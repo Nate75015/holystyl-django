@@ -14,6 +14,8 @@ urlpatterns = [
     path("", include("agronomie.urls")),
     path("", include("iot.urls")),
     path("", include("irrigation.urls")),
+    path("", include("ia.urls")),
+    path("", include("notifications.urls")),
     path("", include("core.urls")),
 ]
 

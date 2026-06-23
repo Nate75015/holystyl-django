@@ -16,7 +16,7 @@ def layout(request):
         {"label": _("Parcelles"), "url_name": "parcelles:list", "icon": "map"},
         {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "droplet"},
         {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "radio"},
-        {"label": _("Assistant"), "url_name": None, "icon": "sparkles"},
+        {"label": _("Assistant"), "url_name": "ia:assistant", "icon": "sparkles"},
     ]
     nav_sections = [
         {
@@ -35,6 +35,13 @@ def layout(request):
                 {"label": _("Cultures & Kc"), "url_name": "agronomie:cultures_kc"},
                 {"label": _("Types de sol"), "url_name": "agronomie:types_sol"},
                 {"label": _("Saisons"), "url_name": "agronomie:saisons"},
+            ],
+        },
+        {
+            "label": _("Assistant & alertes"),
+            "items": [
+                {"label": _("Assistant IA"), "url_name": "ia:assistant"},
+                {"label": _("Notifications"), "url_name": "notifications:center"},
             ],
         },
         {
