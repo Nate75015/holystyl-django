@@ -1,6 +1,6 @@
 {% load i18n %}
-{# Colonne « sous-menu de section » DANS LE FLUX : pousse le contenu vers la droite
-   (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`. #}
+{% comment %}Colonne « sous-menu de section » dans le flux : pousse le contenu vers la
+droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% endcomment %}
 <div x-show="nav" x-cloak x-transition
      class="nav-flyout sticky top-0 z-20 h-screen w-56 shrink-0 overflow-y-auto border-r">
   {% for section in nav_sections %}
