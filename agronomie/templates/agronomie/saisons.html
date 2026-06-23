@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <h2 class="text-xl font-semibold">{% trans "Saisons" %}</h2>
+  {% if saisons %}
+    <div class="space-y-2">
+      {% for s in saisons %}
+        <div class="md-card flex items-center justify-between">
+          <div>
+            <p class="font-medium">{{ s.nom }} {% if s.active %}<span class="ml-2 rounded-full bg-brand/10 px-2 py-0.5 text-xs text-brand">{% trans "active" %}</span>{% endif %}</p>
+            <p class="text-xs text-slate-400">{{ s.date_debut }} → {{ s.date_fin }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune saison définie." %}</p></div>
+  {% endif %}
+</section>
+{% endblock %}
