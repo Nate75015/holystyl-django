@@ -56,7 +56,9 @@
 
   {% include "partials/cookie_banner.html" %}
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="{% static 'js/app.js' %}" defer></script>
+  <script src="{% static 'js/holystyl-viz.js' %}" defer></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

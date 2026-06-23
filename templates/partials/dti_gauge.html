@@ -1,0 +1,2 @@
+{% comment %}Jauge DTI réutilisable. Params : score, numeric, kwh, size (optionnel).{% endcomment %}
+<div class="dti-gauge mx-auto" data-score="{{ score }}" data-numeric="{{ numeric }}" data-kwh="{{ kwh|default:'' }}" data-size="{{ size|default:200 }}"></div>

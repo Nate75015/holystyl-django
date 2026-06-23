@@ -1,0 +1,5 @@
+{% comment %}Graphique d'aires réutilisable. Params : chart_id, chart_data (dict sérialisable JSON), height.{% endcomment %}
+{{ chart_data|json_script:chart_id }}
+<div style="height: {{ height|default:180 }}px">
+  <canvas data-chart="{{ chart_id }}"></canvas>
+</div>
