@@ -1,0 +1,7 @@
+{% load i18n %}
+<div>
+  <label class="mb-1 block text-sm font-medium" for="{{ field.id_for_label }}">{{ field.label }}</label>
+  {{ field }}
+  {% if field.help_text %}<p class="mt-1 text-xs text-slate-400">{{ field.help_text|safe }}</p>{% endif %}
+  {% for error in field.errors %}<p class="mt-1 text-xs text-red-500">{{ error }}</p>{% endfor %}
+</div>

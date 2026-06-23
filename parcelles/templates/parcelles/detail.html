@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h2 class="text-xl font-semibold">{{ parcelle.name }}</h2>
+      <p class="text-sm text-slate-400">{{ parcelle.culture|default:"—" }} · {{ parcelle.area|default:"—" }} ha</p>
+    </div>
+    <div class="flex gap-2">
+      <a href="{% url 'parcelles:edit' parcelle.pk %}" class="md-btn-primary">{% trans "Modifier" %}</a>
+      <a href="{% url 'parcelles:delete' parcelle.pk %}" class="sidebar-link text-red-500">{% trans "Supprimer" %}</a>
+    </div>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <div class="md-card space-y-2">
+      <h3 class="font-medium">{% trans "Culture & sol" %}</h3>
+      <dl class="grid grid-cols-2 gap-1 text-sm">
+        <dt class="text-slate-400">{% trans "Variété" %}</dt><dd>{{ parcelle.variety|default:"—" }}</dd>
+        <dt class="text-slate-400">Kc</dt><dd>{{ parcelle.kc_value }}</dd>
+        <dt class="text-slate-400">{% trans "Type de sol" %}</dt><dd>{{ parcelle.soil_type|default:"—" }}</dd>
+        <dt class="text-slate-400">pH</dt><dd>{{ parcelle.soil_ph|default:"—" }}</dd>
+      </dl>
+    </div>
+    <div class="md-card space-y-2">
+      <h3 class="font-medium">{% trans "Irrigation" %}</h3>
+      <dl class="grid grid-cols-2 gap-1 text-sm">
+        <dt class="text-slate-400">{% trans "Type" %}</dt><dd>{{ parcelle.get_irrigation_type_display|default:"—" }}</dd>
+        <dt class="text-slate-400">{% trans "Débit" %}</dt><dd>{{ parcelle.theoretical_flow_m3h|default:"—" }} m³/h</dd>
+        <dt class="text-slate-400">{% trans "Pression" %}</dt><dd>{{ parcelle.service_pressure_bar|default:"—" }} bar</dd>
+        <dt class="text-slate-400">{% trans "Commune" %}</dt><dd>{{ parcelle.commune|default:"—" }}</dd>
+      </dl>
+    </div>
+  </div>
+
+  <a href="{% url 'parcelles:list' %}" class="sidebar-link inline-block">← {% trans "Retour aux parcelles" %}</a>
+</section>
+{% endblock %}

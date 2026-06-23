@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">{% trans "Parcelles" %}</h2>
+    <a href="{% url 'parcelles:create' %}" class="md-btn-primary">{% trans "+ Nouvelle parcelle" %}</a>
+  </div>
+
+  {% if needs_onboarding %}
+    <div class="md-card">
+      <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Configurez d'abord votre exploitation." %}</p>
+      <a href="{% url 'exploitations:settings' %}" class="md-btn-primary mt-3">{% trans "Configurer" %}</a>
+    </div>
+  {% elif parcelles %}
+    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+          <tr>
+            <th class="px-4 py-3">{% trans "Nom" %}</th>
+            <th class="px-4 py-3">{% trans "Culture" %}</th>
+            <th class="px-4 py-3">{% trans "Surface" %}</th>
+            <th class="px-4 py-3">{% trans "Irrigation" %}</th>
+            <th class="px-4 py-3">{% trans "Statut" %}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+          {% for p in parcelles %}
+            <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+              <td class="px-4 py-3"><a href="{% url 'parcelles:detail' p.pk %}" class="font-medium text-brand">{{ p.name }}</a></td>
+              <td class="px-4 py-3">{{ p.culture|default:"—" }}</td>
+              <td class="px-4 py-3">{{ p.area|default:"—" }} ha</td>
+              <td class="px-4 py-3">{{ p.get_irrigation_type_display|default:"—" }}</td>
+              <td class="px-4 py-3"><span class="rounded-full bg-brand/10 px-2 py-0.5 text-xs text-brand">{{ p.get_status_display }}</span></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="md-card text-center">
+      <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune parcelle pour le moment." %}</p>
+      <a href="{% url 'parcelles:create' %}" class="md-btn-primary mt-3">{% trans "Créer ma première parcelle" %}</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

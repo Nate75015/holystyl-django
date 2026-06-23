@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-md">
+  <div class="md-card space-y-4">
+    <h2 class="text-lg font-semibold">{% trans "Supprimer la parcelle ?" %}</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      {% blocktrans with name=parcelle.name %}La parcelle « {{ name }} » sera définitivement supprimée.{% endblocktrans %}
+    </p>
+    <form method="post" class="flex gap-3">
+      {% csrf_token %}
+      <button type="submit" class="md-btn-primary bg-red-500 hover:bg-red-600">{% trans "Supprimer" %}</button>
+      <a href="{% url 'parcelles:detail' parcelle.pk %}" class="sidebar-link">{% trans "Annuler" %}</a>
+    </form>
+  </div>
+</section>
+{% endblock %}
