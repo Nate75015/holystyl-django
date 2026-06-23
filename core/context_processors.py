@@ -74,6 +74,8 @@ def layout(request):
             "label": _("Mon compte"),
             "items": [
                 {"label": _("Mon exploitation"), "url_name": "exploitations:settings"},
+                {"label": _("Activer un code"), "url_name": "public:activer"},
+                {"label": _("Administration"), "url_name": "administration:admin_panel"},
             ],
         },
     ]

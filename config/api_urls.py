@@ -6,8 +6,10 @@ Conventions : /api/<ressource>/ . Élargi au fil des tranches.
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
+from administration.api import smtp_config, smtp_send_test, smtp_test
 from agronomie.api import CultureKcViewSet, FertigationViewSet, SaisonViewSet, TypeSolViewSet
 from analyses.api import AnalyseSolViewSet, AnalysisResultViewSet, BiodiversiteFicheViewSet
+from billing.api import ActivationActivateView, ActivationVerifyView, SubscriptionListView
 from equipe.api import TaskViewSet, TeamMemberViewSet
 from finances.api import (
     BilanView,
@@ -120,5 +122,13 @@ urlpatterns = [
     path("ai/reports/", AiReportListView.as_view(), name="api-ai-reports"),
     # Bilan ROI
     path("bilan/", BilanView.as_view(), name="api-bilan"),
+    # Billing / activation
+    path("activation/verify/", ActivationVerifyView.as_view(), name="api-activation-verify"),
+    path("activation/activate/", ActivationActivateView.as_view(), name="api-activation-activate"),
+    path("subscriptions/", SubscriptionListView.as_view(), name="api-subscriptions"),
+    # Administration SMTP
+    path("admin/smtp/", smtp_config, name="api-smtp-config"),
+    path("admin/smtp/test/", smtp_test, name="api-smtp-test"),
+    path("admin/smtp/send-test/", smtp_send_test, name="api-smtp-send-test"),
     path("", include(router.urls)),
 ]

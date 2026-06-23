@@ -38,11 +38,8 @@ INTENT_ENUM = [
     "question",
 ]
 
-# Intentions dont l'entité Django existe déjà
-_IMPLEMENTED = {
-    "creer_parcelle", "creer_session_irrigation", "creer_intervention",
-    "creer_charge", "creer_revenu", "question",
-}
+# Toutes les intentions sont désormais implémentées
+_IMPLEMENTED = set(INTENT_ENUM)
 
 
 def build_context(exploitation) -> dict:
@@ -192,10 +189,31 @@ def execute_intent(exploitation, user, message: str, history: list[dict] | None 
         )
         result.update(created=True, entity={"type": "revenu", "id": revenu.id})
 
+    elif intent == "creer_entretien":
+        from operations.models import EntretienMateriel, Machine
+
+        machine = None
+        machine_name = data.get("machineName") or data.get("machine")
+        if machine_name:
+            machine = Machine.objects.filter(exploitation=exploitation, name__icontains=machine_name).first()
+        machine = machine or Machine.objects.filter(exploitation=exploitation).first()
+        if machine is None:
+            result["response"] = response or "Quelle machine est concernée par cet entretien ?"
+            result["needs_more_info"] = True
+        else:
+            entretien = EntretienMateriel.objects.create(
+                exploitation=exploitation,
+                machine=machine,
+                type=data.get("type", "autre"),
+                date=timezone.now(),
+                cout=float(data.get("cout", 0) or 0),
+                description=data.get("description", ""),
+            )
+            result.update(created=True, entity={"type": "entretien", "id": entretien.id})
+
     elif intent in INTENT_ENUM:
-        # Intention reconnue mais module pas encore migré (ex : creer_entretien)
         result["response"] = (
-            response or f"J'ai compris « {intent} », mais ce module sera disponible dans une prochaine version."
+            response or f"J'ai bien compris « {intent} », mais il me manque des informations."
         )
 
     if response or result["created"]:
