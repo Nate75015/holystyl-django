@@ -83,7 +83,7 @@ pytest
 | **2** | IoT (REST gateway), SCADA temps réel (Channels), irrigation, DTI | ✅ Fait |
 | **3** | Assistant IA (Gemini, executeIntent, SSE), notifications | ✅ Fait |
 | **4** | Équipe & planning, bons d'intervention (signature), SMS Twilio, rappels Celery | ✅ Fait |
-| 5 | Opérations & analyses | À venir |
+| **5** | Opérations (machines/interventions/entretiens), analyses (labo OCR Gemini, sol, biodiversité), fertigation | ✅ Fait |
 | 6 | Finances & conformité (PDF/CSV) | À venir |
 | 7 | Public / SEO, billing Stripe | À venir |
 
