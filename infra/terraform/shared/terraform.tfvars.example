@@ -1,0 +1,7 @@
+scaleway_organization_id = "00000000-0000-0000-0000-000000000000"
+scaleway_region          = "fr-par"
+scaleway_zone            = "fr-par-1"
+
+project_name        = "holystyl"
+tfstate_bucket_name = "holystyl-tfstate"
+registry_namespace  = "holystyl"
