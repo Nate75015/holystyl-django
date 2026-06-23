@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Partage de position" %} · {{ APP_NAME }}{% endblock %}
+
+{% block auth_content %}
+<div class="w-full max-w-md text-center">
+  <div class="md-card">
+    {% if member %}
+      <h1 class="text-lg font-semibold">{% trans "Partager ma position" %}</h1>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+        {% blocktrans with name=member.name %}Bonjour {{ name }}, partagez votre position avec votre équipe.{% endblocktrans %}
+      </p>
+      <button id="share" class="md-btn-primary mt-4">{% trans "Partager ma position" %}</button>
+      <p id="status" class="mt-3 text-xs text-slate-400"></p>
+    {% else %}
+      <h1 class="text-lg font-semibold">{% trans "Lien expiré" %}</h1>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Ce lien de partage n'est plus valide." %}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% if member %}
+<script>
+  document.getElementById('share').addEventListener('click', function () {
+    var status = document.getElementById('status');
+    if (!navigator.geolocation) { status.textContent = "{% trans 'Géolocalisation non supportée.' %}"; return; }
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      fetch('/api/team/{{ member.id }}/position/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lat: pos.coords.latitude, lng: pos.coords.longitude, token: '{{ token }}' }),
+      }).then(() => { status.textContent = "{% trans 'Position partagée ✅' %}"; })
+        .catch(() => { status.textContent = "{% trans 'Erreur lors du partage.' %}"; });
+    }, function () { status.textContent = "{% trans 'Accès à la position refusé.' %}"; });
+  });
+</script>
+{% endif %}
+{% endblock %}

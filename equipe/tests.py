@@ -1,0 +1,74 @@
+"""Tests équipe : API tâches/membres, SMS d'affectation, rappels Celery, lien géoloc."""
+
+from datetime import timedelta
+
+import pytest
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+from equipe import services, tasks as celery_tasks
+from equipe.models import Task, TeamMember
+from exploitations.models import Exploitation
+
+User = get_user_model()
+
+
+@pytest.fixture
+def setup(db):
+    user = User.objects.create_user(email="eq@ex.com", password="pwd12345")
+    exploitation = Exploitation.objects.create(owner=user, name="Ferme Eq")
+    member = TeamMember.objects.create(exploitation=exploitation, name="Aude", phone="+33600000000", email="aude@ex.com")
+    return user, exploitation, member
+
+
+@pytest.mark.django_db
+def test_create_task_sends_sms_on_assignment(client, setup, monkeypatch):
+    user, exploitation, member = setup
+    calls = {}
+    monkeypatch.setattr("equipe.services.send_sms", lambda to, body: calls.update(to=to, body=body) or True)
+    client.force_login(user)
+    resp = client.post(
+        "/api/tasks/",
+        {"title": "Tailler parcelle nord", "assigned_to": member.id, "priority": "haute"},
+        content_type="application/json",
+    )
+    assert resp.status_code == 201
+    assert calls.get("to") == "+33600000000"
+    assert "Tailler" in calls.get("body", "")
+
+
+@pytest.mark.django_db
+def test_task_api_tenant_scoped(client, setup):
+    user, exploitation, member = setup
+    Task.objects.create(exploitation=exploitation, title="Mine")
+    other = User.objects.create_user(email="o@ex.com", password="pwd12345")
+    other_exp = Exploitation.objects.create(owner=other, name="Autre")
+    Task.objects.create(exploitation=other_exp, title="Theirs")
+    client.force_login(user)
+    titles = {t["title"] for t in client.get("/api/tasks/").json()}
+    assert titles == {"Mine"}
+
+
+@pytest.mark.django_db
+def test_location_link_generated(setup):
+    _, _, member = setup
+    token = services.generate_location_link(member)
+    member.refresh_from_db()
+    assert member.location_token == token
+    assert member.location_token_expires_at > timezone.now()
+
+
+@pytest.mark.django_db
+def test_reminder_job_sets_flag_and_notifies(setup, monkeypatch):
+    user, exploitation, member = setup
+    sms = []
+    monkeypatch.setattr("equipe.tasks.send_sms", lambda to, body: sms.append(to) or True)
+    monkeypatch.setattr("equipe.tasks.send_mail", lambda *a, **k: 1)
+    task = Task.objects.create(
+        exploitation=exploitation, title="Arrosage", assigned_to=member,
+        due_date=timezone.now() + timedelta(hours=24),
+    )
+    celery_tasks.check_task_reminders()
+    task.refresh_from_db()
+    assert task.reminder_sent_24h is True
+    assert sms == ["+33600000000"]

@@ -24,13 +24,15 @@ whitenoise>=6.8,<7
 # IA — Google Gemini (SDK moderne)
 google-genai>=1.0,<2
 
+# SMS / WhatsApp — Twilio
+twilio>=9.0,<10
+
 # Tests
 pytest>=8.3,<9
 pytest-django>=4.9,<5
 pytest-asyncio>=0.24,<1
 
 # ── Ajoutés au fil des tranches (référence) ─────────────────────────
-# Tranche 4  : twilio                          # SMS/WhatsApp
 # Tranche 5  : pypdf  pdfplumber               # OCR / extraction PDF analyses
 # Tranche 6  : weasyprint                      # export PDF certifié
 # Tranche 7  : stripe                          # paiements / webhooks

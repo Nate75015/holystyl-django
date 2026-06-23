@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     "irrigation",
     "ia",
     "notifications",
+    "equipe",
+    "planning",
 ]
 
 MIDDLEWARE = [
@@ -177,6 +179,11 @@ ADMIN_EMAIL = env("ADMIN_EMAIL", "")
 # ── IA — Google Gemini ──────────────────────────────────────────────
 GEMINI_API_KEY = env("GEMINI_API_KEY", "")
 GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
+
+# ── SMS — Twilio ────────────────────────────────────────────────────
+TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN", "")
+TWILIO_FROM_NUMBER = env("TWILIO_FROM_NUMBER", "")
 
 # ── Divers ──────────────────────────────────────────────────────────
 APP_NAME = "Holystyl"

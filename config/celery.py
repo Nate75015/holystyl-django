@@ -10,7 +10,16 @@ app = Celery("holystyl")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
-# Tâches périodiques (équivalent des cron Node) — branchées au fil des tranches :
-#   - rapport quotidien DTI à 21h00 (Tranche 3)
-#   - rappels de tâches toutes les 15 min (Tranche 4)
-app.conf.beat_schedule = {}
+# Tâches périodiques (équivalent des cron Node : scheduler.ts + taskReminderJob.ts)
+from celery.schedules import crontab  # noqa: E402
+
+app.conf.beat_schedule = {
+    "task-reminders-every-15min": {
+        "task": "equipe.tasks.check_task_reminders",
+        "schedule": 15 * 60,  # toutes les 15 minutes
+    },
+    "daily-report-21h": {
+        "task": "ia.tasks.generate_daily_reports",
+        "schedule": crontab(hour=21, minute=0),
+    },
+}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <h2 class="text-xl font-semibold">{% trans "Équipe" %}</h2>
+  {% if members %}
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for m in members %}
+        <div class="md-card flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-full text-white" style="background: {{ m.color }}">{{ m.name|slice:":1"|upper }}</span>
+          <div class="min-w-0">
+            <p class="font-medium">{{ m.name }} {% if m.is_online %}<span class="ml-1 inline-block h-2 w-2 rounded-full bg-green-500"></span>{% endif %}</p>
+            <p class="truncate text-xs text-slate-400">{{ m.get_role_display }} · {{ m.phone|default:"—" }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API." %}</p></div>
+  {% endif %}
+</section>
+{% endblock %}
