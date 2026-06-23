@@ -6,8 +6,10 @@ from django.contrib import admin
 from django.urls import include, path
 
 from billing.webhook import stripe_webhook
+from core.views import service_worker
 
 urlpatterns = [
+    path("sw.js", service_worker, name="service-worker"),
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("api/stripe/webhook/", stripe_webhook, name="stripe-webhook"),
