@@ -50,7 +50,7 @@ def capteurs(request):
             telemetry_chart = {
                 "labels": [ts.strftime("%H:%M") if ts else "" for ts, _v in serie],
                 "data": [round(v, 1) for _ts, v in serie],
-                "color": "#2abfbf" if flows else "#22c55e",
+                "color": "#0891b2" if flows else "#22c55e",
                 "label": "Débit (m³/h)" if flows else "Humidité (%)",
             }
 

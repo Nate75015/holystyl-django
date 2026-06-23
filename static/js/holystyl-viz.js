@@ -65,10 +65,10 @@
       return g;
     };
     // Multi-séries (conf.datasets) ou série unique (conf.data)
-    const series = conf.datasets || [{ label: conf.label || '', data: conf.data || [], color: conf.color || '#2abfbf' }];
+    const series = conf.datasets || [{ label: conf.label || '', data: conf.data || [], color: conf.color || '#0891b2' }];
     const type = conf.type === 'bar' ? 'bar' : 'line';
     const datasets = series.map((s) => {
-      const color = s.color || '#2abfbf';
+      const color = s.color || '#0891b2';
       return type === 'bar'
         ? { label: s.label || '', data: s.data || [], backgroundColor: color, borderRadius: 6 }
         : { label: s.label || '', data: s.data || [], borderColor: color, backgroundColor: mkFill(color),

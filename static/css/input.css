@@ -3,151 +3,122 @@
 @tailwind utilities;
 
 /* ════════════════════════════════════════════════════════════════════
-   HOLYSTYL — Design system « Industrial Premium »
-   Turquoise #2ABFBF · Lexend · dark mode noir pur · glassmorphism · glow
-   (port fidèle de client/src/index.css)
+   HOLYSTYL — Design « outil de terrain »
+   Pour agriculteurs : lisibilité plein soleil, gros contrastes, ergonomie
+   tactile, identité eau (bleu profond → aqua). Clair par défaut.
 ═══════════════════════════════════════════════════════════════════════ */
 
 @layer base {
   [x-cloak] { display: none !important; }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; font-size: 17px; }   /* base agrandie */
 
-  /* Light mode : fond clair + halos turquoise */
+  /* ── Clair haute-lisibilité (par défaut) ── */
   body {
-    font-family: 'Lexend', 'Lexend Deca', ui-sans-serif, system-ui, sans-serif;
-    color: oklch(12% 0.015 192);
-    background-color: oklch(98% 0.003 192);
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(68% 0.14 192 / 0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 80%, oklch(72% 0.13 192 / 0.04) 0%, transparent 50%);
-    background-attachment: fixed;
+    font-family: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+    color: #1a2b33;                 /* quasi-noir chaud */
+    background-color: #fafaf7;      /* blanc cassé chaud */
+    line-height: 1.55;
   }
 
-  /* Dark mode : noir pur #000 + halos turquoise lumineux */
+  /* ── Sombre (option matin/soir) : encre bleutée, pas noir pur ── */
   .dark body {
-    color: oklch(93% 0.01 192);
-    background-color: #000000;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(72% 0.13 192 / 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 80%, oklch(72% 0.13 192 / 0.04) 0%, transparent 50%);
-    background-attachment: fixed;
+    color: #e8eef0;
+    background-color: #0b1620;
   }
 
-  /* Champs de formulaire */
+  h1, h2, h3 { letter-spacing: -0.01em; }
+
+  /* Champs : grands, bien contrastés */
   input[type="text"], input[type="email"], input[type="password"],
   input[type="number"], input[type="search"], input[type="date"],
   select, textarea {
-    @apply w-full rounded-lg px-3 py-2 text-sm outline-none transition;
-    background: oklch(100% 0 0 / 0.6);
-    border: 1px solid oklch(68% 0.14 192 / 0.18);
-    color: oklch(12% 0.015 192);
+    @apply w-full rounded-xl px-4 py-3 text-base outline-none transition;
+    background: #ffffff;
+    border: 2px solid #d6d3c8;
+    color: #1a2b33;
+    min-height: 48px;
   }
   input:focus, select:focus, textarea:focus {
-    border-color: oklch(68% 0.14 192 / 0.6);
-    box-shadow: 0 0 0 3px oklch(68% 0.14 192 / 0.15);
+    border-color: #0e7490;
+    box-shadow: 0 0 0 3px rgba(14,116,144,0.18);
   }
-  .dark input[type="text"], .dark input[type="email"], .dark input[type="password"],
-  .dark input[type="number"], .dark input[type="search"], .dark input[type="date"],
-  .dark select, .dark textarea {
-    background: oklch(14% 0.015 192 / 0.7);
-    border-color: oklch(72% 0.13 192 / 0.15);
-    color: oklch(93% 0.01 192);
+  .dark input, .dark select, .dark textarea {
+    background: #122230; border-color: #2a3f4d; color: #e8eef0;
   }
 
-  /* Scrollbars fines */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: oklch(92% 0.008 192); }
-  ::-webkit-scrollbar-thumb { background: oklch(78% 0.06 192); border-radius: 3px; }
-  .dark ::-webkit-scrollbar-track { background: oklch(8% 0.01 192); }
-  .dark ::-webkit-scrollbar-thumb { background: oklch(22% 0.02 192); border-radius: 3px; }
-  ::selection { background: oklch(72% 0.13 192 / 0.3); }
+  /* Scrollbars discrètes */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #c9cfc2; border-radius: 6px; border: 2px solid transparent; background-clip: content-box; }
+  .dark ::-webkit-scrollbar-thumb { background: #2a3f4d; }
+  ::selection { background: rgba(8,145,178,0.22); }
 }
 
 @layer components {
-  /* ── Glassmorphism ─────────────────────────────────────────────── */
-  .glass-card {
-    background: oklch(100% 0 0 / 0.78);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid oklch(68% 0.14 192 / 0.12);
-    border-radius: 1rem;
-    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.07), 0 1px 4px oklch(0% 0 0 / 0.04);
-  }
-  .dark .glass-card {
-    background: oklch(10% 0.012 192 / 0.65);
-    border-color: oklch(72% 0.13 192 / 0.10);
-    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.5), 0 1px 4px oklch(0% 0 0 / 0.3);
-  }
-
-  .glass-panel {
-    background: oklch(99% 0.004 192 / 0.96);
-    backdrop-filter: blur(32px);
-    -webkit-backdrop-filter: blur(32px);
-    border-color: oklch(68% 0.14 192 / 0.10);
-  }
-  .dark .glass-panel {
-    background: oklch(5% 0.008 192 / 0.92);
-    border-color: oklch(72% 0.13 192 / 0.08);
-  }
-
-  /* ── Carte standard (utilisée par toutes les pages) ────────────── */
+  /* ── Carte standard : pleine, contrastée, ombre douce (pas de blur) ── */
   .md-card {
     @apply rounded-2xl p-5;
-    background: oklch(100% 0 0 / 0.78);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid oklch(68% 0.14 192 / 0.12);
-    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.07);
+    background: #ffffff;
+    border: 1px solid #e7e5dd;
+    box-shadow: 0 1px 2px rgba(26,43,51,0.04), 0 4px 16px rgba(26,43,51,0.05);
   }
   .dark .md-card {
-    background: oklch(10% 0.012 192 / 0.65);
-    border-color: oklch(72% 0.13 192 / 0.10);
-    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.5);
+    background: #122230;
+    border-color: #21323f;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
   }
 
-  /* ── Boutons ───────────────────────────────────────────────────── */
-  .md-btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white transition;
-    background: oklch(68% 0.14 192);
-    box-shadow: 0 0 20px oklch(72% 0.13 192 / 0.35);
+  /* Panneaux structurels (sidebar/header) — solides, lisibles */
+  .glass-panel {
+    background: #ffffff;
+    border-color: #e7e5dd;
   }
-  .md-btn-primary:hover { background: oklch(62% 0.13 192); box-shadow: 0 0 28px oklch(72% 0.13 192 / 0.5); }
-  .md-btn-primary:disabled { opacity: .5; box-shadow: none; }
-  .dark .md-btn-primary { color: #000; font-weight: 600; background: oklch(72% 0.13 192); }
+  .dark .glass-panel {
+    background: #0d1a24;
+    border-color: #1c2c38;
+  }
+
+  /* ── Boutons : grandes cibles tactiles (≥48px) ── */
+  .md-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 text-base font-bold text-white transition;
+    background: #0e7490;
+    min-height: 48px;
+  }
+  .md-btn-primary:hover { background: #155e75; }
+  .md-btn-primary:active { background: #164e63; }
+  .md-btn-primary:disabled { opacity: .5; }
 
   .md-icon-btn {
-    @apply grid h-8 w-8 place-items-center rounded-lg text-sm transition;
-    border: 1px solid oklch(68% 0.14 192 / 0.18);
+    @apply grid place-items-center rounded-xl text-base transition;
+    height: 44px; width: 44px;
+    border: 1px solid #d6d3c8;
+    background: #ffffff;
   }
-  .md-icon-btn:hover { background: oklch(68% 0.14 192 / 0.10); }
-  .dark .md-icon-btn { border-color: oklch(72% 0.13 192 / 0.15); }
+  .md-icon-btn:hover { background: #f4f2ec; }
+  .dark .md-icon-btn { background: #122230; border-color: #2a3f4d; }
 
-  /* ── Sidebar links ─────────────────────────────────────────────── */
+  /* ── Liens de navigation : grands, lisibles ── */
   .sidebar-link {
-    @apply block rounded-lg px-3 py-2 text-sm font-medium transition;
-    color: oklch(35% 0.02 192);
+    @apply block rounded-xl px-3 py-2.5 text-base font-medium transition;
+    color: #3c4c52; min-height: 44px;
   }
-  .sidebar-link:hover { background: oklch(68% 0.14 192 / 0.08); color: oklch(55% 0.14 192); }
-  .dark .sidebar-link { color: oklch(70% 0.02 192); }
-  .dark .sidebar-link:hover { background: oklch(72% 0.13 192 / 0.12); color: oklch(82% 0.10 192); }
+  .sidebar-link:hover { background: #ecfeff; color: #0e7490; }
+  .dark .sidebar-link { color: #aeb9bd; }
+  .dark .sidebar-link:hover { background: rgba(34,211,238,0.10); color: #67dded; }
 
   .sidebar-link-active {
-    background: oklch(68% 0.14 192 / 0.12) !important;
-    color: oklch(55% 0.14 192) !important;
+    background: #ecfeff !important; color: #0e7490 !important; font-weight: 700;
   }
   .dark .sidebar-link-active {
-    background: oklch(72% 0.13 192 / 0.15) !important;
-    color: oklch(82% 0.12 192) !important;
+    background: rgba(34,211,238,0.14) !important; color: #67dded !important;
   }
 
-  /* ── Glow effects ──────────────────────────────────────────────── */
-  .glow-teal { box-shadow: 0 0 20px oklch(72% 0.13 192 / 0.4), 0 0 60px oklch(72% 0.13 192 / 0.15); }
-  .glow-green { box-shadow: 0 0 20px oklch(72% 0.22 145 / 0.35), 0 0 60px oklch(72% 0.22 145 / 0.12); }
-  .text-glow-teal { text-shadow: 0 0 20px oklch(72% 0.13 192 / 0.7), 0 0 40px oklch(72% 0.13 192 / 0.3); }
+  /* ── Status dots (sémantiques, sans glow agressif) ── */
+  .status-online { background: #65a30d; }
+  .status-offline { background: #94a3b8; }
+  .status-warning { background: #f59e0b; }
 
-  /* ── Status dots lumineux ──────────────────────────────────────── */
-  .status-online { background: oklch(72% 0.22 145); box-shadow: 0 0 8px oklch(72% 0.22 145 / 0.9); }
-  .status-offline { background: oklch(60% 0.02 192); }
-  .status-warning { background: oklch(75% 0.18 60); box-shadow: 0 0 8px oklch(75% 0.18 60 / 0.9); }
+  /* Compat : neutralise les effets premium précédents */
+  .glow-teal, .glow-green { box-shadow: none; }
+  .text-glow-teal { text-shadow: none; }
 }

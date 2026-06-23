@@ -5,8 +5,8 @@
 {% block auth_content %}
 <div class="w-full max-w-sm">
   <div class="mb-6 flex items-center justify-center gap-2">
-    <span class="grid h-9 w-9 place-items-center rounded-lg bg-teal-500 font-bold text-white">H</span>
-    <span class="text-xl font-semibold">{{ APP_NAME }}</span>
+    {% include "partials/brand_mark.html" with size=40 icon=24 %}
+    <span class="text-xl font-bold">{{ APP_NAME }}</span>
   </div>
   <div class="md-card">
     <h1 class="mb-4 text-lg font-semibold">{% trans "Créer un compte" %}</h1>

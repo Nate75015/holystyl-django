@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#06b6c4">
+  <meta name="theme-color" content="#0e7490">
   <title>{% block title %}{{ page_title|default:APP_NAME }} · {{ APP_NAME }}{% endblock %}</title>
 
   <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
   <link rel="icon" href="{% static 'icons/icon.svg' %}" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Lexend+Deca:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
@@ -20,7 +20,7 @@
     // Thème clair/sombre persistant (avant rendu pour éviter le flash)
     function theme() {
       return {
-        dark: (localStorage.getItem('holystyl-theme') || 'dark') === 'dark',
+        dark: (localStorage.getItem('holystyl-theme') || 'light') === 'dark',
         toggle() {
           this.dark = !this.dark;
           localStorage.setItem('holystyl-theme', this.dark ? 'dark' : 'light');

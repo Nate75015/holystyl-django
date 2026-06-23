@@ -26,7 +26,7 @@ def irrigation(request):
         sessions_chart = {
             "labels": [s.start_time.strftime("%d/%m") for s in chrono],
             "data": [round(s.volume_delivered_m3 or 0, 1) for s in chrono],
-            "color": "#2abfbf",
+            "color": "#0891b2",
             "label": "Volume (m³)",
         }
 

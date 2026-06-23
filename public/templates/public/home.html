@@ -6,8 +6,8 @@
 <div class="w-full max-w-3xl space-y-10 py-10 text-center" x-data="alexChat()">
   <div>
     <div class="mb-4 flex items-center justify-center gap-2">
-      <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand text-lg font-bold text-white">H</span>
-      <span class="text-2xl font-semibold">Holystyl</span>
+      {% include "partials/brand_mark.html" with size=44 icon=26 %}
+      <span class="text-2xl font-bold">Holystyl</span>
     </div>
     <h1 class="text-3xl font-bold sm:text-4xl">{% trans "Pilotez votre irrigation, économisez l'eau et l'énergie." %}</h1>
     <p class="mx-auto mt-3 max-w-xl text-slate-500 dark:text-slate-400">

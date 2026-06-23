@@ -34,7 +34,7 @@ def dashboard(request):
             dti_chart = {
                 "labels": [d.calculated_at.strftime("%d/%m") for d in history],
                 "data": [round(d.score_numeric, 1) for d in history],
-                "color": "#2abfbf",
+                "color": "#0891b2",
                 "label": "Score DTI",
             }
 
