@@ -9,6 +9,14 @@ from rest_framework.routers import DefaultRouter
 from agronomie.api import CultureKcViewSet, FertigationViewSet, SaisonViewSet, TypeSolViewSet
 from analyses.api import AnalyseSolViewSet, AnalysisResultViewSet, BiodiversiteFicheViewSet
 from equipe.api import TaskViewSet, TeamMemberViewSet
+from finances.api import (
+    BilanView,
+    ChargeViewSet,
+    FactureClientViewSet,
+    FactureViewSet,
+    RecolteViewSet,
+    RevenuViewSet,
+)
 from operations.api import (
     AffectationEnginViewSet,
     CatalogueEnginViewSet,
@@ -87,6 +95,12 @@ router.register("fertigations", FertigationViewSet, basename="fertigation")
 router.register("analyses/lab", AnalysisResultViewSet, basename="labresult")
 router.register("analyses/sol", AnalyseSolViewSet, basename="analysesol")
 router.register("analyses/biodiversite", BiodiversiteFicheViewSet, basename="biodiversite")
+# Tranche 6 — finances
+router.register("charges", ChargeViewSet, basename="charge")
+router.register("revenus", RevenuViewSet, basename="revenu")
+router.register("recoltes", RecolteViewSet, basename="recolte")
+router.register("facture-clients", FactureClientViewSet, basename="factureclient")
+router.register("factures", FactureViewSet, basename="facture")
 
 urlpatterns = [
     path("exploitation/", CurrentExploitationView.as_view(), name="api-exploitation"),
@@ -104,5 +118,7 @@ urlpatterns = [
     path("ai/conversations/", AiConversationsView.as_view(), name="api-ai-conversations"),
     path("ai/report/", AiGenerateReportView.as_view(), name="api-ai-report"),
     path("ai/reports/", AiReportListView.as_view(), name="api-ai-reports"),
+    # Bilan ROI
+    path("bilan/", BilanView.as_view(), name="api-bilan"),
     path("", include(router.urls)),
 ]

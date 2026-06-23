@@ -47,6 +47,14 @@ def layout(request):
             ],
         },
         {
+            "label": _("Économie"),
+            "items": [
+                {"label": _("Charges"), "url_name": "finances:charges"},
+                {"label": _("Bilan économique"), "url_name": "finances:bilan_economique"},
+                {"label": _("Facturation"), "url_name": "finances:facturation"},
+            ],
+        },
+        {
             "label": _("Planning & Équipe"),
             "items": [
                 {"label": _("Planning"), "url_name": "planning:planning"},
