@@ -80,7 +80,7 @@ pytest
 |---|---|---|
 | **0** | Socle : config, auth email/password, layout, i18n, PWA, Tailwind | ✅ Fait |
 | **1** | Exploitation (onboarding/KPIs), parcelles (wizard + carte), agronomie, Pulse réel | ✅ Fait |
-| 2 | IoT + SCADA temps réel, irrigation | À venir |
+| **2** | IoT (REST gateway), SCADA temps réel (Channels), irrigation, DTI | ✅ Fait |
 | 3 | Assistant IA (Gemini, SSE), notifications | À venir |
 | 4 | Équipe & planning, bons d'intervention, SMS | À venir |
 | 5 | Opérations & analyses | À venir |
