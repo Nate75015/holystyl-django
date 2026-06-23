@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6" x-data="{ tab: 'zones' }">
+  <h2 class="text-xl font-semibold">{% trans "Irrigation" %}</h2>
+
+  <div class="flex gap-2 border-b border-slate-200 dark:border-white/10">
+    {% for key, label in tabs %}
+      <button @click="tab='{{ key }}'" class="px-3 py-2 text-sm font-medium"
+              :class="tab==='{{ key }}' ? 'border-b-2 border-brand text-brand' : 'text-slate-400'">{{ label }}</button>
+    {% endfor %}
+  </div>
+
+  <div x-show="tab==='zones'" class="space-y-2">
+    {% for z in zones %}
+      <div class="md-card flex items-center justify-between">
+        <div><p class="font-medium">{{ z.name }}</p><p class="text-xs text-slate-400">{{ z.get_irrigation_type_display }} · {{ z.surface_ha|default:"—" }} ha</p></div>
+        <span class="text-xs text-slate-400">{{ z.flow_rate_m3h|default:"—" }} m³/h</span>
+      </div>
+    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune zone." %}</p></div>{% endfor %}
+  </div>
+
+  <div x-show="tab==='programs'" x-cloak class="space-y-2">
+    {% for p in programs %}
+      <div class="md-card flex items-center justify-between">
+        <div><p class="font-medium">{{ p.name }}</p><p class="text-xs text-slate-400">{{ p.start_hour }}h{{ p.start_minute }} · {{ p.duration_minutes }} min · {{ p.get_frequency_display }}</p></div>
+        <span class="text-xs {% if p.is_active %}text-green-500{% else %}text-slate-400{% endif %}">{% if p.is_active %}{% trans "actif" %}{% else %}{% trans "inactif" %}{% endif %}</span>
+      </div>
+    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucun programme." %}</p></div>{% endfor %}
+  </div>
+
+  <div x-show="tab==='sessions'" x-cloak class="space-y-2">
+    {% for s in sessions %}
+      <div class="md-card flex items-center justify-between">
+        <div><p class="font-medium">{{ s.start_time }}</p><p class="text-xs text-slate-400">{{ s.get_triggered_by_display }}</p></div>
+        <span class="text-xs text-slate-400">{{ s.volume_delivered_m3|default:"—" }} m³</span>
+      </div>
+    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune session." %}</p></div>{% endfor %}
+  </div>
+
+  <div x-show="tab==='stations'" x-cloak class="space-y-2">
+    {% for st in stations %}
+      <div class="md-card flex items-center justify-between">
+        <div><p class="font-medium">{{ st.name }}</p><p class="text-xs text-slate-400">{{ st.power_kw|default:"—" }} kW · {{ st.get_status_display }}</p></div>
+        <span class="text-xs text-slate-400">{{ st.max_flow_m3h|default:"—" }} m³/h</span>
+      </div>
+    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune station." %}</p></div>{% endfor %}
+  </div>
+</section>
+{% endblock %}
