@@ -10,9 +10,7 @@ pool_size          = 1
 pool_min_size      = 1
 pool_max_size      = 3
 
-postgres_node_type      = "db-dev-s"
-postgres_volume_size_gb = 10
-db_name                 = "holystyl"
-db_user                 = "holystyl_app"
+db_name                = "holystyl"
+serverless_sql_max_cpu = 4
 
 media_bucket_name = "holystyl-media-preprod"

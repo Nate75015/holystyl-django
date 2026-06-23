@@ -6,8 +6,7 @@ provider "scaleway" {
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Réseau privé (VPC) — Kapsule et PostgreSQL partagent le même réseau privé,
-# les pods accèdent à la base sans passer par Internet ni un LB facturé.
+# Réseau privé (VPC) — réseau du cluster Kapsule.
 # ──────────────────────────────────────────────────────────────────────────────
 resource "scaleway_vpc" "this" {
   name       = "${var.cluster_name}-vpc"
@@ -55,67 +54,37 @@ resource "scaleway_k8s_pool" "default" {
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# PostgreSQL managé (endpoint privé sur le VPC du cluster)
+# PostgreSQL — Serverless SQL (hors quota RDB, scale-to-zero).
+# Accès via endpoint public + clé IAM dédiée (pas de réseau privé).
 # ──────────────────────────────────────────────────────────────────────────────
-resource "random_password" "db_admin" {
-  length           = 32
-  special          = true
-  min_lower        = 2
-  min_upper        = 2
-  min_numeric      = 2
-  min_special      = 2
-  override_special = "!#$%&*+-_="
+resource "scaleway_sdb_sql_database" "this" {
+  name       = var.db_name
+  project_id = var.project_id
+  region     = var.scaleway_region
+  min_cpu    = 0
+  max_cpu    = var.serverless_sql_max_cpu
 }
 
-resource "random_password" "db_app" {
-  length           = 32
-  special          = true
-  min_lower        = 2
-  min_upper        = 2
-  min_numeric      = 2
-  min_special      = 2
-  override_special = "!#$%&*+-_="
+# Application IAM + clé API dédiées : identifiants applicatifs de la base.
+resource "scaleway_iam_application" "db" {
+  name        = "${var.cluster_name}-db"
+  description = "Holystyl preprod — accès Serverless SQL"
 }
 
-resource "scaleway_rdb_instance" "this" {
-  name                      = "${var.cluster_name}-db"
-  project_id                = var.project_id
-  region                    = var.scaleway_region
-  node_type                 = var.postgres_node_type
-  engine                    = "PostgreSQL-16"
-  user_name                 = "holystyl_admin"
-  password                  = random_password.db_admin.result
-  volume_size_in_gb         = var.postgres_volume_size_gb
-  volume_type               = "sbs_5k"
-  disable_backup            = false
-  backup_schedule_frequency = 24
-  backup_schedule_retention = 7
+resource "scaleway_iam_policy" "db" {
+  name           = "${var.cluster_name}-db-rw"
+  description    = "Lecture/écriture Serverless SQL pour Holystyl preprod"
+  application_id = scaleway_iam_application.db.id
 
-  private_network {
-    pn_id       = scaleway_vpc_private_network.this.id
-    enable_ipam = true
+  rule {
+    project_ids          = [var.project_id]
+    permission_set_names = ["ServerlessSQLDatabaseReadWrite"]
   }
 }
 
-resource "scaleway_rdb_database" "app" {
-  instance_id = scaleway_rdb_instance.this.id
-  name        = var.db_name
-}
-
-resource "scaleway_rdb_user" "app" {
-  instance_id = scaleway_rdb_instance.this.id
-  name        = var.db_user
-  password    = random_password.db_app.result
-  is_admin    = false
-}
-
-resource "scaleway_rdb_privilege" "app" {
-  instance_id   = scaleway_rdb_instance.this.id
-  database_name = scaleway_rdb_database.app.name
-  user_name     = scaleway_rdb_user.app.name
-  permission    = "all"
-
-  depends_on = [scaleway_rdb_database.app, scaleway_rdb_user.app]
+resource "scaleway_iam_api_key" "db" {
+  application_id = scaleway_iam_application.db.id
+  description    = "Holystyl preprod — Serverless SQL"
 }
 
 # ──────────────────────────────────────────────────────────────────────────────

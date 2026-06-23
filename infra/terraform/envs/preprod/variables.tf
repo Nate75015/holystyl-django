@@ -50,25 +50,16 @@ variable "pool_max_size" {
   default = 3
 }
 
-# ── PostgreSQL ────────────────────────────────────────────────────────────────
-variable "postgres_node_type" {
-  type    = string
-  default = "db-dev-s"
-}
-
-variable "postgres_volume_size_gb" {
-  type    = number
-  default = 10
-}
-
+# ── PostgreSQL (Serverless SQL) ───────────────────────────────────────────────
 variable "db_name" {
   type    = string
   default = "holystyl"
 }
 
-variable "db_user" {
-  type    = string
-  default = "holystyl_app"
+variable "serverless_sql_max_cpu" {
+  description = "Plafond CPU de la base Serverless SQL (min_cpu=0 → scale-to-zero)."
+  type        = number
+  default     = 4
 }
 
 # ── Stockage médias ───────────────────────────────────────────────────────────

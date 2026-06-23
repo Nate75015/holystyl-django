@@ -16,22 +16,24 @@ output "cluster_url" {
   value = scaleway_k8s_cluster.this.apiserver_url
 }
 
-output "rdb_endpoint_ip" {
-  description = "IP privée de l'instance PostgreSQL (réseau privé)."
-  value       = try(scaleway_rdb_instance.this.private_network[0].ip, null)
+output "db_endpoint" {
+  description = "Endpoint de connexion Serverless SQL (host:port/db)."
+  value       = scaleway_sdb_sql_database.this.endpoint
 }
 
-output "rdb_database" {
-  value = scaleway_rdb_database.app.name
+output "db_name" {
+  value = scaleway_sdb_sql_database.this.name
 }
 
-output "rdb_user" {
-  value = scaleway_rdb_user.app.name
+output "db_access_key" {
+  description = "Access key IAM pour la connexion (= user PostgreSQL, sensible)."
+  value       = scaleway_iam_api_key.db.access_key
+  sensitive   = true
 }
 
-output "rdb_password" {
-  description = "Mot de passe de l'utilisateur applicatif (sensible)."
-  value       = random_password.db_app.result
+output "db_secret_key" {
+  description = "Secret key IAM pour la connexion (= password PostgreSQL, sensible)."
+  value       = scaleway_iam_api_key.db.secret_key
   sensitive   = true
 }
 
