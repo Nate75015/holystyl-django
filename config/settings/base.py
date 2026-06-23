@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     "irrigation",
     "ia",
     "notifications",
+    "messagerie",
+    "mail",
+    "sondages",
     "equipe",
     "planning",
     "operations",
@@ -127,11 +130,19 @@ USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ("fr", "Français"),
-    ("en", "English"),
-    ("es", "Español"),
-    ("pt", "Português"),
-    ("pl", "Polski"),
+    ("fr", "Français"),       # France
+    ("de", "Deutsch"),        # Allemagne
+    ("it", "Italiano"),       # Italie
+    ("es", "Español"),        # Espagne
+    ("nl", "Nederlands"),     # Pays-Bas
+    ("pl", "Polski"),         # Pologne
+    ("ro", "Română"),         # Roumanie
+    ("en", "English"),        # Royaume-Uni
+    ("da", "Dansk"),          # Danemark
+    ("ga", "Gaeilge"),        # Irlande
+    ("hu", "Magyar"),         # Hongrie
+    ("el", "Ελληνικά"),       # Grèce
+    ("pt", "Português"),      # conservé (traductions existantes)
 ]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 

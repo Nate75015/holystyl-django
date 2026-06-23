@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);\n"
 
 msgid "Identité"
 msgstr ""
@@ -46,10 +46,10 @@ msgid "utilisateurs"
 msgstr ""
 
 msgid "Connexion"
-msgstr "Logowanie"
+msgstr ""
 
 msgid "Se connecter"
-msgstr "Zaloguj się"
+msgstr ""
 
 msgid "Pas de compte ?"
 msgstr ""
@@ -58,7 +58,7 @@ msgid "Créer un compte"
 msgstr ""
 
 msgid "S'inscrire"
-msgstr "Zarejestruj się"
+msgstr ""
 
 msgid "Déjà un compte ?"
 msgstr ""
@@ -103,13 +103,13 @@ msgid "Dernier test"
 msgstr ""
 
 msgid "Enregistrer"
-msgstr "Zapisz"
+msgstr ""
 
 msgid "Configuration SMTP enregistrée."
 msgstr ""
 
 msgid "Administration"
-msgstr "Administracja"
+msgstr "Riarachán"
 
 msgid "Céréales"
 msgstr ""
@@ -214,13 +214,13 @@ msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
 msgstr ""
 
 msgid "Saisons"
-msgstr "Sezony"
+msgstr "Séasúir"
 
 msgid "Aucune saison définie."
 msgstr ""
 
 msgid "Types de sol"
-msgstr "Typy gleby"
+msgstr "Cineálacha ithreach"
 
 msgid "Rétention"
 msgstr ""
@@ -229,7 +229,7 @@ msgid "Aucun type de sol. Ajoutez-en via l'admin."
 msgstr ""
 
 msgid "Cultures & Kc"
-msgstr "Uprawy i Kc"
+msgstr "Barra & Kc"
 
 msgid "Sol"
 msgstr ""
@@ -271,7 +271,7 @@ msgid "fiches biodiversité"
 msgstr ""
 
 msgid "Analyses de sol"
-msgstr "Analizy gleby"
+msgstr "Anailísí ithreach"
 
 msgid "Labo"
 msgstr ""
@@ -280,7 +280,7 @@ msgid "Aucune analyse de sol."
 msgstr ""
 
 msgid "Laboratoire"
-msgstr "Laboratorium"
+msgstr "Saotharlann"
 
 msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
 msgstr ""
@@ -334,97 +334,97 @@ msgid "abonnements"
 msgstr ""
 
 msgid "Accueil"
-msgstr "Start"
+msgstr "Baile"
 
 msgid "Parcelles"
-msgstr "Działki"
+msgstr "Ceapacha"
 
 msgid "Irrigation"
-msgstr "Nawadnianie"
+msgstr "Uisciú"
 
 msgid "Planning"
-msgstr "Planowanie"
+msgstr "Pleanáil"
 
 msgid "Assistant"
-msgstr "Asystent"
+msgstr "Cúntóir"
 
 msgid "Tableau de bord"
-msgstr "Pulpit"
+msgstr "Painéal"
 
 msgid "Assistant IA"
-msgstr "Asystent AI"
+msgstr "Cúntóir IS"
 
 msgid "Communication"
-msgstr "Komunikacja"
+msgstr "Cumarsáid"
 
 msgid "Notifications"
-msgstr "Powiadomienia"
+msgstr "Fógraí"
 
 msgid "Messagerie"
-msgstr "Wiadomości"
+msgstr "Teachtaireachtaí"
 
 msgid "Mail"
-msgstr "Poczta"
+msgstr "Ríomhphost"
 
 msgid "Sondage"
-msgstr "Ankieta"
+msgstr "Suirbhé"
 
 msgid "Cultures & Terrain"
-msgstr "Uprawy i Teren"
+msgstr "Barra & Talamh"
 
 msgid "Régie SCADA"
-msgstr "Sterowanie SCADA"
+msgstr "Rialú SCADA"
 
 msgid "Capteurs"
-msgstr "Czujniki"
+msgstr "Braiteoirí"
 
 msgid "Protection"
-msgstr "Ochrona"
+msgstr "Cosaint"
 
 msgid "Bassinage anti-gel"
-msgstr "Deszczowanie przeciwprzymrozkowe"
+msgstr "Spréáil in aghaidh sioic"
 
 msgid "Interventions"
-msgstr "Zabiegi"
+msgstr "Idirghabhálacha"
 
 msgid "Économie"
-msgstr "Ekonomia"
+msgstr "Eacnamaíocht"
 
 msgid "Charges"
-msgstr "Koszty"
+msgstr "Costais"
 
 msgid "Bilan économique"
-msgstr "Bilans ekonomiczny"
+msgstr "Achoimre eacnamaíoch"
 
 msgid "Facturation"
-msgstr "Fakturowanie"
+msgstr "Sonrascadh"
 
 msgid "Parc matériel"
-msgstr "Park maszynowy"
+msgstr "Flít trealaimh"
 
 msgid "Environnement"
-msgstr "Środowisko"
+msgstr "Comhshaol"
 
 msgid "RH"
-msgstr "Kadry"
+msgstr "AD"
 
 msgid "Équipe"
-msgstr "Zespół"
+msgstr "Foireann"
 
 msgid "Tâches"
-msgstr "Zadania"
+msgstr "Tascanna"
 
 msgid "Mes tâches"
-msgstr "Moje zadania"
+msgstr "Mo thascanna"
 
 msgid "Mon compte"
-msgstr "Moje konto"
+msgstr "Mo chuntas"
 
 msgid "Mon exploitation"
-msgstr "Moje gospodarstwo"
+msgstr "M'fheirm"
 
 msgid "Activer un code"
-msgstr "Aktywuj kod"
+msgstr "Gníomhachtaigh cód"
 
 msgid "Bienvenue sur Holystyl 👋"
 msgstr ""
@@ -632,7 +632,7 @@ msgid "Informations de base utilisées partout dans l'application."
 msgstr ""
 
 msgid "Annuler"
-msgstr "Anuluj"
+msgstr ""
 
 msgid "Exploitation enregistrée."
 msgstr ""
@@ -1524,10 +1524,10 @@ msgid "La parcelle « %(name)s » sera définitivement supprimée."
 msgstr ""
 
 msgid "Supprimer"
-msgstr "Usuń"
+msgstr ""
 
 msgid "Modifier"
-msgstr "Edytuj"
+msgstr ""
 
 msgid "Culture & sol"
 msgstr ""
@@ -1855,7 +1855,7 @@ msgid "J'ai compris"
 msgstr ""
 
 msgid "Heure locale"
-msgstr "Czas lokalny"
+msgstr "Am áitiúil"
 
 msgid "Langue"
 msgstr ""
@@ -1864,7 +1864,7 @@ msgid "Thème"
 msgstr ""
 
 msgid "Déconnexion"
-msgstr "Wyloguj"
+msgstr ""
 
 msgid "Installer Holystyl"
 msgstr ""
@@ -1885,10 +1885,7 @@ msgid "Fermer"
 msgstr ""
 
 msgid "Bientôt"
-msgstr "Wkrótce"
+msgstr "Go luath"
 
 msgid "Remettons du sens dans notre métier"
 msgstr ""
-
-#~ msgid "Bassinage"
-#~ msgstr "Zraszanie"

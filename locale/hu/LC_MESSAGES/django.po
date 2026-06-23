@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Identité"
 msgstr ""
@@ -46,10 +46,10 @@ msgid "utilisateurs"
 msgstr ""
 
 msgid "Connexion"
-msgstr "Logowanie"
+msgstr ""
 
 msgid "Se connecter"
-msgstr "Zaloguj się"
+msgstr ""
 
 msgid "Pas de compte ?"
 msgstr ""
@@ -58,7 +58,7 @@ msgid "Créer un compte"
 msgstr ""
 
 msgid "S'inscrire"
-msgstr "Zarejestruj się"
+msgstr ""
 
 msgid "Déjà un compte ?"
 msgstr ""
@@ -103,13 +103,13 @@ msgid "Dernier test"
 msgstr ""
 
 msgid "Enregistrer"
-msgstr "Zapisz"
+msgstr ""
 
 msgid "Configuration SMTP enregistrée."
 msgstr ""
 
 msgid "Administration"
-msgstr "Administracja"
+msgstr "Adminisztráció"
 
 msgid "Céréales"
 msgstr ""
@@ -214,13 +214,13 @@ msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
 msgstr ""
 
 msgid "Saisons"
-msgstr "Sezony"
+msgstr "Szezonok"
 
 msgid "Aucune saison définie."
 msgstr ""
 
 msgid "Types de sol"
-msgstr "Typy gleby"
+msgstr "Talajtípusok"
 
 msgid "Rétention"
 msgstr ""
@@ -229,7 +229,7 @@ msgid "Aucun type de sol. Ajoutez-en via l'admin."
 msgstr ""
 
 msgid "Cultures & Kc"
-msgstr "Uprawy i Kc"
+msgstr "Növények & Kc"
 
 msgid "Sol"
 msgstr ""
@@ -271,7 +271,7 @@ msgid "fiches biodiversité"
 msgstr ""
 
 msgid "Analyses de sol"
-msgstr "Analizy gleby"
+msgstr "Talajvizsgálatok"
 
 msgid "Labo"
 msgstr ""
@@ -280,7 +280,7 @@ msgid "Aucune analyse de sol."
 msgstr ""
 
 msgid "Laboratoire"
-msgstr "Laboratorium"
+msgstr "Laboratórium"
 
 msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
 msgstr ""
@@ -334,97 +334,97 @@ msgid "abonnements"
 msgstr ""
 
 msgid "Accueil"
-msgstr "Start"
+msgstr "Kezdőlap"
 
 msgid "Parcelles"
-msgstr "Działki"
+msgstr "Parcellák"
 
 msgid "Irrigation"
-msgstr "Nawadnianie"
+msgstr "Öntözés"
 
 msgid "Planning"
-msgstr "Planowanie"
+msgstr "Tervezés"
 
 msgid "Assistant"
-msgstr "Asystent"
+msgstr "Asszisztens"
 
 msgid "Tableau de bord"
-msgstr "Pulpit"
+msgstr "Irányítópult"
 
 msgid "Assistant IA"
-msgstr "Asystent AI"
+msgstr "MI-asszisztens"
 
 msgid "Communication"
-msgstr "Komunikacja"
+msgstr "Kommunikáció"
 
 msgid "Notifications"
-msgstr "Powiadomienia"
+msgstr "Értesítések"
 
 msgid "Messagerie"
-msgstr "Wiadomości"
+msgstr "Üzenetek"
 
 msgid "Mail"
-msgstr "Poczta"
+msgstr "Levelezés"
 
 msgid "Sondage"
-msgstr "Ankieta"
+msgstr "Szavazás"
 
 msgid "Cultures & Terrain"
-msgstr "Uprawy i Teren"
+msgstr "Növények & Terület"
 
 msgid "Régie SCADA"
-msgstr "Sterowanie SCADA"
+msgstr "SCADA-vezérlés"
 
 msgid "Capteurs"
-msgstr "Czujniki"
+msgstr "Érzékelők"
 
 msgid "Protection"
-msgstr "Ochrona"
+msgstr "Védelem"
 
 msgid "Bassinage anti-gel"
-msgstr "Deszczowanie przeciwprzymrozkowe"
+msgstr "Fagyvédelmi öntözés"
 
 msgid "Interventions"
-msgstr "Zabiegi"
+msgstr "Beavatkozások"
 
 msgid "Économie"
-msgstr "Ekonomia"
+msgstr "Gazdaság"
 
 msgid "Charges"
-msgstr "Koszty"
+msgstr "Költségek"
 
 msgid "Bilan économique"
-msgstr "Bilans ekonomiczny"
+msgstr "Gazdasági mérleg"
 
 msgid "Facturation"
-msgstr "Fakturowanie"
+msgstr "Számlázás"
 
 msgid "Parc matériel"
-msgstr "Park maszynowy"
+msgstr "Géppark"
 
 msgid "Environnement"
-msgstr "Środowisko"
+msgstr "Környezet"
 
 msgid "RH"
-msgstr "Kadry"
+msgstr "HR"
 
 msgid "Équipe"
-msgstr "Zespół"
+msgstr "Csapat"
 
 msgid "Tâches"
-msgstr "Zadania"
+msgstr "Feladatok"
 
 msgid "Mes tâches"
-msgstr "Moje zadania"
+msgstr "Saját feladatok"
 
 msgid "Mon compte"
-msgstr "Moje konto"
+msgstr "Fiókom"
 
 msgid "Mon exploitation"
-msgstr "Moje gospodarstwo"
+msgstr "Gazdaságom"
 
 msgid "Activer un code"
-msgstr "Aktywuj kod"
+msgstr "Kód aktiválása"
 
 msgid "Bienvenue sur Holystyl 👋"
 msgstr ""
@@ -632,7 +632,7 @@ msgid "Informations de base utilisées partout dans l'application."
 msgstr ""
 
 msgid "Annuler"
-msgstr "Anuluj"
+msgstr ""
 
 msgid "Exploitation enregistrée."
 msgstr ""
@@ -1524,10 +1524,10 @@ msgid "La parcelle « %(name)s » sera définitivement supprimée."
 msgstr ""
 
 msgid "Supprimer"
-msgstr "Usuń"
+msgstr ""
 
 msgid "Modifier"
-msgstr "Edytuj"
+msgstr ""
 
 msgid "Culture & sol"
 msgstr ""
@@ -1855,7 +1855,7 @@ msgid "J'ai compris"
 msgstr ""
 
 msgid "Heure locale"
-msgstr "Czas lokalny"
+msgstr "Helyi idő"
 
 msgid "Langue"
 msgstr ""
@@ -1864,7 +1864,7 @@ msgid "Thème"
 msgstr ""
 
 msgid "Déconnexion"
-msgstr "Wyloguj"
+msgstr ""
 
 msgid "Installer Holystyl"
 msgstr ""
@@ -1885,10 +1885,7 @@ msgid "Fermer"
 msgstr ""
 
 msgid "Bientôt"
-msgstr "Wkrótce"
+msgstr "Hamarosan"
 
 msgid "Remettons du sens dans notre métier"
 msgstr ""
-
-#~ msgid "Bassinage"
-#~ msgstr "Zraszanie"

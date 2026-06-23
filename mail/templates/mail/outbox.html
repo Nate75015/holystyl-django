@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl space-y-4">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">{% trans "Mail" %} <span class="text-sm font-normal text-slate-400">· {% trans "Envoyés" %}</span></h2>
+    <a href="{% url 'mail:compose' %}"
+       class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+      <span class="material-icons-round text-[18px]">edit</span>{% trans "Nouveau mail" %}
+    </a>
+  </div>
+
+  {% if emails %}
+    <div class="md-card overflow-hidden divide-y divide-black/5 p-0 dark:divide-white/10">
+      {% for e in emails %}
+        <a href="{% url 'mail:detail' e.pk %}" class="flex items-center gap-3 px-4 py-3 transition hover:bg-black/5 dark:hover:bg-white/5">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand/20 text-brand">
+            <span class="material-icons-round text-[20px]">mail</span>
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate font-medium">{{ e.subject }}</p>
+            <p class="truncate text-xs text-slate-400">{% trans "À" %} : {{ e.to }}</p>
+          </div>
+          <div class="flex shrink-0 flex-col items-end gap-1">
+            <span class="text-[11px] text-slate-400">{{ e.created_at|date:"d/m H:i" }}</span>
+            {% if e.status == 'failed' %}
+              <span class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-semibold text-red-600 dark:bg-red-500/15 dark:text-red-400">{% trans "Échec" %}</span>
+            {% else %}
+              <span class="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-700 dark:bg-green-500/15 dark:text-green-400">{% trans "Envoyé" %}</span>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucun e-mail envoyé pour le moment." %}</p></div>
+  {% endif %}
+</section>
+{% endblock %}

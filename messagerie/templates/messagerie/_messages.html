@@ -1,0 +1,26 @@
+{% load i18n %}
+{% if errors %}
+  <div class="rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-600 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-400">
+    {% for err in errors %}<p>{{ err }}</p>{% endfor %}
+  </div>
+{% endif %}
+{% for message in conversation.messages.all %}
+  <div class="flex {% if message.sender_id == request.user.id %}justify-end{% endif %}">
+    <div class="max-w-[75%] rounded-2xl px-3.5 py-2 text-sm {% if message.sender_id == request.user.id %}bg-brand text-white{% else %}bg-black/5 dark:bg-white/10{% endif %}">
+      {% if conversation.is_group and message.sender_id != request.user.id %}
+        <p class="mb-0.5 text-[11px] font-semibold opacity-70">{{ message.sender.display_name }}</p>
+      {% endif %}
+      {% if message.body %}<p class="whitespace-pre-wrap break-words">{{ message.body }}</p>{% endif %}
+      {% for pj in message.pieces_jointes.all %}
+        <a href="{{ pj.fichier.url }}" target="_blank" rel="noopener"
+           class="mt-1 flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs {% if message.sender_id == request.user.id %}bg-white/15 hover:bg-white/25{% else %}bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20{% endif %}">
+          <span class="material-icons-round text-[16px] opacity-80">attach_file</span>
+          <span class="truncate">{{ pj.nom }}</span>
+        </a>
+      {% endfor %}
+      <p class="mt-0.5 text-right text-[10px] opacity-60">{{ message.created_at|date:"H:i" }}</p>
+    </div>
+  </div>
+{% empty %}
+  <p class="py-8 text-center text-sm text-slate-400">{% trans "Démarrez la conversation 👋" %}</p>
+{% endfor %}

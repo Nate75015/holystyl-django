@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Identité"
 msgstr ""
@@ -46,10 +46,10 @@ msgid "utilisateurs"
 msgstr ""
 
 msgid "Connexion"
-msgstr "Logowanie"
+msgstr ""
 
 msgid "Se connecter"
-msgstr "Zaloguj się"
+msgstr ""
 
 msgid "Pas de compte ?"
 msgstr ""
@@ -58,7 +58,7 @@ msgid "Créer un compte"
 msgstr ""
 
 msgid "S'inscrire"
-msgstr "Zarejestruj się"
+msgstr ""
 
 msgid "Déjà un compte ?"
 msgstr ""
@@ -103,13 +103,13 @@ msgid "Dernier test"
 msgstr ""
 
 msgid "Enregistrer"
-msgstr "Zapisz"
+msgstr ""
 
 msgid "Configuration SMTP enregistrée."
 msgstr ""
 
 msgid "Administration"
-msgstr "Administracja"
+msgstr "Beheer"
 
 msgid "Céréales"
 msgstr ""
@@ -214,13 +214,13 @@ msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
 msgstr ""
 
 msgid "Saisons"
-msgstr "Sezony"
+msgstr "Seizoenen"
 
 msgid "Aucune saison définie."
 msgstr ""
 
 msgid "Types de sol"
-msgstr "Typy gleby"
+msgstr "Bodemtypes"
 
 msgid "Rétention"
 msgstr ""
@@ -229,7 +229,7 @@ msgid "Aucun type de sol. Ajoutez-en via l'admin."
 msgstr ""
 
 msgid "Cultures & Kc"
-msgstr "Uprawy i Kc"
+msgstr "Gewassen & Kc"
 
 msgid "Sol"
 msgstr ""
@@ -271,7 +271,7 @@ msgid "fiches biodiversité"
 msgstr ""
 
 msgid "Analyses de sol"
-msgstr "Analizy gleby"
+msgstr "Bodemanalyses"
 
 msgid "Labo"
 msgstr ""
@@ -337,94 +337,94 @@ msgid "Accueil"
 msgstr "Start"
 
 msgid "Parcelles"
-msgstr "Działki"
+msgstr "Percelen"
 
 msgid "Irrigation"
-msgstr "Nawadnianie"
+msgstr "Irrigatie"
 
 msgid "Planning"
-msgstr "Planowanie"
+msgstr "Planning"
 
 msgid "Assistant"
-msgstr "Asystent"
+msgstr "Assistent"
 
 msgid "Tableau de bord"
-msgstr "Pulpit"
+msgstr "Dashboard"
 
 msgid "Assistant IA"
-msgstr "Asystent AI"
+msgstr "AI-assistent"
 
 msgid "Communication"
-msgstr "Komunikacja"
+msgstr "Communicatie"
 
 msgid "Notifications"
-msgstr "Powiadomienia"
+msgstr "Meldingen"
 
 msgid "Messagerie"
-msgstr "Wiadomości"
+msgstr "Berichten"
 
 msgid "Mail"
-msgstr "Poczta"
+msgstr "E-mail"
 
 msgid "Sondage"
-msgstr "Ankieta"
+msgstr "Peiling"
 
 msgid "Cultures & Terrain"
-msgstr "Uprawy i Teren"
+msgstr "Gewassen & Terrein"
 
 msgid "Régie SCADA"
-msgstr "Sterowanie SCADA"
+msgstr "SCADA-besturing"
 
 msgid "Capteurs"
-msgstr "Czujniki"
+msgstr "Sensoren"
 
 msgid "Protection"
-msgstr "Ochrona"
+msgstr "Bescherming"
 
 msgid "Bassinage anti-gel"
-msgstr "Deszczowanie przeciwprzymrozkowe"
+msgstr "Vorstberegening"
 
 msgid "Interventions"
-msgstr "Zabiegi"
+msgstr "Interventies"
 
 msgid "Économie"
-msgstr "Ekonomia"
+msgstr "Economie"
 
 msgid "Charges"
-msgstr "Koszty"
+msgstr "Kosten"
 
 msgid "Bilan économique"
-msgstr "Bilans ekonomiczny"
+msgstr "Economisch overzicht"
 
 msgid "Facturation"
-msgstr "Fakturowanie"
+msgstr "Facturatie"
 
 msgid "Parc matériel"
-msgstr "Park maszynowy"
+msgstr "Machinepark"
 
 msgid "Environnement"
-msgstr "Środowisko"
+msgstr "Milieu"
 
 msgid "RH"
-msgstr "Kadry"
+msgstr "HR"
 
 msgid "Équipe"
-msgstr "Zespół"
+msgstr "Team"
 
 msgid "Tâches"
-msgstr "Zadania"
+msgstr "Taken"
 
 msgid "Mes tâches"
-msgstr "Moje zadania"
+msgstr "Mijn taken"
 
 msgid "Mon compte"
-msgstr "Moje konto"
+msgstr "Mijn account"
 
 msgid "Mon exploitation"
-msgstr "Moje gospodarstwo"
+msgstr "Mijn bedrijf"
 
 msgid "Activer un code"
-msgstr "Aktywuj kod"
+msgstr "Een code activeren"
 
 msgid "Bienvenue sur Holystyl 👋"
 msgstr ""
@@ -632,7 +632,7 @@ msgid "Informations de base utilisées partout dans l'application."
 msgstr ""
 
 msgid "Annuler"
-msgstr "Anuluj"
+msgstr ""
 
 msgid "Exploitation enregistrée."
 msgstr ""
@@ -1524,10 +1524,10 @@ msgid "La parcelle « %(name)s » sera définitivement supprimée."
 msgstr ""
 
 msgid "Supprimer"
-msgstr "Usuń"
+msgstr ""
 
 msgid "Modifier"
-msgstr "Edytuj"
+msgstr ""
 
 msgid "Culture & sol"
 msgstr ""
@@ -1855,7 +1855,7 @@ msgid "J'ai compris"
 msgstr ""
 
 msgid "Heure locale"
-msgstr "Czas lokalny"
+msgstr "Lokale tijd"
 
 msgid "Langue"
 msgstr ""
@@ -1864,7 +1864,7 @@ msgid "Thème"
 msgstr ""
 
 msgid "Déconnexion"
-msgstr "Wyloguj"
+msgstr ""
 
 msgid "Installer Holystyl"
 msgstr ""
@@ -1885,10 +1885,7 @@ msgid "Fermer"
 msgstr ""
 
 msgid "Bientôt"
-msgstr "Wkrótce"
+msgstr "Binnenkort"
 
 msgid "Remettons du sens dans notre métier"
 msgstr ""
-
-#~ msgid "Bassinage"
-#~ msgstr "Zraszanie"

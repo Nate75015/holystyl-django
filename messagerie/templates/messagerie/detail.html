@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="md-card mx-auto flex h-[calc(100vh-9rem)] max-w-2xl flex-col overflow-hidden p-0">
+  {# En-tête de la conversation #}
+  <div class="flex items-center gap-3 border-b border-black/5 px-4 py-3 dark:border-white/10">
+    <a href="{% url 'messagerie:inbox' %}"
+       class="grid h-9 w-9 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10">
+      <span class="material-icons-round text-[20px]">arrow_back</span>
+    </a>
+    <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand/20 font-bold text-brand">
+      {% if conversation.is_group %}<span class="material-icons-round text-[20px]">group</span>{% else %}{{ conversation.title|slice:":1"|upper }}{% endif %}
+    </span>
+    <div class="min-w-0">
+      <p class="truncate font-semibold leading-tight">{{ conversation.title }}</p>
+      <p class="truncate text-xs text-slate-400">
+        {% if conversation.is_group %}{{ conversation.participants.count }} {% trans "participants" %}{% else %}{% trans "Conversation privée" %}{% endif %}
+      </p>
+    </div>
+  </div>
+
+  {# Fil des messages — rafraîchi toutes les 4 s via HTMX #}
+  <div id="thread"
+       hx-get="{% url 'messagerie:thread' conversation.pk %}" hx-trigger="every 4s" hx-swap="innerHTML"
+       class="flex-1 space-y-2 overflow-y-auto p-4">
+    {% include "messagerie/_messages.html" %}
+  </div>
+
+  {# Composer #}
+  <form id="composer"
+        hx-post="{% url 'messagerie:send' conversation.pk %}" hx-target="#thread" hx-swap="innerHTML"
+        hx-encoding="multipart/form-data"
+        hx-on::after-request="this.reset(); clearPreview()"
+        class="border-t border-black/5 p-3 dark:border-white/10">
+    {% csrf_token %}
+    {# Aperçu des fichiers sélectionnés #}
+    <div id="files-preview" class="mb-2 hidden flex-wrap gap-1.5"></div>
+    <div class="flex items-center gap-2">
+      <label title="{% trans 'Joindre un fichier' %}"
+             class="grid h-10 w-10 shrink-0 cursor-pointer place-items-center rounded-full text-slate-500 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
+        <span class="material-icons-round text-[20px]">attach_file</span>
+        <input id="files-input" type="file" name="fichiers" multiple class="hidden"
+               accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt,.csv,.png,.jpg,.jpeg,.gif,.webp"
+               onchange="renderPreview()">
+      </label>
+      <input name="body" autocomplete="off"
+             placeholder="{% trans 'Écrire un message…' %}"
+             class="flex-1 rounded-full border border-slate-200 bg-transparent px-4 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+      <button type="submit" class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[20px]">send</span>
+      </button>
+    </div>
+  </form>
+</section>
+
+<script>
+  (function () {
+    function scrollThread() { var t = document.getElementById('thread'); if (t) t.scrollTop = t.scrollHeight; }
+    document.body.addEventListener('htmx:afterSwap', function (e) { if (e.target && e.target.id === 'thread') scrollThread(); });
+    window.addEventListener('load', scrollThread);
+    setTimeout(scrollThread, 100);
+  })();
+
+  // Aperçu des fichiers joints (chips avec nom de fichier)
+  function renderPreview() {
+    var input = document.getElementById('files-input');
+    var box = document.getElementById('files-preview');
+    box.innerHTML = '';
+    if (!input.files.length) { box.classList.add('hidden'); box.classList.remove('flex'); return; }
+    box.classList.remove('hidden'); box.classList.add('flex');
+    Array.from(input.files).forEach(function (f) {
+      var chip = document.createElement('span');
+      chip.className = 'inline-flex items-center gap-1 rounded-full bg-black/5 px-2.5 py-1 text-xs text-slate-600 dark:bg-white/10 dark:text-slate-300';
+      chip.innerHTML = '<span class="material-icons-round text-[14px] opacity-70">attach_file</span>' + f.name;
+      box.appendChild(chip);
+    });
+  }
+  function clearPreview() {
+    var box = document.getElementById('files-preview');
+    if (box) { box.innerHTML = ''; box.classList.add('hidden'); box.classList.remove('flex'); }
+  }
+</script>
+{% endblock %}

@@ -1,7 +1,16 @@
 """Variables injectées dans tous les templates (navigation, branding)."""
 
+import unicodedata
+
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+
+
+def _sort_key(label):
+    """Clé de tri alphabétique insensible aux accents/casse, dans la langue active."""
+    text = unicodedata.normalize("NFKD", str(label))
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    return text.casefold()
 
 
 def layout(request):
@@ -20,7 +29,15 @@ def layout(request):
             "items": [
                 {"label": _("Tableau de bord"), "url_name": "core:dashboard", "icon": "dashboard"},
                 {"label": _("Assistant IA"), "url_name": "ia:assistant", "icon": "support_agent"},
+            ],
+        },
+        {
+            "label": _("Communication"), "key": "communication",
+            "items": [
                 {"label": _("Notifications"), "url_name": "notifications:center", "icon": "notifications"},
+                {"label": _("Messagerie"), "url_name": "messagerie:inbox", "icon": "chat"},
+                {"label": _("Mail"), "url_name": "mail:outbox", "icon": "mail"},
+                {"label": _("Sondage"), "url_name": "sondages:liste", "icon": "poll"},
             ],
         },
         {
@@ -77,6 +94,9 @@ def layout(request):
         },
     ]
 
+    # Sections triées par ordre alphabétique (selon le libellé dans la langue active)
+    nav_sections.sort(key=lambda section: _sort_key(section["label"]))
+
     # Section contenant la page courante → le panneau volant reste ouvert dessus
     current = getattr(getattr(request, "resolver_match", None), "view_name", None)
     active_section = ""
@@ -85,9 +105,16 @@ def layout(request):
             active_section = section["key"]
             break
 
+    # Compteur de notifications non lues (badge sur la cloche du header)
+    unread_notifications = 0
+    user = getattr(request, "user", None)
+    if user is not None and user.is_authenticated:
+        unread_notifications = user.notifications.filter(read=False).count()
+
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
         "nav_primary": nav_primary,
         "nav_sections": nav_sections,
         "active_section": active_section,
+        "unread_notifications": unread_notifications,
     }

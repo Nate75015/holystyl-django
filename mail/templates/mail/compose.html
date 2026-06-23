@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-2xl space-y-4">
+  <h2 class="text-xl font-semibold">{% trans "Nouveau mail" %}</h2>
+
+  {% if errors %}
+    <div class="rounded-xl border border-red-300 bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-400">
+      {% for err in errors %}<p>{{ err }}</p>{% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="md-card space-y-4">
+    {% csrf_token %}
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "À" %} <span class="text-slate-400">({% trans "séparez par des virgules" %})</span></label>
+      <input name="to" value="{{ form.to }}" list="carnet" autocomplete="off" required
+             placeholder="client@example.com, partenaire@example.com"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+      {% if contacts %}
+        <datalist id="carnet">
+          {% for name, email in contacts %}<option value="{{ email }}">{{ name }}</option>{% endfor %}
+        </datalist>
+      {% endif %}
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "Cc" %} <span class="text-slate-400">({% trans "optionnel" %})</span></label>
+      <input name="cc" value="{{ form.cc }}" autocomplete="off"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "Objet" %}</label>
+      <input name="subject" value="{{ form.subject }}" required
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "Message" %}</label>
+      <textarea name="body" rows="8"
+                class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">{{ form.body }}</textarea>
+    </div>
+
+    <div>
+      <label class="inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1.5 text-sm text-slate-600 hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
+        <span class="material-icons-round text-[18px]">attach_file</span>{% trans "Joindre des fichiers" %}
+        <input type="file" name="fichiers" multiple class="hidden" onchange="this.nextElementSibling.textContent = this.files.length ? this.files.length + ' fichier(s)' : ''">
+      </label>
+      <span class="ml-1 text-xs text-slate-400"></span>
+    </div>
+
+    <div class="flex justify-end gap-2">
+      <a href="{% url 'mail:outbox' %}" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</a>
+      <button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">send</span>{% trans "Envoyer" %}
+      </button>
+    </div>
+  </form>
+</section>
+{% endblock %}
