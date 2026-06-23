@@ -134,7 +134,7 @@
   /* Inversion : sur le panneau blanc, la sélection est bleu pastel */
   .nav-flyout .sidebar-link:hover { background: #eef6fb; color: #0e7490; }
   .nav-flyout .sidebar-link-active {
-    background: #e7f1fb !important;   /* bleu pastel */
+    background: #d2e7fa !important;   /* bleu pastel (assez visible sur fond blanc) */
     color: #0e7490 !important;
     box-shadow: none;
   }
