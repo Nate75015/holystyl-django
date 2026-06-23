@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <h2 class="text-xl font-semibold">{% trans "Parc matériel" %}</h2>
+  {% if machines %}
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for m in machines %}
+        <div class="md-card">
+          <div class="flex items-center justify-between">
+            <p class="font-medium">{{ m.name }}</p>
+            <span class="rounded-full bg-brand/10 px-2 py-0.5 text-xs text-brand">{{ m.get_status_display }}</span>
+          </div>
+          <p class="text-xs text-slate-400">{{ m.get_type_display }} · {{ m.brand }} {{ m.model }}</p>
+          <p class="mt-2 text-sm">{{ m.total_hours }} h{% if m.next_maintenance_date %} · {% trans "prochain entretien" %} {{ m.next_maintenance_date }}{% endif %}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune machine. Ajoutez-en via l'admin ou l'API." %}</p></div>
+  {% endif %}
+</section>
+{% endblock %}

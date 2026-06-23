@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     "notifications",
     "equipe",
     "planning",
+    "operations",
+    "analyses",
 ]
 
 MIDDLEWARE = [

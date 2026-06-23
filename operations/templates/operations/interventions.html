@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <h2 class="text-xl font-semibold">{% trans "Interventions" %}</h2>
+  {% if interventions %}
+    <div class="space-y-2">
+      {% for i in interventions %}
+        <div class="md-card flex items-center justify-between">
+          <div>
+            <p class="font-medium">{{ i.title|default:i.get_intervention_type_display }}</p>
+            <p class="text-xs text-slate-400">
+              {{ i.get_intervention_type_display }} · {{ i.parcelle.name|default:"—" }} · {{ i.start_time }}
+              {% if i.source == 'ai' %}<span class="ml-1 rounded bg-brand/10 px-1 text-brand">IA</span>{% endif %}
+            </p>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs dark:bg-white/10">{{ i.get_status_display }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune intervention enregistrée." %}</p></div>
+  {% endif %}
+</section>
+{% endblock %}
