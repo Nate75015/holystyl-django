@@ -29,7 +29,7 @@
 </head>
 <body class="min-h-screen">
 {% if user.is_authenticated %}
-  <div class="flex min-h-screen" x-data="{ nav: null }" @keydown.window.escape="nav = null">
+  <div class="flex min-h-screen" x-data="{ nav: '{{ active_section }}' || null }" @keydown.window.escape="nav = null">
     {% include "partials/sidebar.html" %}
     {% include "partials/nav_flyout.html" %}
     <div class="flex min-w-0 flex-1 flex-col">

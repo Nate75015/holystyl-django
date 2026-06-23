@@ -89,8 +89,17 @@ def layout(request):
         },
     ]
 
+    # Section contenant la page courante → le panneau volant reste ouvert dessus
+    current = getattr(getattr(request, "resolver_match", None), "view_name", None)
+    active_section = ""
+    for section in nav_sections:
+        if any(item["url_name"] == current for item in section["items"]):
+            active_section = section["key"]
+            break
+
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
         "nav_primary": nav_primary,
         "nav_sections": nav_sections,
+        "active_section": active_section,
     }
