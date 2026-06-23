@@ -86,12 +86,22 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.4);
   }
 
-  /* Navbar (sidebar/header/bottom) — jaune pastel, lisible */
+  /* Header / barre mobile — jaune pastel */
   .glass-panel {
     background: #fbf5d6;            /* jaune pastel */
     border-color: #ece1b0;
   }
   .dark .glass-panel {
+    background: #0d1a24;
+    border-color: #1c2c38;
+  }
+
+  /* Sidebar gauche — bleu pastel */
+  .nav-left {
+    background: #e7f1fb;           /* bleu pastel */
+    border-color: #cfe1f2;
+  }
+  .dark .nav-left {
     background: #0d1a24;
     border-color: #1c2c38;
   }
