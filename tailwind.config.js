@@ -40,9 +40,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        // Mêmes typos que les projets Satkaar
-        sans: ['"Be Vietnam Pro"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        heading: ['"Barlow Semi Condensed"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Marianne — même police que crm-mairie-agglo
+        sans: ['Marianne', 'system-ui', 'ui-sans-serif', 'sans-serif'],
+        heading: ['Marianne', 'system-ui', 'ui-sans-serif', 'sans-serif'],
       },
     },
   },

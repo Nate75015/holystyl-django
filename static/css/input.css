@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Marianne (même police que crm-mairie-agglo) ─────────────────────
+   Servie via CDN jsDelivr (@gouvfr/dsfr). Licence Étalab / SIL Open Font. */
+@font-face { font-family: "Marianne"; font-style: normal; font-weight: 300; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.13.0/dist/fonts/Marianne-Light.woff2") format("woff2"); }
+@font-face { font-family: "Marianne"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.13.0/dist/fonts/Marianne-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Marianne"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.13.0/dist/fonts/Marianne-Regular_Italic.woff2") format("woff2"); }
+@font-face { font-family: "Marianne"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.13.0/dist/fonts/Marianne-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Marianne"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.13.0/dist/fonts/Marianne-Bold.woff2") format("woff2"); }
+
 /* ════════════════════════════════════════════════════════════════════
    HOLYSTYL — Design « outil de terrain »
    Pour agriculteurs : lisibilité plein soleil, gros contrastes, ergonomie
@@ -15,7 +28,7 @@
 
   /* ── Clair haute-lisibilité (par défaut) ── */
   body {
-    font-family: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Marianne", system-ui, ui-sans-serif, sans-serif;
     color: #1a2b33;                 /* quasi-noir chaud */
     background-color: #fafaf7;      /* blanc cassé chaud */
     line-height: 1.55;
@@ -27,10 +40,10 @@
     background-color: #0b1620;
   }
 
-  /* Titres : Barlow Semi Condensed (comme Satkaar) */
+  /* Titres : Marianne (même police que crm-mairie-agglo) */
   h1, h2, h3, h4 {
-    font-family: "Barlow Semi Condensed", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 600;
+    font-family: "Marianne", system-ui, ui-sans-serif, sans-serif;
+    font-weight: 700;
     letter-spacing: -0.01em;
   }
 
