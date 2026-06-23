@@ -38,6 +38,15 @@ def layout(request):
             ],
         },
         {
+            "label": _("Planning & Équipe"),
+            "items": [
+                {"label": _("Planning"), "url_name": "planning:planning"},
+                {"label": _("Mes tâches"), "url_name": "equipe:mes_taches"},
+                {"label": _("Équipe"), "url_name": "equipe:equipe"},
+                {"label": _("Tâches"), "url_name": "equipe:taches"},
+            ],
+        },
+        {
             "label": _("Assistant & alertes"),
             "items": [
                 {"label": _("Assistant IA"), "url_name": "ia:assistant"},

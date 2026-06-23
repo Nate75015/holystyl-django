@@ -7,7 +7,14 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from agronomie.api import CultureKcViewSet, SaisonViewSet, TypeSolViewSet
+from equipe.api import TaskViewSet, TeamMemberViewSet
 from exploitations.api import CurrentExploitationView, ExploitationKPIsView
+from planning.api import (
+    EquipmentCatalogViewSet,
+    InterventionReportViewSet,
+    PlanningAbsenceViewSet,
+    PlanningTaskViewSet,
+)
 from ia.api import (
     AiChatView,
     AiConversationsView,
@@ -53,6 +60,13 @@ router.register("water/quotas", WaterQuotaViewSet, basename="wquota")
 # Tranche 3 — notifications
 router.register("notifications", NotificationViewSet, basename="notification")
 router.register("notification-rules", NotificationRuleViewSet, basename="notificationrule")
+# Tranche 4 — équipe & planning
+router.register("team", TeamMemberViewSet, basename="teammember")
+router.register("tasks", TaskViewSet, basename="task")
+router.register("planning/tasks", PlanningTaskViewSet, basename="planningtask")
+router.register("planning/absences", PlanningAbsenceViewSet, basename="absence")
+router.register("planning/equipment", EquipmentCatalogViewSet, basename="equipment")
+router.register("planning/reports", InterventionReportViewSet, basename="report")
 
 urlpatterns = [
     path("exploitation/", CurrentExploitationView.as_view(), name="api-exploitation"),
