@@ -79,7 +79,7 @@ pytest
 | Tranche | Périmètre | Statut |
 |---|---|---|
 | **0** | Socle : config, auth email/password, layout, i18n, PWA, Tailwind | ✅ Fait |
-| 1 | Exploitation, parcelles, agronomie, Pulse | À venir |
+| **1** | Exploitation (onboarding/KPIs), parcelles (wizard + carte), agronomie, Pulse réel | ✅ Fait |
 | 2 | IoT + SCADA temps réel, irrigation | À venir |
 | 3 | Assistant IA (Gemini, SSE), notifications | À venir |
 | 4 | Équipe & planning, bons d'intervention, SMS | À venir |
