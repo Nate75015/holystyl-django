@@ -40,7 +40,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['"Atkinson Hyperlegible"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Mêmes typos que les projets Satkaar
+        sans: ['"Be Vietnam Pro"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['"Barlow Semi Condensed"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },
