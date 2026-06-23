@@ -31,6 +31,31 @@ def regie(request):
 
 @login_required
 def capteurs(request):
+    from .models import IotTelemetry
+
     exploitation = _exploitation(request)
     devices = IotDevice.objects.filter(exploitation=exploitation) if exploitation else IotDevice.objects.none()
-    return render(request, "iot/capteurs.html", {"devices": devices, "page_title": _("Capteurs & IoT")})
+
+    telemetry_chart = None
+    if exploitation is not None:
+        # Dernières mesures du device le plus actif (débit ou humidité)
+        recent = list(
+            IotTelemetry.objects.filter(device__exploitation=exploitation).order_by("-timestamp")[:30]
+        )
+        recent = list(reversed(recent))
+        flows = [(t.timestamp, t.flow_rate_m3h) for t in recent if t.flow_rate_m3h is not None]
+        soils = [(t.timestamp, t.soil_moisture) for t in recent if t.soil_moisture is not None]
+        serie = flows or soils
+        if serie:
+            telemetry_chart = {
+                "labels": [ts.strftime("%H:%M") if ts else "" for ts, _v in serie],
+                "data": [round(v, 1) for _ts, v in serie],
+                "color": "#2abfbf" if flows else "#22c55e",
+                "label": "Débit (m³/h)" if flows else "Humidité (%)",
+            }
+
+    return render(
+        request,
+        "iot/capteurs.html",
+        {"devices": devices, "telemetry_chart": telemetry_chart, "page_title": _("Capteurs & IoT")},
+    )

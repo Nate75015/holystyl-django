@@ -23,13 +23,39 @@ def charges(request):
 
 @login_required
 def bilan_economique(request):
+    from django.db.models import Sum
+    from django.db.models.functions import TruncMonth
+
     exploitation = _exploitation(request)
     bilan = compute_bilan(exploitation)
     revenus = Revenu.objects.filter(exploitation=exploitation) if exploitation else Revenu.objects.none()
+
+    chart = None
+    if exploitation is not None:
+        def monthly(model):
+            rows = (
+                model.objects.filter(exploitation=exploitation)
+                .annotate(m=TruncMonth("date")).values("m")
+                .annotate(total=Sum("montant")).order_by("m")
+            )
+            return {r["m"].strftime("%m/%Y"): round(r["total"] or 0, 0) for r in rows if r["m"]}
+
+        rev, chg = monthly(Revenu), monthly(Charge)
+        labels = sorted(set(rev) | set(chg))
+        if labels:
+            chart = {
+                "labels": labels,
+                "type": "bar",
+                "datasets": [
+                    {"label": str(_("Revenus")), "data": [rev.get(m, 0) for m in labels], "color": "#22c55e"},
+                    {"label": str(_("Charges")), "data": [chg.get(m, 0) for m in labels], "color": "#ef4444"},
+                ],
+            }
+
     return render(
         request,
         "finances/bilan_economique.html",
-        {"bilan": bilan, "revenus": revenus, "page_title": _("Bilan économique")},
+        {"bilan": bilan, "revenus": revenus, "chart": chart, "page_title": _("Bilan économique")},
     )
 
 

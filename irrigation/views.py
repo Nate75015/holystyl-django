@@ -16,6 +16,20 @@ def _exploitation(request):
 @login_required
 def irrigation(request):
     exploitation = _exploitation(request)
+    sessions = (
+        list(IrrigationSession.objects.filter(exploitation=exploitation)[:20]) if exploitation else []
+    )
+
+    sessions_chart = None
+    chrono = list(reversed(sessions))
+    if any(s.volume_delivered_m3 for s in chrono):
+        sessions_chart = {
+            "labels": [s.start_time.strftime("%d/%m") for s in chrono],
+            "data": [round(s.volume_delivered_m3 or 0, 1) for s in chrono],
+            "color": "#2abfbf",
+            "label": "Volume (m³)",
+        }
+
     ctx = {
         "page_title": _("Irrigation"),
         "tabs": [
@@ -26,10 +40,9 @@ def irrigation(request):
         ],
         "zones": IrrigationZone.objects.filter(exploitation=exploitation) if exploitation else [],
         "programs": IrrigationProgram.objects.filter(exploitation=exploitation) if exploitation else [],
-        "sessions": (
-            IrrigationSession.objects.filter(exploitation=exploitation)[:20] if exploitation else []
-        ),
+        "sessions": sessions,
         "stations": PumpingStation.objects.filter(exploitation=exploitation) if exploitation else [],
+        "sessions_chart": sessions_chart,
     }
     return render(request, "irrigation/irrigation.html", ctx)
 

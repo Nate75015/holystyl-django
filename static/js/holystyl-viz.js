@@ -56,30 +56,31 @@
     if (!dataEl) return;
     let conf;
     try { conf = JSON.parse(dataEl.textContent); } catch (e) { return; }
-    const color = conf.color || '#2abfbf';
     const ctx = canvas.getContext('2d');
-    const grad = ctx.createLinearGradient(0, 0, 0, canvas.height || 180);
-    grad.addColorStop(0, color + '66');
-    grad.addColorStop(1, color + '05');
+    const h = canvas.height || 180;
+    const mkFill = (color) => {
+      const g = ctx.createLinearGradient(0, 0, 0, h);
+      g.addColorStop(0, color + '66');
+      g.addColorStop(1, color + '05');
+      return g;
+    };
+    // Multi-séries (conf.datasets) ou série unique (conf.data)
+    const series = conf.datasets || [{ label: conf.label || '', data: conf.data || [], color: conf.color || '#2abfbf' }];
+    const type = conf.type === 'bar' ? 'bar' : 'line';
+    const datasets = series.map((s) => {
+      const color = s.color || '#2abfbf';
+      return type === 'bar'
+        ? { label: s.label || '', data: s.data || [], backgroundColor: color, borderRadius: 6 }
+        : { label: s.label || '', data: s.data || [], borderColor: color, backgroundColor: mkFill(color),
+            fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2 };
+    });
     new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: conf.labels || [],
-        datasets: [{
-          label: conf.label || '',
-          data: conf.data || [],
-          borderColor: color,
-          backgroundColor: grad,
-          fill: true,
-          tension: 0.4,
-          pointRadius: 0,
-          borderWidth: 2,
-        }],
-      },
+      type: type,
+      data: { labels: conf.labels || [], datasets: datasets },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
+        plugins: { legend: { display: (conf.datasets && conf.datasets.length > 1), labels: { color: '#7c8a8a' } } },
         scales: {
           x: { grid: { display: false }, ticks: { color: '#7c8a8a', maxRotation: 0, autoSkip: true } },
           y: { grid: { color: 'rgba(127,138,138,0.12)' }, ticks: { color: '#7c8a8a' } },
