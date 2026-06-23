@@ -85,6 +85,9 @@ pytest
 | **4** | Équipe & planning, bons d'intervention (signature), SMS Twilio, rappels Celery | ✅ Fait |
 | **5** | Opérations (machines/interventions/entretiens), analyses (labo OCR Gemini, sol, biodiversité), fertigation | ✅ Fait |
 | **6** | Finances (charges/revenus/récoltes/factures), bilan ROI, exports PDF (WeasyPrint) + CSV subvention | ✅ Fait |
-| 7 | Public / SEO, billing Stripe | À venir |
+| **7** | Public/SEO, lead magnet, agent Alex, billing Stripe, config SMTP | ✅ Fait |
+| **Finalisation** | i18n 5 langues (infra + noyau traduit), `MIGRATION_REPORT.md` | ✅ Fait |
+
+> Migration **terminée** — voir `MIGRATION_REPORT.md` pour le bilan détaillé et les écarts assumés.
 
 Le code React d'origine (`../holystyl`) est conservé tant que la migration n'est pas validée.
