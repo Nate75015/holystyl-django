@@ -106,6 +106,16 @@
     border-color: #1c2c38;
   }
 
+  /* Barre d'installation PWA — sous le header, pleine largeur */
+  .install-bar {
+    background: #eef6fb;          /* bleu très pâle (sous le header jaune) */
+    border-color: #d7e6f2;
+  }
+  .dark .install-bar {
+    background: #0f1f2b;
+    border-color: #1c2c38;
+  }
+
   /* Panneau volant (sous-menu de section, à droite de la sidebar) */
   .nav-flyout {
     background: #ffffff;

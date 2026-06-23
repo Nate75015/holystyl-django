@@ -1,19 +1,19 @@
 {% load i18n %}
-{% comment %}Bannière d'installation PWA. Apparaît quand l'app est installable
-(Chrome/Edge/Android via beforeinstallprompt) ou sur iOS (instructions manuelles).
+{% comment %}Bannière d'installation PWA — barre pleine largeur sous le header.
+Apparaît quand l'app est installable (beforeinstallprompt / Android) ou iOS.
 Masquée si déjà installée ou refusée.{% endcomment %}
 <div x-data="installPrompt()" x-show="visible" x-cloak x-transition
-     class="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-md md-card flex items-center gap-3 lg:bottom-4 lg:right-4 lg:left-auto lg:inset-x-auto">
-  {% include "partials/brand_mark.html" with size=40 icon=24 %}
-  <div class="min-w-0 flex-1">
-    <p class="font-bold leading-tight">{% trans "Installer Holystyl" %}</p>
-    <p class="text-sm text-slate-500 dark:text-slate-400" x-text="ios
-      ? '{% trans "Appuyez sur Partager puis « Sur l’écran d’accueil »." %}'
-      : '{% trans "Accédez plus vite depuis votre écran d’accueil." %}'"></p>
+     class="install-bar flex items-center gap-3 border-b px-4 py-2 lg:px-8">
+  {% include "partials/brand_mark.html" with size=28 icon=16 %}
+  <div class="min-w-0 flex-1 leading-tight">
+    <span class="font-bold">{% trans "Installer Holystyl" %}</span>
+    <span class="text-sm text-slate-500 dark:text-slate-400" x-text="ios
+      ? ' — {% trans "Partager puis « Sur l’écran d’accueil »." %}'
+      : ' — {% trans "Accédez plus vite depuis votre écran d’accueil." %}'"></span>
   </div>
   <div class="flex shrink-0 items-center gap-1">
-    <button x-show="!ios" @click="install()" class="md-btn-primary !px-3 !py-2 text-sm">{% trans "Installer" %}</button>
-    <button @click="dismiss()" class="md-icon-btn" title="{% trans 'Plus tard' %}">✕</button>
+    <button x-show="!ios" @click="install()" class="md-btn-primary !min-h-0 !px-3 !py-1.5 text-sm">{% trans "Installer" %}</button>
+    <button @click="dismiss()" class="md-icon-btn !h-9 !w-9" title="{% trans 'Plus tard' %}">✕</button>
   </div>
 </div>
 
@@ -24,7 +24,6 @@ Masquée si déjà installée ou refusée.{% endcomment %}
       init() {
         var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
         if (standalone || localStorage.getItem('holystyl-install') === 'no') return;
-        // iOS Safari ne supporte pas beforeinstallprompt
         this.ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !/crios|fxios/i.test(navigator.userAgent);
         if (this.ios) { this.visible = true; return; }
         window.addEventListener('beforeinstallprompt', (e) => {

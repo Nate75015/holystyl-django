@@ -34,6 +34,7 @@
     {% include "partials/nav_flyout.html" %}
     <div class="flex min-w-0 flex-1 flex-col">
       {% include "partials/header.html" %}
+      {% include "partials/install_banner.html" %}
       <main class="flex-1 px-4 pb-24 pt-6 lg:px-8 lg:pb-8">
         {% if messages %}
           <div class="mb-4 space-y-2">
@@ -54,7 +55,6 @@
 {% endif %}
 
   {% include "partials/cookie_banner.html" %}
-  {% include "partials/install_banner.html" %}
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="{% static 'js/app.js' %}" defer></script>
