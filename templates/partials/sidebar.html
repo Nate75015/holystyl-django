@@ -1,11 +1,11 @@
 {% load i18n %}
 <aside class="glass-panel nav-left sticky top-0 z-30 hidden h-screen w-60 shrink-0 flex-col border-r lg:flex">
-  <div class="border-b border-black/10 px-5 py-8 dark:border-white/10">
+  <div class="border-b border-white/20 px-5 py-8">
     <div class="flex items-center gap-2">
       {% include "partials/brand_mark.html" with size=34 icon=20 %}
-      <span class="text-xl font-bold tracking-tight text-sand-900 dark:text-white">{{ APP_NAME }}</span>
+      <span class="text-xl font-bold tracking-tight text-white">{{ APP_NAME }}</span>
     </div>
-    <p class="mt-2 text-xs italic text-slate-500 dark:text-slate-400">{% trans "Remettons du sens dans notre métier" %}</p>
+    <p class="mt-2 text-xs italic text-white/70">{% trans "Remettons du sens dans notre métier" %}</p>
   </div>
 
   {# Rail : sections cliquables (pilotent le panneau volant via `nav`) #}
@@ -16,7 +16,7 @@
               class="sidebar-link flex w-full items-center justify-between"
               :class="nav === '{{ section.key }}' ? 'sidebar-link-active' : ''">
         <span>{{ section.label }}</span>
-        <span class="text-slate-400 transition-transform" :class="nav === '{{ section.key }}' ? 'rotate-90' : ''">›</span>
+        <span class="opacity-60 transition-transform" :class="nav === '{{ section.key }}' ? 'rotate-90' : ''">›</span>
       </button>
     {% endfor %}
   </nav>

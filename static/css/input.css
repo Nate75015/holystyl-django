@@ -96,10 +96,16 @@
     border-color: #1c2c38;
   }
 
-  /* Sidebar gauche — jaune doré */
+  /* Sidebar gauche — bleu pétrole foncé (texte clair) */
   .nav-left {
-    background: #fabd05;           /* #fabd05 */
-    border-color: #e0a805;
+    background: #28738f;           /* #28738f */
+    border-color: #1f5e75;
+  }
+  .nav-left .sidebar-link { color: rgba(255, 255, 255, 0.85); }
+  .nav-left .sidebar-link:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+  /* La sélection de section reste une pastille blanche (texte pétrole) */
+  .nav-left .sidebar-link-active {
+    background: #ffffff !important; color: #28738f !important;
   }
   .dark .nav-left {
     background: #0d1a24;
