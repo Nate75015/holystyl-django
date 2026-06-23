@@ -18,6 +18,8 @@ urlpatterns = [
     path("", include("notifications.urls")),
     path("", include("equipe.urls")),
     path("", include("planning.urls")),
+    path("", include("operations.urls")),
+    path("", include("analyses.urls")),
     path("", include("core.urls")),
 ]
 

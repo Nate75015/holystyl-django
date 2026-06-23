@@ -6,8 +6,17 @@ Conventions : /api/<ressource>/ . Élargi au fil des tranches.
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from agronomie.api import CultureKcViewSet, SaisonViewSet, TypeSolViewSet
+from agronomie.api import CultureKcViewSet, FertigationViewSet, SaisonViewSet, TypeSolViewSet
+from analyses.api import AnalyseSolViewSet, AnalysisResultViewSet, BiodiversiteFicheViewSet
 from equipe.api import TaskViewSet, TeamMemberViewSet
+from operations.api import (
+    AffectationEnginViewSet,
+    CatalogueEnginViewSet,
+    EntretienMaterielViewSet,
+    InterventionViewSet,
+    MachineLogViewSet,
+    MachineViewSet,
+)
 from exploitations.api import CurrentExploitationView, ExploitationKPIsView
 from planning.api import (
     EquipmentCatalogViewSet,
@@ -67,6 +76,17 @@ router.register("planning/tasks", PlanningTaskViewSet, basename="planningtask")
 router.register("planning/absences", PlanningAbsenceViewSet, basename="absence")
 router.register("planning/equipment", EquipmentCatalogViewSet, basename="equipment")
 router.register("planning/reports", InterventionReportViewSet, basename="report")
+# Tranche 5 — opérations & analyses
+router.register("machines", MachineViewSet, basename="machine")
+router.register("machine-logs", MachineLogViewSet, basename="machinelog")
+router.register("interventions", InterventionViewSet, basename="intervention")
+router.register("entretiens", EntretienMaterielViewSet, basename="entretien")
+router.register("affectations", AffectationEnginViewSet, basename="affectation")
+router.register("catalogue-engins", CatalogueEnginViewSet, basename="catalogueengin")
+router.register("fertigations", FertigationViewSet, basename="fertigation")
+router.register("analyses/lab", AnalysisResultViewSet, basename="labresult")
+router.register("analyses/sol", AnalyseSolViewSet, basename="analysesol")
+router.register("analyses/biodiversite", BiodiversiteFicheViewSet, basename="biodiversite")
 
 urlpatterns = [
     path("exploitation/", CurrentExploitationView.as_view(), name="api-exploitation"),

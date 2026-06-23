@@ -38,6 +38,15 @@ def layout(request):
             ],
         },
         {
+            "label": _("Opérations & Analyses"),
+            "items": [
+                {"label": _("Parc matériel"), "url_name": "operations:parc_materiel"},
+                {"label": _("Interventions"), "url_name": "operations:interventions"},
+                {"label": _("Laboratoire"), "url_name": "analyses:laboratoire"},
+                {"label": _("Analyses de sol"), "url_name": "analyses:analyses_sol"},
+            ],
+        },
+        {
             "label": _("Planning & Équipe"),
             "items": [
                 {"label": _("Planning"), "url_name": "planning:planning"},
