@@ -138,6 +138,8 @@
     color: #0e7490 !important;
     box-shadow: none;
   }
+  .nav-flyout .sidebar-link-active .material-icons-round { color: #0e7490; }
+  .nav-flyout .sidebar-link:hover .material-icons-round { color: #0e7490; }
   .dark .nav-flyout .sidebar-link-active {
     background: rgba(34,211,238,0.14) !important;
     color: #67dded !important;

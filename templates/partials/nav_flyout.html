@@ -1,7 +1,7 @@
 {% load i18n %}
 {% comment %}Colonne « sous-menu de section » dans le flux : pousse le contenu vers la
 droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% endcomment %}
-<div x-show="nav" x-cloak x-transition
+<div x-show="nav" x-cloak
      class="nav-flyout sticky top-0 z-20 h-screen w-56 shrink-0 overflow-y-auto border-r">
   {% for section in nav_sections %}
     <div x-show="nav === '{{ section.key }}'" class="p-4">
@@ -12,9 +12,15 @@ droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% 
       {% for sub in section.items %}
         {% if sub.url_name %}
           <a href="{% url sub.url_name %}"
-             class="sidebar-link text-sm {% if request.resolver_match.view_name == sub.url_name %}sidebar-link-active{% endif %}">{{ sub.label }}</a>
+             class="sidebar-link flex items-center gap-2.5 text-sm {% if request.resolver_match.view_name == sub.url_name %}sidebar-link-active{% endif %}">
+            <span class="material-icons-round text-[20px] text-slate-400">{{ sub.icon|default:'chevron_right' }}</span>
+            <span>{{ sub.label }}</span>
+          </a>
         {% else %}
-          <span class="sidebar-link cursor-not-allowed text-sm opacity-50" title="{% trans 'Bientôt' %}">{{ sub.label }}</span>
+          <span class="sidebar-link flex items-center gap-2.5 text-sm cursor-not-allowed opacity-50" title="{% trans 'Bientôt' %}">
+            <span class="material-icons-round text-[20px]">{{ sub.icon|default:'chevron_right' }}</span>
+            <span>{{ sub.label }}</span>
+          </span>
         {% endif %}
       {% endfor %}
     </div>
