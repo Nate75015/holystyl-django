@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     "exploitations",
     "agronomie",
     "parcelles",
+    "iot",
+    "irrigation",
 ]
 
 MIDDLEWARE = [
