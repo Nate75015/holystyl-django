@@ -38,8 +38,8 @@ INTENT_ENUM = [
     "question",
 ]
 
-# Intentions dont l'entité Django existe déjà (Tranches 1-2)
-_IMPLEMENTED = {"creer_parcelle", "creer_session_irrigation", "question"}
+# Intentions dont l'entité Django existe déjà
+_IMPLEMENTED = {"creer_parcelle", "creer_session_irrigation", "creer_intervention", "question"}
 
 
 def build_context(exploitation) -> dict:
@@ -141,8 +141,28 @@ def execute_intent(exploitation, user, message: str, history: list[dict] | None 
         )
         result.update(created=True, entity={"type": "irrigation_session", "id": session.id})
 
+    elif intent == "creer_intervention":
+        from operations.models import Intervention
+
+        parcelle = _resolve_parcelle(exploitation, data)
+        itype = data.get("interventionType") or "autre"
+        valid_types = {c.value for c in Intervention.Type}
+        intervention = Intervention.objects.create(
+            exploitation=exploitation,
+            parcelle=parcelle,
+            user=user,
+            intervention_type=itype if itype in valid_types else "autre",
+            title=data.get("title", ""),
+            start_time=timezone.now(),
+            product=data.get("product", ""),
+            dose=str(data.get("dose", "")),
+            notes=data.get("notes", ""),
+            source=Intervention.Source.AI,
+        )
+        result.update(created=True, entity={"type": "intervention", "id": intervention.id})
+
     elif intent in INTENT_ENUM:
-        # Intention reconnue mais module pas encore migré (Tranches 5/6)
+        # Intention reconnue mais module pas encore migré (Tranche 6 : charge/revenu/entretien)
         result["response"] = (
             response or f"J'ai compris « {intent} », mais ce module sera disponible dans une prochaine version."
         )
