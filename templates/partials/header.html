@@ -17,8 +17,9 @@
       </select>
     </form>
 
-    {# Bascule thème — icône lune/soleil fine #}
-    <button @click="toggle()" class="md-icon-btn" title="{% trans 'Thème' %}">
+    {# Bascule thème — icône lune/soleil fine, sans fond #}
+    <button @click="toggle()" title="{% trans 'Thème' %}"
+            class="grid h-9 w-9 place-items-center rounded-full text-slate-600 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
       <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
            fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
