@@ -122,7 +122,7 @@
   }
   .install-btn:hover { background: #0f766e; }
 
-  /* Panneau volant (sous-menu de section, à droite de la sidebar) */
+  /* Panneau volant (sous-menu de section, à droite de la sidebar) — fond blanc */
   .nav-flyout {
     background: #ffffff;
     border-color: #e7e5dd;
@@ -130,6 +130,17 @@
   .dark .nav-flyout {
     background: #0f1f2b;
     border-color: #1c2c38;
+  }
+  /* Inversion : sur le panneau blanc, la sélection est bleu pastel */
+  .nav-flyout .sidebar-link:hover { background: #eef6fb; color: #0e7490; }
+  .nav-flyout .sidebar-link-active {
+    background: #e7f1fb !important;   /* bleu pastel */
+    color: #0e7490 !important;
+    box-shadow: none;
+  }
+  .dark .nav-flyout .sidebar-link-active {
+    background: rgba(34,211,238,0.14) !important;
+    color: #67dded !important;
   }
 
   /* ── Boutons : grandes cibles tactiles (≥48px) ── */
