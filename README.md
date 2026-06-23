@@ -84,7 +84,7 @@ pytest
 | **3** | Assistant IA (Gemini, executeIntent, SSE), notifications | ✅ Fait |
 | **4** | Équipe & planning, bons d'intervention (signature), SMS Twilio, rappels Celery | ✅ Fait |
 | **5** | Opérations (machines/interventions/entretiens), analyses (labo OCR Gemini, sol, biodiversité), fertigation | ✅ Fait |
-| 6 | Finances & conformité (PDF/CSV) | À venir |
+| **6** | Finances (charges/revenus/récoltes/factures), bilan ROI, exports PDF (WeasyPrint) + CSV subvention | ✅ Fait |
 | 7 | Public / SEO, billing Stripe | À venir |
 
 Le code React d'origine (`../holystyl`) est conservé tant que la migration n'est pas validée.
