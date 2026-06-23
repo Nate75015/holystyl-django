@@ -1,0 +1,2493 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-23 11:16+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+#: accounts/admin.py:17
+msgid "Identité"
+msgstr ""
+
+#: accounts/admin.py:18
+msgid "Permissions"
+msgstr ""
+
+#: accounts/admin.py:19
+msgid "Dates"
+msgstr ""
+
+#: accounts/forms.py:15
+msgid "Email"
+msgstr ""
+
+#: accounts/forms.py:23
+msgid "Nom complet"
+msgstr ""
+
+#: accounts/models.py:14
+msgid "adresse email"
+msgstr ""
+
+#: accounts/models.py:15
+msgid "nom complet"
+msgstr ""
+
+#: accounts/models.py:23
+msgid "utilisateur"
+msgstr ""
+
+#: accounts/models.py:24
+msgid "utilisateurs"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:3
+#: accounts/templates/accounts/login.html:12
+msgid "Connexion"
+msgstr "Logowanie"
+
+#: accounts/templates/accounts/login.html:23
+#: accounts/templates/accounts/register.html:26
+#: public/templates/public/home.html:18
+msgid "Se connecter"
+msgstr "Zaloguj się"
+
+#: accounts/templates/accounts/login.html:26
+msgid "Pas de compte ?"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/register.html:3
+#: accounts/templates/accounts/register.html:12
+msgid "Créer un compte"
+msgstr ""
+
+#: accounts/templates/accounts/register.html:23
+msgid "S'inscrire"
+msgstr "Zarejestruj się"
+
+#: accounts/templates/accounts/register.html:26
+msgid "Déjà un compte ?"
+msgstr ""
+
+#: administration/models.py:15 finances/models.py:157 iot/models.py:36
+msgid "Erreur"
+msgstr ""
+
+#: administration/models.py:31
+msgid "configuration SMTP"
+msgstr ""
+
+#: administration/models.py:32
+msgid "configurations SMTP"
+msgstr ""
+
+#: administration/templates/administration/admin.html:6
+msgid "Administration — Email (SMTP)"
+msgstr ""
+
+#: administration/templates/administration/admin.html:10
+msgid "Serveur"
+msgstr ""
+
+#: administration/templates/administration/admin.html:11
+msgid "Port"
+msgstr ""
+
+#: administration/templates/administration/admin.html:14 ia/models.py:13
+msgid "Utilisateur"
+msgstr ""
+
+#: administration/templates/administration/admin.html:15
+msgid "Mot de passe"
+msgstr ""
+
+#: administration/templates/administration/admin.html:18
+msgid "Nom expéditeur"
+msgstr ""
+
+#: administration/templates/administration/admin.html:19
+msgid "Email expéditeur"
+msgstr ""
+
+#: administration/templates/administration/admin.html:21
+msgid "SSL (port 465)"
+msgstr ""
+
+#: administration/templates/administration/admin.html:22
+msgid "Activé"
+msgstr ""
+
+#: administration/templates/administration/admin.html:25
+msgid "Dernier test"
+msgstr ""
+
+#: administration/templates/administration/admin.html:28
+#: exploitations/templates/exploitations/settings.html:23
+#: parcelles/templates/parcelles/form.html:97
+msgid "Enregistrer"
+msgstr "Zapisz"
+
+#: administration/views.py:32
+msgid "Configuration SMTP enregistrée."
+msgstr ""
+
+#: administration/views.py:35 core/context_processors.py:78
+msgid "Administration"
+msgstr "Administracja"
+
+#: agronomie/models.py:16
+msgid "Céréales"
+msgstr ""
+
+#: agronomie/models.py:17
+msgid "Légumes"
+msgstr ""
+
+#: agronomie/models.py:18
+msgid "Fruits"
+msgstr ""
+
+#: agronomie/models.py:19
+msgid "Vigne"
+msgstr ""
+
+#: agronomie/models.py:20
+msgid "Oléagineux"
+msgstr ""
+
+#: agronomie/models.py:21
+msgid "Fourrage"
+msgstr ""
+
+#: agronomie/models.py:22
+msgid "Maraîchage"
+msgstr ""
+
+#: agronomie/models.py:23 finances/models.py:24 finances/models.py:50
+#: operations/models.py:21 operations/models.py:93 operations/models.py:148
+#: operations/models.py:180 operations/models.py:213 planning/models.py:110
+#: planning/models.py:150 planning/models.py:214
+msgid "Autre"
+msgstr ""
+
+#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:104
+#: equipe/models.py:22 exploitations/models.py:20 iot/models.py:40
+#: operations/models.py:30 parcelles/models.py:31
+msgid "nom"
+msgstr ""
+
+#: agronomie/models.py:26
+msgid "nom scientifique"
+msgstr ""
+
+#: agronomie/models.py:39
+msgid "culture (Kc)"
+msgstr ""
+
+#: agronomie/models.py:40
+msgid "cultures (Kc)"
+msgstr ""
+
+#: agronomie/models.py:51
+msgid "Sableux"
+msgstr ""
+
+#: agronomie/models.py:52
+msgid "Limoneux"
+msgstr ""
+
+#: agronomie/models.py:53
+msgid "Argileux"
+msgstr ""
+
+#: agronomie/models.py:54
+msgid "Limon argileux"
+msgstr ""
+
+#: agronomie/models.py:55
+msgid "Sablo-limoneux"
+msgstr ""
+
+#: agronomie/models.py:56
+msgid "Argilo-limoneux"
+msgstr ""
+
+#: agronomie/models.py:60
+msgid "capacité de rétention (mm)"
+msgstr ""
+
+#: agronomie/models.py:61
+msgid "pH typique"
+msgstr ""
+
+#: agronomie/models.py:67 parcelles/models.py:60
+msgid "type de sol"
+msgstr ""
+
+#: agronomie/models.py:68
+msgid "types de sol"
+msgstr ""
+
+#: agronomie/models.py:91
+msgid "fertigation"
+msgstr ""
+
+#: agronomie/models.py:92
+msgid "fertigations"
+msgstr ""
+
+#: agronomie/models.py:105
+msgid "date de début"
+msgstr ""
+
+#: agronomie/models.py:106
+msgid "date de fin"
+msgstr ""
+
+#: agronomie/models.py:107 agronomie/templates/agronomie/saisons.html:12
+msgid "active"
+msgstr ""
+
+#: agronomie/models.py:111
+msgid "saison"
+msgstr ""
+
+#: agronomie/models.py:112
+msgid "saisons"
+msgstr ""
+
+#: agronomie/templates/agronomie/cultures_kc.html:6
+msgid "Cultures & coefficients Kc"
+msgstr ""
+
+#: agronomie/templates/agronomie/cultures_kc.html:12
+#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:33
+#: parcelles/templates/parcelles/form.html:38
+#: parcelles/templates/parcelles/list.html:22
+msgid "Culture"
+msgstr ""
+
+#: agronomie/templates/agronomie/cultures_kc.html:13
+#: finances/templates/finances/charges.html:14
+msgid "Catégorie"
+msgstr ""
+
+#: agronomie/templates/agronomie/cultures_kc.html:17
+msgid "Source"
+msgstr ""
+
+#: agronomie/templates/agronomie/cultures_kc.html:35
+msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
+msgstr ""
+
+#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:34
+#: core/context_processors.py:37
+msgid "Saisons"
+msgstr "Sezony"
+
+#: agronomie/templates/agronomie/saisons.html:19
+msgid "Aucune saison définie."
+msgstr ""
+
+#: agronomie/templates/agronomie/types_sol.html:6 agronomie/views.py:26
+#: core/context_processors.py:36
+msgid "Types de sol"
+msgstr "Typy gleby"
+
+#: agronomie/templates/agronomie/types_sol.html:14
+msgid "Rétention"
+msgstr ""
+
+#: agronomie/templates/agronomie/types_sol.html:21
+msgid "Aucun type de sol. Ajoutez-en via l'admin."
+msgstr ""
+
+#: agronomie/views.py:17 core/context_processors.py:35
+msgid "Cultures & Kc"
+msgstr ""
+
+#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
+msgid "Sol"
+msgstr ""
+
+#: analyses/models.py:15 finances/models.py:18
+#: finances/templates/finances/subvention_pdf.html:31
+msgid "Eau"
+msgstr ""
+
+#: analyses/models.py:16
+msgid "Foliaire"
+msgstr ""
+
+#: analyses/models.py:17
+msgid "Plante"
+msgstr ""
+
+#: analyses/models.py:20
+msgid "OCR en attente"
+msgstr ""
+
+#: analyses/models.py:21
+msgid "OCR effectué"
+msgstr ""
+
+#: analyses/models.py:22 planning/models.py:261
+msgid "Validé"
+msgstr ""
+
+#: analyses/models.py:45
+msgid "rapport d'analyse"
+msgstr ""
+
+#: analyses/models.py:46
+msgid "rapports d'analyse"
+msgstr ""
+
+#: analyses/models.py:68
+msgid "analyse de sol"
+msgstr ""
+
+#: analyses/models.py:69
+msgid "analyses de sol"
+msgstr ""
+
+#: analyses/models.py:87
+msgid "fiche biodiversité"
+msgstr ""
+
+#: analyses/models.py:88
+msgid "fiches biodiversité"
+msgstr ""
+
+#: analyses/templates/analyses/analyses_sol.html:6 analyses/views.py:27
+#: core/context_processors.py:46
+msgid "Analyses de sol"
+msgstr "Analizy gleby"
+
+#: analyses/templates/analyses/analyses_sol.html:19
+#: analyses/templates/analyses/laboratoire.html:12
+msgid "Labo"
+msgstr ""
+
+#: analyses/templates/analyses/analyses_sol.html:25
+msgid "Aucune analyse de sol."
+msgstr ""
+
+#: analyses/templates/analyses/laboratoire.html:6 analyses/views.py:20
+#: core/context_processors.py:45
+msgid "Laboratoire"
+msgstr "Laboratorium"
+
+#: analyses/templates/analyses/laboratoire.html:7
+msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
+msgstr ""
+
+#: analyses/templates/analyses/laboratoire.html:12
+#: iot/templates/iot/capteurs.html:13
+#: parcelles/templates/parcelles/detail.html:30
+#: planning/templates/planning/bon_intervention.html:16
+msgid "Type"
+msgstr ""
+
+#: analyses/templates/analyses/laboratoire.html:12
+#: finances/templates/finances/charges.html:14
+msgid "Date"
+msgstr ""
+
+#: analyses/templates/analyses/laboratoire.html:12
+#: finances/templates/finances/facturation.html:11
+#: iot/templates/iot/capteurs.html:16
+#: parcelles/templates/parcelles/list.html:25
+msgid "Statut"
+msgstr ""
+
+#: analyses/templates/analyses/laboratoire.html:29
+msgid "Aucun rapport. Importez un PDF via l'API (extraction Gemini)."
+msgstr ""
+
+#: billing/models.py:13 equipe/models.py:92 finances/models.py:116
+#: iot/models.py:90
+msgid "En attente"
+msgstr ""
+
+#: billing/models.py:14
+msgid "Utilisé"
+msgstr ""
+
+#: billing/models.py:15
+msgid "Expiré"
+msgstr ""
+
+#: billing/models.py:16 billing/models.py:43 irrigation/models.py:163
+#: planning/models.py:33
+msgid "Annulé"
+msgstr ""
+
+#: billing/models.py:31
+msgid "code d'activation"
+msgstr ""
+
+#: billing/models.py:32
+msgid "codes d'activation"
+msgstr ""
+
+#: billing/models.py:41 irrigation/models.py:161
+msgid "Actif"
+msgstr ""
+
+#: billing/models.py:42
+msgid "Impayé"
+msgstr ""
+
+#: billing/models.py:44
+msgid "Essai"
+msgstr ""
+
+#: billing/models.py:45
+msgid "Non payé"
+msgstr ""
+
+#: billing/models.py:58
+msgid "abonnement"
+msgstr ""
+
+#: billing/models.py:59
+msgid "abonnements"
+msgstr ""
+
+#: core/context_processors.py:15
+msgid "Pulse"
+msgstr ""
+
+#: core/context_processors.py:16 core/context_processors.py:34
+#: core/templates/core/dashboard.html:25
+#: finances/templates/finances/subvention_pdf.html:47
+#: parcelles/templates/parcelles/list.html:7 parcelles/views.py:27
+msgid "Parcelles"
+msgstr "Działki"
+
+#: core/context_processors.py:17 core/context_processors.py:26
+#: finances/templates/finances/subvention_pdf.html:49
+#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:20
+#: operations/models.py:79 operations/models.py:178
+#: parcelles/templates/parcelles/detail.html:28
+#: parcelles/templates/parcelles/form.html:66
+#: parcelles/templates/parcelles/list.html:24
+msgid "Irrigation"
+msgstr "Nawadnianie"
+
+#: core/context_processors.py:18 core/context_processors.py:28
+msgid "Capteurs"
+msgstr "Czujniki"
+
+#: core/context_processors.py:19 ia/models.py:14
+msgid "Assistant"
+msgstr "Asystent"
+
+#: core/context_processors.py:23
+msgid "Pilotage hydrique"
+msgstr ""
+
+#: core/context_processors.py:25 iot/templates/iot/regie.html:7 iot/views.py:28
+msgid "Régie SCADA"
+msgstr ""
+
+#: core/context_processors.py:27
+msgid "Bassinage"
+msgstr "Zraszanie"
+
+#: core/context_processors.py:32
+msgid "Cultures & Terrain"
+msgstr ""
+
+#: core/context_processors.py:41
+msgid "Opérations & Analyses"
+msgstr ""
+
+#: core/context_processors.py:43
+#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
+msgid "Parc matériel"
+msgstr "Sprzęt"
+
+#: core/context_processors.py:44
+#: operations/templates/operations/interventions.html:6 operations/views.py:27
+msgid "Interventions"
+msgstr "Interwencje"
+
+#: core/context_processors.py:50
+msgid "Économie"
+msgstr ""
+
+#: core/context_processors.py:52
+#: finances/templates/finances/bilan_economique.html:16
+#: finances/templates/finances/charges.html:7
+#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
+msgid "Charges"
+msgstr "Koszty"
+
+#: core/context_processors.py:53
+#: finances/templates/finances/bilan_economique.html:7
+#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:32
+msgid "Bilan économique"
+msgstr "Bilans ekonomiczny"
+
+#: core/context_processors.py:54 finances/templates/finances/facturation.html:6
+#: finances/views.py:40
+msgid "Facturation"
+msgstr "Fakturowanie"
+
+#: core/context_processors.py:58
+msgid "Planning & Équipe"
+msgstr ""
+
+#: core/context_processors.py:60 planning/views.py:34
+msgid "Planning"
+msgstr "Harmonogram"
+
+#: core/context_processors.py:61 equipe/templates/equipe/mes_taches.html:6
+#: equipe/views.py:37
+msgid "Mes tâches"
+msgstr "Moje zadania"
+
+#: core/context_processors.py:62 equipe/templates/equipe/equipe.html:6
+#: equipe/views.py:21
+msgid "Équipe"
+msgstr "Zespół"
+
+#: core/context_processors.py:63 equipe/templates/equipe/taches.html:6
+#: equipe/views.py:28
+msgid "Tâches"
+msgstr "Zadania"
+
+#: core/context_processors.py:67
+msgid "Assistant & alertes"
+msgstr ""
+
+#: core/context_processors.py:69 ia/views.py:31
+msgid "Assistant IA"
+msgstr ""
+
+#: core/context_processors.py:70
+#: notifications/templates/notifications/center.html:7
+#: notifications/views.py:18
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+#: core/context_processors.py:74
+msgid "Mon compte"
+msgstr ""
+
+#: core/context_processors.py:76
+#: exploitations/templates/exploitations/settings.html:8
+#: exploitations/views.py:32
+msgid "Mon exploitation"
+msgstr "Moje gospodarstwo"
+
+#: core/context_processors.py:77
+msgid "Activer un code"
+msgstr ""
+
+#: core/templates/core/dashboard.html:8
+msgid "Bienvenue sur Holystyl 👋"
+msgstr ""
+
+#: core/templates/core/dashboard.html:10
+msgid ""
+"Commencez par configurer votre exploitation pour activer le tableau de bord."
+msgstr ""
+
+#: core/templates/core/dashboard.html:12
+#: exploitations/templates/exploitations/settings.html:8
+msgid "Configurer mon exploitation"
+msgstr ""
+
+#: core/templates/core/dashboard.html:20
+msgid "+ Parcelle"
+msgstr ""
+
+#: core/templates/core/dashboard.html:27
+msgid "actives"
+msgstr ""
+
+#: core/templates/core/dashboard.html:30
+#: finances/templates/finances/subvention_pdf.html:30
+#: parcelles/templates/parcelles/list.html:23
+msgid "Surface"
+msgstr ""
+
+#: core/templates/core/dashboard.html:34
+msgid "Quota eau"
+msgstr ""
+
+#: core/templates/core/dashboard.html:41
+#: finances/templates/finances/subvention_pdf.html:33
+msgid "Score DTI"
+msgstr ""
+
+#: core/templates/core/dashboard.html:43
+msgid "Disponible Tranche 2"
+msgstr ""
+
+#: core/templates/core/dashboard.html:49
+msgid ""
+"Les modules temps réel (IoT/SCADA), l'irrigation et l'assistant IA seront "
+"activés dans les prochaines tranches."
+msgstr ""
+
+#: equipe/models.py:15
+msgid "Chef d'équipe"
+msgstr ""
+
+#: equipe/models.py:16
+msgid "Ouvrier"
+msgstr ""
+
+#: equipe/models.py:17
+msgid "Saisonnier"
+msgstr ""
+
+#: equipe/models.py:18
+msgid "Prestataire"
+msgstr ""
+
+#: equipe/models.py:24
+msgid "téléphone"
+msgstr ""
+
+#: equipe/models.py:42
+msgid "membre d'équipe"
+msgstr ""
+
+#: equipe/models.py:43
+msgid "membres d'équipe"
+msgstr ""
+
+#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
+msgid "Haute"
+msgstr ""
+
+#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
+msgid "Normale"
+msgstr ""
+
+#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
+msgid "Basse"
+msgstr ""
+
+#: equipe/models.py:57
+msgid "À faire"
+msgstr ""
+
+#: equipe/models.py:58 operations/models.py:97 planning/models.py:30
+msgid "En cours"
+msgstr ""
+
+#: equipe/models.py:59 iot/models.py:93 operations/models.py:98
+msgid "Terminée"
+msgstr ""
+
+#: equipe/models.py:60
+msgid "Validée"
+msgstr ""
+
+#: equipe/models.py:63
+msgid "titre"
+msgstr ""
+
+#: equipe/models.py:77
+msgid "tâche"
+msgstr ""
+
+#: equipe/models.py:78
+msgid "tâches"
+msgstr ""
+
+#: equipe/models.py:93
+msgid "Envoyé"
+msgstr ""
+
+#: equipe/models.py:94
+msgid "Échoué"
+msgstr ""
+
+#: equipe/models.py:105
+msgid "rappel de tâche"
+msgstr ""
+
+#: equipe/models.py:106
+msgid "rappels de tâche"
+msgstr ""
+
+#: equipe/templates/equipe/equipe.html:20
+msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:3
+msgid "Partage de position"
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:9
+#: equipe/templates/equipe/location_share.html:13
+msgid "Partager ma position"
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:11
+#, python-format
+msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:16
+msgid "Lien expiré"
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:17
+msgid "Ce lien de partage n'est plus valide."
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:28
+msgid "Géolocalisation non supportée."
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:34
+msgid "Position partagée ✅"
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:35
+msgid "Erreur lors du partage."
+msgstr ""
+
+#: equipe/templates/equipe/location_share.html:36
+msgid "Accès à la position refusé."
+msgstr ""
+
+#: equipe/templates/equipe/mes_taches.html:20
+msgid "Aucune tâche assignée."
+msgstr ""
+
+#: equipe/templates/equipe/taches.html:13
+msgid "non assignée"
+msgstr ""
+
+#: equipe/templates/equipe/taches.html:20
+msgid "Aucune tâche."
+msgstr ""
+
+#: exploitations/models.py:18
+msgid "propriétaire"
+msgstr ""
+
+#: exploitations/models.py:21
+msgid "adresse"
+msgstr ""
+
+#: exploitations/models.py:22
+msgid "ville"
+msgstr ""
+
+#: exploitations/models.py:23
+msgid "code postal"
+msgstr ""
+
+#: exploitations/models.py:24
+msgid "latitude"
+msgstr ""
+
+#: exploitations/models.py:25
+msgid "longitude"
+msgstr ""
+
+#: exploitations/models.py:26
+msgid "surface totale (ha)"
+msgstr ""
+
+#: exploitations/models.py:27
+msgid "quota eau (m³)"
+msgstr ""
+
+#: exploitations/models.py:28
+msgid "eau consommée (m³)"
+msgstr ""
+
+#: exploitations/models.py:31
+msgid "exploitation"
+msgstr ""
+
+#: exploitations/models.py:32
+msgid "exploitations"
+msgstr ""
+
+#: exploitations/templates/exploitations/settings.html:10
+msgid "Informations de base utilisées partout dans l'application."
+msgstr ""
+
+#: exploitations/templates/exploitations/settings.html:24
+#: parcelles/templates/parcelles/confirm_delete.html:14
+msgid "Annuler"
+msgstr "Anuluj"
+
+#: exploitations/views.py:24
+msgid "Exploitation enregistrée."
+msgstr ""
+
+#: finances/models.py:15
+msgid "Semences"
+msgstr ""
+
+#: finances/models.py:16
+msgid "Engrais"
+msgstr ""
+
+#: finances/models.py:17
+msgid "Phytosanitaires"
+msgstr ""
+
+#: finances/models.py:19 finances/templates/finances/subvention_pdf.html:32
+msgid "Énergie"
+msgstr ""
+
+#: finances/models.py:20
+msgid "Main d'œuvre"
+msgstr ""
+
+#: finances/models.py:21 ia/models.py:34
+msgid "Matériel"
+msgstr ""
+
+#: finances/models.py:22 operations/models.py:179 planning/models.py:213
+msgid "Transport"
+msgstr ""
+
+#: finances/models.py:23
+msgid "Assurance"
+msgstr ""
+
+#: finances/models.py:36
+msgid "charge"
+msgstr ""
+
+#: finances/models.py:37
+msgid "charges"
+msgstr ""
+
+#: finances/models.py:43
+msgid "Vente céréales"
+msgstr ""
+
+#: finances/models.py:44
+msgid "Vente fruits"
+msgstr ""
+
+#: finances/models.py:45
+msgid "Vente légumes"
+msgstr ""
+
+#: finances/models.py:46
+msgid "Aide PAC"
+msgstr ""
+
+#: finances/models.py:47
+msgid "Subvention"
+msgstr ""
+
+#: finances/models.py:48
+msgid "Location"
+msgstr ""
+
+#: finances/models.py:49
+msgid "Prestation"
+msgstr ""
+
+#: finances/models.py:65
+msgid "revenu"
+msgstr ""
+
+#: finances/models.py:66
+msgid "revenus"
+msgstr ""
+
+#: finances/models.py:72
+msgid "Extra"
+msgstr ""
+
+#: finances/models.py:73
+msgid "Catégorie 1"
+msgstr ""
+
+#: finances/models.py:74
+msgid "Catégorie 2"
+msgstr ""
+
+#: finances/models.py:75
+msgid "Déclassé"
+msgstr ""
+
+#: finances/models.py:88
+msgid "récolte"
+msgstr ""
+
+#: finances/models.py:89
+msgid "récoltes"
+msgstr ""
+
+#: finances/models.py:105
+msgid "client"
+msgstr ""
+
+#: finances/models.py:106
+msgid "clients"
+msgstr ""
+
+#: finances/models.py:115 planning/models.py:259
+msgid "Brouillon"
+msgstr ""
+
+#: finances/models.py:117
+msgid "Payée"
+msgstr ""
+
+#: finances/models.py:118
+msgid "En retard"
+msgstr ""
+
+#: finances/models.py:119 operations/models.py:99
+msgid "Annulée"
+msgstr ""
+
+#: finances/models.py:136
+msgid "facture"
+msgstr ""
+
+#: finances/models.py:137
+msgid "factures"
+msgstr ""
+
+#: finances/models.py:149
+msgid "Taxonomie Verte EU"
+msgstr ""
+
+#: finances/models.py:150
+msgid "Plan Eau 2026"
+msgstr ""
+
+#: finances/models.py:155
+msgid "En génération"
+msgstr ""
+
+#: finances/models.py:156
+msgid "Prêt"
+msgstr ""
+
+#: finances/models.py:168
+msgid "export subvention"
+msgstr ""
+
+#: finances/models.py:169
+msgid "exports subvention"
+msgstr ""
+
+#: finances/templates/finances/bilan_economique.html:9
+msgid "Revenus CSV"
+msgstr ""
+
+#: finances/templates/finances/bilan_economique.html:10
+msgid "Dossier subvention PDF"
+msgstr ""
+
+#: finances/templates/finances/bilan_economique.html:15
+#: finances/templates/finances/subvention_pdf.html:40
+msgid "Revenus"
+msgstr ""
+
+#: finances/templates/finances/bilan_economique.html:17
+#: finances/templates/finances/subvention_pdf.html:42
+msgid "Résultat net"
+msgstr ""
+
+#: finances/templates/finances/bilan_economique.html:18
+msgid "Marge / ha"
+msgstr ""
+
+#: finances/templates/finances/bilan_economique.html:23
+#, python-format
+msgid "Consommation : %(eau)s m³ d'eau · %(energie)s kWh d'énergie."
+msgstr ""
+
+#: finances/templates/finances/charges.html:8
+msgid "Export CSV"
+msgstr ""
+
+#: finances/templates/finances/charges.html:14
+msgid "Montant"
+msgstr ""
+
+#: finances/templates/finances/charges.html:14
+msgid "Fournisseur"
+msgstr ""
+
+#: finances/templates/finances/charges.html:29
+msgid "Aucune charge enregistrée."
+msgstr ""
+
+#: finances/templates/finances/facturation.html:11
+msgid "Client"
+msgstr ""
+
+#: finances/templates/finances/facturation.html:11
+msgid "Émission"
+msgstr ""
+
+#: finances/templates/finances/facturation.html:27
+msgid "Aucune facture."
+msgstr ""
+
+#: finances/templates/finances/subvention_pdf.html:22
+msgid "Dossier de subvention"
+msgstr ""
+
+#: finances/templates/finances/subvention_pdf.html:24
+msgid "Année"
+msgstr ""
+
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:12
+#: parcelles/templates/parcelles/list.html:21
+msgid "Nom"
+msgstr ""
+
+#: finances/templates/finances/subvention_pdf.html:49
+msgid "Surface (ha)"
+msgstr ""
+
+#: finances/templates/finances/subvention_pdf.html:56
+msgid "Document généré par Holystyl."
+msgstr ""
+
+#: ia/models.py:25
+msgid "conversation IA"
+msgstr ""
+
+#: ia/models.py:26
+msgid "conversations IA"
+msgstr ""
+
+#: ia/models.py:32
+msgid "Parcelle"
+msgstr ""
+
+#: ia/models.py:35 planning/templates/planning/bon_intervention.html:29
+msgid "Produit"
+msgstr ""
+
+#: ia/models.py:36
+msgid "Général"
+msgstr ""
+
+#: ia/models.py:44
+msgid "terme vocal"
+msgstr ""
+
+#: ia/models.py:45
+msgid "dictionnaire vocal"
+msgstr ""
+
+#: ia/models.py:67
+msgid "rapport quotidien"
+msgstr ""
+
+#: ia/models.py:68
+msgid "rapports quotidiens"
+msgstr ""
+
+#: ia/templates/ia/assistant.html:7
+msgid "Assistant Holystyl"
+msgstr ""
+
+#: ia/templates/ia/assistant.html:9
+msgid "IA non configurée"
+msgstr ""
+
+#: ia/templates/ia/assistant.html:29
+msgid "Demandez quelque chose…"
+msgstr ""
+
+#: ia/templates/ia/assistant.html:30
+msgid "Dictée vocale"
+msgstr ""
+
+#: ia/templates/ia/assistant.html:31 public/templates/public/home.html:44
+msgid "Envoyer"
+msgstr ""
+
+#: ia/templates/ia/assistant.html:58
+msgid "Reconnaissance vocale non supportée par ce navigateur."
+msgstr ""
+
+#: iot/models.py:16
+msgid "Débitmètre"
+msgstr ""
+
+#: iot/models.py:17
+msgid "Capteur de pression"
+msgstr ""
+
+#: iot/models.py:18
+msgid "Station météo"
+msgstr ""
+
+#: iot/models.py:19
+msgid "Contrôleur de vanne"
+msgstr ""
+
+#: iot/models.py:20
+msgid "Contrôleur de pompe"
+msgstr ""
+
+#: iot/models.py:21
+msgid "Humidité du sol"
+msgstr ""
+
+#: iot/models.py:22
+msgid "Compteur d'énergie"
+msgstr ""
+
+#: iot/models.py:23 iot/models.py:30
+msgid "Générique"
+msgstr ""
+
+#: iot/models.py:33
+msgid "En ligne"
+msgstr ""
+
+#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
+msgid "Hors ligne"
+msgstr ""
+
+#: iot/models.py:35 iot/models.py:131
+msgid "Avertissement"
+msgstr ""
+
+#: iot/models.py:44
+msgid "identifiant device"
+msgstr ""
+
+#: iot/models.py:56
+msgid "device IoT"
+msgstr ""
+
+#: iot/models.py:57
+msgid "devices IoT"
+msgstr ""
+
+#: iot/models.py:82
+msgid "télémétrie"
+msgstr ""
+
+#: iot/models.py:83
+msgid "télémétries"
+msgstr ""
+
+#: iot/models.py:91
+msgid "Envoyée"
+msgstr ""
+
+#: iot/models.py:92
+msgid "Accusée"
+msgstr ""
+
+#: iot/models.py:94
+msgid "Échouée"
+msgstr ""
+
+#: iot/models.py:95
+msgid "Expirée"
+msgstr ""
+
+#: iot/models.py:109
+msgid "commande IoT"
+msgstr ""
+
+#: iot/models.py:110
+msgid "commandes IoT"
+msgstr ""
+
+#: iot/models.py:116
+msgid "Fuite détectée"
+msgstr ""
+
+#: iot/models.py:117
+msgid "Pression basse"
+msgstr ""
+
+#: iot/models.py:118
+msgid "Pression haute"
+msgstr ""
+
+#: iot/models.py:119
+msgid "Débit bas"
+msgstr ""
+
+#: iot/models.py:120
+msgid "Débit élevé"
+msgstr ""
+
+#: iot/models.py:121
+msgid "Panne de pompe"
+msgstr ""
+
+#: iot/models.py:122
+msgid "Baisse d'uniformité"
+msgstr ""
+
+#: iot/models.py:123
+msgid "Pic d'énergie"
+msgstr ""
+
+#: iot/models.py:125
+msgid "Seuil dépassé"
+msgstr ""
+
+#: iot/models.py:126
+msgid "Risque de gel"
+msgstr ""
+
+#: iot/models.py:127
+msgid "Perte invisible"
+msgstr ""
+
+#: iot/models.py:130
+msgid "Info"
+msgstr ""
+
+#: iot/models.py:132
+msgid "Danger"
+msgstr ""
+
+#: iot/models.py:148
+msgid "alerte IoT"
+msgstr ""
+
+#: iot/models.py:149
+msgid "alertes IoT"
+msgstr ""
+
+#: iot/models.py:156
+msgid "Température gel"
+msgstr ""
+
+#: iot/models.py:157
+msgid "Pression min"
+msgstr ""
+
+#: iot/models.py:158
+msgid "Pression max"
+msgstr ""
+
+#: iot/models.py:159
+msgid "Débit min"
+msgstr ""
+
+#: iot/models.py:160
+msgid "Débit max"
+msgstr ""
+
+#: iot/models.py:161
+msgid "kWh/m³ max"
+msgstr ""
+
+#: iot/models.py:162
+msgid "Humidité sol min"
+msgstr ""
+
+#: iot/models.py:163
+msgid "Humidité sol max"
+msgstr ""
+
+#: iot/models.py:164
+msgid "Perte invisible %"
+msgstr ""
+
+#: iot/models.py:176
+msgid "seuil"
+msgstr ""
+
+#: iot/models.py:177
+msgid "seuils"
+msgstr ""
+
+#: iot/templates/iot/capteurs.html:6 iot/views.py:36
+msgid "Capteurs & IoT"
+msgstr ""
+
+#: iot/templates/iot/capteurs.html:14
+msgid "Marque"
+msgstr ""
+
+#: iot/templates/iot/capteurs.html:15
+msgid "Firmware"
+msgstr ""
+
+#: iot/templates/iot/capteurs.html:17
+msgid "Vu"
+msgstr ""
+
+#: iot/templates/iot/capteurs.html:35
+msgid "Aucun capteur enregistré."
+msgstr ""
+
+#: iot/templates/iot/regie.html:10
+msgid "Temps réel actif"
+msgstr ""
+
+#: iot/templates/iot/regie.html:37 parcelles/templates/parcelles/detail.html:31
+msgid "Débit"
+msgstr ""
+
+#: iot/templates/iot/regie.html:38 parcelles/templates/parcelles/detail.html:32
+msgid "Pression"
+msgstr ""
+
+#: iot/templates/iot/regie.html:39
+msgid "Puissance"
+msgstr ""
+
+#: iot/templates/iot/regie.html:40
+msgid "Humidité"
+msgstr ""
+
+#: iot/templates/iot/regie.html:46
+msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
+msgstr ""
+
+#: irrigation/models.py:20 parcelles/models.py:14
+msgid "Goutte à goutte"
+msgstr ""
+
+#: irrigation/models.py:21 parcelles/models.py:15
+msgid "Aspersion"
+msgstr ""
+
+#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
+msgid "Pivot"
+msgstr ""
+
+#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
+msgid "Enrouleur"
+msgstr ""
+
+#: irrigation/models.py:24 parcelles/models.py:18
+msgid "Micro-aspersion"
+msgstr ""
+
+#: irrigation/models.py:25
+msgid "Micro-jet"
+msgstr ""
+
+#: irrigation/models.py:26
+msgid "Submersion"
+msgstr ""
+
+#: irrigation/models.py:29 parcelles/models.py:22
+msgid "Active"
+msgstr ""
+
+#: irrigation/models.py:30 parcelles/models.py:23
+msgid "Inactive"
+msgstr ""
+
+#: irrigation/models.py:31 irrigation/models.py:131 operations/models.py:25
+#: operations/models.py:55 operations/models.py:91
+msgid "Maintenance"
+msgstr ""
+
+#: irrigation/models.py:50
+msgid "zone d'irrigation"
+msgstr ""
+
+#: irrigation/models.py:51
+msgid "zones d'irrigation"
+msgstr ""
+
+#: irrigation/models.py:60
+msgid "Quotidien"
+msgstr ""
+
+#: irrigation/models.py:61
+msgid "Tous les 2 jours"
+msgstr ""
+
+#: irrigation/models.py:62
+msgid "Tous les 3 jours"
+msgstr ""
+
+#: irrigation/models.py:63 irrigation/models.py:241
+msgid "Hebdomadaire"
+msgstr ""
+
+#: irrigation/models.py:64
+msgid "Personnalisé"
+msgstr ""
+
+#: irrigation/models.py:67
+msgid "Par durée"
+msgstr ""
+
+#: irrigation/models.py:68
+msgid "Par volume"
+msgstr ""
+
+#: irrigation/models.py:69
+msgid "Par pluviométrie"
+msgstr ""
+
+#: irrigation/models.py:72 irrigation/models.py:104 irrigation/models.py:156
+#: irrigation/models.py:191 irrigation/models.py:215 operations/models.py:103
+msgid "Manuel"
+msgstr ""
+
+#: irrigation/models.py:73 operations/models.py:102
+msgid "Vocal"
+msgstr ""
+
+#: irrigation/models.py:74 irrigation/models.py:107 operations/models.py:104
+msgid "IA"
+msgstr ""
+
+#: irrigation/models.py:94
+msgid "programme d'irrigation"
+msgstr ""
+
+#: irrigation/models.py:95
+msgid "programmes d'irrigation"
+msgstr ""
+
+#: irrigation/models.py:105 irrigation/models.py:157
+msgid "Auto"
+msgstr ""
+
+#: irrigation/models.py:106
+msgid "IoT"
+msgstr ""
+
+#: irrigation/models.py:123
+msgid "session d'irrigation"
+msgstr ""
+
+#: irrigation/models.py:124
+msgid "sessions d'irrigation"
+msgstr ""
+
+#: irrigation/models.py:130 operations/models.py:24
+msgid "Opérationnelle"
+msgstr ""
+
+#: irrigation/models.py:132 operations/models.py:26
+msgid "En panne"
+msgstr ""
+
+#: irrigation/models.py:147
+msgid "station de pompage"
+msgstr ""
+
+#: irrigation/models.py:148
+msgid "stations de pompage"
+msgstr ""
+
+#: irrigation/models.py:158
+msgid "Capteur"
+msgstr ""
+
+#: irrigation/models.py:162 planning/models.py:32
+msgid "Terminé"
+msgstr ""
+
+#: irrigation/models.py:182
+msgid "événement de bassinage"
+msgstr ""
+
+#: irrigation/models.py:183
+msgid "événements de bassinage"
+msgstr ""
+
+#: irrigation/models.py:205
+msgid "relevé compteur eau"
+msgstr ""
+
+#: irrigation/models.py:206
+msgid "relevés compteur eau"
+msgstr ""
+
+#: irrigation/models.py:231
+msgid "relevé énergie"
+msgstr ""
+
+#: irrigation/models.py:232
+msgid "relevés énergie"
+msgstr ""
+
+#: irrigation/models.py:239
+msgid "Annuel"
+msgstr ""
+
+#: irrigation/models.py:240
+msgid "Mensuel"
+msgstr ""
+
+#: irrigation/models.py:252
+msgid "quota eau"
+msgstr ""
+
+#: irrigation/models.py:253
+msgid "quotas eau"
+msgstr ""
+
+#: irrigation/models.py:278
+msgid "score DTI"
+msgstr ""
+
+#: irrigation/models.py:279
+msgid "scores DTI"
+msgstr ""
+
+#: irrigation/models.py:285
+msgid "Faible"
+msgstr ""
+
+#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
+msgid "Moyen"
+msgstr ""
+
+#: irrigation/models.py:287
+msgid "Élevé"
+msgstr ""
+
+#: irrigation/models.py:288 planning/models.py:256
+msgid "Critique"
+msgstr ""
+
+#: irrigation/models.py:306
+msgid "événement de gel"
+msgstr ""
+
+#: irrigation/models.py:307
+msgid "événements de gel"
+msgstr ""
+
+#: irrigation/models.py:326
+msgid "donnée NDVI"
+msgstr ""
+
+#: irrigation/models.py:327
+msgid "données NDVI"
+msgstr ""
+
+#: irrigation/models.py:345
+msgid "détection de perte invisible"
+msgstr ""
+
+#: irrigation/models.py:346
+msgid "détections de pertes invisibles"
+msgstr ""
+
+#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:43
+msgid "Bassinage anti-gel"
+msgstr ""
+
+#: irrigation/templates/irrigation/bassinage.html:20
+msgid "Aucun événement de bassinage."
+msgstr ""
+
+#: irrigation/templates/irrigation/irrigation.html:21
+msgid "Aucune zone."
+msgstr ""
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "actif"
+msgstr ""
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "inactif"
+msgstr ""
+
+#: irrigation/templates/irrigation/irrigation.html:30
+msgid "Aucun programme."
+msgstr ""
+
+#: irrigation/templates/irrigation/irrigation.html:39
+msgid "Aucune session."
+msgstr ""
+
+#: irrigation/templates/irrigation/irrigation.html:48
+msgid "Aucune station."
+msgstr ""
+
+#: irrigation/views.py:22
+msgid "Zones"
+msgstr ""
+
+#: irrigation/views.py:23
+msgid "Programmes"
+msgstr ""
+
+#: irrigation/views.py:24
+msgid "Sessions"
+msgstr ""
+
+#: irrigation/views.py:25
+msgid "Stations"
+msgstr ""
+
+#: notifications/models.py:17 planning/models.py:40
+msgid "Urgente"
+msgstr ""
+
+#: notifications/models.py:31
+msgid "notification"
+msgstr ""
+
+#: notifications/models.py:32
+msgid "notifications"
+msgstr ""
+
+#: notifications/models.py:49
+msgid "règle de notification"
+msgstr ""
+
+#: notifications/models.py:50
+msgid "règles de notification"
+msgstr ""
+
+#: notifications/templates/notifications/center.html:10
+msgid "Tout marquer comme lu"
+msgstr ""
+
+#: notifications/templates/notifications/center.html:27
+msgid "Aucune notification."
+msgstr ""
+
+#: notifications/templates/notifications/center.html:31
+msgid "Règles d'alerte"
+msgstr ""
+
+#: notifications/templates/notifications/center.html:37
+msgid "activée"
+msgstr ""
+
+#: notifications/templates/notifications/center.html:37
+msgid "désactivée"
+msgstr ""
+
+#: notifications/templates/notifications/center.html:42
+msgid "Aucune règle définie."
+msgstr ""
+
+#: operations/models.py:16 operations/models.py:212
+msgid "Pompe"
+msgstr ""
+
+#: operations/models.py:17 operations/models.py:204
+msgid "Tracteur"
+msgstr ""
+
+#: operations/models.py:20 operations/models.py:205
+msgid "Pulvérisateur"
+msgstr ""
+
+#: operations/models.py:27
+msgid "Réformée"
+msgstr ""
+
+#: operations/models.py:44
+msgid "machine"
+msgstr ""
+
+#: operations/models.py:45
+msgid "machines"
+msgstr ""
+
+#: operations/models.py:54
+msgid "Utilisation"
+msgstr ""
+
+#: operations/models.py:56 operations/models.py:146
+msgid "Réparation"
+msgstr ""
+
+#: operations/models.py:57
+msgid "Inspection"
+msgstr ""
+
+#: operations/models.py:80 operations/models.py:175
+msgid "Traitement"
+msgstr ""
+
+#: operations/models.py:81 operations/models.py:177
+msgid "Fertilisation"
+msgstr ""
+
+#: operations/models.py:82 operations/models.py:176
+msgid "Récolte"
+msgstr ""
+
+#: operations/models.py:83 operations/models.py:174
+msgid "Semis"
+msgstr ""
+
+#: operations/models.py:84
+msgid "Travail du sol"
+msgstr ""
+
+#: operations/models.py:85
+msgid "Taille"
+msgstr ""
+
+#: operations/models.py:86
+msgid "Palissage"
+msgstr ""
+
+#: operations/models.py:87
+msgid "Désherbage"
+msgstr ""
+
+#: operations/models.py:88
+msgid "Éclaircissage"
+msgstr ""
+
+#: operations/models.py:89
+msgid "Effeuillage"
+msgstr ""
+
+#: operations/models.py:90
+msgid "Vendange"
+msgstr ""
+
+#: operations/models.py:92
+msgid "Observation"
+msgstr ""
+
+#: operations/models.py:96
+msgid "Planifiée"
+msgstr ""
+
+#: operations/models.py:129
+msgid "intervention"
+msgstr ""
+
+#: operations/models.py:130
+msgid "interventions"
+msgstr ""
+
+#: operations/models.py:140
+msgid "Vidange"
+msgstr ""
+
+#: operations/models.py:141
+msgid "Filtres"
+msgstr ""
+
+#: operations/models.py:142
+msgid "Courroies"
+msgstr ""
+
+#: operations/models.py:143
+msgid "Pneumatiques"
+msgstr ""
+
+#: operations/models.py:144
+msgid "Freins"
+msgstr ""
+
+#: operations/models.py:145
+msgid "Révision complète"
+msgstr ""
+
+#: operations/models.py:147
+msgid "Contrôle technique"
+msgstr ""
+
+#: operations/models.py:166
+msgid "entretien"
+msgstr ""
+
+#: operations/models.py:167
+msgid "entretiens"
+msgstr ""
+
+#: operations/models.py:173
+msgid "Labour"
+msgstr ""
+
+#: operations/models.py:195
+msgid "affectation d'engin"
+msgstr ""
+
+#: operations/models.py:196
+msgid "affectations d'engins"
+msgstr ""
+
+#: operations/models.py:206
+msgid "Semoir"
+msgstr ""
+
+#: operations/models.py:207
+msgid "Épandeur"
+msgstr ""
+
+#: operations/models.py:208
+msgid "Moissonneuse"
+msgstr ""
+
+#: operations/models.py:209
+msgid "Charrue"
+msgstr ""
+
+#: operations/models.py:210
+msgid "Cultivateur"
+msgstr ""
+
+#: operations/models.py:211
+msgid "Benne"
+msgstr ""
+
+#: operations/models.py:231
+msgid "modèle d'engin (catalogue)"
+msgstr ""
+
+#: operations/models.py:232
+msgid "catalogue d'engins"
+msgstr ""
+
+#: operations/templates/operations/interventions.html:23
+msgid "Aucune intervention enregistrée."
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:16
+msgid "prochain entretien"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:21
+msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
+msgstr ""
+
+#: parcelles/models.py:19
+msgid "Gravitaire"
+msgstr ""
+
+#: parcelles/models.py:24
+msgid "Jachère"
+msgstr ""
+
+#: parcelles/models.py:32
+msgid "surface (ha)"
+msgstr ""
+
+#: parcelles/models.py:37
+msgid "polygone"
+msgstr ""
+
+#: parcelles/models.py:42
+msgid "type d'irrigation"
+msgstr ""
+
+#: parcelles/models.py:44
+msgid "débit théorique (m³/h)"
+msgstr ""
+
+#: parcelles/models.py:45
+msgid "nombre de buses"
+msgstr ""
+
+#: parcelles/models.py:46
+msgid "débit buse (L/h)"
+msgstr ""
+
+#: parcelles/models.py:47
+msgid "écart entre rangs (m)"
+msgstr ""
+
+#: parcelles/models.py:48
+msgid "écart entre émetteurs (m)"
+msgstr ""
+
+#: parcelles/models.py:49
+msgid "pression de service (bar)"
+msgstr ""
+
+#: parcelles/models.py:52
+msgid "culture"
+msgstr ""
+
+#: parcelles/models.py:53
+msgid "variété"
+msgstr ""
+
+#: parcelles/models.py:54 parcelles/models.py:91
+msgid "coefficient Kc"
+msgstr ""
+
+#: parcelles/models.py:55
+msgid "âge des plants (ans)"
+msgstr ""
+
+#: parcelles/models.py:56
+msgid "date de plantation"
+msgstr ""
+
+#: parcelles/models.py:57
+msgid "densité (pieds/ha)"
+msgstr ""
+
+#: parcelles/models.py:61
+msgid "profondeur racinaire"
+msgstr ""
+
+#: parcelles/models.py:62
+msgid "profondeur racinaire (cm)"
+msgstr ""
+
+#: parcelles/models.py:63
+msgid "rétention sol (mm/m)"
+msgstr ""
+
+#: parcelles/models.py:64
+msgid "pH du sol"
+msgstr ""
+
+#: parcelles/models.py:67
+msgid "réf. cadastrale"
+msgstr ""
+
+#: parcelles/models.py:68
+msgid "commune"
+msgstr ""
+
+#: parcelles/models.py:69
+msgid "surface officielle (ha)"
+msgstr ""
+
+#: parcelles/models.py:74
+msgid "parcelle"
+msgstr ""
+
+#: parcelles/models.py:75
+msgid "parcelles"
+msgstr ""
+
+#: parcelles/models.py:87
+msgid "stade"
+msgstr ""
+
+#: parcelles/models.py:89
+msgid "début"
+msgstr ""
+
+#: parcelles/models.py:90
+msgid "fin"
+msgstr ""
+
+#: parcelles/models.py:92
+msgid "profondeur racinaire (m)"
+msgstr ""
+
+#: parcelles/models.py:96
+msgid "stade cultural"
+msgstr ""
+
+#: parcelles/models.py:97
+msgid "stades culturaux"
+msgstr ""
+
+#: parcelles/templates/parcelles/confirm_delete.html:7
+msgid "Supprimer la parcelle ?"
+msgstr ""
+
+#: parcelles/templates/parcelles/confirm_delete.html:9
+#, python-format
+msgid "La parcelle « %(name)s » sera définitivement supprimée."
+msgstr ""
+
+#: parcelles/templates/parcelles/confirm_delete.html:13
+#: parcelles/templates/parcelles/detail.html:13
+msgid "Supprimer"
+msgstr "Usuń"
+
+#: parcelles/templates/parcelles/detail.html:12
+msgid "Modifier"
+msgstr "Edytuj"
+
+#: parcelles/templates/parcelles/detail.html:19
+msgid "Culture & sol"
+msgstr ""
+
+#: parcelles/templates/parcelles/detail.html:21
+msgid "Variété"
+msgstr ""
+
+#: parcelles/templates/parcelles/detail.html:23
+msgid "Type de sol"
+msgstr ""
+
+#: parcelles/templates/parcelles/detail.html:33
+msgid "Commune"
+msgstr ""
+
+#: parcelles/templates/parcelles/detail.html:38
+msgid "Retour aux parcelles"
+msgstr ""
+
+#: parcelles/templates/parcelles/form.html:8
+msgid "Étape"
+msgstr ""
+
+#: parcelles/templates/parcelles/form.html:21
+msgid "Identité & localisation"
+msgstr ""
+
+#: parcelles/templates/parcelles/form.html:33
+msgid "Cliquez sur la carte pour positionner la parcelle."
+msgstr ""
+
+#: parcelles/templates/parcelles/form.html:84
+msgid "Cadastre & statut"
+msgstr ""
+
+#: parcelles/templates/parcelles/form.html:94
+msgid "Précédent"
+msgstr ""
+
+#: parcelles/templates/parcelles/form.html:96
+msgid "Suivant"
+msgstr ""
+
+#: parcelles/templates/parcelles/list.html:8
+msgid "+ Nouvelle parcelle"
+msgstr ""
+
+#: parcelles/templates/parcelles/list.html:13 parcelles/views.py:35
+msgid "Configurez d'abord votre exploitation."
+msgstr ""
+
+#: parcelles/templates/parcelles/list.html:14
+msgid "Configurer"
+msgstr ""
+
+#: parcelles/templates/parcelles/list.html:43
+msgid "Aucune parcelle pour le moment."
+msgstr ""
+
+#: parcelles/templates/parcelles/list.html:44
+msgid "Créer ma première parcelle"
+msgstr ""
+
+#: parcelles/views.py:44
+msgid "Parcelle créée."
+msgstr ""
+
+#: parcelles/views.py:52
+msgid "Nouvelle parcelle"
+msgstr ""
+
+#: parcelles/views.py:75
+msgid "Parcelle mise à jour."
+msgstr ""
+
+#: parcelles/views.py:82
+#, python-format
+msgid "Modifier %(n)s"
+msgstr ""
+
+#: parcelles/views.py:92
+msgid "Parcelle supprimée."
+msgstr ""
+
+#: planning/models.py:29
+msgid "Planifié"
+msgstr ""
+
+#: planning/models.py:31
+msgid "En pause"
+msgstr ""
+
+#: planning/models.py:34
+msgid "Reporté"
+msgstr ""
+
+#: planning/models.py:43
+msgid "Non applicable"
+msgstr ""
+
+#: planning/models.py:44
+msgid "À facturer"
+msgstr ""
+
+#: planning/models.py:45
+msgid "Facturé"
+msgstr ""
+
+#: planning/models.py:46
+msgid "Avoir"
+msgstr ""
+
+#: planning/models.py:80
+msgid "tâche de planning"
+msgstr ""
+
+#: planning/models.py:81
+msgid "tâches de planning"
+msgstr ""
+
+#: planning/models.py:100
+msgid "affectation technicien"
+msgstr ""
+
+#: planning/models.py:101
+msgid "affectations techniciens"
+msgstr ""
+
+#: planning/models.py:106
+msgid "Photo"
+msgstr ""
+
+#: planning/models.py:107
+msgid "Plan"
+msgstr ""
+
+#: planning/models.py:108
+msgid "Schéma"
+msgstr ""
+
+#: planning/models.py:109
+msgid "Document"
+msgstr ""
+
+#: planning/models.py:126
+msgid "Démarrage"
+msgstr ""
+
+#: planning/models.py:127
+msgid "Pause"
+msgstr ""
+
+#: planning/models.py:128
+msgid "Reprise"
+msgstr ""
+
+#: planning/models.py:129
+msgid "Fin"
+msgstr ""
+
+#: planning/models.py:145
+msgid "Congé payé"
+msgstr ""
+
+#: planning/models.py:147
+msgid "Maladie"
+msgstr ""
+
+#: planning/models.py:148
+msgid "Formation"
+msgstr ""
+
+#: planning/models.py:149
+msgid "Sans solde"
+msgstr ""
+
+#: planning/models.py:153
+msgid "Matin"
+msgstr ""
+
+#: planning/models.py:154
+msgid "Après-midi"
+msgstr ""
+
+#: planning/models.py:155
+msgid "Journée"
+msgstr ""
+
+#: planning/models.py:158
+msgid "Demandé"
+msgstr ""
+
+#: planning/models.py:159
+msgid "Approuvé"
+msgstr ""
+
+#: planning/models.py:160
+msgid "Refusé"
+msgstr ""
+
+#: planning/models.py:178
+msgid "absence"
+msgstr ""
+
+#: planning/models.py:179
+msgid "absences"
+msgstr ""
+
+#: planning/models.py:206
+msgid "Outil à main"
+msgstr ""
+
+#: planning/models.py:207
+msgid "Outil de coupe"
+msgstr ""
+
+#: planning/models.py:208
+msgid "Outil motorisé"
+msgstr ""
+
+#: planning/models.py:209
+msgid "Engin"
+msgstr ""
+
+#: planning/models.py:210
+msgid "Protection"
+msgstr ""
+
+#: planning/models.py:211
+msgid "Arrosage"
+msgstr ""
+
+#: planning/models.py:212
+msgid "Mesure"
+msgstr ""
+
+#: planning/models.py:217 planning/models.py:253
+#: planning/templates/planning/planning.html:27
+msgid "Bon"
+msgstr ""
+
+#: planning/models.py:219
+msgid "À réparer"
+msgstr ""
+
+#: planning/models.py:220
+msgid "Hors service"
+msgstr ""
+
+#: planning/models.py:231
+msgid "matériel"
+msgstr ""
+
+#: planning/models.py:232
+msgid "catalogue matériel"
+msgstr ""
+
+#: planning/models.py:255
+msgid "Mauvais"
+msgstr ""
+
+#: planning/models.py:260
+msgid "Complété"
+msgstr ""
+
+#: planning/models.py:262
+msgid "Archivé"
+msgstr ""
+
+#: planning/models.py:295
+msgid "bon d'intervention"
+msgstr ""
+
+#: planning/models.py:296
+msgid "bons d'intervention"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:80
+msgid "Bon d'intervention"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:17
+msgid "Technicien"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:21
+msgid "Travaux réalisés"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:26
+msgid "Produits utilisés"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:30
+msgid "Qté"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:34
+msgid "Ajouter un produit"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:38
+msgid "Observations"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:43
+msgid "Signature du technicien"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:45
+msgid "Effacer"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:46
+msgid "Nom du signataire"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:50
+msgid "Enregistrer le brouillon"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:51
+msgid "Valider le bon"
+msgstr ""
+
+#: planning/templates/planning/planning.html:7
+msgid "Planning des interventions"
+msgstr ""
+
+#: planning/templates/planning/planning.html:17
+msgid "Tâches planifiées"
+msgstr ""
+
+#: planning/templates/planning/planning.html:32
+msgid "Aucune tâche planifiée."
+msgstr ""
+
+#: planning/templates/planning/planning.html:37
+msgid "Backlog"
+msgstr ""
+
+#: planning/templates/planning/planning.html:44
+msgid "Backlog vide."
+msgstr ""
+
+#: planning/views.py:33
+msgid "Jour"
+msgstr ""
+
+#: planning/views.py:33
+msgid "Semaine"
+msgstr ""
+
+#: planning/views.py:33
+msgid "Mois"
+msgstr ""
+
+#: planning/views.py:74
+msgid "Bon d'intervention enregistré."
+msgstr ""
+
+#: public/models.py:17
+msgid "lead capturé"
+msgstr ""
+
+#: public/models.py:18
+msgid "leads capturés"
+msgstr ""
+
+#: public/templates/public/activer.html:6 public/views.py:57
+msgid "Activer mon compte"
+msgstr ""
+
+#: public/templates/public/activer.html:9
+msgid ""
+"Saisissez le code d'activation reçu par email après votre paiement (format "
+"HOLS-XXXX-XXXX)."
+msgstr ""
+
+#: public/templates/public/activer.html:14
+msgid "Activer"
+msgstr ""
+
+#: public/templates/public/home.html:3
+msgid "Irrigation de précision pour agriculteurs"
+msgstr ""
+
+#: public/templates/public/home.html:12
+msgid "Pilotez votre irrigation, économisez l'eau et l'énergie."
+msgstr ""
+
+#: public/templates/public/home.html:14
+msgid ""
+"IoT temps réel, score d'efficience DTI, assistant IA et conformité "
+"subventions — pensés pour les agriculteurs."
+msgstr ""
+
+#: public/templates/public/home.html:17
+msgid "Démarrer"
+msgstr ""
+
+#: public/templates/public/home.html:24
+msgid "Guide gratuit : lire ses analyses de sol"
+msgstr ""
+
+#: public/templates/public/home.html:27
+msgid "Votre email"
+msgstr ""
+
+#: public/templates/public/home.html:28
+msgid "Recevoir"
+msgstr ""
+
+#: public/templates/public/home.html:34
+msgid "Discuter avec Alex 🌱"
+msgstr ""
+
+#: public/templates/public/home.html:43
+msgid "Posez votre question…"
+msgstr ""
+
+#: public/views.py:29
+msgid "Merci ! Votre guide arrive par email."
+msgstr ""
+
+#: public/views.py:54
+msgid "Votre accès Holystyl est activé !"
+msgstr ""
+
+#: public/views.py:56
+msgid "Code invalide ou déjà utilisé."
+msgstr ""
+
+#: templates/partials/cookie_banner.html:6
+msgid ""
+"Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
+msgstr ""
+
+#: templates/partials/cookie_banner.html:8
+msgid "J'ai compris"
+msgstr ""
+
+#: templates/partials/header.html:5
+msgid "Tableau de bord"
+msgstr ""
+
+#: templates/partials/header.html:19
+msgid "Thème"
+msgstr ""
+
+#: templates/partials/sidebar.html:16
+msgid "Bientôt"
+msgstr ""
+
+#: templates/partials/sidebar.html:21
+msgid "Plus"
+msgstr ""
+
+#: templates/partials/sidebar.html:46
+msgid "Déconnexion"
+msgstr "Wyloguj"
