@@ -72,22 +72,26 @@ def healthz(request):
 
 # Service worker servi à la RACINE (scope "/") — requis pour l'installabilité PWA.
 _SW_JS = """
-const CACHE = 'holystyl-v1';
-const PRECACHE = ['/static/css/app.css', '/static/js/app.js', '/static/icons/icon.svg'];
-self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)).catch(() => {}));
-  self.skipWaiting();
-});
+const CACHE = 'holystyl-v2';
+self.addEventListener('install', () => { self.skipWaiting(); });
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))));
-  self.clients.claim();
+  e.waitUntil(
+    caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
 });
+// Network-first pour les assets statiques : toujours frais en ligne,
+// cache seulement en secours hors-ligne (évite de servir un vieux CSS).
 self.addEventListener('fetch', (e) => {
   const { request } = e;
-  if (request.method !== 'GET') return;
-  if (request.url.includes('/static/')) {
-    e.respondWith(caches.match(request).then((hit) => hit || fetch(request)));
-  }
+  if (request.method !== 'GET' || !request.url.includes('/static/')) return;
+  e.respondWith(
+    fetch(request).then((resp) => {
+      const copy = resp.clone();
+      caches.open(CACHE).then((c) => c.put(request, copy)).catch(() => {});
+      return resp;
+    }).catch(() => caches.match(request))
+  );
 });
 """.strip()
 
