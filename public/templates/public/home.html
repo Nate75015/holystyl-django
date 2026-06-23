@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}Holystyl — {% trans "Irrigation de précision pour agriculteurs" %}{% endblock %}
+
+{% block auth_content %}
+<div class="w-full max-w-3xl space-y-10 py-10 text-center" x-data="alexChat()">
+  <div>
+    <div class="mb-4 flex items-center justify-center gap-2">
+      <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand text-lg font-bold text-white">H</span>
+      <span class="text-2xl font-semibold">Holystyl</span>
+    </div>
+    <h1 class="text-3xl font-bold sm:text-4xl">{% trans "Pilotez votre irrigation, économisez l'eau et l'énergie." %}</h1>
+    <p class="mx-auto mt-3 max-w-xl text-slate-500 dark:text-slate-400">
+      {% trans "IoT temps réel, score d'efficience DTI, assistant IA et conformité subventions — pensés pour les agriculteurs." %}
+    </p>
+    <div class="mt-6 flex items-center justify-center gap-3">
+      <a href="{% url 'accounts:register' %}" class="md-btn-primary">{% trans "Démarrer" %}</a>
+      <a href="{% url 'accounts:login' %}" class="sidebar-link">{% trans "Se connecter" %}</a>
+    </div>
+  </div>
+
+  {# Lead magnet #}
+  <div class="md-card mx-auto max-w-md text-left">
+    <h2 class="font-semibold">{% trans "Guide gratuit : lire ses analyses de sol" %}</h2>
+    <form method="post" action="{% url 'public:lead_capture' %}" class="mt-3 flex gap-2">
+      {% csrf_token %}
+      <input type="email" name="email" required placeholder="{% trans 'Votre email' %}" class="flex-1">
+      <button class="md-btn-primary shrink-0">{% trans "Recevoir" %}</button>
+    </form>
+  </div>
+
+  {# Agent commercial Alex #}
+  <div class="md-card mx-auto max-w-md text-left">
+    <h2 class="font-semibold">{% trans "Discuter avec Alex 🌱" %}</h2>
+    <div class="mt-3 max-h-60 space-y-2 overflow-y-auto">
+      <template x-for="(m, i) in chat" :key="i">
+        <div class="flex" :class="m.role==='user' ? 'justify-end' : ''">
+          <div class="max-w-[85%] rounded-2xl px-3 py-2 text-sm" :class="m.role==='user' ? 'bg-brand text-white' : 'bg-slate-100 dark:bg-white/10'" x-text="m.content"></div>
+        </div>
+      </template>
+    </div>
+    <form @submit.prevent="ask()" class="mt-3 flex gap-2">
+      <input x-model="input" type="text" placeholder="{% trans 'Posez votre question…' %}" class="flex-1">
+      <button class="md-btn-primary shrink-0" :disabled="busy">{% trans "Envoyer" %}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function alexChat() {
+    return {
+      chat: [], input: '', busy: false,
+      ask() {
+        var text = this.input.trim();
+        if (!text || this.busy) return;
+        this.chat.push({ role: 'user', content: text });
+        var history = this.chat.map(m => ({ role: m.role, content: m.content }));
+        this.input = ''; this.busy = true;
+        fetch('{% url "public:alex" %}', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history }),
+        }).then(r => r.json())
+          .then(d => { this.chat.push({ role: 'assistant', content: d.response }); })
+          .finally(() => { this.busy = false; });
+      },
+    };
+  }
+</script>
+{% endblock %}

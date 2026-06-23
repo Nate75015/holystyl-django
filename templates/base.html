@@ -51,6 +51,8 @@
   </main>
 {% endif %}
 
+  {% include "partials/cookie_banner.html" %}
+
   <script src="{% static 'js/app.js' %}" defer></script>
   {% block extra_js %}{% endblock %}
 </body>
