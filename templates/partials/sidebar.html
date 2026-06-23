@@ -24,7 +24,11 @@
           <div>
             <p class="px-2 text-xs font-medium uppercase tracking-wide text-slate-400">{{ section.label }}</p>
             {% for sub in section.items %}
-              <span class="sidebar-link cursor-not-allowed text-sm opacity-50">{{ sub }}</span>
+              {% if sub.url_name %}
+                <a href="{% url sub.url_name %}" class="sidebar-link text-sm {% if request.resolver_match.view_name == sub.url_name %}sidebar-link-active{% endif %}">{{ sub.label }}</a>
+              {% else %}
+                <span class="sidebar-link cursor-not-allowed text-sm opacity-50">{{ sub.label }}</span>
+              {% endif %}
             {% endfor %}
           </div>
         {% endfor %}
