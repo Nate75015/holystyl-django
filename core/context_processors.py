@@ -12,7 +12,7 @@ def layout(request):
     rendus désactivés.
     """
     nav_primary = [
-        {"label": _("Pulse"), "url_name": "core:dashboard", "icon": "activity"},
+        {"label": _("Tableau de bord"), "url_name": "core:dashboard", "icon": "activity"},
         {"label": _("Parcelles"), "url_name": "parcelles:list", "icon": "map"},
         {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "droplet"},
         {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "radio"},

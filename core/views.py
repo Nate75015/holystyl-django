@@ -53,7 +53,7 @@ def dashboard(request):
         request,
         "core/dashboard.html",
         {
-            "page_title": "Pulse",
+            "page_title": "Tableau de bord",
             "exploitation": exploitation,
             "needs_onboarding": exploitation is None,
             "kpis": kpis,
