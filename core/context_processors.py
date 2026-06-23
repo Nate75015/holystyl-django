@@ -14,11 +14,20 @@ def layout(request):
     nav_primary = [
         {"label": _("Pulse"), "url_name": "core:dashboard", "icon": "activity"},
         {"label": _("Parcelles"), "url_name": "parcelles:list", "icon": "map"},
-        {"label": _("Irrigation"), "url_name": None, "icon": "droplet"},
-        {"label": _("Capteurs"), "url_name": None, "icon": "radio"},
+        {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "droplet"},
+        {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "radio"},
         {"label": _("Assistant"), "url_name": None, "icon": "sparkles"},
     ]
     nav_sections = [
+        {
+            "label": _("Pilotage hydrique"),
+            "items": [
+                {"label": _("Régie SCADA"), "url_name": "iot:regie"},
+                {"label": _("Irrigation"), "url_name": "irrigation:irrigation"},
+                {"label": _("Bassinage"), "url_name": "irrigation:bassinage"},
+                {"label": _("Capteurs"), "url_name": "iot:capteurs"},
+            ],
+        },
         {
             "label": _("Cultures & Terrain"),
             "items": [
