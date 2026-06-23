@@ -1,5 +1,5 @@
 {% load i18n %}
-<header class="sticky top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white/70 px-4 py-3 backdrop-blur dark:border-white/10 dark:bg-[#05070a]/70 lg:px-8">
+<header class="glass-panel sticky top-0 z-20 flex items-center justify-between border-b px-4 py-3 lg:px-8">
   <div class="flex items-center gap-3">
     <span class="text-sm text-slate-400 lg:hidden">{{ APP_NAME }}</span>
     <h1 class="text-base font-semibold lg:text-lg">{{ page_title|default:_("Tableau de bord") }}</h1>
@@ -19,7 +19,7 @@
     <button @click="toggle()" class="md-icon-btn" title="{% trans 'Thème' %}">
       <span x-show="!dark">🌙</span><span x-show="dark" x-cloak>☀️</span>
     </button>
-    <span class="grid h-8 w-8 place-items-center rounded-full bg-teal-500/20 text-sm font-medium text-teal-600 dark:text-teal-300">
+    <span class="grid h-8 w-8 place-items-center rounded-full bg-brand/20 text-sm font-medium text-brand">
       {{ user.display_name|slice:":1"|upper }}
     </span>
   </div>

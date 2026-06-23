@@ -9,6 +9,9 @@
 
   <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
   <link rel="icon" href="{% static 'icons/icon.svg' %}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Lexend+Deca:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
@@ -26,7 +29,7 @@
     }
   </script>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-800 dark:bg-[#05070a] dark:text-slate-100">
+<body class="min-h-screen">
 {% if user.is_authenticated %}
   <div class="flex min-h-screen">
     {% include "partials/sidebar.html" %}

@@ -2,47 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ════════════════════════════════════════════════════════════════════
+   HOLYSTYL — Design system « Industrial Premium »
+   Turquoise #2ABFBF · Lexend · dark mode noir pur · glassmorphism · glow
+   (port fidèle de client/src/index.css)
+═══════════════════════════════════════════════════════════════════════ */
+
 @layer base {
   [x-cloak] { display: none !important; }
 
-  /* Champs de formulaire Django stylés par défaut */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="number"],
-  input[type="search"],
-  input[type="date"],
-  select,
-  textarea {
-    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800
-           outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30
-           dark:border-white/10 dark:bg-white/5 dark:text-slate-100;
+  html { scroll-behavior: smooth; }
+
+  /* Light mode : fond clair + halos turquoise */
+  body {
+    font-family: 'Lexend', 'Lexend Deca', ui-sans-serif, system-ui, sans-serif;
+    color: oklch(12% 0.015 192);
+    background-color: oklch(98% 0.003 192);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(68% 0.14 192 / 0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, oklch(72% 0.13 192 / 0.04) 0%, transparent 50%);
+    background-attachment: fixed;
   }
+
+  /* Dark mode : noir pur #000 + halos turquoise lumineux */
+  .dark body {
+    color: oklch(93% 0.01 192);
+    background-color: #000000;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(72% 0.13 192 / 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, oklch(72% 0.13 192 / 0.04) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* Champs de formulaire */
+  input[type="text"], input[type="email"], input[type="password"],
+  input[type="number"], input[type="search"], input[type="date"],
+  select, textarea {
+    @apply w-full rounded-lg px-3 py-2 text-sm outline-none transition;
+    background: oklch(100% 0 0 / 0.6);
+    border: 1px solid oklch(68% 0.14 192 / 0.18);
+    color: oklch(12% 0.015 192);
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: oklch(68% 0.14 192 / 0.6);
+    box-shadow: 0 0 0 3px oklch(68% 0.14 192 / 0.15);
+  }
+  .dark input[type="text"], .dark input[type="email"], .dark input[type="password"],
+  .dark input[type="number"], .dark input[type="search"], .dark input[type="date"],
+  .dark select, .dark textarea {
+    background: oklch(14% 0.015 192 / 0.7);
+    border-color: oklch(72% 0.13 192 / 0.15);
+    color: oklch(93% 0.01 192);
+  }
+
+  /* Scrollbars fines */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: oklch(92% 0.008 192); }
+  ::-webkit-scrollbar-thumb { background: oklch(78% 0.06 192); border-radius: 3px; }
+  .dark ::-webkit-scrollbar-track { background: oklch(8% 0.01 192); }
+  .dark ::-webkit-scrollbar-thumb { background: oklch(22% 0.02 192); border-radius: 3px; }
+  ::selection { background: oklch(72% 0.13 192 / 0.3); }
 }
 
 @layer components {
-  .md-card {
-    @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm
-           dark:border-white/10 dark:bg-white/5;
+  /* ── Glassmorphism ─────────────────────────────────────────────── */
+  .glass-card {
+    background: oklch(100% 0 0 / 0.78);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid oklch(68% 0.14 192 / 0.12);
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.07), 0 1px 4px oklch(0% 0 0 / 0.04);
+  }
+  .dark .glass-card {
+    background: oklch(10% 0.012 192 / 0.65);
+    border-color: oklch(72% 0.13 192 / 0.10);
+    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.5), 0 1px 4px oklch(0% 0 0 / 0.3);
   }
 
-  .md-btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-brand px-4 py-2 text-sm font-medium
-           text-white transition hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand/40
-           disabled:opacity-50;
+  .glass-panel {
+    background: oklch(99% 0.004 192 / 0.96);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border-color: oklch(68% 0.14 192 / 0.10);
   }
+  .dark .glass-panel {
+    background: oklch(5% 0.008 192 / 0.92);
+    border-color: oklch(72% 0.13 192 / 0.08);
+  }
+
+  /* ── Carte standard (utilisée par toutes les pages) ────────────── */
+  .md-card {
+    @apply rounded-2xl p-5;
+    background: oklch(100% 0 0 / 0.78);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid oklch(68% 0.14 192 / 0.12);
+    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.07);
+  }
+  .dark .md-card {
+    background: oklch(10% 0.012 192 / 0.65);
+    border-color: oklch(72% 0.13 192 / 0.10);
+    box-shadow: 0 4px 24px oklch(0% 0 0 / 0.5);
+  }
+
+  /* ── Boutons ───────────────────────────────────────────────────── */
+  .md-btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white transition;
+    background: oklch(68% 0.14 192);
+    box-shadow: 0 0 20px oklch(72% 0.13 192 / 0.35);
+  }
+  .md-btn-primary:hover { background: oklch(62% 0.13 192); box-shadow: 0 0 28px oklch(72% 0.13 192 / 0.5); }
+  .md-btn-primary:disabled { opacity: .5; box-shadow: none; }
+  .dark .md-btn-primary { color: #000; font-weight: 600; background: oklch(72% 0.13 192); }
 
   .md-icon-btn {
-    @apply grid h-8 w-8 place-items-center rounded-lg border border-slate-200 text-sm
-           transition hover:bg-slate-100 dark:border-white/10 dark:hover:bg-white/10;
+    @apply grid h-8 w-8 place-items-center rounded-lg text-sm transition;
+    border: 1px solid oklch(68% 0.14 192 / 0.18);
   }
+  .md-icon-btn:hover { background: oklch(68% 0.14 192 / 0.10); }
+  .dark .md-icon-btn { border-color: oklch(72% 0.13 192 / 0.15); }
 
+  /* ── Sidebar links ─────────────────────────────────────────────── */
   .sidebar-link {
-    @apply block rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition
-           hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10;
+    @apply block rounded-lg px-3 py-2 text-sm font-medium transition;
+    color: oklch(35% 0.02 192);
   }
+  .sidebar-link:hover { background: oklch(68% 0.14 192 / 0.08); color: oklch(55% 0.14 192); }
+  .dark .sidebar-link { color: oklch(70% 0.02 192); }
+  .dark .sidebar-link:hover { background: oklch(72% 0.13 192 / 0.12); color: oklch(82% 0.10 192); }
 
   .sidebar-link-active {
-    @apply bg-brand/10 text-brand dark:bg-brand/15 dark:text-brand-50;
+    background: oklch(68% 0.14 192 / 0.12) !important;
+    color: oklch(55% 0.14 192) !important;
   }
+  .dark .sidebar-link-active {
+    background: oklch(72% 0.13 192 / 0.15) !important;
+    color: oklch(82% 0.12 192) !important;
+  }
+
+  /* ── Glow effects ──────────────────────────────────────────────── */
+  .glow-teal { box-shadow: 0 0 20px oklch(72% 0.13 192 / 0.4), 0 0 60px oklch(72% 0.13 192 / 0.15); }
+  .glow-green { box-shadow: 0 0 20px oklch(72% 0.22 145 / 0.35), 0 0 60px oklch(72% 0.22 145 / 0.12); }
+  .text-glow-teal { text-shadow: 0 0 20px oklch(72% 0.13 192 / 0.7), 0 0 40px oklch(72% 0.13 192 / 0.3); }
+
+  /* ── Status dots lumineux ──────────────────────────────────────── */
+  .status-online { background: oklch(72% 0.22 145); box-shadow: 0 0 8px oklch(72% 0.22 145 / 0.9); }
+  .status-offline { background: oklch(60% 0.02 192); }
+  .status-warning { background: oklch(75% 0.18 60); box-shadow: 0 0 8px oklch(75% 0.18 60 / 0.9); }
 }
