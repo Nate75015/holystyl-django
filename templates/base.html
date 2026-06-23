@@ -1,0 +1,57 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'fr' }}" x-data="theme()" :class="dark ? 'dark' : ''">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#06b6c4">
+  <title>{% block title %}{{ page_title|default:APP_NAME }} · {{ APP_NAME }}{% endblock %}</title>
+
+  <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
+  <link rel="icon" href="{% static 'icons/icon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+  <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script>
+    // Thème clair/sombre persistant (avant rendu pour éviter le flash)
+    function theme() {
+      return {
+        dark: (localStorage.getItem('holystyl-theme') || 'dark') === 'dark',
+        toggle() {
+          this.dark = !this.dark;
+          localStorage.setItem('holystyl-theme', this.dark ? 'dark' : 'light');
+        },
+      };
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 dark:bg-[#05070a] dark:text-slate-100">
+{% if user.is_authenticated %}
+  <div class="flex min-h-screen">
+    {% include "partials/sidebar.html" %}
+    <div class="flex min-w-0 flex-1 flex-col">
+      {% include "partials/header.html" %}
+      <main class="flex-1 px-4 pb-24 pt-6 lg:px-8 lg:pb-8">
+        {% if messages %}
+          <div class="mb-4 space-y-2">
+            {% for message in messages %}
+              <div class="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm dark:border-white/10 dark:bg-white/5">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+  {% include "partials/bottom_nav.html" %}
+{% else %}
+  <main class="flex min-h-screen items-center justify-center px-4">
+    {% block auth_content %}{% endblock %}
+  </main>
+{% endif %}
+
+  <script src="{% static 'js/app.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

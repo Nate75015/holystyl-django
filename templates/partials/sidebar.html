@@ -1,0 +1,45 @@
+{% load i18n %}
+<aside class="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-slate-200 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-white/5 lg:flex">
+  <div class="flex items-center gap-2 px-5 py-5">
+    <span class="grid h-8 w-8 place-items-center rounded-lg bg-teal-500 font-bold text-white">H</span>
+    <span class="text-lg font-semibold tracking-tight">{{ APP_NAME }}</span>
+  </div>
+
+  <nav class="flex-1 space-y-1 overflow-y-auto px-3">
+    {% for item in nav_primary %}
+      {% if item.url_name %}
+        <a href="{% url item.url_name %}"
+           class="sidebar-link {% if request.resolver_match.view_name == item.url_name %}sidebar-link-active{% endif %}">
+          {{ item.label }}
+        </a>
+      {% else %}
+        <span class="sidebar-link cursor-not-allowed opacity-50" title="{% trans 'Bientôt' %}">{{ item.label }}</span>
+      {% endif %}
+    {% endfor %}
+
+    <div class="mt-4" x-data="{ open: false }">
+      <button @click="open = !open" class="sidebar-link w-full text-left opacity-80">{% trans "Plus" %} ▾</button>
+      <div x-show="open" x-cloak class="mt-1 space-y-3 pl-2">
+        {% for section in nav_sections %}
+          <div>
+            <p class="px-2 text-xs font-medium uppercase tracking-wide text-slate-400">{{ section.label }}</p>
+            {% for sub in section.items %}
+              <span class="sidebar-link cursor-not-allowed text-sm opacity-50">{{ sub }}</span>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="border-t border-slate-200 p-3 dark:border-white/10">
+    <div class="mb-2 px-2 text-sm">
+      <p class="font-medium">{{ user.display_name }}</p>
+      <p class="truncate text-xs text-slate-400">{{ user.email }}</p>
+    </div>
+    <form method="post" action="{% url 'accounts:logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="sidebar-link w-full text-left text-sm text-red-500">{% trans "Déconnexion" %}</button>
+    </form>
+  </div>
+</aside>

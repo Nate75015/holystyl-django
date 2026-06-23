@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <div class="md-card">
+    <h2 class="text-xl font-semibold">{% trans "Bienvenue sur Holystyl" %}</h2>
+    <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+      {% blocktrans %}Socle Django opérationnel. Les modules métier (parcelles, irrigation, IoT, IA…) arrivent dans les prochaines tranches.{% endblocktrans %}
+    </p>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {% for kpi in kpis %}
+      <div class="md-card">
+        <p class="text-xs uppercase tracking-wide text-slate-400">{{ kpi.label }}</p>
+        <p class="mt-2 text-2xl font-semibold">{{ kpi.value }}</p>
+      </div>
+    {% empty %}
+      <div class="md-card sm:col-span-2 lg:col-span-4">
+        <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune donnée pour le moment." %}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

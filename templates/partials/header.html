@@ -1,0 +1,26 @@
+{% load i18n %}
+<header class="sticky top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white/70 px-4 py-3 backdrop-blur dark:border-white/10 dark:bg-[#05070a]/70 lg:px-8">
+  <div class="flex items-center gap-3">
+    <span class="text-sm text-slate-400 lg:hidden">{{ APP_NAME }}</span>
+    <h1 class="text-base font-semibold lg:text-lg">{{ page_title|default:_("Tableau de bord") }}</h1>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <form method="get" class="hidden sm:block">
+      <select name="lang" onchange="document.cookie='django_language='+this.value+';path=/';location.reload()"
+              class="rounded-md border border-slate-200 bg-transparent px-2 py-1 text-xs dark:border-white/10">
+        {% get_current_language as CUR %}
+        {% get_available_languages as LANGS %}
+        {% for code, name in LANGS %}
+          <option value="{{ code }}" {% if code == CUR %}selected{% endif %}>{{ code|upper }}</option>
+        {% endfor %}
+      </select>
+    </form>
+    <button @click="toggle()" class="md-icon-btn" title="{% trans 'Thème' %}">
+      <span x-show="!dark">🌙</span><span x-show="dark" x-cloak>☀️</span>
+    </button>
+    <span class="grid h-8 w-8 place-items-center rounded-full bg-teal-500/20 text-sm font-medium text-teal-600 dark:text-teal-300">
+      {{ user.display_name|slice:":1"|upper }}
+    </span>
+  </div>
+</header>
