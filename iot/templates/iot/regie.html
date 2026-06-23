@@ -25,20 +25,36 @@
   {% if devices %}
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {% for d in devices %}
-        <div class="md-card" data-device-id="{{ d.id }}">
+        <div class="md-card" data-device-id="{{ d.id }}"
+             :class="(status[{{ d.id }}] || '{{ d.status }}') === 'online' ? 'glow-teal' : ''">
           <div class="flex items-center justify-between">
-            <p class="font-medium">{{ d.name }}</p>
-            <span class="rounded-full px-2 py-0.5 text-xs"
-                  :class="status[{{ d.id }}] === 'online' ? 'bg-green-500/15 text-green-600' : 'bg-slate-400/15 text-slate-400'"
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full"
+                    :class="(status[{{ d.id }}] || '{{ d.status }}') === 'online' ? 'status-online' : 'status-offline'"></span>
+              <p class="font-medium">{{ d.name }}</p>
+            </div>
+            <span class="text-[11px] uppercase tracking-wide text-slate-400"
                   x-text="status[{{ d.id }}] || '{{ d.status }}'"></span>
           </div>
           <p class="text-xs text-slate-400">{{ d.get_device_type_display }} · {{ d.get_brand_display }}</p>
-          <dl class="mt-3 grid grid-cols-2 gap-2 text-sm">
-            <div><dt class="text-slate-400">{% trans "Débit" %}</dt><dd><span x-text="readings[{{ d.id }}]?.flow ?? '—'"></span> m³/h</dd></div>
-            <div><dt class="text-slate-400">{% trans "Pression" %}</dt><dd><span x-text="readings[{{ d.id }}]?.pressure ?? '—'"></span> bar</dd></div>
-            <div><dt class="text-slate-400">{% trans "Puissance" %}</dt><dd><span x-text="readings[{{ d.id }}]?.power ?? '—'"></span> kW</dd></div>
-            <div><dt class="text-slate-400">{% trans "Humidité" %}</dt><dd><span x-text="readings[{{ d.id }}]?.soil ?? '—'"></span> %</dd></div>
-          </dl>
+          <div class="mt-4 grid grid-cols-2 gap-3">
+            <div class="rounded-xl bg-brand/5 p-3">
+              <p class="text-[11px] uppercase text-slate-400">{% trans "Débit" %}</p>
+              <p class="text-lg font-semibold text-brand"><span x-text="readings[{{ d.id }}]?.flow ?? '—'"></span> <span class="text-xs font-normal text-slate-400">m³/h</span></p>
+            </div>
+            <div class="rounded-xl bg-brand/5 p-3">
+              <p class="text-[11px] uppercase text-slate-400">{% trans "Pression" %}</p>
+              <p class="text-lg font-semibold"><span x-text="readings[{{ d.id }}]?.pressure ?? '—'"></span> <span class="text-xs font-normal text-slate-400">bar</span></p>
+            </div>
+            <div class="rounded-xl bg-brand/5 p-3">
+              <p class="text-[11px] uppercase text-slate-400">{% trans "Puissance" %}</p>
+              <p class="text-lg font-semibold"><span x-text="readings[{{ d.id }}]?.power ?? '—'"></span> <span class="text-xs font-normal text-slate-400">kW</span></p>
+            </div>
+            <div class="rounded-xl bg-brand/5 p-3">
+              <p class="text-[11px] uppercase text-slate-400">{% trans "Humidité" %}</p>
+              <p class="text-lg font-semibold text-green-500"><span x-text="readings[{{ d.id }}]?.soil ?? '—'"></span> <span class="text-xs font-normal text-slate-400">%</span></p>
+            </div>
+          </div>
         </div>
       {% endfor %}
     </div>
