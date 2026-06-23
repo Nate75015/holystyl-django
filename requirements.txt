@@ -1,0 +1,34 @@
+# ── Holystyl Django — socle (Tranche 0) ─────────────────────────────
+# Python 3.12 · Django 5.2 LTS
+Django>=5.2,<5.3
+djangorestframework>=3.16,<3.18
+
+# Base de données PostgreSQL
+psycopg[binary]>=3.2,<4
+dj-database-url>=2.3,<3
+
+# Configuration / env
+python-dotenv>=1.0,<2
+
+# ASGI / temps réel (SCADA — infra posée dès le socle)
+channels[daphne]>=4.2,<5
+channels-redis>=4.2,<5
+
+# Jobs planifiés / async (rapport quotidien, rappels, emails/SMS)
+celery>=5.4,<6
+redis>=5.2,<6
+
+# Fichiers statiques
+whitenoise>=6.8,<7
+
+# Tests
+pytest>=8.3,<9
+pytest-django>=4.9,<5
+
+# ── Ajoutés au fil des tranches (référence) ─────────────────────────
+# Tranche 3  : google-generativeai            # IA Gemini (chat, intents, transcription)
+# Tranche 4  : twilio                          # SMS/WhatsApp
+# Tranche 5  : pypdf  pdfplumber               # OCR / extraction PDF analyses
+# Tranche 6  : weasyprint                      # export PDF certifié
+# Tranche 7  : stripe                          # paiements / webhooks
+# Stockage   : django-storages  boto3          # S3 en prod

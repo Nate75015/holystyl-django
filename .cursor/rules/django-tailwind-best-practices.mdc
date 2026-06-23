@@ -1,0 +1,52 @@
+---
+description: Django + Tailwind HTML/CSS/JS best practices for this project
+alwaysApply: true
+---
+
+# Django + Tailwind Best Practices
+
+- Use `base.html` as the global layout and make page templates extend it.
+- Keep business logic in `views.py`/`forms.py`/`models.py`, not in templates.
+- Put static assets in `static/` (`static/css`, `static/js`) and load them with `{% load static %}`.
+- Avoid inline CSS/JS in templates; prefer reusable classes and external files.
+- With Tailwind, prefer utility classes in templates; keep custom CSS minimal and focused.
+- Use consistent spacing/color scale (`p-4`, `gap-4`, `text-slate-*`, `bg-blue-*`) across pages.
+- Split repeated UI into reusable template partials/components.
+- Keep templates readable: clear sections, semantic tags, short blocks.
+- Use Django forms for validation and CSRF protection on all POST forms.
+- For dashboard tables: include explicit empty state, readable headings, and responsive behavior.
+
+## Tailwind Setup — CLI (never CDN)
+
+**Never use the Tailwind CDN** (`cdn.tailwindcss.com`) in templates. All projects use Tailwind CLI v3.
+
+- Source file : `static/css/input.css` (contains `@tailwind base/components/utilities` + `@layer components`)
+- Output file : `static/css/app.css` (compiled, committed)
+- Custom component classes (`.md-card`, `.md-btn-primary`, `.sidebar-link`, etc.) are defined in `input.css` under `@layer components` using `@apply`
+- The theme (colors, fonts) is defined in `tailwind.config.js` at the repo root
+
+```bash
+npm run build:css   # build minifié (prod)
+npm run watch:css   # rebuild automatique en dev
+```
+
+After adding new Tailwind classes to templates, always run `npm run build:css` so `app.css` stays up to date.
+
+Load the compiled CSS in every template (including standalone auth pages):
+
+```django
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+```
+
+## Minimal Template Pattern
+
+```django
+{% load static %}
+{% extends "base.html" %}
+{% block content %}
+  <section class="p-6">
+    <h1 class="text-2xl font-semibold">Page Title</h1>
+  </section>
+{% endblock %}
+```
