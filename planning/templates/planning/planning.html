@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6" x-data="{ view: 'semaine' }">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">{% trans "Planning des interventions" %}</h2>
+    <div class="flex gap-1 rounded-lg border border-slate-200 p-1 text-sm dark:border-white/10">
+      {% for key, label in views %}
+        <button @click="view='{{ key }}'" class="rounded px-3 py-1" :class="view==='{{ key }}' ? 'bg-brand text-white' : ''">{{ label }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-2 space-y-2">
+      <h3 class="text-sm font-medium text-slate-400">{% trans "Tâches planifiées" %}</h3>
+      {% for t in tasks %}
+        {% if not t.is_backlog %}
+          <div class="md-card flex items-center justify-between" style="border-left:4px solid {{ t.couleur|default:'#06b6c4' }}">
+            <div>
+              <p class="font-medium">{{ t.titre }}</p>
+              <p class="text-xs text-slate-400">{{ t.get_type_display }} · {{ t.technicien_nom|default:"—" }}{% if t.date_debut %} · {{ t.date_debut }}{% endif %}</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="rounded-full bg-brand/10 px-2 py-0.5 text-xs text-brand">{{ t.get_statut_display }}</span>
+              <a href="{% url 'planning:bon_intervention' t.pk %}" class="sidebar-link text-xs">{% trans "Bon" %}</a>
+            </div>
+          </div>
+        {% endif %}
+      {% empty %}
+        <div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune tâche planifiée." %}</p></div>
+      {% endfor %}
+    </div>
+
+    <div class="space-y-2">
+      <h3 class="text-sm font-medium text-slate-400">{% trans "Backlog" %}</h3>
+      {% for t in backlog %}
+        <div class="md-card">
+          <p class="font-medium">{{ t.titre }}</p>
+          <p class="text-xs text-slate-400">{{ t.get_priorite_display }}</p>
+        </div>
+      {% empty %}
+        <div class="md-card"><p class="text-sm text-slate-400">{% trans "Backlog vide." %}</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

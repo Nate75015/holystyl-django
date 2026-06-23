@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl space-y-6" x-data="bon()">
+  {{ report.produits_utilises|json_script:"produits-data" }}
+  <h2 class="text-xl font-semibold">{% trans "Bon d'intervention" %} — {{ task.titre }}</h2>
+
+  <form method="post" class="md-card space-y-5" @submit="prepare()">
+    {% csrf_token %}
+    <input type="hidden" name="action" x-model="action">
+    <input type="hidden" name="signature_tech_url" x-ref="sigField">
+    <input type="hidden" name="produits_utilises" :value="JSON.stringify(produits)">
+
+    <div class="grid grid-cols-2 gap-4 text-sm">
+      <div><span class="text-slate-400">{% trans "Type" %}</span><p>{{ task.get_type_display }}</p></div>
+      <div><span class="text-slate-400">{% trans "Technicien" %}</span><p>{{ task.technicien_nom|default:"—" }}</p></div>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "Travaux réalisés" %}</label>
+      <textarea name="description_travaux" rows="3">{{ report.description_travaux }}</textarea>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "Produits utilisés" %}</label>
+      <template x-for="(p, i) in produits" :key="i">
+        <div class="mb-2 flex gap-2">
+          <input type="text" x-model="p.nom" placeholder="{% trans 'Produit' %}" class="flex-1">
+          <input type="number" x-model="p.quantite" placeholder="{% trans 'Qté' %}" class="w-24">
+          <button type="button" @click="produits.splice(i,1)" class="md-icon-btn text-red-500">✕</button>
+        </div>
+      </template>
+      <button type="button" @click="produits.push({nom:'',quantite:1})" class="sidebar-link text-sm">+ {% trans "Ajouter un produit" %}</button>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "Observations" %}</label>
+      <textarea name="observations" rows="2">{{ report.observations }}</textarea>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium">{% trans "Signature du technicien" %}</label>
+      <canvas x-ref="canvas" class="w-full rounded-lg border border-slate-300 dark:border-white/10" height="160"></canvas>
+      <button type="button" @click="clearSig()" class="sidebar-link mt-1 text-xs">{% trans "Effacer" %}</button>
+      <input type="text" name="signature_client_nom" placeholder="{% trans 'Nom du signataire' %}" class="mt-2" value="{{ report.signature_client_nom }}">
+    </div>
+
+    <div class="flex gap-3 border-t border-slate-100 pt-4 dark:border-white/5">
+      <button type="submit" class="sidebar-link" @click="action='draft'">{% trans "Enregistrer le brouillon" %}</button>
+      <button type="submit" class="md-btn-primary" @click="action='validate'">{% trans "Valider le bon" %}</button>
+    </div>
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function bon() {
+    return {
+      action: 'draft',
+      produits: (JSON.parse(document.getElementById('produits-data').textContent) || []),
+      ctx: null, drawing: false,
+      init() {
+        var c = this.$refs.canvas; c.width = c.offsetWidth;
+        this.ctx = c.getContext('2d'); this.ctx.lineWidth = 2; this.ctx.strokeStyle = '#0f172a';
+        var pos = (e) => { var r = c.getBoundingClientRect(); var t = e.touches ? e.touches[0] : e; return [t.clientX - r.left, t.clientY - r.top]; };
+        var down = (e) => { this.drawing = true; this.ctx.beginPath(); this.ctx.moveTo(...pos(e)); e.preventDefault(); };
+        var move = (e) => { if (!this.drawing) return; this.ctx.lineTo(...pos(e)); this.ctx.stroke(); e.preventDefault(); };
+        var up = () => { this.drawing = false; };
+        c.addEventListener('mousedown', down); c.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+        c.addEventListener('touchstart', down); c.addEventListener('touchmove', move); c.addEventListener('touchend', up);
+      },
+      clearSig() { this.ctx.clearRect(0, 0, this.$refs.canvas.width, this.$refs.canvas.height); },
+      prepare() { this.$refs.sigField.value = this.$refs.canvas.toDataURL('image/png'); },
+    };
+  }
+</script>
+{% endblock %}
