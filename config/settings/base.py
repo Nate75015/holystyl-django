@@ -59,6 +59,9 @@ INSTALLED_APPS = [
     "operations",
     "analyses",
     "finances",
+    "billing",
+    "public",
+    "administration",
 ]
 
 MIDDLEWARE = [
@@ -187,6 +190,10 @@ GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
 TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN", "")
 TWILIO_FROM_NUMBER = env("TWILIO_FROM_NUMBER", "")
+
+# ── Paiements — Stripe ──────────────────────────────────────────────
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", "")
+STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET", "")
 
 # ── Divers ──────────────────────────────────────────────────────────
 APP_NAME = "Holystyl"
