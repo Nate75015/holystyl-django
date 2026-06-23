@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <h2 class="text-xl font-semibold">{% trans "Analyses de sol" %}</h2>
+  {% if analyses %}
+    <div class="space-y-2">
+      {% for a in analyses %}
+        <div class="md-card">
+          <div class="flex items-center justify-between">
+            <p class="font-medium">{{ a.parcelle.name }}</p>
+            <span class="text-xs text-slate-400">{{ a.date|date:"d/m/Y" }}</span>
+          </div>
+          <dl class="mt-2 grid grid-cols-2 gap-1 text-sm sm:grid-cols-4">
+            <div><dt class="text-slate-400">pH</dt><dd>{{ a.ph|default:"—" }}</dd></div>
+            <div><dt class="text-slate-400">MO</dt><dd>{{ a.matiere_organique|default:"—" }}</dd></div>
+            <div><dt class="text-slate-400">N</dt><dd>{{ a.azote_total|default:"—" }}</dd></div>
+            <div><dt class="text-slate-400">{% trans "Labo" %}</dt><dd>{{ a.laboratoire|default:"—" }}</dd></div>
+          </dl>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune analyse de sol." %}</p></div>
+  {% endif %}
+</section>
+{% endblock %}
