@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">{% trans "Charges" %}</h2>
+    <a href="{% url 'finances:report_csv' %}?type=charges" class="sidebar-link text-sm">{% trans "Export CSV" %}</a>
+  </div>
+  {% if charges %}
+    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+          <tr><th class="px-4 py-3">{% trans "Date" %}</th><th class="px-4 py-3">{% trans "Catégorie" %}</th><th class="px-4 py-3">{% trans "Montant" %}</th><th class="px-4 py-3">{% trans "Fournisseur" %}</th></tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+          {% for c in charges %}
+            <tr>
+              <td class="px-4 py-3">{{ c.date|date:"d/m/Y" }}</td>
+              <td class="px-4 py-3">{{ c.get_categorie_display }}</td>
+              <td class="px-4 py-3 font-medium">{{ c.montant }} €</td>
+              <td class="px-4 py-3 text-slate-400">{{ c.fournisseur|default:"—" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune charge enregistrée." %}</p></div>
+  {% endif %}
+</section>
+{% endblock %}

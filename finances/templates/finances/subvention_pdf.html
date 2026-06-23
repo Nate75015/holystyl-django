@@ -1,0 +1,58 @@
+{% load i18n %}<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <style>
+    @page { size: A4; margin: 2cm; }
+    body { font-family: sans-serif; color: #1e293b; font-size: 12px; }
+    h1 { color: #06b6c4; font-size: 22px; margin-bottom: 0; }
+    .sub { color: #64748b; margin-top: 4px; }
+    .section { margin-top: 24px; }
+    .kpis { display: flex; gap: 16px; margin-top: 12px; }
+    .kpi { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; flex: 1; }
+    .kpi .label { color: #64748b; font-size: 10px; text-transform: uppercase; }
+    .kpi .value { font-size: 18px; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid #e2e8f0; padding: 6px 8px; text-align: left; }
+    th { background: #f1f5f9; }
+    .footer { margin-top: 32px; color: #94a3b8; font-size: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Holystyl — {% trans "Dossier de subvention" %}</h1>
+  <p class="sub">
+    {{ export_type }}{% if year %} · {% trans "Année" %} {{ year }}{% endif %}
+    {% if exploitation %} · {{ exploitation.name }}{% if exploitation.city %} ({{ exploitation.city }}){% endif %}{% endif %}
+  </p>
+
+  <div class="section">
+    <div class="kpis">
+      <div class="kpi"><div class="label">{% trans "Surface" %}</div><div class="value">{{ bilan.surface_ha }} ha</div></div>
+      <div class="kpi"><div class="label">{% trans "Eau" %}</div><div class="value">{{ bilan.eau_m3 }} m³</div></div>
+      <div class="kpi"><div class="label">{% trans "Énergie" %}</div><div class="value">{{ bilan.energie_kwh }} kWh</div></div>
+      <div class="kpi"><div class="label">{% trans "Score DTI" %}</div><div class="value">{% if dti %}{{ dti.score }}{% else %}—{% endif %}</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>{% trans "Bilan économique" %}</h3>
+    <table>
+      <tr><th>{% trans "Revenus" %}</th><td>{{ bilan.total_revenus }} €</td></tr>
+      <tr><th>{% trans "Charges" %}</th><td>{{ bilan.total_charges }} €</td></tr>
+      <tr><th>{% trans "Résultat net" %}</th><td>{{ bilan.resultat_net }} €</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>{% trans "Parcelles" %}</h3>
+    <table>
+      <tr><th>{% trans "Nom" %}</th><th>{% trans "Culture" %}</th><th>{% trans "Surface (ha)" %}</th><th>{% trans "Irrigation" %}</th></tr>
+      {% for p in parcelles %}
+        <tr><td>{{ p.name }}</td><td>{{ p.culture|default:"—" }}</td><td>{{ p.area|default:"—" }}</td><td>{{ p.get_irrigation_type_display|default:"—" }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <p class="footer">{% trans "Document généré par Holystyl." %}</p>
+</body>
+</html>

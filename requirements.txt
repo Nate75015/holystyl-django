@@ -27,13 +27,15 @@ google-genai>=1.0,<2
 # SMS / WhatsApp — Twilio
 twilio>=9.0,<10
 
+# Export PDF certifié (dossiers subvention)
+weasyprint>=63,<70
+
 # Tests
 pytest>=8.3,<9
 pytest-django>=4.9,<5
 pytest-asyncio>=0.24,<1
 
 # ── Ajoutés au fil des tranches (référence) ─────────────────────────
-# Tranche 5  : pypdf  pdfplumber               # OCR / extraction PDF analyses
-# Tranche 6  : weasyprint                      # export PDF certifié
 # Tranche 7  : stripe                          # paiements / webhooks
 # Stockage   : django-storages  boto3          # S3 en prod
+# Optionnel  : pypdf / pdfplumber              # extraction texte PDF avant OCR Gemini

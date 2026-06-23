@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">{% trans "Bilan économique" %}</h2>
+    <div class="flex gap-2">
+      <a href="{% url 'finances:report_csv' %}?type=revenus" class="sidebar-link text-sm">{% trans "Revenus CSV" %}</a>
+      <a href="{% url 'finances:report_pdf' %}?type=taxonomie_verte" class="md-btn-primary text-sm">{% trans "Dossier subvention PDF" %}</a>
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Revenus" %}</p><p class="mt-2 text-2xl font-semibold text-green-600">{{ bilan.total_revenus }} €</p></div>
+    <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Charges" %}</p><p class="mt-2 text-2xl font-semibold text-red-500">{{ bilan.total_charges }} €</p></div>
+    <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Résultat net" %}</p><p class="mt-2 text-2xl font-semibold">{{ bilan.resultat_net }} €</p></div>
+    <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Marge / ha" %}</p><p class="mt-2 text-2xl font-semibold">{% if bilan.marge_par_ha is not None %}{{ bilan.marge_par_ha }} €{% else %}—{% endif %}</p></div>
+  </div>
+
+  <div class="md-card">
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      {% blocktrans with eau=bilan.eau_m3 energie=bilan.energie_kwh %}Consommation : {{ eau }} m³ d'eau · {{ energie }} kWh d'énergie.{% endblocktrans %}
+    </p>
+  </div>
+</section>
+{% endblock %}
