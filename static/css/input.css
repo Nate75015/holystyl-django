@@ -86,20 +86,20 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.4);
   }
 
-  /* Header / barre mobile — jaune pastel */
+  /* Header / barre mobile — bleu pastel */
   .glass-panel {
-    background: #fbf5d6;            /* jaune pastel */
-    border-color: #ece1b0;
+    background: #e7f1fb;            /* bleu pastel */
+    border-color: #cfe1f2;
   }
   .dark .glass-panel {
     background: #0d1a24;
     border-color: #1c2c38;
   }
 
-  /* Sidebar gauche — bleu pastel */
+  /* Sidebar gauche — jaune doré */
   .nav-left {
-    background: #e7f1fb;           /* bleu pastel */
-    border-color: #cfe1f2;
+    background: #fabd05;           /* #fabd05 */
+    border-color: #e0a805;
   }
   .dark .nav-left {
     background: #0d1a24;
