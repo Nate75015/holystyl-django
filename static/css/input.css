@@ -106,6 +106,16 @@
     border-color: #1c2c38;
   }
 
+  /* Panneau volant (sous-menu de section, à droite de la sidebar) */
+  .nav-flyout {
+    background: #ffffff;
+    border-color: #e7e5dd;
+  }
+  .dark .nav-flyout {
+    background: #0f1f2b;
+    border-color: #1c2c38;
+  }
+
   /* ── Boutons : grandes cibles tactiles (≥48px) ── */
   .md-btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 text-base font-bold text-white transition;

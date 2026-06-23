@@ -22,6 +22,7 @@ def layout(request):
     nav_sections = [
         {
             "label": _("Accueil"),
+            "key": "accueil",
             "items": [
                 {"label": _("Tableau de bord"), "url_name": "core:dashboard"},
                 {"label": _("Assistant IA"), "url_name": "ia:assistant"},
@@ -30,6 +31,7 @@ def layout(request):
         },
         {
             "label": _("Cultures & Terrain"),
+            "key": "cultures",
             "items": [
                 {"label": _("Parcelles"), "url_name": "parcelles:list"},
                 {"label": _("Cultures & Kc"), "url_name": "agronomie:cultures_kc"},
@@ -42,6 +44,7 @@ def layout(request):
         },
         {
             "label": _("Protection"),
+            "key": "protection",
             "items": [
                 {"label": _("Bassinage anti-gel"), "url_name": "irrigation:bassinage"},
                 {"label": _("Interventions"), "url_name": "operations:interventions"},
@@ -49,6 +52,7 @@ def layout(request):
         },
         {
             "label": _("Économie"),
+            "key": "economie",
             "items": [
                 {"label": _("Charges"), "url_name": "finances:charges"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique"},
@@ -58,6 +62,7 @@ def layout(request):
         },
         {
             "label": _("Environnement"),
+            "key": "environnement",
             "items": [
                 {"label": _("Laboratoire"), "url_name": "analyses:laboratoire"},
                 {"label": _("Analyses de sol"), "url_name": "analyses:analyses_sol"},
@@ -65,6 +70,7 @@ def layout(request):
         },
         {
             "label": _("RH"),
+            "key": "rh",
             "items": [
                 {"label": _("Planning"), "url_name": "planning:planning"},
                 {"label": _("Équipe"), "url_name": "equipe:equipe"},
@@ -74,6 +80,7 @@ def layout(request):
         },
         {
             "label": _("Mon compte"),
+            "key": "compte",
             "items": [
                 {"label": _("Mon exploitation"), "url_name": "exploitations:settings"},
                 {"label": _("Activer un code"), "url_name": "public:activer"},

@@ -1,26 +1,25 @@
 {% load i18n %}
-<aside class="glass-panel nav-left sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r lg:flex">
+<aside class="glass-panel nav-left sticky top-0 z-30 hidden h-screen w-60 shrink-0 flex-col border-r lg:flex"
+       x-data="{ open: null }" @keydown.escape="open = null" @click.outside="open = null">
   <div class="flex items-center gap-2 px-5 py-5">
     {% include "partials/brand_mark.html" with size=34 icon=20 %}
     <span class="text-lg font-bold tracking-tight">{{ APP_NAME }}</span>
   </div>
 
-  <nav class="flex-1 space-y-4 overflow-y-auto px-3 pb-4">
+  {# Rail : sections cliquables #}
+  <nav class="flex-1 space-y-1 overflow-y-auto px-3 pb-4">
     {% for section in nav_sections %}
-      <div>
-        <p class="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{{ section.label }}</p>
-        {% for sub in section.items %}
-          {% if sub.url_name %}
-            <a href="{% url sub.url_name %}" class="sidebar-link text-sm {% if request.resolver_match.view_name == sub.url_name %}sidebar-link-active{% endif %}">{{ sub.label }}</a>
-          {% else %}
-            <span class="sidebar-link cursor-not-allowed text-sm opacity-50" title="{% trans 'Bientôt' %}">{{ sub.label }}</span>
-          {% endif %}
-        {% endfor %}
-      </div>
+      <button type="button"
+              @click="open = open === '{{ section.key }}' ? null : '{{ section.key }}'"
+              class="sidebar-link flex w-full items-center justify-between"
+              :class="open === '{{ section.key }}' ? 'sidebar-link-active' : ''">
+        <span>{{ section.label }}</span>
+        <span class="text-slate-400 transition-transform" :class="open === '{{ section.key }}' ? 'rotate-90' : ''">›</span>
+      </button>
     {% endfor %}
   </nav>
 
-  <div class="border-t border-slate-200 p-3 dark:border-white/10">
+  <div class="border-t border-black/5 p-3 dark:border-white/10">
     <div class="mb-2 px-2 text-sm">
       <p class="font-medium">{{ user.display_name }}</p>
       <p class="truncate text-xs text-slate-400">{{ user.email }}</p>
@@ -30,4 +29,20 @@
       <button type="submit" class="sidebar-link w-full text-left text-sm text-red-500">{% trans "Déconnexion" %}</button>
     </form>
   </div>
+
+  {# Panneaux volants — s'ouvrent à droite de la sidebar #}
+  {% for section in nav_sections %}
+    <div x-show="open === '{{ section.key }}'" x-cloak x-transition.opacity
+         class="nav-flyout absolute left-full top-0 z-40 h-screen w-56 overflow-y-auto border-r p-4 shadow-xl">
+      <p class="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{{ section.label }}</p>
+      {% for sub in section.items %}
+        {% if sub.url_name %}
+          <a href="{% url sub.url_name %}"
+             class="sidebar-link text-sm {% if request.resolver_match.view_name == sub.url_name %}sidebar-link-active{% endif %}">{{ sub.label }}</a>
+        {% else %}
+          <span class="sidebar-link cursor-not-allowed text-sm opacity-50" title="{% trans 'Bientôt' %}">{{ sub.label }}</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
 </aside>
