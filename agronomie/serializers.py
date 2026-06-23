@@ -1,6 +1,13 @@
 from rest_framework import serializers
 
-from .models import CultureKc, Saison, TypeSol
+from .models import CultureKc, Fertigation, Saison, TypeSol
+
+
+class FertigationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fertigation
+        exclude = ["exploitation"]
+        read_only_fields = ["id", "created_at"]
 
 
 class CultureKcSerializer(serializers.ModelSerializer):

@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import CultureKc, Saison, TypeSol
+from .models import CultureKc, Fertigation, Saison, TypeSol
+
+admin.site.register(Fertigation)
 
 
 @admin.register(CultureKc)

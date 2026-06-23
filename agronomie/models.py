@@ -72,6 +72,27 @@ class TypeSol(TimeStampedModel):
         return self.nom
 
 
+class Fertigation(models.Model):
+    """Apport d'engrais via irrigation (table `fertigations`)."""
+
+    exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="fertigations")
+    parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.CASCADE, related_name="fertigations")
+    date = models.DateTimeField()
+    produit = models.CharField(max_length=255, blank=True)
+    azote_n = models.FloatField(default=0)
+    phosphore_p = models.FloatField(default=0)
+    potassium_k = models.FloatField(default=0)
+    volume_l = models.FloatField(default=0)
+    concentration = models.FloatField(null=True, blank=True)
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("fertigation")
+        verbose_name_plural = _("fertigations")
+        ordering = ("-date",)
+
+
 class Saison(TimeStampedModel):
     """Saison agronomique d'une exploitation."""
 
