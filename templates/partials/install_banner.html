@@ -1,19 +1,27 @@
 {% load i18n %}
-{% comment %}Bannière d'installation PWA — barre pleine largeur sous le header.
-Apparaît quand l'app est installable (beforeinstallprompt / Android) ou iOS.
-Masquée si déjà installée ou refusée.{% endcomment %}
+{% comment %}Bannière d'installation PWA — carte arrondie pleine largeur sous le header.
+Apparaît si l'app est installable (beforeinstallprompt / Android) ou iOS.{% endcomment %}
 <div x-data="installPrompt()" x-show="visible" x-cloak x-transition
-     class="install-bar flex items-center gap-3 border-b px-4 py-2 lg:px-8">
-  {% include "partials/brand_mark.html" with size=28 icon=16 %}
+     class="install-bar mx-4 mt-4 flex items-center gap-3 rounded-2xl border px-4 py-3 lg:mx-8">
+  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl" style="background:#d8f3ef;">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0e7490" stroke-width="1.8" stroke-linecap="round">
+      <rect x="7" y="3" width="10" height="18" rx="2.5"/><line x1="11" y1="18.5" x2="13" y2="18.5"/>
+    </svg>
+  </span>
   <div class="min-w-0 flex-1 leading-tight">
-    <span class="font-bold">{% trans "Installer Holystyl" %}</span>
-    <span class="text-sm text-slate-500 dark:text-slate-400" x-text="ios
-      ? ' — {% trans "Partager puis « Sur l’écran d’accueil »." %}'
-      : ' — {% trans "Accédez plus vite depuis votre écran d’accueil." %}'"></span>
+    <p class="font-bold">{% trans "Installer Holystyl" %}</p>
+    <p class="text-sm text-slate-500 dark:text-slate-400" x-text="ios
+      ? '{% trans "Partager puis « Sur l’écran d’accueil »." %}'
+      : '{% trans "Accédez plus vite depuis votre écran d’accueil." %}'"></p>
   </div>
-  <div class="flex shrink-0 items-center gap-1">
-    <button x-show="!ios" @click="install()" class="md-btn-primary !min-h-0 !px-3 !py-1.5 text-sm">{% trans "Installer" %}</button>
-    <button @click="dismiss()" class="md-icon-btn !h-9 !w-9" title="{% trans 'Plus tard' %}">✕</button>
+  <div class="flex shrink-0 items-center gap-2">
+    <button x-show="!ios" @click="install()" class="install-btn gap-2 px-4 py-2 text-sm">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/>
+      </svg>
+      {% trans "Télécharger l'app" %}
+    </button>
+    <button @click="dismiss()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" title="{% trans 'Plus tard' %}">✕</button>
   </div>
 </div>
 

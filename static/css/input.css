@@ -106,15 +106,21 @@
     border-color: #1c2c38;
   }
 
-  /* Barre d'installation PWA — sous le header, pleine largeur */
+  /* Barre d'installation PWA — carte arrondie type "promo", vert d'eau doux */
   .install-bar {
-    background: #eef6fb;          /* bleu très pâle (sous le header jaune) */
-    border-color: #d7e6f2;
+    background: #e9f7f3;          /* vert menthe très pâle */
+    border-color: #cdeae3;
   }
   .dark .install-bar {
     background: #0f1f2b;
     border-color: #1c2c38;
   }
+  /* Bouton de la bannière — teal (action) */
+  .install-btn {
+    @apply inline-flex items-center justify-center rounded-xl font-bold text-white transition;
+    background: #0d9488;
+  }
+  .install-btn:hover { background: #0f766e; }
 
   /* Panneau volant (sous-menu de section, à droite de la sidebar) */
   .nav-flyout {
