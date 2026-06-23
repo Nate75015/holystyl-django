@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto flex h-[calc(100vh-9rem)] max-w-3xl flex-col" x-data="assistant()">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">{% trans "Assistant Holystyl" %}</h2>
+    {% if not ai_ready %}
+      <span class="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs text-amber-600">{% trans "IA non configurée" %}</span>
+    {% endif %}
+  </div>
+
+  <div class="mt-4 flex-1 space-y-3 overflow-y-auto rounded-2xl border border-slate-200 p-4 dark:border-white/10" x-ref="log">
+    {% for m in history %}
+      <div class="flex {% if m.role == 'user' %}justify-end{% endif %}">
+        <div class="max-w-[80%] rounded-2xl px-3 py-2 text-sm {% if m.role == 'user' %}bg-brand text-white{% else %}bg-slate-100 dark:bg-white/10{% endif %}">{{ m.content }}</div>
+      </div>
+    {% endfor %}
+    <template x-for="(m, i) in messages" :key="i">
+      <div class="flex" :class="m.role === 'user' ? 'justify-end' : ''">
+        <div class="max-w-[80%] rounded-2xl px-3 py-2 text-sm"
+             :class="m.role === 'user' ? 'bg-brand text-white' : 'bg-slate-100 dark:bg-white/10'"
+             x-text="m.content"></div>
+      </div>
+    </template>
+  </div>
+
+  <form @submit.prevent="send()" class="mt-3 flex gap-2">
+    <input x-model="input" type="text" placeholder="{% trans 'Demandez quelque chose…' %}" class="flex-1" />
+    <button type="button" @click="dictate()" class="md-icon-btn" :class="recording ? 'text-red-500' : ''" title="{% trans 'Dictée vocale' %}">🎤</button>
+    <button type="submit" class="md-btn-primary" :disabled="busy">{% trans "Envoyer" %}</button>
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function assistant() {
+    return {
+      input: '', messages: [], busy: false, recording: false,
+      scroll() { this.$nextTick(() => { this.$refs.log.scrollTop = this.$refs.log.scrollHeight; }); },
+      send() {
+        var text = this.input.trim();
+        if (!text || this.busy) return;
+        this.messages.push({ role: 'user', content: text });
+        this.input = ''; this.busy = true;
+        var reply = { role: 'assistant', content: '' };
+        this.messages.push(reply); this.scroll();
+        var es = new EventSource('{% url "ia:stream" %}?message=' + encodeURIComponent(text));
+        es.onmessage = (e) => {
+          try { reply.content += JSON.parse(e.data).text || ''; this.scroll(); } catch (_) {}
+        };
+        es.addEventListener('done', () => { es.close(); this.busy = false; });
+        es.onerror = () => { es.close(); this.busy = false; };
+      },
+      dictate() {
+        var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SR) { alert('{% trans "Reconnaissance vocale non supportée par ce navigateur." %}'); return; }
+        var rec = new SR(); rec.lang = 'fr-FR';
+        rec.onstart = () => { this.recording = true; };
+        rec.onend = () => { this.recording = false; };
+        rec.onresult = (e) => { this.input = e.results[0][0].transcript; };
+        rec.start();
+      },
+    };
+  }
+</script>
+{% endblock %}

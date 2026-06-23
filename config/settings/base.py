@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     "parcelles",
     "iot",
     "irrigation",
+    "ia",
+    "notifications",
 ]
 
 MIDDLEWARE = [
@@ -171,6 +173,10 @@ CELERY_TASK_EAGER_PROPAGATES = True
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = env("SMTP_FROM", "noreply@holystyl.com")
 ADMIN_EMAIL = env("ADMIN_EMAIL", "")
+
+# ── IA — Google Gemini ──────────────────────────────────────────────
+GEMINI_API_KEY = env("GEMINI_API_KEY", "")
+GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
 
 # ── Divers ──────────────────────────────────────────────────────────
 APP_NAME = "Holystyl"
