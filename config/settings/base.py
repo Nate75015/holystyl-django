@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     # Apps métier Holystyl (ajoutées au fil des tranches)
     "core",
     "accounts",
+    "exploitations",
+    "agronomie",
+    "parcelles",
 ]
 
 MIDDLEWARE = [
