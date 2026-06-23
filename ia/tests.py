@@ -72,9 +72,9 @@ def test_execute_intent_unmigrated_module_is_graceful(user_exploitation, monkeyp
     monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
     monkeypatch.setattr(
         services.gemini, "generate_json",
-        lambda messages, **kw: {"response": "", "intent": "creer_charge", "needs_more_info": False, "data": {}},
+        lambda messages, **kw: {"response": "", "intent": "creer_entretien", "needs_more_info": False, "data": {}},
     )
-    result = services.execute_intent(exploitation, user, "Note une charge de 150€")
+    result = services.execute_intent(exploitation, user, "Note un entretien sur le tracteur")
     assert result["created"] is False
     assert "version" in result["response"].lower() or result["response"]
 

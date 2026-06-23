@@ -39,7 +39,10 @@ INTENT_ENUM = [
 ]
 
 # Intentions dont l'entité Django existe déjà
-_IMPLEMENTED = {"creer_parcelle", "creer_session_irrigation", "creer_intervention", "question"}
+_IMPLEMENTED = {
+    "creer_parcelle", "creer_session_irrigation", "creer_intervention",
+    "creer_charge", "creer_revenu", "question",
+}
 
 
 def build_context(exploitation) -> dict:
@@ -161,8 +164,36 @@ def execute_intent(exploitation, user, message: str, history: list[dict] | None 
         )
         result.update(created=True, entity={"type": "intervention", "id": intervention.id})
 
+    elif intent == "creer_charge":
+        from finances.models import Charge
+
+        charge = Charge.objects.create(
+            exploitation=exploitation,
+            parcelle=_resolve_parcelle(exploitation, data),
+            date=timezone.now(),
+            categorie=data.get("categorie", "autre"),
+            montant=float(data.get("montant", 0) or 0),
+            description=data.get("description", ""),
+            fournisseur=data.get("fournisseur", ""),
+        )
+        result.update(created=True, entity={"type": "charge", "id": charge.id})
+
+    elif intent == "creer_revenu":
+        from finances.models import Revenu
+
+        revenu = Revenu.objects.create(
+            exploitation=exploitation,
+            parcelle=_resolve_parcelle(exploitation, data),
+            date=timezone.now(),
+            categorie=data.get("categorie", "autre"),
+            montant=float(data.get("montant", 0) or 0),
+            description=data.get("description", ""),
+            acheteur=data.get("acheteur", ""),
+        )
+        result.update(created=True, entity={"type": "revenu", "id": revenu.id})
+
     elif intent in INTENT_ENUM:
-        # Intention reconnue mais module pas encore migré (Tranche 6 : charge/revenu/entretien)
+        # Intention reconnue mais module pas encore migré (ex : creer_entretien)
         result["response"] = (
             response or f"J'ai compris « {intent} », mais ce module sera disponible dans une prochaine version."
         )
