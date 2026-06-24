@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "interventions",
     "analyses",
     "analyse_sol",
+    "meteo",
     "finances",
     "billing",
     "public",

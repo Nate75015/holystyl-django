@@ -44,6 +44,7 @@ def layout(request):
             "label": _("Cultures & Terrain"), "key": "cultures",
             "items": [
                 {"label": _("Mes Parcelles"), "url_name": "parcelles:list", "icon": "map"},
+                {"label": _("Météo"), "url_name": "meteo:meteo", "icon": "wb_sunny"},
                 {"label": _("Cultures"), "url_name": "agronomie:cultures", "icon": "grass"},
                 {"label": _("Types de sol"), "url_name": "agronomie:types_sol", "icon": "terrain"},
                 {"label": _("Fertigation"), "url_name": "agronomie:fertigation", "icon": "opacity"},

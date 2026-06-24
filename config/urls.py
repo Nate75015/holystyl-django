@@ -30,6 +30,7 @@ urlpatterns = [
     path("", include("interventions.urls")),
     path("", include("analyses.urls")),
     path("", include("analyse_sol.urls")),
+    path("", include("meteo.urls")),
     path("", include("finances.urls")),
     path("", include("administration.urls")),
     path("", include("core.urls")),
