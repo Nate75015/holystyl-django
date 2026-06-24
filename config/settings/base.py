@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "analyses",
     "analyse_sol",
     "meteo",
+    "pac",
     "finances",
     "billing",
     "public",
@@ -199,6 +200,9 @@ ADMIN_EMAIL = env("ADMIN_EMAIL", "")
 # ── IA — Google Gemini ──────────────────────────────────────────────
 GEMINI_API_KEY = env("GEMINI_API_KEY", "")
 GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
+
+# ── Cron : token de l'endpoint de capture météo planifiée ───────────
+CRON_TOKEN = env("CRON_TOKEN", "")
 
 # ── SMS — Twilio ────────────────────────────────────────────────────
 TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID", "")

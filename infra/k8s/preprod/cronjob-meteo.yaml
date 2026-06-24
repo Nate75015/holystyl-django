@@ -1,0 +1,42 @@
+# Capture météo planifiée.
+# La base SQLite est sur un volume RWO monté par le pod web : on ne remonte pas
+# le volume ici. À la place, le CronJob déclenche un endpoint interne (token) et
+# c'est le pod web (qui possède la base) qui effectue les écritures.
+#
+# Cadence horaire ; l'endpoint ne capture que les exploitations « dues » selon
+# leur fréquence configurée (horaire / 6h / 12h / quotidienne).
+#
+# Pré-requis : la clé CRON_TOKEN doit exister dans le secret `holystyl-env`
+# (même valeur que le settings CRON_TOKEN de l'app).
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: capture-meteo
+  namespace: holystyl
+spec:
+  schedule: "5 * * * *"          # toutes les heures (à HH:05)
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: trigger
+              image: curlimages/curl:8.10.1
+              env:
+                - name: CRON_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: holystyl-env
+                      key: CRON_TOKEN
+              command: ["sh", "-c"]
+              args:
+                - >-
+                  curl -fsS -X POST
+                  -H "X-Cron-Token: $CRON_TOKEN"
+                  -H "Host: 195.154.196.50.nip.io"
+                  http://web/meteo/cron/capturer/

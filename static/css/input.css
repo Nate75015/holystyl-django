@@ -73,6 +73,20 @@
 }
 
 @layer components {
+  /* ── Champ « nu » : fond/bord supprimés pour fusionner avec son conteneur
+     (barres de recherche en pill avec icône). Surcharge le style global des input. ── */
+  .input-bare,
+  .input-bare:focus {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
   /* ── Carte standard : pleine, contrastée, ombre douce (pas de blur) ── */
   .md-card {
     @apply rounded-2xl p-5;

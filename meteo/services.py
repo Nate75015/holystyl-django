@@ -60,6 +60,46 @@ def _r(value, default=None):
         return default
 
 
+def geocode(query):
+    """Géocode un nom de lieu via l'API BAN → (lat, lon, libellé) ou None.
+
+    Priorité aux communes (type=municipality) pour qu'« Avignon » renvoie la
+    ville et non une localité/adresse homonyme ; repli sur une recherche large.
+    """
+    if not query:
+        return None
+    base = "https://api-adresse.data.gouv.fr/search/?limit=1&q=" + urllib.parse.quote(query)
+    for url in (base + "&type=municipality", base):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Holystyl/1.0"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                feats = (json.loads(resp.read()).get("features") or [])
+        except Exception:  # noqa: BLE001 — on tente le repli
+            feats = []
+        if feats:
+            lon, lat = feats[0]["geometry"]["coordinates"]
+            label = (feats[0].get("properties") or {}).get("label") or query
+            return lat, lon, label
+    return None
+
+
+def fetch_current(lat, lon):
+    """Météo courante allégée (température + conditions) — pour les chips de villes."""
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "current": "temperature_2m,weather_code",
+        "timezone": "auto",
+    }
+    url = OPEN_METEO_URL + "?" + urllib.parse.urlencode(params)
+    req = urllib.request.Request(url, headers={"User-Agent": "Holystyl/1.0"})
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        data = json.loads(resp.read())
+    cur = data.get("current", {})
+    label, emoji = _wmo(cur.get("weather_code"))
+    return {"temp": _r(cur.get("temperature_2m")), "label": label, "emoji": emoji}
+
+
 def fetch_weather(lat, lon):
     """Météo courante + prévisions 7 jours pour des coordonnées données."""
     params = {

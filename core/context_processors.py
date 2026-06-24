@@ -44,7 +44,7 @@ def layout(request):
             "label": _("Cultures & Terrain"), "key": "cultures",
             "items": [
                 {"label": _("Mes Parcelles"), "url_name": "parcelles:list", "icon": "map"},
-                {"label": _("Météo"), "url_name": "meteo:meteo", "icon": "wb_sunny"},
+                {"label": _("Météo"), "url_name": "meteo:index", "icon": "wb_sunny"},
                 {"label": _("Cultures"), "url_name": "agronomie:cultures", "icon": "grass"},
                 {"label": _("Types de sol"), "url_name": "agronomie:types_sol", "icon": "terrain"},
                 {"label": _("Fertigation"), "url_name": "agronomie:fertigation", "icon": "opacity"},
@@ -68,6 +68,7 @@ def layout(request):
                 {"label": _("Charges"), "url_name": "finances:charges", "icon": "payments"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
                 {"label": _("Facturation"), "url_name": "finances:facturation", "icon": "receipt_long"},
+                {"label": _("PAC"), "url_name": "pac:pac", "icon": "account_balance"},
                 {"label": _("Parc matériel"), "url_name": "operations:parc_materiel", "icon": "agriculture"},
             ],
         },

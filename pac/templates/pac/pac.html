@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ modal: false }">
+
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-semibold">{% trans "PAC" %}</h2>
+      <p class="mt-1 text-sm text-slate-400">{% trans "Politique Agricole Commune · suivi des aides par campagne" %}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      {# Sélecteur de campagne #}
+      <form method="get" id="campagne-form">
+        <select name="campagne" onchange="document.getElementById('campagne-form').submit()"
+                class="rounded-full border border-slate-200 bg-transparent px-4 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+          {% for a in annees %}<option value="{{ a }}" {% if a == campagne %}selected{% endif %}>{% trans "Campagne" %} {{ a }}</option>{% endfor %}
+        </select>
+      </form>
+      <button type="button" @click="modal = true"
+              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une aide" %}
+      </button>
+    </div>
+  </div>
+
+  {# KPIs #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Montant total estimé" %}</p>
+      <p class="mt-1 text-2xl font-bold">{{ kpi_total }} €</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Payé" %}</p>
+      <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ kpi_paye }} €</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Surface concernée" %}</p>
+      <p class="mt-1 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ kpi_surface }} ha</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Nombre d'aides" %}</p>
+      <p class="mt-1 text-2xl font-bold">{{ kpi_count }}</p>
+    </div>
+  </div>
+
+  {# Liste des aides #}
+  {% if aides %}
+    <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+          <tr>
+            <th class="px-4 py-3">{% trans "Catégorie" %}</th>
+            <th class="px-4 py-3">{% trans "Libellé" %}</th>
+            <th class="px-4 py-3">{% trans "Surface" %}</th>
+            <th class="px-4 py-3">{% trans "Montant" %}</th>
+            <th class="px-4 py-3">{% trans "Statut" %}</th>
+            <th class="px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+          {% for a in aides %}
+            <tr>
+              <td class="px-4 py-3"><span class="rounded-full bg-brand/10 px-2.5 py-1 text-xs font-medium text-brand">{{ a.get_categorie_display }}</span></td>
+              <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ a.libelle|default:"—" }}</td>
+              <td class="px-4 py-3">{{ a.surface_ha|default_if_none:"—" }}{% if a.surface_ha %} ha{% endif %}</td>
+              <td class="px-4 py-3 font-semibold">{{ a.montant|default_if_none:"—" }}{% if a.montant %} €{% endif %}</td>
+              <td class="px-4 py-3">
+                {% if a.statut == 'paye' %}<span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400">{{ a.get_statut_display }}</span>
+                {% elif a.statut == 'accorde' %}<span class="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-400">{{ a.get_statut_display }}</span>
+                {% else %}<span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-white/10 dark:text-slate-300">{{ a.get_statut_display }}</span>{% endif %}
+              </td>
+              <td class="px-4 py-3 text-right">
+                <form method="post" action="{% url 'pac:delete' a.pk %}" onsubmit="return confirm('{% trans "Supprimer cette aide ?" %}')">
+                  {% csrf_token %}
+                  <button type="submit" class="text-slate-400 transition hover:text-red-500"><span class="material-icons-round text-[18px]">delete</span></button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="md-card flex flex-col items-center justify-center py-12 text-center">
+      <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">agriculture</span>
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Aucune aide PAC pour cette campagne." %}</p>
+      <button type="button" @click="modal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une aide" %}
+      </button>
+    </div>
+  {% endif %}
+
+  <div class="flex items-start gap-2 rounded-xl bg-brand/5 px-3 py-2.5 text-xs text-slate-500 dark:bg-white/5 dark:text-slate-400">
+    <span class="material-icons-round text-[16px] text-brand">info</span>
+    <span>{% trans "Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC." %}</span>
+  </div>
+
+  {# Modal : ajouter une aide #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 sm:items-center">
+    <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Nouvelle aide PAC" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+        <form method="post" action="{% url 'pac:create' %}" class="space-y-3">
+          {% csrf_token %}
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Campagne" %}</label>
+              <input name="campagne" type="number" value="{{ campagne }}" min="2000" max="2100"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
+              <select name="categorie" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                {% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Libellé" %}</label>
+            <input name="libelle" placeholder="{% trans 'ex: Éco-régime niveau 2' %}"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Montant (€)" %}</label>
+              <input name="montant" type="number" step="0.01" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
+              <input name="surface_ha" type="number" step="0.01" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Statut" %}</label>
+              <select name="statut" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                {% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">{% trans "Ajouter" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

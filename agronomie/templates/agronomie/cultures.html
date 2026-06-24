@@ -79,9 +79,9 @@
   {# Recherche — sans bordure (fond doux), compacte #}
   <div class="flex items-center gap-2 rounded-full bg-black/5 px-4 py-1.5 dark:bg-white/10">
     <span class="material-icons-round shrink-0 text-[18px] leading-none text-slate-400">search</span>
-    <input type="search" x-model="q" autocomplete="off"
+    <input type="text" x-model="q" autocomplete="off"
            placeholder="{% trans 'Rechercher une culture, un nom scientifique, une source…' %}"
-           class="w-full border-0 bg-transparent p-0 text-sm focus:outline-none focus:ring-0 dark:[color-scheme:dark]">
+           class="input-bare w-full text-sm focus:outline-none focus:ring-0 dark:[color-scheme:dark]">
   </div>
 
   {# Pré-filtres par catégorie — tous sur une seule ligne, largeurs égales #}

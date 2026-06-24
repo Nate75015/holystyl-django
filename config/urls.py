@@ -31,6 +31,7 @@ urlpatterns = [
     path("", include("analyses.urls")),
     path("", include("analyse_sol.urls")),
     path("", include("meteo.urls")),
+    path("", include("pac.urls")),
     path("", include("finances.urls")),
     path("", include("administration.urls")),
     path("", include("core.urls")),
