@@ -1,0 +1,49 @@
+# Application Holystyl (Django + Daphne ASGI).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: holystyl
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: web }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  template:
+    metadata:
+      labels: { app: web }
+    spec:
+      imagePullSecrets:
+        - name: scw-registry
+      containers:
+        - name: web
+          image: rg.fr-par.scw.cloud/holystyl/holystyl:preprod-latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef: { name: holystyl-env }
+          readinessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests: { cpu: "100m", memory: "256Mi" }
+            limits: { cpu: "1", memory: "768Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: holystyl
+spec:
+  selector: { app: web }
+  ports:
+    - port: 80
+      targetPort: 8080

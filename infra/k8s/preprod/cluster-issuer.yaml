@@ -1,0 +1,16 @@
+# ClusterIssuer Let's Encrypt (production). Appliqué APRÈS l'installation de
+# cert-manager (CRDs requis). Remplacer l'email si besoin.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: damien.marque.dm@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: nginx
