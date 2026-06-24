@@ -1,0 +1,98 @@
+# Déploiement continu de la PREPROD.
+# Déclenché à chaque push sur la branche `preprod` (ou manuellement).
+# Pipeline : build image amd64 → push registry Scaleway → kubectl apply +
+# rollout sur le cluster Kapsule → smoke test HTTPS.
+#
+# Secrets requis (repo → Settings → Secrets and variables → Actions) :
+#   - SCW_ACCESS_KEY  : access key IAM (clé CI dédiée recommandée)
+#   - SCW_SECRET_KEY  : secret key IAM
+# Variables requises :
+#   - SCW_DEFAULT_ORGANIZATION_ID
+#   - SCW_DEFAULT_PROJECT_ID
+name: Deploy preprod
+
+on:
+  push:
+    branches: [preprod]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-preprod
+  cancel-in-progress: false
+
+env:
+  IMAGE: rg.fr-par.scw.cloud/holystyl/holystyl
+  NAMESPACE: holystyl
+  CLUSTER_ID: 884493d6-4fd5-45cb-b193-d9fa70db6754
+  PREPROD_HOST: 195.154.196.50.nip.io
+  SCW_REGION: fr-par
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Scaleway Registry
+        uses: docker/login-action@v3
+        with:
+          registry: rg.fr-par.scw.cloud
+          username: nologin
+          password: ${{ secrets.SCW_SECRET_KEY }}
+
+      - name: Build & push image (amd64)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:preprod-latest
+            ${{ env.IMAGE }}:preprod-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Install Scaleway CLI
+        run: |
+          sudo curl -fsSL \
+            https://github.com/scaleway/scaleway-cli/releases/download/v2.52.0/scaleway-cli_2.52.0_linux_amd64 \
+            -o /usr/local/bin/scw
+          sudo chmod +x /usr/local/bin/scw
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Fetch kubeconfig
+        env:
+          SCW_ACCESS_KEY: ${{ secrets.SCW_ACCESS_KEY }}
+          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+          SCW_DEFAULT_ORGANIZATION_ID: ${{ vars.SCW_DEFAULT_ORGANIZATION_ID }}
+          SCW_DEFAULT_PROJECT_ID: ${{ vars.SCW_DEFAULT_PROJECT_ID }}
+        run: |
+          scw k8s kubeconfig get "$CLUSTER_ID" > "$HOME/kubeconfig"
+          echo "KUBECONFIG=$HOME/kubeconfig" >> "$GITHUB_ENV"
+
+      - name: Deploy to Kapsule
+        run: |
+          kubectl apply -f infra/k8s/preprod/namespace.yaml
+          kubectl apply -f infra/k8s/preprod/pvc.yaml
+          kubectl apply -f infra/k8s/preprod/redis.yaml
+          kubectl apply -f infra/k8s/preprod/web.yaml
+          kubectl apply -f infra/k8s/preprod/cluster-issuer.yaml
+          sed "s/__HOST__/${PREPROD_HOST}/g" infra/k8s/preprod/ingress.yaml | kubectl apply -f -
+          # Image taguée au SHA → force un nouveau rollout avec l'image fraîche
+          kubectl -n "$NAMESPACE" set image deploy/web web="${IMAGE}:preprod-${{ github.sha }}"
+          kubectl -n "$NAMESPACE" rollout status deploy/web --timeout=300s
+
+      - name: Smoke test
+        run: |
+          for i in $(seq 1 10); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://${PREPROD_HOST}/" || true)
+            echo "attempt $i: HTTP $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 6
+          done
+          echo "::error::smoke test failed (pas de HTTP 200)"; exit 1
