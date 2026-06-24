@@ -1,0 +1,12 @@
+# Volume persistant pour la base SQLite (preprod). RWO, storageclass par défaut
+# du cluster Kapsule (block storage Scaleway).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: holystyl-data
+  namespace: holystyl
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 2Gi

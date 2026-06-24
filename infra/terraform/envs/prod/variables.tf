@@ -1,6 +1,5 @@
 variable "scaleway_organization_id" {
-  description = "Scaleway organization ID."
-  type        = string
+  type = string
 }
 
 variable "project_id" {
@@ -21,7 +20,7 @@ variable "scaleway_zone" {
 # ── Kapsule ───────────────────────────────────────────────────────────────────
 variable "cluster_name" {
   type    = string
-  default = "holystyl-preprod"
+  default = "holystyl-prod"
 }
 
 variable "kubernetes_version" {
@@ -30,29 +29,48 @@ variable "kubernetes_version" {
 }
 
 variable "node_type" {
-  description = "Type d'Instance Scaleway pour les nœuds du pool."
-  type        = string
-  default     = "PRO2-XXS"
+  type    = string
+  default = "PRO2-XXS"
 }
 
 variable "pool_size" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "pool_min_size" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "pool_max_size" {
   type    = number
-  default = 3
+  default = 4
+}
+
+# ── PostgreSQL managé (RDB) ───────────────────────────────────────────────────
+variable "postgres_node_type" {
+  type    = string
+  default = "db-dev-s"
+}
+
+variable "postgres_volume_size_gb" {
+  type    = number
+  default = 20
+}
+
+variable "db_name" {
+  type    = string
+  default = "holystyl"
+}
+
+variable "db_user" {
+  type    = string
+  default = "holystyl_app"
 }
 
 # ── Stockage médias ───────────────────────────────────────────────────────────
 variable "media_bucket_name" {
-  description = "Bucket Object Storage des médias (globalement unique)."
-  type        = string
-  default     = "holystyl-media-preprod"
+  type    = string
+  default = "holystyl-media-prod"
 }

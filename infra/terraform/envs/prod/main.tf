@@ -6,7 +6,7 @@ provider "scaleway" {
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Réseau privé (VPC) — réseau du cluster Kapsule.
+# Réseau privé (VPC) — Kapsule et PostgreSQL partagent le même réseau privé.
 # ──────────────────────────────────────────────────────────────────────────────
 resource "scaleway_vpc" "this" {
   name       = "${var.cluster_name}-vpc"
@@ -22,7 +22,7 @@ resource "scaleway_vpc_private_network" "this" {
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Cluster Kapsule (control plane managé — gratuit hors offre Dedicated)
+# Cluster Kapsule
 # ──────────────────────────────────────────────────────────────────────────────
 resource "scaleway_k8s_cluster" "this" {
   name                        = var.cluster_name
@@ -30,7 +30,7 @@ resource "scaleway_k8s_cluster" "this" {
   region                      = var.scaleway_region
   version                     = var.kubernetes_version
   cni                         = "cilium"
-  description                 = "Cluster Kapsule Holystyl — preprod"
+  description                 = "Cluster Kapsule Holystyl — prod"
   delete_additional_resources = true
   private_network_id          = scaleway_vpc_private_network.this.id
 
@@ -54,9 +54,70 @@ resource "scaleway_k8s_pool" "default" {
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Base de données — PREPROD utilise SQLite (volume persistant côté K8s, cf.
-# infra/k8s/preprod). Pas de base managée ici : la prod utilise RDB (envs/prod).
+# PostgreSQL managé (RDB) — endpoint privé sur le VPC du cluster.
+# Auth Postgres standard (user/mot de passe), éprouvée avec Django.
+# ⚠️ Nécessite un quota d'instances RDB disponible (cf. README).
 # ──────────────────────────────────────────────────────────────────────────────
+resource "random_password" "db_admin" {
+  length           = 32
+  special          = true
+  min_lower        = 2
+  min_upper        = 2
+  min_numeric      = 2
+  min_special      = 2
+  override_special = "!#$%&*+-_="
+}
+
+resource "random_password" "db_app" {
+  length           = 32
+  special          = true
+  min_lower        = 2
+  min_upper        = 2
+  min_numeric      = 2
+  min_special      = 2
+  override_special = "!#$%&*+-_="
+}
+
+resource "scaleway_rdb_instance" "this" {
+  name                      = "${var.cluster_name}-db"
+  project_id                = var.project_id
+  region                    = var.scaleway_region
+  node_type                 = var.postgres_node_type
+  engine                    = "PostgreSQL-16"
+  user_name                 = "holystyl_admin"
+  password                  = random_password.db_admin.result
+  volume_size_in_gb         = var.postgres_volume_size_gb
+  volume_type               = "sbs_5k"
+  disable_backup            = false
+  backup_schedule_frequency = 24
+  backup_schedule_retention = 7
+
+  private_network {
+    pn_id       = scaleway_vpc_private_network.this.id
+    enable_ipam = true
+  }
+}
+
+resource "scaleway_rdb_database" "app" {
+  instance_id = scaleway_rdb_instance.this.id
+  name        = var.db_name
+}
+
+resource "scaleway_rdb_user" "app" {
+  instance_id = scaleway_rdb_instance.this.id
+  name        = var.db_user
+  password    = random_password.db_app.result
+  is_admin    = false
+}
+
+resource "scaleway_rdb_privilege" "app" {
+  instance_id   = scaleway_rdb_instance.this.id
+  database_name = scaleway_rdb_database.app.name
+  user_name     = scaleway_rdb_user.app.name
+  permission    = "all"
+
+  depends_on = [scaleway_rdb_database.app, scaleway_rdb_user.app]
+}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Bucket Object Storage pour les médias Django

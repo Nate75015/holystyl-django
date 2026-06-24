@@ -1,4 +1,5 @@
 # Application Holystyl (Django + Daphne ASGI).
+# PREPROD : base SQLite sur volume persistant /app/data (cf. pvc.yaml).
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -9,14 +10,15 @@ spec:
   selector:
     matchLabels: { app: web }
   strategy:
-    type: RollingUpdate
-    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+    type: Recreate          # volume RWO partagé → pas de rolling (2 pods = conflit)
   template:
     metadata:
       labels: { app: web }
     spec:
       imagePullSecrets:
         - name: scw-registry
+      securityContext:
+        fsGroup: 1000         # rend le PVC inscriptible par l'utilisateur non-root du conteneur
       containers:
         - name: web
           image: rg.fr-par.scw.cloud/holystyl/holystyl:preprod-latest
@@ -25,17 +27,32 @@ spec:
             - containerPort: 8080
           envFrom:
             - secretRef: { name: holystyl-env }
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
           readinessProbe:
-            httpGet: { path: /healthz, port: 8080 }
+            httpGet:
+              path: /healthz
+              port: 8080
+              httpHeaders:
+                - { name: Host, value: 195.154.196.50.nip.io }
             initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
-            httpGet: { path: /healthz, port: 8080 }
-            initialDelaySeconds: 30
+            httpGet:
+              path: /healthz
+              port: 8080
+              httpHeaders:
+                - { name: Host, value: 195.154.196.50.nip.io }
+            initialDelaySeconds: 40
             periodSeconds: 20
           resources:
             requests: { cpu: "100m", memory: "256Mi" }
             limits: { cpu: "1", memory: "768Mi" }
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: holystyl-data
 ---
 apiVersion: v1
 kind: Service
