@@ -3,6 +3,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -10,6 +11,7 @@ from django.views.decorators.http import require_POST
 
 from equipe.models import TeamMember
 from exploitations.models import Exploitation
+from ia import gemini
 
 from .models import Conversation, ConversationMember, Message, PieceJointe, validate_piece_jointe
 
@@ -32,12 +34,21 @@ def _candidate_users(request):
     return User.objects.filter(id__in=user_ids).order_by("full_name", "email")
 
 
+def _farmers(request):
+    """Agriculteurs inscrits (comptes actifs, hors staff et soi-même)."""
+    return (
+        User.objects.filter(is_active=True, is_staff=False)
+        .exclude(pk=request.user.pk)
+        .order_by("full_name", "email")
+    )
+
+
 def _mark_read(conversation, user):
     ConversationMember.objects.filter(conversation=conversation, user=user).update(last_read_at=timezone.now())
 
 
-@login_required
-def inbox(request):
+def _conversations(request):
+    """Liste des conversations de l'utilisateur, enrichie (titre, aperçu, non lus)."""
     conversations = list(
         Conversation.objects.filter(memberships__user=request.user)
         .prefetch_related("participants", "messages")
@@ -46,13 +57,70 @@ def inbox(request):
     for c in conversations:
         c.title = c.display_name(request.user)
         last = c.last_message()
-        if last:
-            c.preview = last.body or (_("📎 Pièce jointe") if last.pieces_jointes.exists() else "")
-        else:
-            c.preview = ""
+        c.preview = (last.body or (_("📎 Pièce jointe") if last.pieces_jointes.exists() else "")) if last else ""
         c.unread = c.unread_count(request.user)
     conversations.sort(key=lambda c: c.updated_at, reverse=True)
-    return render(request, "messagerie/inbox.html", {"conversations": conversations, "page_title": _("Messagerie")})
+    return conversations
+
+
+@login_required
+def inbox(request):
+    return render(
+        request,
+        "messagerie/inbox.html",
+        {
+            "conversations": _conversations(request),
+            "farmers": _farmers(request),
+            "current_pk": None,
+            "page_title": _("Messagerie"),
+        },
+    )
+
+
+@login_required
+def start(request, user_id):
+    """Ouvre (ou crée) une conversation 1:1 avec un agriculteur, puis affiche le fil."""
+    other = get_object_or_404(User, pk=user_id, is_active=True)
+    if other.pk == request.user.pk:
+        return redirect("messagerie:inbox")
+    conversation = (
+        Conversation.objects.filter(is_group=False, memberships__user=request.user)
+        .filter(memberships__user=other)
+        .first()
+    )
+    if conversation is None:
+        conversation = Conversation.objects.create(
+            is_group=False,
+            created_by=request.user,
+            exploitation=Exploitation.objects.filter(owner=request.user).first(),
+        )
+        ConversationMember.objects.get_or_create(conversation=conversation, user=request.user)
+        ConversationMember.objects.get_or_create(conversation=conversation, user=other)
+    return redirect("messagerie:detail", pk=conversation.pk)
+
+
+@login_required
+@require_POST
+def reformulate(request):
+    """Reformule un message via l'IA (repli : renvoie le texte original)."""
+    text = (request.POST.get("text") or "").strip()
+    if not text or not gemini.is_configured():
+        return JsonResponse({"text": text})
+    try:
+        out = gemini.generate_text(
+            [
+                {"role": "system", "content": (
+                    "Tu reformules des messages de messagerie professionnelle agricole pour les rendre "
+                    "clairs, polis et bien écrits, en français. Conserve le sens et la langue. Réponds "
+                    "UNIQUEMENT par le message reformulé, sans guillemets ni préambule."
+                )},
+                {"role": "user", "content": text[:2000]},
+            ],
+            temperature=0.5,
+        )
+        return JsonResponse({"text": (out or text).strip()})
+    except Exception:  # noqa: BLE001 — indispo IA → repli sur l'original
+        return JsonResponse({"text": text})
 
 
 @login_required
@@ -60,7 +128,13 @@ def detail(request, pk):
     conversation = get_object_or_404(Conversation, pk=pk, memberships__user=request.user)
     conversation.title = conversation.display_name(request.user)
     _mark_read(conversation, request.user)
-    return render(request, "messagerie/detail.html", {"conversation": conversation, "page_title": conversation.title})
+    return render(request, "messagerie/detail.html", {
+        "conversation": conversation,
+        "conversations": _conversations(request),
+        "farmers": _farmers(request),
+        "current_pk": conversation.pk,
+        "page_title": conversation.title,
+    })
 
 
 @login_required
@@ -97,13 +171,20 @@ def send(request, pk):
 
 @login_required
 def new(request):
-    candidates = _candidate_users(request)
+    candidates = _farmers(request)
     if request.method == "POST":
-        ids = request.POST.getlist("participants")
-        name = (request.POST.get("name") or "").strip()
+        mode = request.POST.get("mode", "direct")
+        message_body = (request.POST.get("message") or "").strip()
+        if mode == "groupe":
+            ids = request.POST.getlist("participants")
+            name = (request.POST.get("name") or "").strip()
+        else:
+            ids = [request.POST.get("participant")] if request.POST.get("participant") else []
+            name = ""
+
         users = list(candidates.filter(id__in=ids))
         if users:
-            is_group = len(users) > 1 or bool(name)
+            is_group = mode == "groupe"
             conversation = None
             if not is_group:
                 conversation = (
@@ -119,5 +200,8 @@ def new(request):
                 ConversationMember.objects.get_or_create(conversation=conversation, user=request.user)
                 for u in users:
                     ConversationMember.objects.get_or_create(conversation=conversation, user=u)
+            if message_body:
+                Message.objects.create(conversation=conversation, sender=request.user, body=message_body)
+                Conversation.objects.filter(pk=conversation.pk).update(updated_at=timezone.now())
             return redirect("messagerie:detail", pk=conversation.pk)
     return render(request, "messagerie/new.html", {"candidates": candidates, "page_title": _("Nouvelle conversation")})

@@ -98,13 +98,28 @@ def layout(request):
     # Sections triées par ordre alphabétique (selon le libellé dans la langue active)
     nav_sections.sort(key=lambda section: _sort_key(section["label"]))
 
-    # Section contenant la page courante → le panneau volant reste ouvert dessus
+    # Section + item contenant la page courante (le panneau volant reste ouvert dessus)
     current = getattr(getattr(request, "resolver_match", None), "view_name", None)
-    active_section = ""
-    for section in nav_sections:
-        if any(item["url_name"] == current for item in section["items"]):
-            active_section = section["key"]
+    current_ns = current.split(":")[0] if current else ""
+
+    all_items = [(section, item) for section in nav_sections for item in section["items"]]
+    ns_counts = {}
+    for section, item in all_items:
+        ns = item["url_name"].split(":")[0]
+        ns_counts[ns] = ns_counts.get(ns, 0) + 1
+
+    active_section, active_url_name = "", ""
+    # 1) correspondance exacte du nom de vue
+    for section, item in all_items:
+        if item["url_name"] == current:
+            active_section, active_url_name = section["key"], item["url_name"]
             break
+    # 2) repli par namespace (sous-pages : detail, create…) si le namespace est unique dans la nav
+    if not active_url_name and current_ns and ns_counts.get(current_ns) == 1:
+        for section, item in all_items:
+            if item["url_name"].split(":")[0] == current_ns:
+                active_section, active_url_name = section["key"], item["url_name"]
+                break
 
     # Compteur de notifications non lues (badge sur la cloche du header)
     unread_notifications = 0
@@ -117,5 +132,6 @@ def layout(request):
         "nav_primary": nav_primary,
         "nav_sections": nav_sections,
         "active_section": active_section,
+        "active_url_name": active_url_name,
         "unread_notifications": unread_notifications,
     }

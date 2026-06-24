@@ -12,7 +12,7 @@ droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% 
       {% for sub in section.items %}
         {% if sub.url_name %}
           <a href="{% url sub.url_name %}"
-             class="sidebar-link flex items-center gap-3.5 text-sm {% if request.resolver_match.view_name == sub.url_name %}sidebar-link-active{% endif %}">
+             class="sidebar-link flex items-center gap-3.5 text-sm {% if sub.url_name == active_url_name %}sidebar-link-active{% endif %}">
             <span class="material-icons-round text-[20px] text-slate-400">{{ sub.icon|default:'chevron_right' }}</span>
             <span>{{ sub.label }}</span>
           </a>

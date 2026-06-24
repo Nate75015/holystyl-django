@@ -1,57 +1,76 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block main_padding %}{% endblock %}
+
 {% block content %}
-<section class="md-card mx-auto flex h-[calc(100vh-9rem)] max-w-2xl flex-col overflow-hidden p-0">
-  {# En-tête de la conversation #}
-  <div class="flex items-center gap-3 border-b border-black/5 px-4 py-3 dark:border-white/10">
-    <a href="{% url 'messagerie:inbox' %}"
-       class="grid h-9 w-9 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10">
-      <span class="material-icons-round text-[20px]">arrow_back</span>
-    </a>
-    <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand/20 font-bold text-brand">
-      {% if conversation.is_group %}<span class="material-icons-round text-[20px]">group</span>{% else %}{{ conversation.title|slice:":1"|upper }}{% endif %}
-    </span>
-    <div class="min-w-0">
-      <p class="truncate font-semibold leading-tight">{{ conversation.title }}</p>
-      <p class="truncate text-xs text-slate-400">
-        {% if conversation.is_group %}{{ conversation.participants.count }} {% trans "participants" %}{% else %}{% trans "Conversation privée" %}{% endif %}
-      </p>
+<section class="flex h-[calc(100vh-3.25rem)] overflow-hidden border-t border-slate-200 dark:border-white/10"
+         x-data="{ modal: false, tab: 'direct' }">
+
+  {% include "messagerie/_sidebar.html" with sidebar_mobile=False %}
+
+  {# Panneau principal : le fil #}
+  <div class="flex min-w-0 flex-1 flex-col">
+
+    {# En-tête de la conversation #}
+    <div class="flex items-center gap-3 border-b border-slate-200 px-4 py-3 dark:border-white/10">
+      <a href="{% url 'messagerie:inbox' %}"
+         class="grid h-9 w-9 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 sm:hidden">
+        <span class="material-icons-round text-[20px]">arrow_back</span>
+      </a>
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-bold text-white {% if conversation.is_group %}bg-emerald-700{% else %}bg-slate-800{% endif %}">
+        {% if conversation.is_group %}<span class="material-icons-round text-[20px]">groups</span>{% else %}{{ conversation.title|slice:":2"|upper }}{% endif %}
+      </span>
+      <div class="min-w-0">
+        <p class="truncate font-semibold leading-tight">{{ conversation.title }}</p>
+        <p class="truncate text-xs text-slate-400">
+          {% if conversation.is_group %}{{ conversation.participants.count }} {% trans "participants" %}{% else %}{% trans "Conversation privée" %}{% endif %}
+        </p>
+      </div>
     </div>
+
+    {# Fil des messages — rafraîchi toutes les 4 s via HTMX #}
+    <div id="thread"
+         hx-get="{% url 'messagerie:thread' conversation.pk %}" hx-trigger="every 4s" hx-swap="innerHTML"
+         class="flex-1 space-y-2 overflow-y-auto p-4">
+      {% include "messagerie/_messages.html" %}
+    </div>
+
+    {# Composer #}
+    <form id="composer"
+          hx-post="{% url 'messagerie:send' conversation.pk %}" hx-target="#thread" hx-swap="innerHTML"
+          hx-encoding="multipart/form-data"
+          hx-on::after-request="this.reset(); clearPreview()"
+          class="border-t border-slate-200 p-3 dark:border-white/10">
+      {% csrf_token %}
+      <div id="files-preview" class="mb-2 hidden flex-wrap gap-1.5"></div>
+      <div class="flex items-center gap-2">
+        <label title="{% trans 'Joindre un fichier' %}"
+               class="grid h-10 w-10 shrink-0 cursor-pointer place-items-center rounded-full text-slate-500 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
+          <span class="material-icons-round text-[20px]">attach_file</span>
+          <input id="files-input" type="file" name="fichiers" multiple class="hidden"
+                 accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt,.csv,.png,.jpg,.jpeg,.gif,.webp"
+                 onchange="renderPreview()">
+        </label>
+        <input id="msg-input" name="body" autocomplete="off"
+               placeholder="{% trans 'Écrire un message…' %}"
+               class="flex-1 rounded-full border border-slate-200 bg-transparent px-4 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+        <button type="button" id="mic-btn" onclick="dictateMsg()" title="{% trans 'Dicter le message' %}"
+                class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-slate-500 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
+          <span class="material-icons-round text-[20px]">mic</span>
+        </button>
+        <button type="button" id="reformulate-btn" onclick="reformulateMsg()" title="{% trans 'Reformuler avec l’IA' %}"
+                class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-slate-500 transition hover:bg-black/5 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-white/10">
+          <span class="material-icons-round text-[20px]">auto_fix_high</span>
+        </button>
+        <button type="submit" class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-800 text-white transition hover:bg-slate-900">
+          <span class="material-icons-round text-[20px]">send</span>
+        </button>
+      </div>
+    </form>
   </div>
 
-  {# Fil des messages — rafraîchi toutes les 4 s via HTMX #}
-  <div id="thread"
-       hx-get="{% url 'messagerie:thread' conversation.pk %}" hx-trigger="every 4s" hx-swap="innerHTML"
-       class="flex-1 space-y-2 overflow-y-auto p-4">
-    {% include "messagerie/_messages.html" %}
-  </div>
-
-  {# Composer #}
-  <form id="composer"
-        hx-post="{% url 'messagerie:send' conversation.pk %}" hx-target="#thread" hx-swap="innerHTML"
-        hx-encoding="multipart/form-data"
-        hx-on::after-request="this.reset(); clearPreview()"
-        class="border-t border-black/5 p-3 dark:border-white/10">
-    {% csrf_token %}
-    {# Aperçu des fichiers sélectionnés #}
-    <div id="files-preview" class="mb-2 hidden flex-wrap gap-1.5"></div>
-    <div class="flex items-center gap-2">
-      <label title="{% trans 'Joindre un fichier' %}"
-             class="grid h-10 w-10 shrink-0 cursor-pointer place-items-center rounded-full text-slate-500 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
-        <span class="material-icons-round text-[20px]">attach_file</span>
-        <input id="files-input" type="file" name="fichiers" multiple class="hidden"
-               accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt,.csv,.png,.jpg,.jpeg,.gif,.webp"
-               onchange="renderPreview()">
-      </label>
-      <input name="body" autocomplete="off"
-             placeholder="{% trans 'Écrire un message…' %}"
-             class="flex-1 rounded-full border border-slate-200 bg-transparent px-4 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-      <button type="submit" class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand text-white transition hover:opacity-90">
-        <span class="material-icons-round text-[20px]">send</span>
-      </button>
-    </div>
-  </form>
+  {% include "messagerie/_new_modal.html" %}
 </section>
 
 <script>
@@ -62,7 +81,6 @@
     setTimeout(scrollThread, 100);
   })();
 
-  // Aperçu des fichiers joints (chips avec nom de fichier)
   function renderPreview() {
     var input = document.getElementById('files-input');
     var box = document.getElementById('files-preview');
@@ -79,6 +97,40 @@
   function clearPreview() {
     var box = document.getElementById('files-preview');
     if (box) { box.innerHTML = ''; box.classList.add('hidden'); box.classList.remove('flex'); }
+  }
+
+  // 🎤 Dictée vocale du message
+  function dictateMsg() {
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { alert('{% trans "Reconnaissance vocale non supportée par ce navigateur." %}'); return; }
+    var input = document.getElementById('msg-input');
+    var btn = document.getElementById('mic-btn');
+    var rec = new SR(); rec.lang = 'fr-FR'; rec.interimResults = false;
+    rec.onstart = function () { btn.classList.add('text-red-500'); };
+    rec.onend = function () { btn.classList.remove('text-red-500'); };
+    rec.onresult = function (e) {
+      var t = e.results[0][0].transcript;
+      input.value = (input.value ? input.value.trim() + ' ' : '') + t;
+      input.focus();
+    };
+    rec.start();
+  }
+
+  // ✨ Reformuler le message via l'IA
+  function reformulateMsg() {
+    var input = document.getElementById('msg-input');
+    var text = (input.value || '').trim();
+    if (!text) return;
+    var btn = document.getElementById('reformulate-btn');
+    var icon = btn.querySelector('.material-icons-round');
+    btn.disabled = true; icon.textContent = 'hourglass_empty';
+    var csrf = document.querySelector('#composer [name=csrfmiddlewaretoken]').value;
+    var fd = new FormData(); fd.append('text', text);
+    fetch('{% url "messagerie:reformulate" %}', { method: 'POST', headers: { 'X-CSRFToken': csrf }, credentials: 'same-origin', body: fd })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (d && d.text) { input.value = d.text; input.focus(); } })
+      .catch(function () {})
+      .finally(function () { btn.disabled = false; icon.textContent = 'auto_fix_high'; });
   }
 </script>
 {% endblock %}

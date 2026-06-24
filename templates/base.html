@@ -37,7 +37,7 @@
     <div class="flex min-w-0 flex-1 flex-col">
       {% include "partials/header.html" %}
       {% include "partials/install_banner.html" %}
-      <main class="flex-1 px-4 pb-24 pt-6 lg:px-8 lg:pb-8">
+      <main class="flex-1 {% block main_padding %}px-4 pb-24 pt-6 lg:px-8 lg:pb-8{% endblock %}">
         {% if messages %}
           <div class="mb-4 space-y-2">
             {% for message in messages %}

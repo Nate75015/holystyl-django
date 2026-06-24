@@ -1,36 +1,27 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block main_padding %}{% endblock %}
+
 {% block content %}
-<section class="mx-auto max-w-2xl space-y-4">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold">{% trans "Messagerie" %}</h2>
-    <a href="{% url 'messagerie:new' %}"
-       class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-      <span class="material-icons-round text-[18px]">edit</span>{% trans "Nouvelle conversation" %}
-    </a>
+<section class="flex h-[calc(100vh-3.25rem)] overflow-hidden border-t border-slate-200 dark:border-white/10"
+         x-data="{ modal: false, tab: 'direct' }">
+
+  {% include "messagerie/_sidebar.html" with sidebar_mobile=True %}
+
+  {# Panneau principal : état vide #}
+  <div class="hidden flex-1 flex-col items-center justify-center px-4 text-center sm:flex">
+    <div class="grid h-16 w-16 place-items-center rounded-full bg-black/5 dark:bg-white/10">
+      <span class="material-icons-round text-[28px] text-slate-400">chat_bubble_outline</span>
+    </div>
+    <p class="mt-4 font-semibold">{% trans "Sélectionnez une conversation" %}</p>
+    <p class="mt-1 text-sm text-slate-400">{% trans "ou démarrez-en une nouvelle" %}</p>
+    <button type="button" @click="modal = true"
+            class="mt-5 inline-flex items-center gap-1.5 rounded-full bg-slate-800 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-900">
+      {% trans "Nouveau message" %}
+    </button>
   </div>
 
-  {% if conversations %}
-    <div class="md-card overflow-hidden divide-y divide-black/5 p-0 dark:divide-white/10">
-      {% for c in conversations %}
-        <a href="{% url 'messagerie:detail' c.pk %}"
-           class="flex items-center gap-3 px-4 py-3 transition hover:bg-black/5 dark:hover:bg-white/5">
-          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand/20 font-bold text-brand">
-            {% if c.is_group %}<span class="material-icons-round text-[22px]">group</span>{% else %}{{ c.title|slice:":1"|upper }}{% endif %}
-          </span>
-          <div class="min-w-0 flex-1">
-            <p class="truncate font-medium {% if c.unread %}font-semibold{% endif %}">{{ c.title }}</p>
-            <p class="truncate text-xs text-slate-400">{{ c.preview|default:_("Aucun message") }}</p>
-          </div>
-          {% if c.unread %}
-            <span class="grid min-h-[20px] min-w-[20px] place-items-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">{{ c.unread }}</span>
-          {% endif %}
-        </a>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune conversation pour le moment. Démarrez-en une !" %}</p></div>
-  {% endif %}
+  {% include "messagerie/_new_modal.html" %}
 </section>
 {% endblock %}
