@@ -67,6 +67,8 @@ class Parcelle(TimeStampedModel):
     cadastral_ref = models.CharField(_("réf. cadastrale"), max_length=50, blank=True)
     commune = models.CharField(_("commune"), max_length=100, blank=True)
     official_area_ha = models.FloatField(_("surface officielle (ha)"), null=True, blank=True)
+    cadastre_data = models.JSONField(_("données cadastre (brut IGN)"), null=True, blank=True)
+    acquired_at = models.DateTimeField(_("date d'acquisition"), null=True, blank=True)
 
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.ACTIVE)
 

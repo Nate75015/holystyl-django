@@ -15,6 +15,7 @@ class AiConversation(models.Model):
 
     exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="ai_conversations")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    thread = models.UUIDField(null=True, blank=True, db_index=True)
     role = models.CharField(max_length=10, choices=Role.choices)
     content = models.TextField()
     audio_url = models.TextField(blank=True)

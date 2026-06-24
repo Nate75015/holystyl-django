@@ -4,7 +4,7 @@
 {% block content %}
 {{ parcelles_geojson|json_script:"parcelles-geojson" }}
 <section class="space-y-5"
-  x-data="{ tab: 'carte' }"
+  x-data="{ tab: (new URLSearchParams(location.search).get('tab') || 'carte') }"
   x-init="$watch('tab', v => { if (v === 'carte' && window._map) setTimeout(() => window._map.invalidateSize(), 60) })">
 
   <div class="flex items-start justify-between gap-3">
@@ -59,21 +59,21 @@
   <div x-show="tab === 'carte'" class="space-y-3">
     <div id="add-hint" class="hidden rounded-xl border border-brand/30 bg-brand/5 px-4 py-2.5 text-sm text-brand">
       <span class="material-icons-round align-middle text-[18px]">touch_app</span>
-      {% trans "Cliquez sur une parcelle de la carte pour la sélectionner depuis le cadastre, puis enregistrez-la." %}
+      {% trans "Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis Enregistrer." %}
     </div>
     <div class="relative">
       <div id="map" style="height: 62vh; min-height: 380px;" class="w-full rounded-2xl border border-slate-200 dark:border-white/10"></div>
 
-      {# Panneau de sélection (parcelle cadastrale cliquée) #}
-      <div id="parcel-panel" class="absolute bottom-3 left-3 right-3 hidden rounded-2xl bg-white p-4 shadow-xl dark:bg-[#122230] sm:left-auto sm:w-80">
-        <p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Parcelle cadastrale" %}</p>
-        <p id="sel-ref" class="font-semibold"></p>
-        <p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400"><span class="material-icons-round align-middle text-[16px]">straighten</span> <span id="sel-area"></span></p>
-        <label class="mt-3 block text-xs font-medium">{% trans "Nom de la parcelle" %}</label>
-        <input id="sel-name" class="mt-1 w-full rounded-lg border border-slate-200 bg-transparent px-3 py-1.5 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-        <div class="mt-3 flex justify-end gap-2">
+      {# Panneau de sélection (sous la carte, en flux normal — toujours visible) #}
+      <div id="parcel-panel" class="mt-3 hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-[#122230]">
+        <div class="mb-2 flex items-center justify-between">
+          <p class="text-sm font-semibold"><span id="sel-count">0</span> {% trans "parcelle(s) sélectionnée(s)" %}</p>
+          <p class="text-xs text-slate-400"><span id="sel-total">0</span> ha</p>
+        </div>
+        <div id="sel-list" class="mb-3 max-h-44 space-y-1 overflow-y-auto"></div>
+        <div class="flex justify-end gap-2">
           <button type="button" onclick="cancelSelect()" class="rounded-full px-3 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10">{% trans "Annuler" %}</button>
-          <button type="button" onclick="saveParcel()" class="rounded-full bg-brand px-4 py-1.5 text-sm font-medium text-white transition hover:opacity-90">{% trans "Enregistrer" %}</button>
+          <button type="button" id="sel-save" onclick="saveParcels()" class="rounded-full bg-brand px-4 py-1.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">{% trans "Enregistrer" %} (<span id="sel-count2">0</span>)</button>
         </div>
       </div>
     </div>
@@ -91,6 +91,7 @@
               <th class="px-4 py-3">{% trans "Culture" %}</th>
               <th class="px-4 py-3">{% trans "Réf. cadastrale" %}</th>
               <th class="px-4 py-3">{% trans "Commune" %}</th>
+              <th class="px-4 py-3">{% trans "Acquise le" %}</th>
               <th class="px-4 py-3"></th>
             </tr>
           </thead>
@@ -102,6 +103,7 @@
                 <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ p.culture|default:"—" }}</td>
                 <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ p.cadastral_ref|default:"—" }}</td>
                 <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ p.commune|default:"—" }}</td>
+                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{% if p.acquired_at %}{{ p.acquired_at|date:"d/m/Y" }}{% else %}{{ p.created_at|date:"d/m/Y" }}{% endif %}</td>
                 <td class="px-4 py-3 text-right">
                   <a href="{% url 'parcelles:detail' p.pk %}" class="text-slate-400 hover:text-brand"><span class="material-icons-round text-[18px]">chevron_right</span></a>
                 </td>
@@ -129,7 +131,8 @@
 (function () {
   const CSRF = '{{ csrf_token }}';
   const fc = JSON.parse(document.getElementById('parcelles-geojson').textContent);
-  let map, selLayer = null, selected = null, adding = false;
+  let map, adding = false;
+  const selection = {};
 
   function toast(msg) {
     const t = document.createElement('div');
@@ -194,6 +197,7 @@
     adding = true;
     const h = document.getElementById('add-hint');
     if (h) h.classList.remove('hidden');
+    renderPanel();
     if (map) setTimeout(() => map.invalidateSize(), 60);
   };
 
@@ -202,41 +206,97 @@
       .then(r => r.json())
       .then(data => {
         const feat = data.features && data.features[0];
-        if (!feat) { toast('Aucune parcelle cadastrale à cet endroit.'); return; }
-        showSelection(feat, lat, lon);
+        if (!feat) { toast('Aucune parcelle cadastrale ici.'); return; }
+        toggleSelect(feat);
       })
-      .catch(() => toast('Erreur lors de la récupération du cadastre.'));
+      .catch(() => toast('Erreur récupération cadastre.'));
   }
 
-  function showSelection(feat, lat, lon) {
-    if (selLayer) map.removeLayer(selLayer);
-    selLayer = L.geoJSON(feat, { style: { color: '#f59e0b', weight: 3, fillOpacity: 0.25 } }).addTo(map);
-    try { map.fitBounds(selLayer.getBounds(), { maxZoom: 17 }); } catch (e) {}
-    selected = { feat, lat, lon };
+  function pid(p) { return p.idu || `${p.code_insee || ''}${p.section || ''}${p.numero || ''}`; }
+
+  function toggleSelect(feat) {
     const p = feat.properties || {};
-    const ha = p.contenance ? (p.contenance / 10000).toFixed(2) : '?';
-    document.getElementById('sel-ref').textContent = `${p.section || ''} ${p.numero || ''} · ${p.nom_com || p.code_insee || ''}`;
-    document.getElementById('sel-area').textContent = `${ha} ha`;
-    document.getElementById('sel-name').value = `Parcelle ${(p.section || '')}${(p.numero || '')}`;
-    document.getElementById('parcel-panel').classList.remove('hidden');
+    const id = pid(p);
+    if (selection[id]) {
+      map.removeLayer(selection[id].layer);
+      delete selection[id];
+    } else {
+      const layer = L.geoJSON(feat, { style: { color: '#f59e0b', weight: 3, fillOpacity: 0.3 } }).addTo(map);
+      selection[id] = {
+        feat, layer,
+        name: `Parcelle ${(p.section || '')}${(p.numero || '')}`,
+        ref: `${p.section || ''} ${p.numero || ''}`.trim(),
+        com: p.nom_com || p.code_insee || '',
+        area: p.contenance ? p.contenance / 10000 : null,
+      };
+    }
+    renderPanel();
   }
 
-  window.cancelSelect = function () {
-    document.getElementById('parcel-panel').classList.add('hidden');
-    if (selLayer) { map.removeLayer(selLayer); selLayer = null; }
-    selected = null;
+  function renderPanel() {
+    const ids = Object.keys(selection);
+    const panel = document.getElementById('parcel-panel');
+    // Le panneau reste visible tant qu'on est en mode ajout (même à 0 parcelle).
+    if (!adding && !ids.length) { panel.classList.add('hidden'); return; }
+    panel.classList.remove('hidden');
+    let total = 0;
+    if (!ids.length) {
+      document.getElementById('sel-list').innerHTML =
+        '<p class="px-1 py-2 text-xs text-slate-400">' +
+        'Cliquez sur les parcelles de la carte pour les ajouter.</p>';
+    } else {
+      document.getElementById('sel-list').innerHTML = ids.map(id => {
+        const s = selection[id];
+        total += s.area || 0;
+        const ha = s.area != null ? s.area.toFixed(2) : '?';
+        return `<div class="flex items-center justify-between gap-2 rounded-lg bg-black/5 px-2.5 py-1.5 text-sm dark:bg-white/5">
+                  <span class="truncate"><b>${s.ref}</b> · ${s.com} <span class="text-slate-400">${ha} ha</span></span>
+                  <button type="button" onclick="removeSel('${id}')" class="shrink-0 text-slate-400 hover:text-red-500"><span class="material-icons-round text-[16px]">close</span></button>
+                </div>`;
+      }).join('');
+    }
+    document.getElementById('sel-count').textContent = ids.length;
+    document.getElementById('sel-count2').textContent = ids.length;
+    document.getElementById('sel-total').textContent = total.toFixed(2);
+    document.getElementById('sel-save').disabled = ids.length === 0;
+  }
+
+  window.removeSel = function (id) {
+    if (selection[id]) { map.removeLayer(selection[id].layer); delete selection[id]; renderPanel(); }
   };
 
-  window.saveParcel = function () {
-    if (!selected) return;
+  window.cancelSelect = function () {
+    Object.keys(selection).forEach(id => { map.removeLayer(selection[id].layer); delete selection[id]; });
+    adding = false;
+    const h = document.getElementById('add-hint');
+    if (h) h.classList.add('hidden');
+    document.getElementById('parcel-panel').classList.add('hidden');
+  };
+
+  window.saveParcels = function () {
+    const items = Object.values(selection).map(s => ({ feature: s.feat, name: s.name }));
+    if (!items.length) { toast('Aucune parcelle sélectionnée.'); return; }
+    const btn = document.getElementById('sel-save');
+    if (btn) btn.disabled = true;
     fetch('/parcelles/cadastre/enregistrer/', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF },
-      body: JSON.stringify({ feature: selected.feat, name: document.getElementById('sel-name').value, lat: selected.lat, lon: selected.lon }),
+      body: JSON.stringify({ parcelles: items }),
     })
-      .then(r => r.json())
-      .then(d => { if (d.ok) { location.reload(); } else { toast(d.error || 'Erreur enregistrement.'); } })
-      .catch(() => toast('Erreur réseau.'));
+      .then(async r => {
+        let d = null;
+        try { d = await r.json(); } catch (e) { /* réponse non JSON */ }
+        if (!r.ok || !d || !d.ok) {
+          throw new Error((d && d.error) ? d.error : ('HTTP ' + r.status));
+        }
+        return d;
+      })
+      .then(() => {
+        Object.keys(selection).forEach(id => { map.removeLayer(selection[id].layer); delete selection[id]; });
+        window.location = window.location.pathname + '?tab=liste';
+      })
+      .catch(e => { if (btn) btn.disabled = false; toast('Échec : ' + e.message); });
   };
 
   if (document.readyState !== 'loading') initMap();

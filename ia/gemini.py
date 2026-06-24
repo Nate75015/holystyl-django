@@ -78,6 +78,22 @@ def generate_json(messages: list[dict], *, temperature: float = 0.2) -> dict:
         return {}
 
 
+def extract_json_from_document(data: bytes, mime_type: str, prompt: str, *, temperature: float = 0.1) -> dict:
+    """Envoie un document (PDF/image) à Gemini (multimodal) et force une réponse JSON."""
+    from google.genai import types
+
+    client = _client()
+    resp = client.models.generate_content(
+        model=settings.GEMINI_MODEL,
+        contents=[types.Part.from_bytes(data=data, mime_type=mime_type), prompt],
+        config=types.GenerateContentConfig(temperature=temperature, response_mime_type="application/json"),
+    )
+    try:
+        return json.loads(resp.text or "{}")
+    except (json.JSONDecodeError, TypeError):
+        return {}
+
+
 def stream_text(messages: list[dict], *, temperature: float = 0.7):
     """Génère la réponse en flux (chunks de texte) pour le SSE."""
     system, prompt = _to_contents(messages)

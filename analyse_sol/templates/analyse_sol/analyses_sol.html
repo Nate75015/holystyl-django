@@ -2,27 +2,138 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6">
-  <h2 class="text-xl font-semibold">{% trans "Analyses de sol" %}</h2>
+<section class="space-y-5" x-data="{ modal: false }">
+
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-semibold">{% trans "Analyses de sol" %}</h2>
+      <p class="mt-1 text-sm text-slate-400">{% trans "Résultats d'analyses par parcelle · import de documents" %}</p>
+    </div>
+    <button type="button" @click="modal = true"
+            class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+      <span class="material-icons-round text-[18px]">upload_file</span>{% trans "Importer une analyse" %}
+    </button>
+  </div>
+
+  {# KPIs #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Analyses" %}</p>
+      <p class="mt-1 text-2xl font-bold">{{ kpi_count }}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Parcelles analysées" %}</p>
+      <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ kpi_parcelles }}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "pH moyen" %}</p>
+      <p class="mt-1 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ kpi_ph|default:"—" }}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "MO moyenne (%)" %}</p>
+      <p class="mt-1 text-2xl font-bold text-orange-500 dark:text-orange-400">{{ kpi_mo|default:"—" }}</p>
+    </div>
+  </div>
+
+  {# Liste #}
   {% if analyses %}
-    <div class="space-y-2">
-      {% for a in analyses %}
-        <div class="md-card">
-          <div class="flex items-center justify-between">
-            <p class="font-medium">{{ a.parcelle.name }}</p>
-            <span class="text-xs text-slate-400">{{ a.date|date:"d/m/Y" }}</span>
-          </div>
-          <dl class="mt-2 grid grid-cols-2 gap-1 text-sm sm:grid-cols-4">
-            <div><dt class="text-slate-400">pH</dt><dd>{{ a.ph|default:"—" }}</dd></div>
-            <div><dt class="text-slate-400">MO</dt><dd>{{ a.matiere_organique|default:"—" }}</dd></div>
-            <div><dt class="text-slate-400">N</dt><dd>{{ a.azote_total|default:"—" }}</dd></div>
-            <div><dt class="text-slate-400">{% trans "Labo" %}</dt><dd>{{ a.laboratoire|default:"—" }}</dd></div>
-          </dl>
-        </div>
-      {% endfor %}
+    <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+          <tr>
+            <th class="px-4 py-3">{% trans "Date" %}</th>
+            <th class="px-4 py-3">{% trans "Parcelle" %}</th>
+            <th class="px-4 py-3">{% trans "Laboratoire" %}</th>
+            <th class="px-4 py-3">pH</th>
+            <th class="px-4 py-3">MO %</th>
+            <th class="px-4 py-3">N</th>
+            <th class="px-4 py-3">P</th>
+            <th class="px-4 py-3">K</th>
+            <th class="px-4 py-3">{% trans "Document" %}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+          {% for a in analyses %}
+            <tr>
+              <td class="px-4 py-3">{{ a.date|date:"d/m/Y" }}</td>
+              <td class="px-4 py-3 font-medium">{{ a.parcelle.name }}</td>
+              <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ a.laboratoire|default:"—" }}</td>
+              <td class="px-4 py-3 font-medium text-blue-600 dark:text-blue-400">{{ a.ph|default_if_none:"—" }}</td>
+              <td class="px-4 py-3 font-medium text-orange-500 dark:text-orange-400">{{ a.matiere_organique|default_if_none:"—" }}</td>
+              <td class="px-4 py-3">{{ a.azote_total|default_if_none:"—" }}</td>
+              <td class="px-4 py-3">{{ a.phosphore_assimilable|default_if_none:"—" }}</td>
+              <td class="px-4 py-3">{{ a.potassium_echangeable|default_if_none:"—" }}</td>
+              <td class="px-4 py-3">
+                {% if a.document %}
+                  <a href="{{ a.document.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-brand hover:underline">
+                    <span class="material-icons-round text-[16px]">description</span>{% trans "Voir" %}
+                  </a>
+                {% else %}<span class="text-slate-400">—</span>{% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune analyse de sol." %}</p></div>
+    <div class="md-card flex flex-col items-center justify-center py-12 text-center">
+      <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">science</span>
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Aucune analyse de sol enregistrée." %}</p>
+      <button type="button" @click="modal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">upload_file</span>{% trans "Importer une analyse" %}
+      </button>
+    </div>
   {% endif %}
+
+  {# Modal — Importer une analyse #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
+    <div @click.self="modal = false" class="flex max-h-full w-full max-w-lg items-start justify-center">
+      <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Importer une analyse de sol" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        {% if parcelles %}
+          <form method="post" action="{% url 'analyse_sol:create' %}" enctype="multipart/form-data" class="space-y-3">
+            {% csrf_token %}
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span class="text-red-500">*</span></label>
+                <select name="parcelle" required
+                        class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                  {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+                </select>
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Date" %} <span class="text-red-500">*</span></label>
+                <input name="date" type="date" required
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+              </div>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Document (PDF, image…)" %}</label>
+              <input name="document" type="file" accept=".pdf,.png,.jpg,.jpeg,.csv,.xls,.xlsx"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm file:mr-3 file:rounded-full file:border-0 file:bg-brand file:px-3 file:py-1 file:text-white focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+
+            <div class="flex items-start gap-2 rounded-xl bg-brand/5 px-3 py-2.5 text-xs text-slate-500 dark:bg-white/5 dark:text-slate-400">
+              <span class="material-icons-round text-[16px] text-brand">auto_awesome</span>
+              <span>{% trans "Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du document par OCR/IA à l'import." %}</span>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-1">
+              <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+              <button type="submit" class="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">{% trans "Importer" %}</button>
+            </div>
+          </form>
+        {% else %}
+          <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse." %}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock %}

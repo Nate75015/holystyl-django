@@ -18,6 +18,7 @@ class AnalyseSol(models.Model):
     matiere_organique = models.FloatField(null=True, blank=True)
     calcaire_total = models.FloatField(null=True, blank=True)
     laboratoire = models.CharField(max_length=255, blank=True)
+    document = models.FileField(_("document"), upload_to="analyses_sol/", null=True, blank=True)
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -2,34 +2,109 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto flex h-[calc(100vh-9rem)] max-w-3xl flex-col" x-data="assistant()">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold">{% trans "Assistant Holystyl" %}</h2>
-    {% if not ai_ready %}
-      <span class="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs text-amber-600">{% trans "IA non configurée" %}</span>
-    {% endif %}
+<section class="mx-auto flex h-[calc(100vh-9rem)] max-w-5xl gap-4" x-data="assistant()">
+
+  {# Barre latérale : conversations passées #}
+  <aside class="hidden w-60 shrink-0 flex-col md:flex">
+    <a href="?new"
+       class="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand px-3 py-2 text-sm font-medium text-white transition hover:opacity-90">
+      <span class="material-icons-round text-[16px]">add</span>{% trans "Nouvelle conversation" %}
+    </a>
+    <p class="mt-4 px-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "Conversations" %}</p>
+    <div class="mt-1 flex-1 space-y-0.5 overflow-y-auto">
+      {% for c in conversations %}
+        <a href="?thread={{ c.thread }}"
+           class="block rounded-lg px-3 py-2 transition hover:bg-black/5 dark:hover:bg-white/10 {% if c.thread == current_thread %}bg-black/5 dark:bg-white/10{% endif %}">
+          <p class="truncate text-sm font-medium">{{ c.title }}</p>
+          <p class="text-[11px] text-slate-400">{{ c.last|date:"d/m H:i" }}</p>
+        </a>
+      {% empty %}
+        <p class="px-3 py-2 text-xs text-slate-400">{% trans "Aucune conversation." %}</p>
+      {% endfor %}
+    </div>
+  </aside>
+
+  {# Colonne principale (chat) #}
+  <div class="flex flex-1 flex-col">
+
+  <div class="mb-3 flex items-center justify-end md:hidden">
+    <a href="?new"
+       class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-sm transition hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10">
+      <span class="material-icons-round text-[16px]">add</span>{% trans "Nouvelle conversation" %}
+    </a>
   </div>
 
-  <div class="mt-4 flex-1 space-y-3 overflow-y-auto rounded-2xl border border-slate-200 p-4 dark:border-white/10" x-ref="log">
-    {% for m in history %}
-      <div class="flex {% if m.role == 'user' %}justify-end{% endif %}">
-        <div class="max-w-[80%] rounded-2xl px-3 py-2 text-sm {% if m.role == 'user' %}bg-brand text-white{% else %}bg-slate-100 dark:bg-white/10{% endif %}">{{ m.content }}</div>
+  {% if not ai_ready %}
+    <div class="mb-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-400">
+      {% trans "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles." %}
+    </div>
+  {% endif %}
+
+  {# Zone messages / écran d'accueil #}
+  <div class="flex-1 overflow-y-auto" x-ref="log">
+
+    {# Accueil (aucun message ni historique) #}
+    <div x-show="messages.length === 0 && !hasHistory" class="flex h-full flex-col items-center justify-center px-4 text-center">
+      <div class="grid h-16 w-16 place-items-center rounded-2xl bg-brand text-2xl font-bold text-white">E</div>
+      <h2 class="mt-4 text-2xl font-bold">{% trans "Bonjour, je suis Eric." %}</h2>
+      <p class="mt-2 max-w-md text-sm text-slate-500 dark:text-slate-400">
+        {% trans "Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les cultures, la fertilisation ou vos analyses." %}
+      </p>
+      <div class="mt-6 grid w-full max-w-2xl gap-3 sm:grid-cols-2">
+        <template x-for="s in suggestions" :key="s.text">
+          <button type="button" @click="suggest(s.text)"
+                  class="rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:border-brand hover:shadow-sm dark:border-white/10 dark:bg-white/5">
+            <p class="text-[11px] font-semibold uppercase tracking-wide text-brand" x-text="s.cat"></p>
+            <p class="mt-1 text-sm" x-text="s.text"></p>
+          </button>
+        </template>
       </div>
-    {% endfor %}
-    <template x-for="(m, i) in messages" :key="i">
-      <div class="flex" :class="m.role === 'user' ? 'justify-end' : ''">
-        <div class="max-w-[80%] rounded-2xl px-3 py-2 text-sm"
-             :class="m.role === 'user' ? 'bg-brand text-white' : 'bg-slate-100 dark:bg-white/10'"
-             x-text="m.content"></div>
-      </div>
-    </template>
+    </div>
+
+    {# Conversation #}
+    <div x-show="messages.length > 0 || hasHistory" class="space-y-3 py-2">
+      {% for m in history %}
+        <div class="flex {% if m.role == 'user' %}justify-end{% endif %} items-end gap-2">
+          {% if m.role != 'user' %}<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-white">E</span>{% endif %}
+          <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm {% if m.role == 'user' %}bg-brand text-white{% else %}bg-black/5 dark:bg-white/10{% endif %}">{{ m.content }}</div>
+        </div>
+      {% endfor %}
+      <template x-for="(m, i) in messages" :key="i">
+        <div class="flex items-end gap-2" :class="m.role === 'user' ? 'justify-end' : ''">
+          <template x-if="m.role !== 'user'"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-white">E</span></template>
+          <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm"
+               :class="m.role === 'user' ? 'bg-brand text-white' : 'bg-black/5 dark:bg-white/10'"
+               x-text="m.content || '…'"></div>
+        </div>
+      </template>
+    </div>
   </div>
 
-  <form @submit.prevent="send()" class="mt-3 flex gap-2">
-    <input x-model="input" type="text" placeholder="{% trans 'Demandez quelque chose…' %}" class="flex-1" />
-    <button type="button" @click="dictate()" class="md-icon-btn" :class="recording ? 'text-red-500' : ''" title="{% trans 'Dictée vocale' %}">🎤</button>
-    <button type="submit" class="md-btn-primary" :disabled="busy">{% trans "Envoyer" %}</button>
-  </form>
+  {# Barre de saisie #}
+  <div class="mt-3">
+    <form @submit.prevent="send()"
+          class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition focus-within:border-brand dark:border-white/10 dark:bg-white/5">
+      <textarea x-model="input" rows="1"
+                @keydown.enter.exact.prevent="send()"
+                placeholder="{% trans 'Décrivez votre besoin…' %}"
+                class="w-full resize-none border-0 bg-transparent p-0 text-sm focus:outline-none focus:ring-0"></textarea>
+      <div class="mt-2 flex items-center justify-between gap-2">
+        <span class="text-xs text-slate-400">{% trans "Entrée pour envoyer · Maj+Entrée pour saut de ligne" %}</span>
+        <div class="flex items-center gap-2">
+          <button type="button" @click="dictate()" :class="recording ? 'text-red-500' : 'text-slate-400'"
+                  title="{% trans 'Dictée vocale' %}" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10">
+            <span class="material-icons-round text-[18px]">mic</span>
+          </button>
+          <button type="submit" :disabled="busy"
+                  class="inline-flex items-center gap-1 rounded-full bg-brand px-4 py-1.5 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50">
+            {% trans "Envoyer" %} <span class="material-icons-round text-[16px]">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </form>
+    <p class="mt-2 text-center text-xs text-slate-400">{% trans "Eric peut commettre des erreurs. Vérifiez les informations importantes." %}</p>
+  </div>
+  </div>
 </section>
 {% endblock %}
 
@@ -38,17 +113,34 @@
   function assistant() {
     return {
       input: '', messages: [], busy: false, recording: false,
-      scroll() { this.$nextTick(() => { this.$refs.log.scrollTop = this.$refs.log.scrollHeight; }); },
+      hasHistory: {% if history %}true{% else %}false{% endif %},
+      threadId: '{{ current_thread }}',
+      newId() { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ''; },
+      newConversation() {
+        this.messages = []; this.hasHistory = false; this.input = ''; this.busy = false;
+        this.threadId = this.newId();
+      },
+      suggestions: [
+        { cat: 'Irrigation', text: "Faut-il irriguer mes parcelles aujourd'hui ?" },
+        { cat: 'Fertilisation', text: "Calcule ma dose d'azote pour le maïs" },
+        { cat: 'Cultures', text: 'Quel coefficient Kc pour la tomate en pleine saison ?' },
+        { cat: 'Analyse', text: 'Aide-moi à interpréter mon analyse de sol' },
+      ],
+      scroll() { this.$nextTick(() => { if (this.$refs.log) this.$refs.log.scrollTop = this.$refs.log.scrollHeight; }); },
+      suggest(text) { this.input = text; this.send(); },
       send() {
         var text = this.input.trim();
         if (!text || this.busy) return;
         this.messages.push({ role: 'user', content: text });
+        this.messages.push({ role: 'assistant', content: '' });
+        var idx = this.messages.length - 1;  // index de la bulle réponse (mutation réactive)
         this.input = ''; this.busy = true;
-        var reply = { role: 'assistant', content: '' };
-        this.messages.push(reply); this.scroll();
-        var es = new EventSource('{% url "ia:stream" %}?message=' + encodeURIComponent(text));
+        this.scroll();
+        if (!this.threadId) this.threadId = this.newId();
+        var url = '{% url "ia:stream" %}?message=' + encodeURIComponent(text) + (this.threadId ? '&thread=' + this.threadId : '');
+        var es = new EventSource(url);
         es.onmessage = (e) => {
-          try { reply.content += JSON.parse(e.data).text || ''; this.scroll(); } catch (_) {}
+          try { this.messages[idx].content += JSON.parse(e.data).text || ''; this.scroll(); } catch (_) {}
         };
         es.addEventListener('done', () => { es.close(); this.busy = false; });
         es.onerror = () => { es.close(); this.busy = false; };

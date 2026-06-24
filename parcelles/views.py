@@ -8,7 +8,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
@@ -22,6 +24,7 @@ def _exploitation_or_redirect(request):
 
 
 @login_required
+@ensure_csrf_cookie
 def parcelle_list(request):
     exploitation = _exploitation_or_redirect(request)
     parcelles = (
@@ -63,39 +66,63 @@ def parcelle_cadastre(request):
         return JsonResponse({"error": str(exc)}, status=502)
 
 
-@login_required
-@require_POST
-def parcelle_cadastre_save(request):
-    """Enregistre une parcelle sélectionnée depuis le cadastre IGN."""
-    exploitation = _exploitation_or_redirect(request)
-    if exploitation is None:
-        return JsonResponse({"error": "Configurez votre exploitation."}, status=400)
-    try:
-        body = json.loads(request.body)
-    except (ValueError, TypeError):
-        return JsonResponse({"error": "JSON invalide"}, status=400)
-    feature = body.get("feature") or {}
-    geom = feature.get("geometry")
+def _create_parcelle_from_feature(exploitation, feature, name=None, lat=None, lon=None):
+    """Crée une Parcelle depuis une feature cadastrale (API Carto IGN)."""
+    geom = (feature or {}).get("geometry")
     if not geom:
-        return JsonResponse({"error": "Géométrie manquante"}, status=400)
+        return None
     props = feature.get("properties", {})
     contenance = props.get("contenance")
     area = round(contenance / 10000, 4) if contenance else None
     ref = f"{props.get('section', '')} {props.get('numero', '')}".strip()
     commune = props.get("nom_com") or str(props.get("code_insee", "")) or str(props.get("code_com", ""))
-    name = (body.get("name") or "").strip() or (f"Parcelle {ref}".strip())
-    parcelle = Parcelle.objects.create(
+    name = (name or "").strip() or f"Parcelle {ref}".strip() or "Parcelle"
+    return Parcelle.objects.create(
         exploitation=exploitation,
-        name=name[:255] or "Parcelle",
+        name=name[:255],
         boundaries=geom,
         cadastral_ref=ref[:50],
         commune=str(commune)[:100],
         area=area,
         official_area_ha=area,
-        latitude=body.get("lat"),
-        longitude=body.get("lon"),
+        latitude=lat,
+        longitude=lon,
+        cadastre_data=props,          # toutes les données cadastre disponibles (brut IGN)
+        acquired_at=timezone.now(),   # date d'acquisition
     )
-    return JsonResponse({"ok": True, "id": parcelle.pk, "name": parcelle.name, "area": parcelle.area})
+
+
+@login_required
+@require_POST
+def parcelle_cadastre_save(request):
+    """Enregistre une ou plusieurs parcelles sélectionnées depuis le cadastre IGN."""
+    exploitation = _exploitation_or_redirect(request)
+    if exploitation is None:
+        # Crée une exploitation par défaut pour ne pas bloquer l'ajout de parcelles.
+        exploitation = Exploitation.objects.create(
+            owner=request.user,
+            name=(getattr(request.user, "display_name", "") or "Mon exploitation")[:255],
+        )
+    try:
+        body = json.loads(request.body)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "JSON invalide"}, status=400)
+
+    items = body.get("parcelles")
+    if not items:  # rétrocompat : une seule parcelle
+        items = [{"feature": body.get("feature"), "name": body.get("name"),
+                  "lat": body.get("lat"), "lon": body.get("lon")}]
+
+    created = 0
+    for it in items:
+        parcelle = _create_parcelle_from_feature(
+            exploitation, it.get("feature"), it.get("name"), it.get("lat"), it.get("lon")
+        )
+        if parcelle:
+            created += 1
+    if not created:
+        return JsonResponse({"error": "Aucune parcelle valide."}, status=400)
+    return JsonResponse({"ok": True, "created": created})
 
 
 @login_required
