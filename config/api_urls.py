@@ -8,7 +8,8 @@ from rest_framework.routers import DefaultRouter
 
 from administration.api import smtp_config, smtp_send_test, smtp_test
 from agronomie.api import CultureKcViewSet, FertigationViewSet, SaisonViewSet, TypeSolViewSet
-from analyses.api import AnalyseSolViewSet, AnalysisResultViewSet, BiodiversiteFicheViewSet
+from analyses.api import AnalysisResultViewSet, BiodiversiteFicheViewSet
+from analyse_sol.api import AnalyseSolViewSet
 from billing.api import ActivationActivateView, ActivationVerifyView, SubscriptionListView
 from equipe.api import TaskViewSet, TeamMemberViewSet
 from finances.api import (
@@ -23,10 +24,10 @@ from operations.api import (
     AffectationEnginViewSet,
     CatalogueEnginViewSet,
     EntretienMaterielViewSet,
-    InterventionViewSet,
     MachineLogViewSet,
     MachineViewSet,
 )
+from interventions.api import InterventionViewSet
 from exploitations.api import CurrentExploitationView, ExploitationKPIsView
 from planning.api import (
     EquipmentCatalogViewSet,

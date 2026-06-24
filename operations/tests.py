@@ -4,7 +4,8 @@ import pytest
 from django.contrib.auth import get_user_model
 
 from exploitations.models import Exploitation
-from operations.models import Intervention, Machine
+from interventions.models import Intervention
+from operations.models import Machine
 from parcelles.models import Parcelle
 
 User = get_user_model()

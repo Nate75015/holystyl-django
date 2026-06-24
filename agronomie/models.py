@@ -93,6 +93,34 @@ class Fertigation(models.Model):
         ordering = ("-date",)
 
 
+class Engrais(TimeStampedModel):
+    """Catalogue d'engrais (référentiel) : titres N/P/K, solubilité, effet pH."""
+
+    class Type(models.TextChoices):
+        N = "N", "N"
+        P = "P", "P"
+        K = "K", "K"
+        NP = "NP", "NP"
+        NK = "NK", "NK"
+        NPK = "NPK", "NPK"
+
+    nom = models.CharField(_("nom"), max_length=255)
+    type_engrais = models.CharField(_("type"), max_length=4, choices=Type.choices, default=Type.NPK)
+    n_pct = models.FloatField(_("N %"), null=True, blank=True)
+    p_pct = models.FloatField(_("P %"), null=True, blank=True)
+    k_pct = models.FloatField(_("K %"), null=True, blank=True)
+    solubilite = models.CharField(_("solubilité"), max_length=50, blank=True)
+    ph_effet = models.CharField(_("effet pH"), max_length=50, blank=True)
+
+    class Meta:
+        verbose_name = _("engrais")
+        verbose_name_plural = _("engrais")
+        ordering = ("nom",)
+
+    def __str__(self):
+        return self.nom
+
+
 class Saison(TimeStampedModel):
     """Saison agronomique d'une exploitation."""
 

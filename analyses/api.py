@@ -7,8 +7,8 @@ from rest_framework.response import Response
 
 from exploitations.models import Exploitation
 
-from .models import AnalyseSol, AnalysisResult, BiodiversiteFiche
-from .serializers import AnalyseSolSerializer, AnalysisResultSerializer, BiodiversiteFicheSerializer
+from .models import AnalysisResult, BiodiversiteFiche
+from .serializers import AnalysisResultSerializer, BiodiversiteFicheSerializer
 from .services import apply_extraction
 
 
@@ -46,16 +46,6 @@ class AnalysisResultViewSet(_TenantViewSet):
             report.save(update_fields=["ocr_raw_text"])
         applied = apply_extraction(report)
         return Response({"applied": applied, "report": AnalysisResultSerializer(report).data})
-
-
-class AnalyseSolViewSet(_TenantViewSet):
-    model = AnalyseSol
-    serializer_class = AnalyseSolSerializer
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        parcelle_id = self.request.query_params.get("parcelle")
-        return qs.filter(parcelle_id=parcelle_id) if parcelle_id else qs
 
 
 class BiodiversiteFicheViewSet(_TenantViewSet):

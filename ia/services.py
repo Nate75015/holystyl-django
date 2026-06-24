@@ -142,7 +142,7 @@ def execute_intent(exploitation, user, message: str, history: list[dict] | None 
         result.update(created=True, entity={"type": "irrigation_session", "id": session.id})
 
     elif intent == "creer_intervention":
-        from operations.models import Intervention
+        from interventions.models import Intervention
 
         parcelle = _resolve_parcelle(exploitation, data)
         itype = data.get("interventionType") or "autre"

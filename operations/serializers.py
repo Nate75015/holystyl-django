@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import AffectationEngin, CatalogueEngin, EntretienMateriel, Intervention, Machine, MachineLog
+from .models import AffectationEngin, CatalogueEngin, EntretienMateriel, Machine, MachineLog
 
 
 class _TenantSerializer(serializers.ModelSerializer):
@@ -19,12 +19,6 @@ class MachineLogSerializer(serializers.ModelSerializer):
         model = MachineLog
         exclude = ["exploitation"]
         read_only_fields = ["id", "created_at"]
-
-
-class InterventionSerializer(_TenantSerializer):
-    class Meta(_TenantSerializer.Meta):
-        model = Intervention
-        read_only_fields = ["id", "created_at", "updated_at", "user"]
 
 
 class EntretienMaterielSerializer(serializers.ModelSerializer):

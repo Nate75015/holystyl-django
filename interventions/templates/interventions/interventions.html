@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{{ interventions_json|json_script:"interventions-data" }}
+<section class="space-y-5"
+  x-data="{
+    filter: 'all',
+    modal: false,
+    rows: JSON.parse(document.getElementById('interventions-data').textContent),
+    get filtered() {
+      return this.filter === 'all' ? this.rows : this.rows.filter(r => r.type === this.filter);
+    },
+    badge(t) {
+      return ({
+        irrigation:    'bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400',
+        traitement:    'bg-purple-100 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400',
+        fertilisation: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400',
+        recolte:       'bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400',
+      })[t] || 'bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300';
+    }
+  }">
+
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-semibold">{% trans "Interventions" %}</h2>
+      <p class="mt-1 text-sm text-slate-400">
+        {% blocktrans count n=total %}Journal des opérations culturales · {{ n }} intervention{% plural %}Journal des opérations culturales · {{ n }} interventions{% endblocktrans %}
+      </p>
+    </div>
+    <button type="button" @click="modal = true"
+            class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Enregistrer" %}
+    </button>
+  </div>
+
+  {# Stat cards (cliquables = filtres) #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <button type="button" @click="filter = filter === 'irrigation' ? 'all' : 'irrigation'"
+            class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
+            :class="filter === 'irrigation' ? 'ring-2 ring-blue-400' : ''">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400"><span class="material-icons-round text-[20px]">water_drop</span></span>
+        <span class="text-2xl font-bold">{{ counts.irrigation }}</span>
+      </div>
+      <p class="mt-2 text-sm font-medium">{% trans "Irrigation" %}</p>
+    </button>
+    <button type="button" @click="filter = filter === 'traitement' ? 'all' : 'traitement'"
+            class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
+            :class="filter === 'traitement' ? 'ring-2 ring-purple-400' : ''">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-full bg-purple-100 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400"><span class="material-icons-round text-[20px]">science</span></span>
+        <span class="text-2xl font-bold">{{ counts.traitement }}</span>
+      </div>
+      <p class="mt-2 text-sm font-medium">{% trans "Traitement" %}</p>
+    </button>
+    <button type="button" @click="filter = filter === 'fertilisation' ? 'all' : 'fertilisation'"
+            class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
+            :class="filter === 'fertilisation' ? 'ring-2 ring-emerald-400' : ''">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400"><span class="material-icons-round text-[20px]">eco</span></span>
+        <span class="text-2xl font-bold">{{ counts.fertilisation }}</span>
+      </div>
+      <p class="mt-2 text-sm font-medium">{% trans "Fertilisation" %}</p>
+    </button>
+    <button type="button" @click="filter = filter === 'recolte' ? 'all' : 'recolte'"
+            class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
+            :class="filter === 'recolte' ? 'ring-2 ring-amber-400' : ''">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-full bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400"><span class="material-icons-round text-[20px]">agriculture</span></span>
+        <span class="text-2xl font-bold">{{ counts.recolte }}</span>
+      </div>
+      <p class="mt-2 text-sm font-medium">{% trans "Récolte" %}</p>
+    </button>
+  </div>
+
+  {# Filtre actif #}
+  <div>
+    <button type="button" @click="filter = 'all'"
+            class="rounded-full border px-3.5 py-1.5 text-sm font-medium transition"
+            :class="filter === 'all' ? 'border-brand bg-brand text-white' : 'border-slate-200 text-slate-600 hover:bg-black/5 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10'">
+      {% trans "Toutes" %} (<span x-text="filtered.length"></span>)
+    </button>
+  </div>
+
+  {# Liste #}
+  <div x-show="filtered.length" class="overflow-hidden rounded-2xl border border-slate-200 divide-y divide-slate-100 dark:divide-white/5 dark:border-white/10">
+    <template x-for="(r, i) in filtered" :key="i">
+      <div class="flex items-center gap-3 px-4 py-3">
+        <span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold" :class="badge(r.type)" x-text="r.typeLabel"></span>
+        <div class="min-w-0 flex-1">
+          <p class="truncate font-medium" x-text="r.title"></p>
+          <p class="truncate text-xs text-slate-400"><span x-text="r.date"></span><template x-if="r.parcelle"> · <span x-text="r.parcelle"></span></template></p>
+        </div>
+        <span class="shrink-0 text-xs text-slate-400" x-text="r.status"></span>
+      </div>
+    </template>
+  </div>
+
+  {# État vide — aucune donnée #}
+  <div x-show="!rows.length" class="md-card flex flex-col items-center justify-center py-12 text-center">
+    <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">build</span>
+    <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Aucune intervention enregistrée." %}</p>
+    <button type="button" @click="modal = true"
+            class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Enregistrer la première intervention" %}
+    </button>
+  </div>
+
+  {# État vide — filtre sans résultat #}
+  <div x-show="rows.length && !filtered.length" class="md-card text-center text-sm text-slate-400">
+    {% trans "Aucune intervention pour ce filtre." %}
+  </div>
+
+  {# Modal — Enregistrer une intervention #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
+    <div @click.self="modal = false" class="flex max-h-full w-full max-w-lg items-start justify-center">
+      <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Nouvelle intervention" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        <form method="post" action="{% url 'interventions:intervention_create' %}" class="space-y-3">
+          {% csrf_token %}
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Type" %} <span class="text-red-500">*</span></label>
+              <select name="intervention_type" required
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                {% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Statut" %}</label>
+              <select name="status"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                {% for value, label in statuses %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Titre" %}</label>
+            <input name="title" placeholder="ex: Traitement fongicide bloc A"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Date / heure" %} <span class="text-red-500">*</span></label>
+              <input name="start_time" type="datetime-local" required
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+              <select name="parcelle"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                <option value="">{% trans "—" %}</option>
+                {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Produit" %}</label>
+            <input name="product" placeholder="ex: Bouillie bordelaise"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
+            <textarea name="notes" rows="2"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></textarea>
+          </div>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">{% trans "Enregistrer" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

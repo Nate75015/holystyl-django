@@ -43,10 +43,12 @@ def layout(request):
         {
             "label": _("Cultures & Terrain"), "key": "cultures",
             "items": [
-                {"label": _("Parcelles"), "url_name": "parcelles:list", "icon": "map"},
-                {"label": _("Cultures & Kc"), "url_name": "agronomie:cultures_kc", "icon": "grass"},
+                {"label": _("Mes Parcelles"), "url_name": "parcelles:list", "icon": "map"},
+                {"label": _("Cultures"), "url_name": "agronomie:cultures", "icon": "grass"},
                 {"label": _("Types de sol"), "url_name": "agronomie:types_sol", "icon": "terrain"},
-                {"label": _("Saisons"), "url_name": "agronomie:saisons", "icon": "calendar_month"},
+                {"label": _("Fertigation"), "url_name": "agronomie:fertigation", "icon": "opacity"},
+                {"label": _("Interventions"), "url_name": "interventions:interventions", "icon": "build"},
+                {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
                 {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
                 {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
                 {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "sensors"},
@@ -56,12 +58,12 @@ def layout(request):
             "label": _("Protection"), "key": "protection",
             "items": [
                 {"label": _("Bassinage anti-gel"), "url_name": "irrigation:bassinage", "icon": "ac_unit"},
-                {"label": _("Interventions"), "url_name": "operations:interventions", "icon": "build"},
             ],
         },
         {
             "label": _("Économie"), "key": "economie",
             "items": [
+                {"label": _("Saisons"), "url_name": "agronomie:saisons", "icon": "calendar_month"},
                 {"label": _("Charges"), "url_name": "finances:charges", "icon": "payments"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
                 {"label": _("Facturation"), "url_name": "finances:facturation", "icon": "receipt_long"},
@@ -72,7 +74,6 @@ def layout(request):
             "label": _("Environnement"), "key": "environnement",
             "items": [
                 {"label": _("Laboratoire"), "url_name": "analyses:laboratoire", "icon": "science"},
-                {"label": _("Analyses de sol"), "url_name": "analyses:analyses_sol", "icon": "biotech"},
             ],
         },
         {

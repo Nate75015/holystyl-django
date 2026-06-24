@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{{ cultures_json|json_script:"cultures-data" }}
+<section class="space-y-5"
+  x-data="{
+    q: '',
+    cat: 'all',
+    modal: false,
+    info: false,
+    del: null,
+    rows: JSON.parse(document.getElementById('cultures-data').textContent),
+    filters: [
+      { v: 'all',        l: '{% trans "Toutes" %}' },
+      { v: 'cereales',   l: '{% trans "Céréales" %}' },
+      { v: 'legumes',    l: '{% trans "Légumes" %}' },
+      { v: 'fruits',     l: '{% trans "Fruits" %}' },
+      { v: 'vigne',      l: '{% trans "Vigne" %}' },
+      { v: 'oleagineux', l: '{% trans "Oléagineux" %}' },
+      { v: 'fourrage',   l: '{% trans "Fourrage" %}' },
+      { v: 'maraichage', l: '{% trans "Maraîchage" %}' },
+    ],
+    get filtered() {
+      const q = this.q.trim().toLowerCase();
+      return this.rows.filter(r =>
+        (this.cat === 'all' || r.cat === this.cat) &&
+        (!q || (r.nom + ' ' + r.sci + ' ' + r.catLabel + ' ' + r.source).toLowerCase().includes(q))
+      );
+    }
+  }">
+
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-semibold">{% trans "Cultures & Kc" %}</h2>
+      <p class="mt-1 text-sm text-slate-400">{% trans "Base de données cultures françaises — Coefficients culturaux FAO-56 / ARVALIS" %}</p>
+    </div>
+    <div class="flex shrink-0 items-center gap-2">
+      <button type="button" @click="info = true"
+              class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-black/5 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10">
+        <span class="material-icons-round text-[18px]">info</span>{% trans "Méthode" %}
+      </button>
+      <button type="button" @click="modal = true"
+              class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter" %}
+      </button>
+    </div>
+  </div>
+
+  {# Fiche Méthode — inline, au-dessus de la barre de recherche #}
+  <div x-show="info" x-cloak x-transition
+       class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#122230]">
+    <div class="mb-3 flex items-start justify-between gap-3">
+      <h3 class="flex items-center gap-2 text-base font-semibold">
+        <span class="material-icons-round text-[20px] text-brand">info</span>
+        {% trans "Méthode" %} <code class="rounded bg-black/5 px-1.5 py-0.5 text-sm dark:bg-white/10">ETc = ETP × Kc</code> (FAO-56)
+      </h3>
+      <button type="button" @click="info = false" class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+    </div>
+    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+      {% blocktrans %}Le besoin en eau est calculé avec la formule ETc = ETP × Kc, où l'ETP est l'évapotranspiration potentielle (données météo) et le Kc est le coefficient cultural qui varie selon le stade phénologique de la plante. Le système soustrait la pluie efficace et tient compte de la réserve utile du sol pour calculer la dose d'irrigation nette.{% endblocktrans %}
+    </p>
+    <div class="mt-4 grid gap-2 sm:grid-cols-3">
+      <div class="rounded-xl bg-black/5 px-3.5 py-2.5 dark:bg-white/5">
+        <p class="text-sm font-semibold text-blue-600 dark:text-blue-400">Kc initial</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400">{% trans "Levée → début développement" %}</p>
+      </div>
+      <div class="rounded-xl bg-black/5 px-3.5 py-2.5 dark:bg-white/5">
+        <p class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">Kc mid-saison</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400">{% trans "Pleine croissance végétative" %}</p>
+      </div>
+      <div class="rounded-xl bg-black/5 px-3.5 py-2.5 dark:bg-white/5">
+        <p class="text-sm font-semibold text-orange-500 dark:text-orange-400">Kc fin de cycle</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400">{% trans "Maturation → récolte" %}</p>
+      </div>
+    </div>
+  </div>
+
+  {# Recherche — sans bordure (fond doux), compacte #}
+  <div class="flex items-center gap-2 rounded-full bg-black/5 px-4 py-1.5 dark:bg-white/10">
+    <span class="material-icons-round shrink-0 text-[18px] leading-none text-slate-400">search</span>
+    <input type="search" x-model="q" autocomplete="off"
+           placeholder="{% trans 'Rechercher une culture, un nom scientifique, une source…' %}"
+           class="w-full border-0 bg-transparent p-0 text-sm focus:outline-none focus:ring-0 dark:[color-scheme:dark]">
+  </div>
+
+  {# Pré-filtres par catégorie — tous sur une seule ligne, largeurs égales #}
+  <div class="flex gap-2">
+    <template x-for="f in filters" :key="f.v">
+      <button type="button" @click="cat = f.v" x-text="f.l"
+              class="flex-1 whitespace-nowrap rounded-full border px-2 py-2 text-sm font-medium transition"
+              :class="cat === f.v ? 'border-brand bg-brand text-white' : 'border-slate-200 text-slate-600 hover:bg-black/5 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10'"></button>
+    </template>
+  </div>
+
+  {# Tableau filtré #}
+  <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
+    <table class="w-full text-sm">
+      <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+        <tr>
+          <th class="px-4 py-3">{% trans "Culture" %}</th>
+          <th class="px-4 py-3">{% trans "Nom scientifique" %}</th>
+          <th class="px-4 py-3">{% trans "Catégorie" %}</th>
+          <th class="px-4 py-3">Kc init</th>
+          <th class="px-4 py-3">Kc mid</th>
+          <th class="px-4 py-3">Kc fin</th>
+          <th class="px-4 py-3">{% trans "Source" %}</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+        <template x-for="(r, i) in filtered" :key="i">
+          <tr>
+            <td class="px-4 py-3 font-medium" x-text="r.nom"></td>
+            <td class="px-4 py-3 italic text-slate-500 dark:text-slate-400" x-text="r.sci || '—'"></td>
+            <td class="px-4 py-3" x-text="r.catLabel"></td>
+            <td class="px-4 py-3 font-medium text-blue-600 dark:text-blue-400" x-text="r.ki.toFixed(2)"></td>
+            <td class="px-4 py-3 font-medium text-emerald-600 dark:text-emerald-400" x-text="r.km.toFixed(2)"></td>
+            <td class="px-4 py-3 font-medium text-orange-500 dark:text-orange-400" x-text="r.ke.toFixed(2)"></td>
+            <td class="px-4 py-3 text-slate-400" x-text="r.source"></td>
+            <td class="px-4 py-3 text-right">
+              <button type="button" @click="del = r" title="{% trans 'Supprimer' %}"
+                      class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10">
+                <span class="material-icons-round text-[18px]">delete</span>
+              </button>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <div x-show="filtered.length === 0" class="px-4 py-10 text-center text-sm text-slate-400">
+      {% trans "Aucune culture ne correspond à la recherche." %}
+    </div>
+  </div>
+
+  <p class="text-xs text-slate-400">
+    <span x-text="filtered.length"></span> / <span x-text="rows.length"></span> {% trans "cultures" %}
+  </p>
+
+  {# Modal — Confirmation de suppression (aux couleurs de l'app) #}
+  <div x-show="del" x-cloak x-transition.opacity @keydown.escape.window="del = null"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div @click.self="del = null" class="w-full max-w-sm">
+      <div class="rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="flex items-start gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400">
+            <span class="material-icons-round text-[22px]">delete</span>
+          </span>
+          <div class="min-w-0">
+            <h3 class="font-semibold">{% trans "Supprimer la culture ?" %}</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+              « <span class="font-medium text-slate-700 dark:text-slate-200" x-text="del ? del.nom : ''"></span> » {% trans "sera supprimée définitivement." %}
+            </p>
+          </div>
+        </div>
+        <form method="post" :action="del ? '/cultures/' + del.id + '/supprimer/' : ''" class="mt-5 flex justify-end gap-2">
+          {% csrf_token %}
+          <button type="button" @click="del = null" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+          <button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-red-500 px-5 py-2 text-sm font-medium text-white transition hover:bg-red-600">
+            <span class="material-icons-round text-[18px]">delete</span>{% trans "Supprimer" %}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {# Modal — Nouvelle culture #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
+    <div @click.self="modal = false" class="flex max-h-full w-full max-w-lg items-start justify-center">
+      <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Nouvelle culture" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        <form method="post" action="{% url 'agronomie:culture_create' %}" class="space-y-3">
+          {% csrf_token %}
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Nom commun" %} <span class="text-red-500">*</span></label>
+            <input name="nom" required placeholder="ex: Blé tendre"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Nom scientifique" %}</label>
+            <input name="nom_scientifique" placeholder="ex: Triticum aestivum"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
+            <select name="categorie"
+                    class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+              {% for value, label in categories %}
+                <option value="{{ value }}" {% if value == 'autre' %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="mb-1 block text-xs font-medium text-blue-600 dark:text-blue-400">Kc initial</label>
+              <input name="kc_initial" type="number" step="0.01" min="0" value="0.30"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-medium text-emerald-600 dark:text-emerald-400">Kc mid-saison</label>
+              <input name="kc_mid" type="number" step="0.01" min="0" value="1.00"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-medium text-orange-500 dark:text-orange-400">Kc fin de cycle</label>
+              <input name="kc_end" type="number" step="0.01" min="0" value="0.60"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Source" %}</label>
+            <input name="source" placeholder="ex: FAO-56"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
+            <textarea name="notes" rows="2"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">{% trans "Ajouter" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

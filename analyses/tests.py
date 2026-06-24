@@ -4,8 +4,9 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
+from analyse_sol.models import AnalyseSol
 from analyses import services
-from analyses.models import AnalyseSol, AnalysisResult
+from analyses.models import AnalysisResult
 from exploitations.models import Exploitation
 from parcelles.models import Parcelle
 
