@@ -51,7 +51,9 @@
   </div>
   {% include "partials/bottom_nav.html" %}
 {% else %}
-  <main class="flex min-h-screen items-center justify-center px-4">
+  {% block auth_header %}{% endblock %}
+  {% block auth_hero %}{% endblock %}
+  <main class="{% block auth_main_class %}flex min-h-[calc(100vh-4rem)] items-center justify-center px-4{% endblock %}">
     {% block auth_content %}{% endblock %}
   </main>
 {% endif %}

@@ -16,47 +16,7 @@
       <span x-text="time"></span>
     </div>
 
-    {# Sélecteur de langue — drapeaux des principaux pays agricoles d'Europe #}
-    {% get_current_language as CUR %}
-    <div class="relative" x-data="{
-           open: false,
-           cur: '{{ CUR }}',
-           langs: [
-             { c: 'fr', flag: 'fr', n: 'Français' },
-             { c: 'de', flag: 'de', n: 'Deutsch' },
-             { c: 'it', flag: 'it', n: 'Italiano' },
-             { c: 'es', flag: 'es', n: 'Español' },
-             { c: 'nl', flag: 'nl', n: 'Nederlands' },
-             { c: 'pl', flag: 'pl', n: 'Polski' },
-             { c: 'ro', flag: 'ro', n: 'Română' },
-             { c: 'en', flag: 'gb', n: 'English' },
-             { c: 'da', flag: 'dk', n: 'Dansk' },
-             { c: 'ga', flag: 'ie', n: 'Gaeilge' },
-             { c: 'hu', flag: 'hu', n: 'Magyar' },
-             { c: 'el', flag: 'gr', n: 'Ελληνικά' },
-           ],
-           set(code) {
-             document.cookie = 'django_language=' + code + ';path=/;max-age=31536000';
-             location.reload();
-           }
-         }"
-         @click.outside="open = false">
-      <button type="button" @click="open = !open" title="{% trans 'Langue' %}"
-              class="grid h-9 w-9 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10">
-        <span class="fi rounded-sm" :class="'fi-' + (langs.find(l => l.c === cur) || langs[0]).flag"></span>
-      </button>
-      <div x-show="open" x-cloak x-transition.opacity
-           class="absolute right-0 mt-2 w-44 rounded-2xl border border-black/5 bg-white p-1.5 shadow-xl dark:border-white/10 dark:bg-[#122230]">
-        <template x-for="l in langs" :key="l.c">
-          <button type="button" @click="set(l.c)"
-                  class="flex w-full items-center gap-2.5 rounded-lg px-3 py-1.5 text-left text-sm hover:bg-black/5 dark:hover:bg-white/10"
-                  :class="l.c === cur ? 'font-semibold text-brand' : ''">
-            <span class="fi rounded-sm" :class="'fi-' + l.flag"></span>
-            <span x-text="l.n"></span>
-          </button>
-        </template>
-      </div>
-    </div>
+    {% include "partials/lang_switcher.html" %}
 
     {# Cloche notifications → centre de notifications, avec badge non-lus #}
     <a href="{% url 'notifications:center' %}" title="{% trans 'Notifications' %}"

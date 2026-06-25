@@ -2,22 +2,239 @@
 {% load i18n %}
 {% block title %}Holystyl — {% trans "Irrigation de précision pour agriculteurs" %}{% endblock %}
 
-{% block auth_content %}
-<div class="w-full max-w-3xl space-y-10 py-10 text-center" x-data="alexChat()">
-  <div>
-    <div class="mb-4 flex items-center justify-center gap-2">
-      {% include "partials/brand_mark.html" with size=44 icon=26 %}
-      <span class="text-2xl font-bold">Holystyl</span>
-    </div>
-    <h1 class="text-3xl font-bold sm:text-4xl">{% trans "Pilotez votre irrigation, économisez l'eau et l'énergie." %}</h1>
-    <p class="mx-auto mt-3 max-w-xl text-slate-500 dark:text-slate-400">
-      {% trans "IoT temps réel, score d'efficience DTI, assistant IA et conformité subventions — pensés pour les agriculteurs." %}
-    </p>
-    <div class="mt-6 flex items-center justify-center gap-3">
-      <a href="{% url 'accounts:register' %}" class="md-btn-primary">{% trans "Démarrer" %}</a>
-      <a href="{% url 'accounts:login' %}" class="sidebar-link">{% trans "Se connecter" %}</a>
+{% block auth_header %}
+<header class="sticky top-0 z-30 w-full bg-[#28738f] text-white shadow-sm">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
+    <a href="{% url 'public:home' %}" class="flex items-center gap-2">
+      {% include "partials/brand_mark.html" with size=30 icon=17 %}
+      <span class="text-lg font-bold tracking-tight">Holystyl</span>
+    </a>
+    <nav class="hidden items-center gap-8 text-sm font-medium text-white/80 md:flex">
+      <a href="#domaines" class="transition hover:text-white">{% trans "Domaines" %}</a>
+      <a href="#tarif" class="transition hover:text-white">{% trans "Tarif" %}</a>
+      <a href="#faq" class="transition hover:text-white">FAQ</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      {% include "partials/lang_switcher.html" %}
+      <a href="{% url 'accounts:login' %}"
+         class="rounded-full bg-[#fafaf5] px-5 py-1.5 text-sm font-semibold text-[#28738f] transition hover:opacity-90">
+        {% trans "Connexion" %}
+      </a>
+      <a href="{% url 'accounts:register' %}"
+         class="rounded-full bg-[#ffd426] px-5 py-1.5 text-sm font-bold text-slate-900 shadow-sm transition hover:opacity-90">
+        {% trans "S'inscrire" %}
+      </a>
     </div>
   </div>
+</header>
+{% endblock %}
+
+{% block auth_main_class %}flex justify-center px-4 pb-16{% endblock %}
+
+{% block auth_hero %}
+<section class="border-b border-black/5 bg-gradient-to-b from-[#fafaf5] to-white dark:border-white/10 dark:from-[#0b1620] dark:to-[#0b1620]">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-20">
+
+    {# Texte (gauche, aligné à gauche) #}
+    <div class="text-left">
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">
+        {% trans "Votre exploitation, sans la garder en tête." %}
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-slate-600 dark:text-slate-300">
+        {% trans "L'assistant qui retient, calcule et prouve à votre place." %}
+      </p>
+      <p class="mt-2 text-base font-semibold text-[#28738f]">
+        {% trans "59,90 € HT/mois par exploitation, utilisateurs illimités." %}
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="{% url 'accounts:register' %}"
+           class="rounded-full bg-[#28738f] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
+          {% trans "Commencer maintenant" %}
+        </a>
+        <a href="#domaines"
+           class="rounded-full border border-[#28738f]/40 px-6 py-2.5 text-sm font-semibold text-[#28738f] transition hover:bg-[#28738f]/10">
+          {% trans "Voir ce qu'il fait" %}
+        </a>
+        <a href="#telecharger"
+           class="inline-flex items-center gap-1.5 rounded-full px-6 py-2.5 text-sm font-semibold text-slate-600 transition hover:text-[#28738f] dark:text-slate-300">
+          <span class="material-icons-round text-[18px]">download</span>{% trans "Télécharger l'app" %}
+        </a>
+      </div>
+
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
+        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Sans engagement" %}</span>
+        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Données hébergées en France" %}</span>
+        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Prise en main guidée incluse" %}</span>
+      </div>
+    </div>
+
+    {# Image (droite) — exploitation agricole au coucher du soleil #}
+    <div class="relative">
+      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80"
+           alt="{% trans 'Exploitation agricole au coucher du soleil' %}"
+           loading="lazy"
+           class="h-64 w-full rounded-3xl object-cover shadow-2xl ring-1 ring-black/5 sm:h-80 lg:h-[30rem]">
+    </div>
+  </div>
+</section>
+
+{# Section : la charge qui s'empile #}
+<section id="domaines" class="bg-[#fafaf5] dark:bg-[#0b1620]">
+  <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+        {% trans "Le métier n'a pas changé." %}
+      </h2>
+      <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">
+        {% trans "Sa charge administrative et mentale, si." %}
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {# Réglementation #}
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-white/5">
+        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f]"><span class="material-icons-round text-[22px]">gavel</span></span>
+        <h3 class="mt-4 font-semibold">{% trans "La réglementation qui s'empile" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Plan Eau 2030" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Taxonomie EU" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "E-facturation obligatoire" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Traçabilité renforcée" %}</li>
+        </ul>
+      </div>
+
+      {# Économie #}
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-white/5">
+        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f]"><span class="material-icons-round text-[22px]">payments</span></span>
+        <h3 class="mt-4 font-semibold">{% trans "L'économie qui pèse autrement" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Marges sous pression" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Charges en hausse" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Financement complexe" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Dossiers de subvention" %}</li>
+        </ul>
+      </div>
+
+      {# Main-d'œuvre #}
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-white/5">
+        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f]"><span class="material-icons-round text-[22px]">groups</span></span>
+        <h3 class="mt-4 font-semibold">{% trans "La main-d'œuvre à gérer" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Saisonniers et apprentis" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Associés et salariés" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Transmission incertaine" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Formation continue" %}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Section : chiffres / preuve sociale #}
+<section class="border-t border-black/5 bg-white dark:border-white/10 dark:bg-[#0b1620]">
+  <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+        {% trans "Ce que disent les agriculteurs français" %}
+      </h2>
+      <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">
+        {% trans "Des chiffres qui parlent d'eux-mêmes." %}
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-2xl border border-slate-200 bg-[#fafaf5] p-6 dark:border-white/10 dark:bg-white/5">
+        <p class="text-4xl font-bold text-[#28738f]">48 %</p>
+        <p class="mt-2 font-medium">{% trans "des agriculteurs veulent travailler moins" %}</p>
+        <p class="mt-3 text-xs text-slate-400">{% trans "PRISM 2023 — priorité n°1 à 3 ans" %}</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-[#fafaf5] p-6 dark:border-white/10 dark:bg-white/5">
+        <p class="text-4xl font-bold text-[#28738f]">70 %</p>
+        <p class="mt-2 font-medium">{% trans "choisissent de réduire leurs charges" %}</p>
+        <p class="mt-3 text-xs text-slate-400">{% trans "PRISM 2023 — vs maximiser la productivité" %}</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-[#fafaf5] p-6 dark:border-white/10 dark:bg-white/5">
+        <p class="text-4xl font-bold text-[#28738f]">76 %</p>
+        <p class="mt-2 font-medium">{% trans "subissent le changement climatique" %}</p>
+        <p class="mt-3 text-xs text-slate-400">{% trans "VoxAgri 2025 — effet négatif sur l'exploitation" %}</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-[#fafaf5] p-6 dark:border-white/10 dark:bg-white/5">
+        <p class="text-4xl font-bold text-[#28738f]">51 %</p>
+        <p class="mt-2 font-medium">{% trans "veulent plus d'accompagnement" %}</p>
+        <p class="mt-3 text-xs text-slate-400">{% trans "PRISM 2023 — ou de meilleure qualité" %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Section : la charge invisible — fond jaune (style Notes Mac) #}
+<section class="border-t border-black/5 bg-[#ffd426]">
+  <div class="mx-auto max-w-3xl px-4 py-16 text-center lg:py-20">
+    <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+      {% trans "La charge invisible" %}
+    </h2>
+    <p class="mt-6 text-lg leading-relaxed text-slate-800">
+      {% trans "Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le prouver à un contrôleur, le retrouver pour un dossier, le transmettre à l'apprenti — c'est un autre travail." %}
+    </p>
+    <p class="mt-4 text-lg leading-relaxed text-slate-800">
+      {% trans "Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est ce qui se colle par-dessus." %}
+      <span class="font-semibold text-[#28738f]">{% trans "48 % des agriculteurs citent « maîtriser le temps de travail » comme priorité n°1." %}</span>
+    </p>
+  </div>
+</section>
+
+{# Section : 5 problèmes, 1 réponse — fond vert foncé, contenu décalé à droite #}
+<section class="bg-[#003825] text-white">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-24">
+
+    {# Image (gauche) — agriculteur submergé par l'administratif #}
+    <div>
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+           alt="{% trans 'Agriculteur submergé par la paperasse administrative' %}"
+           loading="lazy"
+           class="h-72 w-full rounded-3xl object-cover shadow-2xl ring-1 ring-white/10 sm:h-96 lg:h-full lg:max-h-[34rem]">
+    </div>
+
+    {# Contenu (droite) #}
+    <div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{% trans "5 problèmes. 1 réponse." %}</h2>
+      <p class="mt-4 text-xl font-medium text-white/90">
+        {% trans "Votre exploitation mérite un assistant qui ne dort jamais." %}
+      </p>
+      <p class="mt-4 leading-relaxed text-white/70">
+        {% trans "Holystyl répond aux 5 grandes préoccupations des agriculteurs français : temps de travail, charges, adaptation climatique, gestion d'équipe et accompagnement. Disponible à la voix, sur le tracteur, à 22h." %}
+      </p>
+
+      <ul class="mt-8 space-y-3">
+        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
+          <span class="font-semibold">{% trans "« Je n'ai pas le temps »" %}</span>
+          <span class="text-white/70"> → {% trans "automatise les rapports et la traçabilité" %}</span>
+        </li>
+        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
+          <span class="font-semibold">{% trans "« Je dois réduire mes charges »" %}</span>
+          <span class="text-white/70"> → {% trans "tableau de bord financier en temps réel" %}</span>
+        </li>
+        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
+          <span class="font-semibold">{% trans "« Le climat change »" %}</span>
+          <span class="text-white/70"> → {% trans "alertes météo, suivi parcellaire, aide à la décision" %}</span>
+        </li>
+        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
+          <span class="font-semibold">{% trans "« Je gère des saisonniers »" %}</span>
+          <span class="text-white/70"> → {% trans "module Équipe & Tâches avec rappels automatiques" %}</span>
+        </li>
+        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
+          <span class="font-semibold">{% trans "« Je ne sais pas à qui demander »" %}</span>
+          <span class="text-white/70"> → {% trans "IA disponible 24h/24 sur vos questions" %}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block auth_content %}
+<div class="w-full max-w-md space-y-6 py-12 text-center" x-data="alexChat()">
 
   {# Lead magnet #}
   <div class="md-card mx-auto max-w-md text-left">
