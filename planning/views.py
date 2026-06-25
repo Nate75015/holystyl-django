@@ -1,6 +1,8 @@
-"""Vues web planning : calendrier des interventions + bon d'intervention."""
+"""Vues web planning : grille jour/semaine/mois d'équipe + bon d'intervention."""
 
+import calendar as _calendar
 import json
+from datetime import date, timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -21,19 +23,60 @@ def _exploitation(request):
 @login_required
 def planning(request):
     exploitation = _exploitation(request)
-    tasks = PlanningTask.objects.filter(exploitation=exploitation) if exploitation else PlanningTask.objects.none()
-    technicians = TeamMember.objects.filter(exploitation=exploitation) if exploitation else TeamMember.objects.none()
-    return render(
-        request,
-        "planning/planning.html",
-        {
-            "tasks": tasks,
-            "backlog": tasks.filter(is_backlog=True),
-            "technicians": technicians,
-            "views": [("jour", _("Jour")), ("semaine", _("Semaine")), ("mois", _("Mois"))],
-            "page_title": _("Planning"),
-        },
-    )
+    team_members = TeamMember.objects.filter(exploitation=exploitation) if exploitation else TeamMember.objects.none()
+
+    today = timezone.localdate()
+
+    # Vue (jour / semaine / mois) et date de référence (?vue=&date=YYYY-MM-DD).
+    vue = request.GET.get("vue", "semaine")
+    if vue not in ("jour", "semaine", "mois"):
+        vue = "semaine"
+    raw = request.GET.get("date")
+    try:
+        base = date.fromisoformat(raw) if raw else today
+    except ValueError:
+        base = today
+
+    ctx = {
+        "team_members": team_members,
+        "today": today,
+        "vue": vue,
+        "anchor": base,
+        "page_title": _("Planning"),
+    }
+
+    if vue == "jour":
+        ctx.update(
+            days=[base],
+            ncols=1,
+            label=base,
+            prev_date=base - timedelta(days=1),
+            next_date=base + timedelta(days=1),
+            is_today_range=(base == today),
+        )
+    elif vue == "semaine":
+        monday = base - timedelta(days=base.weekday())
+        ctx.update(
+            days=[monday + timedelta(days=i) for i in range(7)],
+            ncols=7,
+            week_start=monday,
+            week_end=monday + timedelta(days=6),
+            prev_date=monday - timedelta(days=7),
+            next_date=monday + timedelta(days=7),
+            is_today_range=(monday == today - timedelta(days=today.weekday())),
+        )
+    else:  # mois
+        first = base.replace(day=1)
+        ctx.update(
+            month_weeks=_calendar.Calendar(firstweekday=0).monthdatescalendar(first.year, first.month),
+            month=first,
+            current_month=first.month,
+            prev_date=(first - timedelta(days=1)).replace(day=1),
+            next_date=(first + timedelta(days=31)).replace(day=1),
+            is_today_range=(first.year == today.year and first.month == today.month),
+        )
+
+    return render(request, "planning/planning.html", ctx)
 
 
 @login_required

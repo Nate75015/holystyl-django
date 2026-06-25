@@ -1,48 +1,111 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block main_padding %}{% endblock %}
+
 {% block content %}
-<section class="space-y-6" x-data="{ view: 'semaine' }">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold">{% trans "Planning des interventions" %}</h2>
-    <div class="flex gap-1 rounded-lg border border-slate-200 p-1 text-sm dark:border-white/10">
-      {% for key, label in views %}
-        <button @click="view='{{ key }}'" class="rounded px-3 py-1" :class="view==='{{ key }}' ? 'bg-brand text-white' : ''">{{ label }}</button>
-      {% endfor %}
+<section class="flex h-[calc(100vh-3.25rem)] flex-col">
+
+  {# ── Barre d'outils : titre · filtre vue · navigation ───────────────── #}
+  <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-4 lg:px-6">
+    <h2 class="text-xl font-semibold">{% trans "Planning" %}</h2>
+
+    <div class="flex flex-wrap items-center gap-3">
+      {# Filtre Jour / Semaine / Mois #}
+      <div class="flex rounded-xl border border-[#e7e5dd] p-0.5 text-sm dark:border-white/10">
+        <a href="?vue=jour&date={{ anchor|date:'Y-m-d' }}"
+           class="rounded-lg px-3 py-1.5 font-medium transition {% if vue == 'jour' %}bg-[#14b8a6] text-white{% else %}text-slate-500 hover:bg-black/5 dark:hover:bg-white/10{% endif %}">{% trans "Jour" %}</a>
+        <a href="?vue=semaine&date={{ anchor|date:'Y-m-d' }}"
+           class="rounded-lg px-3 py-1.5 font-medium transition {% if vue == 'semaine' %}bg-[#14b8a6] text-white{% else %}text-slate-500 hover:bg-black/5 dark:hover:bg-white/10{% endif %}">{% trans "Semaine" %}</a>
+        <a href="?vue=mois&date={{ anchor|date:'Y-m-d' }}"
+           class="rounded-lg px-3 py-1.5 font-medium transition {% if vue == 'mois' %}bg-[#14b8a6] text-white{% else %}text-slate-500 hover:bg-black/5 dark:hover:bg-white/10{% endif %}">{% trans "Mois" %}</a>
+      </div>
+
+      {# Navigation période #}
+      <div class="flex items-center gap-2">
+        <a href="?vue={{ vue }}&date={{ prev_date|date:'Y-m-d' }}" class="md-icon-btn" title="{% trans 'Précédent' %}">
+          <span class="material-icons-round text-[20px]">chevron_left</span>
+        </a>
+        <span class="min-w-[11rem] text-center text-sm font-medium">
+          {% if vue == 'jour' %}{{ label|date:'l j F Y'|capfirst }}
+          {% elif vue == 'semaine' %}{{ week_start|date:'j' }} – {{ week_end|date:'j F Y' }}
+          {% else %}{{ month|date:'F Y'|capfirst }}{% endif %}
+        </span>
+        <a href="?vue={{ vue }}&date={{ next_date|date:'Y-m-d' }}" class="md-icon-btn" title="{% trans 'Suivant' %}">
+          <span class="material-icons-round text-[20px]">chevron_right</span>
+        </a>
+        {% if not is_today_range %}
+          <a href="?vue={{ vue }}"
+             class="ml-1 rounded-xl border-2 border-[#d6d3c8] px-3 py-1.5 text-sm font-semibold text-slate-600 transition hover:bg-[#f4f2ec] dark:border-[#2a3f4d] dark:text-slate-300 dark:hover:bg-white/5">
+            {% trans "Aujourd'hui" %}
+          </a>
+        {% endif %}
+      </div>
     </div>
   </div>
 
-  <div class="grid gap-4 lg:grid-cols-3">
-    <div class="lg:col-span-2 space-y-2">
-      <h3 class="text-sm font-medium text-slate-400">{% trans "Tâches planifiées" %}</h3>
-      {% for t in tasks %}
-        {% if not t.is_backlog %}
-          <div class="md-card flex items-center justify-between" style="border-left:4px solid {{ t.couleur|default:'#06b6c4' }}">
-            <div>
-              <p class="font-medium">{{ t.titre }}</p>
-              <p class="text-xs text-slate-400">{{ t.get_type_display }} · {{ t.technicien_nom|default:"—" }}{% if t.date_debut %} · {{ t.date_debut }}{% endif %}</p>
+  {# ── Grille ─────────────────────────────────────────────────────────── #}
+  <div class="min-h-0 flex-1 overflow-auto">
+    <div class="border-y border-[#e7e5dd] bg-white dark:border-white/10 dark:bg-[#122230]">
+
+      {% if vue == 'mois' %}
+        {# ── Vue Mois : calendrier classique ─────────────────────────── #}
+        <div class="grid grid-cols-7 border-b border-[#e7e5dd] dark:border-white/10">
+          {% for d in month_weeks.0 %}
+            <div class="py-2.5 text-center text-xs font-bold uppercase tracking-wide text-slate-400 {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %}">{{ d|date:'D' }}</div>
+          {% endfor %}
+        </div>
+        {% for week in month_weeks %}
+          <div class="grid grid-cols-7 border-b border-[#e7e5dd] last:border-b-0 dark:border-white/10">
+            {% for d in week %}
+              <div class="min-h-[5.5rem] p-2 {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %} {% if d.month != current_month %}bg-black/[0.02] dark:bg-white/[0.02]{% endif %}">
+                <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-bold {% if d == today %}bg-[#14b8a6] text-white{% elif d.month != current_month %}text-slate-300 dark:text-slate-600{% else %}text-slate-700 dark:text-slate-200{% endif %}">{{ d|date:'j' }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
+      {% else %}
+        {# ── Vue Jour / Semaine : grille équipe × jours ──────────────── #}
+        <div class="grid border-b border-[#e7e5dd] dark:border-white/10"
+             style="grid-template-columns: 7.5rem repeat({{ ncols }}, minmax(0, 1fr));">
+          <div class="flex items-center gap-1.5 border-r border-[#e7e5dd] px-4 py-3 text-sm font-bold tracking-wide text-[#14b8a6] dark:border-white/10">
+            <span class="material-icons-round text-[18px]">groups</span>{% trans "ÉQUIPE" %}
+          </div>
+          {% for d in days %}
+            <div class="flex flex-col items-center justify-center gap-0.5 py-3 text-center {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %} {% if d == today %}bg-[#14b8a6]/10{% endif %}">
+              <span class="text-xs font-bold uppercase tracking-wide {% if d == today %}text-[#14b8a6]{% else %}text-slate-400{% endif %}">{{ d|date:'D' }}</span>
+              <span class="text-2xl font-extrabold leading-none {% if d == today %}text-[#14b8a6]{% else %}text-slate-800 dark:text-white{% endif %}">{{ d|date:'j' }}</span>
+              {% if d == today %}<span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#14b8a6]"></span>{% endif %}
             </div>
-            <div class="flex items-center gap-2">
-              <span class="rounded-full bg-brand/10 px-2 py-0.5 text-xs text-brand">{{ t.get_statut_display }}</span>
-              <a href="{% url 'planning:bon_intervention' t.pk %}" class="sidebar-link text-xs">{% trans "Bon" %}</a>
+          {% endfor %}
+        </div>
+
+        {% if team_members %}
+          {% for m in team_members %}
+            <div class="grid border-b border-[#e7e5dd] last:border-b-0 dark:border-white/10"
+                 style="grid-template-columns: 7.5rem repeat({{ ncols }}, minmax(0, 1fr));">
+              <div class="flex items-center gap-2 border-r border-[#e7e5dd] px-3 py-4 dark:border-white/10">
+                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-bold text-white" style="background: {{ m.color }}">{{ m.name|slice:":1"|upper }}</span>
+                <span class="min-w-0 truncate text-sm font-medium">{{ m.name }}</span>
+              </div>
+              {% for d in days %}
+                <div class="min-h-[4.5rem] {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %} {% if d == today %}bg-[#14b8a6]/[0.06]{% endif %}"></div>
+              {% endfor %}
             </div>
+          {% endfor %}
+        {% else %}
+          <div class="flex flex-col items-center justify-center px-4 py-20 text-center">
+            <span class="material-icons-round text-[44px] text-slate-300 dark:text-slate-600">groups</span>
+            <p class="mt-3 text-base font-semibold text-slate-600 dark:text-slate-200">{% trans "Aucun membre d'équipe" %}</p>
+            <p class="mt-1 max-w-sm text-sm text-slate-400">{% trans "Ajoutez des salariés dans la section Équipe pour commencer à planifier." %}</p>
+            <a href="{% url 'equipe:equipe' %}" class="mt-6 md-btn-primary px-5" style="background:#14b8a6;">
+              <span class="material-icons-round text-[18px]">person_add</span>{% trans "Ajouter un membre" %}
+            </a>
           </div>
         {% endif %}
-      {% empty %}
-        <div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune tâche planifiée." %}</p></div>
-      {% endfor %}
-    </div>
+      {% endif %}
 
-    <div class="space-y-2">
-      <h3 class="text-sm font-medium text-slate-400">{% trans "Backlog" %}</h3>
-      {% for t in backlog %}
-        <div class="md-card">
-          <p class="font-medium">{{ t.titre }}</p>
-          <p class="text-xs text-slate-400">{{ t.get_priorite_display }}</p>
-        </div>
-      {% empty %}
-        <div class="md-card"><p class="text-sm text-slate-400">{% trans "Backlog vide." %}</p></div>
-      {% endfor %}
     </div>
   </div>
 </section>
