@@ -1,0 +1,39 @@
+{% comment %}
+Page d'erreur autonome (4xx / 5xx).
+NE PAS étendre base.html ni utiliser de context processor : la vue 500 de
+Django rend ce template sans RequestContext, et le context processor `layout`
+interroge la base — ce qui provoquerait une erreur en cascade si la panne
+vient de la DB. On reste donc 100 % statique (marque en dur, lien « / »).
+{% endcomment %}{% load static i18n %}<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Erreur{% endblock %} · Holystyl</title>
+  <link rel="icon" href="{% static 'icons/icon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="min-h-screen">
+  <main class="flex min-h-screen items-center justify-center px-6 py-12">
+    <div class="w-full max-w-lg text-center">
+
+      <a href="/" class="mb-10 inline-flex items-center gap-2">
+        {% include "partials/brand_mark.html" with size=40 %}
+        <span class="text-xl font-bold tracking-tight">Holystyl</span>
+      </a>
+
+      <p class="text-[6rem] font-bold leading-none tracking-tight text-[#28738f]">{% block code %}{% endblock %}</p>
+      <h1 class="mt-4 text-2xl font-bold sm:text-3xl">{% block heading %}{% endblock %}</h1>
+      <p class="mx-auto mt-3 max-w-md text-slate-500">{% block message %}{% endblock %}</p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="md-btn-primary px-6" style="background:#28738f;">{% trans "Retour à l'accueil" %}</a>
+        <a href="javascript:history.back()"
+           class="inline-flex items-center justify-center rounded-xl border-2 border-[#d6d3c8] px-6 py-3 font-semibold text-slate-600 transition hover:bg-[#f4f2ec] dark:border-[#2a3f4d] dark:text-slate-300 dark:hover:bg-white/5">
+          {% trans "Page précédente" %}
+        </a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

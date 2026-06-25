@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 20:03+0200\n"
+"POT-Creation-Date: 2026-06-25 20:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4706,6 +4706,54 @@ msgstr ""
 
 #: sondages/views.py:42
 msgid "Proposez au moins deux choix."
+msgstr ""
+
+#: templates/400.html:3 templates/400.html:5
+msgid "Requête incorrecte"
+msgstr ""
+
+#: templates/400.html:6
+msgid "La requête n'a pas pu être traitée. Vérifiez l'adresse et réessayez."
+msgstr ""
+
+#: templates/403.html:3 templates/403.html:5
+msgid "Accès refusé"
+msgstr ""
+
+#: templates/403.html:6
+msgid "Vous n'avez pas l'autorisation d'accéder à cette page."
+msgstr ""
+
+#: templates/404.html:3 templates/404.html:5
+msgid "Page introuvable"
+msgstr ""
+
+#: templates/404.html:6
+msgid ""
+"La page que vous cherchez n'existe pas, a été déplacée ou n'est plus "
+"disponible."
+msgstr ""
+
+#: templates/500.html:3
+msgid "Erreur interne"
+msgstr ""
+
+#: templates/500.html:5
+msgid "Une erreur est survenue"
+msgstr ""
+
+#: templates/500.html:6
+msgid ""
+"Le problème vient de notre côté. Réessayez dans un instant — si cela "
+"persiste, contactez le support."
+msgstr ""
+
+#: templates/errors/base.html:30
+msgid "Retour à l'accueil"
+msgstr ""
+
+#: templates/errors/base.html:33
+msgid "Page précédente"
 msgstr ""
 
 #: templates/partials/cookie_banner.html:6
