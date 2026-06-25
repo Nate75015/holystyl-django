@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 17:49+0200\n"
+"POT-Creation-Date: 2026-06-25 20:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,15 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : "
 "4);\n"
 
-#: accounts/admin.py:17 exploitations/views.py:61
+#: accounts/admin.py:17 accounts/templates/accounts/register.html:41
+#: exploitations/views.py:61
 msgid "Identité"
 msgstr "Aitheantas"
 
-#: accounts/admin.py:18
+#: accounts/admin.py:18 accounts/templates/accounts/register.html:52
+#, fuzzy
+#| msgid "adresse"
+msgid "Adresse"
+msgstr "seoladh"
+
+#: accounts/admin.py:19
 msgid "Permissions"
 msgstr "Ceadanna"
 
-#: accounts/admin.py:19
+#: accounts/admin.py:20
 msgid "Dates"
 msgstr "Dátaí"
 
@@ -36,8 +43,22 @@ msgid "Email"
 msgstr "Ríomhphost"
 
 #: accounts/forms.py:23
-msgid "Nom complet"
-msgstr "Ainm iomlán"
+#, fuzzy
+#| msgid "prénom"
+msgid "Prénom"
+msgstr "céadainm"
+
+#: accounts/forms.py:24 agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Ainm"
+
+#: accounts/forms.py:26
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Date de naissance"
+msgstr "dáta breithe"
 
 #: accounts/models.py:14
 msgid "adresse email"
@@ -47,43 +68,136 @@ msgstr "seoladh ríomhphoist"
 msgid "nom complet"
 msgstr "ainm iomlán"
 
-#: accounts/models.py:23
+#: accounts/models.py:18 exploitations/models.py:46
+msgid "date de naissance"
+msgstr "dáta breithe"
+
+#: accounts/models.py:21
+msgid "n° de rue"
+msgstr ""
+
+#: accounts/models.py:22
+#, fuzzy
+#| msgid "Marque"
+msgid "rue"
+msgstr "Branda"
+
+#: accounts/models.py:23 exploitations/models.py:63
+msgid "code postal"
+msgstr "cód poist"
+
+#: accounts/models.py:24 exploitations/models.py:62
+msgid "ville"
+msgstr "cathair"
+
+#: accounts/models.py:32
 msgid "utilisateur"
 msgstr "úsáideoir"
 
-#: accounts/models.py:24
+#: accounts/models.py:33
 msgid "utilisateurs"
 msgstr "úsáideoirí"
 
 #: accounts/templates/accounts/login.html:3
-#: accounts/templates/accounts/login.html:12
 #: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
 msgstr "Logáil isteach"
 
-#: accounts/templates/accounts/login.html:23
-#: accounts/templates/accounts/register.html:26
-msgid "Se connecter"
-msgstr "Logáil isteach"
-
-#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/login.html:20
 msgid "Pas de compte ?"
 msgstr "Gan cuntas?"
 
-#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/login.html:21
 #: accounts/templates/accounts/register.html:3
-#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
 msgstr "Cruthaigh cuntas"
 
-#: accounts/templates/accounts/register.html:23
+#: accounts/templates/accounts/login.html:27
+#, fuzzy
+#| msgid "En retard"
+msgid "Bon retour"
+msgstr "Déanach"
+
+#: accounts/templates/accounts/login.html:28
+msgid "Connectez-vous à votre espace."
+msgstr ""
+
+#: accounts/templates/accounts/login.html:42
+#: accounts/templates/accounts/register.html:21
+msgid "Se connecter"
+msgstr "Logáil isteach"
+
+#: accounts/templates/accounts/login.html:50
+#: accounts/templates/accounts/register.html:82
+#, fuzzy
+#| msgid "Aide PAC"
+msgid "Aide"
+msgstr "Cabhair PAC"
+
+#: accounts/templates/accounts/login.html:58
+#: accounts/templates/accounts/register.html:90
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Gabháltas talmhaíochta ag luí na gréine"
+
+#: accounts/templates/accounts/login.html:64
+#: accounts/templates/accounts/register.html:96
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "Do ghabháltas, gan é a choinneáil i gcuimhne."
+
+#: accounts/templates/accounts/login.html:67
+#: accounts/templates/accounts/register.html:99
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "An cúntóir a choinníonn, a ríomhann agus a chruthaíonn i d'ionad."
+
+#: accounts/templates/accounts/login.html:73
+#: accounts/templates/accounts/register.html:105
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Gan ghealltanas"
+
+#: accounts/templates/accounts/login.html:77
+#: accounts/templates/accounts/register.html:109
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Sonraí óstáilte sa Fhrainc"
+
+#: accounts/templates/accounts/login.html:81
+#: accounts/templates/accounts/register.html:113
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Treoir lámhleabhair san áireamh"
+
+#: accounts/templates/accounts/register.html:20
+msgid "Déjà un compte ?"
+msgstr "Cuntas agat cheana?"
+
+#: accounts/templates/accounts/register.html:27
+#, fuzzy
+#| msgid "Créer un compte"
+msgid "Créer votre compte"
+msgstr "Cruthaigh cuntas"
+
+#: accounts/templates/accounts/register.html:28
+msgid "Quelques informations pour démarrer."
+msgstr ""
+
+#: accounts/templates/accounts/register.html:65
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Mot de passe"
+msgstr "dáta breithe"
+
+#: accounts/templates/accounts/register.html:70
 #: public/templates/public/home.html:25
 msgid "S'inscrire"
 msgstr "Cláraigh"
 
-#: accounts/templates/accounts/register.html:26
-msgid "Déjà un compte ?"
-msgstr "Cuntas agat cheana?"
+#: accounts/templates/accounts/register.html:73
+msgid "En créant un compte, vous acceptez nos conditions d'utilisation."
+msgstr ""
 
 #: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
@@ -261,7 +375,8 @@ msgstr "Barra & Kc"
 #: agronomie/templates/agronomie/cultures.html:36
 msgid ""
 "Base de données cultures françaises — Coefficients culturaux FAO-56 / ARVALIS"
-msgstr "Bunachar sonraí na mbarr Francach — Comhéifeachtaí barrtha FAO-56 / ARVALIS"
+msgstr ""
+"Bunachar sonraí na mbarr Francach — Comhéifeachtaí barrtha FAO-56 / ARVALIS"
 
 #: agronomie/templates/agronomie/cultures.html:41
 #: agronomie/templates/agronomie/cultures.html:56
@@ -286,7 +401,12 @@ msgid ""
 "cultural qui varie selon le stade phénologique de la plante. Le système "
 "soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
 "calculer la dose d'irrigation nette."
-msgstr "Ríomhtar an riachtanas uisce leis an bhfoirmle ETc = ETP × Kc, áit a bhfuil ETP an galú-thrasghalú féideartha (sonraí aimsire) agus Kc an comhéifeacht barrtha a athraíonn de réir chéim feinéimeolaíoch an phlanda. Baineann an córas an bháisteach éifeachtach agus cuireann sé an cúlchiste ithreach úsáidteach san áireamh chun an dáta uiscithe glan a ríomh."
+msgstr ""
+"Ríomhtar an riachtanas uisce leis an bhfoirmle ETc = ETP × Kc, áit a bhfuil "
+"ETP an galú-thrasghalú féideartha (sonraí aimsire) agus Kc an comhéifeacht "
+"barrtha a athraíonn de réir chéim feinéimeolaíoch an phlanda. Baineann an "
+"córas an bháisteach éifeachtach agus cuireann sé an cúlchiste ithreach "
+"úsáidteach san áireamh chun an dáta uiscithe glan a ríomh."
 
 #: agronomie/templates/agronomie/cultures.html:66
 msgid "Levée → début développement"
@@ -412,7 +532,9 @@ msgstr "Treoir Níotráití 91/676/CEE"
 msgid ""
 "Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
 "vos apports cumulés."
-msgstr "Uasteorainn 170 kg N/ha/sa bhliain i gcrios leochaileach. Leanann an córas do na hionchuir charntha go huathoibríoch."
+msgstr ""
+"Uasteorainn 170 kg N/ha/sa bhliain i gcrios leochaileach. Leanann an córas "
+"do na hionchuir charntha go huathoibríoch."
 
 #: agronomie/templates/agronomie/fertigation.html:49
 msgid "Catalogue engrais"
@@ -505,7 +627,8 @@ msgstr "Níl aon ionchur cláraithe."
 #: agronomie/templates/agronomie/fertigation.html:156
 msgid ""
 "Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
-msgstr "Cliceáil ar « Sábháil ionchur » chun ionchur leasú-uiscithe a chur leis."
+msgstr ""
+"Cliceáil ar « Sábháil ionchur » chun ionchur leasú-uiscithe a chur leis."
 
 #: agronomie/templates/agronomie/fertigation.html:167
 msgid "Enregistrer un apport"
@@ -562,7 +685,11 @@ msgid ""
 "capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
 "est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
 "calculer la dose d'irrigation nette et le seuil de déclenchement."
-msgstr "Is é an cúlchiste úsáidteach an méid uisce atá ar fáil don phlanda idir an toilleadh páirce (CC) agus an pointe feoite buan (PFP). Cuirtear in iúl é i mm uisce in aghaidh an mhéadair ithreach. Úsáideann an córas an RU chun an dáileog uiscithe ghlan agus an tairseach spreagtha a ríomh."
+msgstr ""
+"Is é an cúlchiste úsáidteach an méid uisce atá ar fáil don phlanda idir an "
+"toilleadh páirce (CC) agus an pointe feoite buan (PFP). Cuirtear in iúl é i "
+"mm uisce in aghaidh an mhéadair ithreach. Úsáideann an córas an RU chun an "
+"dáileog uiscithe ghlan agus an tairseach spreagtha a ríomh."
 
 #: agronomie/templates/agronomie/types_sol.html:77
 msgid "Rechercher un type de sol, une texture…"
@@ -597,12 +724,6 @@ msgstr "scriosfar go buan é."
 #| msgid "Types de sol"
 msgid "Nouveau type de sol"
 msgstr "Cineálacha ithreach"
-
-#: agronomie/templates/agronomie/types_sol.html:171
-#: finances/templates/finances/subvention_pdf.html:49
-#: iot/templates/iot/capteurs.html:20
-msgid "Nom"
-msgstr "Ainm"
 
 #: agronomie/templates/agronomie/types_sol.html:176
 msgid "Texture"
@@ -700,7 +821,9 @@ msgstr "Doiciméad (PDF, íomhá…)"
 msgid ""
 "Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
 "document par OCR/IA à l'import."
-msgstr "Baintear na luachanna (pH, ÁO, N-P-K, saotharlann…) as an doiciméad go huathoibríoch trí OCR/IS le linn iompórtála."
+msgstr ""
+"Baintear na luachanna (pH, ÁO, N-P-K, saotharlann…) as an doiciméad go "
+"huathoibríoch trí OCR/IS le linn iompórtála."
 
 #: analyse_sol/templates/analyse_sol/analyses_sol.html:129
 msgid "Importer"
@@ -709,7 +832,8 @@ msgstr "Iompórtáil"
 #: analyse_sol/templates/analyse_sol/analyses_sol.html:133
 msgid ""
 "Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
-msgstr "Cuir gabháltas (Mo Ghabháltais) leis ar dtús chun anailís a cheangal leis."
+msgstr ""
+"Cuir gabháltas (Mo Ghabháltais) leis ar dtús chun anailís a cheangal leis."
 
 #: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
 msgid "Sol"
@@ -1210,7 +1334,9 @@ msgstr "Níl aon seisiún uiscithe cláraithe do do ghabháltais."
 msgid ""
 "Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
 "par parcelle."
-msgstr "Níl aon ghabháltas cláraithe. Cruthaigh do ghabháltais chun an tomhaltas in aghaidh an ghabháltais a fheiceáil."
+msgstr ""
+"Níl aon ghabháltas cláraithe. Cruthaigh do ghabháltais chun an tomhaltas in "
+"aghaidh an ghabháltais a fheiceáil."
 
 #: environnement/templates/environnement/placeholder.html:18
 msgid "Module en préparation"
@@ -1295,7 +1421,11 @@ msgid ""
 "Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
 "objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
 "montrent la part alignée du CA, des CapEx et des OpEx."
-msgstr "Tá gníomhaíocht AILÍNITHE más rud é: incháilithe + rannchuidiú substaintiúil le 1 sprioc + DNSH (ní dhéanann sé dochar do na 5 cinn eile) + coimircí íosta. Léiríonn na KPInna an chuid ailínithe den LD, de na CapEx agus de na OpEx."
+msgstr ""
+"Tá gníomhaíocht AILÍNITHE más rud é: incháilithe + rannchuidiú substaintiúil "
+"le 1 sprioc + DNSH (ní dhéanann sé dochar do na 5 cinn eile) + coimircí "
+"íosta. Léiríonn na KPInna an chuid ailínithe den LD, de na CapEx agus de na "
+"OpEx."
 
 #: environnement/templates/environnement/taxonomie.html:106
 msgid "Nouvelle fiche d'activité"
@@ -1354,31 +1484,41 @@ msgstr "Fógraí"
 msgid ""
 "Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
 "couverts végétaux et infrastructures agro-écologiques (IAE)."
-msgstr "Lean bithéagsúlacht do ghabháltas: cúntóirí, pailneoirí, clúdaigh phlandúla agus bonneagar agra-éiceolaíoch (IAE)."
+msgstr ""
+"Lean bithéagsúlacht do ghabháltas: cúntóirí, pailneoirí, clúdaigh phlandúla "
+"agus bonneagar agra-éiceolaíoch (IAE)."
 
 #: environnement/views.py:138
 msgid ""
 "Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
 "reliquats et pression sur la directive Nitrates."
-msgstr "Iarmhéid nítrigine (modh an iarmhéid): ionchuir, easpórtáil ag na barra, fuíoll agus brú ar an treoir Níotráití."
+msgstr ""
+"Iarmhéid nítrigine (modh an iarmhéid): ionchuir, easpórtáil ag na barra, "
+"fuíoll agus brú ar an treoir Níotráití."
 
 #: environnement/views.py:145
 msgid ""
 "Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
 "sols (diagnostic type GES / label bas-carbone)."
-msgstr "Astaíochtaí gás ceaptha teasa an ghabháltais agus stóráil charbóin na n-ithreacha (diagnóis chineál GES / lipéad ísealcharbóin)."
+msgstr ""
+"Astaíochtaí gás ceaptha teasa an ghabháltais agus stóráil charbóin na n-"
+"ithreacha (diagnóis chineál GES / lipéad ísealcharbóin)."
 
 #: environnement/views.py:152
 msgid ""
 "Synthèse environnementale de l'exploitation, exportable, regroupant les "
 "indicateurs (eau, azote, carbone, biodiversité)."
-msgstr "Achoimre chomhshaoil an ghabháltais, easpórtáilte, a chuimsíonn na táscairí (uisce, nítrigin, carbón, bithéagsúlacht)."
+msgstr ""
+"Achoimre chomhshaoil an ghabháltais, easpórtáilte, a chuimsíonn na táscairí "
+"(uisce, nítrigin, carbón, bithéagsúlacht)."
 
 #: environnement/views.py:159
 msgid ""
 "Suivi sanitaire des cultures : maladies, ravageurs, observations et "
 "indicateurs de fréquence de traitement (IFT)."
-msgstr "Faireachán sláinte na mbarr: galair, lotnaidí, breathnuithe agus táscairí minicíochta cóireála (IFT)."
+msgstr ""
+"Faireachán sláinte na mbarr: galair, lotnaidí, breathnuithe agus táscairí "
+"minicíochta cóireála (IFT)."
 
 #: equipe/models.py:15
 msgid "Chef d'équipe"
@@ -1591,10 +1731,6 @@ msgstr "úinéir"
 msgid "prénom"
 msgstr "céadainm"
 
-#: exploitations/models.py:46
-msgid "date de naissance"
-msgstr "dáta breithe"
-
 #: exploitations/models.py:47 exploitations/models.py:118
 msgid "raison sociale"
 msgstr "ainm cláraithe"
@@ -1638,14 +1774,6 @@ msgstr "suíomh gréasáin"
 #: exploitations/models.py:61
 msgid "adresse"
 msgstr "seoladh"
-
-#: exploitations/models.py:62
-msgid "ville"
-msgstr "cathair"
-
-#: exploitations/models.py:63
-msgid "code postal"
-msgstr "cód poist"
 
 #: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
@@ -1754,7 +1882,9 @@ msgstr "An chuideachta seo a scriosadh?"
 msgid ""
 "Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
 "à l'exploitation."
-msgstr "Níl aon chuideachta ghaolmhar. Cuir gnólacht (GAEC, SCI talún…) ceangailte leis an ngabháltas leis."
+msgstr ""
+"Níl aon chuideachta ghaolmhar. Cuir gnólacht (GAEC, SCI talún…) ceangailte "
+"leis an ngabháltas leis."
 
 #: exploitations/templates/exploitations/settings.html:105
 msgid "Raison sociale"
@@ -2122,7 +2252,9 @@ msgstr "Dia duit, is mise Eric."
 msgid ""
 "Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
 "cultures, la fertilisation ou vos analyses."
-msgstr "Do chomhairleoir agranamaíochta. Cuir ceisteanna orm faoi uisciú, barra, leasú nó do chuid anailísí."
+msgstr ""
+"Do chomhairleoir agranamaíochta. Cuir ceisteanna orm faoi uisciú, barra, "
+"leasú nó do chuid anailísí."
 
 #: ia/templates/ia/assistant.html:89
 msgid "Décrivez votre besoin…"
@@ -3056,7 +3188,9 @@ msgstr "Cruthaigh"
 msgid ""
 "Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
 "Ajoutez des membres d'équipe et liez-leur un compte."
-msgstr "Níl aon úsáideoir eile i do ghabháltas le teagmháil leis faoi láthair. Cuir baill foirne leis agus ceangail cuntas leo."
+msgstr ""
+"Níl aon úsáideoir eile i do ghabháltas le teagmháil leis faoi láthair. Cuir "
+"baill foirne leis agus ceangail cuntas leo."
 
 #: messagerie/views.py:60
 msgid "📎 Pièce jointe"
@@ -3198,7 +3332,9 @@ msgstr "Gabháil uathoibríoch dheireanach"
 msgid ""
 "Un relevé de cette ville est enregistré automatiquement à la fréquence "
 "choisie."
-msgstr "Cláraítear léamh den chathair seo go huathoibríoch ag an minicíocht roghnaithe."
+msgstr ""
+"Cláraítear léamh den chathair seo go huathoibríoch ag an minicíocht "
+"roghnaithe."
 
 #: meteo/templates/meteo/meteo.html:61
 msgid "Impossible de récupérer la météo."
@@ -3545,7 +3681,10 @@ msgstr "Níl aon chabhair PAC don fheachtas seo."
 msgid ""
 "Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et "
 "leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
-msgstr "Lean anseo do chabhracha PAC (DPB, éic-réimeas, ICHN, MAEC, orgánach…) de réir feachtais agus a stádas (beartaithe / deonaithe / íoctha). Dearbhú oifigiúil trí TéléPAC."
+msgstr ""
+"Lean anseo do chabhracha PAC (DPB, éic-réimeas, ICHN, MAEC, orgánach…) de "
+"réir feachtais agus a stádas (beartaithe / deonaithe / íoctha). Dearbhú "
+"oifigiúil trí TéléPAC."
 
 #: pac/templates/pac/pac.html:105
 msgid "Nouvelle aide PAC"
@@ -3787,7 +3926,9 @@ msgstr "Liosta"
 msgid ""
 "Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
 "Enregistrer."
-msgstr "Cliceáil ar na gabháltais le cur leis (cliceáil arís chun díroghnú), ansin Sábháil."
+msgstr ""
+"Cliceáil ar na gabháltais le cur leis (cliceáil arís chun díroghnú), ansin "
+"Sábháil."
 
 #: parcelles/templates/parcelles/list.html:70
 msgid "parcelle(s) sélectionnée(s)"
@@ -3804,7 +3945,9 @@ msgstr "Faighte an"
 #: parcelles/templates/parcelles/list.html:116
 msgid ""
 "Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
-msgstr "Níl aon ghabháltas. Cliceáil ar « Cuir leis » chun cinn a roghnú ar an léarscáil."
+msgstr ""
+"Níl aon ghabháltas. Cliceáil ar « Cuir leis » chun cinn a roghnú ar an "
+"léarscáil."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."
@@ -4125,14 +4268,6 @@ msgstr "Réimsí"
 msgid "Tarif"
 msgstr "Praghas"
 
-#: public/templates/public/home.html:41
-msgid "Votre exploitation, sans la garder en tête."
-msgstr "Do ghabháltas, gan é a choinneáil i gcuimhne."
-
-#: public/templates/public/home.html:44
-msgid "L'assistant qui retient, calcule et prouve à votre place."
-msgstr "An cúntóir a choinníonn, a ríomhann agus a chruthaíonn i d'ionad."
-
 #: public/templates/public/home.html:47
 msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
 msgstr "59,90 € gan CBL/mí in aghaidh an ghabháltais, úsáideoirí gan teorainn."
@@ -4149,22 +4284,6 @@ msgstr "Féach cad a dhéanann sé"
 #: templates/partials/install_banner.html:23
 msgid "Télécharger l'app"
 msgstr "Íoslódáil an aip"
-
-#: public/templates/public/home.html:66
-msgid "Sans engagement"
-msgstr "Gan ghealltanas"
-
-#: public/templates/public/home.html:67 public/templates/public/home.html:327
-msgid "Données hébergées en France"
-msgstr "Sonraí óstáilte sa Fhrainc"
-
-#: public/templates/public/home.html:68 public/templates/public/home.html:324
-msgid "Prise en main guidée incluse"
-msgstr "Treoir lámhleabhair san áireamh"
-
-#: public/templates/public/home.html:75
-msgid "Exploitation agricole au coucher du soleil"
-msgstr "Gabháltas talmhaíochta ag luí na gréine"
 
 #: public/templates/public/home.html:87
 msgid "Le métier n'a pas changé."
@@ -4279,20 +4398,26 @@ msgid ""
 "Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
 "prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
 "l'apprenti — c'est un autre travail."
-msgstr "Tá a fhios agat cad a rinne tú ar ghabháltas 3 sé seachtaine ó shin. É a chruthú do chigire, é a aimsiú do chomhad, é a chur ar aghaidh chuig an bprintíseach — sin obair eile."
+msgstr ""
+"Tá a fhios agat cad a rinne tú ar ghabháltas 3 sé seachtaine ó shin. É a "
+"chruthú do chigire, é a aimsiú do chomhad, é a chur ar aghaidh chuig an "
+"bprintíseach — sin obair eile."
 
 #: public/templates/public/home.html:181
 msgid ""
 "Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
 "ce qui se colle par-dessus."
-msgstr "Agus an obair sin, déanann tú í san oíche. Ní hé an t-ualach an gairm, is é an méid a ghreamaítear anuas air."
+msgstr ""
+"Agus an obair sin, déanann tú í san oíche. Ní hé an t-ualach an gairm, is é "
+"an méid a ghreamaítear anuas air."
 
 #: public/templates/public/home.html:182
 #, python-format
 msgid ""
 "48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
 "priorité n°1."
-msgstr "Luann 48 %% de na feirmeoirí « an t-am oibre a rialú » mar thosaíocht uimh.1."
+msgstr ""
+"Luann 48 %% de na feirmeoirí « an t-am oibre a rialú » mar thosaíocht uimh.1."
 
 #: public/templates/public/home.html:194
 msgid "Agriculteur submergé par la paperasse administrative"
@@ -4311,7 +4436,10 @@ msgid ""
 "Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
 "temps de travail, charges, adaptation climatique, gestion d'équipe et "
 "accompagnement. Disponible à la voix, sur le tracteur, à 22h."
-msgstr "Freagraíonn Holystyl do na 5 mórbhuairt atá ag feirmeoirí na Fraince: am oibre, costais, oiriúnú aeráide, bainistíocht foirne agus tacaíocht. Ar fáil le guth, ar an tarracóir, ag 22u."
+msgstr ""
+"Freagraíonn Holystyl do na 5 mórbhuairt atá ag feirmeoirí na Fraince: am "
+"oibre, costais, oiriúnú aeráide, bainistíocht foirne agus tacaíocht. Ar fáil "
+"le guth, ar an tarracóir, ag 22u."
 
 #: public/templates/public/home.html:211
 msgid "« Je n'ai pas le temps »"
@@ -4487,7 +4615,9 @@ msgstr "Anailísí ithreach"
 msgid ""
 "Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre "
 "exploitation. Téléchargement immédiat."
-msgstr "Tuig torthaí d'anailísí agus déan na cinntí cearta do do ghabháltas. Íoslódáil láithreach."
+msgstr ""
+"Tuig torthaí d'anailísí agus déan na cinntí cearta do do ghabháltas. "
+"Íoslódáil láithreach."
 
 #: public/templates/public/home.html:358
 msgid "pH & impact cultures"
@@ -4527,7 +4657,10 @@ msgid ""
 "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
 "de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
 "l'administratif — la priorité n°1 de 48 %% des agriculteurs."
-msgstr "Is féidir. Trí inrianaitheacht, tuarascálacha rialála agus faireachán do ghabháltas a uathoibriú, sábhálann Holystyl na huaireanta a chaitear san oíche ar obair riaracháin — tosaíocht uimh.1 ag 48 %% de na feirmeoirí."
+msgstr ""
+"Is féidir. Trí inrianaitheacht, tuarascálacha rialála agus faireachán do "
+"ghabháltas a uathoibriú, sábhálann Holystyl na huaireanta a chaitear san "
+"oíche ar obair riaracháin — tosaíocht uimh.1 ag 48 %% de na feirmeoirí."
 
 #: public/templates/public/home.html:405
 msgid "Est-ce que l'assistant comprend mes questions techniques ?"
@@ -4538,7 +4671,10 @@ msgid ""
 "Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
 "fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
 "l'écrit comme à la voix, 24h/24."
-msgstr "Tuigeann. Tá an cúntóir IS speisialaithe don talmhaíocht: uisciú, leasú (N, P, K), aimsir, rialachán nó anailísí ithreach — i scríbhinn nó le guth, 24/24."
+msgstr ""
+"Tuigeann. Tá an cúntóir IS speisialaithe don talmhaíocht: uisciú, leasú (N, "
+"P, K), aimsir, rialachán nó anailísí ithreach — i scríbhinn nó le guth, "
+"24/24."
 
 #: public/templates/public/home.html:414
 msgid "Comment démarrer avec Holystyl ?"
@@ -4550,7 +4686,12 @@ msgid ""
 "pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
 "équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
 "IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
-msgstr "Cruthaigh do chuntas ar líne in 2 nóiméad. Treoraíonn lámhleabhar cumraíochta céim ar chéim thú chun do ghabháltais, do bharra agus d'fhoireann a chur leis. Ceanglaíonn Holystyl le do chóras uiscithe (Vyrsa, braiteoirí IoT) agus tá sé oibríochtúil an lá céanna, ó do ghuthán cliste nó ríomhaire."
+msgstr ""
+"Cruthaigh do chuntas ar líne in 2 nóiméad. Treoraíonn lámhleabhar "
+"cumraíochta céim ar chéim thú chun do ghabháltais, do bharra agus "
+"d'fhoireann a chur leis. Ceanglaíonn Holystyl le do chóras uiscithe (Vyrsa, "
+"braiteoirí IoT) agus tá sé oibríochtúil an lá céanna, ó do ghuthán cliste nó "
+"ríomhaire."
 
 #: public/templates/public/home.html:423
 msgid "Holystyl m'aide-t-il à réduire mes charges ?"
@@ -4561,7 +4702,11 @@ msgid ""
 "Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
 "réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
 "aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
-msgstr "Cabhraíonn. Leanann an deais airgeadais do chostais agus do lánpháirteanna i bhfíor-am, aithníonn sé na míreanna a luíonn go trom agus cabhraíonn sé leat cinntí a dhéanamh. Bainistíonn tú do chuótaí uisce agus do threalamh freisin chun caiteachas neamhriachtanach a sheachaint."
+msgstr ""
+"Cabhraíonn. Leanann an deais airgeadais do chostais agus do lánpháirteanna i "
+"bhfíor-am, aithníonn sé na míreanna a luíonn go trom agus cabhraíonn sé leat "
+"cinntí a dhéanamh. Bainistíonn tú do chuótaí uisce agus do threalamh freisin "
+"chun caiteachas neamhriachtanach a sheachaint."
 
 #: public/templates/public/home.html:432
 msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
@@ -4572,7 +4717,10 @@ msgid ""
 "Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
 "réseau ; les données se synchronisent automatiquement dès que la connexion "
 "revient."
-msgstr "Oibríonn. Féachann tú agus iontrálann tú do chuid idirghabhálacha sa pháirc fiú gan líonra; sioncronaítear na sonraí go huathoibríoch a luaithe a fhilleann an nasc."
+msgstr ""
+"Oibríonn. Féachann tú agus iontrálann tú do chuid idirghabhálacha sa pháirc "
+"fiú gan líonra; sioncronaítear na sonraí go huathoibríoch a luaithe a "
+"fhilleann an nasc."
 
 #: public/templates/public/home.html:441
 msgid "Mes données m'appartiennent-elles ?"
@@ -4583,13 +4731,16 @@ msgid ""
 "Absolument. Vos données vous appartiennent et restent confidentielles : "
 "hébergées en France, jamais revendues, exportables ou supprimables à tout "
 "moment."
-msgstr "Go hiomlán. Is leatsa do chuid sonraí agus fanann siad faoi rún: óstáilte sa Fhrainc, ní dhíoltar riamh iad, in-easpórtáilte nó inscriosta am ar bith."
+msgstr ""
+"Go hiomlán. Is leatsa do chuid sonraí agus fanann siad faoi rún: óstáilte sa "
+"Fhrainc, ní dhíoltar riamh iad, in-easpórtáilte nó inscriosta am ar bith."
 
 #: public/templates/public/home.html:463
 msgid ""
 "Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
 "Holystyl."
-msgstr "Cúntóir cliste do ghabháltais talmhaíochta. Deartha le líonra Holystyl."
+msgstr ""
+"Cúntóir cliste do ghabháltais talmhaíochta. Deartha le líonra Holystyl."
 
 #: public/templates/public/home.html:478
 msgid "Accès"
@@ -4790,6 +4941,9 @@ msgstr "Go luath"
 #: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
 msgstr "Cuirimis brí ar ais inár ngairm"
+
+#~ msgid "Nom complet"
+#~ msgstr "Ainm iomlán"
 
 #~ msgid "Administration"
 #~ msgstr "Riarachán"

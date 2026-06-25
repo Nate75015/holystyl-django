@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 17:49+0200\n"
+"POT-Creation-Date: 2026-06-25 20:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:17 exploitations/views.py:61
+#: accounts/admin.py:17 accounts/templates/accounts/register.html:41
+#: exploitations/views.py:61
 msgid "Identité"
 msgstr "Identidade"
 
-#: accounts/admin.py:18
+#: accounts/admin.py:18 accounts/templates/accounts/register.html:52
+#, fuzzy
+#| msgid "adresse"
+msgid "Adresse"
+msgstr "morada"
+
+#: accounts/admin.py:19
 msgid "Permissions"
 msgstr "Permissões"
 
-#: accounts/admin.py:19
+#: accounts/admin.py:20
 msgid "Dates"
 msgstr "Datas"
 
@@ -35,8 +42,22 @@ msgid "Email"
 msgstr "Email"
 
 #: accounts/forms.py:23
-msgid "Nom complet"
-msgstr "Nome completo"
+#, fuzzy
+#| msgid "prénom"
+msgid "Prénom"
+msgstr "nome próprio"
+
+#: accounts/forms.py:24 agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Nome"
+
+#: accounts/forms.py:26
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Date de naissance"
+msgstr "data de nascimento"
 
 #: accounts/models.py:14
 msgid "adresse email"
@@ -46,43 +67,136 @@ msgstr "endereço de email"
 msgid "nom complet"
 msgstr "nome completo"
 
-#: accounts/models.py:23
+#: accounts/models.py:18 exploitations/models.py:46
+msgid "date de naissance"
+msgstr "data de nascimento"
+
+#: accounts/models.py:21
+msgid "n° de rue"
+msgstr ""
+
+#: accounts/models.py:22
+#, fuzzy
+#| msgid "Marque"
+msgid "rue"
+msgstr "Marca"
+
+#: accounts/models.py:23 exploitations/models.py:63
+msgid "code postal"
+msgstr "código postal"
+
+#: accounts/models.py:24 exploitations/models.py:62
+msgid "ville"
+msgstr "cidade"
+
+#: accounts/models.py:32
 msgid "utilisateur"
 msgstr "utilizador"
 
-#: accounts/models.py:24
+#: accounts/models.py:33
 msgid "utilisateurs"
 msgstr "utilizadores"
 
 #: accounts/templates/accounts/login.html:3
-#: accounts/templates/accounts/login.html:12
 #: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
 msgstr "Iniciar sessão"
 
-#: accounts/templates/accounts/login.html:23
-#: accounts/templates/accounts/register.html:26
-msgid "Se connecter"
-msgstr "Entrar"
-
-#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/login.html:20
 msgid "Pas de compte ?"
 msgstr "Não tem conta?"
 
-#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/login.html:21
 #: accounts/templates/accounts/register.html:3
-#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
 msgstr "Criar uma conta"
 
-#: accounts/templates/accounts/register.html:23
+#: accounts/templates/accounts/login.html:27
+#, fuzzy
+#| msgid "En retard"
+msgid "Bon retour"
+msgstr "Em atraso"
+
+#: accounts/templates/accounts/login.html:28
+msgid "Connectez-vous à votre espace."
+msgstr ""
+
+#: accounts/templates/accounts/login.html:42
+#: accounts/templates/accounts/register.html:21
+msgid "Se connecter"
+msgstr "Entrar"
+
+#: accounts/templates/accounts/login.html:50
+#: accounts/templates/accounts/register.html:82
+#, fuzzy
+#| msgid "Aide PAC"
+msgid "Aide"
+msgstr "Ajuda PAC"
+
+#: accounts/templates/accounts/login.html:58
+#: accounts/templates/accounts/register.html:90
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Exploração agrícola ao pôr do sol"
+
+#: accounts/templates/accounts/login.html:64
+#: accounts/templates/accounts/register.html:96
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "A sua exploração, sem ter de a guardar na cabeça."
+
+#: accounts/templates/accounts/login.html:67
+#: accounts/templates/accounts/register.html:99
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "O assistente que memoriza, calcula e comprova por si."
+
+#: accounts/templates/accounts/login.html:73
+#: accounts/templates/accounts/register.html:105
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Sem compromisso"
+
+#: accounts/templates/accounts/login.html:77
+#: accounts/templates/accounts/register.html:109
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Dados alojados em França"
+
+#: accounts/templates/accounts/login.html:81
+#: accounts/templates/accounts/register.html:113
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Acompanhamento guiado incluído"
+
+#: accounts/templates/accounts/register.html:20
+msgid "Déjà un compte ?"
+msgstr "Já tem conta?"
+
+#: accounts/templates/accounts/register.html:27
+#, fuzzy
+#| msgid "Créer un compte"
+msgid "Créer votre compte"
+msgstr "Criar uma conta"
+
+#: accounts/templates/accounts/register.html:28
+msgid "Quelques informations pour démarrer."
+msgstr ""
+
+#: accounts/templates/accounts/register.html:65
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Mot de passe"
+msgstr "data de nascimento"
+
+#: accounts/templates/accounts/register.html:70
 #: public/templates/public/home.html:25
 msgid "S'inscrire"
 msgstr "Registar-se"
 
-#: accounts/templates/accounts/register.html:26
-msgid "Déjà un compte ?"
-msgstr "Já tem conta?"
+#: accounts/templates/accounts/register.html:73
+msgid "En créant un compte, vous acceptez nos conditions d'utilisation."
+msgstr ""
 
 #: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
@@ -260,7 +374,8 @@ msgstr "Növények & Kc"
 #: agronomie/templates/agronomie/cultures.html:36
 msgid ""
 "Base de données cultures françaises — Coefficients culturaux FAO-56 / ARVALIS"
-msgstr "Base de dados de culturas francesas — Coeficientes culturais FAO-56 / ARVALIS"
+msgstr ""
+"Base de dados de culturas francesas — Coeficientes culturais FAO-56 / ARVALIS"
 
 #: agronomie/templates/agronomie/cultures.html:41
 #: agronomie/templates/agronomie/cultures.html:56
@@ -285,7 +400,12 @@ msgid ""
 "cultural qui varie selon le stade phénologique de la plante. Le système "
 "soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
 "calculer la dose d'irrigation nette."
-msgstr "A necessidade de água é calculada com a fórmula ETc = ETP × Kc, em que a ETP é a evapotranspiração potencial (dados meteorológicos) e o Kc é o coeficiente cultural que varia consoante o estádio fenológico da planta. O sistema subtrai a chuva eficaz e tem em conta a reserva utilizável do solo para calcular a dose de rega líquida."
+msgstr ""
+"A necessidade de água é calculada com a fórmula ETc = ETP × Kc, em que a ETP "
+"é a evapotranspiração potencial (dados meteorológicos) e o Kc é o "
+"coeficiente cultural que varia consoante o estádio fenológico da planta. O "
+"sistema subtrai a chuva eficaz e tem em conta a reserva utilizável do solo "
+"para calcular a dose de rega líquida."
 
 #: agronomie/templates/agronomie/cultures.html:66
 msgid "Levée → début développement"
@@ -411,7 +531,9 @@ msgstr "Diretiva Nitratos 91/676/CEE"
 msgid ""
 "Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
 "vos apports cumulés."
-msgstr "Limite de 170 kg N/ha/ano em zona vulnerável. O sistema acompanha automaticamente as suas aplicações acumuladas."
+msgstr ""
+"Limite de 170 kg N/ha/ano em zona vulnerável. O sistema acompanha "
+"automaticamente as suas aplicações acumuladas."
 
 #: agronomie/templates/agronomie/fertigation.html:49
 msgid "Catalogue engrais"
@@ -504,7 +626,8 @@ msgstr "Nenhuma aplicação registada."
 #: agronomie/templates/agronomie/fertigation.html:156
 msgid ""
 "Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
-msgstr "Clique em «Registar aplicação» para adicionar uma aplicação de fertirrigação."
+msgstr ""
+"Clique em «Registar aplicação» para adicionar uma aplicação de fertirrigação."
 
 #: agronomie/templates/agronomie/fertigation.html:167
 msgid "Enregistrer un apport"
@@ -527,7 +650,8 @@ msgstr "Registar"
 #: agronomie/templates/agronomie/fertigation.html:221
 msgid ""
 "Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un apport."
-msgstr "Adicione primeiro uma parcela à sua exploração para registar uma aplicação."
+msgstr ""
+"Adicione primeiro uma parcela à sua exploração para registar uma aplicação."
 
 #: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:132
 #: core/context_processors.py:67
@@ -561,7 +685,11 @@ msgid ""
 "capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
 "est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
 "calculer la dose d'irrigation nette et le seuil de déclenchement."
-msgstr "A reserva utilizável é a quantidade de água disponível para a planta entre a capacidade de campo (CC) e o ponto de emurchecimento permanente (PEP). É expressa em mm de água por metro de solo. O sistema utiliza a RU para calcular a dose de rega líquida e o limiar de acionamento."
+msgstr ""
+"A reserva utilizável é a quantidade de água disponível para a planta entre a "
+"capacidade de campo (CC) e o ponto de emurchecimento permanente (PEP). É "
+"expressa em mm de água por metro de solo. O sistema utiliza a RU para "
+"calcular a dose de rega líquida e o limiar de acionamento."
 
 #: agronomie/templates/agronomie/types_sol.html:77
 msgid "Rechercher un type de sol, une texture…"
@@ -596,12 +724,6 @@ msgstr "será eliminado definitivamente."
 #| msgid "Types de sol"
 msgid "Nouveau type de sol"
 msgstr "Talajtípusok"
-
-#: agronomie/templates/agronomie/types_sol.html:171
-#: finances/templates/finances/subvention_pdf.html:49
-#: iot/templates/iot/capteurs.html:20
-msgid "Nom"
-msgstr "Nome"
 
 #: agronomie/templates/agronomie/types_sol.html:176
 msgid "Texture"
@@ -699,7 +821,9 @@ msgstr "Documento (PDF, imagem…)"
 msgid ""
 "Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
 "document par OCR/IA à l'import."
-msgstr "Os valores (pH, MO, N-P-K, laboratório…) são extraídos automaticamente do documento por OCR/IA na importação."
+msgstr ""
+"Os valores (pH, MO, N-P-K, laboratório…) são extraídos automaticamente do "
+"documento por OCR/IA na importação."
 
 #: analyse_sol/templates/analyse_sol/analyses_sol.html:129
 msgid "Importer"
@@ -708,7 +832,9 @@ msgstr "Importar"
 #: analyse_sol/templates/analyse_sol/analyses_sol.html:133
 msgid ""
 "Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
-msgstr "Adicione primeiro uma parcela (As Minhas Parcelas) para lhe associar uma análise."
+msgstr ""
+"Adicione primeiro uma parcela (As Minhas Parcelas) para lhe associar uma "
+"análise."
 
 #: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
 msgid "Sol"
@@ -966,7 +1092,8 @@ msgstr "Bem-vindo à Holystyl 👋"
 #: core/templates/core/dashboard.html:10
 msgid ""
 "Commencez par configurer votre exploitation pour activer le tableau de bord."
-msgstr "Comece por configurar a sua exploração para ativar o painel de controlo."
+msgstr ""
+"Comece por configurar a sua exploração para ativar o painel de controlo."
 
 #: core/templates/core/dashboard.html:12
 #: exploitations/templates/exploitations/settings.html:13
@@ -1209,7 +1336,9 @@ msgstr "Nenhuma sessão de rega registada para as suas parcelas."
 msgid ""
 "Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
 "par parcelle."
-msgstr "Nenhuma parcela registada. Crie as suas parcelas para ver o consumo por parcela."
+msgstr ""
+"Nenhuma parcela registada. Crie as suas parcelas para ver o consumo por "
+"parcela."
 
 #: environnement/templates/environnement/placeholder.html:18
 msgid "Module en préparation"
@@ -1221,7 +1350,8 @@ msgstr "Esta secção estará disponível em breve."
 
 #: environnement/templates/environnement/taxonomie.html:10
 msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
-msgstr "Regulamento (UE) 2020/852 · alinhamento das atividades (VN / CapEx / OpEx)"
+msgstr ""
+"Regulamento (UE) 2020/852 · alinhamento das atividades (VN / CapEx / OpEx)"
 
 #: environnement/templates/environnement/taxonomie.html:16
 #: environnement/templates/environnement/taxonomie.html:123
@@ -1294,7 +1424,10 @@ msgid ""
 "Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
 "objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
 "montrent la part alignée du CA, des CapEx et des OpEx."
-msgstr "Uma atividade está ALINHADA se: elegível + contribuição substancial para 1 objetivo + DNSH (não prejudica os outros 5) + garantias mínimas. Os KPI mostram a parte alinhada do VN, do CapEx e do OpEx."
+msgstr ""
+"Uma atividade está ALINHADA se: elegível + contribuição substancial para 1 "
+"objetivo + DNSH (não prejudica os outros 5) + garantias mínimas. Os KPI "
+"mostram a parte alinhada do VN, do CapEx e do OpEx."
 
 #: environnement/templates/environnement/taxonomie.html:106
 msgid "Nouvelle fiche d'activité"
@@ -1353,31 +1486,41 @@ msgstr "Értesítések"
 msgid ""
 "Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
 "couverts végétaux et infrastructures agro-écologiques (IAE)."
-msgstr "Acompanhe a biodiversidade das suas parcelas: auxiliares, polinizadores, coberturas vegetais e infraestruturas agroecológicas (IAE)."
+msgstr ""
+"Acompanhe a biodiversidade das suas parcelas: auxiliares, polinizadores, "
+"coberturas vegetais e infraestruturas agroecológicas (IAE)."
 
 #: environnement/views.py:138
 msgid ""
 "Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
 "reliquats et pression sur la directive Nitrates."
-msgstr "Balanço de azoto (método do balanço): entradas, exportações pelas culturas, resíduos e pressão sobre a diretiva Nitratos."
+msgstr ""
+"Balanço de azoto (método do balanço): entradas, exportações pelas culturas, "
+"resíduos e pressão sobre a diretiva Nitratos."
 
 #: environnement/views.py:145
 msgid ""
 "Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
 "sols (diagnostic type GES / label bas-carbone)."
-msgstr "Emissões de gases com efeito de estufa da exploração e armazenamento de carbono dos solos (diagnóstico tipo GEE / rótulo baixo carbono)."
+msgstr ""
+"Emissões de gases com efeito de estufa da exploração e armazenamento de "
+"carbono dos solos (diagnóstico tipo GEE / rótulo baixo carbono)."
 
 #: environnement/views.py:152
 msgid ""
 "Synthèse environnementale de l'exploitation, exportable, regroupant les "
 "indicateurs (eau, azote, carbone, biodiversité)."
-msgstr "Síntese ambiental da exploração, exportável, reunindo os indicadores (água, azoto, carbono, biodiversidade)."
+msgstr ""
+"Síntese ambiental da exploração, exportável, reunindo os indicadores (água, "
+"azoto, carbono, biodiversidade)."
 
 #: environnement/views.py:159
 msgid ""
 "Suivi sanitaire des cultures : maladies, ravageurs, observations et "
 "indicateurs de fréquence de traitement (IFT)."
-msgstr "Acompanhamento sanitário das culturas: doenças, pragas, observações e indicadores de frequência de tratamento (IFT)."
+msgstr ""
+"Acompanhamento sanitário das culturas: doenças, pragas, observações e "
+"indicadores de frequência de tratamento (IFT)."
 
 #: equipe/models.py:15
 msgid "Chef d'équipe"
@@ -1590,10 +1733,6 @@ msgstr "proprietário"
 msgid "prénom"
 msgstr "nome próprio"
 
-#: exploitations/models.py:46
-msgid "date de naissance"
-msgstr "data de nascimento"
-
 #: exploitations/models.py:47 exploitations/models.py:118
 msgid "raison sociale"
 msgstr "denominação social"
@@ -1637,14 +1776,6 @@ msgstr "site web"
 #: exploitations/models.py:61
 msgid "adresse"
 msgstr "morada"
-
-#: exploitations/models.py:62
-msgid "ville"
-msgstr "cidade"
-
-#: exploitations/models.py:63
-msgid "code postal"
-msgstr "código postal"
 
 #: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
@@ -1753,7 +1884,9 @@ msgstr "Eliminar esta sociedade?"
 msgid ""
 "Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
 "à l'exploitation."
-msgstr "Nenhuma sociedade ligada. Adicione uma empresa (GAEC, SCI fundiária…) associada à exploração."
+msgstr ""
+"Nenhuma sociedade ligada. Adicione uma empresa (GAEC, SCI fundiária…) "
+"associada à exploração."
 
 #: exploitations/templates/exploitations/settings.html:105
 msgid "Raison sociale"
@@ -2111,7 +2244,8 @@ msgstr "Nenhuma conversa."
 
 #: ia/templates/ia/assistant.html:39
 msgid "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles."
-msgstr "IA não configurada — adicione GEMINI_API_KEY para obter respostas reais."
+msgstr ""
+"IA não configurada — adicione GEMINI_API_KEY para obter respostas reais."
 
 #: ia/templates/ia/assistant.html:49
 msgid "Bonjour, je suis Eric."
@@ -2121,7 +2255,9 @@ msgstr "Olá, sou o Eric."
 msgid ""
 "Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
 "cultures, la fertilisation ou vos analyses."
-msgstr "O seu consultor agrónomo. Coloque-me as suas questões sobre rega, culturas, fertilização ou as suas análises."
+msgstr ""
+"O seu consultor agrónomo. Coloque-me as suas questões sobre rega, culturas, "
+"fertilização ou as suas análises."
 
 #: ia/templates/ia/assistant.html:89
 msgid "Décrivez votre besoin…"
@@ -3052,7 +3188,9 @@ msgstr "Criar"
 msgid ""
 "Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
 "Ajoutez des membres d'équipe et liez-leur un compte."
-msgstr "Nenhum outro utilizador na sua exploração para contactar de momento. Adicione membros de equipa e associe-lhes uma conta."
+msgstr ""
+"Nenhum outro utilizador na sua exploração para contactar de momento. "
+"Adicione membros de equipa e associe-lhes uma conta."
 
 #: messagerie/views.py:60
 msgid "📎 Pièce jointe"
@@ -3194,7 +3332,9 @@ msgstr "Última captura automática"
 msgid ""
 "Un relevé de cette ville est enregistré automatiquement à la fréquence "
 "choisie."
-msgstr "Um registo desta cidade é guardado automaticamente com a frequência escolhida."
+msgstr ""
+"Um registo desta cidade é guardado automaticamente com a frequência "
+"escolhida."
 
 #: meteo/templates/meteo/meteo.html:61
 msgid "Impossible de récupérer la météo."
@@ -3541,7 +3681,10 @@ msgstr "Nenhuma ajuda PAC para esta campanha."
 msgid ""
 "Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et "
 "leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
-msgstr "Acompanhe aqui as suas ajudas PAC (DPB, eco-regime, ICHN, MAEC, bio…) por campanha e o respetivo estado (previsto / concedido / pago). Declaração oficial através do TéléPAC."
+msgstr ""
+"Acompanhe aqui as suas ajudas PAC (DPB, eco-regime, ICHN, MAEC, bio…) por "
+"campanha e o respetivo estado (previsto / concedido / pago). Declaração "
+"oficial através do TéléPAC."
 
 #: pac/templates/pac/pac.html:105
 msgid "Nouvelle aide PAC"
@@ -3783,7 +3926,9 @@ msgstr "Lista"
 msgid ""
 "Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
 "Enregistrer."
-msgstr "Clique nas parcelas a adicionar (volte a clicar para desselecionar) e depois Registar."
+msgstr ""
+"Clique nas parcelas a adicionar (volte a clicar para desselecionar) e depois "
+"Registar."
 
 #: parcelles/templates/parcelles/list.html:70
 msgid "parcelle(s) sélectionnée(s)"
@@ -4121,14 +4266,6 @@ msgstr "Domínios"
 msgid "Tarif"
 msgstr "Tarifa"
 
-#: public/templates/public/home.html:41
-msgid "Votre exploitation, sans la garder en tête."
-msgstr "A sua exploração, sem ter de a guardar na cabeça."
-
-#: public/templates/public/home.html:44
-msgid "L'assistant qui retient, calcule et prouve à votre place."
-msgstr "O assistente que memoriza, calcula e comprova por si."
-
 #: public/templates/public/home.html:47
 msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
 msgstr "59,90 € sem IVA/mês por exploração, utilizadores ilimitados."
@@ -4145,22 +4282,6 @@ msgstr "Ver o que faz"
 #: templates/partials/install_banner.html:23
 msgid "Télécharger l'app"
 msgstr "Descarregar a app"
-
-#: public/templates/public/home.html:66
-msgid "Sans engagement"
-msgstr "Sem compromisso"
-
-#: public/templates/public/home.html:67 public/templates/public/home.html:327
-msgid "Données hébergées en France"
-msgstr "Dados alojados em França"
-
-#: public/templates/public/home.html:68 public/templates/public/home.html:324
-msgid "Prise en main guidée incluse"
-msgstr "Acompanhamento guiado incluído"
-
-#: public/templates/public/home.html:75
-msgid "Exploitation agricole au coucher du soleil"
-msgstr "Exploração agrícola ao pôr do sol"
 
 #: public/templates/public/home.html:87
 msgid "Le métier n'a pas changé."
@@ -4275,20 +4396,26 @@ msgid ""
 "Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
 "prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
 "l'apprenti — c'est un autre travail."
-msgstr "Sabe o que fez na parcela 3 há seis semanas. Prová-lo a um inspetor, encontrá-lo para um processo, transmiti-lo ao aprendiz — é outro trabalho."
+msgstr ""
+"Sabe o que fez na parcela 3 há seis semanas. Prová-lo a um inspetor, "
+"encontrá-lo para um processo, transmiti-lo ao aprendiz — é outro trabalho."
 
 #: public/templates/public/home.html:181
 msgid ""
 "Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
 "ce qui se colle par-dessus."
-msgstr "E esse trabalho fá-lo à noite. A carga não é o ofício, é o que se cola por cima."
+msgstr ""
+"E esse trabalho fá-lo à noite. A carga não é o ofício, é o que se cola por "
+"cima."
 
 #: public/templates/public/home.html:182
 #, python-format
 msgid ""
 "48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
 "priorité n°1."
-msgstr "48 %% dos agricultores apontam «controlar o tempo de trabalho» como prioridade n.º 1."
+msgstr ""
+"48 %% dos agricultores apontam «controlar o tempo de trabalho» como "
+"prioridade n.º 1."
 
 #: public/templates/public/home.html:194
 msgid "Agriculteur submergé par la paperasse administrative"
@@ -4307,7 +4434,10 @@ msgid ""
 "Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
 "temps de travail, charges, adaptation climatique, gestion d'équipe et "
 "accompagnement. Disponible à la voix, sur le tracteur, à 22h."
-msgstr "A Holystyl responde às 5 grandes preocupações dos agricultores franceses: tempo de trabalho, encargos, adaptação climática, gestão de equipa e acompanhamento. Disponível por voz, no trator, às 22h."
+msgstr ""
+"A Holystyl responde às 5 grandes preocupações dos agricultores franceses: "
+"tempo de trabalho, encargos, adaptação climática, gestão de equipa e "
+"acompanhamento. Disponível por voz, no trator, às 22h."
 
 #: public/templates/public/home.html:211
 msgid "« Je n'ai pas le temps »"
@@ -4483,7 +4613,9 @@ msgstr "Talajvizsgálatok"
 msgid ""
 "Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre "
 "exploitation. Téléchargement immédiat."
-msgstr "Compreenda os resultados das suas análises e tome as decisões certas para a sua exploração. Descarregamento imediato."
+msgstr ""
+"Compreenda os resultados das suas análises e tome as decisões certas para a "
+"sua exploração. Descarregamento imediato."
 
 #: public/templates/public/home.html:358
 msgid "pH & impact cultures"
@@ -4523,7 +4655,11 @@ msgid ""
 "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
 "de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
 "l'administratif — la priorité n°1 de 48 %% des agriculteurs."
-msgstr "Sim. Ao automatizar a rastreabilidade, os relatórios regulamentares e o acompanhamento das suas parcelas, a Holystyl faz-lhe poupar as horas passadas à noite com a parte administrativa — a prioridade n.º 1 de 48 %% dos agricultores."
+msgstr ""
+"Sim. Ao automatizar a rastreabilidade, os relatórios regulamentares e o "
+"acompanhamento das suas parcelas, a Holystyl faz-lhe poupar as horas "
+"passadas à noite com a parte administrativa — a prioridade n.º 1 de 48 %% "
+"dos agricultores."
 
 #: public/templates/public/home.html:405
 msgid "Est-ce que l'assistant comprend mes questions techniques ?"
@@ -4534,7 +4670,10 @@ msgid ""
 "Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
 "fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
 "l'écrit comme à la voix, 24h/24."
-msgstr "Sim. O assistente de IA é especializado em agricultura: rega, fertilização (N, P, K), meteorologia, regulamentação ou análises de solo — por escrito e por voz, 24h/24."
+msgstr ""
+"Sim. O assistente de IA é especializado em agricultura: rega, fertilização "
+"(N, P, K), meteorologia, regulamentação ou análises de solo — por escrito e "
+"por voz, 24h/24."
 
 #: public/templates/public/home.html:414
 msgid "Comment démarrer avec Holystyl ?"
@@ -4546,7 +4685,11 @@ msgid ""
 "pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
 "équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
 "IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
-msgstr "Crie a sua conta online em 2 minutos. Um guia de configuração passo a passo acompanha-o para adicionar as suas parcelas, as suas culturas e a sua equipa. A Holystyl liga-se ao seu sistema de rega (Vyrsa, sensores IoT) e fica operacional no próprio dia, a partir do seu smartphone ou computador."
+msgstr ""
+"Crie a sua conta online em 2 minutos. Um guia de configuração passo a passo "
+"acompanha-o para adicionar as suas parcelas, as suas culturas e a sua "
+"equipa. A Holystyl liga-se ao seu sistema de rega (Vyrsa, sensores IoT) e "
+"fica operacional no próprio dia, a partir do seu smartphone ou computador."
 
 #: public/templates/public/home.html:423
 msgid "Holystyl m'aide-t-il à réduire mes charges ?"
@@ -4557,7 +4700,11 @@ msgid ""
 "Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
 "réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
 "aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
-msgstr "Sim. O painel financeiro acompanha os seus encargos e as suas margens em tempo real, identifica as rubricas que pesam e ajuda-o a decidir. Também gere as suas quotas de água e o seu equipamento para evitar despesas desnecessárias."
+msgstr ""
+"Sim. O painel financeiro acompanha os seus encargos e as suas margens em "
+"tempo real, identifica as rubricas que pesam e ajuda-o a decidir. Também "
+"gere as suas quotas de água e o seu equipamento para evitar despesas "
+"desnecessárias."
 
 #: public/templates/public/home.html:432
 msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
@@ -4568,7 +4715,9 @@ msgid ""
 "Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
 "réseau ; les données se synchronisent automatiquement dès que la connexion "
 "revient."
-msgstr "Sim. Consulta e regista as suas intervenções no terreno mesmo sem rede; os dados sincronizam-se automaticamente assim que a ligação regressa."
+msgstr ""
+"Sim. Consulta e regista as suas intervenções no terreno mesmo sem rede; os "
+"dados sincronizam-se automaticamente assim que a ligação regressa."
 
 #: public/templates/public/home.html:441
 msgid "Mes données m'appartiennent-elles ?"
@@ -4579,13 +4728,18 @@ msgid ""
 "Absolument. Vos données vous appartiennent et restent confidentielles : "
 "hébergées en France, jamais revendues, exportables ou supprimables à tout "
 "moment."
-msgstr "Absolutamente. Os seus dados pertencem-lhe e permanecem confidenciais: alojados em França, nunca revendidos, exportáveis ou elimináveis a qualquer momento."
+msgstr ""
+"Absolutamente. Os seus dados pertencem-lhe e permanecem confidenciais: "
+"alojados em França, nunca revendidos, exportáveis ou elimináveis a qualquer "
+"momento."
 
 #: public/templates/public/home.html:463
 msgid ""
 "Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
 "Holystyl."
-msgstr "Assistente inteligente para explorações agrícolas. Concebido com a rede Holystyl."
+msgstr ""
+"Assistente inteligente para explorações agrícolas. Concebido com a rede "
+"Holystyl."
 
 #: public/templates/public/home.html:478
 msgid "Accès"
@@ -4780,6 +4934,9 @@ msgstr "Hamarosan"
 #: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
 msgstr "Devolvamos sentido ao nosso ofício"
+
+#~ msgid "Nom complet"
+#~ msgstr "Nome completo"
 
 #~ msgid "Administration"
 #~ msgstr "Adminisztráció"

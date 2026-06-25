@@ -44,11 +44,20 @@ def test_register_creates_user_and_logs_in(client):
     resp = client.post(
         reverse("accounts:register"),
         {
+            "first_name": "Jean",
+            "last_name": "Nouveau",
             "email": "new@example.com",
-            "full_name": "Nouveau",
+            "birth_date": "1985-04-12",
+            "address_number": "12",
+            "address_street": "rue des Champs",
+            "address_zip": "31000",
+            "address_city": "Toulouse",
             "password1": "ComplexePwd!2026",
             "password2": "ComplexePwd!2026",
         },
     )
     assert resp.status_code == 302
-    assert User.objects.filter(email="new@example.com").exists()
+    user = User.objects.get(email="new@example.com")
+    assert user.full_name == "Jean Nouveau"
+    assert user.birth_date.isoformat() == "1985-04-12"
+    assert user.address_city == "Toulouse"

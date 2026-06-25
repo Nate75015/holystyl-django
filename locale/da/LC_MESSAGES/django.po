@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 17:49+0200\n"
+"POT-Creation-Date: 2026-06-25 20:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:17 exploitations/views.py:61
+#: accounts/admin.py:17 accounts/templates/accounts/register.html:41
+#: exploitations/views.py:61
 msgid "Identité"
 msgstr "Identitet"
 
-#: accounts/admin.py:18
+#: accounts/admin.py:18 accounts/templates/accounts/register.html:52
+#, fuzzy
+#| msgid "adresse"
+msgid "Adresse"
+msgstr "adresse"
+
+#: accounts/admin.py:19
 msgid "Permissions"
 msgstr "Tilladelser"
 
-#: accounts/admin.py:19
+#: accounts/admin.py:20
 msgid "Dates"
 msgstr "Datoer"
 
@@ -35,8 +42,22 @@ msgid "Email"
 msgstr "E-mail"
 
 #: accounts/forms.py:23
-msgid "Nom complet"
-msgstr "Fulde navn"
+#, fuzzy
+#| msgid "prénom"
+msgid "Prénom"
+msgstr "fornavn"
+
+#: accounts/forms.py:24 agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Navn"
+
+#: accounts/forms.py:26
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Date de naissance"
+msgstr "fødselsdato"
 
 #: accounts/models.py:14
 msgid "adresse email"
@@ -46,43 +67,136 @@ msgstr "e-mailadresse"
 msgid "nom complet"
 msgstr "fulde navn"
 
-#: accounts/models.py:23
+#: accounts/models.py:18 exploitations/models.py:46
+msgid "date de naissance"
+msgstr "fødselsdato"
+
+#: accounts/models.py:21
+msgid "n° de rue"
+msgstr ""
+
+#: accounts/models.py:22
+#, fuzzy
+#| msgid "Marque"
+msgid "rue"
+msgstr "Mærke"
+
+#: accounts/models.py:23 exploitations/models.py:63
+msgid "code postal"
+msgstr "postnummer"
+
+#: accounts/models.py:24 exploitations/models.py:62
+msgid "ville"
+msgstr "by"
+
+#: accounts/models.py:32
 msgid "utilisateur"
 msgstr "bruger"
 
-#: accounts/models.py:24
+#: accounts/models.py:33
 msgid "utilisateurs"
 msgstr "brugere"
 
 #: accounts/templates/accounts/login.html:3
-#: accounts/templates/accounts/login.html:12
 #: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
 msgstr "Log ind"
 
-#: accounts/templates/accounts/login.html:23
-#: accounts/templates/accounts/register.html:26
-msgid "Se connecter"
-msgstr "Log ind"
-
-#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/login.html:20
 msgid "Pas de compte ?"
 msgstr "Ingen konto?"
 
-#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/login.html:21
 #: accounts/templates/accounts/register.html:3
-#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
 msgstr "Opret en konto"
 
-#: accounts/templates/accounts/register.html:23
+#: accounts/templates/accounts/login.html:27
+#, fuzzy
+#| msgid "En retard"
+msgid "Bon retour"
+msgstr "Forsinket"
+
+#: accounts/templates/accounts/login.html:28
+msgid "Connectez-vous à votre espace."
+msgstr ""
+
+#: accounts/templates/accounts/login.html:42
+#: accounts/templates/accounts/register.html:21
+msgid "Se connecter"
+msgstr "Log ind"
+
+#: accounts/templates/accounts/login.html:50
+#: accounts/templates/accounts/register.html:82
+#, fuzzy
+#| msgid "Aide PAC"
+msgid "Aide"
+msgstr "CAP-støtte"
+
+#: accounts/templates/accounts/login.html:58
+#: accounts/templates/accounts/register.html:90
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Landbrugsbedrift ved solnedgang"
+
+#: accounts/templates/accounts/login.html:64
+#: accounts/templates/accounts/register.html:96
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "Din bedrift, uden at du skal huske det hele."
+
+#: accounts/templates/accounts/login.html:67
+#: accounts/templates/accounts/register.html:99
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "Assistenten, der husker, beregner og dokumenterer for dig."
+
+#: accounts/templates/accounts/login.html:73
+#: accounts/templates/accounts/register.html:105
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Uden binding"
+
+#: accounts/templates/accounts/login.html:77
+#: accounts/templates/accounts/register.html:109
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Data hostet i Frankrig"
+
+#: accounts/templates/accounts/login.html:81
+#: accounts/templates/accounts/register.html:113
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Guidet opstart inkluderet"
+
+#: accounts/templates/accounts/register.html:20
+msgid "Déjà un compte ?"
+msgstr "Har du allerede en konto?"
+
+#: accounts/templates/accounts/register.html:27
+#, fuzzy
+#| msgid "Créer un compte"
+msgid "Créer votre compte"
+msgstr "Opret en konto"
+
+#: accounts/templates/accounts/register.html:28
+msgid "Quelques informations pour démarrer."
+msgstr ""
+
+#: accounts/templates/accounts/register.html:65
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Mot de passe"
+msgstr "fødselsdato"
+
+#: accounts/templates/accounts/register.html:70
 #: public/templates/public/home.html:25
 msgid "S'inscrire"
 msgstr "Tilmeld dig"
 
-#: accounts/templates/accounts/register.html:26
-msgid "Déjà un compte ?"
-msgstr "Har du allerede en konto?"
+#: accounts/templates/accounts/register.html:73
+msgid "En créant un compte, vous acceptez nos conditions d'utilisation."
+msgstr ""
 
 #: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
@@ -285,7 +399,12 @@ msgid ""
 "cultural qui varie selon le stade phénologique de la plante. Le système "
 "soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
 "calculer la dose d'irrigation nette."
-msgstr "Vandbehovet beregnes med formlen ETc = ETP × Kc, hvor ETP er den potentielle evapotranspiration (vejrdata) og Kc er afgrødekoefficienten, der varierer afhængigt af plantens fænologiske stadie. Systemet fratrækker den effektive nedbør og tager højde for jordens nyttige vandreserve for at beregne den nette vandingsdosis."
+msgstr ""
+"Vandbehovet beregnes med formlen ETc = ETP × Kc, hvor ETP er den potentielle "
+"evapotranspiration (vejrdata) og Kc er afgrødekoefficienten, der varierer "
+"afhængigt af plantens fænologiske stadie. Systemet fratrækker den effektive "
+"nedbør og tager højde for jordens nyttige vandreserve for at beregne den "
+"nette vandingsdosis."
 
 #: agronomie/templates/agronomie/cultures.html:66
 msgid "Levée → début développement"
@@ -411,7 +530,9 @@ msgstr "Nitratdirektiv 91/676/EØF"
 msgid ""
 "Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
 "vos apports cumulés."
-msgstr "Loft på 170 kg N/ha/år i sårbare zoner. Systemet følger automatisk dine akkumulerede tilførsler."
+msgstr ""
+"Loft på 170 kg N/ha/år i sårbare zoner. Systemet følger automatisk dine "
+"akkumulerede tilførsler."
 
 #: agronomie/templates/agronomie/fertigation.html:49
 msgid "Catalogue engrais"
@@ -561,7 +682,11 @@ msgid ""
 "capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
 "est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
 "calculer la dose d'irrigation nette et le seuil de déclenchement."
-msgstr "Den nyttige vandreserve er den mængde vand, der er tilgængelig for planten mellem markkapacitet (CC) og det permanente visnepunkt (PFP). Den udtrykkes i mm vand pr. meter jord. Systemet bruger RU til at beregne den nette vandingsdosis og udløsningstærsklen."
+msgstr ""
+"Den nyttige vandreserve er den mængde vand, der er tilgængelig for planten "
+"mellem markkapacitet (CC) og det permanente visnepunkt (PFP). Den udtrykkes "
+"i mm vand pr. meter jord. Systemet bruger RU til at beregne den nette "
+"vandingsdosis og udløsningstærsklen."
 
 #: agronomie/templates/agronomie/types_sol.html:77
 msgid "Rechercher un type de sol, une texture…"
@@ -596,12 +721,6 @@ msgstr "slettes permanent."
 #| msgid "Types de sol"
 msgid "Nouveau type de sol"
 msgstr "Jordtyper"
-
-#: agronomie/templates/agronomie/types_sol.html:171
-#: finances/templates/finances/subvention_pdf.html:49
-#: iot/templates/iot/capteurs.html:20
-msgid "Nom"
-msgstr "Navn"
 
 #: agronomie/templates/agronomie/types_sol.html:176
 msgid "Texture"
@@ -699,7 +818,9 @@ msgstr "Dokument (PDF, billede…)"
 msgid ""
 "Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
 "document par OCR/IA à l'import."
-msgstr "Værdierne (pH, OM, N-P-K, laboratorium…) udtrækkes automatisk fra dokumentet via OCR/AI ved import."
+msgstr ""
+"Værdierne (pH, OM, N-P-K, laboratorium…) udtrækkes automatisk fra dokumentet "
+"via OCR/AI ved import."
 
 #: analyse_sol/templates/analyse_sol/analyses_sol.html:129
 msgid "Importer"
@@ -1209,7 +1330,8 @@ msgstr "Ingen vandingssession registreret for dine marker."
 msgid ""
 "Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
 "par parcelle."
-msgstr "Ingen mark registreret. Opret dine marker for at se forbruget pr. mark."
+msgstr ""
+"Ingen mark registreret. Opret dine marker for at se forbruget pr. mark."
 
 #: environnement/templates/environnement/placeholder.html:18
 msgid "Module en préparation"
@@ -1221,7 +1343,9 @@ msgstr "Denne sektion bliver snart tilgængelig."
 
 #: environnement/templates/environnement/taxonomie.html:10
 msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
-msgstr "Forordning (EU) 2020/852 · tilpasning af aktiviteter (omsætning / CapEx / OpEx)"
+msgstr ""
+"Forordning (EU) 2020/852 · tilpasning af aktiviteter (omsætning / CapEx / "
+"OpEx)"
 
 #: environnement/templates/environnement/taxonomie.html:16
 #: environnement/templates/environnement/taxonomie.html:123
@@ -1294,7 +1418,10 @@ msgid ""
 "Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
 "objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
 "montrent la part alignée du CA, des CapEx et des OpEx."
-msgstr "En aktivitet er TILPASSET hvis: berettiget + væsentligt bidrag til 1 mål + DNSH (skader ikke de 5 andre) + minimumsgarantier. KPI'erne viser den tilpassede andel af omsætning, CapEx og OpEx."
+msgstr ""
+"En aktivitet er TILPASSET hvis: berettiget + væsentligt bidrag til 1 mål + "
+"DNSH (skader ikke de 5 andre) + minimumsgarantier. KPI'erne viser den "
+"tilpassede andel af omsætning, CapEx og OpEx."
 
 #: environnement/templates/environnement/taxonomie.html:106
 msgid "Nouvelle fiche d'activité"
@@ -1353,31 +1480,41 @@ msgstr "Notifikationer"
 msgid ""
 "Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
 "couverts végétaux et infrastructures agro-écologiques (IAE)."
-msgstr "Følg biodiversiteten på dine marker: nyttedyr, bestøvere, dækafgrøder og agroøkologiske infrastrukturer (IAE)."
+msgstr ""
+"Følg biodiversiteten på dine marker: nyttedyr, bestøvere, dækafgrøder og "
+"agroøkologiske infrastrukturer (IAE)."
 
 #: environnement/views.py:138
 msgid ""
 "Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
 "reliquats et pression sur la directive Nitrates."
-msgstr "Kvælstofregnskab (balancemetode): tilførsler, afgrødernes optag, restmængder og pres i forhold til nitratdirektivet."
+msgstr ""
+"Kvælstofregnskab (balancemetode): tilførsler, afgrødernes optag, restmængder "
+"og pres i forhold til nitratdirektivet."
 
 #: environnement/views.py:145
 msgid ""
 "Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
 "sols (diagnostic type GES / label bas-carbone)."
-msgstr "Bedriftens drivhusgasudledning og kulstoflagring i jorden (GHG-diagnose / lavkulstofmærke)."
+msgstr ""
+"Bedriftens drivhusgasudledning og kulstoflagring i jorden (GHG-diagnose / "
+"lavkulstofmærke)."
 
 #: environnement/views.py:152
 msgid ""
 "Synthèse environnementale de l'exploitation, exportable, regroupant les "
 "indicateurs (eau, azote, carbone, biodiversité)."
-msgstr "Miljøsammendrag for bedriften, eksporterbart, der samler indikatorerne (vand, kvælstof, kulstof, biodiversitet)."
+msgstr ""
+"Miljøsammendrag for bedriften, eksporterbart, der samler indikatorerne "
+"(vand, kvælstof, kulstof, biodiversitet)."
 
 #: environnement/views.py:159
 msgid ""
 "Suivi sanitaire des cultures : maladies, ravageurs, observations et "
 "indicateurs de fréquence de traitement (IFT)."
-msgstr "Sundhedsovervågning af afgrøder: sygdomme, skadedyr, observationer og indikatorer for behandlingshyppighed (IFT)."
+msgstr ""
+"Sundhedsovervågning af afgrøder: sygdomme, skadedyr, observationer og "
+"indikatorer for behandlingshyppighed (IFT)."
 
 #: equipe/models.py:15
 msgid "Chef d'équipe"
@@ -1590,10 +1727,6 @@ msgstr "ejer"
 msgid "prénom"
 msgstr "fornavn"
 
-#: exploitations/models.py:46
-msgid "date de naissance"
-msgstr "fødselsdato"
-
 #: exploitations/models.py:47 exploitations/models.py:118
 msgid "raison sociale"
 msgstr "firmanavn"
@@ -1637,14 +1770,6 @@ msgstr "hjemmeside"
 #: exploitations/models.py:61
 msgid "adresse"
 msgstr "adresse"
-
-#: exploitations/models.py:62
-msgid "ville"
-msgstr "by"
-
-#: exploitations/models.py:63
-msgid "code postal"
-msgstr "postnummer"
 
 #: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
@@ -1753,7 +1878,9 @@ msgstr "Slet denne virksomhed?"
 msgid ""
 "Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
 "à l'exploitation."
-msgstr "Ingen tilknyttet virksomhed. Tilføj en virksomhed (GAEC, ejendoms-SCI…) tilknyttet bedriften."
+msgstr ""
+"Ingen tilknyttet virksomhed. Tilføj en virksomhed (GAEC, ejendoms-SCI…) "
+"tilknyttet bedriften."
 
 #: exploitations/templates/exploitations/settings.html:105
 msgid "Raison sociale"
@@ -2121,7 +2248,9 @@ msgstr "Hej, jeg er Eric."
 msgid ""
 "Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
 "cultures, la fertilisation ou vos analyses."
-msgstr "Din agronomiske rådgiver. Stil mig dine spørgsmål om vanding, afgrøder, gødskning eller dine analyser."
+msgstr ""
+"Din agronomiske rådgiver. Stil mig dine spørgsmål om vanding, afgrøder, "
+"gødskning eller dine analyser."
 
 #: ia/templates/ia/assistant.html:89
 msgid "Décrivez votre besoin…"
@@ -2895,7 +3024,8 @@ msgstr "Filtype ikke tilladt: %(ext)s. Accepterede filtyper: %(list)s."
 #: messagerie/models.py:29
 #, python-format
 msgid "Le fichier dépasse la taille maximale de 5 Mo (%(got)s Mo reçus)."
-msgstr "Filen overskrider den maksimale størrelse på 5 MB (%(got)s MB modtaget)."
+msgstr ""
+"Filen overskrider den maksimale størrelse på 5 MB (%(got)s MB modtaget)."
 
 #: messagerie/models.py:41
 msgid "groupe"
@@ -3052,7 +3182,9 @@ msgstr "Opret"
 msgid ""
 "Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
 "Ajoutez des membres d'équipe et liez-leur un compte."
-msgstr "Ingen anden bruger i din bedrift at kontakte i øjeblikket. Tilføj teammedlemmer og knyt en konto til dem."
+msgstr ""
+"Ingen anden bruger i din bedrift at kontakte i øjeblikket. Tilføj "
+"teammedlemmer og knyt en konto til dem."
 
 #: messagerie/views.py:60
 msgid "📎 Pièce jointe"
@@ -3194,7 +3326,8 @@ msgstr "Seneste auto-registrering"
 msgid ""
 "Un relevé de cette ville est enregistré automatiquement à la fréquence "
 "choisie."
-msgstr "En aflæsning af denne by registreres automatisk med den valgte frekvens."
+msgstr ""
+"En aflæsning af denne by registreres automatisk med den valgte frekvens."
 
 #: meteo/templates/meteo/meteo.html:61
 msgid "Impossible de récupérer la météo."
@@ -3541,7 +3674,10 @@ msgstr "Ingen CAP-støtte for denne kampagne."
 msgid ""
 "Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et "
 "leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
-msgstr "Følg her dine CAP-støtter (DPB, eco-scheme, ICHN, MAEC, økologi…) pr. kampagne og deres status (planlagt / bevilget / betalt). Officiel anmeldelse via TéléPAC."
+msgstr ""
+"Følg her dine CAP-støtter (DPB, eco-scheme, ICHN, MAEC, økologi…) pr. "
+"kampagne og deres status (planlagt / bevilget / betalt). Officiel anmeldelse "
+"via TéléPAC."
 
 #: pac/templates/pac/pac.html:105
 msgid "Nouvelle aide PAC"
@@ -3783,7 +3919,9 @@ msgstr "Liste"
 msgid ""
 "Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
 "Enregistrer."
-msgstr "Klik på de marker, der skal tilføjes (klik igen for at fravælge), og gem derefter."
+msgstr ""
+"Klik på de marker, der skal tilføjes (klik igen for at fravælge), og gem "
+"derefter."
 
 #: parcelles/templates/parcelles/list.html:70
 msgid "parcelle(s) sélectionnée(s)"
@@ -4121,14 +4259,6 @@ msgstr "Områder"
 msgid "Tarif"
 msgstr "Pris"
 
-#: public/templates/public/home.html:41
-msgid "Votre exploitation, sans la garder en tête."
-msgstr "Din bedrift, uden at du skal huske det hele."
-
-#: public/templates/public/home.html:44
-msgid "L'assistant qui retient, calcule et prouve à votre place."
-msgstr "Assistenten, der husker, beregner og dokumenterer for dig."
-
 #: public/templates/public/home.html:47
 msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
 msgstr "59,90 € ekskl. moms/måned pr. bedrift, ubegrænset antal brugere."
@@ -4145,22 +4275,6 @@ msgstr "Se hvad den kan"
 #: templates/partials/install_banner.html:23
 msgid "Télécharger l'app"
 msgstr "Download appen"
-
-#: public/templates/public/home.html:66
-msgid "Sans engagement"
-msgstr "Uden binding"
-
-#: public/templates/public/home.html:67 public/templates/public/home.html:327
-msgid "Données hébergées en France"
-msgstr "Data hostet i Frankrig"
-
-#: public/templates/public/home.html:68 public/templates/public/home.html:324
-msgid "Prise en main guidée incluse"
-msgstr "Guidet opstart inkluderet"
-
-#: public/templates/public/home.html:75
-msgid "Exploitation agricole au coucher du soleil"
-msgstr "Landbrugsbedrift ved solnedgang"
 
 #: public/templates/public/home.html:87
 msgid "Le métier n'a pas changé."
@@ -4275,20 +4389,26 @@ msgid ""
 "Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
 "prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
 "l'apprenti — c'est un autre travail."
-msgstr "Du ved, hvad du gjorde på mark 3 for seks uger siden. At dokumentere det for en kontrollør, finde det igen til en ansøgning, videregive det til lærlingen — det er et helt andet arbejde."
+msgstr ""
+"Du ved, hvad du gjorde på mark 3 for seks uger siden. At dokumentere det for "
+"en kontrollør, finde det igen til en ansøgning, videregive det til lærlingen "
+"— det er et helt andet arbejde."
 
 #: public/templates/public/home.html:181
 msgid ""
 "Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
 "ce qui se colle par-dessus."
-msgstr "Og det arbejde laver du om aftenen. Byrden er ikke faget — det er det, der lægger sig oven på."
+msgstr ""
+"Og det arbejde laver du om aftenen. Byrden er ikke faget — det er det, der "
+"lægger sig oven på."
 
 #: public/templates/public/home.html:182
 #, python-format
 msgid ""
 "48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
 "priorité n°1."
-msgstr "48 %% af landmændene nævner »at styre arbejdstiden« som prioritet nr. 1."
+msgstr ""
+"48 %% af landmændene nævner »at styre arbejdstiden« som prioritet nr. 1."
 
 #: public/templates/public/home.html:194
 msgid "Agriculteur submergé par la paperasse administrative"
@@ -4307,7 +4427,10 @@ msgid ""
 "Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
 "temps de travail, charges, adaptation climatique, gestion d'équipe et "
 "accompagnement. Disponible à la voix, sur le tracteur, à 22h."
-msgstr "Holystyl svarer på de 5 store bekymringer hos franske landmænd: arbejdstid, omkostninger, klimatilpasning, teamstyring og rådgivning. Tilgængelig med stemmen, på traktoren, kl. 22."
+msgstr ""
+"Holystyl svarer på de 5 store bekymringer hos franske landmænd: arbejdstid, "
+"omkostninger, klimatilpasning, teamstyring og rådgivning. Tilgængelig med "
+"stemmen, på traktoren, kl. 22."
 
 #: public/templates/public/home.html:211
 msgid "« Je n'ai pas le temps »"
@@ -4483,7 +4606,9 @@ msgstr "Jordanalyser"
 msgid ""
 "Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre "
 "exploitation. Téléchargement immédiat."
-msgstr "Forstå dine analyseresultater og træf de rigtige beslutninger for din bedrift. Øjeblikkelig download."
+msgstr ""
+"Forstå dine analyseresultater og træf de rigtige beslutninger for din "
+"bedrift. Øjeblikkelig download."
 
 #: public/templates/public/home.html:358
 msgid "pH & impact cultures"
@@ -4523,7 +4648,10 @@ msgid ""
 "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
 "de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
 "l'administratif — la priorité n°1 de 48 %% des agriculteurs."
-msgstr "Ja. Ved at automatisere sporbarhed, lovpligtige rapporter og overvågningen af dine marker sparer Holystyl dig de timer, du bruger om aftenen på administration — prioritet nr. 1 for 48 %% af landmændene."
+msgstr ""
+"Ja. Ved at automatisere sporbarhed, lovpligtige rapporter og overvågningen "
+"af dine marker sparer Holystyl dig de timer, du bruger om aftenen på "
+"administration — prioritet nr. 1 for 48 %% af landmændene."
 
 #: public/templates/public/home.html:405
 msgid "Est-ce que l'assistant comprend mes questions techniques ?"
@@ -4534,7 +4662,10 @@ msgid ""
 "Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
 "fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
 "l'écrit comme à la voix, 24h/24."
-msgstr "Ja. AI-assistenten er specialiseret i landbrug: vanding, gødskning (N, P, K), vejr, regler eller jordanalyser — både skriftligt og med stemmen, døgnet rundt."
+msgstr ""
+"Ja. AI-assistenten er specialiseret i landbrug: vanding, gødskning (N, P, "
+"K), vejr, regler eller jordanalyser — både skriftligt og med stemmen, døgnet "
+"rundt."
 
 #: public/templates/public/home.html:414
 msgid "Comment démarrer avec Holystyl ?"
@@ -4546,7 +4677,11 @@ msgid ""
 "pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
 "équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
 "IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
-msgstr "Opret din konto online på 2 minutter. En trinvis konfigurationsguide hjælper dig med at tilføje dine marker, dine afgrøder og dit team. Holystyl forbindes til dit vandingssystem (Vyrsa, IoT-sensorer) og er driftsklar samme dag, fra din smartphone eller computer."
+msgstr ""
+"Opret din konto online på 2 minutter. En trinvis konfigurationsguide hjælper "
+"dig med at tilføje dine marker, dine afgrøder og dit team. Holystyl "
+"forbindes til dit vandingssystem (Vyrsa, IoT-sensorer) og er driftsklar "
+"samme dag, fra din smartphone eller computer."
 
 #: public/templates/public/home.html:423
 msgid "Holystyl m'aide-t-il à réduire mes charges ?"
@@ -4557,7 +4692,11 @@ msgid ""
 "Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
 "réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
 "aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
-msgstr "Ja. Det finansielle dashboard følger dine omkostninger og marginer i realtid, identificerer de poster, der vejer tungt, og hjælper dig med at prioritere. Du styrer også dine vandkvoter og dit materiel for at undgå unødvendige udgifter."
+msgstr ""
+"Ja. Det finansielle dashboard følger dine omkostninger og marginer i "
+"realtid, identificerer de poster, der vejer tungt, og hjælper dig med at "
+"prioritere. Du styrer også dine vandkvoter og dit materiel for at undgå "
+"unødvendige udgifter."
 
 #: public/templates/public/home.html:432
 msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
@@ -4568,7 +4707,9 @@ msgid ""
 "Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
 "réseau ; les données se synchronisent automatiquement dès que la connexion "
 "revient."
-msgstr "Ja. Du kan se og registrere dine indgreb i marken selv uden netværk; data synkroniseres automatisk, så snart forbindelsen vender tilbage."
+msgstr ""
+"Ja. Du kan se og registrere dine indgreb i marken selv uden netværk; data "
+"synkroniseres automatisk, så snart forbindelsen vender tilbage."
 
 #: public/templates/public/home.html:441
 msgid "Mes données m'appartiennent-elles ?"
@@ -4579,13 +4720,17 @@ msgid ""
 "Absolument. Vos données vous appartiennent et restent confidentielles : "
 "hébergées en France, jamais revendues, exportables ou supprimables à tout "
 "moment."
-msgstr "Helt sikkert. Dine data tilhører dig og forbliver fortrolige: hostet i Frankrig, aldrig videresolgt, eksporterbare eller sletbare når som helst."
+msgstr ""
+"Helt sikkert. Dine data tilhører dig og forbliver fortrolige: hostet i "
+"Frankrig, aldrig videresolgt, eksporterbare eller sletbare når som helst."
 
 #: public/templates/public/home.html:463
 msgid ""
 "Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
 "Holystyl."
-msgstr "Intelligent assistent til landbrugsbedrifter. Udviklet sammen med Holystyl-netværket."
+msgstr ""
+"Intelligent assistent til landbrugsbedrifter. Udviklet sammen med Holystyl-"
+"netværket."
 
 #: public/templates/public/home.html:478
 msgid "Accès"
@@ -4780,6 +4925,9 @@ msgstr "Kommer snart"
 #: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
 msgstr "Lad os give mening til vores fag igen"
+
+#~ msgid "Nom complet"
+#~ msgstr "Fulde navn"
 
 #~ msgid "Administration"
 #~ msgstr "Administration"

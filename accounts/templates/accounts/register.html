@@ -2,29 +2,118 @@
 {% load i18n %}
 {% block title %}{% trans "Créer un compte" %} · {{ APP_NAME }}{% endblock %}
 
+{% block auth_main_class %}min-h-screen{% endblock %}
+
 {% block auth_content %}
-<div class="w-full max-w-sm">
-  <div class="mb-6 flex items-center justify-center gap-2">
-    {% include "partials/brand_mark.html" with size=40 icon=24 %}
-    <span class="text-xl font-bold">{{ APP_NAME }}</span>
+<div class="grid min-h-screen lg:grid-cols-[1fr_minmax(0,30rem)] xl:grid-cols-[1fr_minmax(0,34rem)]">
+
+  {# ── Colonne formulaire ───────────────────────────────────────────── #}
+  <div class="flex min-h-screen flex-col px-6 py-7 sm:px-10 lg:px-16">
+
+    {# En-tête : marque + lien connexion #}
+    <header class="flex items-center justify-between gap-4">
+      <a href="{% url 'public:home' %}" class="flex items-center gap-2">
+        {% include "partials/brand_mark.html" with size=36 %}
+        <span class="text-lg font-bold tracking-tight">{{ APP_NAME }}</span>
+      </a>
+      <p class="text-sm text-slate-500 dark:text-slate-400">
+        {% trans "Déjà un compte ?" %}
+        <a href="{% url 'accounts:login' %}" class="font-semibold text-[#28738f] hover:underline dark:text-[#67dded]">{% trans "Se connecter" %}</a>
+      </p>
+    </header>
+
+    {# Formulaire — centré verticalement quand l'espace le permet (marges auto) #}
+    <div class="mx-auto my-auto w-full max-w-xl py-10">
+      <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{% trans "Créer votre compte" %}</h1>
+      <p class="mt-2 text-slate-500 dark:text-slate-400">{% trans "Quelques informations pour démarrer." %}</p>
+
+      <form method="post" class="mt-8 space-y-7">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="rounded-xl border-2 border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-500/30 dark:bg-red-500/10">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        {# Identité #}
+        <section class="space-y-4">
+          <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "Identité" %}</h2>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {% include "accounts/_field.html" with field=form.first_name %}
+            {% include "accounts/_field.html" with field=form.last_name %}
+          </div>
+          {% include "accounts/_field.html" with field=form.email %}
+          {% include "accounts/_field.html" with field=form.birth_date %}
+        </section>
+
+        {# Adresse #}
+        <section class="space-y-4">
+          <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "Adresse" %}</h2>
+          <div class="grid gap-4 sm:grid-cols-[7rem_1fr]">
+            {% include "accounts/_field.html" with field=form.address_number %}
+            {% include "accounts/_field.html" with field=form.address_street %}
+          </div>
+          <div class="grid gap-4 sm:grid-cols-[9rem_1fr]">
+            {% include "accounts/_field.html" with field=form.address_zip %}
+            {% include "accounts/_field.html" with field=form.address_city %}
+          </div>
+        </section>
+
+        {# Sécurité #}
+        <section class="space-y-4">
+          <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "Mot de passe" %}</h2>
+          {% include "accounts/_field.html" with field=form.password1 %}
+          {% include "accounts/_field.html" with field=form.password2 %}
+        </section>
+
+        <button type="submit" class="md-btn-primary w-full" style="background:#28738f;">{% trans "S'inscrire" %}</button>
+
+        <p class="text-center text-xs text-slate-400">
+          {% trans "En créant un compte, vous acceptez nos conditions d'utilisation." %}
+        </p>
+      </form>
+    </div>
+
+    {# Pied : copyright + aide #}
+    <footer class="flex items-center justify-between gap-4 text-sm text-slate-400">
+      <span>© {{ APP_NAME }}</span>
+      <a href="{% url 'public:home' %}" class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 font-medium text-slate-500 transition hover:bg-slate-50 dark:border-white/10 dark:hover:bg-white/5">
+        <span class="material-icons-round text-[16px]">help_outline</span>{% trans "Aide" %}
+      </a>
+    </footer>
   </div>
-  <div class="md-card">
-    <h1 class="mb-4 text-lg font-semibold">{% trans "Créer un compte" %}</h1>
-    <form method="post" class="space-y-4">
-      {% csrf_token %}
-      {% for field in form %}
-        <div>
-          <label class="mb-1 block text-sm font-medium" for="{{ field.id_for_label }}">{{ field.label }}</label>
-          {{ field }}
-          {% if field.help_text %}<p class="mt-1 text-xs text-slate-400">{{ field.help_text|safe }}</p>{% endif %}
-          {% for error in field.errors %}<p class="mt-1 text-xs text-red-500">{{ error }}</p>{% endfor %}
-        </div>
-      {% endfor %}
-      <button type="submit" class="md-btn-primary w-full">{% trans "S'inscrire" %}</button>
-    </form>
-    <p class="mt-4 text-center text-sm text-slate-500">
-      {% trans "Déjà un compte ?" %} <a href="{% url 'accounts:login' %}" class="text-teal-500">{% trans "Se connecter" %}</a>
-    </p>
-  </div>
+
+  {# ── Colonne marketing (image + réassurance) — masquée en mobile ───── #}
+  <aside class="relative hidden overflow-hidden lg:block">
+    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80"
+         alt="{% trans 'Exploitation agricole au coucher du soleil' %}"
+         class="absolute inset-0 h-full w-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0f3b46] via-[#28738f]/70 to-[#28738f]/30"></div>
+
+    <div class="relative flex h-full flex-col justify-end p-12 text-white">
+      <h2 class="max-w-sm text-3xl font-bold leading-tight">
+        {% trans "Votre exploitation, sans la garder en tête." %}
+      </h2>
+      <p class="mt-3 max-w-sm text-white/80">
+        {% trans "L'assistant qui retient, calcule et prouve à votre place." %}
+      </p>
+
+      <ul class="mt-8 space-y-3 text-sm">
+        <li class="flex items-center gap-2.5">
+          <span class="material-icons-round text-[20px] text-[#ffd426]">check_circle</span>
+          {% trans "Sans engagement" %}
+        </li>
+        <li class="flex items-center gap-2.5">
+          <span class="material-icons-round text-[20px] text-[#ffd426]">check_circle</span>
+          {% trans "Données hébergées en France" %}
+        </li>
+        <li class="flex items-center gap-2.5">
+          <span class="material-icons-round text-[20px] text-[#ffd426]">check_circle</span>
+          {% trans "Prise en main guidée incluse" %}
+        </li>
+      </ul>
+    </div>
+  </aside>
 </div>
 {% endblock %}
