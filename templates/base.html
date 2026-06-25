@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+  <script src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js" defer></script>
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <script>
     // Thème clair/sombre persistant (avant rendu pour éviter le flash)
@@ -56,6 +57,7 @@
   <main class="{% block auth_main_class %}flex min-h-[calc(100vh-4rem)] items-center justify-center px-4{% endblock %}">
     {% block auth_content %}{% endblock %}
   </main>
+  {% block auth_footer %}{% endblock %}
 {% endif %}
 
   {% include "partials/cookie_banner.html" %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 16:53+0200\n"
+"POT-Creation-Date: 2026-06-25 17:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,1876 +16,4780 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : "
+"4);\n"
 
+#: accounts/admin.py:17 exploitations/views.py:61
 msgid "Identité"
-msgstr ""
+msgstr "Aitheantas"
 
+#: accounts/admin.py:18
 msgid "Permissions"
-msgstr ""
+msgstr "Ceadanna"
 
+#: accounts/admin.py:19
 msgid "Dates"
-msgstr ""
+msgstr "Dátaí"
 
+#: accounts/forms.py:15
 msgid "Email"
-msgstr ""
+msgstr "Ríomhphost"
 
+#: accounts/forms.py:23
 msgid "Nom complet"
-msgstr ""
+msgstr "Ainm iomlán"
 
+#: accounts/models.py:14
 msgid "adresse email"
-msgstr ""
+msgstr "seoladh ríomhphoist"
 
+#: accounts/models.py:15
 msgid "nom complet"
-msgstr ""
+msgstr "ainm iomlán"
 
+#: accounts/models.py:23
 msgid "utilisateur"
-msgstr ""
+msgstr "úsáideoir"
 
+#: accounts/models.py:24
 msgid "utilisateurs"
-msgstr ""
+msgstr "úsáideoirí"
 
+#: accounts/templates/accounts/login.html:3
+#: accounts/templates/accounts/login.html:12
+#: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
-msgstr ""
+msgstr "Logáil isteach"
 
+#: accounts/templates/accounts/login.html:23
+#: accounts/templates/accounts/register.html:26
 msgid "Se connecter"
-msgstr ""
+msgstr "Logáil isteach"
 
+#: accounts/templates/accounts/login.html:26
 msgid "Pas de compte ?"
-msgstr ""
+msgstr "Gan cuntas?"
 
+#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/register.html:3
+#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
-msgstr ""
+msgstr "Cruthaigh cuntas"
 
+#: accounts/templates/accounts/register.html:23
+#: public/templates/public/home.html:25
 msgid "S'inscrire"
-msgstr ""
+msgstr "Cláraigh"
 
+#: accounts/templates/accounts/register.html:26
 msgid "Déjà un compte ?"
-msgstr ""
+msgstr "Cuntas agat cheana?"
 
+#: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
-msgstr ""
+msgstr "Earráid"
 
+#: administration/models.py:31
 msgid "configuration SMTP"
-msgstr ""
+msgstr "cumraíocht SMTP"
 
+#: administration/models.py:32
 msgid "configurations SMTP"
-msgstr ""
+msgstr "cumraíochtaí SMTP"
 
-msgid "Administration — Email (SMTP)"
-msgstr ""
-
-msgid "Serveur"
-msgstr ""
-
-msgid "Port"
-msgstr ""
-
-msgid "Utilisateur"
-msgstr ""
-
-msgid "Mot de passe"
-msgstr ""
-
-msgid "Nom expéditeur"
-msgstr ""
-
-msgid "Email expéditeur"
-msgstr ""
-
-msgid "SSL (port 465)"
-msgstr ""
-
-msgid "Activé"
-msgstr ""
-
-msgid "Dernier test"
-msgstr ""
-
-msgid "Enregistrer"
-msgstr ""
-
-msgid "Configuration SMTP enregistrée."
-msgstr ""
-
-msgid "Administration"
-msgstr "Riarachán"
-
+#: agronomie/models.py:16 agronomie/templates/agronomie/cultures.html:16
 msgid "Céréales"
-msgstr ""
+msgstr "Gránaigh"
 
+#: agronomie/models.py:17 agronomie/templates/agronomie/cultures.html:17
 msgid "Légumes"
-msgstr ""
+msgstr "Glasraí"
 
+#: agronomie/models.py:18 agronomie/templates/agronomie/cultures.html:18
 msgid "Fruits"
-msgstr ""
+msgstr "Torthaí"
 
+#: agronomie/models.py:19 agronomie/templates/agronomie/cultures.html:19
 msgid "Vigne"
-msgstr ""
+msgstr "Fíniúna"
 
+#: agronomie/models.py:20 agronomie/templates/agronomie/cultures.html:20
 msgid "Oléagineux"
-msgstr ""
+msgstr "Olaphlandaí"
 
+#: agronomie/models.py:21 agronomie/templates/agronomie/cultures.html:21
 msgid "Fourrage"
-msgstr ""
+msgstr "Foráiste"
 
+#: agronomie/models.py:22 agronomie/templates/agronomie/cultures.html:22
 msgid "Maraîchage"
-msgstr ""
+msgstr "Garraíodóireacht mhargaidh"
 
+#: agronomie/models.py:23 exploitations/models.py:21 exploitations/models.py:34
+#: finances/models.py:24 finances/models.py:50 interventions/models.py:26
+#: operations/models.py:21 operations/models.py:87 operations/models.py:119
+#: operations/models.py:152 pac/models.py:18 planning/models.py:110
+#: planning/models.py:150 planning/models.py:214
 msgid "Autre"
-msgstr ""
+msgstr "Eile"
 
+#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:107
+#: agronomie/models.py:132 equipe/models.py:22 exploitations/models.py:42
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:17
+#: operations/models.py:30 parcelles/models.py:31
 msgid "nom"
-msgstr ""
+msgstr "ainm"
 
+#: agronomie/models.py:26
 msgid "nom scientifique"
-msgstr ""
+msgstr "ainm eolaíoch"
 
+#: agronomie/models.py:39
 msgid "culture (Kc)"
-msgstr ""
+msgstr "barr (Kc)"
 
+#: agronomie/models.py:40
 msgid "cultures (Kc)"
-msgstr ""
+msgstr "barra (Kc)"
 
+#: agronomie/models.py:51 agronomie/templates/agronomie/types_sol.html:16
 msgid "Sableux"
-msgstr ""
+msgstr "Gainmheach"
 
+#: agronomie/models.py:52 agronomie/templates/agronomie/types_sol.html:17
 msgid "Limoneux"
-msgstr ""
+msgstr "Láimríneach"
 
+#: agronomie/models.py:53 agronomie/templates/agronomie/types_sol.html:18
 msgid "Argileux"
-msgstr ""
+msgstr "Créúil"
 
+#: agronomie/models.py:54 agronomie/templates/agronomie/types_sol.html:19
 msgid "Limon argileux"
-msgstr ""
+msgstr "Láib chréúil"
 
+#: agronomie/models.py:55 agronomie/templates/agronomie/types_sol.html:20
 msgid "Sablo-limoneux"
-msgstr ""
+msgstr "Gaineamh-láibeach"
 
+#: agronomie/models.py:56 agronomie/templates/agronomie/types_sol.html:21
 msgid "Argilo-limoneux"
-msgstr ""
+msgstr "Cré-láibeach"
 
+#: agronomie/models.py:60
 msgid "capacité de rétention (mm)"
-msgstr ""
+msgstr "toilleadh coinneála (mm)"
 
+#: agronomie/models.py:61 agronomie/templates/agronomie/types_sol.html:108
 msgid "pH typique"
-msgstr ""
+msgstr "pH tipiciúil"
 
+#: agronomie/models.py:67 parcelles/models.py:60
 msgid "type de sol"
-msgstr ""
+msgstr "cineál ithreach"
 
+#: agronomie/models.py:68 agronomie/templates/agronomie/types_sol.html:128
 msgid "types de sol"
-msgstr ""
+msgstr "cineálacha ithreach"
 
+#: agronomie/models.py:91
 msgid "fertigation"
-msgstr ""
+msgstr "leasú-uisciú"
 
+#: agronomie/models.py:92
 msgid "fertigations"
-msgstr ""
+msgstr "leasú-uisciúcháin"
 
+#: agronomie/models.py:108
+msgid "type"
+msgstr "cineál"
+
+#: agronomie/models.py:109
+msgid "N %"
+msgstr "N %"
+
+#: agronomie/models.py:110
+msgid "P %"
+msgstr "P %"
+
+#: agronomie/models.py:111
+msgid "K %"
+msgstr "K %"
+
+#: agronomie/models.py:112
+msgid "solubilité"
+msgstr "intuaslagthacht"
+
+#: agronomie/models.py:113
+msgid "effet pH"
+msgstr "éifeacht pH"
+
+#: agronomie/models.py:116 agronomie/models.py:117
+msgid "engrais"
+msgstr "leasachán"
+
+#: agronomie/models.py:133
 msgid "date de début"
-msgstr ""
+msgstr "dáta tosaigh"
 
+#: agronomie/models.py:134
 msgid "date de fin"
-msgstr ""
+msgstr "dáta deiridh"
 
+#: agronomie/models.py:135 agronomie/templates/agronomie/saisons.html:12
 msgid "active"
-msgstr ""
+msgstr "gníomhach"
 
+#: agronomie/models.py:139
 msgid "saison"
-msgstr ""
+msgstr "séasúr"
 
+#: agronomie/models.py:140
 msgid "saisons"
-msgstr ""
+msgstr "séasúir"
 
-msgid "Cultures & coefficients Kc"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:15
+#: agronomie/templates/agronomie/types_sol.html:15
+#: interventions/templates/interventions/interventions.html:82
+msgid "Toutes"
+msgstr "Uile"
 
-msgid "Culture"
-msgstr ""
-
-msgid "Catégorie"
-msgstr ""
-
-msgid "Source"
-msgstr ""
-
-msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
-msgstr ""
-
-msgid "Saisons"
-msgstr "Séasúir"
-
-msgid "Aucune saison définie."
-msgstr ""
-
-msgid "Types de sol"
-msgstr "Cineálacha ithreach"
-
-msgid "Rétention"
-msgstr ""
-
-msgid "Aucun type de sol. Ajoutez-en via l'admin."
-msgstr ""
-
+#: agronomie/templates/agronomie/cultures.html:35 agronomie/views.py:46
 msgid "Cultures & Kc"
 msgstr "Barra & Kc"
 
-msgid "Sol"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:36
+msgid ""
+"Base de données cultures françaises — Coefficients culturaux FAO-56 / ARVALIS"
+msgstr "Bunachar sonraí na mbarr Francach — Comhéifeachtaí barrtha FAO-56 / ARVALIS"
 
-msgid "Eau"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:41
+#: agronomie/templates/agronomie/cultures.html:56
+msgid "Méthode"
+msgstr "Modh"
 
-msgid "Foliaire"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:45
+#: agronomie/templates/agronomie/cultures.html:233
+#: agronomie/templates/agronomie/types_sol.html:54
+#: agronomie/templates/agronomie/types_sol.html:213
+#: environnement/templates/environnement/taxonomie.html:178
+#: exploitations/templates/exploitations/settings.html:140
+#: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
+#: parcelles/templates/parcelles/list.html:17
+msgid "Ajouter"
+msgstr "Cuir leis"
 
-msgid "Plante"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:61
+msgid ""
+"Le besoin en eau est calculé avec la formule ETc = ETP × Kc, où l'ETP est "
+"l'évapotranspiration potentielle (données météo) et le Kc est le coefficient "
+"cultural qui varie selon le stade phénologique de la plante. Le système "
+"soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
+"calculer la dose d'irrigation nette."
+msgstr "Ríomhtar an riachtanas uisce leis an bhfoirmle ETc = ETP × Kc, áit a bhfuil ETP an galú-thrasghalú féideartha (sonraí aimsire) agus Kc an comhéifeacht barrtha a athraíonn de réir chéim feinéimeolaíoch an phlanda. Baineann an córas an bháisteach éifeachtach agus cuireann sé an cúlchiste ithreach úsáidteach san áireamh chun an dáta uiscithe glan a ríomh."
 
-msgid "OCR en attente"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:66
+msgid "Levée → début développement"
+msgstr "Péacadh → tús forbartha"
 
-msgid "OCR effectué"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:70
+msgid "Pleine croissance végétative"
+msgstr "Lánfhás fásúil"
 
-msgid "Validé"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:74
+msgid "Maturation → récolte"
+msgstr "Aibiú → fómhar"
 
-msgid "rapport d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:83
+msgid "Rechercher une culture, un nom scientifique, une source…"
+msgstr "Cuardaigh barr, ainm eolaíoch, foinse…"
 
-msgid "rapports d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:101
+#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:34
+#: parcelles/templates/parcelles/form.html:38
+#: parcelles/templates/parcelles/list.html:91
+msgid "Culture"
+msgstr "Barr"
 
+#: agronomie/templates/agronomie/cultures.html:102
+#: agronomie/templates/agronomie/cultures.html:186
+msgid "Nom scientifique"
+msgstr "Ainm eolaíoch"
+
+#: agronomie/templates/agronomie/cultures.html:103
+#: agronomie/templates/agronomie/cultures.html:192
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:53
+#: pac/templates/pac/pac.html:117
+msgid "Catégorie"
+msgstr "Catagóir"
+
+#: agronomie/templates/agronomie/cultures.html:107
+#: agronomie/templates/agronomie/cultures.html:220
+msgid "Source"
+msgstr "Foinse"
+
+#: agronomie/templates/agronomie/cultures.html:122
+#: agronomie/templates/agronomie/cultures.html:160
+#: agronomie/templates/agronomie/types_sol.html:97
+#: agronomie/templates/agronomie/types_sol.html:151
+#: parcelles/templates/parcelles/confirm_delete.html:13
+#: parcelles/templates/parcelles/detail.html:13
+msgid "Supprimer"
+msgstr "Scrios"
+
+#: agronomie/templates/agronomie/cultures.html:132
+msgid "Aucune culture ne correspond à la recherche."
+msgstr "Níl aon bharr ag teacht leis an gcuardach."
+
+#: agronomie/templates/agronomie/cultures.html:137
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "cultures"
+msgstr "Barra & Kc"
+
+#: agronomie/templates/agronomie/cultures.html:150
+msgid "Supprimer la culture ?"
+msgstr "An bharr a scriosadh?"
+
+#: agronomie/templates/agronomie/cultures.html:152
+msgid "sera supprimée définitivement."
+msgstr "scriosfar go buan é."
+
+#: agronomie/templates/agronomie/cultures.html:158
+#: agronomie/templates/agronomie/cultures.html:232
+#: agronomie/templates/agronomie/fertigation.html:216
+#: agronomie/templates/agronomie/types_sol.html:149
+#: agronomie/templates/agronomie/types_sol.html:212
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:128
+#: environnement/templates/environnement/taxonomie.html:177
+#: exploitations/templates/exploitations/settings.html:50
+#: exploitations/templates/exploitations/settings.html:139
+#: interventions/templates/interventions/interventions.html:174
+#: mail/templates/mail/compose.html:56
+#: messagerie/templates/messagerie/_new_modal.html:61
+#: messagerie/templates/messagerie/new.html:34
+#: meteo/templates/meteo/index.html:76 pac/templates/pac/pac.html:145
+#: parcelles/templates/parcelles/confirm_delete.html:14
+#: parcelles/templates/parcelles/list.html:75
+#: sondages/templates/sondages/create.html:37
+msgid "Annuler"
+msgstr "Cealaigh"
+
+#: agronomie/templates/agronomie/cultures.html:173
+msgid "Nouvelle culture"
+msgstr "Barr nua"
+
+#: agronomie/templates/agronomie/cultures.html:180
+msgid "Nom commun"
+msgstr "Gnáthainm"
+
+#: agronomie/templates/agronomie/cultures.html:226
+#: agronomie/templates/agronomie/types_sol.html:207
+#: interventions/templates/interventions/interventions.html:169
+msgid "Notes"
+msgstr "Nótaí"
+
+#: agronomie/templates/agronomie/fertigation.html:19 agronomie/views.py:162
+#: core/context_processors.py:50
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Fertigation"
+msgstr "Uisciú"
+
+#: agronomie/templates/agronomie/fertigation.html:20
+msgid "Gestion N/P/K · Directive Nitrates · Calcul doses"
+msgstr "Bainistíocht N/P/K · Treoir Níotráití · Ríomh dáileog"
+
+#: agronomie/templates/agronomie/fertigation.html:24
+msgid "Enregistrer apport"
+msgstr "Sábháil ionchur"
+
+#: agronomie/templates/agronomie/fertigation.html:33
+msgid "Directive Nitrates 91/676/CEE"
+msgstr "Treoir Níotráití 91/676/CEE"
+
+#: agronomie/templates/agronomie/fertigation.html:41
+msgid ""
+"Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
+"vos apports cumulés."
+msgstr "Uasteorainn 170 kg N/ha/sa bhliain i gcrios leochaileach. Leanann an córas do na hionchuir charntha go huathoibríoch."
+
+#: agronomie/templates/agronomie/fertigation.html:49
+msgid "Catalogue engrais"
+msgstr "Catalóg leasachán"
+
+#: agronomie/templates/agronomie/fertigation.html:52
+msgid "Calcul doses"
+msgstr "Ríomh dáileog"
+
+#: agronomie/templates/agronomie/fertigation.html:55
+msgid "Historique"
+msgstr "Stair"
+
+#: agronomie/templates/agronomie/fertigation.html:63
+#: agronomie/templates/agronomie/fertigation.html:92 finances/models.py:16
+msgid "Engrais"
+msgstr "Leasachán"
+
+#: agronomie/templates/agronomie/fertigation.html:64
+#: interventions/templates/interventions/interventions.html:129
+#: iot/templates/iot/capteurs.html:21
+#: parcelles/templates/parcelles/detail.html:30
+#: planning/templates/planning/bon_intervention.html:16
+msgid "Type"
+msgstr "Cineál"
+
+#: agronomie/templates/agronomie/fertigation.html:68
+msgid "Solubilité"
+msgstr "Intuaslagthacht"
+
+#: agronomie/templates/agronomie/fertigation.html:69
+msgid "pH effet"
+msgstr "éifeacht pH"
+
+#: agronomie/templates/agronomie/fertigation.html:99
+msgid "Dose produit (kg/ha)"
+msgstr "Dáileog táirge (kg/ha)"
+
+#: agronomie/templates/agronomie/fertigation.html:106
+msgid "Azote (N)"
+msgstr "Nítrigin (N)"
+
+#: agronomie/templates/agronomie/fertigation.html:110
+msgid "Phosphore (P)"
+msgstr "Fosfar (P)"
+
+#: agronomie/templates/agronomie/fertigation.html:114
+msgid "Potassium (K)"
+msgstr "Potaisiam (K)"
+
+#: agronomie/templates/agronomie/fertigation.html:118
+#, python-format
+msgid "Éléments apportés = dose produit × titre (%%) ÷ 100."
+msgstr "Eilimintí curtha = dáileog táirge × tíotar (%%) ÷ 100."
+
+#: agronomie/templates/agronomie/fertigation.html:128
+#: agronomie/templates/agronomie/fertigation.html:175
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:44
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:110
+#: finances/templates/finances/charges.html:14
+#: meteo/templates/meteo/meteo.html:140
+msgid "Date"
+msgstr "Dáta"
+
+#: agronomie/templates/agronomie/fertigation.html:129
+#: agronomie/templates/agronomie/fertigation.html:180
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:45
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:103 ia/models.py:33
+#: interventions/templates/interventions/interventions.html:155
+#: parcelles/templates/parcelles/list.html:89
+msgid "Parcelle"
+msgstr "Gabháltas"
+
+#: agronomie/templates/agronomie/fertigation.html:130
+#: agronomie/templates/agronomie/fertigation.html:188 ia/models.py:36
+#: interventions/templates/interventions/interventions.html:164
+#: planning/templates/planning/bon_intervention.html:29
+#: public/templates/public/home.html:469
+msgid "Produit"
+msgstr "Táirge"
+
+#: agronomie/templates/agronomie/fertigation.html:134
+msgid "Volume"
+msgstr "Toirt"
+
+#: agronomie/templates/agronomie/fertigation.html:155
+msgid "Aucun apport enregistré."
+msgstr "Níl aon ionchur cláraithe."
+
+#: agronomie/templates/agronomie/fertigation.html:156
+msgid ""
+"Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
+msgstr "Cliceáil ar « Sábháil ionchur » chun ionchur leasú-uiscithe a chur leis."
+
+#: agronomie/templates/agronomie/fertigation.html:167
+msgid "Enregistrer un apport"
+msgstr "Sábháil ionchur"
+
+#: agronomie/templates/agronomie/fertigation.html:211
+msgid "Volume (L)"
+msgstr "Toirt (L)"
+
+#: agronomie/templates/agronomie/fertigation.html:217
+#: exploitations/templates/exploitations/settings.html:52
+#: interventions/templates/interventions/interventions.html:33
+#: interventions/templates/interventions/interventions.html:175
+#: meteo/templates/meteo/meteo.html:52
+#: parcelles/templates/parcelles/form.html:97
+#: parcelles/templates/parcelles/list.html:76
+msgid "Enregistrer"
+msgstr "Sábháil"
+
+#: agronomie/templates/agronomie/fertigation.html:221
+msgid ""
+"Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un apport."
+msgstr "Cuir gabháltas le do ghnóthas ar dtús chun ionchur a chlárú."
+
+#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:132
+#: core/context_processors.py:67
+msgid "Saisons"
+msgstr "Séasúir"
+
+#: agronomie/templates/agronomie/saisons.html:19
+msgid "Aucune saison définie."
+msgstr "Níl aon séasúr sainithe."
+
+#: agronomie/templates/agronomie/types_sol.html:44 agronomie/views.py:99
+#: core/context_processors.py:49
+msgid "Types de sol"
+msgstr "Cineálacha ithreach"
+
+#: agronomie/templates/agronomie/types_sol.html:45
+msgid "Caractéristiques hydriques et agronomiques par texture"
+msgstr "Saintréithe hidreacha agus agranamaíocha de réir uigeachta"
+
+#: agronomie/templates/agronomie/types_sol.html:50
+msgid "Réserve Utile"
+msgstr "Cúlchiste Úsáidte"
+
+#: agronomie/templates/agronomie/types_sol.html:64
+msgid "Réserve Utile (RU)"
+msgstr "Cúlchiste Úsáidteach (RU)"
+
+#: agronomie/templates/agronomie/types_sol.html:69
+msgid ""
+"La réserve utile est la quantité d'eau disponible pour la plante entre la "
+"capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
+"est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
+"calculer la dose d'irrigation nette et le seuil de déclenchement."
+msgstr "Is é an cúlchiste úsáidteach an méid uisce atá ar fáil don phlanda idir an toilleadh páirce (CC) agus an pointe feoite buan (PFP). Cuirtear in iúl é i mm uisce in aghaidh an mhéadair ithreach. Úsáideann an córas an RU chun an dáileog uiscithe ghlan agus an tairseach spreagtha a ríomh."
+
+#: agronomie/templates/agronomie/types_sol.html:77
+msgid "Rechercher un type de sol, une texture…"
+msgstr "Cuardaigh cineál ithreach, uigeacht…"
+
+#: agronomie/templates/agronomie/types_sol.html:104
+msgid "Rétention"
+msgstr "Coinneáil"
+
+#: agronomie/templates/agronomie/types_sol.html:112
+msgid "Conductivité"
+msgstr "Seoltacht"
+
+#: agronomie/templates/agronomie/types_sol.html:116
+msgid "Densité"
+msgstr "Dlús"
+
+#: agronomie/templates/agronomie/types_sol.html:124
+msgid "Aucun type de sol ne correspond à la recherche."
+msgstr "Níl aon chineál ithreach ag teacht leis an gcuardach."
+
+#: agronomie/templates/agronomie/types_sol.html:141
+msgid "Supprimer ce type de sol ?"
+msgstr "An cineál ithreach seo a scriosadh?"
+
+#: agronomie/templates/agronomie/types_sol.html:143
+msgid "sera supprimé définitivement."
+msgstr "scriosfar go buan é."
+
+#: agronomie/templates/agronomie/types_sol.html:164
+#, fuzzy
+#| msgid "Types de sol"
+msgid "Nouveau type de sol"
+msgstr "Cineálacha ithreach"
+
+#: agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Ainm"
+
+#: agronomie/templates/agronomie/types_sol.html:176
+msgid "Texture"
+msgstr "Uigeacht"
+
+#: agronomie/templates/agronomie/types_sol.html:186
+msgid "Rétention (mm)"
+msgstr "Coinneáil (mm)"
+
+#: agronomie/templates/agronomie/types_sol.html:196
+msgid "Conductivité (mm/h)"
+msgstr "Seoltacht (mm/u)"
+
+#: agronomie/templates/agronomie/types_sol.html:201
+msgid "Densité (g/cm³)"
+msgstr "Dlús (g/cm³)"
+
+#: analyse_sol/models.py:31
+msgid "document"
+msgstr "doiciméad"
+
+#: analyse_sol/models.py:36
 msgid "analyse de sol"
-msgstr ""
+msgstr "anailís ithreach"
 
+#: analyse_sol/models.py:37
 msgid "analyses de sol"
-msgstr ""
+msgstr "anailísí ithreach"
 
-msgid "fiche biodiversité"
-msgstr ""
-
-msgid "fiches biodiversité"
-msgstr ""
-
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:9
+#: analyse_sol/views.py:43 core/context_processors.py:52
+#: public/templates/public/home.html:270
 msgid "Analyses de sol"
 msgstr "Anailísí ithreach"
 
-msgid "Labo"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:10
+msgid "Résultats d'analyses par parcelle · import de documents"
+msgstr "Torthaí anailísí de réir gabháltais · iompórtáil doiciméad"
 
-msgid "Aucune analyse de sol."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:14
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:83
+msgid "Importer une analyse"
+msgstr "Iompórtáil anailís"
 
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:21
+#: parcelles/templates/parcelles/list.html:51
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Analyses"
+msgstr "Anailísí ithreach"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:25
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles analysées"
+msgstr "Ceapacha"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:29
+msgid "pH moyen"
+msgstr "pH meánach"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:33
+#, python-format
+msgid "MO moyenne (%%)"
+msgstr "ÁO meánach (%%)"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:46
 msgid "Laboratoire"
 msgstr "Saotharlann"
 
-msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:52
+#: planning/models.py:109
+msgid "Document"
+msgstr "Doiciméad"
 
-msgid "Type"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:69
+msgid "Voir"
+msgstr "Féach"
 
-msgid "Date"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:81
+msgid "Aucune analyse de sol enregistrée."
+msgstr "Níl aon anailís ithreach cláraithe."
 
-msgid "Statut"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:94
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Importer une analyse de sol"
+msgstr "Anailísí ithreach"
 
-msgid "Aucun rapport. Importez un PDF via l'API (extraction Gemini)."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:117
+msgid "Document (PDF, image…)"
+msgstr "Doiciméad (PDF, íomhá…)"
 
-msgid "En attente"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:124
+msgid ""
+"Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
+"document par OCR/IA à l'import."
+msgstr "Baintear na luachanna (pH, ÁO, N-P-K, saotharlann…) as an doiciméad go huathoibríoch trí OCR/IS le linn iompórtála."
 
-msgid "Utilisé"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:129
+msgid "Importer"
+msgstr "Iompórtáil"
 
-msgid "Expiré"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:133
+msgid ""
+"Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
+msgstr "Cuir gabháltas (Mo Ghabháltais) leis ar dtús chun anailís a cheangal leis."
 
-msgid "Annulé"
-msgstr ""
+#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
+msgid "Sol"
+msgstr "Ithir"
 
-msgid "code d'activation"
-msgstr ""
+#: analyses/models.py:15 finances/models.py:18
+#: finances/templates/finances/bilan_economique.html:30
+#: finances/templates/finances/subvention_pdf.html:31
+msgid "Eau"
+msgstr "Uisce"
 
-msgid "codes d'activation"
-msgstr ""
+#: analyses/models.py:16
+msgid "Foliaire"
+msgstr "Duillebhach"
 
-msgid "Actif"
-msgstr ""
+#: analyses/models.py:17
+msgid "Plante"
+msgstr "Planda"
 
-msgid "Impayé"
-msgstr ""
+#: analyses/models.py:20
+msgid "OCR en attente"
+msgstr "OCR ar feitheamh"
 
-msgid "Essai"
-msgstr ""
+#: analyses/models.py:21
+msgid "OCR effectué"
+msgstr "OCR déanta"
 
-msgid "Non payé"
-msgstr ""
+#: analyses/models.py:22 planning/models.py:261
+msgid "Validé"
+msgstr "Bailíochtaithe"
 
-msgid "abonnement"
-msgstr ""
+#: analyses/models.py:45
+msgid "rapport d'analyse"
+msgstr "tuarascáil anailíse"
 
-msgid "abonnements"
-msgstr ""
+#: analyses/models.py:46
+msgid "rapports d'analyse"
+msgstr "tuarascálacha anailíse"
 
+#: analyses/models.py:64
+msgid "fiche biodiversité"
+msgstr "bileog bithéagsúlachta"
+
+#: analyses/models.py:65
+msgid "fiches biodiversité"
+msgstr "bileoga bithéagsúlachta"
+
+#: core/context_processors.py:19 core/context_processors.py:28
 msgid "Accueil"
 msgstr "Baile"
 
+#: core/context_processors.py:20 core/templates/core/dashboard.html:67
+#: finances/templates/finances/subvention_pdf.html:47
 msgid "Parcelles"
 msgstr "Ceapacha"
 
+#: core/context_processors.py:21 core/context_processors.py:53
+#: finances/templates/finances/subvention_pdf.html:49
+#: interventions/models.py:12
+#: interventions/templates/interventions/interventions.html:46
+#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:34
+#: operations/models.py:117 parcelles/templates/parcelles/detail.html:28
+#: parcelles/templates/parcelles/form.html:66
 msgid "Irrigation"
 msgstr "Uisciú"
 
+#: core/context_processors.py:22 core/context_processors.py:90
+#: planning/views.py:34
 msgid "Planning"
 msgstr "Pleanáil"
 
+#: core/context_processors.py:23 ia/models.py:14
 msgid "Assistant"
 msgstr "Cúntóir"
 
+#: core/context_processors.py:30 templates/partials/header.html:5
 msgid "Tableau de bord"
 msgstr "Painéal"
 
+#: core/context_processors.py:31
 msgid "Assistant IA"
 msgstr "Cúntóir IS"
 
+#: core/context_processors.py:35
 msgid "Communication"
 msgstr "Cumarsáid"
 
+#: core/context_processors.py:37
+#: notifications/templates/notifications/center.html:7
+#: notifications/views.py:18 templates/partials/header.html:22
 msgid "Notifications"
 msgstr "Fógraí"
 
+#: core/context_processors.py:38 messagerie/views.py:75
 msgid "Messagerie"
 msgstr "Teachtaireachtaí"
 
+#: core/context_processors.py:39 mail/templates/mail/outbox.html:7
+#: mail/views.py:39
 msgid "Mail"
 msgstr "Ríomhphost"
 
+#: core/context_processors.py:40
 msgid "Sondage"
 msgstr "Suirbhé"
 
+#: core/context_processors.py:44
 msgid "Cultures & Terrain"
 msgstr "Barra & Talamh"
 
-msgid "Régie SCADA"
-msgstr "Rialú SCADA"
+#: core/context_processors.py:46 parcelles/templates/parcelles/list.html:12
+#: parcelles/views.py:48
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Mes Parcelles"
+msgstr "Ceapacha"
 
-msgid "Capteurs"
-msgstr "Braiteoirí"
+#: core/context_processors.py:47 meteo/templates/meteo/index.html:9
+#: meteo/views.py:73
+msgid "Météo"
+msgstr "Aimsir"
 
-msgid "Protection"
-msgstr "Cosaint"
+#: core/context_processors.py:48
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "Cultures"
+msgstr "Barra & Kc"
 
-msgid "Bassinage anti-gel"
-msgstr "Spréáil in aghaidh sioic"
-
+#: core/context_processors.py:51
+#: interventions/templates/interventions/interventions.html:26
+#: interventions/views.py:49 public/templates/public/home.html:265
 msgid "Interventions"
 msgstr "Idirghabhálacha"
 
+#: core/context_processors.py:54 iot/templates/iot/regie.html:7 iot/views.py:28
+msgid "Régie SCADA"
+msgstr "Rialú SCADA"
+
+#: core/context_processors.py:55
+msgid "Capteurs"
+msgstr "Braiteoirí"
+
+#: core/context_processors.py:59 planning/models.py:210
+msgid "Protection"
+msgstr "Cosaint"
+
+#: core/context_processors.py:61
+#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:56
+msgid "Bassinage anti-gel"
+msgstr "Spréáil in aghaidh sioic"
+
+#: core/context_processors.py:65
 msgid "Économie"
 msgstr "Eacnamaíocht"
 
+#: core/context_processors.py:68
+#: finances/templates/finances/bilan_economique.html:16
+#: finances/templates/finances/charges.html:7
+#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
+#: finances/views.py:51
 msgid "Charges"
 msgstr "Costais"
 
+#: core/context_processors.py:69
+#: finances/templates/finances/bilan_economique.html:7
+#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:58
 msgid "Bilan économique"
 msgstr "Achoimre eacnamaíoch"
 
+#: core/context_processors.py:70 finances/templates/finances/facturation.html:6
+#: finances/views.py:66
 msgid "Facturation"
 msgstr "Sonrascadh"
 
+#: core/context_processors.py:71 pac/templates/pac/pac.html:9 pac/views.py:56
+msgid "PAC"
+msgstr "PAC"
+
+#: core/context_processors.py:72
+#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
+#: public/templates/public/home.html:260
 msgid "Parc matériel"
 msgstr "Flít trealaimh"
 
+#: core/context_processors.py:76
 msgid "Environnement"
 msgstr "Comhshaol"
 
+#: core/context_processors.py:78 environnement/views.py:50
+msgid "Biodiversité"
+msgstr "Bithéagsúlacht"
+
+#: core/context_processors.py:79
+msgid "Bilan eau"
+msgstr "Iarmhéid uisce"
+
+#: core/context_processors.py:80 environnement/views.py:137
+msgid "Bilan azoté"
+msgstr "Iarmhéid nítrigine"
+
+#: core/context_processors.py:81 environnement/views.py:144
+msgid "Empreinte carbone"
+msgstr "Lorg carbóin"
+
+#: core/context_processors.py:82 environnement/views.py:151
+#, fuzzy
+#| msgid "Environnement"
+msgid "Rapport environnemental"
+msgstr "Comhshaol"
+
+#: core/context_processors.py:83 environnement/views.py:158
+msgid "Santé végétale"
+msgstr "Sláinte plandaí"
+
+#: core/context_processors.py:84
+#: environnement/templates/environnement/taxonomie.html:9
+#: environnement/views.py:196 public/templates/public/home.html:101
+msgid "Taxonomie EU"
+msgstr "Tacsanomaíocht AE"
+
+#: core/context_processors.py:88
 msgid "RH"
 msgstr "AD"
 
+#: core/context_processors.py:91 equipe/templates/equipe/equipe.html:6
+#: equipe/views.py:21
 msgid "Équipe"
 msgstr "Foireann"
 
+#: core/context_processors.py:92 equipe/templates/equipe/taches.html:6
+#: equipe/views.py:28
 msgid "Tâches"
 msgstr "Tascanna"
 
+#: core/context_processors.py:93 equipe/templates/equipe/mes_taches.html:6
+#: equipe/views.py:37
 msgid "Mes tâches"
 msgstr "Mo thascanna"
 
+#: core/context_processors.py:97
 msgid "Mon compte"
 msgstr "Mo chuntas"
 
+#: core/context_processors.py:99
+#: exploitations/templates/exploitations/settings.html:13
+#: exploitations/views.py:92 meteo/templates/meteo/index.html:26
+#: templates/partials/header.html:59
 msgid "Mon exploitation"
 msgstr "M'fheirm"
 
-msgid "Activer un code"
+#: core/templates/core/dashboard.html:8
+msgid "Bienvenue sur Holystyl 👋"
+msgstr "Fáilte go Holystyl 👋"
+
+#: core/templates/core/dashboard.html:10
+msgid ""
+"Commencez par configurer votre exploitation pour activer le tableau de bord."
+msgstr "Tosaigh trí do ghabháltas a chumrú chun an deais a chumasú."
+
+#: core/templates/core/dashboard.html:12
+#: exploitations/templates/exploitations/settings.html:13
+msgid "Configurer mon exploitation"
+msgstr "Cumraigh mo ghabháltas"
+
+#: core/templates/core/dashboard.html:20
+msgid "+ Parcelle"
+msgstr "+ Gabháltas"
+
+#: core/templates/core/dashboard.html:26
+msgid "Efficience DTI"
+msgstr "Éifeachtúlacht DTI"
+
+#: core/templates/core/dashboard.html:32
+msgid "Aucun score DTI calculé."
+msgstr "Níl aon scór DTI ríofa."
+
+#: core/templates/core/dashboard.html:41
+msgid "Météo & ETP"
+msgstr "Aimsir & ETP"
+
+#: core/templates/core/dashboard.html:42
+msgid "Localisation manquante"
+msgstr "Suíomh ar iarraidh"
+
+#: core/templates/core/dashboard.html:46
+msgid "Température"
+msgstr "Teocht"
+
+#: core/templates/core/dashboard.html:47 iot/templates/iot/regie.html:54
+#: meteo/templates/meteo/meteo.html:77 meteo/templates/meteo/meteo.html:143
+msgid "Humidité"
+msgstr "Taise"
+
+#: core/templates/core/dashboard.html:48 meteo/templates/meteo/meteo.html:78
+#: meteo/templates/meteo/meteo.html:98 meteo/templates/meteo/meteo.html:144
+msgid "Vent"
+msgstr "Gaoth"
+
+#: core/templates/core/dashboard.html:61
+msgid "Chargement météo…"
+msgstr "Aimsir á luchtú…"
+
+#: core/templates/core/dashboard.html:67
+msgid "actives"
+msgstr "gníomhach"
+
+#: core/templates/core/dashboard.html:68
+#: finances/templates/finances/subvention_pdf.html:30
+#: pac/templates/pac/pac.html:55 parcelles/templates/parcelles/list.html:90
+msgid "Surface"
+msgstr "Achar"
+
+#: core/templates/core/dashboard.html:69
+msgid "Quota eau"
+msgstr "Cuóta uisce"
+
+#: core/templates/core/dashboard.html:70
+msgid "Alertes actives"
+msgstr "Foláirimh ghníomhacha"
+
+#: core/templates/core/dashboard.html:76
+msgid "Historique DTI"
+msgstr "Stair DTI"
+
+#: core/templates/core/dashboard.html:78
+msgid "Pas encore de données."
+msgstr "Níl aon sonraí fós."
+
+#: core/templates/core/dashboard.html:81
+msgid "Consommation d'eau"
+msgstr "Tomhaltas uisce"
+
+#: core/templates/core/dashboard.html:83
+msgid "Pas encore de relevés."
+msgstr "Níl aon léamha fós."
+
+#: core/templates/core/dashboard.html:89
+msgid "Alertes"
+msgstr "Foláirimh"
+
+#: core/templates/core/dashboard.html:96
+msgid "Aucune alerte active. 🌿"
+msgstr "Níl aon fholáireamh gníomhach. 🌿"
+
+#: environnement/models.py:11
+msgid "Atténuation du changement climatique"
+msgstr "Maolú ar an athrú aeráide"
+
+#: environnement/models.py:12
+msgid "Adaptation au changement climatique"
+msgstr "Oiriúnú don athrú aeráide"
+
+#: environnement/models.py:13
+msgid "Eau et ressources marines"
+msgstr "Uisce agus acmhainní mara"
+
+#: environnement/models.py:14
+#, fuzzy
+#| msgid "Économie"
+msgid "Économie circulaire"
+msgstr "Eacnamaíocht"
+
+#: environnement/models.py:15
+msgid "Prévention de la pollution"
+msgstr "Cosc ar thruailliú"
+
+#: environnement/models.py:16
+msgid "Biodiversité et écosystèmes"
+msgstr "Bithéagsúlacht agus éiceachórais"
+
+#: environnement/models.py:21 pac/models.py:28
+msgid "campagne"
+msgstr "feachtas"
+
+#: environnement/models.py:22
+msgid "activité"
+msgstr "gníomhaíocht"
+
+#: environnement/models.py:23
+msgid "code NACE"
+msgstr "cód NACE"
+
+#: environnement/models.py:25
+msgid "objectif de contribution"
+msgstr "sprioc rannchuidithe"
+
+#: environnement/models.py:27
+msgid "éligible"
+msgstr "incháilithe"
+
+#: environnement/models.py:28
+msgid "contribution substantielle"
+msgstr "rannchuidiú substaintiúil"
+
+#: environnement/models.py:30
+msgid "DNSH par objectif"
+msgstr "DNSH de réir sprice"
+
+#: environnement/models.py:31
+msgid "garanties minimales"
+msgstr "coimircí íosta"
+
+#: environnement/models.py:32 exploitations/models.py:89
+msgid "chiffre d'affaires (€)"
+msgstr "láimhdeachas (€)"
+
+#: environnement/models.py:33
+msgid "CapEx (€)"
+msgstr "CapEx (€)"
+
+#: environnement/models.py:34
+msgid "OpEx (€)"
+msgstr "OpEx (€)"
+
+#: environnement/models.py:35
+#, fuzzy
+#| msgid "Notifications"
+msgid "justification"
+msgstr "Fógraí"
+
+#: environnement/models.py:39
+msgid "activité Taxonomie"
+msgstr "gníomhaíocht Tacsanomaíochta"
+
+#: environnement/models.py:40
+msgid "activités Taxonomie"
+msgstr "gníomhaíochtaí Tacsanomaíochta"
+
+#: environnement/templates/environnement/bilan_eau.html:9
+#: environnement/views.py:113
+msgid "Bilan Eau"
+msgstr "Iarmhéid Uisce"
+
+#: environnement/templates/environnement/bilan_eau.html:10
+msgid "Consommation d'eau d'irrigation · Sessions réelles"
+msgstr "Tomhaltas uisce uiscithe · Seisiúin iarbhír"
+
+#: environnement/templates/environnement/bilan_eau.html:14
+msgid "Export"
+msgstr "Easpórtáil"
+
+#: environnement/templates/environnement/bilan_eau.html:21
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation totale"
+msgstr "Uisciú"
+
+#: environnement/templates/environnement/bilan_eau.html:23
+msgid "cumul des sessions"
+msgstr "carnadh na seisiún"
+
+#: environnement/templates/environnement/bilan_eau.html:26
+#: irrigation/views.py:38
+msgid "Sessions"
+msgstr "Seisiúin"
+
+#: environnement/templates/environnement/bilan_eau.html:28
+msgid "sessions enregistrées"
+msgstr "seisiúin chláraithe"
+
+#: environnement/templates/environnement/bilan_eau.html:31
+msgid "Quota utilisé"
+msgstr "Cuóta úsáidte"
+
+#: environnement/templates/environnement/bilan_eau.html:33
+msgid "alloués"
+msgstr "leithdháilte"
+
+#: environnement/templates/environnement/bilan_eau.html:36
+msgid "Coût eau"
+msgstr "Costas uisce"
+
+#: environnement/templates/environnement/bilan_eau.html:38
+msgid "estimé"
+msgstr "measta"
+
+#: environnement/templates/environnement/bilan_eau.html:44
+msgid "Consommation mensuelle (m³)"
+msgstr "Tomhaltas míosúil (m³)"
+
+#: environnement/templates/environnement/bilan_eau.html:49
+msgid "Aucune session d'irrigation enregistrée"
+msgstr "Níl aon seisiún uiscithe cláraithe"
+
+#: environnement/templates/environnement/bilan_eau.html:55
+msgid "Consommation par parcelle (m³/jour)"
+msgstr "Tomhaltas de réir gabháltais (m³/lá)"
+
+#: environnement/templates/environnement/bilan_eau.html:68
+msgid "Aucune session d'irrigation"
+msgstr "Níl aon seisiún uiscithe"
+
+#: environnement/templates/environnement/bilan_eau.html:75
+msgid "Aucune session d'irrigation enregistrée pour vos parcelles."
+msgstr "Níl aon seisiún uiscithe cláraithe do do ghabháltais."
+
+#: environnement/templates/environnement/bilan_eau.html:79
+msgid ""
+"Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
+"par parcelle."
+msgstr "Níl aon ghabháltas cláraithe. Cruthaigh do ghabháltais chun an tomhaltas in aghaidh an ghabháltais a fheiceáil."
+
+#: environnement/templates/environnement/placeholder.html:18
+msgid "Module en préparation"
+msgstr "Modúl á ullmhú"
+
+#: environnement/templates/environnement/placeholder.html:19
+msgid "Cette section sera bientôt disponible."
+msgstr "Beidh an chuid seo ar fáil go luath."
+
+#: environnement/templates/environnement/taxonomie.html:10
+msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
+msgstr "Rialachán (AE) 2020/852 · ailíniú gníomhaíochtaí (LD / CapEx / OpEx)"
+
+#: environnement/templates/environnement/taxonomie.html:16
+#: environnement/templates/environnement/taxonomie.html:123
+#: pac/templates/pac/pac.html:17 pac/templates/pac/pac.html:112
+msgid "Campagne"
+msgstr "Feachtas"
+
+#: environnement/templates/environnement/taxonomie.html:21
+#: environnement/templates/environnement/taxonomie.html:90
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une fiche"
 msgstr "Gníomhachtaigh cód"
 
-msgid "Bienvenue sur Holystyl 👋"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:29
+msgid "Chiffre d'affaires aligné"
+msgstr "Láimhdeachas ailínithe"
 
-msgid "Commencez par configurer votre exploitation pour activer le tableau de bord."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:33
+msgid "CapEx aligné"
+msgstr "CapEx ailínithe"
 
-msgid "Configurer mon exploitation"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:37
+msgid "OpEx aligné"
+msgstr "OpEx ailínithe"
 
-msgid "+ Parcelle"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:41
+msgid "Fiches alignées"
+msgstr "Bileoga ailínithe"
 
-msgid "Efficience DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:52
+#: environnement/templates/environnement/taxonomie.html:114
+msgid "Activité"
+msgstr "Gníomhaíocht"
 
-msgid "Aucun score DTI calculé."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:53
+msgid "Objectif"
+msgstr "Sprioc"
 
-msgid "Météo & ETP"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:54
+#: finances/templates/finances/facturation.html:11
+#: interventions/templates/interventions/interventions.html:136
+#: iot/templates/iot/capteurs.html:24 pac/templates/pac/pac.html:57
+#: pac/templates/pac/pac.html:138
+msgid "Statut"
+msgstr "Stádas"
 
-msgid "Localisation manquante"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:67
+msgid "Aligné"
+msgstr "Ailínithe"
 
-msgid "Température"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:68
+msgid "Éligible"
+msgstr "Incháilithe"
 
-msgid "Humidité"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:69
+msgid "Non éligible"
+msgstr "Neamh-incháilithe"
 
-msgid "Vent"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:75
+msgid "Supprimer cette fiche ?"
+msgstr "An bhileog seo a scriosadh?"
 
-msgid "Chargement météo…"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:88
+msgid "Aucune fiche pour cette campagne."
+msgstr "Níl aon bhileog don fheachtas seo."
 
-msgid "actives"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:97
+msgid ""
+"Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
+"objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
+"montrent la part alignée du CA, des CapEx et des OpEx."
+msgstr "Tá gníomhaíocht AILÍNITHE más rud é: incháilithe + rannchuidiú substaintiúil le 1 sprioc + DNSH (ní dhéanann sé dochar do na 5 cinn eile) + coimircí íosta. Léiríonn na KPInna an chuid ailínithe den LD, de na CapEx agus de na OpEx."
 
-msgid "Surface"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:106
+msgid "Nouvelle fiche d'activité"
+msgstr "Bileog ghníomhaíochta nua"
 
-msgid "Quota eau"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:115
+msgid "ex: Production de noix"
+msgstr "sm: Táirgeadh cnónna"
 
-msgid "Alertes actives"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:119
+msgid "Code NACE"
+msgstr "Cód NACE"
 
-msgid "Historique DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:127
+msgid "Objectif de contribution"
+msgstr "Sprioc rannchuidithe"
 
-msgid "Pas encore de données."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:136
+#: meteo/templates/meteo/meteo.html:141
+#, fuzzy
+#| msgid "Communication"
+msgid "Conditions"
+msgstr "Cumarsáid"
 
-msgid "Consommation d'eau"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:138
+msgid "Activité éligible (figure dans la Taxonomie)"
+msgstr "Gníomhaíocht incháilithe (san áireamh sa Tacsanomaíocht)"
 
-msgid "Pas encore de relevés."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:139
+msgid "Contribution substantielle vérifiée"
+msgstr "Rannchuidiú substaintiúil fíoraithe"
 
-msgid "Alertes"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:140
+msgid "Garanties minimales respectées"
+msgstr "Coimircí íosta urramaithe"
 
-msgid "Aucune alerte active. 🌿"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:146
+msgid "DNSH — ne nuit pas significativement à :"
+msgstr "DNSH — ní dhéanann sé dochar suntasach do:"
 
+#: environnement/templates/environnement/taxonomie.html:147
+msgid "À cocher pour les objectifs autres que celui de contribution."
+msgstr "Le ticeáil do na spriocanna seachas an ceann rannchuidithe."
+
+#: environnement/templates/environnement/taxonomie.html:158
+msgid "CA (€)"
+msgstr "LD (€)"
+
+#: environnement/templates/environnement/taxonomie.html:172
+#, fuzzy
+#| msgid "Notifications"
+msgid "Justification"
+msgstr "Fógraí"
+
+#: environnement/views.py:51
+msgid ""
+"Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
+"couverts végétaux et infrastructures agro-écologiques (IAE)."
+msgstr "Lean bithéagsúlacht do ghabháltas: cúntóirí, pailneoirí, clúdaigh phlandúla agus bonneagar agra-éiceolaíoch (IAE)."
+
+#: environnement/views.py:138
+msgid ""
+"Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
+"reliquats et pression sur la directive Nitrates."
+msgstr "Iarmhéid nítrigine (modh an iarmhéid): ionchuir, easpórtáil ag na barra, fuíoll agus brú ar an treoir Níotráití."
+
+#: environnement/views.py:145
+msgid ""
+"Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
+"sols (diagnostic type GES / label bas-carbone)."
+msgstr "Astaíochtaí gás ceaptha teasa an ghabháltais agus stóráil charbóin na n-ithreacha (diagnóis chineál GES / lipéad ísealcharbóin)."
+
+#: environnement/views.py:152
+msgid ""
+"Synthèse environnementale de l'exploitation, exportable, regroupant les "
+"indicateurs (eau, azote, carbone, biodiversité)."
+msgstr "Achoimre chomhshaoil an ghabháltais, easpórtáilte, a chuimsíonn na táscairí (uisce, nítrigin, carbón, bithéagsúlacht)."
+
+#: environnement/views.py:159
+msgid ""
+"Suivi sanitaire des cultures : maladies, ravageurs, observations et "
+"indicateurs de fréquence de traitement (IFT)."
+msgstr "Faireachán sláinte na mbarr: galair, lotnaidí, breathnuithe agus táscairí minicíochta cóireála (IFT)."
+
+#: equipe/models.py:15
 msgid "Chef d'équipe"
-msgstr ""
+msgstr "Ceannaire foirne"
 
+#: equipe/models.py:16
 msgid "Ouvrier"
-msgstr ""
+msgstr "Oibrí"
 
+#: equipe/models.py:17
 msgid "Saisonnier"
-msgstr ""
+msgstr "Séasúrach"
 
+#: equipe/models.py:18
 msgid "Prestataire"
-msgstr ""
+msgstr "Soláthraí"
 
+#: equipe/models.py:24
 msgid "téléphone"
-msgstr ""
+msgstr "guthán"
 
+#: equipe/models.py:42
 msgid "membre d'équipe"
-msgstr ""
+msgstr "ball foirne"
 
+#: equipe/models.py:43
 msgid "membres d'équipe"
-msgstr ""
+msgstr "baill foirne"
 
+#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
 msgid "Haute"
-msgstr ""
+msgstr "Ard"
 
+#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
 msgid "Normale"
-msgstr ""
+msgstr "Gnáth"
 
+#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
 msgid "Basse"
-msgstr ""
+msgstr "Íseal"
 
+#: equipe/models.py:57
 msgid "À faire"
-msgstr ""
+msgstr "Le déanamh"
 
+#: equipe/models.py:58 interventions/models.py:30 planning/models.py:30
 msgid "En cours"
-msgstr ""
+msgstr "Ar siúl"
 
+#: equipe/models.py:59 interventions/models.py:31 iot/models.py:93
 msgid "Terminée"
-msgstr ""
+msgstr "Críochnaithe"
 
+#: equipe/models.py:60
 msgid "Validée"
-msgstr ""
+msgstr "Bailíochtaithe"
 
+#: equipe/models.py:63
 msgid "titre"
-msgstr ""
+msgstr "teideal"
 
+#: equipe/models.py:77
 msgid "tâche"
-msgstr ""
+msgstr "tasc"
 
+#: equipe/models.py:78
 msgid "tâches"
-msgstr ""
+msgstr "tascanna"
 
+#: equipe/models.py:92 finances/models.py:116 iot/models.py:90
+msgid "En attente"
+msgstr "Ar feitheamh"
+
+#: equipe/models.py:93 mail/models.py:14 mail/templates/mail/detail.html:16
+#: mail/templates/mail/outbox.html:30
 msgid "Envoyé"
-msgstr ""
+msgstr "Seolta"
 
+#: equipe/models.py:94
 msgid "Échoué"
-msgstr ""
+msgstr "Theip air"
 
+#: equipe/models.py:105
 msgid "rappel de tâche"
-msgstr ""
+msgstr "meabhrúchán tasc"
 
+#: equipe/models.py:106
 msgid "rappels de tâche"
-msgstr ""
+msgstr "meabhrúcháin tasc"
 
+#: equipe/templates/equipe/equipe.html:20
 msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Níl aon bhall foirne. Cuir cinn leis tríd an riarachán nó an API."
 
+#: equipe/templates/equipe/location_share.html:3
 msgid "Partage de position"
-msgstr ""
+msgstr "Roinnt suímh"
 
+#: equipe/templates/equipe/location_share.html:9
+#: equipe/templates/equipe/location_share.html:13
 msgid "Partager ma position"
-msgstr ""
+msgstr "Roinn mo shuíomh"
 
+#: equipe/templates/equipe/location_share.html:11
 #, python-format
 msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
-msgstr ""
+msgstr "Dia duit %(name)s, roinn do shuíomh le do fhoireann."
 
+#: equipe/templates/equipe/location_share.html:16
 msgid "Lien expiré"
-msgstr ""
+msgstr "Nasc imithe in éag"
 
+#: equipe/templates/equipe/location_share.html:17
 msgid "Ce lien de partage n'est plus valide."
-msgstr ""
+msgstr "Níl an nasc roinnte seo bailí a thuilleadh."
 
+#: equipe/templates/equipe/location_share.html:28
 msgid "Géolocalisation non supportée."
-msgstr ""
+msgstr "Ní thacaítear le geoláithriú."
 
+#: equipe/templates/equipe/location_share.html:34
 msgid "Position partagée ✅"
-msgstr ""
+msgstr "Suíomh roinnte ✅"
 
+#: equipe/templates/equipe/location_share.html:35
 msgid "Erreur lors du partage."
-msgstr ""
+msgstr "Earráid agus é á roinnt."
 
+#: equipe/templates/equipe/location_share.html:36
 msgid "Accès à la position refusé."
-msgstr ""
+msgstr "Diúltaíodh rochtain ar an suíomh."
 
+#: equipe/templates/equipe/mes_taches.html:20
 msgid "Aucune tâche assignée."
-msgstr ""
+msgstr "Níl aon tasc sannta."
 
+#: equipe/templates/equipe/taches.html:13
 msgid "non assignée"
-msgstr ""
+msgstr "gan sannadh"
 
+#: equipe/templates/equipe/taches.html:20
 msgid "Aucune tâche."
-msgstr ""
+msgstr "Níl aon tasc."
 
+#: exploitations/models.py:15
+msgid "Exploitation individuelle"
+msgstr "Gabháltas aonair"
+
+#: exploitations/models.py:16
+msgid "EARL"
+msgstr "EARL"
+
+#: exploitations/models.py:17
+msgid "GAEC"
+msgstr "GAEC"
+
+#: exploitations/models.py:18
+msgid "SCEA"
+msgstr "SCEA"
+
+#: exploitations/models.py:19
+msgid "SCEV"
+msgstr "SCEV"
+
+#: exploitations/models.py:20
+msgid "SARL"
+msgstr "SARL"
+
+#: exploitations/models.py:24
+#, fuzzy
+#| msgid "Interventions"
+msgid "Conventionnel"
+msgstr "Idirghabhálacha"
+
+#: exploitations/models.py:25 pac/models.py:16
+msgid "Agriculture biologique"
+msgstr "Talmhaíocht orgánach"
+
+#: exploitations/models.py:26
+msgid "En conversion bio"
+msgstr "Á thiontú go horgánach"
+
+#: exploitations/models.py:27
+#, fuzzy
+#| msgid "Environnement"
+msgid "Haute Valeur Environnementale"
+msgstr "Comhshaol"
+
+#: exploitations/models.py:30
+msgid "Forage"
+msgstr "Toll"
+
+#: exploitations/models.py:31
+msgid "Rivière / cours d'eau"
+msgstr "Abhainn / sruthchúrsa"
+
+#: exploitations/models.py:32
+msgid "Réseau collectif"
+msgstr "Líonra comhchoiteann"
+
+#: exploitations/models.py:33
+msgid "Retenue / bassin"
+msgstr "Coinneáil / linn"
+
+#: exploitations/models.py:40
 msgid "propriétaire"
-msgstr ""
+msgstr "úinéir"
 
+#: exploitations/models.py:45
+msgid "prénom"
+msgstr "céadainm"
+
+#: exploitations/models.py:46
+msgid "date de naissance"
+msgstr "dáta breithe"
+
+#: exploitations/models.py:47 exploitations/models.py:118
+msgid "raison sociale"
+msgstr "ainm cláraithe"
+
+#: exploitations/models.py:48 exploitations/models.py:120
+msgid "forme juridique"
+msgstr "foirm dhlíthiúil"
+
+#: exploitations/models.py:49 exploitations/models.py:122
+msgid "SIRET"
+msgstr "SIRET"
+
+#: exploitations/models.py:50 exploitations/models.py:123
+msgid "n° PACAGE"
+msgstr "uimhir PACAGE"
+
+#: exploitations/models.py:51 exploitations/models.py:124
+msgid "TVA intracommunautaire"
+msgstr "CBL idirphobail"
+
+#: exploitations/models.py:52 exploitations/models.py:125
+msgid "année d'installation"
+msgstr "bliain bunaithe"
+
+#: exploitations/models.py:55
+msgid "téléphone 1"
+msgstr "guthán 1"
+
+#: exploitations/models.py:56
+msgid "téléphone 2"
+msgstr "guthán 2"
+
+#: exploitations/models.py:57
+msgid "email"
+msgstr "ríomhphost"
+
+#: exploitations/models.py:58
+msgid "site web"
+msgstr "suíomh gréasáin"
+
+#: exploitations/models.py:61
 msgid "adresse"
-msgstr ""
+msgstr "seoladh"
 
+#: exploitations/models.py:62
 msgid "ville"
-msgstr ""
+msgstr "cathair"
 
+#: exploitations/models.py:63
 msgid "code postal"
-msgstr ""
+msgstr "cód poist"
 
+#: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
-msgstr ""
+msgstr "domhanleithead"
 
+#: exploitations/models.py:65 meteo/models.py:20 meteo/models.py:48
 msgid "longitude"
-msgstr ""
+msgstr "domhanfhad"
 
+#: exploitations/models.py:68
 msgid "surface totale (ha)"
-msgstr ""
+msgstr "achar iomlán (ha)"
 
+#: exploitations/models.py:69
+msgid "SAU — surface agricole utile (ha)"
+msgstr "SAU — achar talmhaíochta úsáidte (ha)"
+
+#: exploitations/models.py:71
+msgid "type d'agriculture"
+msgstr "cineál talmhaíochta"
+
+#: exploitations/models.py:73
+msgid "productions principales"
+msgstr "príomhtháirgí"
+
+#: exploitations/models.py:74
+msgid "cheptel"
+msgstr "tréad"
+
+#: exploitations/models.py:77
 msgid "quota eau (m³)"
-msgstr ""
+msgstr "cuóta uisce (m³)"
 
+#: exploitations/models.py:78
 msgid "eau consommée (m³)"
-msgstr ""
+msgstr "uisce ídithe (m³)"
 
+#: exploitations/models.py:79
+msgid "prix de l'eau (€/m³)"
+msgstr "praghas an uisce (€/m³)"
+
+#: exploitations/models.py:80
+msgid "source d'eau"
+msgstr "foinse uisce"
+
+#: exploitations/models.py:81
+msgid "surface irrigable (ha)"
+msgstr "achar in-uiscithe (ha)"
+
+#: exploitations/models.py:84
+msgid "niveau HVE"
+msgstr "leibhéal HVE"
+
+#: exploitations/models.py:85
+#, fuzzy
+#| msgid "Notifications"
+msgid "certifications & labels"
+msgstr "Fógraí"
+
+#: exploitations/models.py:85
+msgid "Bio, AOP/IGP, Label Rouge…"
+msgstr "Orgánach, AOP/IGP, Label Rouge…"
+
+#: exploitations/models.py:88
+msgid "main-d'œuvre (ETP)"
+msgstr "lucht saothair (ETP)"
+
+#: exploitations/models.py:92
 msgid "exploitation"
-msgstr ""
+msgstr "gabháltas"
 
+#: exploitations/models.py:93
 msgid "exploitations"
-msgstr ""
+msgstr "gabháltais"
 
-msgid "Informations de base utilisées partout dans l'application."
-msgstr ""
+#: exploitations/models.py:117
+msgid "rôle / libellé"
+msgstr "ról / lipéad"
 
-msgid "Annuler"
-msgstr ""
+#: exploitations/models.py:129
+msgid "société liée"
+msgstr "cuideachta ghaolmhar"
 
-msgid "Exploitation enregistrée."
-msgstr ""
+#: exploitations/models.py:130
+msgid "sociétés liées"
+msgstr "cuideachtaí gaolmhara"
 
-msgid "Semences"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:15
+msgid "Profil de l'exploitation — utilisé partout dans l'application."
+msgstr "Próifíl an ghabháltais — úsáidte ar fud an fheidhmchláir."
 
-msgid "Engrais"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:64
+msgid "Sociétés liées"
+msgstr "Cuideachtaí gaolmhara"
 
-msgid "Phytosanitaires"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:68
+#: exploitations/templates/exploitations/settings.html:99
+msgid "Ajouter une entreprise"
+msgstr "Cuir gnólacht leis"
 
-msgid "Énergie"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:81
+msgid "Supprimer cette société ?"
+msgstr "An chuideachta seo a scriosadh?"
 
-msgid "Main d'œuvre"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:89
+msgid ""
+"Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
+"à l'exploitation."
+msgstr "Níl aon chuideachta ghaolmhar. Cuir gnólacht (GAEC, SCI talún…) ceangailte leis an ngabháltas leis."
 
-msgid "Matériel"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:105
+msgid "Raison sociale"
+msgstr "Ainm cláraithe"
 
-msgid "Transport"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:107
+msgid "Tapez ≥ 3 lettres pour rechercher dans l'annuaire officiel."
+msgstr "Clóscríobh ≥ 3 litir chun cuardach a dhéanamh san eolaire oifigiúil."
 
-msgid "Assurance"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:111
+msgid "Rôle / libellé"
+msgstr "Ról / lipéad"
 
-msgid "charge"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:112
+msgid "ex: SCI foncière"
+msgstr "sm: SCI talún"
 
-msgid "charges"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:115
+msgid "Forme juridique"
+msgstr "Foirm dhlíthiúil"
 
-msgid "Vente céréales"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:126
+msgid "N° PACAGE"
+msgstr "Uimhir PACAGE"
 
-msgid "Vente fruits"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:130
+msgid "TVA intra."
+msgstr "CBL idir."
 
-msgid "Vente légumes"
-msgstr ""
-
-msgid "Aide PAC"
-msgstr ""
-
-msgid "Subvention"
-msgstr ""
-
-msgid "Location"
-msgstr ""
-
-msgid "Prestation"
-msgstr ""
-
-msgid "revenu"
-msgstr ""
-
-msgid "revenus"
-msgstr ""
-
-msgid "Extra"
-msgstr ""
-
-msgid "Catégorie 1"
-msgstr ""
-
-msgid "Catégorie 2"
-msgstr ""
-
-msgid "Déclassé"
-msgstr ""
-
-msgid "récolte"
-msgstr ""
-
-msgid "récoltes"
-msgstr ""
-
-msgid "client"
-msgstr ""
-
-msgid "clients"
-msgstr ""
-
-msgid "Brouillon"
-msgstr ""
-
-msgid "Payée"
-msgstr ""
-
-msgid "En retard"
-msgstr ""
-
-msgid "Annulée"
-msgstr ""
-
-msgid "facture"
-msgstr ""
-
-msgid "factures"
-msgstr ""
-
-msgid "Taxonomie Verte EU"
-msgstr ""
-
-msgid "Plan Eau 2026"
-msgstr ""
-
-msgid "En génération"
-msgstr ""
-
-msgid "Prêt"
-msgstr ""
-
-msgid "export subvention"
-msgstr ""
-
-msgid "exports subvention"
-msgstr ""
-
-msgid "Revenus CSV"
-msgstr ""
-
-msgid "Dossier subvention PDF"
-msgstr ""
-
-msgid "Revenus"
-msgstr ""
-
-msgid "Résultat net"
-msgstr ""
-
-msgid "Marge / ha"
-msgstr ""
-
-msgid "Revenus vs charges (par mois)"
-msgstr ""
-
-msgid "Pas encore de données financières."
-msgstr ""
-
-msgid "Consommation"
-msgstr ""
-
-msgid "Export CSV"
-msgstr ""
-
-msgid "Montant"
-msgstr ""
-
-msgid "Fournisseur"
-msgstr ""
-
-msgid "Aucune charge enregistrée."
-msgstr ""
-
-msgid "Client"
-msgstr ""
-
-msgid "Émission"
-msgstr ""
-
-msgid "Aucune facture."
-msgstr ""
-
-msgid "Dossier de subvention"
-msgstr ""
-
+#: exploitations/templates/exploitations/settings.html:134
+#: finances/templates/finances/subvention_pdf.html:24
 msgid "Année"
-msgstr ""
+msgstr "Bliain"
 
+#: exploitations/views.py:54
+msgid "Exploitation enregistrée."
+msgstr "Gabháltas cláraithe."
+
+#: exploitations/views.py:63
+msgid "Juridique"
+msgstr "Dlíthiúil"
+
+#: exploitations/views.py:65 public/templates/public/home.html:482
+msgid "Contact"
+msgstr "Teagmháil"
+
+#: exploitations/views.py:67
+msgid "Localisation"
+msgstr "Suíomh"
+
+#: exploitations/views.py:69
+msgid "Caractéristiques agricoles"
+msgstr "Saintréithe talmhaíochta"
+
+#: exploitations/views.py:71
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Eau & irrigation"
+msgstr "Uisciú"
+
+#: exploitations/views.py:73
+#, fuzzy
+#| msgid "Notifications"
+msgid "Certifications & labels"
+msgstr "Fógraí"
+
+#: exploitations/views.py:75
+#, fuzzy
+#| msgid "Économie"
+msgid "Économique"
+msgstr "Eacnamaíocht"
+
+#: exploitations/views.py:117
+msgid "Société ajoutée."
+msgstr "Cuideachta curtha leis."
+
+#: finances/models.py:15
+msgid "Semences"
+msgstr "Síolta"
+
+#: finances/models.py:17
+msgid "Phytosanitaires"
+msgstr "Fíteasláintíocht"
+
+#: finances/models.py:19 finances/templates/finances/bilan_economique.html:31
+#: finances/templates/finances/subvention_pdf.html:32
+msgid "Énergie"
+msgstr "Fuinneamh"
+
+#: finances/models.py:20
+msgid "Main d'œuvre"
+msgstr "Lucht saothair"
+
+#: finances/models.py:21 ia/models.py:35
+msgid "Matériel"
+msgstr "Trealamh"
+
+#: finances/models.py:22 operations/models.py:118 planning/models.py:213
+msgid "Transport"
+msgstr "Iompar"
+
+#: finances/models.py:23
+msgid "Assurance"
+msgstr "Árachas"
+
+#: finances/models.py:36
+msgid "charge"
+msgstr "costas"
+
+#: finances/models.py:37
+msgid "charges"
+msgstr "costais"
+
+#: finances/models.py:43
+msgid "Vente céréales"
+msgstr "Díol gránach"
+
+#: finances/models.py:44
+msgid "Vente fruits"
+msgstr "Díol torthaí"
+
+#: finances/models.py:45
+msgid "Vente légumes"
+msgstr "Díol glasraí"
+
+#: finances/models.py:46
+msgid "Aide PAC"
+msgstr "Cabhair PAC"
+
+#: finances/models.py:47
+msgid "Subvention"
+msgstr "Fóirdheontas"
+
+#: finances/models.py:48
+msgid "Location"
+msgstr "Cíos"
+
+#: finances/models.py:49
+msgid "Prestation"
+msgstr "Seirbhís"
+
+#: finances/models.py:65
+msgid "revenu"
+msgstr "ioncam"
+
+#: finances/models.py:66
+msgid "revenus"
+msgstr "ioncaim"
+
+#: finances/models.py:72
+msgid "Extra"
+msgstr "Breise"
+
+#: finances/models.py:73
+msgid "Catégorie 1"
+msgstr "Catagóir 1"
+
+#: finances/models.py:74
+msgid "Catégorie 2"
+msgstr "Catagóir 2"
+
+#: finances/models.py:75
+msgid "Déclassé"
+msgstr "Íosrangaithe"
+
+#: finances/models.py:88
+msgid "récolte"
+msgstr "fómhar"
+
+#: finances/models.py:89
+msgid "récoltes"
+msgstr "fómhair"
+
+#: finances/models.py:105
+msgid "client"
+msgstr "cliant"
+
+#: finances/models.py:106
+msgid "clients"
+msgstr "cliaint"
+
+#: finances/models.py:115 planning/models.py:259
+msgid "Brouillon"
+msgstr "Dréacht"
+
+#: finances/models.py:117
+msgid "Payée"
+msgstr "Íoctha"
+
+#: finances/models.py:118
+msgid "En retard"
+msgstr "Déanach"
+
+#: finances/models.py:119 interventions/models.py:32
+msgid "Annulée"
+msgstr "Cealaithe"
+
+#: finances/models.py:136
+msgid "facture"
+msgstr "sonrasc"
+
+#: finances/models.py:137
+msgid "factures"
+msgstr "sonraisc"
+
+#: finances/models.py:149
+msgid "Taxonomie Verte EU"
+msgstr "Tacsanomaíocht Ghlas AE"
+
+#: finances/models.py:150
+msgid "Plan Eau 2026"
+msgstr "Plean Uisce 2026"
+
+#: finances/models.py:155
+msgid "En génération"
+msgstr "Á ghiniúint"
+
+#: finances/models.py:156
+msgid "Prêt"
+msgstr "Réidh"
+
+#: finances/models.py:168
+msgid "export subvention"
+msgstr "easpórtáil fóirdheontais"
+
+#: finances/models.py:169
+msgid "exports subvention"
+msgstr "easpórtálacha fóirdheontais"
+
+#: finances/templates/finances/bilan_economique.html:9
+msgid "Revenus CSV"
+msgstr "Ioncaim CSV"
+
+#: finances/templates/finances/bilan_economique.html:10
+msgid "Dossier subvention PDF"
+msgstr "Comhad iarratais fóirdheontais PDF"
+
+#: finances/templates/finances/bilan_economique.html:15
+#: finances/templates/finances/subvention_pdf.html:40 finances/views.py:50
+msgid "Revenus"
+msgstr "Ioncaim"
+
+#: finances/templates/finances/bilan_economique.html:17
+#: finances/templates/finances/subvention_pdf.html:42
+msgid "Résultat net"
+msgstr "Glanioncam"
+
+#: finances/templates/finances/bilan_economique.html:18
+msgid "Marge / ha"
+msgstr "Lánpháirt / ha"
+
+#: finances/templates/finances/bilan_economique.html:23
+msgid "Revenus vs charges (par mois)"
+msgstr "Ioncaim vs costais (in aghaidh na míosa)"
+
+#: finances/templates/finances/bilan_economique.html:25
+msgid "Pas encore de données financières."
+msgstr "Níl aon sonraí airgeadais fós."
+
+#: finances/templates/finances/bilan_economique.html:28
+msgid "Consommation"
+msgstr "Tomhaltas"
+
+#: finances/templates/finances/charges.html:8
+msgid "Export CSV"
+msgstr "Easpórtáil CSV"
+
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:56
+msgid "Montant"
+msgstr "Méid"
+
+#: finances/templates/finances/charges.html:14
+msgid "Fournisseur"
+msgstr "Soláthraí"
+
+#: finances/templates/finances/charges.html:29
+msgid "Aucune charge enregistrée."
+msgstr "Níl aon chostas cláraithe."
+
+#: finances/templates/finances/facturation.html:11
+msgid "Client"
+msgstr "Cliant"
+
+#: finances/templates/finances/facturation.html:11
+msgid "Émission"
+msgstr "Eisiúint"
+
+#: finances/templates/finances/facturation.html:27
+msgid "Aucune facture."
+msgstr "Níl aon sonrasc."
+
+#: finances/templates/finances/subvention_pdf.html:22
+msgid "Dossier de subvention"
+msgstr "Comhad fóirdheontais"
+
+#: finances/templates/finances/subvention_pdf.html:33
 msgid "Score DTI"
-msgstr ""
+msgstr "Scór DTI"
 
-msgid "Nom"
-msgstr ""
-
+#: finances/templates/finances/subvention_pdf.html:49
+#: pac/templates/pac/pac.html:134
 msgid "Surface (ha)"
-msgstr ""
+msgstr "Achar (ha)"
 
+#: finances/templates/finances/subvention_pdf.html:56
 msgid "Document généré par Holystyl."
-msgstr ""
+msgstr "Doiciméad arna ghiniúint ag Holystyl."
 
+#: ia/models.py:13
+msgid "Utilisateur"
+msgstr "Úsáideoir"
+
+#: ia/models.py:26
 msgid "conversation IA"
-msgstr ""
+msgstr "comhrá IS"
 
+#: ia/models.py:27
 msgid "conversations IA"
-msgstr ""
+msgstr "comhráite IS"
 
-msgid "Parcelle"
-msgstr ""
-
-msgid "Produit"
-msgstr ""
-
+#: ia/models.py:37
 msgid "Général"
-msgstr ""
+msgstr "Ginearálta"
 
+#: ia/models.py:45
 msgid "terme vocal"
-msgstr ""
+msgstr "téarma gutha"
 
+#: ia/models.py:46
 msgid "dictionnaire vocal"
-msgstr ""
+msgstr "foclóir gutha"
 
+#: ia/models.py:68
 msgid "rapport quotidien"
-msgstr ""
+msgstr "tuarascáil laethúil"
 
+#: ia/models.py:69
 msgid "rapports quotidiens"
-msgstr ""
+msgstr "tuarascálacha laethúla"
 
-msgid "Assistant Holystyl"
-msgstr ""
+#: ia/templates/ia/assistant.html:11 ia/templates/ia/assistant.html:33
+#: messagerie/templates/messagerie/new.html:6 messagerie/views.py:207
+msgid "Nouvelle conversation"
+msgstr "Comhrá nua"
 
-msgid "IA non configurée"
-msgstr ""
+#: ia/templates/ia/assistant.html:13
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversations"
+msgstr "Cumarsáid"
 
-msgid "Demandez quelque chose…"
-msgstr ""
+#: ia/templates/ia/assistant.html:22
+msgid "Aucune conversation."
+msgstr "Níl aon chomhrá."
 
+#: ia/templates/ia/assistant.html:39
+msgid "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles."
+msgstr "IS gan chumrú — cuir GEMINI_API_KEY leis le haghaidh fíorfhreagraí."
+
+#: ia/templates/ia/assistant.html:49
+msgid "Bonjour, je suis Eric."
+msgstr "Dia duit, is mise Eric."
+
+#: ia/templates/ia/assistant.html:51
+msgid ""
+"Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
+"cultures, la fertilisation ou vos analyses."
+msgstr "Do chomhairleoir agranamaíochta. Cuir ceisteanna orm faoi uisciú, barra, leasú nó do chuid anailísí."
+
+#: ia/templates/ia/assistant.html:89
+msgid "Décrivez votre besoin…"
+msgstr "Déan cur síos ar do riachtanas…"
+
+#: ia/templates/ia/assistant.html:92
+msgid "Entrée pour envoyer · Maj+Entrée pour saut de ligne"
+msgstr "Enter chun seoladh · Shift+Enter le haghaidh líne nua"
+
+#: ia/templates/ia/assistant.html:95
 msgid "Dictée vocale"
-msgstr ""
+msgstr "Deachtú gutha"
 
+#: ia/templates/ia/assistant.html:100 mail/templates/mail/compose.html:58
+#: messagerie/templates/messagerie/_new_modal.html:62
 msgid "Envoyer"
-msgstr ""
+msgstr "Seol"
 
+#: ia/templates/ia/assistant.html:105
+msgid "Eric peut commettre des erreurs. Vérifiez les informations importantes."
+msgstr "Féadann Eric botúin a dhéanamh. Seiceáil an fhaisnéis thábhachtach."
+
+#: ia/templates/ia/assistant.html:150
+#: messagerie/templates/messagerie/detail.html:105
 msgid "Reconnaissance vocale non supportée par ce navigateur."
-msgstr ""
-
-msgid "Débitmètre"
-msgstr ""
-
-msgid "Capteur de pression"
-msgstr ""
-
-msgid "Station météo"
-msgstr ""
-
-msgid "Contrôleur de vanne"
-msgstr ""
-
-msgid "Contrôleur de pompe"
-msgstr ""
-
-msgid "Humidité du sol"
-msgstr ""
-
-msgid "Compteur d'énergie"
-msgstr ""
-
-msgid "Générique"
-msgstr ""
-
-msgid "En ligne"
-msgstr ""
-
-msgid "Hors ligne"
-msgstr ""
-
-msgid "Avertissement"
-msgstr ""
-
-msgid "identifiant device"
-msgstr ""
-
-msgid "device IoT"
-msgstr ""
-
-msgid "devices IoT"
-msgstr ""
-
-msgid "télémétrie"
-msgstr ""
-
-msgid "télémétries"
-msgstr ""
-
-msgid "Envoyée"
-msgstr ""
-
-msgid "Accusée"
-msgstr ""
-
-msgid "Échouée"
-msgstr ""
-
-msgid "Expirée"
-msgstr ""
-
-msgid "commande IoT"
-msgstr ""
-
-msgid "commandes IoT"
-msgstr ""
-
-msgid "Fuite détectée"
-msgstr ""
-
-msgid "Pression basse"
-msgstr ""
-
-msgid "Pression haute"
-msgstr ""
-
-msgid "Débit bas"
-msgstr ""
-
-msgid "Débit élevé"
-msgstr ""
-
-msgid "Panne de pompe"
-msgstr ""
-
-msgid "Baisse d'uniformité"
-msgstr ""
-
-msgid "Pic d'énergie"
-msgstr ""
-
-msgid "Seuil dépassé"
-msgstr ""
-
-msgid "Risque de gel"
-msgstr ""
-
-msgid "Perte invisible"
-msgstr ""
-
-msgid "Info"
-msgstr ""
-
-msgid "Danger"
-msgstr ""
-
-msgid "alerte IoT"
-msgstr ""
-
-msgid "alertes IoT"
-msgstr ""
-
-msgid "Température gel"
-msgstr ""
-
-msgid "Pression min"
-msgstr ""
-
-msgid "Pression max"
-msgstr ""
-
-msgid "Débit min"
-msgstr ""
-
-msgid "Débit max"
-msgstr ""
-
-msgid "kWh/m³ max"
-msgstr ""
-
-msgid "Humidité sol min"
-msgstr ""
-
-msgid "Humidité sol max"
-msgstr ""
-
-msgid "Perte invisible %"
-msgstr ""
-
-msgid "seuil"
-msgstr ""
-
-msgid "seuils"
-msgstr ""
-
-msgid "Capteurs & IoT"
-msgstr ""
-
-msgid "Télémétrie récente"
-msgstr ""
-
-msgid "Marque"
-msgstr ""
-
-msgid "Firmware"
-msgstr ""
-
-msgid "Vu"
-msgstr ""
-
-msgid "Aucun capteur enregistré."
-msgstr ""
-
-msgid "Temps réel actif"
-msgstr ""
-
-msgid "Débit"
-msgstr ""
-
-msgid "Pression"
-msgstr ""
-
-msgid "Puissance"
-msgstr ""
-
-msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
-msgstr ""
-
-msgid "Goutte à goutte"
-msgstr ""
-
-msgid "Aspersion"
-msgstr ""
-
-msgid "Pivot"
-msgstr ""
-
-msgid "Enrouleur"
-msgstr ""
-
-msgid "Micro-aspersion"
-msgstr ""
-
-msgid "Micro-jet"
-msgstr ""
-
-msgid "Submersion"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Maintenance"
-msgstr ""
-
-msgid "zone d'irrigation"
-msgstr ""
-
-msgid "zones d'irrigation"
-msgstr ""
-
-msgid "Quotidien"
-msgstr ""
-
-msgid "Tous les 2 jours"
-msgstr ""
-
-msgid "Tous les 3 jours"
-msgstr ""
-
-msgid "Hebdomadaire"
-msgstr ""
-
-msgid "Personnalisé"
-msgstr ""
-
-msgid "Par durée"
-msgstr ""
-
-msgid "Par volume"
-msgstr ""
-
-msgid "Par pluviométrie"
-msgstr ""
-
-msgid "Manuel"
-msgstr ""
-
-msgid "Vocal"
-msgstr ""
-
-msgid "IA"
-msgstr ""
-
-msgid "programme d'irrigation"
-msgstr ""
-
-msgid "programmes d'irrigation"
-msgstr ""
-
-msgid "Auto"
-msgstr ""
-
-msgid "IoT"
-msgstr ""
-
-msgid "session d'irrigation"
-msgstr ""
-
-msgid "sessions d'irrigation"
-msgstr ""
-
-msgid "Opérationnelle"
-msgstr ""
-
-msgid "En panne"
-msgstr ""
-
-msgid "station de pompage"
-msgstr ""
-
-msgid "stations de pompage"
-msgstr ""
-
-msgid "Capteur"
-msgstr ""
-
-msgid "Terminé"
-msgstr ""
-
-msgid "événement de bassinage"
-msgstr ""
-
-msgid "événements de bassinage"
-msgstr ""
-
-msgid "relevé compteur eau"
-msgstr ""
-
-msgid "relevés compteur eau"
-msgstr ""
-
-msgid "relevé énergie"
-msgstr ""
-
-msgid "relevés énergie"
-msgstr ""
-
-msgid "Annuel"
-msgstr ""
-
-msgid "Mensuel"
-msgstr ""
-
-msgid "quota eau"
-msgstr ""
-
-msgid "quotas eau"
-msgstr ""
-
-msgid "score DTI"
-msgstr ""
-
-msgid "scores DTI"
-msgstr ""
-
-msgid "Faible"
-msgstr ""
-
-msgid "Moyen"
-msgstr ""
-
-msgid "Élevé"
-msgstr ""
-
-msgid "Critique"
-msgstr ""
-
-msgid "événement de gel"
-msgstr ""
-
-msgid "événements de gel"
-msgstr ""
-
-msgid "donnée NDVI"
-msgstr ""
-
-msgid "données NDVI"
-msgstr ""
-
-msgid "détection de perte invisible"
-msgstr ""
-
-msgid "détections de pertes invisibles"
-msgstr ""
-
-msgid "Aucun événement de bassinage."
-msgstr ""
-
-msgid "Volumes irrigués récents"
-msgstr ""
-
-msgid "Aucune zone."
-msgstr ""
-
-msgid "actif"
-msgstr ""
-
-msgid "inactif"
-msgstr ""
-
-msgid "Aucun programme."
-msgstr ""
-
-msgid "Aucune session."
-msgstr ""
-
-msgid "Aucune station."
-msgstr ""
-
-msgid "Zones"
-msgstr ""
-
-msgid "Programmes"
-msgstr ""
-
-msgid "Sessions"
-msgstr ""
-
-msgid "Stations"
-msgstr ""
-
-msgid "Urgente"
-msgstr ""
-
-msgid "notification"
-msgstr ""
-
-msgid "notifications"
-msgstr ""
-
-msgid "règle de notification"
-msgstr ""
-
-msgid "règles de notification"
-msgstr ""
-
-msgid "Tout marquer comme lu"
-msgstr ""
-
-msgid "Aucune notification."
-msgstr ""
-
-msgid "Règles d'alerte"
-msgstr ""
-
-msgid "activée"
-msgstr ""
-
-msgid "désactivée"
-msgstr ""
-
-msgid "Aucune règle définie."
-msgstr ""
-
-msgid "Pompe"
-msgstr ""
-
-msgid "Tracteur"
-msgstr ""
-
-msgid "Pulvérisateur"
-msgstr ""
-
-msgid "Réformée"
-msgstr ""
-
-msgid "machine"
-msgstr ""
-
-msgid "machines"
-msgstr ""
-
-msgid "Utilisation"
-msgstr ""
-
-msgid "Réparation"
-msgstr ""
-
-msgid "Inspection"
-msgstr ""
-
+msgstr "Ní thacaíonn an brabhsálaí seo le haithint gutha."
+
+#: ia/views.py:40 messagerie/models.py:66
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversation"
+msgstr "Cumarsáid"
+
+#: ia/views.py:68
+msgid "Eric"
+msgstr "Eric"
+
+#: interventions/models.py:13
+#: interventions/templates/interventions/interventions.html:55
+#: operations/models.py:114
 msgid "Traitement"
-msgstr ""
+msgstr "Cóireáil"
 
+#: interventions/models.py:14
+#: interventions/templates/interventions/interventions.html:64
+#: operations/models.py:116
 msgid "Fertilisation"
-msgstr ""
+msgstr "Leasú"
 
+#: interventions/models.py:15
+#: interventions/templates/interventions/interventions.html:73
+#: operations/models.py:115
 msgid "Récolte"
-msgstr ""
+msgstr "Fómhar"
 
+#: interventions/models.py:16 operations/models.py:113
 msgid "Semis"
-msgstr ""
+msgstr "Síolchur"
 
+#: interventions/models.py:17
 msgid "Travail du sol"
-msgstr ""
+msgstr "Saothrú ithreach"
 
+#: interventions/models.py:18
 msgid "Taille"
-msgstr ""
+msgstr "Bearradh"
 
+#: interventions/models.py:19
 msgid "Palissage"
-msgstr ""
+msgstr "Tacaíocht"
 
+#: interventions/models.py:20
 msgid "Désherbage"
-msgstr ""
+msgstr "Sceitheadh fiailí"
 
+#: interventions/models.py:21
 msgid "Éclaircissage"
-msgstr ""
+msgstr "Tanú"
 
+#: interventions/models.py:22
 msgid "Effeuillage"
-msgstr ""
+msgstr "Bain duilleoga"
 
+#: interventions/models.py:23
 msgid "Vendange"
-msgstr ""
+msgstr "Fómhar fíonchaor"
 
+#: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:131
+#: operations/models.py:25 operations/models.py:55
+msgid "Maintenance"
+msgstr "Cothabháil"
+
+#: interventions/models.py:25
 msgid "Observation"
-msgstr ""
+msgstr "Breathnú"
 
+#: interventions/models.py:29
 msgid "Planifiée"
-msgstr ""
+msgstr "Pleanáilte"
 
+#: interventions/models.py:35 irrigation/models.py:73
+msgid "Vocal"
+msgstr "Guth"
+
+#: interventions/models.py:36 irrigation/models.py:72 irrigation/models.py:104
+#: irrigation/models.py:156 irrigation/models.py:191 irrigation/models.py:215
+msgid "Manuel"
+msgstr "Lámhleabhar"
+
+#: interventions/models.py:37 irrigation/models.py:74 irrigation/models.py:107
+msgid "IA"
+msgstr "IS"
+
+#: interventions/models.py:62
 msgid "intervention"
-msgstr ""
+msgstr "idirghabháil"
 
+#: interventions/models.py:63
 msgid "interventions"
-msgstr ""
+msgstr "idirghabhálacha"
 
-msgid "Vidange"
-msgstr ""
+#: interventions/templates/interventions/interventions.html:28
+#, python-format
+msgid "Journal des opérations culturales · %(n)s intervention"
+msgid_plural "Journal des opérations culturales · %(n)s interventions"
+msgstr[0] "Loga na n-oibríochtaí barrtha · %(n)s idirghabháil"
+msgstr[1] "Loga na n-oibríochtaí barrtha · %(n)s idirghabháil"
+msgstr[2] "Loga na n-oibríochtaí barrtha · %(n)s idirghabháil"
+msgstr[3] "Loga na n-oibríochtaí barrtha · %(n)s n-idirghabháil"
+msgstr[4] "Loga na n-oibríochtaí barrtha · %(n)s idirghabháil"
 
-msgid "Filtres"
-msgstr ""
-
-msgid "Courroies"
-msgstr ""
-
-msgid "Pneumatiques"
-msgstr ""
-
-msgid "Freins"
-msgstr ""
-
-msgid "Révision complète"
-msgstr ""
-
-msgid "Contrôle technique"
-msgstr ""
-
-msgid "entretien"
-msgstr ""
-
-msgid "entretiens"
-msgstr ""
-
-msgid "Labour"
-msgstr ""
-
-msgid "affectation d'engin"
-msgstr ""
-
-msgid "affectations d'engins"
-msgstr ""
-
-msgid "Semoir"
-msgstr ""
-
-msgid "Épandeur"
-msgstr ""
-
-msgid "Moissonneuse"
-msgstr ""
-
-msgid "Charrue"
-msgstr ""
-
-msgid "Cultivateur"
-msgstr ""
-
-msgid "Benne"
-msgstr ""
-
-msgid "modèle d'engin (catalogue)"
-msgstr ""
-
-msgid "catalogue d'engins"
-msgstr ""
-
+#: interventions/templates/interventions/interventions.html:103
 msgid "Aucune intervention enregistrée."
-msgstr ""
+msgstr "Níl aon idirghabháil cláraithe."
 
+#: interventions/templates/interventions/interventions.html:106
+msgid "Enregistrer la première intervention"
+msgstr "Cláraigh an chéad idirghabháil"
+
+#: interventions/templates/interventions/interventions.html:112
+msgid "Aucune intervention pour ce filtre."
+msgstr "Níl aon idirghabháil don scagaire seo."
+
+#: interventions/templates/interventions/interventions.html:121
+#, fuzzy
+#| msgid "Interventions"
+msgid "Nouvelle intervention"
+msgstr "Idirghabhálacha"
+
+#: interventions/templates/interventions/interventions.html:144
+msgid "Titre"
+msgstr "Teideal"
+
+#: interventions/templates/interventions/interventions.html:150
+msgid "Date / heure"
+msgstr "Dáta / am"
+
+#: interventions/templates/interventions/interventions.html:158
+msgid "—"
+msgstr "—"
+
+#: iot/models.py:16
+msgid "Débitmètre"
+msgstr "Sreabhmhéadar"
+
+#: iot/models.py:17
+msgid "Capteur de pression"
+msgstr "Braiteoir brú"
+
+#: iot/models.py:18
+msgid "Station météo"
+msgstr "Stáisiún aimsire"
+
+#: iot/models.py:19
+msgid "Contrôleur de vanne"
+msgstr "Rialaitheoir comhla"
+
+#: iot/models.py:20
+msgid "Contrôleur de pompe"
+msgstr "Rialaitheoir caidéil"
+
+#: iot/models.py:21
+msgid "Humidité du sol"
+msgstr "Taise ithreach"
+
+#: iot/models.py:22
+msgid "Compteur d'énergie"
+msgstr "Méadar fuinnimh"
+
+#: iot/models.py:23 iot/models.py:30
+msgid "Générique"
+msgstr "Cineálach"
+
+#: iot/models.py:33
+msgid "En ligne"
+msgstr "Ar líne"
+
+#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
+msgid "Hors ligne"
+msgstr "As líne"
+
+#: iot/models.py:35 iot/models.py:131
+msgid "Avertissement"
+msgstr "Rabhadh"
+
+#: iot/models.py:44
+msgid "identifiant device"
+msgstr "aitheantóir gléis"
+
+#: iot/models.py:56
+msgid "device IoT"
+msgstr "gléas IoT"
+
+#: iot/models.py:57
+msgid "devices IoT"
+msgstr "gléasanna IoT"
+
+#: iot/models.py:82
+msgid "télémétrie"
+msgstr "teiliméadracht"
+
+#: iot/models.py:83
+msgid "télémétries"
+msgstr "teiliméadrachtaí"
+
+#: iot/models.py:91
+msgid "Envoyée"
+msgstr "Seolta"
+
+#: iot/models.py:92
+msgid "Accusée"
+msgstr "Admhaithe"
+
+#: iot/models.py:94
+msgid "Échouée"
+msgstr "Theip air"
+
+#: iot/models.py:95
+msgid "Expirée"
+msgstr "Imithe in éag"
+
+#: iot/models.py:109
+msgid "commande IoT"
+msgstr "ordú IoT"
+
+#: iot/models.py:110
+msgid "commandes IoT"
+msgstr "orduithe IoT"
+
+#: iot/models.py:116
+msgid "Fuite détectée"
+msgstr "Sceitheadh braite"
+
+#: iot/models.py:117
+msgid "Pression basse"
+msgstr "Brú íseal"
+
+#: iot/models.py:118
+msgid "Pression haute"
+msgstr "Brú ard"
+
+#: iot/models.py:119
+msgid "Débit bas"
+msgstr "Sreabhadh íseal"
+
+#: iot/models.py:120
+msgid "Débit élevé"
+msgstr "Sreabhadh ard"
+
+#: iot/models.py:121
+msgid "Panne de pompe"
+msgstr "Cliseadh caidéil"
+
+#: iot/models.py:122
+msgid "Baisse d'uniformité"
+msgstr "Laghdú aonfhoirmeachta"
+
+#: iot/models.py:123
+msgid "Pic d'énergie"
+msgstr "Buaicphointe fuinnimh"
+
+#: iot/models.py:125
+msgid "Seuil dépassé"
+msgstr "Tairseach sáraithe"
+
+#: iot/models.py:126
+msgid "Risque de gel"
+msgstr "Baol sioc"
+
+#: iot/models.py:127
+msgid "Perte invisible"
+msgstr "Caillteanas dofheicthe"
+
+#: iot/models.py:130
+msgid "Info"
+msgstr "Eolas"
+
+#: iot/models.py:132
+msgid "Danger"
+msgstr "Contúirt"
+
+#: iot/models.py:148
+msgid "alerte IoT"
+msgstr "foláireamh IoT"
+
+#: iot/models.py:149
+msgid "alertes IoT"
+msgstr "foláirimh IoT"
+
+#: iot/models.py:156
+msgid "Température gel"
+msgstr "Teocht sioc"
+
+#: iot/models.py:157
+msgid "Pression min"
+msgstr "Brú íosta"
+
+#: iot/models.py:158
+msgid "Pression max"
+msgstr "Brú uasta"
+
+#: iot/models.py:159
+msgid "Débit min"
+msgstr "Sreabhadh íosta"
+
+#: iot/models.py:160
+msgid "Débit max"
+msgstr "Sreabhadh uasta"
+
+#: iot/models.py:161
+msgid "kWh/m³ max"
+msgstr "kWh/m³ uasta"
+
+#: iot/models.py:162
+msgid "Humidité sol min"
+msgstr "Taise ithreach íosta"
+
+#: iot/models.py:163
+msgid "Humidité sol max"
+msgstr "Taise ithreach uasta"
+
+#: iot/models.py:164
+msgid "Perte invisible %"
+msgstr "Caillteanas dofheicthe %"
+
+#: iot/models.py:176
+msgid "seuil"
+msgstr "tairseach"
+
+#: iot/models.py:177
+msgid "seuils"
+msgstr "tairseacha"
+
+#: iot/templates/iot/capteurs.html:6 iot/views.py:60
+msgid "Capteurs & IoT"
+msgstr "Braiteoirí & IoT"
+
+#: iot/templates/iot/capteurs.html:10
+msgid "Télémétrie récente"
+msgstr "Teiliméadracht le déanaí"
+
+#: iot/templates/iot/capteurs.html:22
+msgid "Marque"
+msgstr "Branda"
+
+#: iot/templates/iot/capteurs.html:23
+msgid "Firmware"
+msgstr "Dochtearra"
+
+#: iot/templates/iot/capteurs.html:25
+msgid "Vu"
+msgstr "Feicthe"
+
+#: iot/templates/iot/capteurs.html:43
+msgid "Aucun capteur enregistré."
+msgstr "Níl aon bhraiteoir cláraithe."
+
+#: iot/templates/iot/regie.html:10
+msgid "Temps réel actif"
+msgstr "Fíor-am gníomhach"
+
+#: iot/templates/iot/regie.html:42 parcelles/templates/parcelles/detail.html:31
+msgid "Débit"
+msgstr "Sreabhadh"
+
+#: iot/templates/iot/regie.html:46 parcelles/templates/parcelles/detail.html:32
+msgid "Pression"
+msgstr "Brú"
+
+#: iot/templates/iot/regie.html:50
+msgid "Puissance"
+msgstr "Cumhacht"
+
+#: iot/templates/iot/regie.html:62
+msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
+msgstr "Níl aon ghléas IoT. Cuir cinn leis tríd an riarachán nó Braiteoirí."
+
+#: irrigation/models.py:20 parcelles/models.py:14
+msgid "Goutte à goutte"
+msgstr "Braon ar bhraon"
+
+#: irrigation/models.py:21 parcelles/models.py:15
+msgid "Aspersion"
+msgstr "Spréáil"
+
+#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
+msgid "Pivot"
+msgstr "Maighne"
+
+#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
+msgid "Enrouleur"
+msgstr "Rolladóir"
+
+#: irrigation/models.py:24 parcelles/models.py:18
+msgid "Micro-aspersion"
+msgstr "Micrea-spréáil"
+
+#: irrigation/models.py:25
+msgid "Micro-jet"
+msgstr "Micrea-scaird"
+
+#: irrigation/models.py:26
+msgid "Submersion"
+msgstr "Tumadh"
+
+#: irrigation/models.py:29 parcelles/models.py:22
+msgid "Active"
+msgstr "Gníomhach"
+
+#: irrigation/models.py:30 parcelles/models.py:23
+msgid "Inactive"
+msgstr "Neamhghníomhach"
+
+#: irrigation/models.py:50
+msgid "zone d'irrigation"
+msgstr "crios uiscithe"
+
+#: irrigation/models.py:51
+msgid "zones d'irrigation"
+msgstr "criosanna uiscithe"
+
+#: irrigation/models.py:60
+msgid "Quotidien"
+msgstr "Laethúil"
+
+#: irrigation/models.py:61
+msgid "Tous les 2 jours"
+msgstr "Gach 2 lá"
+
+#: irrigation/models.py:62
+msgid "Tous les 3 jours"
+msgstr "Gach 3 lá"
+
+#: irrigation/models.py:63 irrigation/models.py:241
+msgid "Hebdomadaire"
+msgstr "Seachtainiúil"
+
+#: irrigation/models.py:64
+msgid "Personnalisé"
+msgstr "Saincheaptha"
+
+#: irrigation/models.py:67
+msgid "Par durée"
+msgstr "De réir fadachta"
+
+#: irrigation/models.py:68
+msgid "Par volume"
+msgstr "De réir toirte"
+
+#: irrigation/models.py:69
+msgid "Par pluviométrie"
+msgstr "De réir báistí"
+
+#: irrigation/models.py:94
+msgid "programme d'irrigation"
+msgstr "clár uiscithe"
+
+#: irrigation/models.py:95
+msgid "programmes d'irrigation"
+msgstr "cláir uiscithe"
+
+#: irrigation/models.py:105 irrigation/models.py:157
+msgid "Auto"
+msgstr "Uathoibríoch"
+
+#: irrigation/models.py:106
+msgid "IoT"
+msgstr "IoT"
+
+#: irrigation/models.py:123
+msgid "session d'irrigation"
+msgstr "seisiún uiscithe"
+
+#: irrigation/models.py:124
+msgid "sessions d'irrigation"
+msgstr "seisiúin uiscithe"
+
+#: irrigation/models.py:130 operations/models.py:24
+msgid "Opérationnelle"
+msgstr "Oibríochtúil"
+
+#: irrigation/models.py:132 operations/models.py:26
+msgid "En panne"
+msgstr "Briste"
+
+#: irrigation/models.py:147
+msgid "station de pompage"
+msgstr "stáisiún caidéalaithe"
+
+#: irrigation/models.py:148
+msgid "stations de pompage"
+msgstr "stáisiúin chaidéalaithe"
+
+#: irrigation/models.py:158
+msgid "Capteur"
+msgstr "Braiteoir"
+
+#: irrigation/models.py:161
+msgid "Actif"
+msgstr "Gníomhach"
+
+#: irrigation/models.py:162 planning/models.py:32
+msgid "Terminé"
+msgstr "Críochnaithe"
+
+#: irrigation/models.py:163 planning/models.py:33
+msgid "Annulé"
+msgstr "Cealaithe"
+
+#: irrigation/models.py:182
+msgid "événement de bassinage"
+msgstr "imeacht báite"
+
+#: irrigation/models.py:183
+msgid "événements de bassinage"
+msgstr "imeachtaí báite"
+
+#: irrigation/models.py:205
+msgid "relevé compteur eau"
+msgstr "léamh méadair uisce"
+
+#: irrigation/models.py:206
+msgid "relevés compteur eau"
+msgstr "léamha méadair uisce"
+
+#: irrigation/models.py:231
+msgid "relevé énergie"
+msgstr "léamh fuinnimh"
+
+#: irrigation/models.py:232
+msgid "relevés énergie"
+msgstr "léamha fuinnimh"
+
+#: irrigation/models.py:239
+msgid "Annuel"
+msgstr "Bliantúil"
+
+#: irrigation/models.py:240
+msgid "Mensuel"
+msgstr "Míosúil"
+
+#: irrigation/models.py:252
+msgid "quota eau"
+msgstr "cuóta uisce"
+
+#: irrigation/models.py:253
+msgid "quotas eau"
+msgstr "cuótaí uisce"
+
+#: irrigation/models.py:278
+msgid "score DTI"
+msgstr "scór DTI"
+
+#: irrigation/models.py:279
+msgid "scores DTI"
+msgstr "scóir DTI"
+
+#: irrigation/models.py:285
+msgid "Faible"
+msgstr "Íseal"
+
+#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
+msgid "Moyen"
+msgstr "Meánach"
+
+#: irrigation/models.py:287
+msgid "Élevé"
+msgstr "Ard"
+
+#: irrigation/models.py:288 planning/models.py:256
+msgid "Critique"
+msgstr "Criticiúil"
+
+#: irrigation/models.py:306
+msgid "événement de gel"
+msgstr "imeacht sioc"
+
+#: irrigation/models.py:307
+msgid "événements de gel"
+msgstr "imeachtaí sioc"
+
+#: irrigation/models.py:326
+msgid "donnée NDVI"
+msgstr "sonra NDVI"
+
+#: irrigation/models.py:327
+msgid "données NDVI"
+msgstr "sonraí NDVI"
+
+#: irrigation/models.py:345
+msgid "détection de perte invisible"
+msgstr "braith caillteanais dofheicthe"
+
+#: irrigation/models.py:346
+msgid "détections de pertes invisibles"
+msgstr "braiteanna caillteanais dofheicthe"
+
+#: irrigation/templates/irrigation/bassinage.html:20
+msgid "Aucun événement de bassinage."
+msgstr "Níl aon imeacht báite."
+
+#: irrigation/templates/irrigation/irrigation.html:10
+msgid "Volumes irrigués récents"
+msgstr "Toirteanna uiscithe le déanaí"
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "Aucune zone."
+msgstr "Níl aon chrios."
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "actif"
+msgstr "gníomhach"
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "inactif"
+msgstr "neamhghníomhach"
+
+#: irrigation/templates/irrigation/irrigation.html:37
+msgid "Aucun programme."
+msgstr "Níl aon chlár."
+
+#: irrigation/templates/irrigation/irrigation.html:46
+msgid "Aucune session."
+msgstr "Níl aon seisiún."
+
+#: irrigation/templates/irrigation/irrigation.html:55
+msgid "Aucune station."
+msgstr "Níl aon stáisiún."
+
+#: irrigation/views.py:36
+msgid "Zones"
+msgstr "Criosanna"
+
+#: irrigation/views.py:37
+msgid "Programmes"
+msgstr "Cláir"
+
+#: irrigation/views.py:39
+msgid "Stations"
+msgstr "Stáisiúin"
+
+#: mail/models.py:15 mail/templates/mail/detail.html:14
+#: mail/templates/mail/outbox.html:28
+msgid "Échec"
+msgstr "Cliseadh"
+
+#: mail/models.py:22
+msgid "destinataires"
+msgstr "faighteoirí"
+
+#: mail/models.py:23
+msgid "copie"
+msgstr "cóip"
+
+#: mail/models.py:24
+msgid "objet"
+msgstr "ábhar"
+
+#: mail/models.py:25 messagerie/models.py:99 messagerie/models.py:102
+#, fuzzy
+#| msgid "Messagerie"
+msgid "message"
+msgstr "Teachtaireachtaí"
+
+#: mail/models.py:26 messagerie/models.py:120
+msgid "pièces jointes"
+msgstr "ceangaltáin"
+
+#: mail/models.py:31
+msgid "e-mail"
+msgstr "ríomhphost"
+
+#: mail/models.py:32
+msgid "e-mails"
+msgstr "ríomhphoist"
+
+#: mail/templates/mail/compose.html:6 mail/templates/mail/outbox.html:10
+#: mail/views.py:83 mail/views.py:116
+msgid "Nouveau mail"
+msgstr "Ríomhphost nua"
+
+#: mail/templates/mail/compose.html:18 mail/templates/mail/detail.html:21
+#: mail/templates/mail/outbox.html:23
+#: messagerie/templates/messagerie/_new_modal.html:30
+msgid "À"
+msgstr "Chuig"
+
+#: mail/templates/mail/compose.html:18
+msgid "séparez par des virgules"
+msgstr "scar le camóga"
+
+#: mail/templates/mail/compose.html:30 mail/templates/mail/detail.html:22
+msgid "Cc"
+msgstr "Cc"
+
+#: mail/templates/mail/compose.html:30
+#: messagerie/templates/messagerie/new.html:26
+msgid "optionnel"
+msgstr "roghnach"
+
+#: mail/templates/mail/compose.html:36
+msgid "Objet"
+msgstr "Ábhar"
+
+#: mail/templates/mail/compose.html:42
+#: messagerie/templates/messagerie/_new_modal.html:55
+#, fuzzy
+#| msgid "Messagerie"
+msgid "Message"
+msgstr "Teachtaireachtaí"
+
+#: mail/templates/mail/compose.html:49
+msgid "Joindre des fichiers"
+msgstr "Ceangail comhaid"
+
+#: mail/templates/mail/detail.html:7
+msgid "Retour"
+msgstr "Ar ais"
+
+#: mail/templates/mail/detail.html:23
+msgid "Le"
+msgstr "An"
+
+#: mail/templates/mail/detail.html:40
+msgid "Erreur d'envoi"
+msgstr "Earráid sheolta"
+
+#: mail/templates/mail/outbox.html:7
+msgid "Envoyés"
+msgstr "Seolta"
+
+#: mail/templates/mail/outbox.html:37
+msgid "Aucun e-mail envoyé pour le moment."
+msgstr "Níl aon ríomhphost seolta go fóill."
+
+#: mail/views.py:73
+msgid "Indiquez au moins un destinataire valide."
+msgstr "Cuir faighteoir bailí amháin ar a laghad in iúl."
+
+#: mail/views.py:75
+#, python-format
+msgid "Adresses invalides ignorées : %(list)s"
+msgstr "Seoltaí neamhbhailí neamhaird: %(list)s"
+
+#: mail/views.py:77
+msgid "L'objet est obligatoire."
+msgstr "Tá an t-ábhar éigeantach."
+
+#: messagerie/models.py:24
+#, python-format
+msgid "Extension non autorisée : %(ext)s. Extensions acceptées : %(list)s."
+msgstr "Iarmhír neamhcheadaithe: %(ext)s. Iarmhíreanna inghlactha: %(list)s."
+
+#: messagerie/models.py:29
+#, python-format
+msgid "Le fichier dépasse la taille maximale de 5 Mo (%(got)s Mo reçus)."
+msgstr "Sáraíonn an comhad an t-uasmhéid 5 Mb (%(got)s Mb faighte)."
+
+#: messagerie/models.py:41
+msgid "groupe"
+msgstr "grúpa"
+
+#: messagerie/models.py:42
+msgid "nom du groupe"
+msgstr "ainm an ghrúpa"
+
+#: messagerie/models.py:51
+#, fuzzy
+#| msgid "Facturation"
+msgid "conversation"
+msgstr "Sonrascadh"
+
+#: messagerie/models.py:52
+#, fuzzy
+#| msgid "Interventions"
+msgid "conversations"
+msgstr "Idirghabhálacha"
+
+#: messagerie/models.py:64 messagerie/templates/messagerie/_new_modal.html:25
+msgid "Groupe"
+msgstr "Grúpa"
+
+#: messagerie/models.py:88
+msgid "membre de conversation"
+msgstr "ball comhrá"
+
+#: messagerie/models.py:89
+msgid "membres de conversation"
+msgstr "baill chomhrá"
+
+#: messagerie/models.py:103
+#, fuzzy
+#| msgid "Messagerie"
+msgid "messages"
+msgstr "Teachtaireachtaí"
+
+#: messagerie/models.py:114
+msgid "fichier"
+msgstr "comhad"
+
+#: messagerie/models.py:119
+msgid "pièce jointe"
+msgstr "ceangaltán"
+
+#: messagerie/templates/messagerie/_messages.html:25
+msgid "Démarrez la conversation 👋"
+msgstr "Tosaigh an comhrá 👋"
+
+#: messagerie/templates/messagerie/_new_modal.html:8
+#: messagerie/templates/messagerie/_sidebar.html:5
+#: messagerie/templates/messagerie/inbox.html:21
+msgid "Nouveau message"
+msgstr "Teachtaireacht nua"
+
+#: messagerie/templates/messagerie/_new_modal.html:20
+msgid "Direct"
+msgstr "Díreach"
+
+#: messagerie/templates/messagerie/_new_modal.html:33
+msgid "— Choisir un agriculteur —"
+msgstr "— Roghnaigh feirmeoir —"
+
+#: messagerie/templates/messagerie/_new_modal.html:40
+#: messagerie/templates/messagerie/new.html:26
+msgid "Nom du groupe"
+msgstr "Ainm an ghrúpa"
+
+#: messagerie/templates/messagerie/_new_modal.html:41
+msgid "ex: Équipe irrigation"
+msgstr "sm: Foireann uiscithe"
+
+#: messagerie/templates/messagerie/_new_modal.html:45
+msgid "Membres"
+msgstr "Baill"
+
+#: messagerie/templates/messagerie/_new_modal.html:50
+msgid "Ctrl/Cmd + clic pour en sélectionner plusieurs."
+msgstr "Ctrl/Cmd + cliceáil chun roinnt a roghnú."
+
+#: messagerie/templates/messagerie/_new_modal.html:56
+msgid "Écrivez votre message…"
+msgstr "Scríobh do theachtaireacht…"
+
+#: messagerie/templates/messagerie/_sidebar.html:4
+msgid "Chat"
+msgstr "Comhrá"
+
+#: messagerie/templates/messagerie/_sidebar.html:23
+msgid "Aucun message"
+msgstr "Níl aon teachtaireacht"
+
+#: messagerie/templates/messagerie/_sidebar.html:31
+msgid "Aucune conversation pour le moment."
+msgstr "Níl aon chomhrá go fóill."
+
+#: messagerie/templates/messagerie/_sidebar.html:32
+msgid "Démarrer une conversation"
+msgstr "Tosaigh comhrá"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "participants"
+msgstr "rannpháirtithe"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "Conversation privée"
+msgstr "Comhrá príobháideach"
+
+#: messagerie/templates/messagerie/detail.html:48
+msgid "Joindre un fichier"
+msgstr "Ceangail comhad"
+
+#: messagerie/templates/messagerie/detail.html:56
+msgid "Écrire un message…"
+msgstr "Scríobh teachtaireacht…"
+
+#: messagerie/templates/messagerie/detail.html:58
+msgid "Dicter le message"
+msgstr "Deachtaigh an teachtaireacht"
+
+#: messagerie/templates/messagerie/detail.html:62
+msgid "Reformuler avec l’IA"
+msgstr "Athfhoclaigh leis an IS"
+
+#: messagerie/templates/messagerie/inbox.html:17
+msgid "Sélectionnez une conversation"
+msgstr "Roghnaigh comhrá"
+
+#: messagerie/templates/messagerie/inbox.html:18
+msgid "ou démarrez-en une nouvelle"
+msgstr "nó tosaigh ceann nua"
+
+#: messagerie/templates/messagerie/new.html:12
+msgid "Participants"
+msgstr "Rannpháirtithe"
+
+#: messagerie/templates/messagerie/new.html:28
+msgid "Ex. Équipe récolte"
+msgstr "Sm. Foireann fómhair"
+
+#: messagerie/templates/messagerie/new.html:30
+msgid ""
+"Renseignez un nom ou cochez plusieurs participants pour créer un groupe."
+msgstr "Cuir ainm isteach nó tic roinnt rannpháirtithe chun grúpa a chruthú."
+
+#: messagerie/templates/messagerie/new.html:35
+#: sondages/templates/sondages/create.html:38
+msgid "Créer"
+msgstr "Cruthaigh"
+
+#: messagerie/templates/messagerie/new.html:41
+msgid ""
+"Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
+"Ajoutez des membres d'équipe et liez-leur un compte."
+msgstr "Níl aon úsáideoir eile i do ghabháltas le teagmháil leis faoi láthair. Cuir baill foirne leis agus ceangail cuntas leo."
+
+#: messagerie/views.py:60
+msgid "📎 Pièce jointe"
+msgstr "📎 Ceangaltán"
+
+#: meteo/models.py:9
+msgid "Toutes les heures"
+msgstr "Gach uair an chloig"
+
+#: meteo/models.py:10
+msgid "Toutes les 6 heures"
+msgstr "Gach 6 uair"
+
+#: meteo/models.py:11
+msgid "Toutes les 12 heures"
+msgstr "Gach 12 uair"
+
+#: meteo/models.py:12
+msgid "Quotidienne"
+msgstr "Laethúil"
+
+#: meteo/models.py:18
+msgid "slug"
+msgstr "slug"
+
+#: meteo/models.py:24
+msgid "capture automatique"
+msgstr "gabháil uathoibríoch"
+
+#: meteo/models.py:26
+msgid "fréquence"
+msgstr "minicíocht"
+
+#: meteo/models.py:28
+msgid "dernière capture auto"
+msgstr "gabháil uathoibríoch dheireanach"
+
+#: meteo/models.py:31
+msgid "ville météo"
+msgstr "cathair aimsire"
+
+#: meteo/models.py:32
+msgid "villes météo"
+msgstr "cathracha aimsire"
+
+#: meteo/models.py:46
+msgid "lieu"
+msgstr "áit"
+
+#: meteo/models.py:49
+msgid "température (°C)"
+msgstr "teocht (°C)"
+
+#: meteo/models.py:50
+msgid "humidité (%)"
+msgstr "taise (%)"
+
+#: meteo/models.py:51
+msgid "vent (km/h)"
+msgstr "gaoth (km/u)"
+
+#: meteo/models.py:52
+msgid "pluie (mm)"
+msgstr "báisteach (mm)"
+
+#: meteo/models.py:53
+msgid "ET0 (mm)"
+msgstr "ET0 (mm)"
+
+#: meteo/models.py:54
+#, fuzzy
+#| msgid "Notifications"
+msgid "conditions"
+msgstr "Fógraí"
+
+#: meteo/models.py:55
+msgid "capturé le"
+msgstr "gafa ar"
+
+#: meteo/models.py:58
+msgid "relevé météo"
+msgstr "léamh aimsire"
+
+#: meteo/models.py:59
+msgid "relevés météo"
+msgstr "léamha aimsire"
+
+#: meteo/templates/meteo/index.html:10
+msgid "Vos villes en un coup d'œil"
+msgstr "Do chathracha ar an toirt"
+
+#: meteo/templates/meteo/index.html:14 meteo/templates/meteo/index.html:61
+msgid "Ajouter une ville"
+msgstr "Cuir cathair leis"
+
+#: meteo/templates/meteo/index.html:37
+msgid "Retirer"
+msgstr "Bain"
+
+#: meteo/templates/meteo/index.html:52
+msgid "Ajoutez une ville pour suivre sa météo."
+msgstr "Cuir cathair leis chun a haimsir a leanúint."
+
+#: meteo/templates/meteo/index.html:70
+msgid "Rechercher une commune"
+msgstr "Cuardaigh ceantar"
+
+#: meteo/templates/meteo/index.html:71
+msgid "ex: Avignon"
+msgstr "sm: Avignon"
+
+#: meteo/templates/meteo/index.html:73
+msgid "Tapez un nom puis Entrée pour rechercher."
+msgstr "Clóscríobh ainm ansin Enter chun cuardach."
+
+#: meteo/templates/meteo/meteo.html:10
+msgid "Toutes les villes"
+msgstr "Gach cathair"
+
+#: meteo/templates/meteo/meteo.html:27
+#, fuzzy
+#| msgid "Capteurs"
+msgid "Capturer"
+msgstr "Braiteoirí"
+
+#: meteo/templates/meteo/meteo.html:41
+msgid "Capture automatique"
+msgstr "Gabháil uathoibríoch"
+
+#: meteo/templates/meteo/meteo.html:45
+msgid "Activée"
+msgstr "Cumasaithe"
+
+#: meteo/templates/meteo/meteo.html:53
+msgid "Dernière capture auto"
+msgstr "Gabháil uathoibríoch dheireanach"
+
+#: meteo/templates/meteo/meteo.html:55
+msgid ""
+"Un relevé de cette ville est enregistré automatiquement à la fréquence "
+"choisie."
+msgstr "Cláraítear léamh den chathair seo go huathoibríoch ag an minicíocht roghnaithe."
+
+#: meteo/templates/meteo/meteo.html:61
+msgid "Impossible de récupérer la météo."
+msgstr "Ní féidir an aimsir a fháil."
+
+#: meteo/templates/meteo/meteo.html:76
+msgid "Ressenti"
+msgstr "Mothú"
+
+#: meteo/templates/meteo/meteo.html:79 meteo/templates/meteo/meteo.html:95
+#: meteo/templates/meteo/meteo.html:145
+msgid "Pluie"
+msgstr "Báisteach"
+
+#: meteo/templates/meteo/meteo.html:86
+msgid "Prévisions 7 jours"
+msgstr "Réamhaisnéis 7 lá"
+
+#: meteo/templates/meteo/meteo.html:96
+msgid "Proba."
+msgstr "Dóch."
+
+#: meteo/templates/meteo/meteo.html:97
+msgid "Évapotranspiration (FAO-56)"
+msgstr "Galú-thrasghalú (FAO-56)"
+
+#: meteo/templates/meteo/meteo.html:110
+msgid "Évolution"
+msgstr "Forbairt"
+
+#: meteo/templates/meteo/meteo.html:113
+msgid "Température (°C)"
+msgstr "Teocht (°C)"
+
+#: meteo/templates/meteo/meteo.html:117
+#, python-format
+msgid "Humidité (%%)"
+msgstr "Taise (%%)"
+
+#: meteo/templates/meteo/meteo.html:121
+msgid "Vent (km/h)"
+msgstr "Gaoth (km/u)"
+
+#: meteo/templates/meteo/meteo.html:125
+msgid "Pluie (mm)"
+msgstr "Báisteach (mm)"
+
+#: meteo/templates/meteo/meteo.html:135
+msgid "Historique des relevés"
+msgstr "Stair na léamh"
+
+#: meteo/views.py:89
+msgid "Capture automatique mise à jour."
+msgstr "Gabháil uathoibríoch nuashonraithe."
+
+#: meteo/views.py:118
+msgid "Lieu introuvable."
+msgstr "Áit nach bhfuarthas."
+
+#: meteo/views.py:197
+msgid "Relevé météo capturé."
+msgstr "Léamh aimsire gafa."
+
+#: meteo/views.py:198
+#, python-format
+msgid "Échec de la capture : %(e)s"
+msgstr "Theip ar an ngabháil: %(e)s"
+
+#: notifications/models.py:17 planning/models.py:40
+msgid "Urgente"
+msgstr "Práinneach"
+
+#: notifications/models.py:31
+msgid "notification"
+msgstr "fógra"
+
+#: notifications/models.py:32
+msgid "notifications"
+msgstr "fógraí"
+
+#: notifications/models.py:49
+msgid "règle de notification"
+msgstr "riail fógra"
+
+#: notifications/models.py:50
+msgid "règles de notification"
+msgstr "rialacha fógra"
+
+#: notifications/templates/notifications/center.html:10
+msgid "Tout marquer comme lu"
+msgstr "Marcáil gach rud mar léite"
+
+#: notifications/templates/notifications/center.html:27
+msgid "Aucune notification."
+msgstr "Níl aon fhógra."
+
+#: notifications/templates/notifications/center.html:31
+msgid "Règles d'alerte"
+msgstr "Rialacha foláirimh"
+
+#: notifications/templates/notifications/center.html:37
+msgid "activée"
+msgstr "cumasaithe"
+
+#: notifications/templates/notifications/center.html:37
+msgid "désactivée"
+msgstr "díchumasaithe"
+
+#: notifications/templates/notifications/center.html:42
+msgid "Aucune règle définie."
+msgstr "Níl aon riail sainithe."
+
+#: operations/models.py:16 operations/models.py:151
+msgid "Pompe"
+msgstr "Caidéal"
+
+#: operations/models.py:17 operations/models.py:143
+msgid "Tracteur"
+msgstr "Tarracóir"
+
+#: operations/models.py:20 operations/models.py:144
+msgid "Pulvérisateur"
+msgstr "Spréire"
+
+#: operations/models.py:27
+msgid "Réformée"
+msgstr "Athchóirithe"
+
+#: operations/models.py:44
+msgid "machine"
+msgstr "meaisín"
+
+#: operations/models.py:45
+msgid "machines"
+msgstr "meaisíní"
+
+#: operations/models.py:54
+msgid "Utilisation"
+msgstr "Úsáid"
+
+#: operations/models.py:56 operations/models.py:85
+msgid "Réparation"
+msgstr "Deisiú"
+
+#: operations/models.py:57
+msgid "Inspection"
+msgstr "Iniúchadh"
+
+#: operations/models.py:79
+msgid "Vidange"
+msgstr "Folmhú ola"
+
+#: operations/models.py:80
+msgid "Filtres"
+msgstr "Scagairí"
+
+#: operations/models.py:81
+msgid "Courroies"
+msgstr "Criosanna"
+
+#: operations/models.py:82
+msgid "Pneumatiques"
+msgstr "Boinn"
+
+#: operations/models.py:83
+msgid "Freins"
+msgstr "Coscáin"
+
+#: operations/models.py:84
+msgid "Révision complète"
+msgstr "Athbhreithniú iomlán"
+
+#: operations/models.py:86
+msgid "Contrôle technique"
+msgstr "Tástáil theicniúil"
+
+#: operations/models.py:105
+msgid "entretien"
+msgstr "cothabháil"
+
+#: operations/models.py:106
+msgid "entretiens"
+msgstr "cothabhálacha"
+
+#: operations/models.py:112
+msgid "Labour"
+msgstr "Treabhadh"
+
+#: operations/models.py:134
+msgid "affectation d'engin"
+msgstr "sannadh innill"
+
+#: operations/models.py:135
+msgid "affectations d'engins"
+msgstr "sannaí innill"
+
+#: operations/models.py:145
+msgid "Semoir"
+msgstr "Síolaire"
+
+#: operations/models.py:146
+msgid "Épandeur"
+msgstr "Scaipire"
+
+#: operations/models.py:147
+msgid "Moissonneuse"
+msgstr "Inneall buainte"
+
+#: operations/models.py:148
+msgid "Charrue"
+msgstr "Céachta"
+
+#: operations/models.py:149
+msgid "Cultivateur"
+msgstr "Saothróir"
+
+#: operations/models.py:150
+msgid "Benne"
+msgstr "Tralaí"
+
+#: operations/models.py:170
+msgid "modèle d'engin (catalogue)"
+msgstr "samhail innill (catalóg)"
+
+#: operations/models.py:171
+msgid "catalogue d'engins"
+msgstr "catalóg innill"
+
+#: operations/templates/operations/parc_materiel.html:16
 msgid "prochain entretien"
-msgstr ""
+msgstr "chéad chothabháil eile"
 
+#: operations/templates/operations/parc_materiel.html:21
 msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Níl aon mheaisín. Cuir cinn leis tríd an riarachán nó an API."
 
-msgid "Gravitaire"
-msgstr ""
+#: pac/models.py:9
+msgid "DPB — Droits à paiement de base"
+msgstr "DPB — Cearta íocaíochta bunúsaí"
 
-msgid "Jachère"
-msgstr ""
+#: pac/models.py:10
+msgid "Éco-régime"
+msgstr "Éic-réimeas"
 
+#: pac/models.py:11
+msgid "Paiement redistributif"
+msgstr "Íocaíocht athdháilte"
+
+#: pac/models.py:12
+msgid "Aide jeune agriculteur"
+msgstr "Cabhair feirmeora óig"
+
+#: pac/models.py:13
+msgid "Aides couplées"
+msgstr "Cabhracha cúpláilte"
+
+#: pac/models.py:14
+msgid "ICHN — Indemnité handicap naturel"
+msgstr "ICHN — Liúntas míbhuntáiste nádúrtha"
+
+#: pac/models.py:15
+msgid "MAEC — Mesures agro-environnementales"
+msgstr "MAEC — Bearta agra-chomhshaoil"
+
+#: pac/models.py:17
+msgid "Assurance récolte"
+msgstr "Árachas fómhair"
+
+#: pac/models.py:21
+msgid "Prévu"
+msgstr "Beartaithe"
+
+#: pac/models.py:22
+msgid "Accordé"
+msgstr "Deonaithe"
+
+#: pac/models.py:23 pac/templates/pac/pac.html:34
+msgid "Payé"
+msgstr "Íoctha"
+
+#: pac/models.py:29
+msgid "catégorie"
+msgstr "catagóir"
+
+#: pac/models.py:30
+msgid "libellé"
+msgstr "lipéad"
+
+#: pac/models.py:31
+msgid "montant (€)"
+msgstr "méid (€)"
+
+#: pac/models.py:32 parcelles/models.py:32
 msgid "surface (ha)"
-msgstr ""
+msgstr "achar (ha)"
 
+#: pac/models.py:33
+msgid "statut"
+msgstr "stádas"
+
+#: pac/models.py:37
+msgid "aide PAC"
+msgstr "cabhair PAC"
+
+#: pac/models.py:38
+msgid "aides PAC"
+msgstr "cabhracha PAC"
+
+#: pac/templates/pac/pac.html:10
+msgid "Politique Agricole Commune · suivi des aides par campagne"
+msgstr "An Comhbheartas Talmhaíochta · faireachán cabhrach de réir feachtais"
+
+#: pac/templates/pac/pac.html:22 pac/templates/pac/pac.html:89
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une aide"
+msgstr "Gníomhachtaigh cód"
+
+#: pac/templates/pac/pac.html:30
+msgid "Montant total estimé"
+msgstr "Méid iomlán measta"
+
+#: pac/templates/pac/pac.html:38
+msgid "Surface concernée"
+msgstr "Achar lena mbaineann"
+
+#: pac/templates/pac/pac.html:42
+msgid "Nombre d'aides"
+msgstr "Líon cabhrach"
+
+#: pac/templates/pac/pac.html:54 pac/templates/pac/pac.html:124
+msgid "Libellé"
+msgstr "Lipéad"
+
+#: pac/templates/pac/pac.html:74
+msgid "Supprimer cette aide ?"
+msgstr "An chabhair seo a scriosadh?"
+
+#: pac/templates/pac/pac.html:87
+msgid "Aucune aide PAC pour cette campagne."
+msgstr "Níl aon chabhair PAC don fheachtas seo."
+
+#: pac/templates/pac/pac.html:96
+msgid ""
+"Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et "
+"leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
+msgstr "Lean anseo do chabhracha PAC (DPB, éic-réimeas, ICHN, MAEC, orgánach…) de réir feachtais agus a stádas (beartaithe / deonaithe / íoctha). Dearbhú oifigiúil trí TéléPAC."
+
+#: pac/templates/pac/pac.html:105
+msgid "Nouvelle aide PAC"
+msgstr "Cabhair PAC nua"
+
+#: pac/templates/pac/pac.html:125
+msgid "ex: Éco-régime niveau 2"
+msgstr "sm: Éic-réimeas leibhéal 2"
+
+#: pac/templates/pac/pac.html:130
+msgid "Montant (€)"
+msgstr "Méid (€)"
+
+#: parcelles/models.py:19
+msgid "Gravitaire"
+msgstr "Imtharraingteach"
+
+#: parcelles/models.py:24
+msgid "Jachère"
+msgstr "Branar"
+
+#: parcelles/models.py:37
 msgid "polygone"
-msgstr ""
+msgstr "polagán"
 
+#: parcelles/models.py:42
 msgid "type d'irrigation"
-msgstr ""
+msgstr "cineál uiscithe"
 
+#: parcelles/models.py:44
 msgid "débit théorique (m³/h)"
-msgstr ""
+msgstr "sreabhadh teoiriciúil (m³/u)"
 
+#: parcelles/models.py:45
 msgid "nombre de buses"
-msgstr ""
+msgstr "líon na soc"
 
+#: parcelles/models.py:46
 msgid "débit buse (L/h)"
-msgstr ""
+msgstr "sreabhadh soc (L/u)"
 
+#: parcelles/models.py:47
 msgid "écart entre rangs (m)"
-msgstr ""
+msgstr "spás idir rónna (m)"
 
+#: parcelles/models.py:48
 msgid "écart entre émetteurs (m)"
-msgstr ""
+msgstr "spás idir astaírí (m)"
 
+#: parcelles/models.py:49
 msgid "pression de service (bar)"
-msgstr ""
+msgstr "brú seirbhíse (bar)"
 
+#: parcelles/models.py:52
 msgid "culture"
-msgstr ""
+msgstr "barr"
 
+#: parcelles/models.py:53
 msgid "variété"
-msgstr ""
+msgstr "cineál"
 
+#: parcelles/models.py:54 parcelles/models.py:93
 msgid "coefficient Kc"
-msgstr ""
+msgstr "comhéifeacht Kc"
 
+#: parcelles/models.py:55
 msgid "âge des plants (ans)"
-msgstr ""
+msgstr "aois na bplandaí (bl)"
 
+#: parcelles/models.py:56
 msgid "date de plantation"
-msgstr ""
+msgstr "dáta plandála"
 
+#: parcelles/models.py:57
 msgid "densité (pieds/ha)"
-msgstr ""
+msgstr "dlús (gais/ha)"
 
+#: parcelles/models.py:61
 msgid "profondeur racinaire"
-msgstr ""
+msgstr "doimhneacht fréimhe"
 
+#: parcelles/models.py:62
 msgid "profondeur racinaire (cm)"
-msgstr ""
+msgstr "doimhneacht fréimhe (cm)"
 
+#: parcelles/models.py:63
 msgid "rétention sol (mm/m)"
-msgstr ""
+msgstr "coinneáil ithreach (mm/m)"
 
+#: parcelles/models.py:64
 msgid "pH du sol"
-msgstr ""
+msgstr "pH na hithreach"
 
+#: parcelles/models.py:67
 msgid "réf. cadastrale"
-msgstr ""
+msgstr "tag. cadastrach"
 
+#: parcelles/models.py:68
 msgid "commune"
-msgstr ""
+msgstr "baile"
 
+#: parcelles/models.py:69
 msgid "surface officielle (ha)"
-msgstr ""
+msgstr "achar oifigiúil (ha)"
 
+#: parcelles/models.py:70
+msgid "données cadastre (brut IGN)"
+msgstr "sonraí cadastair (amh IGN)"
+
+#: parcelles/models.py:71
+msgid "date d'acquisition"
+msgstr "dáta fála"
+
+#: parcelles/models.py:76
 msgid "parcelle"
-msgstr ""
+msgstr "gabháltas"
 
+#: parcelles/models.py:77
 msgid "parcelles"
-msgstr ""
+msgstr "gabháltais"
 
+#: parcelles/models.py:89
 msgid "stade"
-msgstr ""
+msgstr "céim"
 
+#: parcelles/models.py:91
 msgid "début"
-msgstr ""
+msgstr "tús"
 
+#: parcelles/models.py:92
 msgid "fin"
-msgstr ""
+msgstr "deireadh"
 
+#: parcelles/models.py:94
 msgid "profondeur racinaire (m)"
-msgstr ""
+msgstr "doimhneacht fréimhe (m)"
 
+#: parcelles/models.py:98
 msgid "stade cultural"
-msgstr ""
+msgstr "céim barrtha"
 
+#: parcelles/models.py:99
 msgid "stades culturaux"
-msgstr ""
+msgstr "céimeanna barrtha"
 
+#: parcelles/templates/parcelles/confirm_delete.html:7
 msgid "Supprimer la parcelle ?"
-msgstr ""
+msgstr "An gabháltas a scriosadh?"
 
+#: parcelles/templates/parcelles/confirm_delete.html:9
 #, python-format
 msgid "La parcelle « %(name)s » sera définitivement supprimée."
-msgstr ""
+msgstr "Scriosfar an gabháltas « %(name)s » go buan."
 
-msgid "Supprimer"
-msgstr ""
-
+#: parcelles/templates/parcelles/detail.html:12
 msgid "Modifier"
-msgstr ""
+msgstr "Cuir in eagar"
 
+#: parcelles/templates/parcelles/detail.html:19
 msgid "Culture & sol"
-msgstr ""
+msgstr "Barr & ithir"
 
+#: parcelles/templates/parcelles/detail.html:21
 msgid "Variété"
-msgstr ""
+msgstr "Cineál"
 
+#: parcelles/templates/parcelles/detail.html:23
 msgid "Type de sol"
-msgstr ""
+msgstr "Cineál ithreach"
 
+#: parcelles/templates/parcelles/detail.html:33
+#: parcelles/templates/parcelles/list.html:93
 msgid "Commune"
-msgstr ""
+msgstr "Baile"
 
+#: parcelles/templates/parcelles/detail.html:38
 msgid "Retour aux parcelles"
-msgstr ""
+msgstr "Ar ais go dtí na gabháltais"
 
+#: parcelles/templates/parcelles/form.html:8
 msgid "Étape"
-msgstr ""
+msgstr "Céim"
 
+#: parcelles/templates/parcelles/form.html:21
 msgid "Identité & localisation"
-msgstr ""
+msgstr "Aitheantas & suíomh"
 
+#: parcelles/templates/parcelles/form.html:33
 msgid "Cliquez sur la carte pour positionner la parcelle."
-msgstr ""
+msgstr "Cliceáil ar an léarscáil chun an gabháltas a shuíomh."
 
+#: parcelles/templates/parcelles/form.html:84
 msgid "Cadastre & statut"
-msgstr ""
+msgstr "Cadastar & stádas"
 
+#: parcelles/templates/parcelles/form.html:94
 msgid "Précédent"
-msgstr ""
+msgstr "Roimhe"
 
+#: parcelles/templates/parcelles/form.html:96
 msgid "Suivant"
-msgstr ""
+msgstr "Ar aghaidh"
 
-msgid "+ Nouvelle parcelle"
-msgstr ""
+#: parcelles/templates/parcelles/list.html:13
+msgid "Carte satellite · Cadastre IGN · Surfaces"
+msgstr "Léarscáil shatailíte · Cadastar IGN · Achair"
 
+#: parcelles/templates/parcelles/list.html:24
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles actives"
+msgstr "Ceapacha"
+
+#: parcelles/templates/parcelles/list.html:28
+msgid "Surface totale"
+msgstr "Achar iomlán"
+
+#: parcelles/templates/parcelles/list.html:32
+msgid "Stress hydrique"
+msgstr "Strus uisce"
+
+#: parcelles/templates/parcelles/list.html:36
+msgid "Humidité moyenne"
+msgstr "Taise meánach"
+
+#: parcelles/templates/parcelles/list.html:45
+msgid "Rechercher un lieu…"
+msgstr "Cuardaigh áit…"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Carte"
+msgstr "Léarscáil"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Liste"
+msgstr "Liosta"
+
+#: parcelles/templates/parcelles/list.html:62
+msgid ""
+"Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
+"Enregistrer."
+msgstr "Cliceáil ar na gabháltais le cur leis (cliceáil arís chun díroghnú), ansin Sábháil."
+
+#: parcelles/templates/parcelles/list.html:70
+msgid "parcelle(s) sélectionnée(s)"
+msgstr "gabháltas/gabháltais roghnaithe"
+
+#: parcelles/templates/parcelles/list.html:92
+msgid "Réf. cadastrale"
+msgstr "Tag. cadastrach"
+
+#: parcelles/templates/parcelles/list.html:94
+msgid "Acquise le"
+msgstr "Faighte an"
+
+#: parcelles/templates/parcelles/list.html:116
+msgid ""
+"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+msgstr "Níl aon ghabháltas. Cliceáil ar « Cuir leis » chun cinn a roghnú ar an léarscáil."
+
+#: parcelles/templates/parcelles/list.html:122
+msgid "Analyses des parcelles — bientôt."
+msgstr "Anailísí na ngabháltas — go luath."
+
+#: parcelles/views.py:132
 msgid "Configurez d'abord votre exploitation."
-msgstr ""
+msgstr "Cumraigh do ghabháltas ar dtús."
 
-msgid "Configurer"
-msgstr ""
-
-msgid "Aucune parcelle pour le moment."
-msgstr ""
-
-msgid "Créer ma première parcelle"
-msgstr ""
-
+#: parcelles/views.py:141
 msgid "Parcelle créée."
-msgstr ""
+msgstr "Gabháltas cruthaithe."
 
+#: parcelles/views.py:149
 msgid "Nouvelle parcelle"
-msgstr ""
+msgstr "Gabháltas nua"
 
+#: parcelles/views.py:172
 msgid "Parcelle mise à jour."
-msgstr ""
+msgstr "Gabháltas nuashonraithe."
 
+#: parcelles/views.py:179
 #, python-format
 msgid "Modifier %(n)s"
-msgstr ""
+msgstr "Cuir %(n)s in eagar"
 
+#: parcelles/views.py:189
 msgid "Parcelle supprimée."
-msgstr ""
+msgstr "Gabháltas scriosta."
 
+#: planning/models.py:29
 msgid "Planifié"
-msgstr ""
+msgstr "Pleanáilte"
 
+#: planning/models.py:31
 msgid "En pause"
-msgstr ""
+msgstr "Ar sos"
 
+#: planning/models.py:34
 msgid "Reporté"
-msgstr ""
+msgstr "Curtha siar"
 
+#: planning/models.py:43
 msgid "Non applicable"
-msgstr ""
+msgstr "Neamhinfheidhme"
 
+#: planning/models.py:44
 msgid "À facturer"
-msgstr ""
+msgstr "Le sonrascú"
 
+#: planning/models.py:45
 msgid "Facturé"
-msgstr ""
+msgstr "Sonrascaithe"
 
+#: planning/models.py:46
 msgid "Avoir"
-msgstr ""
+msgstr "Sochar"
 
+#: planning/models.py:80
 msgid "tâche de planning"
-msgstr ""
+msgstr "tasc pleanála"
 
+#: planning/models.py:81
 msgid "tâches de planning"
-msgstr ""
+msgstr "tascanna pleanála"
 
+#: planning/models.py:100
 msgid "affectation technicien"
-msgstr ""
+msgstr "sannadh teicneora"
 
+#: planning/models.py:101
 msgid "affectations techniciens"
-msgstr ""
+msgstr "sannaí teicneora"
 
+#: planning/models.py:106
 msgid "Photo"
-msgstr ""
+msgstr "Grianghraf"
 
+#: planning/models.py:107
 msgid "Plan"
-msgstr ""
+msgstr "Plean"
 
+#: planning/models.py:108
 msgid "Schéma"
-msgstr ""
+msgstr "Léaráid"
 
-msgid "Document"
-msgstr ""
-
+#: planning/models.py:126
 msgid "Démarrage"
-msgstr ""
+msgstr "Tosú"
 
+#: planning/models.py:127
 msgid "Pause"
-msgstr ""
+msgstr "Sos"
 
+#: planning/models.py:128
 msgid "Reprise"
-msgstr ""
+msgstr "Atosú"
 
+#: planning/models.py:129
 msgid "Fin"
-msgstr ""
+msgstr "Deireadh"
 
+#: planning/models.py:145
 msgid "Congé payé"
-msgstr ""
+msgstr "Saoire íoctha"
 
+#: planning/models.py:147
 msgid "Maladie"
-msgstr ""
+msgstr "Breoiteacht"
 
+#: planning/models.py:148
 msgid "Formation"
-msgstr ""
+msgstr "Oiliúint"
 
+#: planning/models.py:149
 msgid "Sans solde"
-msgstr ""
+msgstr "Gan phá"
 
+#: planning/models.py:153
 msgid "Matin"
-msgstr ""
+msgstr "Maidin"
 
+#: planning/models.py:154
 msgid "Après-midi"
-msgstr ""
+msgstr "Iarnóin"
 
+#: planning/models.py:155
 msgid "Journée"
-msgstr ""
+msgstr "Lá"
 
+#: planning/models.py:158
 msgid "Demandé"
-msgstr ""
+msgstr "Iarrtha"
 
+#: planning/models.py:159
 msgid "Approuvé"
-msgstr ""
+msgstr "Ceadaithe"
 
+#: planning/models.py:160
 msgid "Refusé"
-msgstr ""
+msgstr "Diúltaithe"
 
+#: planning/models.py:178
 msgid "absence"
-msgstr ""
+msgstr "asláithreacht"
 
+#: planning/models.py:179
 msgid "absences"
-msgstr ""
+msgstr "asláithreachtaí"
 
+#: planning/models.py:206
 msgid "Outil à main"
-msgstr ""
+msgstr "Uirlis láimhe"
 
+#: planning/models.py:207
 msgid "Outil de coupe"
-msgstr ""
+msgstr "Uirlis ghearrtha"
 
+#: planning/models.py:208
 msgid "Outil motorisé"
-msgstr ""
+msgstr "Uirlis mhótaraithe"
 
+#: planning/models.py:209
 msgid "Engin"
-msgstr ""
+msgstr "Inneall"
 
+#: planning/models.py:211
 msgid "Arrosage"
-msgstr ""
+msgstr "Uisciú"
 
+#: planning/models.py:212
 msgid "Mesure"
-msgstr ""
+msgstr "Tomhas"
 
+#: planning/models.py:217 planning/models.py:253
+#: planning/templates/planning/planning.html:27
 msgid "Bon"
-msgstr ""
+msgstr "Maith"
 
+#: planning/models.py:219
 msgid "À réparer"
-msgstr ""
+msgstr "Le deisiú"
 
+#: planning/models.py:220
 msgid "Hors service"
-msgstr ""
+msgstr "As seirbhís"
 
+#: planning/models.py:231
 msgid "matériel"
-msgstr ""
+msgstr "trealamh"
 
+#: planning/models.py:232
 msgid "catalogue matériel"
-msgstr ""
+msgstr "catalóg trealaimh"
 
+#: planning/models.py:255
 msgid "Mauvais"
-msgstr ""
+msgstr "Dona"
 
+#: planning/models.py:260
 msgid "Complété"
-msgstr ""
+msgstr "Críochnaithe"
 
+#: planning/models.py:262
 msgid "Archivé"
-msgstr ""
+msgstr "Cartlannaithe"
 
+#: planning/models.py:295
 msgid "bon d'intervention"
-msgstr ""
+msgstr "deimhniú idirghabhála"
 
+#: planning/models.py:296
 msgid "bons d'intervention"
-msgstr ""
+msgstr "deimhnithe idirghabhála"
 
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:80
 msgid "Bon d'intervention"
-msgstr ""
+msgstr "Deimhniú idirghabhála"
 
+#: planning/templates/planning/bon_intervention.html:17
 msgid "Technicien"
-msgstr ""
+msgstr "Teicneoir"
 
+#: planning/templates/planning/bon_intervention.html:21
 msgid "Travaux réalisés"
-msgstr ""
+msgstr "Obair déanta"
 
+#: planning/templates/planning/bon_intervention.html:26
 msgid "Produits utilisés"
-msgstr ""
+msgstr "Táirgí úsáidte"
 
+#: planning/templates/planning/bon_intervention.html:30
 msgid "Qté"
-msgstr ""
+msgstr "Cnd"
 
+#: planning/templates/planning/bon_intervention.html:34
 msgid "Ajouter un produit"
-msgstr ""
+msgstr "Cuir táirge leis"
 
+#: planning/templates/planning/bon_intervention.html:38
 msgid "Observations"
-msgstr ""
+msgstr "Breathnuithe"
 
+#: planning/templates/planning/bon_intervention.html:43
 msgid "Signature du technicien"
-msgstr ""
+msgstr "Síniú an teicneora"
 
+#: planning/templates/planning/bon_intervention.html:45
 msgid "Effacer"
-msgstr ""
+msgstr "Glan"
 
+#: planning/templates/planning/bon_intervention.html:46
 msgid "Nom du signataire"
-msgstr ""
+msgstr "Ainm an tsínitheora"
 
+#: planning/templates/planning/bon_intervention.html:50
 msgid "Enregistrer le brouillon"
-msgstr ""
+msgstr "Sábháil an dréacht"
 
+#: planning/templates/planning/bon_intervention.html:51
 msgid "Valider le bon"
-msgstr ""
+msgstr "Bailíochtaigh an deimhniú"
 
+#: planning/templates/planning/planning.html:7
 msgid "Planning des interventions"
-msgstr ""
+msgstr "Pleanáil na n-idirghabhálacha"
 
+#: planning/templates/planning/planning.html:17
 msgid "Tâches planifiées"
-msgstr ""
+msgstr "Tascanna pleanáilte"
 
+#: planning/templates/planning/planning.html:32
 msgid "Aucune tâche planifiée."
-msgstr ""
+msgstr "Níl aon tasc pleanáilte."
 
+#: planning/templates/planning/planning.html:37
 msgid "Backlog"
-msgstr ""
+msgstr "Riaráiste"
 
+#: planning/templates/planning/planning.html:44
 msgid "Backlog vide."
-msgstr ""
+msgstr "Riaráiste folamh."
 
+#: planning/views.py:33
 msgid "Jour"
-msgstr ""
+msgstr "Lá"
 
+#: planning/views.py:33
 msgid "Semaine"
-msgstr ""
+msgstr "Seachtain"
 
+#: planning/views.py:33
 msgid "Mois"
-msgstr ""
+msgstr "Mí"
 
+#: planning/views.py:74
 msgid "Bon d'intervention enregistré."
-msgstr ""
+msgstr "Deimhniú idirghabhála sábháilte."
 
+#: public/models.py:17
 msgid "lead capturé"
-msgstr ""
+msgstr "sprioc-cheangal gafa"
 
+#: public/models.py:18
 msgid "leads capturés"
-msgstr ""
+msgstr "sprioc-cheangail ghafa"
 
-msgid "Activer mon compte"
-msgstr ""
-
-msgid "Saisissez le code d'activation reçu par email après votre paiement (format HOLS-XXXX-XXXX)."
-msgstr ""
-
-msgid "Activer"
-msgstr ""
-
+#: public/templates/public/home.html:3
 msgid "Irrigation de précision pour agriculteurs"
-msgstr ""
+msgstr "Uisciú beachtais d'fheirmeoirí"
 
-msgid "Pilotez votre irrigation, économisez l'eau et l'énergie."
-msgstr ""
+#: public/templates/public/home.html:13 public/templates/public/home.html:471
+msgid "Domaines"
+msgstr "Réimsí"
 
-msgid "IoT temps réel, score d'efficience DTI, assistant IA et conformité subventions — pensés pour les agriculteurs."
-msgstr ""
+#: public/templates/public/home.html:14 public/templates/public/home.html:307
+#: public/templates/public/home.html:472
+msgid "Tarif"
+msgstr "Praghas"
 
-msgid "Démarrer"
-msgstr ""
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "Do ghabháltas, gan é a choinneáil i gcuimhne."
 
-msgid "Guide gratuit : lire ses analyses de sol"
-msgstr ""
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "An cúntóir a choinníonn, a ríomhann agus a chruthaíonn i d'ionad."
 
-msgid "Votre email"
-msgstr ""
+#: public/templates/public/home.html:47
+msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
+msgstr "59,90 € gan CBL/mí in aghaidh an ghabháltais, úsáideoirí gan teorainn."
 
-msgid "Recevoir"
-msgstr ""
+#: public/templates/public/home.html:53
+msgid "Commencer maintenant"
+msgstr "Tosaigh anois"
 
-msgid "Discuter avec Alex 🌱"
-msgstr ""
+#: public/templates/public/home.html:57
+msgid "Voir ce qu'il fait"
+msgstr "Féach cad a dhéanann sé"
 
-msgid "Posez votre question…"
-msgstr ""
+#: public/templates/public/home.html:61
+#: templates/partials/install_banner.html:23
+msgid "Télécharger l'app"
+msgstr "Íoslódáil an aip"
 
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Gan ghealltanas"
+
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Sonraí óstáilte sa Fhrainc"
+
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Treoir lámhleabhair san áireamh"
+
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Gabháltas talmhaíochta ag luí na gréine"
+
+#: public/templates/public/home.html:87
+msgid "Le métier n'a pas changé."
+msgstr "Níor athraigh an gairm."
+
+#: public/templates/public/home.html:90
+msgid "Sa charge administrative et mentale, si."
+msgstr "A hualach riaracháin agus meabhrach, áfach, d'athraigh."
+
+#: public/templates/public/home.html:98
+msgid "La réglementation qui s'empile"
+msgstr "An rialachán a charnann"
+
+#: public/templates/public/home.html:100
+msgid "Plan Eau 2030"
+msgstr "Plean Uisce 2030"
+
+#: public/templates/public/home.html:102
+msgid "E-facturation obligatoire"
+msgstr "R-shonrascú éigeantach"
+
+#: public/templates/public/home.html:103
+msgid "Traçabilité renforcée"
+msgstr "Inrianaitheacht fheabhsaithe"
+
+#: public/templates/public/home.html:110
+msgid "L'économie qui pèse autrement"
+msgstr "An gheilleagar a luíonn ar bhealach eile"
+
+#: public/templates/public/home.html:112
+msgid "Marges sous pression"
+msgstr "Lánpháirteanna faoi bhrú"
+
+#: public/templates/public/home.html:113
+msgid "Charges en hausse"
+msgstr "Costais ag ardú"
+
+#: public/templates/public/home.html:114
+msgid "Financement complexe"
+msgstr "Maoiniú casta"
+
+#: public/templates/public/home.html:115 public/templates/public/home.html:290
+msgid "Dossiers de subvention"
+msgstr "Comhaid fhóirdheontais"
+
+#: public/templates/public/home.html:122
+msgid "La main-d'œuvre à gérer"
+msgstr "An lucht saothair le bainistiú"
+
+#: public/templates/public/home.html:124
+msgid "Saisonniers et apprentis"
+msgstr "Séasúraigh agus printísigh"
+
+#: public/templates/public/home.html:125
+msgid "Associés et salariés"
+msgstr "Comhpháirtithe agus fostaithe"
+
+#: public/templates/public/home.html:126
+msgid "Transmission incertaine"
+msgstr "Aistriú éiginnte"
+
+#: public/templates/public/home.html:127
+msgid "Formation continue"
+msgstr "Oiliúint leanúnach"
+
+#: public/templates/public/home.html:139
+msgid "Ce que disent les agriculteurs français"
+msgstr "Cad a deir feirmeoirí na Fraince"
+
+#: public/templates/public/home.html:142
+msgid "Des chiffres qui parlent d'eux-mêmes."
+msgstr "Figiúirí a labhraíonn dóibh féin."
+
+#: public/templates/public/home.html:149
+msgid "des agriculteurs veulent travailler moins"
+msgstr "de na feirmeoirí ar mian leo oibriú níos lú"
+
+#: public/templates/public/home.html:150
+msgid "PRISM 2023 — priorité n°1 à 3 ans"
+msgstr "PRISM 2023 — tosaíocht uimh.1 thar 3 bliana"
+
+#: public/templates/public/home.html:154
+msgid "choisissent de réduire leurs charges"
+msgstr "a roghnaíonn a gcostais a laghdú"
+
+#: public/templates/public/home.html:155
+msgid "PRISM 2023 — vs maximiser la productivité"
+msgstr "PRISM 2023 — vs táirgiúlacht a uasmhéadú"
+
+#: public/templates/public/home.html:159
+msgid "subissent le changement climatique"
+msgstr "a fhulaingíonn an t-athrú aeráide"
+
+#: public/templates/public/home.html:160
+msgid "VoxAgri 2025 — effet négatif sur l'exploitation"
+msgstr "VoxAgri 2025 — éifeacht dhiúltach ar an ngabháltas"
+
+#: public/templates/public/home.html:164
+msgid "veulent plus d'accompagnement"
+msgstr "ar mian leo tuilleadh tacaíochta"
+
+#: public/templates/public/home.html:165
+msgid "PRISM 2023 — ou de meilleure qualité"
+msgstr "PRISM 2023 — nó tacaíocht níos fearr"
+
+#: public/templates/public/home.html:175
+msgid "La charge invisible"
+msgstr "An t-ualach dofheicthe"
+
+#: public/templates/public/home.html:178
+msgid ""
+"Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
+"prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
+"l'apprenti — c'est un autre travail."
+msgstr "Tá a fhios agat cad a rinne tú ar ghabháltas 3 sé seachtaine ó shin. É a chruthú do chigire, é a aimsiú do chomhad, é a chur ar aghaidh chuig an bprintíseach — sin obair eile."
+
+#: public/templates/public/home.html:181
+msgid ""
+"Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
+"ce qui se colle par-dessus."
+msgstr "Agus an obair sin, déanann tú í san oíche. Ní hé an t-ualach an gairm, is é an méid a ghreamaítear anuas air."
+
+#: public/templates/public/home.html:182
+#, python-format
+msgid ""
+"48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
+"priorité n°1."
+msgstr "Luann 48 %% de na feirmeoirí « an t-am oibre a rialú » mar thosaíocht uimh.1."
+
+#: public/templates/public/home.html:194
+msgid "Agriculteur submergé par la paperasse administrative"
+msgstr "Feirmeoir faoi bhrú ag an obair pháipéir riaracháin"
+
+#: public/templates/public/home.html:201
+msgid "5 problèmes. 1 réponse."
+msgstr "5 fhadhb. 1 fhreagra."
+
+#: public/templates/public/home.html:203
+msgid "Votre exploitation mérite un assistant qui ne dort jamais."
+msgstr "Tuilleann do ghabháltas cúntóir nach gcodlaíonn riamh."
+
+#: public/templates/public/home.html:206
+msgid ""
+"Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
+"temps de travail, charges, adaptation climatique, gestion d'équipe et "
+"accompagnement. Disponible à la voix, sur le tracteur, à 22h."
+msgstr "Freagraíonn Holystyl do na 5 mórbhuairt atá ag feirmeoirí na Fraince: am oibre, costais, oiriúnú aeráide, bainistíocht foirne agus tacaíocht. Ar fáil le guth, ar an tarracóir, ag 22u."
+
+#: public/templates/public/home.html:211
+msgid "« Je n'ai pas le temps »"
+msgstr "« Níl an t-am agam »"
+
+#: public/templates/public/home.html:212
+msgid "automatise les rapports et la traçabilité"
+msgstr "déanann sé na tuarascálacha agus an inrianaitheacht a uathoibriú"
+
+#: public/templates/public/home.html:215
+msgid "« Je dois réduire mes charges »"
+msgstr "« Caithfidh mé mo chostais a laghdú »"
+
+#: public/templates/public/home.html:216
+msgid "tableau de bord financier en temps réel"
+msgstr "deais airgeadais i bhfíor-am"
+
+#: public/templates/public/home.html:219
+msgid "« Le climat change »"
+msgstr "« Tá an aeráid ag athrú »"
+
+#: public/templates/public/home.html:220
+msgid "alertes météo, suivi parcellaire, aide à la décision"
+msgstr "foláirimh aimsire, faireachán gabháltais, cabhair chinnteoireachta"
+
+#: public/templates/public/home.html:223
+msgid "« Je gère des saisonniers »"
+msgstr "« Bainistím séasúraigh »"
+
+#: public/templates/public/home.html:224
+msgid "module Équipe & Tâches avec rappels automatiques"
+msgstr "modúl Foireann & Tascanna le meabhrúcháin uathoibríocha"
+
+#: public/templates/public/home.html:227
+msgid "« Je ne sais pas à qui demander »"
+msgstr "« Níl a fhios agam cé air a n-iarrfaidh mé »"
+
+#: public/templates/public/home.html:228
+msgid "IA disponible 24h/24 sur vos questions"
+msgstr "IS ar fáil 24/24 do do cheisteanna"
+
+#: public/templates/public/home.html:240
+msgid "Tout ce qu'il couvre"
+msgstr "Gach a gclúdaíonn sé"
+
+#: public/templates/public/home.html:243
+msgid "Dix domaines. Un seul outil."
+msgstr "Deich réimse. Aon uirlis amháin."
+
+#: public/templates/public/home.html:250
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation et eau"
+msgstr "Uisciú"
+
+#: public/templates/public/home.html:251
+msgid "Programmes, quotas, capteurs IoT"
+msgstr "Cláir, cuótaí, braiteoirí IoT"
+
+#: public/templates/public/home.html:255
+msgid "Charges et marges"
+msgstr "Costais agus lánpháirteanna"
+
+#: public/templates/public/home.html:256
+msgid "Suivi économique en temps réel"
+msgstr "Faireachán eacnamaíoch i bhfíor-am"
+
+#: public/templates/public/home.html:261
+msgid "Maintenance, alertes, historique"
+msgstr "Cothabháil, foláirimh, stair"
+
+#: public/templates/public/home.html:266
+msgid "Traitements, travaux, traçabilité"
+msgstr "Cóireálacha, oibreacha, inrianaitheacht"
+
+#: public/templates/public/home.html:271
+msgid "Résultats, recommandations"
+msgstr "Torthaí, moltaí"
+
+#: public/templates/public/home.html:275
+msgid "Récoltes"
+msgstr "Fómhair"
+
+#: public/templates/public/home.html:276
+msgid "Volumes, qualité, rendements"
+msgstr "Toirteanna, cáilíocht, táirgeacht"
+
+#: public/templates/public/home.html:280
+msgid "Équipe et planning"
+msgstr "Foireann agus pleanáil"
+
+#: public/templates/public/home.html:281
+msgid "Saisonniers, apprentis, associés"
+msgstr "Séasúraigh, printísigh, comhpháirtithe"
+
+#: public/templates/public/home.html:285
+msgid "Conformité réglementaire"
+msgstr "Comhlíonadh rialála"
+
+#: public/templates/public/home.html:286
+msgid "Taxonomie EU, Plan Eau 2030"
+msgstr "Tacsanomaíocht AE, Plean Uisce 2030"
+
+#: public/templates/public/home.html:291
+msgid "JEI, CIR, aides PAC"
+msgstr "JEI, CIR, cabhracha PAC"
+
+#: public/templates/public/home.html:295
+msgid "Météo et alertes"
+msgstr "Aimsir agus foláirimh"
+
+#: public/templates/public/home.html:296
+msgid "Gel, ETP, prévisions 7 jours"
+msgstr "Sioc, ETP, réamhaisnéis 7 lá"
+
+#: public/templates/public/home.html:309
+msgid "Simple et transparent."
+msgstr "Simplí agus trédhearcach."
+
+#: public/templates/public/home.html:315
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "par mois · par exploitation"
+msgstr "M'fheirm"
+
+#: public/templates/public/home.html:317
+msgid "Tous vos utilisateurs inclus — sans engagement"
+msgstr "Do chuid úsáideoirí uile san áireamh — gan ghealltanas"
+
+#: public/templates/public/home.html:322
+msgid "Assistant vocal illimité"
+msgstr "Cúntóir gutha gan teorainn"
+
+#: public/templates/public/home.html:323
+msgid "Tous les modules inclus"
+msgstr "Na modúil uile san áireamh"
+
+#: public/templates/public/home.html:325
+msgid "Support réactif"
+msgstr "Tacaíocht thapa"
+
+#: public/templates/public/home.html:326
+msgid "Mises à jour automatiques"
+msgstr "Nuashonruithe uathoibríocha"
+
+#: public/templates/public/home.html:328
+msgid "Utilisateurs illimités par exploitation"
+msgstr "Úsáideoirí gan teorainn in aghaidh an ghabháltais"
+
+#: public/templates/public/home.html:329
+msgid "Accès mobile et tablette"
+msgstr "Rochtain ar fón póca agus táibléad"
+
+#: public/templates/public/home.html:335
+msgid "S'abonner maintenant"
+msgstr "Liostáil anois"
+
+#: public/templates/public/home.html:337
+msgid "Paiement sécurisé par Stripe · Résiliation en 1 clic"
+msgstr "Íocaíocht shlán le Stripe · Cealú in 1 chliceáil"
+
+#: public/templates/public/home.html:347
+msgid "Guide gratuit"
+msgstr "Treoir saor in aisce"
+
+#: public/templates/public/home.html:349
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Lire ses analyses de sol"
+msgstr "Anailísí ithreach"
+
+#: public/templates/public/home.html:352
+msgid ""
+"Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre "
+"exploitation. Téléchargement immédiat."
+msgstr "Tuig torthaí d'anailísí agus déan na cinntí cearta do do ghabháltas. Íoslódáil láithreach."
+
+#: public/templates/public/home.html:358
+msgid "pH & impact cultures"
+msgstr "pH & tionchar ar bharra"
+
+#: public/templates/public/home.html:362
+msgid "Matière organique"
+msgstr "Ábhar orgánach"
+
+#: public/templates/public/home.html:366
+msgid "N, P, K décryptés"
+msgstr "N, P, K mínithe"
+
+#: public/templates/public/home.html:370
+msgid "Recommandations concrètes"
+msgstr "Moltaí nithiúla"
+
+#: public/templates/public/home.html:378
+msgid "Recevoir le guide"
+msgstr "Faigh an treoir"
+
+#: public/templates/public/home.html:381
+msgid "Aucun spam. Votre email ne sera jamais revendu."
+msgstr "Gan turscar. Ní dhíolfar do ríomhphost riamh."
+
+#: public/templates/public/home.html:390
+msgid "Questions fréquentes"
+msgstr "Ceisteanna coitianta"
+
+#: public/templates/public/home.html:396
+msgid "Holystyl peut-il vraiment m'aider à travailler moins ?"
+msgstr "An féidir le Holystyl cabhrú liom go fíor oibriú níos lú?"
+
+#: public/templates/public/home.html:400
+#, python-format
+msgid ""
+"Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
+"de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
+"l'administratif — la priorité n°1 de 48 %% des agriculteurs."
+msgstr "Is féidir. Trí inrianaitheacht, tuarascálacha rialála agus faireachán do ghabháltas a uathoibriú, sábhálann Holystyl na huaireanta a chaitear san oíche ar obair riaracháin — tosaíocht uimh.1 ag 48 %% de na feirmeoirí."
+
+#: public/templates/public/home.html:405
+msgid "Est-ce que l'assistant comprend mes questions techniques ?"
+msgstr "An dtuigeann an cúntóir mo cheisteanna teicniúla?"
+
+#: public/templates/public/home.html:409
+msgid ""
+"Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
+"fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
+"l'écrit comme à la voix, 24h/24."
+msgstr "Tuigeann. Tá an cúntóir IS speisialaithe don talmhaíocht: uisciú, leasú (N, P, K), aimsir, rialachán nó anailísí ithreach — i scríbhinn nó le guth, 24/24."
+
+#: public/templates/public/home.html:414
+msgid "Comment démarrer avec Holystyl ?"
+msgstr "Conas tosú le Holystyl?"
+
+#: public/templates/public/home.html:418
+msgid ""
+"Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à "
+"pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
+"équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
+"IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
+msgstr "Cruthaigh do chuntas ar líne in 2 nóiméad. Treoraíonn lámhleabhar cumraíochta céim ar chéim thú chun do ghabháltais, do bharra agus d'fhoireann a chur leis. Ceanglaíonn Holystyl le do chóras uiscithe (Vyrsa, braiteoirí IoT) agus tá sé oibríochtúil an lá céanna, ó do ghuthán cliste nó ríomhaire."
+
+#: public/templates/public/home.html:423
+msgid "Holystyl m'aide-t-il à réduire mes charges ?"
+msgstr "An gcabhraíonn Holystyl liom mo chostais a laghdú?"
+
+#: public/templates/public/home.html:427
+msgid ""
+"Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
+"réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
+"aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
+msgstr "Cabhraíonn. Leanann an deais airgeadais do chostais agus do lánpháirteanna i bhfíor-am, aithníonn sé na míreanna a luíonn go trom agus cabhraíonn sé leat cinntí a dhéanamh. Bainistíonn tú do chuótaí uisce agus do threalamh freisin chun caiteachas neamhriachtanach a sheachaint."
+
+#: public/templates/public/home.html:432
+msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
+msgstr "An oibríonn an feidhmchlár gan idirlíon ar an ngabháltas?"
+
+#: public/templates/public/home.html:436
+msgid ""
+"Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
+"réseau ; les données se synchronisent automatiquement dès que la connexion "
+"revient."
+msgstr "Oibríonn. Féachann tú agus iontrálann tú do chuid idirghabhálacha sa pháirc fiú gan líonra; sioncronaítear na sonraí go huathoibríoch a luaithe a fhilleann an nasc."
+
+#: public/templates/public/home.html:441
+msgid "Mes données m'appartiennent-elles ?"
+msgstr "An liomsa mo chuid sonraí?"
+
+#: public/templates/public/home.html:445
+msgid ""
+"Absolument. Vos données vous appartiennent et restent confidentielles : "
+"hébergées en France, jamais revendues, exportables ou supprimables à tout "
+"moment."
+msgstr "Go hiomlán. Is leatsa do chuid sonraí agus fanann siad faoi rún: óstáilte sa Fhrainc, ní dhíoltar riamh iad, in-easpórtáilte nó inscriosta am ar bith."
+
+#: public/templates/public/home.html:463
+msgid ""
+"Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
+"Holystyl."
+msgstr "Cúntóir cliste do ghabháltais talmhaíochta. Deartha le líonra Holystyl."
+
+#: public/templates/public/home.html:478
+msgid "Accès"
+msgstr "Rochtain"
+
+#: public/templates/public/home.html:481
+msgid "S'abonner"
+msgstr "Liostáil"
+
+#: public/templates/public/home.html:488
+msgid "© 2026 Holystyl · Tous droits réservés"
+msgstr "© 2026 Holystyl · Gach ceart ar cosaint"
+
+#: public/templates/public/home.html:490
+msgid "Mentions légales"
+msgstr "Fógraí dlíthiúla"
+
+#: public/templates/public/home.html:492
+msgid "Confidentialité"
+msgstr "Príobháideachas"
+
+#: public/templates/public/home.html:493
+msgid "Registre transparence UE 238841"
+msgstr "Clár trédhearcachta AE 238841"
+
+#: public/views.py:26
 msgid "Merci ! Votre guide arrive par email."
-msgstr ""
+msgstr "Go raibh maith agat! Tagann do threoir trí ríomhphost."
 
-msgid "Votre accès Holystyl est activé !"
-msgstr ""
+#: sondages/models.py:15
+msgid "question"
+msgstr "ceist"
 
-msgid "Code invalide ou déjà utilisé."
-msgstr ""
+#: sondages/models.py:17
+msgid "clôturé"
+msgstr "dúnta"
 
-msgid "Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
-msgstr ""
+#: sondages/models.py:20
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondage"
+msgstr "Suirbhé"
 
+#: sondages/models.py:21
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondages"
+msgstr "Suirbhé"
+
+#: sondages/models.py:48
+msgid "texte"
+msgstr "téacs"
+
+#: sondages/models.py:52 sondages/models.py:53
+#: sondages/templates/sondages/liste.html:27
+msgid "choix"
+msgstr "rogha"
+
+#: sondages/models.py:67
+msgid "vote"
+msgstr "vóta"
+
+#: sondages/models.py:68
+msgid "votes"
+msgstr "vótaí"
+
+#: sondages/templates/sondages/create.html:6
+#: sondages/templates/sondages/liste.html:10 sondages/views.py:45
+#: sondages/views.py:58
+msgid "Nouveau sondage"
+msgstr "Pobalbhreith nua"
+
+#: sondages/templates/sondages/create.html:17
+msgid "Question"
+msgstr "Ceist"
+
+#: sondages/templates/sondages/create.html:19
+msgid "Ex. Quelle parcelle irriguer en priorité ?"
+msgstr "Sm. Cén gabháltas le huisciú ar dtús?"
+
+#: sondages/templates/sondages/create.html:24
+#: sondages/templates/sondages/create.html:27
+#: sondages/templates/sondages/create.html:48
+msgid "Choix"
+msgstr "Rogha"
+
+#: sondages/templates/sondages/create.html:32
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter un choix"
+msgstr "Gníomhachtaigh cód"
+
+#: sondages/templates/sondages/detail.html:7
+#: sondages/templates/sondages/liste.html:7 sondages/views.py:30
+#, fuzzy
+#| msgid "Sondage"
+msgid "Sondages"
+msgstr "Suirbhé"
+
+#: sondages/templates/sondages/detail.html:14
+#: sondages/templates/sondages/liste.html:21
+msgid "Clôturé"
+msgstr "Dúnta"
+
+#: sondages/templates/sondages/detail.html:35
+#, python-format
+msgid "%(n)s vote au total"
+msgid_plural "%(n)s votes au total"
+msgstr[0] "%(n)s vóta san iomlán"
+msgstr[1] "%(n)s vóta san iomlán"
+msgstr[2] "%(n)s vóta san iomlán"
+msgstr[3] "%(n)s vóta san iomlán"
+msgstr[4] "%(n)s vóta san iomlán"
+
+#: sondages/templates/sondages/detail.html:46
+msgid "Voter"
+msgstr "Vótáil"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Rouvrir le sondage"
+msgstr "Athoscail an phobalbhreith"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Clôturer le sondage"
+msgstr "Dún an phobalbhreith"
+
+#: sondages/templates/sondages/liste.html:23
+msgid "Voté"
+msgstr "Vótáilte"
+
+#: sondages/templates/sondages/liste.html:27
+#, python-format
+msgid "%(n)s vote"
+msgid_plural "%(n)s votes"
+msgstr[0] "%(n)s vóta"
+msgstr[1] "%(n)s vóta"
+msgstr[2] "%(n)s vóta"
+msgstr[3] "%(n)s vóta"
+msgstr[4] "%(n)s vóta"
+
+#: sondages/templates/sondages/liste.html:33
+msgid "Aucun sondage pour le moment. Créez-en un !"
+msgstr "Níl aon phobalbhreith go fóill. Cruthaigh ceann!"
+
+#: sondages/views.py:40
+msgid "La question est obligatoire."
+msgstr "Tá an cheist éigeantach."
+
+#: sondages/views.py:42
+msgid "Proposez au moins deux choix."
+msgstr "Mol dhá rogha ar a laghad."
+
+#: templates/partials/cookie_banner.html:6
+msgid ""
+"Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
+msgstr "Úsáidimid fianáin riachtanacha le haghaidh fheidhmiú Holystyl (RGCS)."
+
+#: templates/partials/cookie_banner.html:8
 msgid "J'ai compris"
-msgstr ""
+msgstr "Tuigim"
 
+#: templates/partials/header.html:13
 msgid "Heure locale"
 msgstr "Am áitiúil"
 
-msgid "Langue"
-msgstr ""
-
+#: templates/partials/header.html:33
 msgid "Thème"
-msgstr ""
+msgstr "Téama"
 
+#: templates/partials/header.html:64
 msgid "Déconnexion"
-msgstr ""
+msgstr "Logáil amach"
 
+#: templates/partials/install_banner.html:13
 msgid "Installer Holystyl"
-msgstr ""
+msgstr "Suiteáil Holystyl"
 
+#: templates/partials/install_banner.html:15
 msgid "Partager puis « Sur l’écran d’accueil »."
-msgstr ""
+msgstr "Roinn ansin « Chuig an scáileán baile »."
 
+#: templates/partials/install_banner.html:16
 msgid "Accédez plus vite depuis votre écran d’accueil."
-msgstr ""
+msgstr "Faigh rochtain níos tapúla ó do scáileán baile."
 
-msgid "Télécharger l'app"
-msgstr ""
-
+#: templates/partials/install_banner.html:25
 msgid "Plus tard"
-msgstr ""
+msgstr "Níos déanaí"
 
-msgid "Fermer"
-msgstr ""
+#: templates/partials/lang_switcher.html:27
+msgid "Langue"
+msgstr "Teanga"
 
+#: templates/partials/nav_flyout.html:17
 msgid "Bientôt"
 msgstr "Go luath"
 
+#: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
-msgstr ""
+msgstr "Cuirimis brí ar ais inár ngairm"
+
+#~ msgid "Administration"
+#~ msgstr "Riarachán"

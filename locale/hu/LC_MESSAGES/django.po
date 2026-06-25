@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 16:53+0200\n"
+"POT-Creation-Date: 2026-06-25 17:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,1874 +18,4768 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: accounts/admin.py:17 exploitations/views.py:61
 msgid "Identité"
-msgstr ""
+msgstr "Azonosítás"
 
+#: accounts/admin.py:18
 msgid "Permissions"
-msgstr ""
+msgstr "Jogosultságok"
 
+#: accounts/admin.py:19
 msgid "Dates"
-msgstr ""
+msgstr "Dátumok"
 
+#: accounts/forms.py:15
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
+#: accounts/forms.py:23
 msgid "Nom complet"
-msgstr ""
+msgstr "Teljes név"
 
+#: accounts/models.py:14
 msgid "adresse email"
-msgstr ""
+msgstr "e-mail-cím"
 
+#: accounts/models.py:15
 msgid "nom complet"
-msgstr ""
+msgstr "teljes név"
 
+#: accounts/models.py:23
 msgid "utilisateur"
-msgstr ""
+msgstr "felhasználó"
 
+#: accounts/models.py:24
 msgid "utilisateurs"
-msgstr ""
+msgstr "felhasználók"
 
+#: accounts/templates/accounts/login.html:3
+#: accounts/templates/accounts/login.html:12
+#: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
-msgstr ""
+msgstr "Bejelentkezés"
 
+#: accounts/templates/accounts/login.html:23
+#: accounts/templates/accounts/register.html:26
 msgid "Se connecter"
-msgstr ""
+msgstr "Bejelentkezés"
 
+#: accounts/templates/accounts/login.html:26
 msgid "Pas de compte ?"
-msgstr ""
+msgstr "Nincs fiókja?"
 
+#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/register.html:3
+#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
-msgstr ""
+msgstr "Fiók létrehozása"
 
+#: accounts/templates/accounts/register.html:23
+#: public/templates/public/home.html:25
 msgid "S'inscrire"
-msgstr ""
+msgstr "Regisztráció"
 
+#: accounts/templates/accounts/register.html:26
 msgid "Déjà un compte ?"
-msgstr ""
+msgstr "Már van fiókja?"
 
+#: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
-msgstr ""
+msgstr "Hiba"
 
+#: administration/models.py:31
 msgid "configuration SMTP"
-msgstr ""
+msgstr "SMTP-konfiguráció"
 
+#: administration/models.py:32
 msgid "configurations SMTP"
-msgstr ""
+msgstr "SMTP-konfigurációk"
 
-msgid "Administration — Email (SMTP)"
-msgstr ""
-
-msgid "Serveur"
-msgstr ""
-
-msgid "Port"
-msgstr ""
-
-msgid "Utilisateur"
-msgstr ""
-
-msgid "Mot de passe"
-msgstr ""
-
-msgid "Nom expéditeur"
-msgstr ""
-
-msgid "Email expéditeur"
-msgstr ""
-
-msgid "SSL (port 465)"
-msgstr ""
-
-msgid "Activé"
-msgstr ""
-
-msgid "Dernier test"
-msgstr ""
-
-msgid "Enregistrer"
-msgstr ""
-
-msgid "Configuration SMTP enregistrée."
-msgstr ""
-
-msgid "Administration"
-msgstr "Adminisztráció"
-
+#: agronomie/models.py:16 agronomie/templates/agronomie/cultures.html:16
 msgid "Céréales"
-msgstr ""
+msgstr "Gabonafélék"
 
+#: agronomie/models.py:17 agronomie/templates/agronomie/cultures.html:17
 msgid "Légumes"
-msgstr ""
+msgstr "Zöldségek"
 
+#: agronomie/models.py:18 agronomie/templates/agronomie/cultures.html:18
 msgid "Fruits"
-msgstr ""
+msgstr "Gyümölcsök"
 
+#: agronomie/models.py:19 agronomie/templates/agronomie/cultures.html:19
 msgid "Vigne"
-msgstr ""
+msgstr "Szőlő"
 
+#: agronomie/models.py:20 agronomie/templates/agronomie/cultures.html:20
 msgid "Oléagineux"
-msgstr ""
+msgstr "Olajnövények"
 
+#: agronomie/models.py:21 agronomie/templates/agronomie/cultures.html:21
 msgid "Fourrage"
-msgstr ""
+msgstr "Takarmány"
 
+#: agronomie/models.py:22 agronomie/templates/agronomie/cultures.html:22
 msgid "Maraîchage"
-msgstr ""
+msgstr "Zöldségtermesztés"
 
+#: agronomie/models.py:23 exploitations/models.py:21 exploitations/models.py:34
+#: finances/models.py:24 finances/models.py:50 interventions/models.py:26
+#: operations/models.py:21 operations/models.py:87 operations/models.py:119
+#: operations/models.py:152 pac/models.py:18 planning/models.py:110
+#: planning/models.py:150 planning/models.py:214
 msgid "Autre"
-msgstr ""
+msgstr "Egyéb"
 
+#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:107
+#: agronomie/models.py:132 equipe/models.py:22 exploitations/models.py:42
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:17
+#: operations/models.py:30 parcelles/models.py:31
 msgid "nom"
-msgstr ""
+msgstr "név"
 
+#: agronomie/models.py:26
 msgid "nom scientifique"
-msgstr ""
+msgstr "tudományos név"
 
+#: agronomie/models.py:39
 msgid "culture (Kc)"
-msgstr ""
+msgstr "növény (Kc)"
 
+#: agronomie/models.py:40
 msgid "cultures (Kc)"
-msgstr ""
+msgstr "növények (Kc)"
 
+#: agronomie/models.py:51 agronomie/templates/agronomie/types_sol.html:16
 msgid "Sableux"
-msgstr ""
+msgstr "Homokos"
 
+#: agronomie/models.py:52 agronomie/templates/agronomie/types_sol.html:17
 msgid "Limoneux"
-msgstr ""
+msgstr "Vályogos"
 
+#: agronomie/models.py:53 agronomie/templates/agronomie/types_sol.html:18
 msgid "Argileux"
-msgstr ""
+msgstr "Agyagos"
 
+#: agronomie/models.py:54 agronomie/templates/agronomie/types_sol.html:19
 msgid "Limon argileux"
-msgstr ""
+msgstr "Agyagos vályog"
 
+#: agronomie/models.py:55 agronomie/templates/agronomie/types_sol.html:20
 msgid "Sablo-limoneux"
-msgstr ""
+msgstr "Homokos vályog"
 
+#: agronomie/models.py:56 agronomie/templates/agronomie/types_sol.html:21
 msgid "Argilo-limoneux"
-msgstr ""
+msgstr "Vályogos agyag"
 
+#: agronomie/models.py:60
 msgid "capacité de rétention (mm)"
-msgstr ""
+msgstr "víztartó képesség (mm)"
 
+#: agronomie/models.py:61 agronomie/templates/agronomie/types_sol.html:108
 msgid "pH typique"
-msgstr ""
+msgstr "jellemző pH"
 
+#: agronomie/models.py:67 parcelles/models.py:60
 msgid "type de sol"
-msgstr ""
+msgstr "talajtípus"
 
+#: agronomie/models.py:68 agronomie/templates/agronomie/types_sol.html:128
 msgid "types de sol"
-msgstr ""
+msgstr "talajtípusok"
 
+#: agronomie/models.py:91
 msgid "fertigation"
-msgstr ""
+msgstr "tápoldatozás"
 
+#: agronomie/models.py:92
 msgid "fertigations"
-msgstr ""
+msgstr "tápoldatozások"
 
+#: agronomie/models.py:108
+msgid "type"
+msgstr "típus"
+
+#: agronomie/models.py:109
+msgid "N %"
+msgstr "N %"
+
+#: agronomie/models.py:110
+msgid "P %"
+msgstr "P %"
+
+#: agronomie/models.py:111
+msgid "K %"
+msgstr "K %"
+
+#: agronomie/models.py:112
+msgid "solubilité"
+msgstr "oldhatóság"
+
+#: agronomie/models.py:113
+msgid "effet pH"
+msgstr "pH-hatás"
+
+#: agronomie/models.py:116 agronomie/models.py:117
+msgid "engrais"
+msgstr "műtrágya"
+
+#: agronomie/models.py:133
 msgid "date de début"
-msgstr ""
+msgstr "kezdő dátum"
 
+#: agronomie/models.py:134
 msgid "date de fin"
-msgstr ""
+msgstr "záró dátum"
 
+#: agronomie/models.py:135 agronomie/templates/agronomie/saisons.html:12
 msgid "active"
-msgstr ""
+msgstr "aktív"
 
+#: agronomie/models.py:139
 msgid "saison"
-msgstr ""
+msgstr "szezon"
 
+#: agronomie/models.py:140
 msgid "saisons"
-msgstr ""
+msgstr "szezonok"
 
-msgid "Cultures & coefficients Kc"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:15
+#: agronomie/templates/agronomie/types_sol.html:15
+#: interventions/templates/interventions/interventions.html:82
+msgid "Toutes"
+msgstr "Mind"
 
-msgid "Culture"
-msgstr ""
-
-msgid "Catégorie"
-msgstr ""
-
-msgid "Source"
-msgstr ""
-
-msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
-msgstr ""
-
-msgid "Saisons"
-msgstr "Szezonok"
-
-msgid "Aucune saison définie."
-msgstr ""
-
-msgid "Types de sol"
-msgstr "Talajtípusok"
-
-msgid "Rétention"
-msgstr ""
-
-msgid "Aucun type de sol. Ajoutez-en via l'admin."
-msgstr ""
-
+#: agronomie/templates/agronomie/cultures.html:35 agronomie/views.py:46
 msgid "Cultures & Kc"
 msgstr "Növények & Kc"
 
-msgid "Sol"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:36
+msgid ""
+"Base de données cultures françaises — Coefficients culturaux FAO-56 / ARVALIS"
+msgstr "Francia növényi adatbázis — FAO-56 / ARVALIS növénykoefficiensek"
 
-msgid "Eau"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:41
+#: agronomie/templates/agronomie/cultures.html:56
+msgid "Méthode"
+msgstr "Módszer"
 
-msgid "Foliaire"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:45
+#: agronomie/templates/agronomie/cultures.html:233
+#: agronomie/templates/agronomie/types_sol.html:54
+#: agronomie/templates/agronomie/types_sol.html:213
+#: environnement/templates/environnement/taxonomie.html:178
+#: exploitations/templates/exploitations/settings.html:140
+#: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
+#: parcelles/templates/parcelles/list.html:17
+msgid "Ajouter"
+msgstr "Hozzáadás"
 
-msgid "Plante"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:61
+msgid ""
+"Le besoin en eau est calculé avec la formule ETc = ETP × Kc, où l'ETP est "
+"l'évapotranspiration potentielle (données météo) et le Kc est le coefficient "
+"cultural qui varie selon le stade phénologique de la plante. Le système "
+"soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
+"calculer la dose d'irrigation nette."
+msgstr "A vízigény az ETc = ETP × Kc képlettel kerül kiszámításra, ahol az ETP a potenciális evapotranszspiráció (időjárási adatok), a Kc pedig a növénykoefficiens, amely a növény fenológiai állapotától függően változik. A rendszer levonja a hatékony csapadékot, és figyelembe veszi a talaj hasznosítható vízkészletét a nettó öntözési adag kiszámításához."
 
-msgid "OCR en attente"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:66
+msgid "Levée → début développement"
+msgstr "Kelés → fejlődés kezdete"
 
-msgid "OCR effectué"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:70
+msgid "Pleine croissance végétative"
+msgstr "Teljes vegetatív növekedés"
 
-msgid "Validé"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:74
+msgid "Maturation → récolte"
+msgstr "Érés → betakarítás"
 
-msgid "rapport d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:83
+msgid "Rechercher une culture, un nom scientifique, une source…"
+msgstr "Növény, tudományos név vagy forrás keresése…"
 
-msgid "rapports d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:101
+#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:34
+#: parcelles/templates/parcelles/form.html:38
+#: parcelles/templates/parcelles/list.html:91
+msgid "Culture"
+msgstr "Növény"
 
+#: agronomie/templates/agronomie/cultures.html:102
+#: agronomie/templates/agronomie/cultures.html:186
+msgid "Nom scientifique"
+msgstr "Tudományos név"
+
+#: agronomie/templates/agronomie/cultures.html:103
+#: agronomie/templates/agronomie/cultures.html:192
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:53
+#: pac/templates/pac/pac.html:117
+msgid "Catégorie"
+msgstr "Kategória"
+
+#: agronomie/templates/agronomie/cultures.html:107
+#: agronomie/templates/agronomie/cultures.html:220
+msgid "Source"
+msgstr "Forrás"
+
+#: agronomie/templates/agronomie/cultures.html:122
+#: agronomie/templates/agronomie/cultures.html:160
+#: agronomie/templates/agronomie/types_sol.html:97
+#: agronomie/templates/agronomie/types_sol.html:151
+#: parcelles/templates/parcelles/confirm_delete.html:13
+#: parcelles/templates/parcelles/detail.html:13
+msgid "Supprimer"
+msgstr "Törlés"
+
+#: agronomie/templates/agronomie/cultures.html:132
+msgid "Aucune culture ne correspond à la recherche."
+msgstr "Egyetlen növény sem felel meg a keresésnek."
+
+#: agronomie/templates/agronomie/cultures.html:137
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "cultures"
+msgstr "Növények & Kc"
+
+#: agronomie/templates/agronomie/cultures.html:150
+msgid "Supprimer la culture ?"
+msgstr "Törli a növényt?"
+
+#: agronomie/templates/agronomie/cultures.html:152
+msgid "sera supprimée définitivement."
+msgstr "véglegesen törlésre kerül."
+
+#: agronomie/templates/agronomie/cultures.html:158
+#: agronomie/templates/agronomie/cultures.html:232
+#: agronomie/templates/agronomie/fertigation.html:216
+#: agronomie/templates/agronomie/types_sol.html:149
+#: agronomie/templates/agronomie/types_sol.html:212
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:128
+#: environnement/templates/environnement/taxonomie.html:177
+#: exploitations/templates/exploitations/settings.html:50
+#: exploitations/templates/exploitations/settings.html:139
+#: interventions/templates/interventions/interventions.html:174
+#: mail/templates/mail/compose.html:56
+#: messagerie/templates/messagerie/_new_modal.html:61
+#: messagerie/templates/messagerie/new.html:34
+#: meteo/templates/meteo/index.html:76 pac/templates/pac/pac.html:145
+#: parcelles/templates/parcelles/confirm_delete.html:14
+#: parcelles/templates/parcelles/list.html:75
+#: sondages/templates/sondages/create.html:37
+msgid "Annuler"
+msgstr "Mégse"
+
+#: agronomie/templates/agronomie/cultures.html:173
+msgid "Nouvelle culture"
+msgstr "Új növény"
+
+#: agronomie/templates/agronomie/cultures.html:180
+msgid "Nom commun"
+msgstr "Köznapi név"
+
+#: agronomie/templates/agronomie/cultures.html:226
+#: agronomie/templates/agronomie/types_sol.html:207
+#: interventions/templates/interventions/interventions.html:169
+msgid "Notes"
+msgstr "Megjegyzések"
+
+#: agronomie/templates/agronomie/fertigation.html:19 agronomie/views.py:162
+#: core/context_processors.py:50
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Fertigation"
+msgstr "Öntözés"
+
+#: agronomie/templates/agronomie/fertigation.html:20
+msgid "Gestion N/P/K · Directive Nitrates · Calcul doses"
+msgstr "N/P/K-kezelés · Nitrát-irányelv · Adagszámítás"
+
+#: agronomie/templates/agronomie/fertigation.html:24
+msgid "Enregistrer apport"
+msgstr "Adagolás rögzítése"
+
+#: agronomie/templates/agronomie/fertigation.html:33
+msgid "Directive Nitrates 91/676/CEE"
+msgstr "91/676/EGK Nitrát-irányelv"
+
+#: agronomie/templates/agronomie/fertigation.html:41
+msgid ""
+"Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
+"vos apports cumulés."
+msgstr "Felső határ 170 kg N/ha/év érzékeny területen. A rendszer automatikusan követi a halmozott adagolásokat."
+
+#: agronomie/templates/agronomie/fertigation.html:49
+msgid "Catalogue engrais"
+msgstr "Műtrágya-katalógus"
+
+#: agronomie/templates/agronomie/fertigation.html:52
+msgid "Calcul doses"
+msgstr "Adagszámítás"
+
+#: agronomie/templates/agronomie/fertigation.html:55
+msgid "Historique"
+msgstr "Előzmények"
+
+#: agronomie/templates/agronomie/fertigation.html:63
+#: agronomie/templates/agronomie/fertigation.html:92 finances/models.py:16
+msgid "Engrais"
+msgstr "Műtrágya"
+
+#: agronomie/templates/agronomie/fertigation.html:64
+#: interventions/templates/interventions/interventions.html:129
+#: iot/templates/iot/capteurs.html:21
+#: parcelles/templates/parcelles/detail.html:30
+#: planning/templates/planning/bon_intervention.html:16
+msgid "Type"
+msgstr "Típus"
+
+#: agronomie/templates/agronomie/fertigation.html:68
+msgid "Solubilité"
+msgstr "Oldhatóság"
+
+#: agronomie/templates/agronomie/fertigation.html:69
+msgid "pH effet"
+msgstr "pH-hatás"
+
+#: agronomie/templates/agronomie/fertigation.html:99
+msgid "Dose produit (kg/ha)"
+msgstr "Termékadag (kg/ha)"
+
+#: agronomie/templates/agronomie/fertigation.html:106
+msgid "Azote (N)"
+msgstr "Nitrogén (N)"
+
+#: agronomie/templates/agronomie/fertigation.html:110
+msgid "Phosphore (P)"
+msgstr "Foszfor (P)"
+
+#: agronomie/templates/agronomie/fertigation.html:114
+msgid "Potassium (K)"
+msgstr "Kálium (K)"
+
+#: agronomie/templates/agronomie/fertigation.html:118
+#, python-format
+msgid "Éléments apportés = dose produit × titre (%%) ÷ 100."
+msgstr "Bevitt elemek = termékadag × hatóanyagtartalom (%%) ÷ 100."
+
+#: agronomie/templates/agronomie/fertigation.html:128
+#: agronomie/templates/agronomie/fertigation.html:175
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:44
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:110
+#: finances/templates/finances/charges.html:14
+#: meteo/templates/meteo/meteo.html:140
+msgid "Date"
+msgstr "Dátum"
+
+#: agronomie/templates/agronomie/fertigation.html:129
+#: agronomie/templates/agronomie/fertigation.html:180
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:45
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:103 ia/models.py:33
+#: interventions/templates/interventions/interventions.html:155
+#: parcelles/templates/parcelles/list.html:89
+msgid "Parcelle"
+msgstr "Tábla"
+
+#: agronomie/templates/agronomie/fertigation.html:130
+#: agronomie/templates/agronomie/fertigation.html:188 ia/models.py:36
+#: interventions/templates/interventions/interventions.html:164
+#: planning/templates/planning/bon_intervention.html:29
+#: public/templates/public/home.html:469
+msgid "Produit"
+msgstr "Termék"
+
+#: agronomie/templates/agronomie/fertigation.html:134
+msgid "Volume"
+msgstr "Térfogat"
+
+#: agronomie/templates/agronomie/fertigation.html:155
+msgid "Aucun apport enregistré."
+msgstr "Nincs rögzített adagolás."
+
+#: agronomie/templates/agronomie/fertigation.html:156
+msgid ""
+"Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
+msgstr "Kattintson az „Adagolás rögzítése” gombra tápoldatozási adag hozzáadásához."
+
+#: agronomie/templates/agronomie/fertigation.html:167
+msgid "Enregistrer un apport"
+msgstr "Adagolás rögzítése"
+
+#: agronomie/templates/agronomie/fertigation.html:211
+msgid "Volume (L)"
+msgstr "Térfogat (L)"
+
+#: agronomie/templates/agronomie/fertigation.html:217
+#: exploitations/templates/exploitations/settings.html:52
+#: interventions/templates/interventions/interventions.html:33
+#: interventions/templates/interventions/interventions.html:175
+#: meteo/templates/meteo/meteo.html:52
+#: parcelles/templates/parcelles/form.html:97
+#: parcelles/templates/parcelles/list.html:76
+msgid "Enregistrer"
+msgstr "Mentés"
+
+#: agronomie/templates/agronomie/fertigation.html:221
+msgid ""
+"Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un apport."
+msgstr "Adagolás rögzítéséhez először adjon hozzá egy táblát a gazdaságához."
+
+#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:132
+#: core/context_processors.py:67
+msgid "Saisons"
+msgstr "Szezonok"
+
+#: agronomie/templates/agronomie/saisons.html:19
+msgid "Aucune saison définie."
+msgstr "Nincs meghatározott szezon."
+
+#: agronomie/templates/agronomie/types_sol.html:44 agronomie/views.py:99
+#: core/context_processors.py:49
+msgid "Types de sol"
+msgstr "Talajtípusok"
+
+#: agronomie/templates/agronomie/types_sol.html:45
+msgid "Caractéristiques hydriques et agronomiques par texture"
+msgstr "Vízgazdálkodási és agronómiai jellemzők textúra szerint"
+
+#: agronomie/templates/agronomie/types_sol.html:50
+msgid "Réserve Utile"
+msgstr "Hasznosítható vízkészlet"
+
+#: agronomie/templates/agronomie/types_sol.html:64
+msgid "Réserve Utile (RU)"
+msgstr "Hasznosítható vízkészlet (RU)"
+
+#: agronomie/templates/agronomie/types_sol.html:69
+msgid ""
+"La réserve utile est la quantité d'eau disponible pour la plante entre la "
+"capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
+"est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
+"calculer la dose d'irrigation nette et le seuil de déclenchement."
+msgstr "A hasznosítható vízkészlet a növény számára elérhető vízmennyiség a szabadföldi vízkapacitás (CC) és a hervadáspont (PFP) között. Méter talajra eső vízmm-ben fejezzük ki. A rendszer a RU-t használja a nettó öntözési adag és az indítási küszöbérték kiszámításához."
+
+#: agronomie/templates/agronomie/types_sol.html:77
+msgid "Rechercher un type de sol, une texture…"
+msgstr "Talajtípus vagy textúra keresése…"
+
+#: agronomie/templates/agronomie/types_sol.html:104
+msgid "Rétention"
+msgstr "Víztartás"
+
+#: agronomie/templates/agronomie/types_sol.html:112
+msgid "Conductivité"
+msgstr "Vezetőképesség"
+
+#: agronomie/templates/agronomie/types_sol.html:116
+msgid "Densité"
+msgstr "Sűrűség"
+
+#: agronomie/templates/agronomie/types_sol.html:124
+msgid "Aucun type de sol ne correspond à la recherche."
+msgstr "Egyetlen talajtípus sem felel meg a keresésnek."
+
+#: agronomie/templates/agronomie/types_sol.html:141
+msgid "Supprimer ce type de sol ?"
+msgstr "Törli ezt a talajtípust?"
+
+#: agronomie/templates/agronomie/types_sol.html:143
+msgid "sera supprimé définitivement."
+msgstr "véglegesen törlésre kerül."
+
+#: agronomie/templates/agronomie/types_sol.html:164
+#, fuzzy
+#| msgid "Types de sol"
+msgid "Nouveau type de sol"
+msgstr "Talajtípusok"
+
+#: agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Név"
+
+#: agronomie/templates/agronomie/types_sol.html:176
+msgid "Texture"
+msgstr "Textúra"
+
+#: agronomie/templates/agronomie/types_sol.html:186
+msgid "Rétention (mm)"
+msgstr "Víztartás (mm)"
+
+#: agronomie/templates/agronomie/types_sol.html:196
+msgid "Conductivité (mm/h)"
+msgstr "Vezetőképesség (mm/h)"
+
+#: agronomie/templates/agronomie/types_sol.html:201
+msgid "Densité (g/cm³)"
+msgstr "Sűrűség (g/cm³)"
+
+#: analyse_sol/models.py:31
+msgid "document"
+msgstr "dokumentum"
+
+#: analyse_sol/models.py:36
 msgid "analyse de sol"
-msgstr ""
+msgstr "talajvizsgálat"
 
+#: analyse_sol/models.py:37
 msgid "analyses de sol"
-msgstr ""
+msgstr "talajvizsgálatok"
 
-msgid "fiche biodiversité"
-msgstr ""
-
-msgid "fiches biodiversité"
-msgstr ""
-
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:9
+#: analyse_sol/views.py:43 core/context_processors.py:52
+#: public/templates/public/home.html:270
 msgid "Analyses de sol"
 msgstr "Talajvizsgálatok"
 
-msgid "Labo"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:10
+msgid "Résultats d'analyses par parcelle · import de documents"
+msgstr "Vizsgálati eredmények táblánként · dokumentumok importálása"
 
-msgid "Aucune analyse de sol."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:14
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:83
+msgid "Importer une analyse"
+msgstr "Vizsgálat importálása"
 
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:21
+#: parcelles/templates/parcelles/list.html:51
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Analyses"
+msgstr "Talajvizsgálatok"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:25
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles analysées"
+msgstr "Parcellák"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:29
+msgid "pH moyen"
+msgstr "átlagos pH"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:33
+#, python-format
+msgid "MO moyenne (%%)"
+msgstr "Átlagos SZA (%%)"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:46
 msgid "Laboratoire"
 msgstr "Laboratórium"
 
-msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:52
+#: planning/models.py:109
+msgid "Document"
+msgstr "Dokumentum"
 
-msgid "Type"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:69
+msgid "Voir"
+msgstr "Megtekintés"
 
-msgid "Date"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:81
+msgid "Aucune analyse de sol enregistrée."
+msgstr "Nincs rögzített talajvizsgálat."
 
-msgid "Statut"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:94
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Importer une analyse de sol"
+msgstr "Talajvizsgálatok"
 
-msgid "Aucun rapport. Importez un PDF via l'API (extraction Gemini)."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:117
+msgid "Document (PDF, image…)"
+msgstr "Dokumentum (PDF, kép…)"
 
-msgid "En attente"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:124
+msgid ""
+"Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
+"document par OCR/IA à l'import."
+msgstr "Az értékek (pH, SZA, N-P-K, laboratórium…) importáláskor OCR/MI segítségével automatikusan kinyerésre kerülnek a dokumentumból."
 
-msgid "Utilisé"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:129
+msgid "Importer"
+msgstr "Importálás"
 
-msgid "Expiré"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:133
+msgid ""
+"Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
+msgstr "Vizsgálat csatolásához először adjon hozzá egy táblát (Tábláim)."
 
-msgid "Annulé"
-msgstr ""
+#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
+msgid "Sol"
+msgstr "Talaj"
 
-msgid "code d'activation"
-msgstr ""
+#: analyses/models.py:15 finances/models.py:18
+#: finances/templates/finances/bilan_economique.html:30
+#: finances/templates/finances/subvention_pdf.html:31
+msgid "Eau"
+msgstr "Víz"
 
-msgid "codes d'activation"
-msgstr ""
+#: analyses/models.py:16
+msgid "Foliaire"
+msgstr "Levél"
 
-msgid "Actif"
-msgstr ""
+#: analyses/models.py:17
+msgid "Plante"
+msgstr "Növény"
 
-msgid "Impayé"
-msgstr ""
+#: analyses/models.py:20
+msgid "OCR en attente"
+msgstr "OCR függőben"
 
-msgid "Essai"
-msgstr ""
+#: analyses/models.py:21
+msgid "OCR effectué"
+msgstr "OCR elvégezve"
 
-msgid "Non payé"
-msgstr ""
+#: analyses/models.py:22 planning/models.py:261
+msgid "Validé"
+msgstr "Jóváhagyva"
 
-msgid "abonnement"
-msgstr ""
+#: analyses/models.py:45
+msgid "rapport d'analyse"
+msgstr "vizsgálati jelentés"
 
-msgid "abonnements"
-msgstr ""
+#: analyses/models.py:46
+msgid "rapports d'analyse"
+msgstr "vizsgálati jelentések"
 
+#: analyses/models.py:64
+msgid "fiche biodiversité"
+msgstr "biodiverzitási adatlap"
+
+#: analyses/models.py:65
+msgid "fiches biodiversité"
+msgstr "biodiverzitási adatlapok"
+
+#: core/context_processors.py:19 core/context_processors.py:28
 msgid "Accueil"
 msgstr "Kezdőlap"
 
+#: core/context_processors.py:20 core/templates/core/dashboard.html:67
+#: finances/templates/finances/subvention_pdf.html:47
 msgid "Parcelles"
 msgstr "Parcellák"
 
+#: core/context_processors.py:21 core/context_processors.py:53
+#: finances/templates/finances/subvention_pdf.html:49
+#: interventions/models.py:12
+#: interventions/templates/interventions/interventions.html:46
+#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:34
+#: operations/models.py:117 parcelles/templates/parcelles/detail.html:28
+#: parcelles/templates/parcelles/form.html:66
 msgid "Irrigation"
 msgstr "Öntözés"
 
+#: core/context_processors.py:22 core/context_processors.py:90
+#: planning/views.py:34
 msgid "Planning"
 msgstr "Tervezés"
 
+#: core/context_processors.py:23 ia/models.py:14
 msgid "Assistant"
 msgstr "Asszisztens"
 
+#: core/context_processors.py:30 templates/partials/header.html:5
 msgid "Tableau de bord"
 msgstr "Irányítópult"
 
+#: core/context_processors.py:31
 msgid "Assistant IA"
 msgstr "MI-asszisztens"
 
+#: core/context_processors.py:35
 msgid "Communication"
 msgstr "Kommunikáció"
 
+#: core/context_processors.py:37
+#: notifications/templates/notifications/center.html:7
+#: notifications/views.py:18 templates/partials/header.html:22
 msgid "Notifications"
 msgstr "Értesítések"
 
+#: core/context_processors.py:38 messagerie/views.py:75
 msgid "Messagerie"
 msgstr "Üzenetek"
 
+#: core/context_processors.py:39 mail/templates/mail/outbox.html:7
+#: mail/views.py:39
 msgid "Mail"
 msgstr "Levelezés"
 
+#: core/context_processors.py:40
 msgid "Sondage"
 msgstr "Szavazás"
 
+#: core/context_processors.py:44
 msgid "Cultures & Terrain"
 msgstr "Növények & Terület"
 
-msgid "Régie SCADA"
-msgstr "SCADA-vezérlés"
+#: core/context_processors.py:46 parcelles/templates/parcelles/list.html:12
+#: parcelles/views.py:48
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Mes Parcelles"
+msgstr "Parcellák"
 
-msgid "Capteurs"
-msgstr "Érzékelők"
+#: core/context_processors.py:47 meteo/templates/meteo/index.html:9
+#: meteo/views.py:73
+msgid "Météo"
+msgstr "Időjárás"
 
-msgid "Protection"
-msgstr "Védelem"
+#: core/context_processors.py:48
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "Cultures"
+msgstr "Növények & Kc"
 
-msgid "Bassinage anti-gel"
-msgstr "Fagyvédelmi öntözés"
-
+#: core/context_processors.py:51
+#: interventions/templates/interventions/interventions.html:26
+#: interventions/views.py:49 public/templates/public/home.html:265
 msgid "Interventions"
 msgstr "Beavatkozások"
 
+#: core/context_processors.py:54 iot/templates/iot/regie.html:7 iot/views.py:28
+msgid "Régie SCADA"
+msgstr "SCADA-vezérlés"
+
+#: core/context_processors.py:55
+msgid "Capteurs"
+msgstr "Érzékelők"
+
+#: core/context_processors.py:59 planning/models.py:210
+msgid "Protection"
+msgstr "Védelem"
+
+#: core/context_processors.py:61
+#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:56
+msgid "Bassinage anti-gel"
+msgstr "Fagyvédelmi öntözés"
+
+#: core/context_processors.py:65
 msgid "Économie"
 msgstr "Gazdaság"
 
+#: core/context_processors.py:68
+#: finances/templates/finances/bilan_economique.html:16
+#: finances/templates/finances/charges.html:7
+#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
+#: finances/views.py:51
 msgid "Charges"
 msgstr "Költségek"
 
+#: core/context_processors.py:69
+#: finances/templates/finances/bilan_economique.html:7
+#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:58
 msgid "Bilan économique"
 msgstr "Gazdasági mérleg"
 
+#: core/context_processors.py:70 finances/templates/finances/facturation.html:6
+#: finances/views.py:66
 msgid "Facturation"
 msgstr "Számlázás"
 
+#: core/context_processors.py:71 pac/templates/pac/pac.html:9 pac/views.py:56
+msgid "PAC"
+msgstr "KAP"
+
+#: core/context_processors.py:72
+#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
+#: public/templates/public/home.html:260
 msgid "Parc matériel"
 msgstr "Géppark"
 
+#: core/context_processors.py:76
 msgid "Environnement"
 msgstr "Környezet"
 
+#: core/context_processors.py:78 environnement/views.py:50
+msgid "Biodiversité"
+msgstr "Biodiverzitás"
+
+#: core/context_processors.py:79
+msgid "Bilan eau"
+msgstr "Vízmérleg"
+
+#: core/context_processors.py:80 environnement/views.py:137
+msgid "Bilan azoté"
+msgstr "Nitrogénmérleg"
+
+#: core/context_processors.py:81 environnement/views.py:144
+msgid "Empreinte carbone"
+msgstr "Szénlábnyom"
+
+#: core/context_processors.py:82 environnement/views.py:151
+#, fuzzy
+#| msgid "Environnement"
+msgid "Rapport environnemental"
+msgstr "Környezet"
+
+#: core/context_processors.py:83 environnement/views.py:158
+msgid "Santé végétale"
+msgstr "Növényegészségügy"
+
+#: core/context_processors.py:84
+#: environnement/templates/environnement/taxonomie.html:9
+#: environnement/views.py:196 public/templates/public/home.html:101
+msgid "Taxonomie EU"
+msgstr "EU-taxonómia"
+
+#: core/context_processors.py:88
 msgid "RH"
 msgstr "HR"
 
+#: core/context_processors.py:91 equipe/templates/equipe/equipe.html:6
+#: equipe/views.py:21
 msgid "Équipe"
 msgstr "Csapat"
 
+#: core/context_processors.py:92 equipe/templates/equipe/taches.html:6
+#: equipe/views.py:28
 msgid "Tâches"
 msgstr "Feladatok"
 
+#: core/context_processors.py:93 equipe/templates/equipe/mes_taches.html:6
+#: equipe/views.py:37
 msgid "Mes tâches"
 msgstr "Saját feladatok"
 
+#: core/context_processors.py:97
 msgid "Mon compte"
 msgstr "Fiókom"
 
+#: core/context_processors.py:99
+#: exploitations/templates/exploitations/settings.html:13
+#: exploitations/views.py:92 meteo/templates/meteo/index.html:26
+#: templates/partials/header.html:59
 msgid "Mon exploitation"
 msgstr "Gazdaságom"
 
-msgid "Activer un code"
+#: core/templates/core/dashboard.html:8
+msgid "Bienvenue sur Holystyl 👋"
+msgstr "Üdvözöljük a Holystylön 👋"
+
+#: core/templates/core/dashboard.html:10
+msgid ""
+"Commencez par configurer votre exploitation pour activer le tableau de bord."
+msgstr "Kezdje a gazdasága beállításával az irányítópult aktiválásához."
+
+#: core/templates/core/dashboard.html:12
+#: exploitations/templates/exploitations/settings.html:13
+msgid "Configurer mon exploitation"
+msgstr "Gazdaságom beállítása"
+
+#: core/templates/core/dashboard.html:20
+msgid "+ Parcelle"
+msgstr "+ Tábla"
+
+#: core/templates/core/dashboard.html:26
+msgid "Efficience DTI"
+msgstr "DTI-hatékonyság"
+
+#: core/templates/core/dashboard.html:32
+msgid "Aucun score DTI calculé."
+msgstr "Nincs kiszámított DTI-pontszám."
+
+#: core/templates/core/dashboard.html:41
+msgid "Météo & ETP"
+msgstr "Időjárás és ETP"
+
+#: core/templates/core/dashboard.html:42
+msgid "Localisation manquante"
+msgstr "Hiányzó helymeghatározás"
+
+#: core/templates/core/dashboard.html:46
+msgid "Température"
+msgstr "Hőmérséklet"
+
+#: core/templates/core/dashboard.html:47 iot/templates/iot/regie.html:54
+#: meteo/templates/meteo/meteo.html:77 meteo/templates/meteo/meteo.html:143
+msgid "Humidité"
+msgstr "Páratartalom"
+
+#: core/templates/core/dashboard.html:48 meteo/templates/meteo/meteo.html:78
+#: meteo/templates/meteo/meteo.html:98 meteo/templates/meteo/meteo.html:144
+msgid "Vent"
+msgstr "Szél"
+
+#: core/templates/core/dashboard.html:61
+msgid "Chargement météo…"
+msgstr "Időjárás betöltése…"
+
+#: core/templates/core/dashboard.html:67
+msgid "actives"
+msgstr "aktív"
+
+#: core/templates/core/dashboard.html:68
+#: finances/templates/finances/subvention_pdf.html:30
+#: pac/templates/pac/pac.html:55 parcelles/templates/parcelles/list.html:90
+msgid "Surface"
+msgstr "Terület"
+
+#: core/templates/core/dashboard.html:69
+msgid "Quota eau"
+msgstr "Vízkvóta"
+
+#: core/templates/core/dashboard.html:70
+msgid "Alertes actives"
+msgstr "Aktív riasztások"
+
+#: core/templates/core/dashboard.html:76
+msgid "Historique DTI"
+msgstr "DTI-előzmények"
+
+#: core/templates/core/dashboard.html:78
+msgid "Pas encore de données."
+msgstr "Még nincs adat."
+
+#: core/templates/core/dashboard.html:81
+msgid "Consommation d'eau"
+msgstr "Vízfogyasztás"
+
+#: core/templates/core/dashboard.html:83
+msgid "Pas encore de relevés."
+msgstr "Még nincs leolvasás."
+
+#: core/templates/core/dashboard.html:89
+msgid "Alertes"
+msgstr "Riasztások"
+
+#: core/templates/core/dashboard.html:96
+msgid "Aucune alerte active. 🌿"
+msgstr "Nincs aktív riasztás. 🌿"
+
+#: environnement/models.py:11
+msgid "Atténuation du changement climatique"
+msgstr "Az éghajlatváltozás mérséklése"
+
+#: environnement/models.py:12
+msgid "Adaptation au changement climatique"
+msgstr "Az éghajlatváltozáshoz való alkalmazkodás"
+
+#: environnement/models.py:13
+msgid "Eau et ressources marines"
+msgstr "Víz és tengeri erőforrások"
+
+#: environnement/models.py:14
+#, fuzzy
+#| msgid "Économie"
+msgid "Économie circulaire"
+msgstr "Gazdaság"
+
+#: environnement/models.py:15
+msgid "Prévention de la pollution"
+msgstr "Szennyezésmegelőzés"
+
+#: environnement/models.py:16
+msgid "Biodiversité et écosystèmes"
+msgstr "Biodiverzitás és ökoszisztémák"
+
+#: environnement/models.py:21 pac/models.py:28
+msgid "campagne"
+msgstr "kampány"
+
+#: environnement/models.py:22
+msgid "activité"
+msgstr "tevékenység"
+
+#: environnement/models.py:23
+msgid "code NACE"
+msgstr "NACE-kód"
+
+#: environnement/models.py:25
+msgid "objectif de contribution"
+msgstr "hozzájárulási célkitűzés"
+
+#: environnement/models.py:27
+msgid "éligible"
+msgstr "támogatható"
+
+#: environnement/models.py:28
+msgid "contribution substantielle"
+msgstr "jelentős hozzájárulás"
+
+#: environnement/models.py:30
+msgid "DNSH par objectif"
+msgstr "DNSH célkitűzésenként"
+
+#: environnement/models.py:31
+msgid "garanties minimales"
+msgstr "minimális garanciák"
+
+#: environnement/models.py:32 exploitations/models.py:89
+msgid "chiffre d'affaires (€)"
+msgstr "árbevétel (€)"
+
+#: environnement/models.py:33
+msgid "CapEx (€)"
+msgstr "CapEx (€)"
+
+#: environnement/models.py:34
+msgid "OpEx (€)"
+msgstr "OpEx (€)"
+
+#: environnement/models.py:35
+#, fuzzy
+#| msgid "Notifications"
+msgid "justification"
+msgstr "Értesítések"
+
+#: environnement/models.py:39
+msgid "activité Taxonomie"
+msgstr "taxonómiai tevékenység"
+
+#: environnement/models.py:40
+msgid "activités Taxonomie"
+msgstr "taxonómiai tevékenységek"
+
+#: environnement/templates/environnement/bilan_eau.html:9
+#: environnement/views.py:113
+msgid "Bilan Eau"
+msgstr "Vízmérleg"
+
+#: environnement/templates/environnement/bilan_eau.html:10
+msgid "Consommation d'eau d'irrigation · Sessions réelles"
+msgstr "Öntözővíz-fogyasztás · Tényleges menetek"
+
+#: environnement/templates/environnement/bilan_eau.html:14
+msgid "Export"
+msgstr "Exportálás"
+
+#: environnement/templates/environnement/bilan_eau.html:21
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation totale"
+msgstr "Öntözés"
+
+#: environnement/templates/environnement/bilan_eau.html:23
+msgid "cumul des sessions"
+msgstr "menetek összesítése"
+
+#: environnement/templates/environnement/bilan_eau.html:26
+#: irrigation/views.py:38
+msgid "Sessions"
+msgstr "Menetek"
+
+#: environnement/templates/environnement/bilan_eau.html:28
+msgid "sessions enregistrées"
+msgstr "rögzített menetek"
+
+#: environnement/templates/environnement/bilan_eau.html:31
+msgid "Quota utilisé"
+msgstr "Felhasznált kvóta"
+
+#: environnement/templates/environnement/bilan_eau.html:33
+msgid "alloués"
+msgstr "kiosztva"
+
+#: environnement/templates/environnement/bilan_eau.html:36
+msgid "Coût eau"
+msgstr "Vízköltség"
+
+#: environnement/templates/environnement/bilan_eau.html:38
+msgid "estimé"
+msgstr "becsült"
+
+#: environnement/templates/environnement/bilan_eau.html:44
+msgid "Consommation mensuelle (m³)"
+msgstr "Havi fogyasztás (m³)"
+
+#: environnement/templates/environnement/bilan_eau.html:49
+msgid "Aucune session d'irrigation enregistrée"
+msgstr "Nincs rögzített öntözési menet"
+
+#: environnement/templates/environnement/bilan_eau.html:55
+msgid "Consommation par parcelle (m³/jour)"
+msgstr "Fogyasztás táblánként (m³/nap)"
+
+#: environnement/templates/environnement/bilan_eau.html:68
+msgid "Aucune session d'irrigation"
+msgstr "Nincs öntözési menet"
+
+#: environnement/templates/environnement/bilan_eau.html:75
+msgid "Aucune session d'irrigation enregistrée pour vos parcelles."
+msgstr "Nincs rögzített öntözési menet a tábláihoz."
+
+#: environnement/templates/environnement/bilan_eau.html:79
+msgid ""
+"Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
+"par parcelle."
+msgstr "Nincs rögzített tábla. Hozza létre a tábláit a táblánkénti fogyasztás megtekintéséhez."
+
+#: environnement/templates/environnement/placeholder.html:18
+msgid "Module en préparation"
+msgstr "Modul előkészületben"
+
+#: environnement/templates/environnement/placeholder.html:19
+msgid "Cette section sera bientôt disponible."
+msgstr "Ez a szakasz hamarosan elérhető lesz."
+
+#: environnement/templates/environnement/taxonomie.html:10
+msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
+msgstr "(EU) 2020/852 rendelet · tevékenységek összhangja (árbevétel / CapEx / OpEx)"
+
+#: environnement/templates/environnement/taxonomie.html:16
+#: environnement/templates/environnement/taxonomie.html:123
+#: pac/templates/pac/pac.html:17 pac/templates/pac/pac.html:112
+msgid "Campagne"
+msgstr "Kampány"
+
+#: environnement/templates/environnement/taxonomie.html:21
+#: environnement/templates/environnement/taxonomie.html:90
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une fiche"
 msgstr "Kód aktiválása"
 
-msgid "Bienvenue sur Holystyl 👋"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:29
+msgid "Chiffre d'affaires aligné"
+msgstr "Összhangba hozott árbevétel"
 
-msgid "Commencez par configurer votre exploitation pour activer le tableau de bord."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:33
+msgid "CapEx aligné"
+msgstr "Összhangba hozott CapEx"
 
-msgid "Configurer mon exploitation"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:37
+msgid "OpEx aligné"
+msgstr "Összhangba hozott OpEx"
 
-msgid "+ Parcelle"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:41
+msgid "Fiches alignées"
+msgstr "Összhangba hozott adatlapok"
 
-msgid "Efficience DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:52
+#: environnement/templates/environnement/taxonomie.html:114
+msgid "Activité"
+msgstr "Tevékenység"
 
-msgid "Aucun score DTI calculé."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:53
+msgid "Objectif"
+msgstr "Célkitűzés"
 
-msgid "Météo & ETP"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:54
+#: finances/templates/finances/facturation.html:11
+#: interventions/templates/interventions/interventions.html:136
+#: iot/templates/iot/capteurs.html:24 pac/templates/pac/pac.html:57
+#: pac/templates/pac/pac.html:138
+msgid "Statut"
+msgstr "Állapot"
 
-msgid "Localisation manquante"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:67
+msgid "Aligné"
+msgstr "Összhangban"
 
-msgid "Température"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:68
+msgid "Éligible"
+msgstr "Támogatható"
 
-msgid "Humidité"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:69
+msgid "Non éligible"
+msgstr "Nem támogatható"
 
-msgid "Vent"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:75
+msgid "Supprimer cette fiche ?"
+msgstr "Törli ezt az adatlapot?"
 
-msgid "Chargement météo…"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:88
+msgid "Aucune fiche pour cette campagne."
+msgstr "Nincs adatlap ehhez a kampányhoz."
 
-msgid "actives"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:97
+msgid ""
+"Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
+"objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
+"montrent la part alignée du CA, des CapEx et des OpEx."
+msgstr "Egy tevékenység akkor van ÖSSZHANGBAN, ha: támogatható + jelentős hozzájárulás 1 célkitűzéshez + DNSH (nem árt a másik 5-nek) + minimális garanciák. A KPI-k az árbevétel, a CapEx és az OpEx összhangban lévő részét mutatják."
 
-msgid "Surface"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:106
+msgid "Nouvelle fiche d'activité"
+msgstr "Új tevékenységi adatlap"
 
-msgid "Quota eau"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:115
+msgid "ex: Production de noix"
+msgstr "pl.: Dió termesztése"
 
-msgid "Alertes actives"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:119
+msgid "Code NACE"
+msgstr "NACE-kód"
 
-msgid "Historique DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:127
+msgid "Objectif de contribution"
+msgstr "Hozzájárulási célkitűzés"
 
-msgid "Pas encore de données."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:136
+#: meteo/templates/meteo/meteo.html:141
+#, fuzzy
+#| msgid "Communication"
+msgid "Conditions"
+msgstr "Kommunikáció"
 
-msgid "Consommation d'eau"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:138
+msgid "Activité éligible (figure dans la Taxonomie)"
+msgstr "Támogatható tevékenység (szerepel a taxonómiában)"
 
-msgid "Pas encore de relevés."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:139
+msgid "Contribution substantielle vérifiée"
+msgstr "Jelentős hozzájárulás ellenőrizve"
 
-msgid "Alertes"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:140
+msgid "Garanties minimales respectées"
+msgstr "Minimális garanciák betartva"
 
-msgid "Aucune alerte active. 🌿"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:146
+msgid "DNSH — ne nuit pas significativement à :"
+msgstr "DNSH — nem árt jelentősen a következőknek:"
 
+#: environnement/templates/environnement/taxonomie.html:147
+msgid "À cocher pour les objectifs autres que celui de contribution."
+msgstr "A hozzájárulási célkitűzéstől eltérő célkitűzéseknél bejelölendő."
+
+#: environnement/templates/environnement/taxonomie.html:158
+msgid "CA (€)"
+msgstr "Árbevétel (€)"
+
+#: environnement/templates/environnement/taxonomie.html:172
+#, fuzzy
+#| msgid "Notifications"
+msgid "Justification"
+msgstr "Értesítések"
+
+#: environnement/views.py:51
+msgid ""
+"Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
+"couverts végétaux et infrastructures agro-écologiques (IAE)."
+msgstr "Kövesse tábláinak biodiverzitását: hasznos szervezetek, beporzók, takarónövények és agroökológiai infrastruktúrák (IAE)."
+
+#: environnement/views.py:138
+msgid ""
+"Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
+"reliquats et pression sur la directive Nitrates."
+msgstr "Nitrogénmérleg (mérlegmódszer): bevitelek, növények általi elvonás, maradékok és a Nitrát-irányelvre nehezedő nyomás."
+
+#: environnement/views.py:145
+msgid ""
+"Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
+"sols (diagnostic type GES / label bas-carbone)."
+msgstr "A gazdaság üvegházhatású gázkibocsátása és a talajok széntárolása (ÜHG-diagnosztika / alacsony szén-dioxid-kibocsátású tanúsítvány)."
+
+#: environnement/views.py:152
+msgid ""
+"Synthèse environnementale de l'exploitation, exportable, regroupant les "
+"indicateurs (eau, azote, carbone, biodiversité)."
+msgstr "A gazdaság exportálható környezeti összefoglalója, amely egyesíti a mutatókat (víz, nitrogén, szén, biodiverzitás)."
+
+#: environnement/views.py:159
+msgid ""
+"Suivi sanitaire des cultures : maladies, ravageurs, observations et "
+"indicateurs de fréquence de traitement (IFT)."
+msgstr "A növények egészségügyi nyomon követése: betegségek, kártevők, megfigyelések és kezelési gyakorisági mutatók (IFT)."
+
+#: equipe/models.py:15
 msgid "Chef d'équipe"
-msgstr ""
+msgstr "Csoportvezető"
 
+#: equipe/models.py:16
 msgid "Ouvrier"
-msgstr ""
+msgstr "Munkás"
 
+#: equipe/models.py:17
 msgid "Saisonnier"
-msgstr ""
+msgstr "Idénymunkás"
 
+#: equipe/models.py:18
 msgid "Prestataire"
-msgstr ""
+msgstr "Szolgáltató"
 
+#: equipe/models.py:24
 msgid "téléphone"
-msgstr ""
+msgstr "telefon"
 
+#: equipe/models.py:42
 msgid "membre d'équipe"
-msgstr ""
+msgstr "csapattag"
 
+#: equipe/models.py:43
 msgid "membres d'équipe"
-msgstr ""
+msgstr "csapattagok"
 
+#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
 msgid "Haute"
-msgstr ""
+msgstr "Magas"
 
+#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
 msgid "Normale"
-msgstr ""
+msgstr "Normál"
 
+#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
 msgid "Basse"
-msgstr ""
+msgstr "Alacsony"
 
+#: equipe/models.py:57
 msgid "À faire"
-msgstr ""
+msgstr "Elvégzendő"
 
+#: equipe/models.py:58 interventions/models.py:30 planning/models.py:30
 msgid "En cours"
-msgstr ""
+msgstr "Folyamatban"
 
+#: equipe/models.py:59 interventions/models.py:31 iot/models.py:93
 msgid "Terminée"
-msgstr ""
+msgstr "Befejezve"
 
+#: equipe/models.py:60
 msgid "Validée"
-msgstr ""
+msgstr "Jóváhagyva"
 
+#: equipe/models.py:63
 msgid "titre"
-msgstr ""
+msgstr "cím"
 
+#: equipe/models.py:77
 msgid "tâche"
-msgstr ""
+msgstr "feladat"
 
+#: equipe/models.py:78
 msgid "tâches"
-msgstr ""
+msgstr "feladatok"
 
+#: equipe/models.py:92 finances/models.py:116 iot/models.py:90
+msgid "En attente"
+msgstr "Függőben"
+
+#: equipe/models.py:93 mail/models.py:14 mail/templates/mail/detail.html:16
+#: mail/templates/mail/outbox.html:30
 msgid "Envoyé"
-msgstr ""
+msgstr "Elküldve"
 
+#: equipe/models.py:94
 msgid "Échoué"
-msgstr ""
+msgstr "Sikertelen"
 
+#: equipe/models.py:105
 msgid "rappel de tâche"
-msgstr ""
+msgstr "feladatemlékeztető"
 
+#: equipe/models.py:106
 msgid "rappels de tâche"
-msgstr ""
+msgstr "feladatemlékeztetők"
 
+#: equipe/templates/equipe/equipe.html:20
 msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Nincs csapattag. Adjon hozzá az adminon vagy az API-n keresztül."
 
+#: equipe/templates/equipe/location_share.html:3
 msgid "Partage de position"
-msgstr ""
+msgstr "Helymegosztás"
 
+#: equipe/templates/equipe/location_share.html:9
+#: equipe/templates/equipe/location_share.html:13
 msgid "Partager ma position"
-msgstr ""
+msgstr "Helyzetem megosztása"
 
+#: equipe/templates/equipe/location_share.html:11
 #, python-format
 msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
-msgstr ""
+msgstr "Üdvözöljük, %(name)s! Ossza meg a helyzetét a csapatával."
 
+#: equipe/templates/equipe/location_share.html:16
 msgid "Lien expiré"
-msgstr ""
+msgstr "Lejárt hivatkozás"
 
+#: equipe/templates/equipe/location_share.html:17
 msgid "Ce lien de partage n'est plus valide."
-msgstr ""
+msgstr "Ez a megosztási hivatkozás már nem érvényes."
 
+#: equipe/templates/equipe/location_share.html:28
 msgid "Géolocalisation non supportée."
-msgstr ""
+msgstr "A helymeghatározás nem támogatott."
 
+#: equipe/templates/equipe/location_share.html:34
 msgid "Position partagée ✅"
-msgstr ""
+msgstr "Helyzet megosztva ✅"
 
+#: equipe/templates/equipe/location_share.html:35
 msgid "Erreur lors du partage."
-msgstr ""
+msgstr "Hiba a megosztás során."
 
+#: equipe/templates/equipe/location_share.html:36
 msgid "Accès à la position refusé."
-msgstr ""
+msgstr "A helyzethez való hozzáférés megtagadva."
 
+#: equipe/templates/equipe/mes_taches.html:20
 msgid "Aucune tâche assignée."
-msgstr ""
+msgstr "Nincs hozzárendelt feladat."
 
+#: equipe/templates/equipe/taches.html:13
 msgid "non assignée"
-msgstr ""
+msgstr "nincs hozzárendelve"
 
+#: equipe/templates/equipe/taches.html:20
 msgid "Aucune tâche."
-msgstr ""
+msgstr "Nincs feladat."
 
+#: exploitations/models.py:15
+msgid "Exploitation individuelle"
+msgstr "Egyéni gazdaság"
+
+#: exploitations/models.py:16
+msgid "EARL"
+msgstr "EARL"
+
+#: exploitations/models.py:17
+msgid "GAEC"
+msgstr "GAEC"
+
+#: exploitations/models.py:18
+msgid "SCEA"
+msgstr "SCEA"
+
+#: exploitations/models.py:19
+msgid "SCEV"
+msgstr "SCEV"
+
+#: exploitations/models.py:20
+msgid "SARL"
+msgstr "SARL"
+
+#: exploitations/models.py:24
+#, fuzzy
+#| msgid "Interventions"
+msgid "Conventionnel"
+msgstr "Beavatkozások"
+
+#: exploitations/models.py:25 pac/models.py:16
+msgid "Agriculture biologique"
+msgstr "Biogazdálkodás"
+
+#: exploitations/models.py:26
+msgid "En conversion bio"
+msgstr "Bioátállás alatt"
+
+#: exploitations/models.py:27
+#, fuzzy
+#| msgid "Environnement"
+msgid "Haute Valeur Environnementale"
+msgstr "Környezet"
+
+#: exploitations/models.py:30
+msgid "Forage"
+msgstr "Fúrt kút"
+
+#: exploitations/models.py:31
+msgid "Rivière / cours d'eau"
+msgstr "Folyó / vízfolyás"
+
+#: exploitations/models.py:32
+msgid "Réseau collectif"
+msgstr "Közösségi hálózat"
+
+#: exploitations/models.py:33
+msgid "Retenue / bassin"
+msgstr "Tározó / medence"
+
+#: exploitations/models.py:40
 msgid "propriétaire"
-msgstr ""
+msgstr "tulajdonos"
 
+#: exploitations/models.py:45
+msgid "prénom"
+msgstr "keresztnév"
+
+#: exploitations/models.py:46
+msgid "date de naissance"
+msgstr "születési dátum"
+
+#: exploitations/models.py:47 exploitations/models.py:118
+msgid "raison sociale"
+msgstr "cégnév"
+
+#: exploitations/models.py:48 exploitations/models.py:120
+msgid "forme juridique"
+msgstr "jogi forma"
+
+#: exploitations/models.py:49 exploitations/models.py:122
+msgid "SIRET"
+msgstr "SIRET"
+
+#: exploitations/models.py:50 exploitations/models.py:123
+msgid "n° PACAGE"
+msgstr "PACAGE-szám"
+
+#: exploitations/models.py:51 exploitations/models.py:124
+msgid "TVA intracommunautaire"
+msgstr "közösségi adószám"
+
+#: exploitations/models.py:52 exploitations/models.py:125
+msgid "année d'installation"
+msgstr "alapítás éve"
+
+#: exploitations/models.py:55
+msgid "téléphone 1"
+msgstr "telefon 1"
+
+#: exploitations/models.py:56
+msgid "téléphone 2"
+msgstr "telefon 2"
+
+#: exploitations/models.py:57
+msgid "email"
+msgstr "e-mail"
+
+#: exploitations/models.py:58
+msgid "site web"
+msgstr "weboldal"
+
+#: exploitations/models.py:61
 msgid "adresse"
-msgstr ""
+msgstr "cím"
 
+#: exploitations/models.py:62
 msgid "ville"
-msgstr ""
+msgstr "település"
 
+#: exploitations/models.py:63
 msgid "code postal"
-msgstr ""
+msgstr "irányítószám"
 
+#: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
-msgstr ""
+msgstr "szélesség"
 
+#: exploitations/models.py:65 meteo/models.py:20 meteo/models.py:48
 msgid "longitude"
-msgstr ""
+msgstr "hosszúság"
 
+#: exploitations/models.py:68
 msgid "surface totale (ha)"
-msgstr ""
+msgstr "összterület (ha)"
 
+#: exploitations/models.py:69
+msgid "SAU — surface agricole utile (ha)"
+msgstr "SAU — hasznosított mezőgazdasági terület (ha)"
+
+#: exploitations/models.py:71
+msgid "type d'agriculture"
+msgstr "gazdálkodás típusa"
+
+#: exploitations/models.py:73
+msgid "productions principales"
+msgstr "fő termékek"
+
+#: exploitations/models.py:74
+msgid "cheptel"
+msgstr "állatállomány"
+
+#: exploitations/models.py:77
 msgid "quota eau (m³)"
-msgstr ""
+msgstr "vízkvóta (m³)"
 
+#: exploitations/models.py:78
 msgid "eau consommée (m³)"
-msgstr ""
+msgstr "elfogyasztott víz (m³)"
 
+#: exploitations/models.py:79
+msgid "prix de l'eau (€/m³)"
+msgstr "vízár (€/m³)"
+
+#: exploitations/models.py:80
+msgid "source d'eau"
+msgstr "vízforrás"
+
+#: exploitations/models.py:81
+msgid "surface irrigable (ha)"
+msgstr "öntözhető terület (ha)"
+
+#: exploitations/models.py:84
+msgid "niveau HVE"
+msgstr "HVE-szint"
+
+#: exploitations/models.py:85
+#, fuzzy
+#| msgid "Notifications"
+msgid "certifications & labels"
+msgstr "Értesítések"
+
+#: exploitations/models.py:85
+msgid "Bio, AOP/IGP, Label Rouge…"
+msgstr "Bio, AOP/IGP, Label Rouge…"
+
+#: exploitations/models.py:88
+msgid "main-d'œuvre (ETP)"
+msgstr "munkaerő (FTE)"
+
+#: exploitations/models.py:92
 msgid "exploitation"
-msgstr ""
+msgstr "gazdaság"
 
+#: exploitations/models.py:93
 msgid "exploitations"
-msgstr ""
+msgstr "gazdaságok"
 
-msgid "Informations de base utilisées partout dans l'application."
-msgstr ""
+#: exploitations/models.py:117
+msgid "rôle / libellé"
+msgstr "szerep / megnevezés"
 
-msgid "Annuler"
-msgstr ""
+#: exploitations/models.py:129
+msgid "société liée"
+msgstr "kapcsolt vállalkozás"
 
-msgid "Exploitation enregistrée."
-msgstr ""
+#: exploitations/models.py:130
+msgid "sociétés liées"
+msgstr "kapcsolt vállalkozások"
 
-msgid "Semences"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:15
+msgid "Profil de l'exploitation — utilisé partout dans l'application."
+msgstr "A gazdaság profilja — az alkalmazás egészében használatos."
 
-msgid "Engrais"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:64
+msgid "Sociétés liées"
+msgstr "Kapcsolt vállalkozások"
 
-msgid "Phytosanitaires"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:68
+#: exploitations/templates/exploitations/settings.html:99
+msgid "Ajouter une entreprise"
+msgstr "Vállalkozás hozzáadása"
 
-msgid "Énergie"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:81
+msgid "Supprimer cette société ?"
+msgstr "Törli ezt a vállalkozást?"
 
-msgid "Main d'œuvre"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:89
+msgid ""
+"Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
+"à l'exploitation."
+msgstr "Nincs kapcsolt vállalkozás. Adjon hozzá a gazdasághoz kapcsolódó vállalkozást (GAEC, SCI foncière…)."
 
-msgid "Matériel"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:105
+msgid "Raison sociale"
+msgstr "Cégnév"
 
-msgid "Transport"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:107
+msgid "Tapez ≥ 3 lettres pour rechercher dans l'annuaire officiel."
+msgstr "Írjon be legalább 3 betűt a hivatalos nyilvántartásban való kereséshez."
 
-msgid "Assurance"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:111
+msgid "Rôle / libellé"
+msgstr "Szerep / megnevezés"
 
-msgid "charge"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:112
+msgid "ex: SCI foncière"
+msgstr "pl.: SCI foncière"
 
-msgid "charges"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:115
+msgid "Forme juridique"
+msgstr "Jogi forma"
 
-msgid "Vente céréales"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:126
+msgid "N° PACAGE"
+msgstr "PACAGE-szám"
 
-msgid "Vente fruits"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:130
+msgid "TVA intra."
+msgstr "Közösségi adószám"
 
-msgid "Vente légumes"
-msgstr ""
-
-msgid "Aide PAC"
-msgstr ""
-
-msgid "Subvention"
-msgstr ""
-
-msgid "Location"
-msgstr ""
-
-msgid "Prestation"
-msgstr ""
-
-msgid "revenu"
-msgstr ""
-
-msgid "revenus"
-msgstr ""
-
-msgid "Extra"
-msgstr ""
-
-msgid "Catégorie 1"
-msgstr ""
-
-msgid "Catégorie 2"
-msgstr ""
-
-msgid "Déclassé"
-msgstr ""
-
-msgid "récolte"
-msgstr ""
-
-msgid "récoltes"
-msgstr ""
-
-msgid "client"
-msgstr ""
-
-msgid "clients"
-msgstr ""
-
-msgid "Brouillon"
-msgstr ""
-
-msgid "Payée"
-msgstr ""
-
-msgid "En retard"
-msgstr ""
-
-msgid "Annulée"
-msgstr ""
-
-msgid "facture"
-msgstr ""
-
-msgid "factures"
-msgstr ""
-
-msgid "Taxonomie Verte EU"
-msgstr ""
-
-msgid "Plan Eau 2026"
-msgstr ""
-
-msgid "En génération"
-msgstr ""
-
-msgid "Prêt"
-msgstr ""
-
-msgid "export subvention"
-msgstr ""
-
-msgid "exports subvention"
-msgstr ""
-
-msgid "Revenus CSV"
-msgstr ""
-
-msgid "Dossier subvention PDF"
-msgstr ""
-
-msgid "Revenus"
-msgstr ""
-
-msgid "Résultat net"
-msgstr ""
-
-msgid "Marge / ha"
-msgstr ""
-
-msgid "Revenus vs charges (par mois)"
-msgstr ""
-
-msgid "Pas encore de données financières."
-msgstr ""
-
-msgid "Consommation"
-msgstr ""
-
-msgid "Export CSV"
-msgstr ""
-
-msgid "Montant"
-msgstr ""
-
-msgid "Fournisseur"
-msgstr ""
-
-msgid "Aucune charge enregistrée."
-msgstr ""
-
-msgid "Client"
-msgstr ""
-
-msgid "Émission"
-msgstr ""
-
-msgid "Aucune facture."
-msgstr ""
-
-msgid "Dossier de subvention"
-msgstr ""
-
+#: exploitations/templates/exploitations/settings.html:134
+#: finances/templates/finances/subvention_pdf.html:24
 msgid "Année"
-msgstr ""
+msgstr "Év"
 
+#: exploitations/views.py:54
+msgid "Exploitation enregistrée."
+msgstr "Gazdaság elmentve."
+
+#: exploitations/views.py:63
+msgid "Juridique"
+msgstr "Jogi"
+
+#: exploitations/views.py:65 public/templates/public/home.html:482
+msgid "Contact"
+msgstr "Kapcsolat"
+
+#: exploitations/views.py:67
+msgid "Localisation"
+msgstr "Helymeghatározás"
+
+#: exploitations/views.py:69
+msgid "Caractéristiques agricoles"
+msgstr "Mezőgazdasági jellemzők"
+
+#: exploitations/views.py:71
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Eau & irrigation"
+msgstr "Öntözés"
+
+#: exploitations/views.py:73
+#, fuzzy
+#| msgid "Notifications"
+msgid "Certifications & labels"
+msgstr "Értesítések"
+
+#: exploitations/views.py:75
+#, fuzzy
+#| msgid "Économie"
+msgid "Économique"
+msgstr "Gazdaság"
+
+#: exploitations/views.py:117
+msgid "Société ajoutée."
+msgstr "Vállalkozás hozzáadva."
+
+#: finances/models.py:15
+msgid "Semences"
+msgstr "Vetőmagok"
+
+#: finances/models.py:17
+msgid "Phytosanitaires"
+msgstr "Növényvédő szerek"
+
+#: finances/models.py:19 finances/templates/finances/bilan_economique.html:31
+#: finances/templates/finances/subvention_pdf.html:32
+msgid "Énergie"
+msgstr "Energia"
+
+#: finances/models.py:20
+msgid "Main d'œuvre"
+msgstr "Munkaerő"
+
+#: finances/models.py:21 ia/models.py:35
+msgid "Matériel"
+msgstr "Eszközök"
+
+#: finances/models.py:22 operations/models.py:118 planning/models.py:213
+msgid "Transport"
+msgstr "Szállítás"
+
+#: finances/models.py:23
+msgid "Assurance"
+msgstr "Biztosítás"
+
+#: finances/models.py:36
+msgid "charge"
+msgstr "költség"
+
+#: finances/models.py:37
+msgid "charges"
+msgstr "költségek"
+
+#: finances/models.py:43
+msgid "Vente céréales"
+msgstr "Gabonaértékesítés"
+
+#: finances/models.py:44
+msgid "Vente fruits"
+msgstr "Gyümölcsértékesítés"
+
+#: finances/models.py:45
+msgid "Vente légumes"
+msgstr "Zöldségértékesítés"
+
+#: finances/models.py:46
+msgid "Aide PAC"
+msgstr "KAP-támogatás"
+
+#: finances/models.py:47
+msgid "Subvention"
+msgstr "Támogatás"
+
+#: finances/models.py:48
+msgid "Location"
+msgstr "Bérlet"
+
+#: finances/models.py:49
+msgid "Prestation"
+msgstr "Szolgáltatás"
+
+#: finances/models.py:65
+msgid "revenu"
+msgstr "bevétel"
+
+#: finances/models.py:66
+msgid "revenus"
+msgstr "bevételek"
+
+#: finances/models.py:72
+msgid "Extra"
+msgstr "Extra"
+
+#: finances/models.py:73
+msgid "Catégorie 1"
+msgstr "1. kategória"
+
+#: finances/models.py:74
+msgid "Catégorie 2"
+msgstr "2. kategória"
+
+#: finances/models.py:75
+msgid "Déclassé"
+msgstr "Leértékelt"
+
+#: finances/models.py:88
+msgid "récolte"
+msgstr "betakarítás"
+
+#: finances/models.py:89
+msgid "récoltes"
+msgstr "betakarítások"
+
+#: finances/models.py:105
+msgid "client"
+msgstr "ügyfél"
+
+#: finances/models.py:106
+msgid "clients"
+msgstr "ügyfelek"
+
+#: finances/models.py:115 planning/models.py:259
+msgid "Brouillon"
+msgstr "Vázlat"
+
+#: finances/models.py:117
+msgid "Payée"
+msgstr "Kifizetve"
+
+#: finances/models.py:118
+msgid "En retard"
+msgstr "Késedelmes"
+
+#: finances/models.py:119 interventions/models.py:32
+msgid "Annulée"
+msgstr "Törölve"
+
+#: finances/models.py:136
+msgid "facture"
+msgstr "számla"
+
+#: finances/models.py:137
+msgid "factures"
+msgstr "számlák"
+
+#: finances/models.py:149
+msgid "Taxonomie Verte EU"
+msgstr "EU zöld taxonómia"
+
+#: finances/models.py:150
+msgid "Plan Eau 2026"
+msgstr "Víz Terv 2026"
+
+#: finances/models.py:155
+msgid "En génération"
+msgstr "Generálás alatt"
+
+#: finances/models.py:156
+msgid "Prêt"
+msgstr "Kész"
+
+#: finances/models.py:168
+msgid "export subvention"
+msgstr "támogatási export"
+
+#: finances/models.py:169
+msgid "exports subvention"
+msgstr "támogatási exportok"
+
+#: finances/templates/finances/bilan_economique.html:9
+msgid "Revenus CSV"
+msgstr "Bevételek CSV"
+
+#: finances/templates/finances/bilan_economique.html:10
+msgid "Dossier subvention PDF"
+msgstr "Támogatási dosszié PDF"
+
+#: finances/templates/finances/bilan_economique.html:15
+#: finances/templates/finances/subvention_pdf.html:40 finances/views.py:50
+msgid "Revenus"
+msgstr "Bevételek"
+
+#: finances/templates/finances/bilan_economique.html:17
+#: finances/templates/finances/subvention_pdf.html:42
+msgid "Résultat net"
+msgstr "Nettó eredmény"
+
+#: finances/templates/finances/bilan_economique.html:18
+msgid "Marge / ha"
+msgstr "Árrés / ha"
+
+#: finances/templates/finances/bilan_economique.html:23
+msgid "Revenus vs charges (par mois)"
+msgstr "Bevételek és költségek (havonta)"
+
+#: finances/templates/finances/bilan_economique.html:25
+msgid "Pas encore de données financières."
+msgstr "Még nincs pénzügyi adat."
+
+#: finances/templates/finances/bilan_economique.html:28
+msgid "Consommation"
+msgstr "Fogyasztás"
+
+#: finances/templates/finances/charges.html:8
+msgid "Export CSV"
+msgstr "CSV-export"
+
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:56
+msgid "Montant"
+msgstr "Összeg"
+
+#: finances/templates/finances/charges.html:14
+msgid "Fournisseur"
+msgstr "Beszállító"
+
+#: finances/templates/finances/charges.html:29
+msgid "Aucune charge enregistrée."
+msgstr "Nincs rögzített költség."
+
+#: finances/templates/finances/facturation.html:11
+msgid "Client"
+msgstr "Ügyfél"
+
+#: finances/templates/finances/facturation.html:11
+msgid "Émission"
+msgstr "Kiállítás"
+
+#: finances/templates/finances/facturation.html:27
+msgid "Aucune facture."
+msgstr "Nincs számla."
+
+#: finances/templates/finances/subvention_pdf.html:22
+msgid "Dossier de subvention"
+msgstr "Támogatási dosszié"
+
+#: finances/templates/finances/subvention_pdf.html:33
 msgid "Score DTI"
-msgstr ""
+msgstr "DTI-pontszám"
 
-msgid "Nom"
-msgstr ""
-
+#: finances/templates/finances/subvention_pdf.html:49
+#: pac/templates/pac/pac.html:134
 msgid "Surface (ha)"
-msgstr ""
+msgstr "Terület (ha)"
 
+#: finances/templates/finances/subvention_pdf.html:56
 msgid "Document généré par Holystyl."
-msgstr ""
+msgstr "A Holystyl által generált dokumentum."
 
+#: ia/models.py:13
+msgid "Utilisateur"
+msgstr "Felhasználó"
+
+#: ia/models.py:26
 msgid "conversation IA"
-msgstr ""
+msgstr "MI-beszélgetés"
 
+#: ia/models.py:27
 msgid "conversations IA"
-msgstr ""
+msgstr "MI-beszélgetések"
 
-msgid "Parcelle"
-msgstr ""
-
-msgid "Produit"
-msgstr ""
-
+#: ia/models.py:37
 msgid "Général"
-msgstr ""
+msgstr "Általános"
 
+#: ia/models.py:45
 msgid "terme vocal"
-msgstr ""
+msgstr "hangkifejezés"
 
+#: ia/models.py:46
 msgid "dictionnaire vocal"
-msgstr ""
+msgstr "hangszótár"
 
+#: ia/models.py:68
 msgid "rapport quotidien"
-msgstr ""
+msgstr "napi jelentés"
 
+#: ia/models.py:69
 msgid "rapports quotidiens"
-msgstr ""
+msgstr "napi jelentések"
 
-msgid "Assistant Holystyl"
-msgstr ""
+#: ia/templates/ia/assistant.html:11 ia/templates/ia/assistant.html:33
+#: messagerie/templates/messagerie/new.html:6 messagerie/views.py:207
+msgid "Nouvelle conversation"
+msgstr "Új beszélgetés"
 
-msgid "IA non configurée"
-msgstr ""
+#: ia/templates/ia/assistant.html:13
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversations"
+msgstr "Kommunikáció"
 
-msgid "Demandez quelque chose…"
-msgstr ""
+#: ia/templates/ia/assistant.html:22
+msgid "Aucune conversation."
+msgstr "Nincs beszélgetés."
 
+#: ia/templates/ia/assistant.html:39
+msgid "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles."
+msgstr "MI nincs beállítva — adja meg a GEMINI_API_KEY-t a valódi válaszokhoz."
+
+#: ia/templates/ia/assistant.html:49
+msgid "Bonjour, je suis Eric."
+msgstr "Üdvözlöm, Eric vagyok."
+
+#: ia/templates/ia/assistant.html:51
+msgid ""
+"Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
+"cultures, la fertilisation ou vos analyses."
+msgstr "Az Ön agronómus tanácsadója. Tegye fel kérdéseit az öntözésről, a növényekről, a tápanyag-utánpótlásról vagy a vizsgálatairól."
+
+#: ia/templates/ia/assistant.html:89
+msgid "Décrivez votre besoin…"
+msgstr "Írja le, mire van szüksége…"
+
+#: ia/templates/ia/assistant.html:92
+msgid "Entrée pour envoyer · Maj+Entrée pour saut de ligne"
+msgstr "Enter a küldéshez · Shift+Enter sortöréshez"
+
+#: ia/templates/ia/assistant.html:95
 msgid "Dictée vocale"
-msgstr ""
+msgstr "Hangbevitel"
 
+#: ia/templates/ia/assistant.html:100 mail/templates/mail/compose.html:58
+#: messagerie/templates/messagerie/_new_modal.html:62
 msgid "Envoyer"
-msgstr ""
+msgstr "Küldés"
 
+#: ia/templates/ia/assistant.html:105
+msgid "Eric peut commettre des erreurs. Vérifiez les informations importantes."
+msgstr "Eric hibázhat. Ellenőrizze a fontos információkat."
+
+#: ia/templates/ia/assistant.html:150
+#: messagerie/templates/messagerie/detail.html:105
 msgid "Reconnaissance vocale non supportée par ce navigateur."
-msgstr ""
-
-msgid "Débitmètre"
-msgstr ""
-
-msgid "Capteur de pression"
-msgstr ""
-
-msgid "Station météo"
-msgstr ""
-
-msgid "Contrôleur de vanne"
-msgstr ""
-
-msgid "Contrôleur de pompe"
-msgstr ""
-
-msgid "Humidité du sol"
-msgstr ""
-
-msgid "Compteur d'énergie"
-msgstr ""
-
-msgid "Générique"
-msgstr ""
-
-msgid "En ligne"
-msgstr ""
-
-msgid "Hors ligne"
-msgstr ""
-
-msgid "Avertissement"
-msgstr ""
-
-msgid "identifiant device"
-msgstr ""
-
-msgid "device IoT"
-msgstr ""
-
-msgid "devices IoT"
-msgstr ""
-
-msgid "télémétrie"
-msgstr ""
-
-msgid "télémétries"
-msgstr ""
-
-msgid "Envoyée"
-msgstr ""
-
-msgid "Accusée"
-msgstr ""
-
-msgid "Échouée"
-msgstr ""
-
-msgid "Expirée"
-msgstr ""
-
-msgid "commande IoT"
-msgstr ""
-
-msgid "commandes IoT"
-msgstr ""
-
-msgid "Fuite détectée"
-msgstr ""
-
-msgid "Pression basse"
-msgstr ""
-
-msgid "Pression haute"
-msgstr ""
-
-msgid "Débit bas"
-msgstr ""
-
-msgid "Débit élevé"
-msgstr ""
-
-msgid "Panne de pompe"
-msgstr ""
-
-msgid "Baisse d'uniformité"
-msgstr ""
-
-msgid "Pic d'énergie"
-msgstr ""
-
-msgid "Seuil dépassé"
-msgstr ""
-
-msgid "Risque de gel"
-msgstr ""
-
-msgid "Perte invisible"
-msgstr ""
-
-msgid "Info"
-msgstr ""
-
-msgid "Danger"
-msgstr ""
-
-msgid "alerte IoT"
-msgstr ""
-
-msgid "alertes IoT"
-msgstr ""
-
-msgid "Température gel"
-msgstr ""
-
-msgid "Pression min"
-msgstr ""
-
-msgid "Pression max"
-msgstr ""
-
-msgid "Débit min"
-msgstr ""
-
-msgid "Débit max"
-msgstr ""
-
-msgid "kWh/m³ max"
-msgstr ""
-
-msgid "Humidité sol min"
-msgstr ""
-
-msgid "Humidité sol max"
-msgstr ""
-
-msgid "Perte invisible %"
-msgstr ""
-
-msgid "seuil"
-msgstr ""
-
-msgid "seuils"
-msgstr ""
-
-msgid "Capteurs & IoT"
-msgstr ""
-
-msgid "Télémétrie récente"
-msgstr ""
-
-msgid "Marque"
-msgstr ""
-
-msgid "Firmware"
-msgstr ""
-
-msgid "Vu"
-msgstr ""
-
-msgid "Aucun capteur enregistré."
-msgstr ""
-
-msgid "Temps réel actif"
-msgstr ""
-
-msgid "Débit"
-msgstr ""
-
-msgid "Pression"
-msgstr ""
-
-msgid "Puissance"
-msgstr ""
-
-msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
-msgstr ""
-
-msgid "Goutte à goutte"
-msgstr ""
-
-msgid "Aspersion"
-msgstr ""
-
-msgid "Pivot"
-msgstr ""
-
-msgid "Enrouleur"
-msgstr ""
-
-msgid "Micro-aspersion"
-msgstr ""
-
-msgid "Micro-jet"
-msgstr ""
-
-msgid "Submersion"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Maintenance"
-msgstr ""
-
-msgid "zone d'irrigation"
-msgstr ""
-
-msgid "zones d'irrigation"
-msgstr ""
-
-msgid "Quotidien"
-msgstr ""
-
-msgid "Tous les 2 jours"
-msgstr ""
-
-msgid "Tous les 3 jours"
-msgstr ""
-
-msgid "Hebdomadaire"
-msgstr ""
-
-msgid "Personnalisé"
-msgstr ""
-
-msgid "Par durée"
-msgstr ""
-
-msgid "Par volume"
-msgstr ""
-
-msgid "Par pluviométrie"
-msgstr ""
-
-msgid "Manuel"
-msgstr ""
-
-msgid "Vocal"
-msgstr ""
-
-msgid "IA"
-msgstr ""
-
-msgid "programme d'irrigation"
-msgstr ""
-
-msgid "programmes d'irrigation"
-msgstr ""
-
-msgid "Auto"
-msgstr ""
-
-msgid "IoT"
-msgstr ""
-
-msgid "session d'irrigation"
-msgstr ""
-
-msgid "sessions d'irrigation"
-msgstr ""
-
-msgid "Opérationnelle"
-msgstr ""
-
-msgid "En panne"
-msgstr ""
-
-msgid "station de pompage"
-msgstr ""
-
-msgid "stations de pompage"
-msgstr ""
-
-msgid "Capteur"
-msgstr ""
-
-msgid "Terminé"
-msgstr ""
-
-msgid "événement de bassinage"
-msgstr ""
-
-msgid "événements de bassinage"
-msgstr ""
-
-msgid "relevé compteur eau"
-msgstr ""
-
-msgid "relevés compteur eau"
-msgstr ""
-
-msgid "relevé énergie"
-msgstr ""
-
-msgid "relevés énergie"
-msgstr ""
-
-msgid "Annuel"
-msgstr ""
-
-msgid "Mensuel"
-msgstr ""
-
-msgid "quota eau"
-msgstr ""
-
-msgid "quotas eau"
-msgstr ""
-
-msgid "score DTI"
-msgstr ""
-
-msgid "scores DTI"
-msgstr ""
-
-msgid "Faible"
-msgstr ""
-
-msgid "Moyen"
-msgstr ""
-
-msgid "Élevé"
-msgstr ""
-
-msgid "Critique"
-msgstr ""
-
-msgid "événement de gel"
-msgstr ""
-
-msgid "événements de gel"
-msgstr ""
-
-msgid "donnée NDVI"
-msgstr ""
-
-msgid "données NDVI"
-msgstr ""
-
-msgid "détection de perte invisible"
-msgstr ""
-
-msgid "détections de pertes invisibles"
-msgstr ""
-
-msgid "Aucun événement de bassinage."
-msgstr ""
-
-msgid "Volumes irrigués récents"
-msgstr ""
-
-msgid "Aucune zone."
-msgstr ""
-
-msgid "actif"
-msgstr ""
-
-msgid "inactif"
-msgstr ""
-
-msgid "Aucun programme."
-msgstr ""
-
-msgid "Aucune session."
-msgstr ""
-
-msgid "Aucune station."
-msgstr ""
-
-msgid "Zones"
-msgstr ""
-
-msgid "Programmes"
-msgstr ""
-
-msgid "Sessions"
-msgstr ""
-
-msgid "Stations"
-msgstr ""
-
-msgid "Urgente"
-msgstr ""
-
-msgid "notification"
-msgstr ""
-
-msgid "notifications"
-msgstr ""
-
-msgid "règle de notification"
-msgstr ""
-
-msgid "règles de notification"
-msgstr ""
-
-msgid "Tout marquer comme lu"
-msgstr ""
-
-msgid "Aucune notification."
-msgstr ""
-
-msgid "Règles d'alerte"
-msgstr ""
-
-msgid "activée"
-msgstr ""
-
-msgid "désactivée"
-msgstr ""
-
-msgid "Aucune règle définie."
-msgstr ""
-
-msgid "Pompe"
-msgstr ""
-
-msgid "Tracteur"
-msgstr ""
-
-msgid "Pulvérisateur"
-msgstr ""
-
-msgid "Réformée"
-msgstr ""
-
-msgid "machine"
-msgstr ""
-
-msgid "machines"
-msgstr ""
-
-msgid "Utilisation"
-msgstr ""
-
-msgid "Réparation"
-msgstr ""
-
-msgid "Inspection"
-msgstr ""
-
+msgstr "A beszédfelismerést ez a böngésző nem támogatja."
+
+#: ia/views.py:40 messagerie/models.py:66
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversation"
+msgstr "Kommunikáció"
+
+#: ia/views.py:68
+msgid "Eric"
+msgstr "Eric"
+
+#: interventions/models.py:13
+#: interventions/templates/interventions/interventions.html:55
+#: operations/models.py:114
 msgid "Traitement"
-msgstr ""
+msgstr "Kezelés"
 
+#: interventions/models.py:14
+#: interventions/templates/interventions/interventions.html:64
+#: operations/models.py:116
 msgid "Fertilisation"
-msgstr ""
+msgstr "Tápanyag-utánpótlás"
 
+#: interventions/models.py:15
+#: interventions/templates/interventions/interventions.html:73
+#: operations/models.py:115
 msgid "Récolte"
-msgstr ""
+msgstr "Betakarítás"
 
+#: interventions/models.py:16 operations/models.py:113
 msgid "Semis"
-msgstr ""
+msgstr "Vetés"
 
+#: interventions/models.py:17
 msgid "Travail du sol"
-msgstr ""
+msgstr "Talajművelés"
 
+#: interventions/models.py:18
 msgid "Taille"
-msgstr ""
+msgstr "Metszés"
 
+#: interventions/models.py:19
 msgid "Palissage"
-msgstr ""
+msgstr "Támrendszerre kötözés"
 
+#: interventions/models.py:20
 msgid "Désherbage"
-msgstr ""
+msgstr "Gyomirtás"
 
+#: interventions/models.py:21
 msgid "Éclaircissage"
-msgstr ""
+msgstr "Ritkítás"
 
+#: interventions/models.py:22
 msgid "Effeuillage"
-msgstr ""
+msgstr "Lombtalanítás"
 
+#: interventions/models.py:23
 msgid "Vendange"
-msgstr ""
+msgstr "Szüret"
 
+#: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:131
+#: operations/models.py:25 operations/models.py:55
+msgid "Maintenance"
+msgstr "Karbantartás"
+
+#: interventions/models.py:25
 msgid "Observation"
-msgstr ""
+msgstr "Megfigyelés"
 
+#: interventions/models.py:29
 msgid "Planifiée"
-msgstr ""
+msgstr "Ütemezve"
 
+#: interventions/models.py:35 irrigation/models.py:73
+msgid "Vocal"
+msgstr "Hangalapú"
+
+#: interventions/models.py:36 irrigation/models.py:72 irrigation/models.py:104
+#: irrigation/models.py:156 irrigation/models.py:191 irrigation/models.py:215
+msgid "Manuel"
+msgstr "Kézi"
+
+#: interventions/models.py:37 irrigation/models.py:74 irrigation/models.py:107
+msgid "IA"
+msgstr "MI"
+
+#: interventions/models.py:62
 msgid "intervention"
-msgstr ""
+msgstr "beavatkozás"
 
+#: interventions/models.py:63
 msgid "interventions"
-msgstr ""
+msgstr "beavatkozások"
 
-msgid "Vidange"
-msgstr ""
+#: interventions/templates/interventions/interventions.html:28
+#, python-format
+msgid "Journal des opérations culturales · %(n)s intervention"
+msgid_plural "Journal des opérations culturales · %(n)s interventions"
+msgstr[0] "Művelési műveletek naplója · %(n)s beavatkozás"
+msgstr[1] "Művelési műveletek naplója · %(n)s beavatkozás"
 
-msgid "Filtres"
-msgstr ""
-
-msgid "Courroies"
-msgstr ""
-
-msgid "Pneumatiques"
-msgstr ""
-
-msgid "Freins"
-msgstr ""
-
-msgid "Révision complète"
-msgstr ""
-
-msgid "Contrôle technique"
-msgstr ""
-
-msgid "entretien"
-msgstr ""
-
-msgid "entretiens"
-msgstr ""
-
-msgid "Labour"
-msgstr ""
-
-msgid "affectation d'engin"
-msgstr ""
-
-msgid "affectations d'engins"
-msgstr ""
-
-msgid "Semoir"
-msgstr ""
-
-msgid "Épandeur"
-msgstr ""
-
-msgid "Moissonneuse"
-msgstr ""
-
-msgid "Charrue"
-msgstr ""
-
-msgid "Cultivateur"
-msgstr ""
-
-msgid "Benne"
-msgstr ""
-
-msgid "modèle d'engin (catalogue)"
-msgstr ""
-
-msgid "catalogue d'engins"
-msgstr ""
-
+#: interventions/templates/interventions/interventions.html:103
 msgid "Aucune intervention enregistrée."
-msgstr ""
+msgstr "Nincs rögzített beavatkozás."
 
+#: interventions/templates/interventions/interventions.html:106
+msgid "Enregistrer la première intervention"
+msgstr "Az első beavatkozás rögzítése"
+
+#: interventions/templates/interventions/interventions.html:112
+msgid "Aucune intervention pour ce filtre."
+msgstr "Nincs beavatkozás ehhez a szűréshez."
+
+#: interventions/templates/interventions/interventions.html:121
+#, fuzzy
+#| msgid "Interventions"
+msgid "Nouvelle intervention"
+msgstr "Beavatkozások"
+
+#: interventions/templates/interventions/interventions.html:144
+msgid "Titre"
+msgstr "Cím"
+
+#: interventions/templates/interventions/interventions.html:150
+msgid "Date / heure"
+msgstr "Dátum / idő"
+
+#: interventions/templates/interventions/interventions.html:158
+msgid "—"
+msgstr "—"
+
+#: iot/models.py:16
+msgid "Débitmètre"
+msgstr "Áramlásmérő"
+
+#: iot/models.py:17
+msgid "Capteur de pression"
+msgstr "Nyomásérzékelő"
+
+#: iot/models.py:18
+msgid "Station météo"
+msgstr "Időjárás-állomás"
+
+#: iot/models.py:19
+msgid "Contrôleur de vanne"
+msgstr "Szelepvezérlő"
+
+#: iot/models.py:20
+msgid "Contrôleur de pompe"
+msgstr "Szivattyúvezérlő"
+
+#: iot/models.py:21
+msgid "Humidité du sol"
+msgstr "Talajnedvesség"
+
+#: iot/models.py:22
+msgid "Compteur d'énergie"
+msgstr "Energiamérő"
+
+#: iot/models.py:23 iot/models.py:30
+msgid "Générique"
+msgstr "Általános"
+
+#: iot/models.py:33
+msgid "En ligne"
+msgstr "Online"
+
+#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
+msgid "Hors ligne"
+msgstr "Offline"
+
+#: iot/models.py:35 iot/models.py:131
+msgid "Avertissement"
+msgstr "Figyelmeztetés"
+
+#: iot/models.py:44
+msgid "identifiant device"
+msgstr "eszközazonosító"
+
+#: iot/models.py:56
+msgid "device IoT"
+msgstr "IoT-eszköz"
+
+#: iot/models.py:57
+msgid "devices IoT"
+msgstr "IoT-eszközök"
+
+#: iot/models.py:82
+msgid "télémétrie"
+msgstr "telemetria"
+
+#: iot/models.py:83
+msgid "télémétries"
+msgstr "telemetriák"
+
+#: iot/models.py:91
+msgid "Envoyée"
+msgstr "Elküldve"
+
+#: iot/models.py:92
+msgid "Accusée"
+msgstr "Visszaigazolva"
+
+#: iot/models.py:94
+msgid "Échouée"
+msgstr "Sikertelen"
+
+#: iot/models.py:95
+msgid "Expirée"
+msgstr "Lejárt"
+
+#: iot/models.py:109
+msgid "commande IoT"
+msgstr "IoT-parancs"
+
+#: iot/models.py:110
+msgid "commandes IoT"
+msgstr "IoT-parancsok"
+
+#: iot/models.py:116
+msgid "Fuite détectée"
+msgstr "Szivárgás észlelve"
+
+#: iot/models.py:117
+msgid "Pression basse"
+msgstr "Alacsony nyomás"
+
+#: iot/models.py:118
+msgid "Pression haute"
+msgstr "Magas nyomás"
+
+#: iot/models.py:119
+msgid "Débit bas"
+msgstr "Alacsony áramlás"
+
+#: iot/models.py:120
+msgid "Débit élevé"
+msgstr "Magas áramlás"
+
+#: iot/models.py:121
+msgid "Panne de pompe"
+msgstr "Szivattyúhiba"
+
+#: iot/models.py:122
+msgid "Baisse d'uniformité"
+msgstr "Egyenletesség csökkenése"
+
+#: iot/models.py:123
+msgid "Pic d'énergie"
+msgstr "Energiacsúcs"
+
+#: iot/models.py:125
+msgid "Seuil dépassé"
+msgstr "Küszöbérték túllépve"
+
+#: iot/models.py:126
+msgid "Risque de gel"
+msgstr "Fagyveszély"
+
+#: iot/models.py:127
+msgid "Perte invisible"
+msgstr "Rejtett veszteség"
+
+#: iot/models.py:130
+msgid "Info"
+msgstr "Információ"
+
+#: iot/models.py:132
+msgid "Danger"
+msgstr "Veszély"
+
+#: iot/models.py:148
+msgid "alerte IoT"
+msgstr "IoT-riasztás"
+
+#: iot/models.py:149
+msgid "alertes IoT"
+msgstr "IoT-riasztások"
+
+#: iot/models.py:156
+msgid "Température gel"
+msgstr "Fagyhőmérséklet"
+
+#: iot/models.py:157
+msgid "Pression min"
+msgstr "Min. nyomás"
+
+#: iot/models.py:158
+msgid "Pression max"
+msgstr "Max. nyomás"
+
+#: iot/models.py:159
+msgid "Débit min"
+msgstr "Min. áramlás"
+
+#: iot/models.py:160
+msgid "Débit max"
+msgstr "Max. áramlás"
+
+#: iot/models.py:161
+msgid "kWh/m³ max"
+msgstr "kWh/m³ max"
+
+#: iot/models.py:162
+msgid "Humidité sol min"
+msgstr "Min. talajnedvesség"
+
+#: iot/models.py:163
+msgid "Humidité sol max"
+msgstr "Max. talajnedvesség"
+
+#: iot/models.py:164
+msgid "Perte invisible %"
+msgstr "Rejtett veszteség %"
+
+#: iot/models.py:176
+msgid "seuil"
+msgstr "küszöbérték"
+
+#: iot/models.py:177
+msgid "seuils"
+msgstr "küszöbértékek"
+
+#: iot/templates/iot/capteurs.html:6 iot/views.py:60
+msgid "Capteurs & IoT"
+msgstr "Érzékelők és IoT"
+
+#: iot/templates/iot/capteurs.html:10
+msgid "Télémétrie récente"
+msgstr "Legutóbbi telemetria"
+
+#: iot/templates/iot/capteurs.html:22
+msgid "Marque"
+msgstr "Márka"
+
+#: iot/templates/iot/capteurs.html:23
+msgid "Firmware"
+msgstr "Firmware"
+
+#: iot/templates/iot/capteurs.html:25
+msgid "Vu"
+msgstr "Látva"
+
+#: iot/templates/iot/capteurs.html:43
+msgid "Aucun capteur enregistré."
+msgstr "Nincs rögzített érzékelő."
+
+#: iot/templates/iot/regie.html:10
+msgid "Temps réel actif"
+msgstr "Valós idő aktív"
+
+#: iot/templates/iot/regie.html:42 parcelles/templates/parcelles/detail.html:31
+msgid "Débit"
+msgstr "Áramlás"
+
+#: iot/templates/iot/regie.html:46 parcelles/templates/parcelles/detail.html:32
+msgid "Pression"
+msgstr "Nyomás"
+
+#: iot/templates/iot/regie.html:50
+msgid "Puissance"
+msgstr "Teljesítmény"
+
+#: iot/templates/iot/regie.html:62
+msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
+msgstr "Nincs IoT-eszköz. Adjon hozzá az adminon vagy az Érzékelők menüben."
+
+#: irrigation/models.py:20 parcelles/models.py:14
+msgid "Goutte à goutte"
+msgstr "Csepegtető"
+
+#: irrigation/models.py:21 parcelles/models.py:15
+msgid "Aspersion"
+msgstr "Esőztető"
+
+#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
+msgid "Pivot"
+msgstr "Lineár/körforgó"
+
+#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
+msgid "Enrouleur"
+msgstr "Öntöződob"
+
+#: irrigation/models.py:24 parcelles/models.py:18
+msgid "Micro-aspersion"
+msgstr "Mikroesőztető"
+
+#: irrigation/models.py:25
+msgid "Micro-jet"
+msgstr "Mikrojet"
+
+#: irrigation/models.py:26
+msgid "Submersion"
+msgstr "Árasztásos"
+
+#: irrigation/models.py:29 parcelles/models.py:22
+msgid "Active"
+msgstr "Aktív"
+
+#: irrigation/models.py:30 parcelles/models.py:23
+msgid "Inactive"
+msgstr "Inaktív"
+
+#: irrigation/models.py:50
+msgid "zone d'irrigation"
+msgstr "öntözési zóna"
+
+#: irrigation/models.py:51
+msgid "zones d'irrigation"
+msgstr "öntözési zónák"
+
+#: irrigation/models.py:60
+msgid "Quotidien"
+msgstr "Naponta"
+
+#: irrigation/models.py:61
+msgid "Tous les 2 jours"
+msgstr "Kétnaponta"
+
+#: irrigation/models.py:62
+msgid "Tous les 3 jours"
+msgstr "Háromnaponta"
+
+#: irrigation/models.py:63 irrigation/models.py:241
+msgid "Hebdomadaire"
+msgstr "Hetente"
+
+#: irrigation/models.py:64
+msgid "Personnalisé"
+msgstr "Egyéni"
+
+#: irrigation/models.py:67
+msgid "Par durée"
+msgstr "Időtartam szerint"
+
+#: irrigation/models.py:68
+msgid "Par volume"
+msgstr "Térfogat szerint"
+
+#: irrigation/models.py:69
+msgid "Par pluviométrie"
+msgstr "Csapadék szerint"
+
+#: irrigation/models.py:94
+msgid "programme d'irrigation"
+msgstr "öntözési program"
+
+#: irrigation/models.py:95
+msgid "programmes d'irrigation"
+msgstr "öntözési programok"
+
+#: irrigation/models.py:105 irrigation/models.py:157
+msgid "Auto"
+msgstr "Auto"
+
+#: irrigation/models.py:106
+msgid "IoT"
+msgstr "IoT"
+
+#: irrigation/models.py:123
+msgid "session d'irrigation"
+msgstr "öntözési menet"
+
+#: irrigation/models.py:124
+msgid "sessions d'irrigation"
+msgstr "öntözési menetek"
+
+#: irrigation/models.py:130 operations/models.py:24
+msgid "Opérationnelle"
+msgstr "Üzemképes"
+
+#: irrigation/models.py:132 operations/models.py:26
+msgid "En panne"
+msgstr "Meghibásodott"
+
+#: irrigation/models.py:147
+msgid "station de pompage"
+msgstr "szivattyúállomás"
+
+#: irrigation/models.py:148
+msgid "stations de pompage"
+msgstr "szivattyúállomások"
+
+#: irrigation/models.py:158
+msgid "Capteur"
+msgstr "Érzékelő"
+
+#: irrigation/models.py:161
+msgid "Actif"
+msgstr "Aktív"
+
+#: irrigation/models.py:162 planning/models.py:32
+msgid "Terminé"
+msgstr "Befejezve"
+
+#: irrigation/models.py:163 planning/models.py:33
+msgid "Annulé"
+msgstr "Törölve"
+
+#: irrigation/models.py:182
+msgid "événement de bassinage"
+msgstr "öntözési esemény"
+
+#: irrigation/models.py:183
+msgid "événements de bassinage"
+msgstr "öntözési események"
+
+#: irrigation/models.py:205
+msgid "relevé compteur eau"
+msgstr "vízmérő-leolvasás"
+
+#: irrigation/models.py:206
+msgid "relevés compteur eau"
+msgstr "vízmérő-leolvasások"
+
+#: irrigation/models.py:231
+msgid "relevé énergie"
+msgstr "energialeolvasás"
+
+#: irrigation/models.py:232
+msgid "relevés énergie"
+msgstr "energialeolvasások"
+
+#: irrigation/models.py:239
+msgid "Annuel"
+msgstr "Éves"
+
+#: irrigation/models.py:240
+msgid "Mensuel"
+msgstr "Havi"
+
+#: irrigation/models.py:252
+msgid "quota eau"
+msgstr "vízkvóta"
+
+#: irrigation/models.py:253
+msgid "quotas eau"
+msgstr "vízkvóták"
+
+#: irrigation/models.py:278
+msgid "score DTI"
+msgstr "DTI-pontszám"
+
+#: irrigation/models.py:279
+msgid "scores DTI"
+msgstr "DTI-pontszámok"
+
+#: irrigation/models.py:285
+msgid "Faible"
+msgstr "Alacsony"
+
+#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
+msgid "Moyen"
+msgstr "Közepes"
+
+#: irrigation/models.py:287
+msgid "Élevé"
+msgstr "Magas"
+
+#: irrigation/models.py:288 planning/models.py:256
+msgid "Critique"
+msgstr "Kritikus"
+
+#: irrigation/models.py:306
+msgid "événement de gel"
+msgstr "fagyesemény"
+
+#: irrigation/models.py:307
+msgid "événements de gel"
+msgstr "fagyesemények"
+
+#: irrigation/models.py:326
+msgid "donnée NDVI"
+msgstr "NDVI-adat"
+
+#: irrigation/models.py:327
+msgid "données NDVI"
+msgstr "NDVI-adatok"
+
+#: irrigation/models.py:345
+msgid "détection de perte invisible"
+msgstr "rejtett veszteség észlelése"
+
+#: irrigation/models.py:346
+msgid "détections de pertes invisibles"
+msgstr "rejtett veszteségek észlelései"
+
+#: irrigation/templates/irrigation/bassinage.html:20
+msgid "Aucun événement de bassinage."
+msgstr "Nincs öntözési esemény."
+
+#: irrigation/templates/irrigation/irrigation.html:10
+msgid "Volumes irrigués récents"
+msgstr "Legutóbbi öntözött térfogatok"
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "Aucune zone."
+msgstr "Nincs zóna."
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "actif"
+msgstr "aktív"
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "inactif"
+msgstr "inaktív"
+
+#: irrigation/templates/irrigation/irrigation.html:37
+msgid "Aucun programme."
+msgstr "Nincs program."
+
+#: irrigation/templates/irrigation/irrigation.html:46
+msgid "Aucune session."
+msgstr "Nincs menet."
+
+#: irrigation/templates/irrigation/irrigation.html:55
+msgid "Aucune station."
+msgstr "Nincs állomás."
+
+#: irrigation/views.py:36
+msgid "Zones"
+msgstr "Zónák"
+
+#: irrigation/views.py:37
+msgid "Programmes"
+msgstr "Programok"
+
+#: irrigation/views.py:39
+msgid "Stations"
+msgstr "Állomások"
+
+#: mail/models.py:15 mail/templates/mail/detail.html:14
+#: mail/templates/mail/outbox.html:28
+msgid "Échec"
+msgstr "Sikertelen"
+
+#: mail/models.py:22
+msgid "destinataires"
+msgstr "címzettek"
+
+#: mail/models.py:23
+msgid "copie"
+msgstr "másolat"
+
+#: mail/models.py:24
+msgid "objet"
+msgstr "tárgy"
+
+#: mail/models.py:25 messagerie/models.py:99 messagerie/models.py:102
+#, fuzzy
+#| msgid "Messagerie"
+msgid "message"
+msgstr "Üzenetek"
+
+#: mail/models.py:26 messagerie/models.py:120
+msgid "pièces jointes"
+msgstr "mellékletek"
+
+#: mail/models.py:31
+msgid "e-mail"
+msgstr "e-mail"
+
+#: mail/models.py:32
+msgid "e-mails"
+msgstr "e-mailek"
+
+#: mail/templates/mail/compose.html:6 mail/templates/mail/outbox.html:10
+#: mail/views.py:83 mail/views.py:116
+msgid "Nouveau mail"
+msgstr "Új levél"
+
+#: mail/templates/mail/compose.html:18 mail/templates/mail/detail.html:21
+#: mail/templates/mail/outbox.html:23
+#: messagerie/templates/messagerie/_new_modal.html:30
+msgid "À"
+msgstr "Címzett"
+
+#: mail/templates/mail/compose.html:18
+msgid "séparez par des virgules"
+msgstr "vesszővel elválasztva"
+
+#: mail/templates/mail/compose.html:30 mail/templates/mail/detail.html:22
+msgid "Cc"
+msgstr "Másolat"
+
+#: mail/templates/mail/compose.html:30
+#: messagerie/templates/messagerie/new.html:26
+msgid "optionnel"
+msgstr "opcionális"
+
+#: mail/templates/mail/compose.html:36
+msgid "Objet"
+msgstr "Tárgy"
+
+#: mail/templates/mail/compose.html:42
+#: messagerie/templates/messagerie/_new_modal.html:55
+#, fuzzy
+#| msgid "Messagerie"
+msgid "Message"
+msgstr "Üzenetek"
+
+#: mail/templates/mail/compose.html:49
+msgid "Joindre des fichiers"
+msgstr "Fájlok csatolása"
+
+#: mail/templates/mail/detail.html:7
+msgid "Retour"
+msgstr "Vissza"
+
+#: mail/templates/mail/detail.html:23
+msgid "Le"
+msgstr "Dátum"
+
+#: mail/templates/mail/detail.html:40
+msgid "Erreur d'envoi"
+msgstr "Küldési hiba"
+
+#: mail/templates/mail/outbox.html:7
+msgid "Envoyés"
+msgstr "Elküldött"
+
+#: mail/templates/mail/outbox.html:37
+msgid "Aucun e-mail envoyé pour le moment."
+msgstr "Még nincs elküldött e-mail."
+
+#: mail/views.py:73
+msgid "Indiquez au moins un destinataire valide."
+msgstr "Adjon meg legalább egy érvényes címzettet."
+
+#: mail/views.py:75
+#, python-format
+msgid "Adresses invalides ignorées : %(list)s"
+msgstr "Figyelmen kívül hagyott érvénytelen címek: %(list)s"
+
+#: mail/views.py:77
+msgid "L'objet est obligatoire."
+msgstr "A tárgy megadása kötelező."
+
+#: messagerie/models.py:24
+#, python-format
+msgid "Extension non autorisée : %(ext)s. Extensions acceptées : %(list)s."
+msgstr "Nem engedélyezett kiterjesztés: %(ext)s. Elfogadott kiterjesztések: %(list)s."
+
+#: messagerie/models.py:29
+#, python-format
+msgid "Le fichier dépasse la taille maximale de 5 Mo (%(got)s Mo reçus)."
+msgstr "A fájl meghaladja az 5 MB-os maximális méretet (%(got)s MB érkezett)."
+
+#: messagerie/models.py:41
+msgid "groupe"
+msgstr "csoport"
+
+#: messagerie/models.py:42
+msgid "nom du groupe"
+msgstr "csoport neve"
+
+#: messagerie/models.py:51
+#, fuzzy
+#| msgid "Facturation"
+msgid "conversation"
+msgstr "Számlázás"
+
+#: messagerie/models.py:52
+#, fuzzy
+#| msgid "Interventions"
+msgid "conversations"
+msgstr "Beavatkozások"
+
+#: messagerie/models.py:64 messagerie/templates/messagerie/_new_modal.html:25
+msgid "Groupe"
+msgstr "Csoport"
+
+#: messagerie/models.py:88
+msgid "membre de conversation"
+msgstr "beszélgetés résztvevője"
+
+#: messagerie/models.py:89
+msgid "membres de conversation"
+msgstr "beszélgetés résztvevői"
+
+#: messagerie/models.py:103
+#, fuzzy
+#| msgid "Messagerie"
+msgid "messages"
+msgstr "Üzenetek"
+
+#: messagerie/models.py:114
+msgid "fichier"
+msgstr "fájl"
+
+#: messagerie/models.py:119
+msgid "pièce jointe"
+msgstr "melléklet"
+
+#: messagerie/templates/messagerie/_messages.html:25
+msgid "Démarrez la conversation 👋"
+msgstr "Indítsa el a beszélgetést 👋"
+
+#: messagerie/templates/messagerie/_new_modal.html:8
+#: messagerie/templates/messagerie/_sidebar.html:5
+#: messagerie/templates/messagerie/inbox.html:21
+msgid "Nouveau message"
+msgstr "Új üzenet"
+
+#: messagerie/templates/messagerie/_new_modal.html:20
+msgid "Direct"
+msgstr "Közvetlen"
+
+#: messagerie/templates/messagerie/_new_modal.html:33
+msgid "— Choisir un agriculteur —"
+msgstr "— Válasszon gazdálkodót —"
+
+#: messagerie/templates/messagerie/_new_modal.html:40
+#: messagerie/templates/messagerie/new.html:26
+msgid "Nom du groupe"
+msgstr "Csoport neve"
+
+#: messagerie/templates/messagerie/_new_modal.html:41
+msgid "ex: Équipe irrigation"
+msgstr "pl.: Öntözési csapat"
+
+#: messagerie/templates/messagerie/_new_modal.html:45
+msgid "Membres"
+msgstr "Tagok"
+
+#: messagerie/templates/messagerie/_new_modal.html:50
+msgid "Ctrl/Cmd + clic pour en sélectionner plusieurs."
+msgstr "Ctrl/Cmd + kattintás többszörös kijelöléshez."
+
+#: messagerie/templates/messagerie/_new_modal.html:56
+msgid "Écrivez votre message…"
+msgstr "Írja meg üzenetét…"
+
+#: messagerie/templates/messagerie/_sidebar.html:4
+msgid "Chat"
+msgstr "Csevegés"
+
+#: messagerie/templates/messagerie/_sidebar.html:23
+msgid "Aucun message"
+msgstr "Nincs üzenet"
+
+#: messagerie/templates/messagerie/_sidebar.html:31
+msgid "Aucune conversation pour le moment."
+msgstr "Egyelőre nincs beszélgetés."
+
+#: messagerie/templates/messagerie/_sidebar.html:32
+msgid "Démarrer une conversation"
+msgstr "Beszélgetés indítása"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "participants"
+msgstr "résztvevők"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "Conversation privée"
+msgstr "Privát beszélgetés"
+
+#: messagerie/templates/messagerie/detail.html:48
+msgid "Joindre un fichier"
+msgstr "Fájl csatolása"
+
+#: messagerie/templates/messagerie/detail.html:56
+msgid "Écrire un message…"
+msgstr "Írjon üzenetet…"
+
+#: messagerie/templates/messagerie/detail.html:58
+msgid "Dicter le message"
+msgstr "Üzenet diktálása"
+
+#: messagerie/templates/messagerie/detail.html:62
+msgid "Reformuler avec l’IA"
+msgstr "Átfogalmazás MI-vel"
+
+#: messagerie/templates/messagerie/inbox.html:17
+msgid "Sélectionnez une conversation"
+msgstr "Válasszon beszélgetést"
+
+#: messagerie/templates/messagerie/inbox.html:18
+msgid "ou démarrez-en une nouvelle"
+msgstr "vagy indítson újat"
+
+#: messagerie/templates/messagerie/new.html:12
+msgid "Participants"
+msgstr "Résztvevők"
+
+#: messagerie/templates/messagerie/new.html:28
+msgid "Ex. Équipe récolte"
+msgstr "Pl.: Betakarítási csapat"
+
+#: messagerie/templates/messagerie/new.html:30
+msgid ""
+"Renseignez un nom ou cochez plusieurs participants pour créer un groupe."
+msgstr "Adjon meg egy nevet vagy jelöljön ki több résztvevőt csoport létrehozásához."
+
+#: messagerie/templates/messagerie/new.html:35
+#: sondages/templates/sondages/create.html:38
+msgid "Créer"
+msgstr "Létrehozás"
+
+#: messagerie/templates/messagerie/new.html:41
+msgid ""
+"Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
+"Ajoutez des membres d'équipe et liez-leur un compte."
+msgstr "Egyelőre nincs más felhasználó a gazdaságában, akit megkereshetne. Adjon hozzá csapattagokat, és társítson hozzájuk fiókot."
+
+#: messagerie/views.py:60
+msgid "📎 Pièce jointe"
+msgstr "📎 Melléklet"
+
+#: meteo/models.py:9
+msgid "Toutes les heures"
+msgstr "Óránként"
+
+#: meteo/models.py:10
+msgid "Toutes les 6 heures"
+msgstr "6 óránként"
+
+#: meteo/models.py:11
+msgid "Toutes les 12 heures"
+msgstr "12 óránként"
+
+#: meteo/models.py:12
+msgid "Quotidienne"
+msgstr "Naponta"
+
+#: meteo/models.py:18
+msgid "slug"
+msgstr "slug"
+
+#: meteo/models.py:24
+msgid "capture automatique"
+msgstr "automatikus rögzítés"
+
+#: meteo/models.py:26
+msgid "fréquence"
+msgstr "gyakoriság"
+
+#: meteo/models.py:28
+msgid "dernière capture auto"
+msgstr "utolsó automatikus rögzítés"
+
+#: meteo/models.py:31
+msgid "ville météo"
+msgstr "időjárási település"
+
+#: meteo/models.py:32
+msgid "villes météo"
+msgstr "időjárási települések"
+
+#: meteo/models.py:46
+msgid "lieu"
+msgstr "hely"
+
+#: meteo/models.py:49
+msgid "température (°C)"
+msgstr "hőmérséklet (°C)"
+
+#: meteo/models.py:50
+msgid "humidité (%)"
+msgstr "páratartalom (%)"
+
+#: meteo/models.py:51
+msgid "vent (km/h)"
+msgstr "szél (km/h)"
+
+#: meteo/models.py:52
+msgid "pluie (mm)"
+msgstr "csapadék (mm)"
+
+#: meteo/models.py:53
+msgid "ET0 (mm)"
+msgstr "ET0 (mm)"
+
+#: meteo/models.py:54
+#, fuzzy
+#| msgid "Notifications"
+msgid "conditions"
+msgstr "Értesítések"
+
+#: meteo/models.py:55
+msgid "capturé le"
+msgstr "rögzítés ideje"
+
+#: meteo/models.py:58
+msgid "relevé météo"
+msgstr "időjárási leolvasás"
+
+#: meteo/models.py:59
+msgid "relevés météo"
+msgstr "időjárási leolvasások"
+
+#: meteo/templates/meteo/index.html:10
+msgid "Vos villes en un coup d'œil"
+msgstr "Települései egy pillantásra"
+
+#: meteo/templates/meteo/index.html:14 meteo/templates/meteo/index.html:61
+msgid "Ajouter une ville"
+msgstr "Település hozzáadása"
+
+#: meteo/templates/meteo/index.html:37
+msgid "Retirer"
+msgstr "Eltávolítás"
+
+#: meteo/templates/meteo/index.html:52
+msgid "Ajoutez une ville pour suivre sa météo."
+msgstr "Adjon hozzá egy települést az időjárásának követéséhez."
+
+#: meteo/templates/meteo/index.html:70
+msgid "Rechercher une commune"
+msgstr "Település keresése"
+
+#: meteo/templates/meteo/index.html:71
+msgid "ex: Avignon"
+msgstr "pl.: Avignon"
+
+#: meteo/templates/meteo/index.html:73
+msgid "Tapez un nom puis Entrée pour rechercher."
+msgstr "Írjon be egy nevet, majd nyomja meg az Entert a kereséshez."
+
+#: meteo/templates/meteo/meteo.html:10
+msgid "Toutes les villes"
+msgstr "Összes település"
+
+#: meteo/templates/meteo/meteo.html:27
+#, fuzzy
+#| msgid "Capteurs"
+msgid "Capturer"
+msgstr "Érzékelők"
+
+#: meteo/templates/meteo/meteo.html:41
+msgid "Capture automatique"
+msgstr "Automatikus rögzítés"
+
+#: meteo/templates/meteo/meteo.html:45
+msgid "Activée"
+msgstr "Bekapcsolva"
+
+#: meteo/templates/meteo/meteo.html:53
+msgid "Dernière capture auto"
+msgstr "Utolsó automatikus rögzítés"
+
+#: meteo/templates/meteo/meteo.html:55
+msgid ""
+"Un relevé de cette ville est enregistré automatiquement à la fréquence "
+"choisie."
+msgstr "E település egy leolvasása a kiválasztott gyakorisággal automatikusan rögzítésre kerül."
+
+#: meteo/templates/meteo/meteo.html:61
+msgid "Impossible de récupérer la météo."
+msgstr "Az időjárás lekérése nem sikerült."
+
+#: meteo/templates/meteo/meteo.html:76
+msgid "Ressenti"
+msgstr "Hőérzet"
+
+#: meteo/templates/meteo/meteo.html:79 meteo/templates/meteo/meteo.html:95
+#: meteo/templates/meteo/meteo.html:145
+msgid "Pluie"
+msgstr "Csapadék"
+
+#: meteo/templates/meteo/meteo.html:86
+msgid "Prévisions 7 jours"
+msgstr "7 napos előrejelzés"
+
+#: meteo/templates/meteo/meteo.html:96
+msgid "Proba."
+msgstr "Valószínűség"
+
+#: meteo/templates/meteo/meteo.html:97
+msgid "Évapotranspiration (FAO-56)"
+msgstr "Evapotranszspiráció (FAO-56)"
+
+#: meteo/templates/meteo/meteo.html:110
+msgid "Évolution"
+msgstr "Alakulás"
+
+#: meteo/templates/meteo/meteo.html:113
+msgid "Température (°C)"
+msgstr "Hőmérséklet (°C)"
+
+#: meteo/templates/meteo/meteo.html:117
+#, python-format
+msgid "Humidité (%%)"
+msgstr "Páratartalom (%%)"
+
+#: meteo/templates/meteo/meteo.html:121
+msgid "Vent (km/h)"
+msgstr "Szél (km/h)"
+
+#: meteo/templates/meteo/meteo.html:125
+msgid "Pluie (mm)"
+msgstr "Csapadék (mm)"
+
+#: meteo/templates/meteo/meteo.html:135
+msgid "Historique des relevés"
+msgstr "Leolvasások előzményei"
+
+#: meteo/views.py:89
+msgid "Capture automatique mise à jour."
+msgstr "Automatikus rögzítés frissítve."
+
+#: meteo/views.py:118
+msgid "Lieu introuvable."
+msgstr "A hely nem található."
+
+#: meteo/views.py:197
+msgid "Relevé météo capturé."
+msgstr "Időjárási leolvasás rögzítve."
+
+#: meteo/views.py:198
+#, python-format
+msgid "Échec de la capture : %(e)s"
+msgstr "A rögzítés sikertelen: %(e)s"
+
+#: notifications/models.py:17 planning/models.py:40
+msgid "Urgente"
+msgstr "Sürgős"
+
+#: notifications/models.py:31
+msgid "notification"
+msgstr "értesítés"
+
+#: notifications/models.py:32
+msgid "notifications"
+msgstr "értesítések"
+
+#: notifications/models.py:49
+msgid "règle de notification"
+msgstr "értesítési szabály"
+
+#: notifications/models.py:50
+msgid "règles de notification"
+msgstr "értesítési szabályok"
+
+#: notifications/templates/notifications/center.html:10
+msgid "Tout marquer comme lu"
+msgstr "Összes megjelölése olvasottként"
+
+#: notifications/templates/notifications/center.html:27
+msgid "Aucune notification."
+msgstr "Nincs értesítés."
+
+#: notifications/templates/notifications/center.html:31
+msgid "Règles d'alerte"
+msgstr "Riasztási szabályok"
+
+#: notifications/templates/notifications/center.html:37
+msgid "activée"
+msgstr "bekapcsolva"
+
+#: notifications/templates/notifications/center.html:37
+msgid "désactivée"
+msgstr "kikapcsolva"
+
+#: notifications/templates/notifications/center.html:42
+msgid "Aucune règle définie."
+msgstr "Nincs meghatározott szabály."
+
+#: operations/models.py:16 operations/models.py:151
+msgid "Pompe"
+msgstr "Szivattyú"
+
+#: operations/models.py:17 operations/models.py:143
+msgid "Tracteur"
+msgstr "Traktor"
+
+#: operations/models.py:20 operations/models.py:144
+msgid "Pulvérisateur"
+msgstr "Permetező"
+
+#: operations/models.py:27
+msgid "Réformée"
+msgstr "Selejtezve"
+
+#: operations/models.py:44
+msgid "machine"
+msgstr "gép"
+
+#: operations/models.py:45
+msgid "machines"
+msgstr "gépek"
+
+#: operations/models.py:54
+msgid "Utilisation"
+msgstr "Használat"
+
+#: operations/models.py:56 operations/models.py:85
+msgid "Réparation"
+msgstr "Javítás"
+
+#: operations/models.py:57
+msgid "Inspection"
+msgstr "Ellenőrzés"
+
+#: operations/models.py:79
+msgid "Vidange"
+msgstr "Olajcsere"
+
+#: operations/models.py:80
+msgid "Filtres"
+msgstr "Szűrők"
+
+#: operations/models.py:81
+msgid "Courroies"
+msgstr "Szíjak"
+
+#: operations/models.py:82
+msgid "Pneumatiques"
+msgstr "Gumiabroncsok"
+
+#: operations/models.py:83
+msgid "Freins"
+msgstr "Fékek"
+
+#: operations/models.py:84
+msgid "Révision complète"
+msgstr "Teljes átvizsgálás"
+
+#: operations/models.py:86
+msgid "Contrôle technique"
+msgstr "Műszaki vizsga"
+
+#: operations/models.py:105
+msgid "entretien"
+msgstr "karbantartás"
+
+#: operations/models.py:106
+msgid "entretiens"
+msgstr "karbantartások"
+
+#: operations/models.py:112
+msgid "Labour"
+msgstr "Szántás"
+
+#: operations/models.py:134
+msgid "affectation d'engin"
+msgstr "géphozzárendelés"
+
+#: operations/models.py:135
+msgid "affectations d'engins"
+msgstr "géphozzárendelések"
+
+#: operations/models.py:145
+msgid "Semoir"
+msgstr "Vetőgép"
+
+#: operations/models.py:146
+msgid "Épandeur"
+msgstr "Szórógép"
+
+#: operations/models.py:147
+msgid "Moissonneuse"
+msgstr "Aratógép"
+
+#: operations/models.py:148
+msgid "Charrue"
+msgstr "Eke"
+
+#: operations/models.py:149
+msgid "Cultivateur"
+msgstr "Kultivátor"
+
+#: operations/models.py:150
+msgid "Benne"
+msgstr "Billenőkocsi"
+
+#: operations/models.py:170
+msgid "modèle d'engin (catalogue)"
+msgstr "gépmodell (katalógus)"
+
+#: operations/models.py:171
+msgid "catalogue d'engins"
+msgstr "gépkatalógus"
+
+#: operations/templates/operations/parc_materiel.html:16
 msgid "prochain entretien"
-msgstr ""
+msgstr "következő karbantartás"
 
+#: operations/templates/operations/parc_materiel.html:21
 msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Nincs gép. Adjon hozzá az adminon vagy az API-n keresztül."
 
-msgid "Gravitaire"
-msgstr ""
+#: pac/models.py:9
+msgid "DPB — Droits à paiement de base"
+msgstr "DPB — Alaptámogatási jogosultságok"
 
-msgid "Jachère"
-msgstr ""
+#: pac/models.py:10
+msgid "Éco-régime"
+msgstr "Ökorendszer"
 
+#: pac/models.py:11
+msgid "Paiement redistributif"
+msgstr "Újraelosztó támogatás"
+
+#: pac/models.py:12
+msgid "Aide jeune agriculteur"
+msgstr "Fiatal gazdálkodói támogatás"
+
+#: pac/models.py:13
+msgid "Aides couplées"
+msgstr "Termeléshez kötött támogatások"
+
+#: pac/models.py:14
+msgid "ICHN — Indemnité handicap naturel"
+msgstr "ICHN — Természeti hátrány kompenzáció"
+
+#: pac/models.py:15
+msgid "MAEC — Mesures agro-environnementales"
+msgstr "MAEC — Agrár-környezetgazdálkodási intézkedések"
+
+#: pac/models.py:17
+msgid "Assurance récolte"
+msgstr "Termésbiztosítás"
+
+#: pac/models.py:21
+msgid "Prévu"
+msgstr "Tervezett"
+
+#: pac/models.py:22
+msgid "Accordé"
+msgstr "Megítélt"
+
+#: pac/models.py:23 pac/templates/pac/pac.html:34
+msgid "Payé"
+msgstr "Kifizetve"
+
+#: pac/models.py:29
+msgid "catégorie"
+msgstr "kategória"
+
+#: pac/models.py:30
+msgid "libellé"
+msgstr "megnevezés"
+
+#: pac/models.py:31
+msgid "montant (€)"
+msgstr "összeg (€)"
+
+#: pac/models.py:32 parcelles/models.py:32
 msgid "surface (ha)"
-msgstr ""
+msgstr "terület (ha)"
 
+#: pac/models.py:33
+msgid "statut"
+msgstr "állapot"
+
+#: pac/models.py:37
+msgid "aide PAC"
+msgstr "KAP-támogatás"
+
+#: pac/models.py:38
+msgid "aides PAC"
+msgstr "KAP-támogatások"
+
+#: pac/templates/pac/pac.html:10
+msgid "Politique Agricole Commune · suivi des aides par campagne"
+msgstr "Közös Agrárpolitika · támogatások követése kampányonként"
+
+#: pac/templates/pac/pac.html:22 pac/templates/pac/pac.html:89
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une aide"
+msgstr "Kód aktiválása"
+
+#: pac/templates/pac/pac.html:30
+msgid "Montant total estimé"
+msgstr "Becsült teljes összeg"
+
+#: pac/templates/pac/pac.html:38
+msgid "Surface concernée"
+msgstr "Érintett terület"
+
+#: pac/templates/pac/pac.html:42
+msgid "Nombre d'aides"
+msgstr "Támogatások száma"
+
+#: pac/templates/pac/pac.html:54 pac/templates/pac/pac.html:124
+msgid "Libellé"
+msgstr "Megnevezés"
+
+#: pac/templates/pac/pac.html:74
+msgid "Supprimer cette aide ?"
+msgstr "Törli ezt a támogatást?"
+
+#: pac/templates/pac/pac.html:87
+msgid "Aucune aide PAC pour cette campagne."
+msgstr "Nincs KAP-támogatás ehhez a kampányhoz."
+
+#: pac/templates/pac/pac.html:96
+msgid ""
+"Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et "
+"leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
+msgstr "Itt kövesse a KAP-támogatásait (DPB, ökorendszer, ICHN, MAEC, bio…) kampányonként és állapotuk szerint (tervezett / megítélt / kifizetve). Hivatalos bevallás a TéléPAC-on keresztül."
+
+#: pac/templates/pac/pac.html:105
+msgid "Nouvelle aide PAC"
+msgstr "Új KAP-támogatás"
+
+#: pac/templates/pac/pac.html:125
+msgid "ex: Éco-régime niveau 2"
+msgstr "pl.: Ökorendszer 2. szint"
+
+#: pac/templates/pac/pac.html:130
+msgid "Montant (€)"
+msgstr "Összeg (€)"
+
+#: parcelles/models.py:19
+msgid "Gravitaire"
+msgstr "Gravitációs"
+
+#: parcelles/models.py:24
+msgid "Jachère"
+msgstr "Ugar"
+
+#: parcelles/models.py:37
 msgid "polygone"
-msgstr ""
+msgstr "sokszög"
 
+#: parcelles/models.py:42
 msgid "type d'irrigation"
-msgstr ""
+msgstr "öntözés típusa"
 
+#: parcelles/models.py:44
 msgid "débit théorique (m³/h)"
-msgstr ""
+msgstr "elméleti vízhozam (m³/h)"
 
+#: parcelles/models.py:45
 msgid "nombre de buses"
-msgstr ""
+msgstr "fúvókák száma"
 
+#: parcelles/models.py:46
 msgid "débit buse (L/h)"
-msgstr ""
+msgstr "fúvóka-vízhozam (L/h)"
 
+#: parcelles/models.py:47
 msgid "écart entre rangs (m)"
-msgstr ""
+msgstr "sortávolság (m)"
 
+#: parcelles/models.py:48
 msgid "écart entre émetteurs (m)"
-msgstr ""
+msgstr "kibocsátók közötti távolság (m)"
 
+#: parcelles/models.py:49
 msgid "pression de service (bar)"
-msgstr ""
+msgstr "üzemi nyomás (bar)"
 
+#: parcelles/models.py:52
 msgid "culture"
-msgstr ""
+msgstr "növény"
 
+#: parcelles/models.py:53
 msgid "variété"
-msgstr ""
+msgstr "fajta"
 
+#: parcelles/models.py:54 parcelles/models.py:93
 msgid "coefficient Kc"
-msgstr ""
+msgstr "Kc-koefficiens"
 
+#: parcelles/models.py:55
 msgid "âge des plants (ans)"
-msgstr ""
+msgstr "növények kora (év)"
 
+#: parcelles/models.py:56
 msgid "date de plantation"
-msgstr ""
+msgstr "telepítés dátuma"
 
+#: parcelles/models.py:57
 msgid "densité (pieds/ha)"
-msgstr ""
+msgstr "sűrűség (tő/ha)"
 
+#: parcelles/models.py:61
 msgid "profondeur racinaire"
-msgstr ""
+msgstr "gyökérmélység"
 
+#: parcelles/models.py:62
 msgid "profondeur racinaire (cm)"
-msgstr ""
+msgstr "gyökérmélység (cm)"
 
+#: parcelles/models.py:63
 msgid "rétention sol (mm/m)"
-msgstr ""
+msgstr "talaj-víztartás (mm/m)"
 
+#: parcelles/models.py:64
 msgid "pH du sol"
-msgstr ""
+msgstr "talaj pH"
 
+#: parcelles/models.py:67
 msgid "réf. cadastrale"
-msgstr ""
+msgstr "kataszteri hivatkozás"
 
+#: parcelles/models.py:68
 msgid "commune"
-msgstr ""
+msgstr "település"
 
+#: parcelles/models.py:69
 msgid "surface officielle (ha)"
-msgstr ""
+msgstr "hivatalos terület (ha)"
 
+#: parcelles/models.py:70
+msgid "données cadastre (brut IGN)"
+msgstr "kataszteri adatok (nyers IGN)"
+
+#: parcelles/models.py:71
+msgid "date d'acquisition"
+msgstr "szerzés dátuma"
+
+#: parcelles/models.py:76
 msgid "parcelle"
-msgstr ""
+msgstr "tábla"
 
+#: parcelles/models.py:77
 msgid "parcelles"
-msgstr ""
+msgstr "táblák"
 
+#: parcelles/models.py:89
 msgid "stade"
-msgstr ""
+msgstr "fenofázis"
 
+#: parcelles/models.py:91
 msgid "début"
-msgstr ""
+msgstr "kezdet"
 
+#: parcelles/models.py:92
 msgid "fin"
-msgstr ""
+msgstr "vég"
 
+#: parcelles/models.py:94
 msgid "profondeur racinaire (m)"
-msgstr ""
+msgstr "gyökérmélység (m)"
 
+#: parcelles/models.py:98
 msgid "stade cultural"
-msgstr ""
+msgstr "fejlődési fázis"
 
+#: parcelles/models.py:99
 msgid "stades culturaux"
-msgstr ""
+msgstr "fejlődési fázisok"
 
+#: parcelles/templates/parcelles/confirm_delete.html:7
 msgid "Supprimer la parcelle ?"
-msgstr ""
+msgstr "Törli a táblát?"
 
+#: parcelles/templates/parcelles/confirm_delete.html:9
 #, python-format
 msgid "La parcelle « %(name)s » sera définitivement supprimée."
-msgstr ""
+msgstr "A(z) „%(name)s” tábla véglegesen törlésre kerül."
 
-msgid "Supprimer"
-msgstr ""
-
+#: parcelles/templates/parcelles/detail.html:12
 msgid "Modifier"
-msgstr ""
+msgstr "Szerkesztés"
 
+#: parcelles/templates/parcelles/detail.html:19
 msgid "Culture & sol"
-msgstr ""
+msgstr "Növény és talaj"
 
+#: parcelles/templates/parcelles/detail.html:21
 msgid "Variété"
-msgstr ""
+msgstr "Fajta"
 
+#: parcelles/templates/parcelles/detail.html:23
 msgid "Type de sol"
-msgstr ""
+msgstr "Talajtípus"
 
+#: parcelles/templates/parcelles/detail.html:33
+#: parcelles/templates/parcelles/list.html:93
 msgid "Commune"
-msgstr ""
+msgstr "Település"
 
+#: parcelles/templates/parcelles/detail.html:38
 msgid "Retour aux parcelles"
-msgstr ""
+msgstr "Vissza a táblákhoz"
 
+#: parcelles/templates/parcelles/form.html:8
 msgid "Étape"
-msgstr ""
+msgstr "Lépés"
 
+#: parcelles/templates/parcelles/form.html:21
 msgid "Identité & localisation"
-msgstr ""
+msgstr "Azonosítás és helymeghatározás"
 
+#: parcelles/templates/parcelles/form.html:33
 msgid "Cliquez sur la carte pour positionner la parcelle."
-msgstr ""
+msgstr "Kattintson a térképre a tábla elhelyezéséhez."
 
+#: parcelles/templates/parcelles/form.html:84
 msgid "Cadastre & statut"
-msgstr ""
+msgstr "Kataszter és állapot"
 
+#: parcelles/templates/parcelles/form.html:94
 msgid "Précédent"
-msgstr ""
+msgstr "Előző"
 
+#: parcelles/templates/parcelles/form.html:96
 msgid "Suivant"
-msgstr ""
+msgstr "Következő"
 
-msgid "+ Nouvelle parcelle"
-msgstr ""
+#: parcelles/templates/parcelles/list.html:13
+msgid "Carte satellite · Cadastre IGN · Surfaces"
+msgstr "Műholdas térkép · IGN-kataszter · Területek"
 
+#: parcelles/templates/parcelles/list.html:24
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles actives"
+msgstr "Parcellák"
+
+#: parcelles/templates/parcelles/list.html:28
+msgid "Surface totale"
+msgstr "Összterület"
+
+#: parcelles/templates/parcelles/list.html:32
+msgid "Stress hydrique"
+msgstr "Vízstressz"
+
+#: parcelles/templates/parcelles/list.html:36
+msgid "Humidité moyenne"
+msgstr "Átlagos páratartalom"
+
+#: parcelles/templates/parcelles/list.html:45
+msgid "Rechercher un lieu…"
+msgstr "Hely keresése…"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Carte"
+msgstr "Térkép"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Liste"
+msgstr "Lista"
+
+#: parcelles/templates/parcelles/list.html:62
+msgid ""
+"Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
+"Enregistrer."
+msgstr "Kattintson a hozzáadni kívánt táblákra (újrakattintással kijelölés megszüntetése), majd Mentés."
+
+#: parcelles/templates/parcelles/list.html:70
+msgid "parcelle(s) sélectionnée(s)"
+msgstr "kijelölt tábla(k)"
+
+#: parcelles/templates/parcelles/list.html:92
+msgid "Réf. cadastrale"
+msgstr "Kataszteri hivatkozás"
+
+#: parcelles/templates/parcelles/list.html:94
+msgid "Acquise le"
+msgstr "Szerzés ideje"
+
+#: parcelles/templates/parcelles/list.html:116
+msgid ""
+"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+msgstr "Nincs tábla. Kattintson a „Hozzáadás” gombra a térképen való kijelöléshez."
+
+#: parcelles/templates/parcelles/list.html:122
+msgid "Analyses des parcelles — bientôt."
+msgstr "Táblák elemzése — hamarosan."
+
+#: parcelles/views.py:132
 msgid "Configurez d'abord votre exploitation."
-msgstr ""
+msgstr "Először állítsa be a gazdaságát."
 
-msgid "Configurer"
-msgstr ""
-
-msgid "Aucune parcelle pour le moment."
-msgstr ""
-
-msgid "Créer ma première parcelle"
-msgstr ""
-
+#: parcelles/views.py:141
 msgid "Parcelle créée."
-msgstr ""
+msgstr "Tábla létrehozva."
 
+#: parcelles/views.py:149
 msgid "Nouvelle parcelle"
-msgstr ""
+msgstr "Új tábla"
 
+#: parcelles/views.py:172
 msgid "Parcelle mise à jour."
-msgstr ""
+msgstr "Tábla frissítve."
 
+#: parcelles/views.py:179
 #, python-format
 msgid "Modifier %(n)s"
-msgstr ""
+msgstr "%(n)s szerkesztése"
 
+#: parcelles/views.py:189
 msgid "Parcelle supprimée."
-msgstr ""
+msgstr "Tábla törölve."
 
+#: planning/models.py:29
 msgid "Planifié"
-msgstr ""
+msgstr "Ütemezve"
 
+#: planning/models.py:31
 msgid "En pause"
-msgstr ""
+msgstr "Szüneteltetve"
 
+#: planning/models.py:34
 msgid "Reporté"
-msgstr ""
+msgstr "Elhalasztva"
 
+#: planning/models.py:43
 msgid "Non applicable"
-msgstr ""
+msgstr "Nem alkalmazható"
 
+#: planning/models.py:44
 msgid "À facturer"
-msgstr ""
+msgstr "Számlázandó"
 
+#: planning/models.py:45
 msgid "Facturé"
-msgstr ""
+msgstr "Kiszámlázva"
 
+#: planning/models.py:46
 msgid "Avoir"
-msgstr ""
+msgstr "Jóváírás"
 
+#: planning/models.py:80
 msgid "tâche de planning"
-msgstr ""
+msgstr "ütemezési feladat"
 
+#: planning/models.py:81
 msgid "tâches de planning"
-msgstr ""
+msgstr "ütemezési feladatok"
 
+#: planning/models.py:100
 msgid "affectation technicien"
-msgstr ""
+msgstr "technikus-hozzárendelés"
 
+#: planning/models.py:101
 msgid "affectations techniciens"
-msgstr ""
+msgstr "technikus-hozzárendelések"
 
+#: planning/models.py:106
 msgid "Photo"
-msgstr ""
+msgstr "Fénykép"
 
+#: planning/models.py:107
 msgid "Plan"
-msgstr ""
+msgstr "Terv"
 
+#: planning/models.py:108
 msgid "Schéma"
-msgstr ""
+msgstr "Vázlat"
 
-msgid "Document"
-msgstr ""
-
+#: planning/models.py:126
 msgid "Démarrage"
-msgstr ""
+msgstr "Indítás"
 
+#: planning/models.py:127
 msgid "Pause"
-msgstr ""
+msgstr "Szünet"
 
+#: planning/models.py:128
 msgid "Reprise"
-msgstr ""
+msgstr "Folytatás"
 
+#: planning/models.py:129
 msgid "Fin"
-msgstr ""
+msgstr "Vég"
 
+#: planning/models.py:145
 msgid "Congé payé"
-msgstr ""
+msgstr "Fizetett szabadság"
 
+#: planning/models.py:147
 msgid "Maladie"
-msgstr ""
+msgstr "Betegség"
 
+#: planning/models.py:148
 msgid "Formation"
-msgstr ""
+msgstr "Képzés"
 
+#: planning/models.py:149
 msgid "Sans solde"
-msgstr ""
+msgstr "Fizetés nélküli"
 
+#: planning/models.py:153
 msgid "Matin"
-msgstr ""
+msgstr "Délelőtt"
 
+#: planning/models.py:154
 msgid "Après-midi"
-msgstr ""
+msgstr "Délután"
 
+#: planning/models.py:155
 msgid "Journée"
-msgstr ""
+msgstr "Egész nap"
 
+#: planning/models.py:158
 msgid "Demandé"
-msgstr ""
+msgstr "Igényelt"
 
+#: planning/models.py:159
 msgid "Approuvé"
-msgstr ""
+msgstr "Jóváhagyva"
 
+#: planning/models.py:160
 msgid "Refusé"
-msgstr ""
+msgstr "Elutasítva"
 
+#: planning/models.py:178
 msgid "absence"
-msgstr ""
+msgstr "távollét"
 
+#: planning/models.py:179
 msgid "absences"
-msgstr ""
+msgstr "távollétek"
 
+#: planning/models.py:206
 msgid "Outil à main"
-msgstr ""
+msgstr "Kézi szerszám"
 
+#: planning/models.py:207
 msgid "Outil de coupe"
-msgstr ""
+msgstr "Vágószerszám"
 
+#: planning/models.py:208
 msgid "Outil motorisé"
-msgstr ""
+msgstr "Motoros szerszám"
 
+#: planning/models.py:209
 msgid "Engin"
-msgstr ""
+msgstr "Gép"
 
+#: planning/models.py:211
 msgid "Arrosage"
-msgstr ""
+msgstr "Öntözés"
 
+#: planning/models.py:212
 msgid "Mesure"
-msgstr ""
+msgstr "Mérés"
 
+#: planning/models.py:217 planning/models.py:253
+#: planning/templates/planning/planning.html:27
 msgid "Bon"
-msgstr ""
+msgstr "Jó"
 
+#: planning/models.py:219
 msgid "À réparer"
-msgstr ""
+msgstr "Javításra szorul"
 
+#: planning/models.py:220
 msgid "Hors service"
-msgstr ""
+msgstr "Üzemen kívül"
 
+#: planning/models.py:231
 msgid "matériel"
-msgstr ""
+msgstr "eszköz"
 
+#: planning/models.py:232
 msgid "catalogue matériel"
-msgstr ""
+msgstr "eszközkatalógus"
 
+#: planning/models.py:255
 msgid "Mauvais"
-msgstr ""
+msgstr "Rossz"
 
+#: planning/models.py:260
 msgid "Complété"
-msgstr ""
+msgstr "Befejezve"
 
+#: planning/models.py:262
 msgid "Archivé"
-msgstr ""
+msgstr "Archiválva"
 
+#: planning/models.py:295
 msgid "bon d'intervention"
-msgstr ""
+msgstr "munkalap"
 
+#: planning/models.py:296
 msgid "bons d'intervention"
-msgstr ""
+msgstr "munkalapok"
 
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:80
 msgid "Bon d'intervention"
-msgstr ""
+msgstr "Munkalap"
 
+#: planning/templates/planning/bon_intervention.html:17
 msgid "Technicien"
-msgstr ""
+msgstr "Technikus"
 
+#: planning/templates/planning/bon_intervention.html:21
 msgid "Travaux réalisés"
-msgstr ""
+msgstr "Elvégzett munkák"
 
+#: planning/templates/planning/bon_intervention.html:26
 msgid "Produits utilisés"
-msgstr ""
+msgstr "Felhasznált termékek"
 
+#: planning/templates/planning/bon_intervention.html:30
 msgid "Qté"
-msgstr ""
+msgstr "Menny."
 
+#: planning/templates/planning/bon_intervention.html:34
 msgid "Ajouter un produit"
-msgstr ""
+msgstr "Termék hozzáadása"
 
+#: planning/templates/planning/bon_intervention.html:38
 msgid "Observations"
-msgstr ""
+msgstr "Megjegyzések"
 
+#: planning/templates/planning/bon_intervention.html:43
 msgid "Signature du technicien"
-msgstr ""
+msgstr "A technikus aláírása"
 
+#: planning/templates/planning/bon_intervention.html:45
 msgid "Effacer"
-msgstr ""
+msgstr "Törlés"
 
+#: planning/templates/planning/bon_intervention.html:46
 msgid "Nom du signataire"
-msgstr ""
+msgstr "Az aláíró neve"
 
+#: planning/templates/planning/bon_intervention.html:50
 msgid "Enregistrer le brouillon"
-msgstr ""
+msgstr "Vázlat mentése"
 
+#: planning/templates/planning/bon_intervention.html:51
 msgid "Valider le bon"
-msgstr ""
+msgstr "Munkalap jóváhagyása"
 
+#: planning/templates/planning/planning.html:7
 msgid "Planning des interventions"
-msgstr ""
+msgstr "Beavatkozások ütemezése"
 
+#: planning/templates/planning/planning.html:17
 msgid "Tâches planifiées"
-msgstr ""
+msgstr "Ütemezett feladatok"
 
+#: planning/templates/planning/planning.html:32
 msgid "Aucune tâche planifiée."
-msgstr ""
+msgstr "Nincs ütemezett feladat."
 
+#: planning/templates/planning/planning.html:37
 msgid "Backlog"
-msgstr ""
+msgstr "Teendőlista"
 
+#: planning/templates/planning/planning.html:44
 msgid "Backlog vide."
-msgstr ""
+msgstr "A teendőlista üres."
 
+#: planning/views.py:33
 msgid "Jour"
-msgstr ""
+msgstr "Nap"
 
+#: planning/views.py:33
 msgid "Semaine"
-msgstr ""
+msgstr "Hét"
 
+#: planning/views.py:33
 msgid "Mois"
-msgstr ""
+msgstr "Hónap"
 
+#: planning/views.py:74
 msgid "Bon d'intervention enregistré."
-msgstr ""
+msgstr "Munkalap elmentve."
 
+#: public/models.py:17
 msgid "lead capturé"
-msgstr ""
+msgstr "rögzített érdeklődő"
 
+#: public/models.py:18
 msgid "leads capturés"
-msgstr ""
+msgstr "rögzített érdeklődők"
 
-msgid "Activer mon compte"
-msgstr ""
-
-msgid "Saisissez le code d'activation reçu par email après votre paiement (format HOLS-XXXX-XXXX)."
-msgstr ""
-
-msgid "Activer"
-msgstr ""
-
+#: public/templates/public/home.html:3
 msgid "Irrigation de précision pour agriculteurs"
-msgstr ""
+msgstr "Precíziós öntözés gazdálkodóknak"
 
-msgid "Pilotez votre irrigation, économisez l'eau et l'énergie."
-msgstr ""
+#: public/templates/public/home.html:13 public/templates/public/home.html:471
+msgid "Domaines"
+msgstr "Területek"
 
-msgid "IoT temps réel, score d'efficience DTI, assistant IA et conformité subventions — pensés pour les agriculteurs."
-msgstr ""
+#: public/templates/public/home.html:14 public/templates/public/home.html:307
+#: public/templates/public/home.html:472
+msgid "Tarif"
+msgstr "Díjszabás"
 
-msgid "Démarrer"
-msgstr ""
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "A gazdasága, fejben tartás nélkül."
 
-msgid "Guide gratuit : lire ses analyses de sol"
-msgstr ""
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "Az asszisztens, amely megjegyez, számol és bizonyít Ön helyett."
 
-msgid "Votre email"
-msgstr ""
+#: public/templates/public/home.html:47
+msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
+msgstr "59,90 € + áfa/hó gazdaságonként, korlátlan felhasználóval."
 
-msgid "Recevoir"
-msgstr ""
+#: public/templates/public/home.html:53
+msgid "Commencer maintenant"
+msgstr "Kezdés most"
 
-msgid "Discuter avec Alex 🌱"
-msgstr ""
+#: public/templates/public/home.html:57
+msgid "Voir ce qu'il fait"
+msgstr "Nézze meg, mire képes"
 
-msgid "Posez votre question…"
-msgstr ""
+#: public/templates/public/home.html:61
+#: templates/partials/install_banner.html:23
+msgid "Télécharger l'app"
+msgstr "Alkalmazás letöltése"
 
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Kötelezettség nélkül"
+
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Adatok Franciaországban tárolva"
+
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Irányított bevezetés mellékelve"
+
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Mezőgazdasági gazdaság napnyugtakor"
+
+#: public/templates/public/home.html:87
+msgid "Le métier n'a pas changé."
+msgstr "A szakma nem változott."
+
+#: public/templates/public/home.html:90
+msgid "Sa charge administrative et mentale, si."
+msgstr "Az adminisztratív és mentális terhe viszont igen."
+
+#: public/templates/public/home.html:98
+msgid "La réglementation qui s'empile"
+msgstr "A halmozódó szabályozás"
+
+#: public/templates/public/home.html:100
+msgid "Plan Eau 2030"
+msgstr "Víz Terv 2030"
+
+#: public/templates/public/home.html:102
+msgid "E-facturation obligatoire"
+msgstr "Kötelező e-számlázás"
+
+#: public/templates/public/home.html:103
+msgid "Traçabilité renforcée"
+msgstr "Szigorúbb nyomon követhetőség"
+
+#: public/templates/public/home.html:110
+msgid "L'économie qui pèse autrement"
+msgstr "A másként nyomasztó gazdaság"
+
+#: public/templates/public/home.html:112
+msgid "Marges sous pression"
+msgstr "Nyomás alatti árrések"
+
+#: public/templates/public/home.html:113
+msgid "Charges en hausse"
+msgstr "Növekvő költségek"
+
+#: public/templates/public/home.html:114
+msgid "Financement complexe"
+msgstr "Összetett finanszírozás"
+
+#: public/templates/public/home.html:115 public/templates/public/home.html:290
+msgid "Dossiers de subvention"
+msgstr "Támogatási dossziék"
+
+#: public/templates/public/home.html:122
+msgid "La main-d'œuvre à gérer"
+msgstr "A kezelendő munkaerő"
+
+#: public/templates/public/home.html:124
+msgid "Saisonniers et apprentis"
+msgstr "Idénymunkások és tanulók"
+
+#: public/templates/public/home.html:125
+msgid "Associés et salariés"
+msgstr "Társak és alkalmazottak"
+
+#: public/templates/public/home.html:126
+msgid "Transmission incertaine"
+msgstr "Bizonytalan átadás"
+
+#: public/templates/public/home.html:127
+msgid "Formation continue"
+msgstr "Folyamatos képzés"
+
+#: public/templates/public/home.html:139
+msgid "Ce que disent les agriculteurs français"
+msgstr "Amit a francia gazdálkodók mondanak"
+
+#: public/templates/public/home.html:142
+msgid "Des chiffres qui parlent d'eux-mêmes."
+msgstr "Magukért beszélő számok."
+
+#: public/templates/public/home.html:149
+msgid "des agriculteurs veulent travailler moins"
+msgstr "a gazdálkodók kevesebbet szeretnének dolgozni"
+
+#: public/templates/public/home.html:150
+msgid "PRISM 2023 — priorité n°1 à 3 ans"
+msgstr "PRISM 2023 — 1. számú prioritás 3 éven belül"
+
+#: public/templates/public/home.html:154
+msgid "choisissent de réduire leurs charges"
+msgstr "a költségeik csökkentését választják"
+
+#: public/templates/public/home.html:155
+msgid "PRISM 2023 — vs maximiser la productivité"
+msgstr "PRISM 2023 — szemben a termelékenység maximalizálásával"
+
+#: public/templates/public/home.html:159
+msgid "subissent le changement climatique"
+msgstr "elszenvedik az éghajlatváltozást"
+
+#: public/templates/public/home.html:160
+msgid "VoxAgri 2025 — effet négatif sur l'exploitation"
+msgstr "VoxAgri 2025 — negatív hatás a gazdaságra"
+
+#: public/templates/public/home.html:164
+msgid "veulent plus d'accompagnement"
+msgstr "több támogatást szeretnének"
+
+#: public/templates/public/home.html:165
+msgid "PRISM 2023 — ou de meilleure qualité"
+msgstr "PRISM 2023 — vagy jobb minőségűt"
+
+#: public/templates/public/home.html:175
+msgid "La charge invisible"
+msgstr "A láthatatlan teher"
+
+#: public/templates/public/home.html:178
+msgid ""
+"Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
+"prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
+"l'apprenti — c'est un autre travail."
+msgstr "Ön tudja, mit végzett a 3. táblán hat héttel ezelőtt. Ezt egy ellenőrnek bizonyítani, egy dossziéhoz megkeresni, a tanulónak átadni — az már egy másik munka."
+
+#: public/templates/public/home.html:181
+msgid ""
+"Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
+"ce qui se colle par-dessus."
+msgstr "És ezt a munkát este végzi. A teher nem a szakma, hanem az, ami ráragad."
+
+#: public/templates/public/home.html:182
+#, python-format
+msgid ""
+"48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
+"priorité n°1."
+msgstr "A gazdálkodók 48 %%-a a „munkaidő kézben tartását” jelöli meg 1. számú prioritásként."
+
+#: public/templates/public/home.html:194
+msgid "Agriculteur submergé par la paperasse administrative"
+msgstr "Az adminisztratív papírmunkával túlterhelt gazdálkodó"
+
+#: public/templates/public/home.html:201
+msgid "5 problèmes. 1 réponse."
+msgstr "5 probléma. 1 megoldás."
+
+#: public/templates/public/home.html:203
+msgid "Votre exploitation mérite un assistant qui ne dort jamais."
+msgstr "A gazdasága megérdemel egy asszisztenst, amely sosem alszik."
+
+#: public/templates/public/home.html:206
+msgid ""
+"Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
+"temps de travail, charges, adaptation climatique, gestion d'équipe et "
+"accompagnement. Disponible à la voix, sur le tracteur, à 22h."
+msgstr "A Holystyl választ ad a francia gazdálkodók 5 fő aggályára: munkaidő, költségek, éghajlati alkalmazkodás, csapatirányítás és támogatás. Elérhető hanggal, a traktoron, este 22 órakor is."
+
+#: public/templates/public/home.html:211
+msgid "« Je n'ai pas le temps »"
+msgstr "„Nincs időm”"
+
+#: public/templates/public/home.html:212
+msgid "automatise les rapports et la traçabilité"
+msgstr "automatizálja a jelentéseket és a nyomon követhetőséget"
+
+#: public/templates/public/home.html:215
+msgid "« Je dois réduire mes charges »"
+msgstr "„Csökkentenem kell a költségeimet”"
+
+#: public/templates/public/home.html:216
+msgid "tableau de bord financier en temps réel"
+msgstr "valós idejű pénzügyi irányítópult"
+
+#: public/templates/public/home.html:219
+msgid "« Le climat change »"
+msgstr "„Változik az éghajlat”"
+
+#: public/templates/public/home.html:220
+msgid "alertes météo, suivi parcellaire, aide à la décision"
+msgstr "időjárási riasztások, táblaszintű nyomon követés, döntéstámogatás"
+
+#: public/templates/public/home.html:223
+msgid "« Je gère des saisonniers »"
+msgstr "„Idénymunkásokat irányítok”"
+
+#: public/templates/public/home.html:224
+msgid "module Équipe & Tâches avec rappels automatiques"
+msgstr "Csapat és Feladatok modul automatikus emlékeztetőkkel"
+
+#: public/templates/public/home.html:227
+msgid "« Je ne sais pas à qui demander »"
+msgstr "„Nem tudom, kihez forduljak”"
+
+#: public/templates/public/home.html:228
+msgid "IA disponible 24h/24 sur vos questions"
+msgstr "Éjjel-nappal elérhető MI a kérdéseihez"
+
+#: public/templates/public/home.html:240
+msgid "Tout ce qu'il couvre"
+msgstr "Minden, amit lefed"
+
+#: public/templates/public/home.html:243
+msgid "Dix domaines. Un seul outil."
+msgstr "Tíz terület. Egyetlen eszköz."
+
+#: public/templates/public/home.html:250
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation et eau"
+msgstr "Öntözés"
+
+#: public/templates/public/home.html:251
+msgid "Programmes, quotas, capteurs IoT"
+msgstr "Programok, kvóták, IoT-érzékelők"
+
+#: public/templates/public/home.html:255
+msgid "Charges et marges"
+msgstr "Költségek és árrések"
+
+#: public/templates/public/home.html:256
+msgid "Suivi économique en temps réel"
+msgstr "Valós idejű gazdasági nyomon követés"
+
+#: public/templates/public/home.html:261
+msgid "Maintenance, alertes, historique"
+msgstr "Karbantartás, riasztások, előzmények"
+
+#: public/templates/public/home.html:266
+msgid "Traitements, travaux, traçabilité"
+msgstr "Kezelések, munkák, nyomon követhetőség"
+
+#: public/templates/public/home.html:271
+msgid "Résultats, recommandations"
+msgstr "Eredmények, ajánlások"
+
+#: public/templates/public/home.html:275
+msgid "Récoltes"
+msgstr "Betakarítások"
+
+#: public/templates/public/home.html:276
+msgid "Volumes, qualité, rendements"
+msgstr "Mennyiségek, minőség, hozamok"
+
+#: public/templates/public/home.html:280
+msgid "Équipe et planning"
+msgstr "Csapat és ütemezés"
+
+#: public/templates/public/home.html:281
+msgid "Saisonniers, apprentis, associés"
+msgstr "Idénymunkások, tanulók, társak"
+
+#: public/templates/public/home.html:285
+msgid "Conformité réglementaire"
+msgstr "Szabályozási megfelelés"
+
+#: public/templates/public/home.html:286
+msgid "Taxonomie EU, Plan Eau 2030"
+msgstr "EU-taxonómia, Víz Terv 2030"
+
+#: public/templates/public/home.html:291
+msgid "JEI, CIR, aides PAC"
+msgstr "JEI, CIR, KAP-támogatások"
+
+#: public/templates/public/home.html:295
+msgid "Météo et alertes"
+msgstr "Időjárás és riasztások"
+
+#: public/templates/public/home.html:296
+msgid "Gel, ETP, prévisions 7 jours"
+msgstr "Fagy, ETP, 7 napos előrejelzés"
+
+#: public/templates/public/home.html:309
+msgid "Simple et transparent."
+msgstr "Egyszerű és átlátható."
+
+#: public/templates/public/home.html:315
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "par mois · par exploitation"
+msgstr "Gazdaságom"
+
+#: public/templates/public/home.html:317
+msgid "Tous vos utilisateurs inclus — sans engagement"
+msgstr "Minden felhasználója mellékelve — kötelezettség nélkül"
+
+#: public/templates/public/home.html:322
+msgid "Assistant vocal illimité"
+msgstr "Korlátlan hangasszisztens"
+
+#: public/templates/public/home.html:323
+msgid "Tous les modules inclus"
+msgstr "Minden modul mellékelve"
+
+#: public/templates/public/home.html:325
+msgid "Support réactif"
+msgstr "Gyors ügyfélszolgálat"
+
+#: public/templates/public/home.html:326
+msgid "Mises à jour automatiques"
+msgstr "Automatikus frissítések"
+
+#: public/templates/public/home.html:328
+msgid "Utilisateurs illimités par exploitation"
+msgstr "Korlátlan felhasználó gazdaságonként"
+
+#: public/templates/public/home.html:329
+msgid "Accès mobile et tablette"
+msgstr "Mobil- és tablethozzáférés"
+
+#: public/templates/public/home.html:335
+msgid "S'abonner maintenant"
+msgstr "Előfizetés most"
+
+#: public/templates/public/home.html:337
+msgid "Paiement sécurisé par Stripe · Résiliation en 1 clic"
+msgstr "Biztonságos fizetés a Stripe-on keresztül · Lemondás 1 kattintással"
+
+#: public/templates/public/home.html:347
+msgid "Guide gratuit"
+msgstr "Ingyenes útmutató"
+
+#: public/templates/public/home.html:349
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Lire ses analyses de sol"
+msgstr "Talajvizsgálatok"
+
+#: public/templates/public/home.html:352
+msgid ""
+"Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre "
+"exploitation. Téléchargement immédiat."
+msgstr "Értse meg a vizsgálati eredményeit, és hozza meg a megfelelő döntéseket a gazdasága számára. Azonnali letöltés."
+
+#: public/templates/public/home.html:358
+msgid "pH & impact cultures"
+msgstr "pH és növényi hatás"
+
+#: public/templates/public/home.html:362
+msgid "Matière organique"
+msgstr "Szerves anyag"
+
+#: public/templates/public/home.html:366
+msgid "N, P, K décryptés"
+msgstr "N, P, K megfejtve"
+
+#: public/templates/public/home.html:370
+msgid "Recommandations concrètes"
+msgstr "Konkrét ajánlások"
+
+#: public/templates/public/home.html:378
+msgid "Recevoir le guide"
+msgstr "Útmutató fogadása"
+
+#: public/templates/public/home.html:381
+msgid "Aucun spam. Votre email ne sera jamais revendu."
+msgstr "Semmi spam. Az e-mail-címét sosem adjuk el."
+
+#: public/templates/public/home.html:390
+msgid "Questions fréquentes"
+msgstr "Gyakori kérdések"
+
+#: public/templates/public/home.html:396
+msgid "Holystyl peut-il vraiment m'aider à travailler moins ?"
+msgstr "Tényleg segíthet a Holystyl abban, hogy kevesebbet dolgozzam?"
+
+#: public/templates/public/home.html:400
+#, python-format
+msgid ""
+"Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
+"de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
+"l'administratif — la priorité n°1 de 48 %% des agriculteurs."
+msgstr "Igen. A nyomon követhetőség, a szabályozási jelentések és a táblái nyomon követésének automatizálásával a Holystyl megspórolja Önnek az adminisztrációval esténként eltöltött órákat — a gazdálkodók 48 %%-ának 1. számú prioritását."
+
+#: public/templates/public/home.html:405
+msgid "Est-ce que l'assistant comprend mes questions techniques ?"
+msgstr "Megérti az asszisztens a műszaki kérdéseimet?"
+
+#: public/templates/public/home.html:409
+msgid ""
+"Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
+"fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
+"l'écrit comme à la voix, 24h/24."
+msgstr "Igen. Az MI-asszisztens a mezőgazdaságra szakosodott: öntözés, tápanyag-utánpótlás (N, P, K), időjárás, szabályozás vagy talajvizsgálatok — írásban és hanggal is, éjjel-nappal."
+
+#: public/templates/public/home.html:414
+msgid "Comment démarrer avec Holystyl ?"
+msgstr "Hogyan kezdhetek bele a Holystyl használatába?"
+
+#: public/templates/public/home.html:418
+msgid ""
+"Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à "
+"pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
+"équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
+"IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
+msgstr "Hozza létre a fiókját online 2 perc alatt. Egy lépésről lépésre haladó beállítási útmutató segít a táblái, növényei és csapata hozzáadásában. A Holystyl csatlakozik az öntözőrendszeréhez (Vyrsa, IoT-érzékelők), és még aznap üzemkész okostelefonjáról vagy számítógépéről."
+
+#: public/templates/public/home.html:423
+msgid "Holystyl m'aide-t-il à réduire mes charges ?"
+msgstr "Segít a Holystyl a költségeim csökkentésében?"
+
+#: public/templates/public/home.html:427
+msgid ""
+"Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
+"réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
+"aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
+msgstr "Igen. A pénzügyi irányítópult valós időben követi a költségeit és árréseit, azonosítja a nyomasztó tételeket, és segít a döntéshozatalban. Vízkvótáit és eszközeit is irányítja a felesleges kiadások elkerülése érdekében."
+
+#: public/templates/public/home.html:432
+msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
+msgstr "Működik az alkalmazás internet nélkül a táblán?"
+
+#: public/templates/public/home.html:436
+msgid ""
+"Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
+"réseau ; les données se synchronisent automatiquement dès que la connexion "
+"revient."
+msgstr "Igen. A terepen hálózat nélkül is megtekintheti és rögzítheti a beavatkozásait; az adatok automatikusan szinkronizálódnak, amint visszatér a kapcsolat."
+
+#: public/templates/public/home.html:441
+msgid "Mes données m'appartiennent-elles ?"
+msgstr "Az enyémek az adataim?"
+
+#: public/templates/public/home.html:445
+msgid ""
+"Absolument. Vos données vous appartiennent et restent confidentielles : "
+"hébergées en France, jamais revendues, exportables ou supprimables à tout "
+"moment."
+msgstr "Feltétlenül. Az adatai az Önéi és bizalmasak maradnak: Franciaországban tárolva, sosem eladva, bármikor exportálhatók vagy törölhetők."
+
+#: public/templates/public/home.html:463
+msgid ""
+"Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
+"Holystyl."
+msgstr "Intelligens asszisztens mezőgazdasági gazdaságok számára. A Holystyl hálózattal közösen kifejlesztve."
+
+#: public/templates/public/home.html:478
+msgid "Accès"
+msgstr "Hozzáférés"
+
+#: public/templates/public/home.html:481
+msgid "S'abonner"
+msgstr "Előfizetés"
+
+#: public/templates/public/home.html:488
+msgid "© 2026 Holystyl · Tous droits réservés"
+msgstr "© 2026 Holystyl · Minden jog fenntartva"
+
+#: public/templates/public/home.html:490
+msgid "Mentions légales"
+msgstr "Jogi nyilatkozat"
+
+#: public/templates/public/home.html:492
+msgid "Confidentialité"
+msgstr "Adatvédelem"
+
+#: public/templates/public/home.html:493
+msgid "Registre transparence UE 238841"
+msgstr "EU átláthatósági nyilvántartás 238841"
+
+#: public/views.py:26
 msgid "Merci ! Votre guide arrive par email."
-msgstr ""
+msgstr "Köszönjük! Az útmutatója e-mailben érkezik."
 
-msgid "Votre accès Holystyl est activé !"
-msgstr ""
+#: sondages/models.py:15
+msgid "question"
+msgstr "kérdés"
 
-msgid "Code invalide ou déjà utilisé."
-msgstr ""
+#: sondages/models.py:17
+msgid "clôturé"
+msgstr "lezárva"
 
-msgid "Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
-msgstr ""
+#: sondages/models.py:20
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondage"
+msgstr "Szavazás"
 
+#: sondages/models.py:21
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondages"
+msgstr "Szavazás"
+
+#: sondages/models.py:48
+msgid "texte"
+msgstr "szöveg"
+
+#: sondages/models.py:52 sondages/models.py:53
+#: sondages/templates/sondages/liste.html:27
+msgid "choix"
+msgstr "választás"
+
+#: sondages/models.py:67
+msgid "vote"
+msgstr "szavazat"
+
+#: sondages/models.py:68
+msgid "votes"
+msgstr "szavazatok"
+
+#: sondages/templates/sondages/create.html:6
+#: sondages/templates/sondages/liste.html:10 sondages/views.py:45
+#: sondages/views.py:58
+msgid "Nouveau sondage"
+msgstr "Új szavazás"
+
+#: sondages/templates/sondages/create.html:17
+msgid "Question"
+msgstr "Kérdés"
+
+#: sondages/templates/sondages/create.html:19
+msgid "Ex. Quelle parcelle irriguer en priorité ?"
+msgstr "Pl.: Melyik táblát öntözzük elsőként?"
+
+#: sondages/templates/sondages/create.html:24
+#: sondages/templates/sondages/create.html:27
+#: sondages/templates/sondages/create.html:48
+msgid "Choix"
+msgstr "Választási lehetőség"
+
+#: sondages/templates/sondages/create.html:32
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter un choix"
+msgstr "Kód aktiválása"
+
+#: sondages/templates/sondages/detail.html:7
+#: sondages/templates/sondages/liste.html:7 sondages/views.py:30
+#, fuzzy
+#| msgid "Sondage"
+msgid "Sondages"
+msgstr "Szavazás"
+
+#: sondages/templates/sondages/detail.html:14
+#: sondages/templates/sondages/liste.html:21
+msgid "Clôturé"
+msgstr "Lezárva"
+
+#: sondages/templates/sondages/detail.html:35
+#, python-format
+msgid "%(n)s vote au total"
+msgid_plural "%(n)s votes au total"
+msgstr[0] "Összesen %(n)s szavazat"
+msgstr[1] "Összesen %(n)s szavazat"
+
+#: sondages/templates/sondages/detail.html:46
+msgid "Voter"
+msgstr "Szavazás"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Rouvrir le sondage"
+msgstr "Szavazás újranyitása"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Clôturer le sondage"
+msgstr "Szavazás lezárása"
+
+#: sondages/templates/sondages/liste.html:23
+msgid "Voté"
+msgstr "Leszavazva"
+
+#: sondages/templates/sondages/liste.html:27
+#, python-format
+msgid "%(n)s vote"
+msgid_plural "%(n)s votes"
+msgstr[0] "%(n)s szavazat"
+msgstr[1] "%(n)s szavazat"
+
+#: sondages/templates/sondages/liste.html:33
+msgid "Aucun sondage pour le moment. Créez-en un !"
+msgstr "Egyelőre nincs szavazás. Hozzon létre egyet!"
+
+#: sondages/views.py:40
+msgid "La question est obligatoire."
+msgstr "A kérdés megadása kötelező."
+
+#: sondages/views.py:42
+msgid "Proposez au moins deux choix."
+msgstr "Adjon meg legalább két választási lehetőséget."
+
+#: templates/partials/cookie_banner.html:6
+msgid ""
+"Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
+msgstr "A Holystyl működéséhez elengedhetetlen sütiket használunk (GDPR)."
+
+#: templates/partials/cookie_banner.html:8
 msgid "J'ai compris"
-msgstr ""
+msgstr "Megértettem"
 
+#: templates/partials/header.html:13
 msgid "Heure locale"
 msgstr "Helyi idő"
 
-msgid "Langue"
-msgstr ""
-
+#: templates/partials/header.html:33
 msgid "Thème"
-msgstr ""
+msgstr "Téma"
 
+#: templates/partials/header.html:64
 msgid "Déconnexion"
-msgstr ""
+msgstr "Kijelentkezés"
 
+#: templates/partials/install_banner.html:13
 msgid "Installer Holystyl"
-msgstr ""
+msgstr "Holystyl telepítése"
 
+#: templates/partials/install_banner.html:15
 msgid "Partager puis « Sur l’écran d’accueil »."
-msgstr ""
+msgstr "Megosztás, majd „A kezdőképernyőre”."
 
+#: templates/partials/install_banner.html:16
 msgid "Accédez plus vite depuis votre écran d’accueil."
-msgstr ""
+msgstr "Férjen hozzá gyorsabban a kezdőképernyőjéről."
 
-msgid "Télécharger l'app"
-msgstr ""
-
+#: templates/partials/install_banner.html:25
 msgid "Plus tard"
-msgstr ""
+msgstr "Később"
 
-msgid "Fermer"
-msgstr ""
+#: templates/partials/lang_switcher.html:27
+msgid "Langue"
+msgstr "Nyelv"
 
+#: templates/partials/nav_flyout.html:17
 msgid "Bientôt"
 msgstr "Hamarosan"
 
+#: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
-msgstr ""
+msgstr "Adjunk újra értelmet a szakmánknak"
+
+#~ msgid "Administration"
+#~ msgstr "Adminisztráció"

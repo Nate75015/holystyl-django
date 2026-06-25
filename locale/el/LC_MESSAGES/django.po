@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 16:53+0200\n"
+"POT-Creation-Date: 2026-06-25 17:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,1874 +18,4873 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: accounts/admin.py:17 exploitations/views.py:61
 msgid "Identité"
-msgstr ""
+msgstr "Ταυτότητα"
 
+#: accounts/admin.py:18
 msgid "Permissions"
-msgstr ""
+msgstr "Δικαιώματα"
 
+#: accounts/admin.py:19
 msgid "Dates"
-msgstr ""
+msgstr "Ημερομηνίες"
 
+#: accounts/forms.py:15
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
+#: accounts/forms.py:23
 msgid "Nom complet"
-msgstr ""
+msgstr "Πλήρες όνομα"
 
+#: accounts/models.py:14
 msgid "adresse email"
-msgstr ""
+msgstr "διεύθυνση email"
 
+#: accounts/models.py:15
 msgid "nom complet"
-msgstr ""
+msgstr "πλήρες όνομα"
 
+#: accounts/models.py:23
 msgid "utilisateur"
-msgstr ""
+msgstr "χρήστης"
 
+#: accounts/models.py:24
 msgid "utilisateurs"
-msgstr ""
+msgstr "χρήστες"
 
+#: accounts/templates/accounts/login.html:3
+#: accounts/templates/accounts/login.html:12
+#: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
-msgstr ""
+msgstr "Σύνδεση"
 
+#: accounts/templates/accounts/login.html:23
+#: accounts/templates/accounts/register.html:26
 msgid "Se connecter"
-msgstr ""
+msgstr "Σύνδεση"
 
+#: accounts/templates/accounts/login.html:26
 msgid "Pas de compte ?"
-msgstr ""
+msgstr "Δεν έχετε λογαριασμό;"
 
+#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/register.html:3
+#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
-msgstr ""
+msgstr "Δημιουργία λογαριασμού"
 
+#: accounts/templates/accounts/register.html:23
+#: public/templates/public/home.html:25
 msgid "S'inscrire"
-msgstr ""
+msgstr "Εγγραφή"
 
+#: accounts/templates/accounts/register.html:26
 msgid "Déjà un compte ?"
-msgstr ""
+msgstr "Έχετε ήδη λογαριασμό;"
 
+#: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
-msgstr ""
+msgstr "Σφάλμα"
 
+#: administration/models.py:31
 msgid "configuration SMTP"
-msgstr ""
+msgstr "ρύθμιση SMTP"
 
+#: administration/models.py:32
 msgid "configurations SMTP"
-msgstr ""
+msgstr "ρυθμίσεις SMTP"
 
-msgid "Administration — Email (SMTP)"
-msgstr ""
-
-msgid "Serveur"
-msgstr ""
-
-msgid "Port"
-msgstr ""
-
-msgid "Utilisateur"
-msgstr ""
-
-msgid "Mot de passe"
-msgstr ""
-
-msgid "Nom expéditeur"
-msgstr ""
-
-msgid "Email expéditeur"
-msgstr ""
-
-msgid "SSL (port 465)"
-msgstr ""
-
-msgid "Activé"
-msgstr ""
-
-msgid "Dernier test"
-msgstr ""
-
-msgid "Enregistrer"
-msgstr ""
-
-msgid "Configuration SMTP enregistrée."
-msgstr ""
-
-msgid "Administration"
-msgstr "Διαχείριση"
-
+#: agronomie/models.py:16 agronomie/templates/agronomie/cultures.html:16
 msgid "Céréales"
-msgstr ""
+msgstr "Δημητριακά"
 
+#: agronomie/models.py:17 agronomie/templates/agronomie/cultures.html:17
 msgid "Légumes"
-msgstr ""
+msgstr "Λαχανικά"
 
+#: agronomie/models.py:18 agronomie/templates/agronomie/cultures.html:18
 msgid "Fruits"
-msgstr ""
+msgstr "Φρούτα"
 
+#: agronomie/models.py:19 agronomie/templates/agronomie/cultures.html:19
 msgid "Vigne"
-msgstr ""
+msgstr "Άμπελος"
 
+#: agronomie/models.py:20 agronomie/templates/agronomie/cultures.html:20
 msgid "Oléagineux"
-msgstr ""
+msgstr "Ελαιούχα"
 
+#: agronomie/models.py:21 agronomie/templates/agronomie/cultures.html:21
 msgid "Fourrage"
-msgstr ""
+msgstr "Χορτονομή"
 
+#: agronomie/models.py:22 agronomie/templates/agronomie/cultures.html:22
 msgid "Maraîchage"
-msgstr ""
+msgstr "Κηπευτικά"
 
+#: agronomie/models.py:23 exploitations/models.py:21
+#: exploitations/models.py:34 finances/models.py:24 finances/models.py:50
+#: interventions/models.py:26 operations/models.py:21 operations/models.py:87
+#: operations/models.py:119 operations/models.py:152 pac/models.py:18
+#: planning/models.py:110 planning/models.py:150 planning/models.py:214
 msgid "Autre"
-msgstr ""
+msgstr "Άλλο"
 
+#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:107
+#: agronomie/models.py:132 equipe/models.py:22 exploitations/models.py:42
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:17
+#: operations/models.py:30 parcelles/models.py:31
 msgid "nom"
-msgstr ""
+msgstr "όνομα"
 
+#: agronomie/models.py:26
 msgid "nom scientifique"
-msgstr ""
+msgstr "επιστημονικό όνομα"
 
+#: agronomie/models.py:39
 msgid "culture (Kc)"
-msgstr ""
+msgstr "καλλιέργεια (Kc)"
 
+#: agronomie/models.py:40
 msgid "cultures (Kc)"
-msgstr ""
+msgstr "καλλιέργειες (Kc)"
 
+#: agronomie/models.py:51 agronomie/templates/agronomie/types_sol.html:16
 msgid "Sableux"
-msgstr ""
+msgstr "Αμμώδες"
 
+#: agronomie/models.py:52 agronomie/templates/agronomie/types_sol.html:17
 msgid "Limoneux"
-msgstr ""
+msgstr "Ιλυώδες"
 
+#: agronomie/models.py:53 agronomie/templates/agronomie/types_sol.html:18
 msgid "Argileux"
-msgstr ""
+msgstr "Αργιλώδες"
 
+#: agronomie/models.py:54 agronomie/templates/agronomie/types_sol.html:19
 msgid "Limon argileux"
-msgstr ""
+msgstr "Αργιλοϊλυώδες"
 
+#: agronomie/models.py:55 agronomie/templates/agronomie/types_sol.html:20
 msgid "Sablo-limoneux"
-msgstr ""
+msgstr "Αμμοϊλυώδες"
 
+#: agronomie/models.py:56 agronomie/templates/agronomie/types_sol.html:21
 msgid "Argilo-limoneux"
-msgstr ""
+msgstr "Αργιλοϊλυώδες"
 
+#: agronomie/models.py:60
 msgid "capacité de rétention (mm)"
-msgstr ""
+msgstr "ικανότητα συγκράτησης (mm)"
 
+#: agronomie/models.py:61 agronomie/templates/agronomie/types_sol.html:108
 msgid "pH typique"
-msgstr ""
+msgstr "τυπικό pH"
 
+#: agronomie/models.py:67 parcelles/models.py:60
 msgid "type de sol"
-msgstr ""
+msgstr "τύπος εδάφους"
 
+#: agronomie/models.py:68 agronomie/templates/agronomie/types_sol.html:128
 msgid "types de sol"
-msgstr ""
+msgstr "τύποι εδάφους"
 
+#: agronomie/models.py:91
 msgid "fertigation"
-msgstr ""
+msgstr "υδρολίπανση"
 
+#: agronomie/models.py:92
 msgid "fertigations"
-msgstr ""
+msgstr "υδρολιπάνσεις"
 
+#: agronomie/models.py:108
+msgid "type"
+msgstr "τύπος"
+
+#: agronomie/models.py:109
+msgid "N %"
+msgstr "N %"
+
+#: agronomie/models.py:110
+msgid "P %"
+msgstr "P %"
+
+#: agronomie/models.py:111
+msgid "K %"
+msgstr "K %"
+
+#: agronomie/models.py:112
+msgid "solubilité"
+msgstr "διαλυτότητα"
+
+#: agronomie/models.py:113
+msgid "effet pH"
+msgstr "επίδραση pH"
+
+#: agronomie/models.py:116 agronomie/models.py:117
+msgid "engrais"
+msgstr "λίπασμα"
+
+#: agronomie/models.py:133
 msgid "date de début"
-msgstr ""
+msgstr "ημερομηνία έναρξης"
 
+#: agronomie/models.py:134
 msgid "date de fin"
-msgstr ""
+msgstr "ημερομηνία λήξης"
 
+#: agronomie/models.py:135 agronomie/templates/agronomie/saisons.html:12
 msgid "active"
-msgstr ""
+msgstr "ενεργή"
 
+#: agronomie/models.py:139
 msgid "saison"
-msgstr ""
+msgstr "σεζόν"
 
+#: agronomie/models.py:140
 msgid "saisons"
-msgstr ""
+msgstr "σεζόν"
 
-msgid "Cultures & coefficients Kc"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:15
+#: agronomie/templates/agronomie/types_sol.html:15
+#: interventions/templates/interventions/interventions.html:82
+msgid "Toutes"
+msgstr "Όλες"
 
-msgid "Culture"
-msgstr ""
-
-msgid "Catégorie"
-msgstr ""
-
-msgid "Source"
-msgstr ""
-
-msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
-msgstr ""
-
-msgid "Saisons"
-msgstr "Εποχές"
-
-msgid "Aucune saison définie."
-msgstr ""
-
-msgid "Types de sol"
-msgstr "Τύποι εδάφους"
-
-msgid "Rétention"
-msgstr ""
-
-msgid "Aucun type de sol. Ajoutez-en via l'admin."
-msgstr ""
-
+#: agronomie/templates/agronomie/cultures.html:35 agronomie/views.py:46
 msgid "Cultures & Kc"
 msgstr "Καλλιέργειες & Kc"
 
-msgid "Sol"
+#: agronomie/templates/agronomie/cultures.html:36
+msgid ""
+"Base de données cultures françaises — Coefficients culturaux FAO-56 / "
+"ARVALIS"
 msgstr ""
+"Βάση δεδομένων γαλλικών καλλιεργειών — Φυτικοί συντελεστές FAO-56 / ARVALIS"
 
-msgid "Eau"
+#: agronomie/templates/agronomie/cultures.html:41
+#: agronomie/templates/agronomie/cultures.html:56
+msgid "Méthode"
+msgstr "Μέθοδος"
+
+#: agronomie/templates/agronomie/cultures.html:45
+#: agronomie/templates/agronomie/cultures.html:233
+#: agronomie/templates/agronomie/types_sol.html:54
+#: agronomie/templates/agronomie/types_sol.html:213
+#: environnement/templates/environnement/taxonomie.html:178
+#: exploitations/templates/exploitations/settings.html:140
+#: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
+#: parcelles/templates/parcelles/list.html:17
+msgid "Ajouter"
+msgstr "Προσθήκη"
+
+#: agronomie/templates/agronomie/cultures.html:61
+msgid ""
+"Le besoin en eau est calculé avec la formule ETc = ETP × Kc, où l'ETP est "
+"l'évapotranspiration potentielle (données météo) et le Kc est le coefficient"
+" cultural qui varie selon le stade phénologique de la plante. Le système "
+"soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
+"calculer la dose d'irrigation nette."
 msgstr ""
+"Η ανάγκη σε νερό υπολογίζεται με τον τύπο ETc = ETP × Kc, όπου ETP είναι η "
+"δυνητική εξατμισοδιαπνοή (μετεωρολογικά δεδομένα) και Kc ο φυτικός "
+"συντελεστής που μεταβάλλεται ανάλογα με το φαινολογικό στάδιο του φυτού. Το "
+"σύστημα αφαιρεί την ωφέλιμη βροχόπτωση και λαμβάνει υπόψη τη διαθέσιμη "
+"υδατοϊκανότητα του εδάφους για τον υπολογισμό της καθαρής δόσης άρδευσης."
 
-msgid "Foliaire"
+#: agronomie/templates/agronomie/cultures.html:66
+msgid "Levée → début développement"
+msgstr "Φύτρωμα → αρχή ανάπτυξης"
+
+#: agronomie/templates/agronomie/cultures.html:70
+msgid "Pleine croissance végétative"
+msgstr "Πλήρης βλαστική ανάπτυξη"
+
+#: agronomie/templates/agronomie/cultures.html:74
+msgid "Maturation → récolte"
+msgstr "Ωρίμανση → συγκομιδή"
+
+#: agronomie/templates/agronomie/cultures.html:83
+msgid "Rechercher une culture, un nom scientifique, une source…"
+msgstr "Αναζήτηση καλλιέργειας, επιστημονικού ονόματος, πηγής…"
+
+#: agronomie/templates/agronomie/cultures.html:101
+#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:34
+#: parcelles/templates/parcelles/form.html:38
+#: parcelles/templates/parcelles/list.html:91
+msgid "Culture"
+msgstr "Καλλιέργεια"
+
+#: agronomie/templates/agronomie/cultures.html:102
+#: agronomie/templates/agronomie/cultures.html:186
+msgid "Nom scientifique"
+msgstr "Επιστημονικό όνομα"
+
+#: agronomie/templates/agronomie/cultures.html:103
+#: agronomie/templates/agronomie/cultures.html:192
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:53
+#: pac/templates/pac/pac.html:117
+msgid "Catégorie"
+msgstr "Κατηγορία"
+
+#: agronomie/templates/agronomie/cultures.html:107
+#: agronomie/templates/agronomie/cultures.html:220
+msgid "Source"
+msgstr "Πηγή"
+
+#: agronomie/templates/agronomie/cultures.html:122
+#: agronomie/templates/agronomie/cultures.html:160
+#: agronomie/templates/agronomie/types_sol.html:97
+#: agronomie/templates/agronomie/types_sol.html:151
+#: parcelles/templates/parcelles/confirm_delete.html:13
+#: parcelles/templates/parcelles/detail.html:13
+msgid "Supprimer"
+msgstr "Διαγραφή"
+
+#: agronomie/templates/agronomie/cultures.html:132
+msgid "Aucune culture ne correspond à la recherche."
+msgstr "Καμία καλλιέργεια δεν αντιστοιχεί στην αναζήτηση."
+
+#: agronomie/templates/agronomie/cultures.html:137
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "cultures"
+msgstr "Καλλιέργειες & Kc"
+
+#: agronomie/templates/agronomie/cultures.html:150
+msgid "Supprimer la culture ?"
+msgstr "Διαγραφή καλλιέργειας;"
+
+#: agronomie/templates/agronomie/cultures.html:152
+msgid "sera supprimée définitivement."
+msgstr "θα διαγραφεί οριστικά."
+
+#: agronomie/templates/agronomie/cultures.html:158
+#: agronomie/templates/agronomie/cultures.html:232
+#: agronomie/templates/agronomie/fertigation.html:216
+#: agronomie/templates/agronomie/types_sol.html:149
+#: agronomie/templates/agronomie/types_sol.html:212
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:128
+#: environnement/templates/environnement/taxonomie.html:177
+#: exploitations/templates/exploitations/settings.html:50
+#: exploitations/templates/exploitations/settings.html:139
+#: interventions/templates/interventions/interventions.html:174
+#: mail/templates/mail/compose.html:56
+#: messagerie/templates/messagerie/_new_modal.html:61
+#: messagerie/templates/messagerie/new.html:34
+#: meteo/templates/meteo/index.html:76 pac/templates/pac/pac.html:145
+#: parcelles/templates/parcelles/confirm_delete.html:14
+#: parcelles/templates/parcelles/list.html:75
+#: sondages/templates/sondages/create.html:37
+msgid "Annuler"
+msgstr "Ακύρωση"
+
+#: agronomie/templates/agronomie/cultures.html:173
+msgid "Nouvelle culture"
+msgstr "Νέα καλλιέργεια"
+
+#: agronomie/templates/agronomie/cultures.html:180
+msgid "Nom commun"
+msgstr "Κοινό όνομα"
+
+#: agronomie/templates/agronomie/cultures.html:226
+#: agronomie/templates/agronomie/types_sol.html:207
+#: interventions/templates/interventions/interventions.html:169
+msgid "Notes"
+msgstr "Σημειώσεις"
+
+#: agronomie/templates/agronomie/fertigation.html:19 agronomie/views.py:162
+#: core/context_processors.py:50
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Fertigation"
+msgstr "Άρδευση"
+
+#: agronomie/templates/agronomie/fertigation.html:20
+msgid "Gestion N/P/K · Directive Nitrates · Calcul doses"
+msgstr "Διαχείριση N/P/K · Οδηγία Νιτρικών · Υπολογισμός δόσεων"
+
+#: agronomie/templates/agronomie/fertigation.html:24
+msgid "Enregistrer apport"
+msgstr "Καταχώρηση παροχής"
+
+#: agronomie/templates/agronomie/fertigation.html:33
+msgid "Directive Nitrates 91/676/CEE"
+msgstr "Οδηγία Νιτρικών 91/676/ΕΟΚ"
+
+#: agronomie/templates/agronomie/fertigation.html:41
+msgid ""
+"Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
+"vos apports cumulés."
 msgstr ""
+"Ανώτατο όριο 170 kg N/ha/έτος σε ευπαθή ζώνη. Το σύστημα παρακολουθεί "
+"αυτόματα τις σωρευτικές παροχές σας."
 
-msgid "Plante"
+#: agronomie/templates/agronomie/fertigation.html:49
+msgid "Catalogue engrais"
+msgstr "Κατάλογος λιπασμάτων"
+
+#: agronomie/templates/agronomie/fertigation.html:52
+msgid "Calcul doses"
+msgstr "Υπολογισμός δόσεων"
+
+#: agronomie/templates/agronomie/fertigation.html:55
+msgid "Historique"
+msgstr "Ιστορικό"
+
+#: agronomie/templates/agronomie/fertigation.html:63
+#: agronomie/templates/agronomie/fertigation.html:92 finances/models.py:16
+msgid "Engrais"
+msgstr "Λίπασμα"
+
+#: agronomie/templates/agronomie/fertigation.html:64
+#: interventions/templates/interventions/interventions.html:129
+#: iot/templates/iot/capteurs.html:21
+#: parcelles/templates/parcelles/detail.html:30
+#: planning/templates/planning/bon_intervention.html:16
+msgid "Type"
+msgstr "Τύπος"
+
+#: agronomie/templates/agronomie/fertigation.html:68
+msgid "Solubilité"
+msgstr "Διαλυτότητα"
+
+#: agronomie/templates/agronomie/fertigation.html:69
+msgid "pH effet"
+msgstr "επίδραση pH"
+
+#: agronomie/templates/agronomie/fertigation.html:99
+msgid "Dose produit (kg/ha)"
+msgstr "Δόση προϊόντος (kg/ha)"
+
+#: agronomie/templates/agronomie/fertigation.html:106
+msgid "Azote (N)"
+msgstr "Άζωτο (N)"
+
+#: agronomie/templates/agronomie/fertigation.html:110
+msgid "Phosphore (P)"
+msgstr "Φώσφορος (P)"
+
+#: agronomie/templates/agronomie/fertigation.html:114
+msgid "Potassium (K)"
+msgstr "Κάλιο (K)"
+
+#: agronomie/templates/agronomie/fertigation.html:118
+#, python-format
+msgid "Éléments apportés = dose produit × titre (%%) ÷ 100."
+msgstr "Παρεχόμενα στοιχεία = δόση προϊόντος × περιεκτικότητα (%%) ÷ 100."
+
+#: agronomie/templates/agronomie/fertigation.html:128
+#: agronomie/templates/agronomie/fertigation.html:175
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:44
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:110
+#: finances/templates/finances/charges.html:14
+#: meteo/templates/meteo/meteo.html:140
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: agronomie/templates/agronomie/fertigation.html:129
+#: agronomie/templates/agronomie/fertigation.html:180
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:45
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:103 ia/models.py:33
+#: interventions/templates/interventions/interventions.html:155
+#: parcelles/templates/parcelles/list.html:89
+msgid "Parcelle"
+msgstr "Αγροτεμάχιο"
+
+#: agronomie/templates/agronomie/fertigation.html:130
+#: agronomie/templates/agronomie/fertigation.html:188 ia/models.py:36
+#: interventions/templates/interventions/interventions.html:164
+#: planning/templates/planning/bon_intervention.html:29
+#: public/templates/public/home.html:469
+msgid "Produit"
+msgstr "Προϊόν"
+
+#: agronomie/templates/agronomie/fertigation.html:134
+msgid "Volume"
+msgstr "Όγκος"
+
+#: agronomie/templates/agronomie/fertigation.html:155
+msgid "Aucun apport enregistré."
+msgstr "Καμία καταχωρημένη παροχή."
+
+#: agronomie/templates/agronomie/fertigation.html:156
+msgid ""
+"Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
 msgstr ""
+"Κάντε κλικ στο «Καταχώρηση παροχής» για να προσθέσετε μια παροχή "
+"υδρολίπανσης."
 
-msgid "OCR en attente"
+#: agronomie/templates/agronomie/fertigation.html:167
+msgid "Enregistrer un apport"
+msgstr "Καταχώρηση παροχής"
+
+#: agronomie/templates/agronomie/fertigation.html:211
+msgid "Volume (L)"
+msgstr "Όγκος (L)"
+
+#: agronomie/templates/agronomie/fertigation.html:217
+#: exploitations/templates/exploitations/settings.html:52
+#: interventions/templates/interventions/interventions.html:33
+#: interventions/templates/interventions/interventions.html:175
+#: meteo/templates/meteo/meteo.html:52
+#: parcelles/templates/parcelles/form.html:97
+#: parcelles/templates/parcelles/list.html:76
+msgid "Enregistrer"
+msgstr "Αποθήκευση"
+
+#: agronomie/templates/agronomie/fertigation.html:221
+msgid ""
+"Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un "
+"apport."
 msgstr ""
+"Προσθέστε πρώτα ένα αγροτεμάχιο στην εκμετάλλευσή σας για να καταχωρήσετε "
+"μια παροχή."
 
-msgid "OCR effectué"
+#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:132
+#: core/context_processors.py:67
+msgid "Saisons"
+msgstr "Εποχές"
+
+#: agronomie/templates/agronomie/saisons.html:19
+msgid "Aucune saison définie."
+msgstr "Καμία ορισμένη σεζόν."
+
+#: agronomie/templates/agronomie/types_sol.html:44 agronomie/views.py:99
+#: core/context_processors.py:49
+msgid "Types de sol"
+msgstr "Τύποι εδάφους"
+
+#: agronomie/templates/agronomie/types_sol.html:45
+msgid "Caractéristiques hydriques et agronomiques par texture"
+msgstr "Υδατικά και αγρονομικά χαρακτηριστικά ανά υφή"
+
+#: agronomie/templates/agronomie/types_sol.html:50
+msgid "Réserve Utile"
+msgstr "Διαθέσιμη Υδατοϊκανότητα"
+
+#: agronomie/templates/agronomie/types_sol.html:64
+msgid "Réserve Utile (RU)"
+msgstr "Διαθέσιμη Υδατοϊκανότητα (RU)"
+
+#: agronomie/templates/agronomie/types_sol.html:69
+msgid ""
+"La réserve utile est la quantité d'eau disponible pour la plante entre la "
+"capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
+"est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
+"calculer la dose d'irrigation nette et le seuil de déclenchement."
 msgstr ""
+"Η διαθέσιμη υδατοϊκανότητα είναι η ποσότητα νερού που είναι διαθέσιμη στο "
+"φυτό μεταξύ της υδατοϊκανότητας αγρού (CC) και του σημείου μόνιμης μάρανσης "
+"(PFP). Εκφράζεται σε mm νερού ανά μέτρο εδάφους. Το σύστημα χρησιμοποιεί τη "
+"RU για τον υπολογισμό της καθαρής δόσης άρδευσης και του ορίου "
+"ενεργοποίησης."
 
-msgid "Validé"
-msgstr ""
+#: agronomie/templates/agronomie/types_sol.html:77
+msgid "Rechercher un type de sol, une texture…"
+msgstr "Αναζήτηση τύπου εδάφους, υφής…"
 
-msgid "rapport d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/types_sol.html:104
+msgid "Rétention"
+msgstr "Συγκράτηση"
 
-msgid "rapports d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/types_sol.html:112
+msgid "Conductivité"
+msgstr "Αγωγιμότητα"
 
+#: agronomie/templates/agronomie/types_sol.html:116
+msgid "Densité"
+msgstr "Πυκνότητα"
+
+#: agronomie/templates/agronomie/types_sol.html:124
+msgid "Aucun type de sol ne correspond à la recherche."
+msgstr "Κανένας τύπος εδάφους δεν αντιστοιχεί στην αναζήτηση."
+
+#: agronomie/templates/agronomie/types_sol.html:141
+msgid "Supprimer ce type de sol ?"
+msgstr "Διαγραφή αυτού του τύπου εδάφους;"
+
+#: agronomie/templates/agronomie/types_sol.html:143
+msgid "sera supprimé définitivement."
+msgstr "θα διαγραφεί οριστικά."
+
+#: agronomie/templates/agronomie/types_sol.html:164
+#, fuzzy
+#| msgid "Types de sol"
+msgid "Nouveau type de sol"
+msgstr "Τύποι εδάφους"
+
+#: agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Όνομα"
+
+#: agronomie/templates/agronomie/types_sol.html:176
+msgid "Texture"
+msgstr "Υφή"
+
+#: agronomie/templates/agronomie/types_sol.html:186
+msgid "Rétention (mm)"
+msgstr "Συγκράτηση (mm)"
+
+#: agronomie/templates/agronomie/types_sol.html:196
+msgid "Conductivité (mm/h)"
+msgstr "Αγωγιμότητα (mm/h)"
+
+#: agronomie/templates/agronomie/types_sol.html:201
+msgid "Densité (g/cm³)"
+msgstr "Πυκνότητα (g/cm³)"
+
+#: analyse_sol/models.py:31
+msgid "document"
+msgstr "έγγραφο"
+
+#: analyse_sol/models.py:36
 msgid "analyse de sol"
-msgstr ""
+msgstr "ανάλυση εδάφους"
 
+#: analyse_sol/models.py:37
 msgid "analyses de sol"
-msgstr ""
+msgstr "αναλύσεις εδάφους"
 
-msgid "fiche biodiversité"
-msgstr ""
-
-msgid "fiches biodiversité"
-msgstr ""
-
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:9
+#: analyse_sol/views.py:43 core/context_processors.py:52
+#: public/templates/public/home.html:270
 msgid "Analyses de sol"
 msgstr "Αναλύσεις εδάφους"
 
-msgid "Labo"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:10
+msgid "Résultats d'analyses par parcelle · import de documents"
+msgstr "Αποτελέσματα αναλύσεων ανά αγροτεμάχιο · εισαγωγή εγγράφων"
 
-msgid "Aucune analyse de sol."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:14
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:83
+msgid "Importer une analyse"
+msgstr "Εισαγωγή ανάλυσης"
 
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:21
+#: parcelles/templates/parcelles/list.html:51
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Analyses"
+msgstr "Αναλύσεις εδάφους"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:25
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles analysées"
+msgstr "Αγροτεμάχια"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:29
+msgid "pH moyen"
+msgstr "μέσο pH"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:33
+#, python-format
+msgid "MO moyenne (%%)"
+msgstr "μέση OΥ (%%)"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:46
 msgid "Laboratoire"
 msgstr "Εργαστήριο"
 
-msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:52
+#: planning/models.py:109
+msgid "Document"
+msgstr "Έγγραφο"
 
-msgid "Type"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:69
+msgid "Voir"
+msgstr "Προβολή"
 
-msgid "Date"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:81
+msgid "Aucune analyse de sol enregistrée."
+msgstr "Καμία καταχωρημένη ανάλυση εδάφους."
 
-msgid "Statut"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:94
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Importer une analyse de sol"
+msgstr "Αναλύσεις εδάφους"
 
-msgid "Aucun rapport. Importez un PDF via l'API (extraction Gemini)."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:117
+msgid "Document (PDF, image…)"
+msgstr "Έγγραφο (PDF, εικόνα…)"
 
-msgid "En attente"
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:124
+msgid ""
+"Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
+"document par OCR/IA à l'import."
 msgstr ""
+"Οι τιμές (pH, OΥ, N-P-K, εργαστήριο…) εξάγονται αυτόματα από το έγγραφο μέσω"
+" OCR/AI κατά την εισαγωγή."
 
-msgid "Utilisé"
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:129
+msgid "Importer"
+msgstr "Εισαγωγή"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:133
+msgid ""
+"Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
 msgstr ""
+"Προσθέστε πρώτα ένα αγροτεμάχιο (Τα Αγροτεμάχιά μου) για να επισυνάψετε μια "
+"ανάλυση."
 
-msgid "Expiré"
-msgstr ""
+#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
+msgid "Sol"
+msgstr "Έδαφος"
 
-msgid "Annulé"
-msgstr ""
+#: analyses/models.py:15 finances/models.py:18
+#: finances/templates/finances/bilan_economique.html:30
+#: finances/templates/finances/subvention_pdf.html:31
+msgid "Eau"
+msgstr "Νερό"
 
-msgid "code d'activation"
-msgstr ""
+#: analyses/models.py:16
+msgid "Foliaire"
+msgstr "Φυλλικός"
 
-msgid "codes d'activation"
-msgstr ""
+#: analyses/models.py:17
+msgid "Plante"
+msgstr "Φυτό"
 
-msgid "Actif"
-msgstr ""
+#: analyses/models.py:20
+msgid "OCR en attente"
+msgstr "OCR σε αναμονή"
 
-msgid "Impayé"
-msgstr ""
+#: analyses/models.py:21
+msgid "OCR effectué"
+msgstr "OCR ολοκληρώθηκε"
 
-msgid "Essai"
-msgstr ""
+#: analyses/models.py:22 planning/models.py:261
+msgid "Validé"
+msgstr "Επικυρωμένο"
 
-msgid "Non payé"
-msgstr ""
+#: analyses/models.py:45
+msgid "rapport d'analyse"
+msgstr "έκθεση ανάλυσης"
 
-msgid "abonnement"
-msgstr ""
+#: analyses/models.py:46
+msgid "rapports d'analyse"
+msgstr "εκθέσεις ανάλυσης"
 
-msgid "abonnements"
-msgstr ""
+#: analyses/models.py:64
+msgid "fiche biodiversité"
+msgstr "δελτίο βιοποικιλότητας"
 
+#: analyses/models.py:65
+msgid "fiches biodiversité"
+msgstr "δελτία βιοποικιλότητας"
+
+#: core/context_processors.py:19 core/context_processors.py:28
 msgid "Accueil"
 msgstr "Αρχική"
 
+#: core/context_processors.py:20 core/templates/core/dashboard.html:67
+#: finances/templates/finances/subvention_pdf.html:47
 msgid "Parcelles"
 msgstr "Αγροτεμάχια"
 
+#: core/context_processors.py:21 core/context_processors.py:53
+#: finances/templates/finances/subvention_pdf.html:49
+#: interventions/models.py:12
+#: interventions/templates/interventions/interventions.html:46
+#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:34
+#: operations/models.py:117 parcelles/templates/parcelles/detail.html:28
+#: parcelles/templates/parcelles/form.html:66
 msgid "Irrigation"
 msgstr "Άρδευση"
 
+#: core/context_processors.py:22 core/context_processors.py:90
+#: planning/views.py:34
 msgid "Planning"
 msgstr "Προγραμματισμός"
 
+#: core/context_processors.py:23 ia/models.py:14
 msgid "Assistant"
 msgstr "Βοηθός"
 
+#: core/context_processors.py:30 templates/partials/header.html:5
 msgid "Tableau de bord"
 msgstr "Πίνακας ελέγχου"
 
+#: core/context_processors.py:31
 msgid "Assistant IA"
 msgstr "Βοηθός AI"
 
+#: core/context_processors.py:35
 msgid "Communication"
 msgstr "Επικοινωνία"
 
+#: core/context_processors.py:37
+#: notifications/templates/notifications/center.html:7
+#: notifications/views.py:18 templates/partials/header.html:22
 msgid "Notifications"
 msgstr "Ειδοποιήσεις"
 
+#: core/context_processors.py:38 messagerie/views.py:75
 msgid "Messagerie"
 msgstr "Μηνύματα"
 
+#: core/context_processors.py:39 mail/templates/mail/outbox.html:7
+#: mail/views.py:39
 msgid "Mail"
 msgstr "Email"
 
+#: core/context_processors.py:40
 msgid "Sondage"
 msgstr "Δημοσκόπηση"
 
+#: core/context_processors.py:44
 msgid "Cultures & Terrain"
 msgstr "Καλλιέργειες & Έδαφος"
 
-msgid "Régie SCADA"
-msgstr "Έλεγχος SCADA"
+#: core/context_processors.py:46 parcelles/templates/parcelles/list.html:12
+#: parcelles/views.py:48
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Mes Parcelles"
+msgstr "Αγροτεμάχια"
 
-msgid "Capteurs"
-msgstr "Αισθητήρες"
+#: core/context_processors.py:47 meteo/templates/meteo/index.html:9
+#: meteo/views.py:73
+msgid "Météo"
+msgstr "Καιρός"
 
-msgid "Protection"
-msgstr "Προστασία"
+#: core/context_processors.py:48
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "Cultures"
+msgstr "Καλλιέργειες & Kc"
 
-msgid "Bassinage anti-gel"
-msgstr "Αντιπαγετική άρδευση"
-
+#: core/context_processors.py:51
+#: interventions/templates/interventions/interventions.html:26
+#: interventions/views.py:49 public/templates/public/home.html:265
 msgid "Interventions"
 msgstr "Παρεμβάσεις"
 
+#: core/context_processors.py:54 iot/templates/iot/regie.html:7
+#: iot/views.py:28
+msgid "Régie SCADA"
+msgstr "Έλεγχος SCADA"
+
+#: core/context_processors.py:55
+msgid "Capteurs"
+msgstr "Αισθητήρες"
+
+#: core/context_processors.py:59 planning/models.py:210
+msgid "Protection"
+msgstr "Προστασία"
+
+#: core/context_processors.py:61
+#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:56
+msgid "Bassinage anti-gel"
+msgstr "Αντιπαγετική άρδευση"
+
+#: core/context_processors.py:65
 msgid "Économie"
 msgstr "Οικονομία"
 
+#: core/context_processors.py:68
+#: finances/templates/finances/bilan_economique.html:16
+#: finances/templates/finances/charges.html:7
+#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
+#: finances/views.py:51
 msgid "Charges"
 msgstr "Έξοδα"
 
+#: core/context_processors.py:69
+#: finances/templates/finances/bilan_economique.html:7
+#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:58
 msgid "Bilan économique"
 msgstr "Οικονομικός απολογισμός"
 
+#: core/context_processors.py:70
+#: finances/templates/finances/facturation.html:6 finances/views.py:66
 msgid "Facturation"
 msgstr "Τιμολόγηση"
 
+#: core/context_processors.py:71 pac/templates/pac/pac.html:9 pac/views.py:56
+msgid "PAC"
+msgstr "ΚΑΠ"
+
+#: core/context_processors.py:72
+#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
+#: public/templates/public/home.html:260
 msgid "Parc matériel"
 msgstr "Στόλος εξοπλισμού"
 
+#: core/context_processors.py:76
 msgid "Environnement"
 msgstr "Περιβάλλον"
 
+#: core/context_processors.py:78 environnement/views.py:50
+msgid "Biodiversité"
+msgstr "Βιοποικιλότητα"
+
+#: core/context_processors.py:79
+msgid "Bilan eau"
+msgstr "Ισοζύγιο νερού"
+
+#: core/context_processors.py:80 environnement/views.py:137
+msgid "Bilan azoté"
+msgstr "Ισοζύγιο αζώτου"
+
+#: core/context_processors.py:81 environnement/views.py:144
+msgid "Empreinte carbone"
+msgstr "Αποτύπωμα άνθρακα"
+
+#: core/context_processors.py:82 environnement/views.py:151
+#, fuzzy
+#| msgid "Environnement"
+msgid "Rapport environnemental"
+msgstr "Περιβάλλον"
+
+#: core/context_processors.py:83 environnement/views.py:158
+msgid "Santé végétale"
+msgstr "Υγεία φυτών"
+
+#: core/context_processors.py:84
+#: environnement/templates/environnement/taxonomie.html:9
+#: environnement/views.py:196 public/templates/public/home.html:101
+msgid "Taxonomie EU"
+msgstr "Ταξινομία ΕΕ"
+
+#: core/context_processors.py:88
 msgid "RH"
 msgstr "Ανθρώπινο δυναμικό"
 
+#: core/context_processors.py:91 equipe/templates/equipe/equipe.html:6
+#: equipe/views.py:21
 msgid "Équipe"
 msgstr "Ομάδα"
 
+#: core/context_processors.py:92 equipe/templates/equipe/taches.html:6
+#: equipe/views.py:28
 msgid "Tâches"
 msgstr "Εργασίες"
 
+#: core/context_processors.py:93 equipe/templates/equipe/mes_taches.html:6
+#: equipe/views.py:37
 msgid "Mes tâches"
 msgstr "Οι εργασίες μου"
 
+#: core/context_processors.py:97
 msgid "Mon compte"
 msgstr "Ο λογαριασμός μου"
 
+#: core/context_processors.py:99
+#: exploitations/templates/exploitations/settings.html:13
+#: exploitations/views.py:92 meteo/templates/meteo/index.html:26
+#: templates/partials/header.html:59
 msgid "Mon exploitation"
 msgstr "Η εκμετάλλευσή μου"
 
-msgid "Activer un code"
+#: core/templates/core/dashboard.html:8
+msgid "Bienvenue sur Holystyl 👋"
+msgstr "Καλώς ήρθατε στο Holystyl 👋"
+
+#: core/templates/core/dashboard.html:10
+msgid ""
+"Commencez par configurer votre exploitation pour activer le tableau de bord."
+msgstr ""
+"Ξεκινήστε ρυθμίζοντας την εκμετάλλευσή σας για να ενεργοποιήσετε τον πίνακα "
+"ελέγχου."
+
+#: core/templates/core/dashboard.html:12
+#: exploitations/templates/exploitations/settings.html:13
+msgid "Configurer mon exploitation"
+msgstr "Ρύθμιση της εκμετάλλευσής μου"
+
+#: core/templates/core/dashboard.html:20
+msgid "+ Parcelle"
+msgstr "+ Αγροτεμάχιο"
+
+#: core/templates/core/dashboard.html:26
+msgid "Efficience DTI"
+msgstr "Αποδοτικότητα DTI"
+
+#: core/templates/core/dashboard.html:32
+msgid "Aucun score DTI calculé."
+msgstr "Δεν υπολογίστηκε σκορ DTI."
+
+#: core/templates/core/dashboard.html:41
+msgid "Météo & ETP"
+msgstr "Καιρός & ETP"
+
+#: core/templates/core/dashboard.html:42
+msgid "Localisation manquante"
+msgstr "Λείπει η τοποθεσία"
+
+#: core/templates/core/dashboard.html:46
+msgid "Température"
+msgstr "Θερμοκρασία"
+
+#: core/templates/core/dashboard.html:47 iot/templates/iot/regie.html:54
+#: meteo/templates/meteo/meteo.html:77 meteo/templates/meteo/meteo.html:143
+msgid "Humidité"
+msgstr "Υγρασία"
+
+#: core/templates/core/dashboard.html:48 meteo/templates/meteo/meteo.html:78
+#: meteo/templates/meteo/meteo.html:98 meteo/templates/meteo/meteo.html:144
+msgid "Vent"
+msgstr "Άνεμος"
+
+#: core/templates/core/dashboard.html:61
+msgid "Chargement météo…"
+msgstr "Φόρτωση καιρού…"
+
+#: core/templates/core/dashboard.html:67
+msgid "actives"
+msgstr "ενεργές"
+
+#: core/templates/core/dashboard.html:68
+#: finances/templates/finances/subvention_pdf.html:30
+#: pac/templates/pac/pac.html:55 parcelles/templates/parcelles/list.html:90
+msgid "Surface"
+msgstr "Έκταση"
+
+#: core/templates/core/dashboard.html:69
+msgid "Quota eau"
+msgstr "Ποσόστωση νερού"
+
+#: core/templates/core/dashboard.html:70
+msgid "Alertes actives"
+msgstr "Ενεργές ειδοποιήσεις"
+
+#: core/templates/core/dashboard.html:76
+msgid "Historique DTI"
+msgstr "Ιστορικό DTI"
+
+#: core/templates/core/dashboard.html:78
+msgid "Pas encore de données."
+msgstr "Δεν υπάρχουν ακόμη δεδομένα."
+
+#: core/templates/core/dashboard.html:81
+msgid "Consommation d'eau"
+msgstr "Κατανάλωση νερού"
+
+#: core/templates/core/dashboard.html:83
+msgid "Pas encore de relevés."
+msgstr "Δεν υπάρχουν ακόμη μετρήσεις."
+
+#: core/templates/core/dashboard.html:89
+msgid "Alertes"
+msgstr "Ειδοποιήσεις"
+
+#: core/templates/core/dashboard.html:96
+msgid "Aucune alerte active. 🌿"
+msgstr "Καμία ενεργή ειδοποίηση. 🌿"
+
+#: environnement/models.py:11
+msgid "Atténuation du changement climatique"
+msgstr "Μετριασμός της κλιματικής αλλαγής"
+
+#: environnement/models.py:12
+msgid "Adaptation au changement climatique"
+msgstr "Προσαρμογή στην κλιματική αλλαγή"
+
+#: environnement/models.py:13
+msgid "Eau et ressources marines"
+msgstr "Νερό και θαλάσσιοι πόροι"
+
+#: environnement/models.py:14
+#, fuzzy
+#| msgid "Économie"
+msgid "Économie circulaire"
+msgstr "Οικονομία"
+
+#: environnement/models.py:15
+msgid "Prévention de la pollution"
+msgstr "Πρόληψη της ρύπανσης"
+
+#: environnement/models.py:16
+msgid "Biodiversité et écosystèmes"
+msgstr "Βιοποικιλότητα και οικοσυστήματα"
+
+#: environnement/models.py:21 pac/models.py:28
+msgid "campagne"
+msgstr "περίοδος"
+
+#: environnement/models.py:22
+msgid "activité"
+msgstr "δραστηριότητα"
+
+#: environnement/models.py:23
+msgid "code NACE"
+msgstr "κωδικός NACE"
+
+#: environnement/models.py:25
+msgid "objectif de contribution"
+msgstr "στόχος συμβολής"
+
+#: environnement/models.py:27
+msgid "éligible"
+msgstr "επιλέξιμη"
+
+#: environnement/models.py:28
+msgid "contribution substantielle"
+msgstr "ουσιαστική συμβολή"
+
+#: environnement/models.py:30
+msgid "DNSH par objectif"
+msgstr "DNSH ανά στόχο"
+
+#: environnement/models.py:31
+msgid "garanties minimales"
+msgstr "ελάχιστες εγγυήσεις"
+
+#: environnement/models.py:32 exploitations/models.py:89
+msgid "chiffre d'affaires (€)"
+msgstr "κύκλος εργασιών (€)"
+
+#: environnement/models.py:33
+msgid "CapEx (€)"
+msgstr "CapEx (€)"
+
+#: environnement/models.py:34
+msgid "OpEx (€)"
+msgstr "OpEx (€)"
+
+#: environnement/models.py:35
+#, fuzzy
+#| msgid "Notifications"
+msgid "justification"
+msgstr "Ειδοποιήσεις"
+
+#: environnement/models.py:39
+msgid "activité Taxonomie"
+msgstr "δραστηριότητα Ταξινομίας"
+
+#: environnement/models.py:40
+msgid "activités Taxonomie"
+msgstr "δραστηριότητες Ταξινομίας"
+
+#: environnement/templates/environnement/bilan_eau.html:9
+#: environnement/views.py:113
+msgid "Bilan Eau"
+msgstr "Ισοζύγιο Νερού"
+
+#: environnement/templates/environnement/bilan_eau.html:10
+msgid "Consommation d'eau d'irrigation · Sessions réelles"
+msgstr "Κατανάλωση νερού άρδευσης · Πραγματικές συνεδρίες"
+
+#: environnement/templates/environnement/bilan_eau.html:14
+msgid "Export"
+msgstr "Εξαγωγή"
+
+#: environnement/templates/environnement/bilan_eau.html:21
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation totale"
+msgstr "Άρδευση"
+
+#: environnement/templates/environnement/bilan_eau.html:23
+msgid "cumul des sessions"
+msgstr "σύνολο συνεδριών"
+
+#: environnement/templates/environnement/bilan_eau.html:26
+#: irrigation/views.py:38
+msgid "Sessions"
+msgstr "Συνεδρίες"
+
+#: environnement/templates/environnement/bilan_eau.html:28
+msgid "sessions enregistrées"
+msgstr "καταχωρημένες συνεδρίες"
+
+#: environnement/templates/environnement/bilan_eau.html:31
+msgid "Quota utilisé"
+msgstr "Χρησιμοποιημένη ποσόστωση"
+
+#: environnement/templates/environnement/bilan_eau.html:33
+msgid "alloués"
+msgstr "κατανεμημένα"
+
+#: environnement/templates/environnement/bilan_eau.html:36
+msgid "Coût eau"
+msgstr "Κόστος νερού"
+
+#: environnement/templates/environnement/bilan_eau.html:38
+msgid "estimé"
+msgstr "εκτιμώμενο"
+
+#: environnement/templates/environnement/bilan_eau.html:44
+msgid "Consommation mensuelle (m³)"
+msgstr "Μηνιαία κατανάλωση (m³)"
+
+#: environnement/templates/environnement/bilan_eau.html:49
+msgid "Aucune session d'irrigation enregistrée"
+msgstr "Καμία καταχωρημένη συνεδρία άρδευσης"
+
+#: environnement/templates/environnement/bilan_eau.html:55
+msgid "Consommation par parcelle (m³/jour)"
+msgstr "Κατανάλωση ανά αγροτεμάχιο (m³/ημέρα)"
+
+#: environnement/templates/environnement/bilan_eau.html:68
+msgid "Aucune session d'irrigation"
+msgstr "Καμία συνεδρία άρδευσης"
+
+#: environnement/templates/environnement/bilan_eau.html:75
+msgid "Aucune session d'irrigation enregistrée pour vos parcelles."
+msgstr "Καμία καταχωρημένη συνεδρία άρδευσης για τα αγροτεμάχιά σας."
+
+#: environnement/templates/environnement/bilan_eau.html:79
+msgid ""
+"Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
+"par parcelle."
+msgstr ""
+"Κανένα καταχωρημένο αγροτεμάχιο. Δημιουργήστε τα αγροτεμάχιά σας για να "
+"δείτε την κατανάλωση ανά αγροτεμάχιο."
+
+#: environnement/templates/environnement/placeholder.html:18
+msgid "Module en préparation"
+msgstr "Ενότητα υπό προετοιμασία"
+
+#: environnement/templates/environnement/placeholder.html:19
+msgid "Cette section sera bientôt disponible."
+msgstr "Αυτή η ενότητα θα είναι σύντομα διαθέσιμη."
+
+#: environnement/templates/environnement/taxonomie.html:10
+msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
+msgstr ""
+"Κανονισμός (ΕΕ) 2020/852 · ευθυγράμμιση δραστηριοτήτων (Κύκλος εργασιών / "
+"CapEx / OpEx)"
+
+#: environnement/templates/environnement/taxonomie.html:16
+#: environnement/templates/environnement/taxonomie.html:123
+#: pac/templates/pac/pac.html:17 pac/templates/pac/pac.html:112
+msgid "Campagne"
+msgstr "Περίοδος"
+
+#: environnement/templates/environnement/taxonomie.html:21
+#: environnement/templates/environnement/taxonomie.html:90
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une fiche"
 msgstr "Ενεργοποίηση κωδικού"
 
-msgid "Bienvenue sur Holystyl 👋"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:29
+msgid "Chiffre d'affaires aligné"
+msgstr "Ευθυγραμμισμένος κύκλος εργασιών"
 
-msgid "Commencez par configurer votre exploitation pour activer le tableau de bord."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:33
+msgid "CapEx aligné"
+msgstr "Ευθυγραμμισμένο CapEx"
 
-msgid "Configurer mon exploitation"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:37
+msgid "OpEx aligné"
+msgstr "Ευθυγραμμισμένο OpEx"
 
-msgid "+ Parcelle"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:41
+msgid "Fiches alignées"
+msgstr "Ευθυγραμμισμένα δελτία"
 
-msgid "Efficience DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:52
+#: environnement/templates/environnement/taxonomie.html:114
+msgid "Activité"
+msgstr "Δραστηριότητα"
 
-msgid "Aucun score DTI calculé."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:53
+msgid "Objectif"
+msgstr "Στόχος"
 
-msgid "Météo & ETP"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:54
+#: finances/templates/finances/facturation.html:11
+#: interventions/templates/interventions/interventions.html:136
+#: iot/templates/iot/capteurs.html:24 pac/templates/pac/pac.html:57
+#: pac/templates/pac/pac.html:138
+msgid "Statut"
+msgstr "Κατάσταση"
 
-msgid "Localisation manquante"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:67
+msgid "Aligné"
+msgstr "Ευθυγραμμισμένο"
 
-msgid "Température"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:68
+msgid "Éligible"
+msgstr "Επιλέξιμο"
 
-msgid "Humidité"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:69
+msgid "Non éligible"
+msgstr "Μη επιλέξιμο"
 
-msgid "Vent"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:75
+msgid "Supprimer cette fiche ?"
+msgstr "Διαγραφή αυτού του δελτίου;"
 
-msgid "Chargement météo…"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:88
+msgid "Aucune fiche pour cette campagne."
+msgstr "Κανένα δελτίο για αυτήν την περίοδο."
 
-msgid "actives"
+#: environnement/templates/environnement/taxonomie.html:97
+msgid ""
+"Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
+"objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
+"montrent la part alignée du CA, des CapEx et des OpEx."
 msgstr ""
+"Μια δραστηριότητα είναι ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ εάν: επιλέξιμη + ουσιαστική συμβολή "
+"σε 1 στόχο + DNSH (δεν βλάπτει τους άλλους 5) + ελάχιστες εγγυήσεις. Οι "
+"δείκτες KPI δείχνουν το ευθυγραμμισμένο μέρος του κύκλου εργασιών, των CapEx"
+" και των OpEx."
 
-msgid "Surface"
+#: environnement/templates/environnement/taxonomie.html:106
+msgid "Nouvelle fiche d'activité"
+msgstr "Νέο δελτίο δραστηριότητας"
+
+#: environnement/templates/environnement/taxonomie.html:115
+msgid "ex: Production de noix"
+msgstr "π.χ.: Παραγωγή καρυδιών"
+
+#: environnement/templates/environnement/taxonomie.html:119
+msgid "Code NACE"
+msgstr "Κωδικός NACE"
+
+#: environnement/templates/environnement/taxonomie.html:127
+msgid "Objectif de contribution"
+msgstr "Στόχος συμβολής"
+
+#: environnement/templates/environnement/taxonomie.html:136
+#: meteo/templates/meteo/meteo.html:141
+#, fuzzy
+#| msgid "Communication"
+msgid "Conditions"
+msgstr "Επικοινωνία"
+
+#: environnement/templates/environnement/taxonomie.html:138
+msgid "Activité éligible (figure dans la Taxonomie)"
+msgstr "Επιλέξιμη δραστηριότητα (περιλαμβάνεται στην Ταξινομία)"
+
+#: environnement/templates/environnement/taxonomie.html:139
+msgid "Contribution substantielle vérifiée"
+msgstr "Επαληθευμένη ουσιαστική συμβολή"
+
+#: environnement/templates/environnement/taxonomie.html:140
+msgid "Garanties minimales respectées"
+msgstr "Τηρούνται οι ελάχιστες εγγυήσεις"
+
+#: environnement/templates/environnement/taxonomie.html:146
+msgid "DNSH — ne nuit pas significativement à :"
+msgstr "DNSH — δεν βλάπτει σημαντικά:"
+
+#: environnement/templates/environnement/taxonomie.html:147
+msgid "À cocher pour les objectifs autres que celui de contribution."
+msgstr "Επιλέξτε για στόχους άλλους από αυτόν της συμβολής."
+
+#: environnement/templates/environnement/taxonomie.html:158
+msgid "CA (€)"
+msgstr "Κύκλος εργασιών (€)"
+
+#: environnement/templates/environnement/taxonomie.html:172
+#, fuzzy
+#| msgid "Notifications"
+msgid "Justification"
+msgstr "Ειδοποιήσεις"
+
+#: environnement/views.py:51
+msgid ""
+"Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
+"couverts végétaux et infrastructures agro-écologiques (IAE)."
 msgstr ""
+"Παρακολουθήστε τη βιοποικιλότητα των αγροτεμαχίων σας: ωφέλιμα, "
+"επικονιαστές, φυτοκάλυψη και αγρο-οικολογικές υποδομές (IAE)."
 
-msgid "Quota eau"
+#: environnement/views.py:138
+msgid ""
+"Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
+"reliquats et pression sur la directive Nitrates."
 msgstr ""
+"Ισοζύγιο αζώτου (μέθοδος ισοζυγίου): εισροές, εξαγωγές από τις καλλιέργειες,"
+" υπολείμματα και πίεση στην οδηγία Νιτρικών."
 
-msgid "Alertes actives"
+#: environnement/views.py:145
+msgid ""
+"Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
+"sols (diagnostic type GES / label bas-carbone)."
 msgstr ""
+"Εκπομπές αερίων του θερμοκηπίου της εκμετάλλευσης και αποθήκευση άνθρακα στα"
+" εδάφη (διάγνωση τύπου GES / σήμα χαμηλού άνθρακα)."
 
-msgid "Historique DTI"
+#: environnement/views.py:152
+msgid ""
+"Synthèse environnementale de l'exploitation, exportable, regroupant les "
+"indicateurs (eau, azote, carbone, biodiversité)."
 msgstr ""
+"Περιβαλλοντική σύνθεση της εκμετάλλευσης, εξαγώγιμη, που συγκεντρώνει τους "
+"δείκτες (νερό, άζωτο, άνθρακας, βιοποικιλότητα)."
 
-msgid "Pas encore de données."
+#: environnement/views.py:159
+msgid ""
+"Suivi sanitaire des cultures : maladies, ravageurs, observations et "
+"indicateurs de fréquence de traitement (IFT)."
 msgstr ""
+"Υγειονομική παρακολούθηση των καλλιεργειών: ασθένειες, επιβλαβείς "
+"οργανισμοί, παρατηρήσεις και δείκτες συχνότητας επεμβάσεων (IFT)."
 
-msgid "Consommation d'eau"
-msgstr ""
-
-msgid "Pas encore de relevés."
-msgstr ""
-
-msgid "Alertes"
-msgstr ""
-
-msgid "Aucune alerte active. 🌿"
-msgstr ""
-
+#: equipe/models.py:15
 msgid "Chef d'équipe"
-msgstr ""
+msgstr "Αρχηγός ομάδας"
 
+#: equipe/models.py:16
 msgid "Ouvrier"
-msgstr ""
+msgstr "Εργάτης"
 
+#: equipe/models.py:17
 msgid "Saisonnier"
-msgstr ""
+msgstr "Εποχικός"
 
+#: equipe/models.py:18
 msgid "Prestataire"
-msgstr ""
+msgstr "Πάροχος"
 
+#: equipe/models.py:24
 msgid "téléphone"
-msgstr ""
+msgstr "τηλέφωνο"
 
+#: equipe/models.py:42
 msgid "membre d'équipe"
-msgstr ""
+msgstr "μέλος ομάδας"
 
+#: equipe/models.py:43
 msgid "membres d'équipe"
-msgstr ""
+msgstr "μέλη ομάδας"
 
+#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
 msgid "Haute"
-msgstr ""
+msgstr "Υψηλή"
 
+#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
 msgid "Normale"
-msgstr ""
+msgstr "Κανονική"
 
+#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
 msgid "Basse"
-msgstr ""
+msgstr "Χαμηλή"
 
+#: equipe/models.py:57
 msgid "À faire"
-msgstr ""
+msgstr "Προς εκτέλεση"
 
+#: equipe/models.py:58 interventions/models.py:30 planning/models.py:30
 msgid "En cours"
-msgstr ""
+msgstr "Σε εξέλιξη"
 
+#: equipe/models.py:59 interventions/models.py:31 iot/models.py:93
 msgid "Terminée"
-msgstr ""
+msgstr "Ολοκληρωμένη"
 
+#: equipe/models.py:60
 msgid "Validée"
-msgstr ""
+msgstr "Επικυρωμένη"
 
+#: equipe/models.py:63
 msgid "titre"
-msgstr ""
+msgstr "τίτλος"
 
+#: equipe/models.py:77
 msgid "tâche"
-msgstr ""
+msgstr "εργασία"
 
+#: equipe/models.py:78
 msgid "tâches"
-msgstr ""
+msgstr "εργασίες"
 
+#: equipe/models.py:92 finances/models.py:116 iot/models.py:90
+msgid "En attente"
+msgstr "Σε αναμονή"
+
+#: equipe/models.py:93 mail/models.py:14 mail/templates/mail/detail.html:16
+#: mail/templates/mail/outbox.html:30
 msgid "Envoyé"
-msgstr ""
+msgstr "Απεσταλμένο"
 
+#: equipe/models.py:94
 msgid "Échoué"
-msgstr ""
+msgstr "Απέτυχε"
 
+#: equipe/models.py:105
 msgid "rappel de tâche"
-msgstr ""
+msgstr "υπενθύμιση εργασίας"
 
+#: equipe/models.py:106
 msgid "rappels de tâche"
-msgstr ""
+msgstr "υπενθυμίσεις εργασίας"
 
+#: equipe/templates/equipe/equipe.html:20
 msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Κανένα μέλος ομάδας. Προσθέστε μέλη μέσω της διαχείρισης ή του API."
 
+#: equipe/templates/equipe/location_share.html:3
 msgid "Partage de position"
-msgstr ""
+msgstr "Κοινοποίηση θέσης"
 
+#: equipe/templates/equipe/location_share.html:9
+#: equipe/templates/equipe/location_share.html:13
 msgid "Partager ma position"
-msgstr ""
+msgstr "Κοινοποίηση της θέσης μου"
 
+#: equipe/templates/equipe/location_share.html:11
 #, python-format
 msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
-msgstr ""
+msgstr "Γεια σας %(name)s, κοινοποιήστε τη θέση σας με την ομάδα σας."
 
+#: equipe/templates/equipe/location_share.html:16
 msgid "Lien expiré"
-msgstr ""
+msgstr "Ληγμένος σύνδεσμος"
 
+#: equipe/templates/equipe/location_share.html:17
 msgid "Ce lien de partage n'est plus valide."
-msgstr ""
+msgstr "Αυτός ο σύνδεσμος κοινοποίησης δεν είναι πλέον έγκυρος."
 
+#: equipe/templates/equipe/location_share.html:28
 msgid "Géolocalisation non supportée."
-msgstr ""
+msgstr "Ο γεωεντοπισμός δεν υποστηρίζεται."
 
+#: equipe/templates/equipe/location_share.html:34
 msgid "Position partagée ✅"
-msgstr ""
+msgstr "Η θέση κοινοποιήθηκε ✅"
 
+#: equipe/templates/equipe/location_share.html:35
 msgid "Erreur lors du partage."
-msgstr ""
+msgstr "Σφάλμα κατά την κοινοποίηση."
 
+#: equipe/templates/equipe/location_share.html:36
 msgid "Accès à la position refusé."
-msgstr ""
+msgstr "Η πρόσβαση στη θέση απορρίφθηκε."
 
+#: equipe/templates/equipe/mes_taches.html:20
 msgid "Aucune tâche assignée."
-msgstr ""
+msgstr "Καμία ανατεθειμένη εργασία."
 
+#: equipe/templates/equipe/taches.html:13
 msgid "non assignée"
-msgstr ""
+msgstr "μη ανατεθειμένη"
 
+#: equipe/templates/equipe/taches.html:20
 msgid "Aucune tâche."
-msgstr ""
+msgstr "Καμία εργασία."
 
+#: exploitations/models.py:15
+msgid "Exploitation individuelle"
+msgstr "Ατομική εκμετάλλευση"
+
+#: exploitations/models.py:16
+msgid "EARL"
+msgstr "EARL"
+
+#: exploitations/models.py:17
+msgid "GAEC"
+msgstr "GAEC"
+
+#: exploitations/models.py:18
+msgid "SCEA"
+msgstr "SCEA"
+
+#: exploitations/models.py:19
+msgid "SCEV"
+msgstr "SCEV"
+
+#: exploitations/models.py:20
+msgid "SARL"
+msgstr "SARL"
+
+#: exploitations/models.py:24
+#, fuzzy
+#| msgid "Interventions"
+msgid "Conventionnel"
+msgstr "Παρεμβάσεις"
+
+#: exploitations/models.py:25 pac/models.py:16
+msgid "Agriculture biologique"
+msgstr "Βιολογική γεωργία"
+
+#: exploitations/models.py:26
+msgid "En conversion bio"
+msgstr "Σε μετατροπή σε βιολογική"
+
+#: exploitations/models.py:27
+#, fuzzy
+#| msgid "Environnement"
+msgid "Haute Valeur Environnementale"
+msgstr "Περιβάλλον"
+
+#: exploitations/models.py:30
+msgid "Forage"
+msgstr "Γεώτρηση"
+
+#: exploitations/models.py:31
+msgid "Rivière / cours d'eau"
+msgstr "Ποτάμι / ρέμα"
+
+#: exploitations/models.py:32
+msgid "Réseau collectif"
+msgstr "Συλλογικό δίκτυο"
+
+#: exploitations/models.py:33
+msgid "Retenue / bassin"
+msgstr "Ταμιευτήρας / λεκάνη"
+
+#: exploitations/models.py:40
 msgid "propriétaire"
-msgstr ""
+msgstr "ιδιοκτήτης"
 
+#: exploitations/models.py:45
+msgid "prénom"
+msgstr "όνομα"
+
+#: exploitations/models.py:46
+msgid "date de naissance"
+msgstr "ημερομηνία γέννησης"
+
+#: exploitations/models.py:47 exploitations/models.py:118
+msgid "raison sociale"
+msgstr "επωνυμία"
+
+#: exploitations/models.py:48 exploitations/models.py:120
+msgid "forme juridique"
+msgstr "νομική μορφή"
+
+#: exploitations/models.py:49 exploitations/models.py:122
+msgid "SIRET"
+msgstr "SIRET"
+
+#: exploitations/models.py:50 exploitations/models.py:123
+msgid "n° PACAGE"
+msgstr "αρ. PACAGE"
+
+#: exploitations/models.py:51 exploitations/models.py:124
+msgid "TVA intracommunautaire"
+msgstr "ενδοκοινοτικός ΦΠΑ"
+
+#: exploitations/models.py:52 exploitations/models.py:125
+msgid "année d'installation"
+msgstr "έτος εγκατάστασης"
+
+#: exploitations/models.py:55
+msgid "téléphone 1"
+msgstr "τηλέφωνο 1"
+
+#: exploitations/models.py:56
+msgid "téléphone 2"
+msgstr "τηλέφωνο 2"
+
+#: exploitations/models.py:57
+msgid "email"
+msgstr "email"
+
+#: exploitations/models.py:58
+msgid "site web"
+msgstr "ιστοσελίδα"
+
+#: exploitations/models.py:61
 msgid "adresse"
-msgstr ""
+msgstr "διεύθυνση"
 
+#: exploitations/models.py:62
 msgid "ville"
-msgstr ""
+msgstr "πόλη"
 
+#: exploitations/models.py:63
 msgid "code postal"
-msgstr ""
+msgstr "ταχυδρομικός κώδικας"
 
+#: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
-msgstr ""
+msgstr "γεωγραφικό πλάτος"
 
+#: exploitations/models.py:65 meteo/models.py:20 meteo/models.py:48
 msgid "longitude"
-msgstr ""
+msgstr "γεωγραφικό μήκος"
 
+#: exploitations/models.py:68
 msgid "surface totale (ha)"
-msgstr ""
+msgstr "συνολική έκταση (ha)"
 
+#: exploitations/models.py:69
+msgid "SAU — surface agricole utile (ha)"
+msgstr "SAU — χρησιμοποιούμενη γεωργική έκταση (ha)"
+
+#: exploitations/models.py:71
+msgid "type d'agriculture"
+msgstr "τύπος γεωργίας"
+
+#: exploitations/models.py:73
+msgid "productions principales"
+msgstr "κύριες παραγωγές"
+
+#: exploitations/models.py:74
+msgid "cheptel"
+msgstr "ζωικό κεφάλαιο"
+
+#: exploitations/models.py:77
 msgid "quota eau (m³)"
-msgstr ""
+msgstr "ποσόστωση νερού (m³)"
 
+#: exploitations/models.py:78
 msgid "eau consommée (m³)"
-msgstr ""
+msgstr "καταναλωθέν νερό (m³)"
 
+#: exploitations/models.py:79
+msgid "prix de l'eau (€/m³)"
+msgstr "τιμή νερού (€/m³)"
+
+#: exploitations/models.py:80
+msgid "source d'eau"
+msgstr "πηγή νερού"
+
+#: exploitations/models.py:81
+msgid "surface irrigable (ha)"
+msgstr "αρδεύσιμη έκταση (ha)"
+
+#: exploitations/models.py:84
+msgid "niveau HVE"
+msgstr "επίπεδο HVE"
+
+#: exploitations/models.py:85
+#, fuzzy
+#| msgid "Notifications"
+msgid "certifications & labels"
+msgstr "Ειδοποιήσεις"
+
+#: exploitations/models.py:85
+msgid "Bio, AOP/IGP, Label Rouge…"
+msgstr "Βιολογικό, ΠΟΠ/ΠΓΕ, Label Rouge…"
+
+#: exploitations/models.py:88
+msgid "main-d'œuvre (ETP)"
+msgstr "εργατικό δυναμικό (ΙΠΑ)"
+
+#: exploitations/models.py:92
 msgid "exploitation"
-msgstr ""
+msgstr "εκμετάλλευση"
 
+#: exploitations/models.py:93
 msgid "exploitations"
-msgstr ""
+msgstr "εκμεταλλεύσεις"
 
-msgid "Informations de base utilisées partout dans l'application."
-msgstr ""
+#: exploitations/models.py:117
+msgid "rôle / libellé"
+msgstr "ρόλος / ετικέτα"
 
-msgid "Annuler"
-msgstr ""
+#: exploitations/models.py:129
+msgid "société liée"
+msgstr "συνδεδεμένη εταιρεία"
 
-msgid "Exploitation enregistrée."
-msgstr ""
+#: exploitations/models.py:130
+msgid "sociétés liées"
+msgstr "συνδεδεμένες εταιρείες"
 
-msgid "Semences"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:15
+msgid "Profil de l'exploitation — utilisé partout dans l'application."
+msgstr "Προφίλ της εκμετάλλευσης — χρησιμοποιείται παντού στην εφαρμογή."
 
-msgid "Engrais"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:64
+msgid "Sociétés liées"
+msgstr "Συνδεδεμένες εταιρείες"
 
-msgid "Phytosanitaires"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:68
+#: exploitations/templates/exploitations/settings.html:99
+msgid "Ajouter une entreprise"
+msgstr "Προσθήκη επιχείρησης"
 
-msgid "Énergie"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:81
+msgid "Supprimer cette société ?"
+msgstr "Διαγραφή αυτής της εταιρείας;"
 
-msgid "Main d'œuvre"
+#: exploitations/templates/exploitations/settings.html:89
+msgid ""
+"Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
+"à l'exploitation."
 msgstr ""
+"Καμία συνδεδεμένη εταιρεία. Προσθέστε μια επιχείρηση (GAEC, SCI ακινήτων…) "
+"που συνδέεται με την εκμετάλλευση."
 
-msgid "Matériel"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:105
+msgid "Raison sociale"
+msgstr "Επωνυμία"
 
-msgid "Transport"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:107
+msgid "Tapez ≥ 3 lettres pour rechercher dans l'annuaire officiel."
+msgstr "Πληκτρολογήστε ≥ 3 γράμματα για αναζήτηση στον επίσημο κατάλογο."
 
-msgid "Assurance"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:111
+msgid "Rôle / libellé"
+msgstr "Ρόλος / ετικέτα"
 
-msgid "charge"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:112
+msgid "ex: SCI foncière"
+msgstr "π.χ.: SCI ακινήτων"
 
-msgid "charges"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:115
+msgid "Forme juridique"
+msgstr "Νομική μορφή"
 
-msgid "Vente céréales"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:126
+msgid "N° PACAGE"
+msgstr "Αρ. PACAGE"
 
-msgid "Vente fruits"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:130
+msgid "TVA intra."
+msgstr "Ενδοκ. ΦΠΑ"
 
-msgid "Vente légumes"
-msgstr ""
-
-msgid "Aide PAC"
-msgstr ""
-
-msgid "Subvention"
-msgstr ""
-
-msgid "Location"
-msgstr ""
-
-msgid "Prestation"
-msgstr ""
-
-msgid "revenu"
-msgstr ""
-
-msgid "revenus"
-msgstr ""
-
-msgid "Extra"
-msgstr ""
-
-msgid "Catégorie 1"
-msgstr ""
-
-msgid "Catégorie 2"
-msgstr ""
-
-msgid "Déclassé"
-msgstr ""
-
-msgid "récolte"
-msgstr ""
-
-msgid "récoltes"
-msgstr ""
-
-msgid "client"
-msgstr ""
-
-msgid "clients"
-msgstr ""
-
-msgid "Brouillon"
-msgstr ""
-
-msgid "Payée"
-msgstr ""
-
-msgid "En retard"
-msgstr ""
-
-msgid "Annulée"
-msgstr ""
-
-msgid "facture"
-msgstr ""
-
-msgid "factures"
-msgstr ""
-
-msgid "Taxonomie Verte EU"
-msgstr ""
-
-msgid "Plan Eau 2026"
-msgstr ""
-
-msgid "En génération"
-msgstr ""
-
-msgid "Prêt"
-msgstr ""
-
-msgid "export subvention"
-msgstr ""
-
-msgid "exports subvention"
-msgstr ""
-
-msgid "Revenus CSV"
-msgstr ""
-
-msgid "Dossier subvention PDF"
-msgstr ""
-
-msgid "Revenus"
-msgstr ""
-
-msgid "Résultat net"
-msgstr ""
-
-msgid "Marge / ha"
-msgstr ""
-
-msgid "Revenus vs charges (par mois)"
-msgstr ""
-
-msgid "Pas encore de données financières."
-msgstr ""
-
-msgid "Consommation"
-msgstr ""
-
-msgid "Export CSV"
-msgstr ""
-
-msgid "Montant"
-msgstr ""
-
-msgid "Fournisseur"
-msgstr ""
-
-msgid "Aucune charge enregistrée."
-msgstr ""
-
-msgid "Client"
-msgstr ""
-
-msgid "Émission"
-msgstr ""
-
-msgid "Aucune facture."
-msgstr ""
-
-msgid "Dossier de subvention"
-msgstr ""
-
+#: exploitations/templates/exploitations/settings.html:134
+#: finances/templates/finances/subvention_pdf.html:24
 msgid "Année"
-msgstr ""
+msgstr "Έτος"
 
+#: exploitations/views.py:54
+msgid "Exploitation enregistrée."
+msgstr "Η εκμετάλλευση καταχωρήθηκε."
+
+#: exploitations/views.py:63
+msgid "Juridique"
+msgstr "Νομικά"
+
+#: exploitations/views.py:65 public/templates/public/home.html:482
+msgid "Contact"
+msgstr "Επικοινωνία"
+
+#: exploitations/views.py:67
+msgid "Localisation"
+msgstr "Τοποθεσία"
+
+#: exploitations/views.py:69
+msgid "Caractéristiques agricoles"
+msgstr "Γεωργικά χαρακτηριστικά"
+
+#: exploitations/views.py:71
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Eau & irrigation"
+msgstr "Άρδευση"
+
+#: exploitations/views.py:73
+#, fuzzy
+#| msgid "Notifications"
+msgid "Certifications & labels"
+msgstr "Ειδοποιήσεις"
+
+#: exploitations/views.py:75
+#, fuzzy
+#| msgid "Économie"
+msgid "Économique"
+msgstr "Οικονομία"
+
+#: exploitations/views.py:117
+msgid "Société ajoutée."
+msgstr "Η εταιρεία προστέθηκε."
+
+#: finances/models.py:15
+msgid "Semences"
+msgstr "Σπόροι"
+
+#: finances/models.py:17
+msgid "Phytosanitaires"
+msgstr "Φυτοπροστατευτικά"
+
+#: finances/models.py:19 finances/templates/finances/bilan_economique.html:31
+#: finances/templates/finances/subvention_pdf.html:32
+msgid "Énergie"
+msgstr "Ενέργεια"
+
+#: finances/models.py:20
+msgid "Main d'œuvre"
+msgstr "Εργατικό δυναμικό"
+
+#: finances/models.py:21 ia/models.py:35
+msgid "Matériel"
+msgstr "Εξοπλισμός"
+
+#: finances/models.py:22 operations/models.py:118 planning/models.py:213
+msgid "Transport"
+msgstr "Μεταφορά"
+
+#: finances/models.py:23
+msgid "Assurance"
+msgstr "Ασφάλιση"
+
+#: finances/models.py:36
+msgid "charge"
+msgstr "δαπάνη"
+
+#: finances/models.py:37
+msgid "charges"
+msgstr "δαπάνες"
+
+#: finances/models.py:43
+msgid "Vente céréales"
+msgstr "Πώληση δημητριακών"
+
+#: finances/models.py:44
+msgid "Vente fruits"
+msgstr "Πώληση φρούτων"
+
+#: finances/models.py:45
+msgid "Vente légumes"
+msgstr "Πώληση λαχανικών"
+
+#: finances/models.py:46
+msgid "Aide PAC"
+msgstr "Ενίσχυση ΚΑΠ"
+
+#: finances/models.py:47
+msgid "Subvention"
+msgstr "Επιδότηση"
+
+#: finances/models.py:48
+msgid "Location"
+msgstr "Ενοικίαση"
+
+#: finances/models.py:49
+msgid "Prestation"
+msgstr "Παροχή υπηρεσίας"
+
+#: finances/models.py:65
+msgid "revenu"
+msgstr "έσοδο"
+
+#: finances/models.py:66
+msgid "revenus"
+msgstr "έσοδα"
+
+#: finances/models.py:72
+msgid "Extra"
+msgstr "Έξτρα"
+
+#: finances/models.py:73
+msgid "Catégorie 1"
+msgstr "Κατηγορία 1"
+
+#: finances/models.py:74
+msgid "Catégorie 2"
+msgstr "Κατηγορία 2"
+
+#: finances/models.py:75
+msgid "Déclassé"
+msgstr "Υποβαθμισμένο"
+
+#: finances/models.py:88
+msgid "récolte"
+msgstr "συγκομιδή"
+
+#: finances/models.py:89
+msgid "récoltes"
+msgstr "συγκομιδές"
+
+#: finances/models.py:105
+msgid "client"
+msgstr "πελάτης"
+
+#: finances/models.py:106
+msgid "clients"
+msgstr "πελάτες"
+
+#: finances/models.py:115 planning/models.py:259
+msgid "Brouillon"
+msgstr "Πρόχειρο"
+
+#: finances/models.py:117
+msgid "Payée"
+msgstr "Πληρωμένο"
+
+#: finances/models.py:118
+msgid "En retard"
+msgstr "Σε καθυστέρηση"
+
+#: finances/models.py:119 interventions/models.py:32
+msgid "Annulée"
+msgstr "Ακυρωμένη"
+
+#: finances/models.py:136
+msgid "facture"
+msgstr "τιμολόγιο"
+
+#: finances/models.py:137
+msgid "factures"
+msgstr "τιμολόγια"
+
+#: finances/models.py:149
+msgid "Taxonomie Verte EU"
+msgstr "Πράσινη Ταξινομία ΕΕ"
+
+#: finances/models.py:150
+msgid "Plan Eau 2026"
+msgstr "Σχέδιο Νερού 2026"
+
+#: finances/models.py:155
+msgid "En génération"
+msgstr "Σε δημιουργία"
+
+#: finances/models.py:156
+msgid "Prêt"
+msgstr "Έτοιμο"
+
+#: finances/models.py:168
+msgid "export subvention"
+msgstr "εξαγωγή επιδότησης"
+
+#: finances/models.py:169
+msgid "exports subvention"
+msgstr "εξαγωγές επιδότησης"
+
+#: finances/templates/finances/bilan_economique.html:9
+msgid "Revenus CSV"
+msgstr "Έσοδα CSV"
+
+#: finances/templates/finances/bilan_economique.html:10
+msgid "Dossier subvention PDF"
+msgstr "Φάκελος επιδότησης PDF"
+
+#: finances/templates/finances/bilan_economique.html:15
+#: finances/templates/finances/subvention_pdf.html:40 finances/views.py:50
+msgid "Revenus"
+msgstr "Έσοδα"
+
+#: finances/templates/finances/bilan_economique.html:17
+#: finances/templates/finances/subvention_pdf.html:42
+msgid "Résultat net"
+msgstr "Καθαρό αποτέλεσμα"
+
+#: finances/templates/finances/bilan_economique.html:18
+msgid "Marge / ha"
+msgstr "Περιθώριο / ha"
+
+#: finances/templates/finances/bilan_economique.html:23
+msgid "Revenus vs charges (par mois)"
+msgstr "Έσοδα vs δαπάνες (ανά μήνα)"
+
+#: finances/templates/finances/bilan_economique.html:25
+msgid "Pas encore de données financières."
+msgstr "Δεν υπάρχουν ακόμη οικονομικά δεδομένα."
+
+#: finances/templates/finances/bilan_economique.html:28
+msgid "Consommation"
+msgstr "Κατανάλωση"
+
+#: finances/templates/finances/charges.html:8
+msgid "Export CSV"
+msgstr "Εξαγωγή CSV"
+
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:56
+msgid "Montant"
+msgstr "Ποσό"
+
+#: finances/templates/finances/charges.html:14
+msgid "Fournisseur"
+msgstr "Προμηθευτής"
+
+#: finances/templates/finances/charges.html:29
+msgid "Aucune charge enregistrée."
+msgstr "Καμία καταχωρημένη δαπάνη."
+
+#: finances/templates/finances/facturation.html:11
+msgid "Client"
+msgstr "Πελάτης"
+
+#: finances/templates/finances/facturation.html:11
+msgid "Émission"
+msgstr "Έκδοση"
+
+#: finances/templates/finances/facturation.html:27
+msgid "Aucune facture."
+msgstr "Κανένα τιμολόγιο."
+
+#: finances/templates/finances/subvention_pdf.html:22
+msgid "Dossier de subvention"
+msgstr "Φάκελος επιδότησης"
+
+#: finances/templates/finances/subvention_pdf.html:33
 msgid "Score DTI"
-msgstr ""
+msgstr "Σκορ DTI"
 
-msgid "Nom"
-msgstr ""
-
+#: finances/templates/finances/subvention_pdf.html:49
+#: pac/templates/pac/pac.html:134
 msgid "Surface (ha)"
-msgstr ""
+msgstr "Έκταση (ha)"
 
+#: finances/templates/finances/subvention_pdf.html:56
 msgid "Document généré par Holystyl."
-msgstr ""
+msgstr "Έγγραφο που δημιουργήθηκε από το Holystyl."
 
+#: ia/models.py:13
+msgid "Utilisateur"
+msgstr "Χρήστης"
+
+#: ia/models.py:26
 msgid "conversation IA"
-msgstr ""
+msgstr "συνομιλία AI"
 
+#: ia/models.py:27
 msgid "conversations IA"
-msgstr ""
+msgstr "συνομιλίες AI"
 
-msgid "Parcelle"
-msgstr ""
-
-msgid "Produit"
-msgstr ""
-
+#: ia/models.py:37
 msgid "Général"
-msgstr ""
+msgstr "Γενικά"
 
+#: ia/models.py:45
 msgid "terme vocal"
-msgstr ""
+msgstr "φωνητικός όρος"
 
+#: ia/models.py:46
 msgid "dictionnaire vocal"
-msgstr ""
+msgstr "φωνητικό λεξικό"
 
+#: ia/models.py:68
 msgid "rapport quotidien"
-msgstr ""
+msgstr "ημερήσια αναφορά"
 
+#: ia/models.py:69
 msgid "rapports quotidiens"
-msgstr ""
+msgstr "ημερήσιες αναφορές"
 
-msgid "Assistant Holystyl"
-msgstr ""
+#: ia/templates/ia/assistant.html:11 ia/templates/ia/assistant.html:33
+#: messagerie/templates/messagerie/new.html:6 messagerie/views.py:207
+msgid "Nouvelle conversation"
+msgstr "Νέα συνομιλία"
 
-msgid "IA non configurée"
-msgstr ""
+#: ia/templates/ia/assistant.html:13
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversations"
+msgstr "Επικοινωνία"
 
-msgid "Demandez quelque chose…"
-msgstr ""
+#: ia/templates/ia/assistant.html:22
+msgid "Aucune conversation."
+msgstr "Καμία συνομιλία."
 
+#: ia/templates/ia/assistant.html:39
+msgid "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles."
+msgstr ""
+"Το AI δεν έχει ρυθμιστεί — προσθέστε το GEMINI_API_KEY για πραγματικές "
+"απαντήσεις."
+
+#: ia/templates/ia/assistant.html:49
+msgid "Bonjour, je suis Eric."
+msgstr "Γεια σας, είμαι ο Eric."
+
+#: ia/templates/ia/assistant.html:51
+msgid ""
+"Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
+"cultures, la fertilisation ou vos analyses."
+msgstr ""
+"Ο γεωπόνος σύμβουλός σας. Κάντε μου τις ερωτήσεις σας για την άρδευση, τις "
+"καλλιέργειες, τη λίπανση ή τις αναλύσεις σας."
+
+#: ia/templates/ia/assistant.html:89
+msgid "Décrivez votre besoin…"
+msgstr "Περιγράψτε την ανάγκη σας…"
+
+#: ia/templates/ia/assistant.html:92
+msgid "Entrée pour envoyer · Maj+Entrée pour saut de ligne"
+msgstr "Enter για αποστολή · Shift+Enter για αλλαγή γραμμής"
+
+#: ia/templates/ia/assistant.html:95
 msgid "Dictée vocale"
-msgstr ""
+msgstr "Φωνητική υπαγόρευση"
 
+#: ia/templates/ia/assistant.html:100 mail/templates/mail/compose.html:58
+#: messagerie/templates/messagerie/_new_modal.html:62
 msgid "Envoyer"
-msgstr ""
+msgstr "Αποστολή"
 
+#: ia/templates/ia/assistant.html:105
+msgid ""
+"Eric peut commettre des erreurs. Vérifiez les informations importantes."
+msgstr "Ο Eric μπορεί να κάνει λάθη. Επαληθεύστε τις σημαντικές πληροφορίες."
+
+#: ia/templates/ia/assistant.html:150
+#: messagerie/templates/messagerie/detail.html:105
 msgid "Reconnaissance vocale non supportée par ce navigateur."
-msgstr ""
-
-msgid "Débitmètre"
-msgstr ""
-
-msgid "Capteur de pression"
-msgstr ""
-
-msgid "Station météo"
-msgstr ""
-
-msgid "Contrôleur de vanne"
-msgstr ""
-
-msgid "Contrôleur de pompe"
-msgstr ""
-
-msgid "Humidité du sol"
-msgstr ""
-
-msgid "Compteur d'énergie"
-msgstr ""
-
-msgid "Générique"
-msgstr ""
-
-msgid "En ligne"
-msgstr ""
-
-msgid "Hors ligne"
-msgstr ""
-
-msgid "Avertissement"
-msgstr ""
-
-msgid "identifiant device"
-msgstr ""
-
-msgid "device IoT"
-msgstr ""
-
-msgid "devices IoT"
-msgstr ""
-
-msgid "télémétrie"
-msgstr ""
-
-msgid "télémétries"
-msgstr ""
-
-msgid "Envoyée"
-msgstr ""
-
-msgid "Accusée"
-msgstr ""
-
-msgid "Échouée"
-msgstr ""
-
-msgid "Expirée"
-msgstr ""
-
-msgid "commande IoT"
-msgstr ""
-
-msgid "commandes IoT"
-msgstr ""
-
-msgid "Fuite détectée"
-msgstr ""
-
-msgid "Pression basse"
-msgstr ""
-
-msgid "Pression haute"
-msgstr ""
-
-msgid "Débit bas"
-msgstr ""
-
-msgid "Débit élevé"
-msgstr ""
-
-msgid "Panne de pompe"
-msgstr ""
-
-msgid "Baisse d'uniformité"
-msgstr ""
-
-msgid "Pic d'énergie"
-msgstr ""
-
-msgid "Seuil dépassé"
-msgstr ""
-
-msgid "Risque de gel"
-msgstr ""
-
-msgid "Perte invisible"
-msgstr ""
-
-msgid "Info"
-msgstr ""
-
-msgid "Danger"
-msgstr ""
-
-msgid "alerte IoT"
-msgstr ""
-
-msgid "alertes IoT"
-msgstr ""
-
-msgid "Température gel"
-msgstr ""
-
-msgid "Pression min"
-msgstr ""
-
-msgid "Pression max"
-msgstr ""
-
-msgid "Débit min"
-msgstr ""
-
-msgid "Débit max"
-msgstr ""
-
-msgid "kWh/m³ max"
-msgstr ""
-
-msgid "Humidité sol min"
-msgstr ""
-
-msgid "Humidité sol max"
-msgstr ""
-
-msgid "Perte invisible %"
-msgstr ""
-
-msgid "seuil"
-msgstr ""
-
-msgid "seuils"
-msgstr ""
-
-msgid "Capteurs & IoT"
-msgstr ""
-
-msgid "Télémétrie récente"
-msgstr ""
-
-msgid "Marque"
-msgstr ""
-
-msgid "Firmware"
-msgstr ""
-
-msgid "Vu"
-msgstr ""
-
-msgid "Aucun capteur enregistré."
-msgstr ""
-
-msgid "Temps réel actif"
-msgstr ""
-
-msgid "Débit"
-msgstr ""
-
-msgid "Pression"
-msgstr ""
-
-msgid "Puissance"
-msgstr ""
-
-msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
-msgstr ""
-
-msgid "Goutte à goutte"
-msgstr ""
-
-msgid "Aspersion"
-msgstr ""
-
-msgid "Pivot"
-msgstr ""
-
-msgid "Enrouleur"
-msgstr ""
-
-msgid "Micro-aspersion"
-msgstr ""
-
-msgid "Micro-jet"
-msgstr ""
-
-msgid "Submersion"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Maintenance"
-msgstr ""
-
-msgid "zone d'irrigation"
-msgstr ""
-
-msgid "zones d'irrigation"
-msgstr ""
-
-msgid "Quotidien"
-msgstr ""
-
-msgid "Tous les 2 jours"
-msgstr ""
-
-msgid "Tous les 3 jours"
-msgstr ""
-
-msgid "Hebdomadaire"
-msgstr ""
-
-msgid "Personnalisé"
-msgstr ""
-
-msgid "Par durée"
-msgstr ""
-
-msgid "Par volume"
-msgstr ""
-
-msgid "Par pluviométrie"
-msgstr ""
-
-msgid "Manuel"
-msgstr ""
-
-msgid "Vocal"
-msgstr ""
-
-msgid "IA"
-msgstr ""
-
-msgid "programme d'irrigation"
-msgstr ""
-
-msgid "programmes d'irrigation"
-msgstr ""
-
-msgid "Auto"
-msgstr ""
-
-msgid "IoT"
-msgstr ""
-
-msgid "session d'irrigation"
-msgstr ""
-
-msgid "sessions d'irrigation"
-msgstr ""
-
-msgid "Opérationnelle"
-msgstr ""
-
-msgid "En panne"
-msgstr ""
-
-msgid "station de pompage"
-msgstr ""
-
-msgid "stations de pompage"
-msgstr ""
-
-msgid "Capteur"
-msgstr ""
-
-msgid "Terminé"
-msgstr ""
-
-msgid "événement de bassinage"
-msgstr ""
-
-msgid "événements de bassinage"
-msgstr ""
-
-msgid "relevé compteur eau"
-msgstr ""
-
-msgid "relevés compteur eau"
-msgstr ""
-
-msgid "relevé énergie"
-msgstr ""
-
-msgid "relevés énergie"
-msgstr ""
-
-msgid "Annuel"
-msgstr ""
-
-msgid "Mensuel"
-msgstr ""
-
-msgid "quota eau"
-msgstr ""
-
-msgid "quotas eau"
-msgstr ""
-
-msgid "score DTI"
-msgstr ""
-
-msgid "scores DTI"
-msgstr ""
-
-msgid "Faible"
-msgstr ""
-
-msgid "Moyen"
-msgstr ""
-
-msgid "Élevé"
-msgstr ""
-
-msgid "Critique"
-msgstr ""
-
-msgid "événement de gel"
-msgstr ""
-
-msgid "événements de gel"
-msgstr ""
-
-msgid "donnée NDVI"
-msgstr ""
-
-msgid "données NDVI"
-msgstr ""
-
-msgid "détection de perte invisible"
-msgstr ""
-
-msgid "détections de pertes invisibles"
-msgstr ""
-
-msgid "Aucun événement de bassinage."
-msgstr ""
-
-msgid "Volumes irrigués récents"
-msgstr ""
-
-msgid "Aucune zone."
-msgstr ""
-
-msgid "actif"
-msgstr ""
-
-msgid "inactif"
-msgstr ""
-
-msgid "Aucun programme."
-msgstr ""
-
-msgid "Aucune session."
-msgstr ""
-
-msgid "Aucune station."
-msgstr ""
-
-msgid "Zones"
-msgstr ""
-
-msgid "Programmes"
-msgstr ""
-
-msgid "Sessions"
-msgstr ""
-
-msgid "Stations"
-msgstr ""
-
-msgid "Urgente"
-msgstr ""
-
-msgid "notification"
-msgstr ""
-
-msgid "notifications"
-msgstr ""
-
-msgid "règle de notification"
-msgstr ""
-
-msgid "règles de notification"
-msgstr ""
-
-msgid "Tout marquer comme lu"
-msgstr ""
-
-msgid "Aucune notification."
-msgstr ""
-
-msgid "Règles d'alerte"
-msgstr ""
-
-msgid "activée"
-msgstr ""
-
-msgid "désactivée"
-msgstr ""
-
-msgid "Aucune règle définie."
-msgstr ""
-
-msgid "Pompe"
-msgstr ""
-
-msgid "Tracteur"
-msgstr ""
-
-msgid "Pulvérisateur"
-msgstr ""
-
-msgid "Réformée"
-msgstr ""
-
-msgid "machine"
-msgstr ""
-
-msgid "machines"
-msgstr ""
-
-msgid "Utilisation"
-msgstr ""
-
-msgid "Réparation"
-msgstr ""
-
-msgid "Inspection"
-msgstr ""
-
+msgstr "Η φωνητική αναγνώριση δεν υποστηρίζεται από αυτόν τον περιηγητή."
+
+#: ia/views.py:40 messagerie/models.py:66
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversation"
+msgstr "Επικοινωνία"
+
+#: ia/views.py:68
+msgid "Eric"
+msgstr "Eric"
+
+#: interventions/models.py:13
+#: interventions/templates/interventions/interventions.html:55
+#: operations/models.py:114
 msgid "Traitement"
-msgstr ""
+msgstr "Επέμβαση"
 
+#: interventions/models.py:14
+#: interventions/templates/interventions/interventions.html:64
+#: operations/models.py:116
 msgid "Fertilisation"
-msgstr ""
+msgstr "Λίπανση"
 
+#: interventions/models.py:15
+#: interventions/templates/interventions/interventions.html:73
+#: operations/models.py:115
 msgid "Récolte"
-msgstr ""
+msgstr "Συγκομιδή"
 
+#: interventions/models.py:16 operations/models.py:113
 msgid "Semis"
-msgstr ""
+msgstr "Σπορά"
 
+#: interventions/models.py:17
 msgid "Travail du sol"
-msgstr ""
+msgstr "Κατεργασία εδάφους"
 
+#: interventions/models.py:18
 msgid "Taille"
-msgstr ""
+msgstr "Κλάδεμα"
 
+#: interventions/models.py:19
 msgid "Palissage"
-msgstr ""
+msgstr "Υποστύλωση"
 
+#: interventions/models.py:20
 msgid "Désherbage"
-msgstr ""
+msgstr "Ζιζανιοκτονία"
 
+#: interventions/models.py:21
 msgid "Éclaircissage"
-msgstr ""
+msgstr "Αραίωμα"
 
+#: interventions/models.py:22
 msgid "Effeuillage"
-msgstr ""
+msgstr "Αφυλλισμός"
 
+#: interventions/models.py:23
 msgid "Vendange"
-msgstr ""
+msgstr "Τρύγος"
 
+#: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:131
+#: operations/models.py:25 operations/models.py:55
+msgid "Maintenance"
+msgstr "Συντήρηση"
+
+#: interventions/models.py:25
 msgid "Observation"
-msgstr ""
+msgstr "Παρατήρηση"
 
+#: interventions/models.py:29
 msgid "Planifiée"
-msgstr ""
+msgstr "Προγραμματισμένη"
 
+#: interventions/models.py:35 irrigation/models.py:73
+msgid "Vocal"
+msgstr "Φωνητικό"
+
+#: interventions/models.py:36 irrigation/models.py:72 irrigation/models.py:104
+#: irrigation/models.py:156 irrigation/models.py:191 irrigation/models.py:215
+msgid "Manuel"
+msgstr "Χειροκίνητο"
+
+#: interventions/models.py:37 irrigation/models.py:74 irrigation/models.py:107
+msgid "IA"
+msgstr "AI"
+
+#: interventions/models.py:62
 msgid "intervention"
-msgstr ""
+msgstr "επέμβαση"
 
+#: interventions/models.py:63
 msgid "interventions"
-msgstr ""
+msgstr "επεμβάσεις"
 
-msgid "Vidange"
-msgstr ""
+#: interventions/templates/interventions/interventions.html:28
+#, python-format
+msgid "Journal des opérations culturales · %(n)s intervention"
+msgid_plural "Journal des opérations culturales · %(n)s interventions"
+msgstr[0] "Ημερολόγιο καλλιεργητικών εργασιών · %(n)s επέμβαση"
+msgstr[1] "Ημερολόγιο καλλιεργητικών εργασιών · %(n)s επεμβάσεις"
 
-msgid "Filtres"
-msgstr ""
-
-msgid "Courroies"
-msgstr ""
-
-msgid "Pneumatiques"
-msgstr ""
-
-msgid "Freins"
-msgstr ""
-
-msgid "Révision complète"
-msgstr ""
-
-msgid "Contrôle technique"
-msgstr ""
-
-msgid "entretien"
-msgstr ""
-
-msgid "entretiens"
-msgstr ""
-
-msgid "Labour"
-msgstr ""
-
-msgid "affectation d'engin"
-msgstr ""
-
-msgid "affectations d'engins"
-msgstr ""
-
-msgid "Semoir"
-msgstr ""
-
-msgid "Épandeur"
-msgstr ""
-
-msgid "Moissonneuse"
-msgstr ""
-
-msgid "Charrue"
-msgstr ""
-
-msgid "Cultivateur"
-msgstr ""
-
-msgid "Benne"
-msgstr ""
-
-msgid "modèle d'engin (catalogue)"
-msgstr ""
-
-msgid "catalogue d'engins"
-msgstr ""
-
+#: interventions/templates/interventions/interventions.html:103
 msgid "Aucune intervention enregistrée."
-msgstr ""
+msgstr "Καμία καταχωρημένη επέμβαση."
 
+#: interventions/templates/interventions/interventions.html:106
+msgid "Enregistrer la première intervention"
+msgstr "Καταχώρηση της πρώτης επέμβασης"
+
+#: interventions/templates/interventions/interventions.html:112
+msgid "Aucune intervention pour ce filtre."
+msgstr "Καμία επέμβαση για αυτό το φίλτρο."
+
+#: interventions/templates/interventions/interventions.html:121
+#, fuzzy
+#| msgid "Interventions"
+msgid "Nouvelle intervention"
+msgstr "Παρεμβάσεις"
+
+#: interventions/templates/interventions/interventions.html:144
+msgid "Titre"
+msgstr "Τίτλος"
+
+#: interventions/templates/interventions/interventions.html:150
+msgid "Date / heure"
+msgstr "Ημερομηνία / ώρα"
+
+#: interventions/templates/interventions/interventions.html:158
+msgid "—"
+msgstr "—"
+
+#: iot/models.py:16
+msgid "Débitmètre"
+msgstr "Παροχόμετρο"
+
+#: iot/models.py:17
+msgid "Capteur de pression"
+msgstr "Αισθητήρας πίεσης"
+
+#: iot/models.py:18
+msgid "Station météo"
+msgstr "Μετεωρολογικός σταθμός"
+
+#: iot/models.py:19
+msgid "Contrôleur de vanne"
+msgstr "Ελεγκτής βαλβίδας"
+
+#: iot/models.py:20
+msgid "Contrôleur de pompe"
+msgstr "Ελεγκτής αντλίας"
+
+#: iot/models.py:21
+msgid "Humidité du sol"
+msgstr "Υγρασία εδάφους"
+
+#: iot/models.py:22
+msgid "Compteur d'énergie"
+msgstr "Μετρητής ενέργειας"
+
+#: iot/models.py:23 iot/models.py:30
+msgid "Générique"
+msgstr "Γενικό"
+
+#: iot/models.py:33
+msgid "En ligne"
+msgstr "Συνδεδεμένο"
+
+#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
+msgid "Hors ligne"
+msgstr "Εκτός σύνδεσης"
+
+#: iot/models.py:35 iot/models.py:131
+msgid "Avertissement"
+msgstr "Προειδοποίηση"
+
+#: iot/models.py:44
+msgid "identifiant device"
+msgstr "αναγνωριστικό συσκευής"
+
+#: iot/models.py:56
+msgid "device IoT"
+msgstr "συσκευή IoT"
+
+#: iot/models.py:57
+msgid "devices IoT"
+msgstr "συσκευές IoT"
+
+#: iot/models.py:82
+msgid "télémétrie"
+msgstr "τηλεμετρία"
+
+#: iot/models.py:83
+msgid "télémétries"
+msgstr "τηλεμετρίες"
+
+#: iot/models.py:91
+msgid "Envoyée"
+msgstr "Απεσταλμένη"
+
+#: iot/models.py:92
+msgid "Accusée"
+msgstr "Επιβεβαιωμένη"
+
+#: iot/models.py:94
+msgid "Échouée"
+msgstr "Απέτυχε"
+
+#: iot/models.py:95
+msgid "Expirée"
+msgstr "Έληξε"
+
+#: iot/models.py:109
+msgid "commande IoT"
+msgstr "εντολή IoT"
+
+#: iot/models.py:110
+msgid "commandes IoT"
+msgstr "εντολές IoT"
+
+#: iot/models.py:116
+msgid "Fuite détectée"
+msgstr "Εντοπίστηκε διαρροή"
+
+#: iot/models.py:117
+msgid "Pression basse"
+msgstr "Χαμηλή πίεση"
+
+#: iot/models.py:118
+msgid "Pression haute"
+msgstr "Υψηλή πίεση"
+
+#: iot/models.py:119
+msgid "Débit bas"
+msgstr "Χαμηλή παροχή"
+
+#: iot/models.py:120
+msgid "Débit élevé"
+msgstr "Υψηλή παροχή"
+
+#: iot/models.py:121
+msgid "Panne de pompe"
+msgstr "Βλάβη αντλίας"
+
+#: iot/models.py:122
+msgid "Baisse d'uniformité"
+msgstr "Πτώση ομοιομορφίας"
+
+#: iot/models.py:123
+msgid "Pic d'énergie"
+msgstr "Αιχμή ενέργειας"
+
+#: iot/models.py:125
+msgid "Seuil dépassé"
+msgstr "Υπέρβαση ορίου"
+
+#: iot/models.py:126
+msgid "Risque de gel"
+msgstr "Κίνδυνος παγετού"
+
+#: iot/models.py:127
+msgid "Perte invisible"
+msgstr "Αόρατη απώλεια"
+
+#: iot/models.py:130
+msgid "Info"
+msgstr "Πληροφορία"
+
+#: iot/models.py:132
+msgid "Danger"
+msgstr "Κίνδυνος"
+
+#: iot/models.py:148
+msgid "alerte IoT"
+msgstr "ειδοποίηση IoT"
+
+#: iot/models.py:149
+msgid "alertes IoT"
+msgstr "ειδοποιήσεις IoT"
+
+#: iot/models.py:156
+msgid "Température gel"
+msgstr "Θερμοκρασία παγετού"
+
+#: iot/models.py:157
+msgid "Pression min"
+msgstr "Ελάχ. πίεση"
+
+#: iot/models.py:158
+msgid "Pression max"
+msgstr "Μέγ. πίεση"
+
+#: iot/models.py:159
+msgid "Débit min"
+msgstr "Ελάχ. παροχή"
+
+#: iot/models.py:160
+msgid "Débit max"
+msgstr "Μέγ. παροχή"
+
+#: iot/models.py:161
+msgid "kWh/m³ max"
+msgstr "kWh/m³ μέγ."
+
+#: iot/models.py:162
+msgid "Humidité sol min"
+msgstr "Ελάχ. υγρασία εδάφους"
+
+#: iot/models.py:163
+msgid "Humidité sol max"
+msgstr "Μέγ. υγρασία εδάφους"
+
+#: iot/models.py:164
+msgid "Perte invisible %"
+msgstr "Αόρατη απώλεια %"
+
+#: iot/models.py:176
+msgid "seuil"
+msgstr "όριο"
+
+#: iot/models.py:177
+msgid "seuils"
+msgstr "όρια"
+
+#: iot/templates/iot/capteurs.html:6 iot/views.py:60
+msgid "Capteurs & IoT"
+msgstr "Αισθητήρες & IoT"
+
+#: iot/templates/iot/capteurs.html:10
+msgid "Télémétrie récente"
+msgstr "Πρόσφατη τηλεμετρία"
+
+#: iot/templates/iot/capteurs.html:22
+msgid "Marque"
+msgstr "Μάρκα"
+
+#: iot/templates/iot/capteurs.html:23
+msgid "Firmware"
+msgstr "Firmware"
+
+#: iot/templates/iot/capteurs.html:25
+msgid "Vu"
+msgstr "Είδαμε"
+
+#: iot/templates/iot/capteurs.html:43
+msgid "Aucun capteur enregistré."
+msgstr "Κανένας καταχωρημένος αισθητήρας."
+
+#: iot/templates/iot/regie.html:10
+msgid "Temps réel actif"
+msgstr "Πραγματικός χρόνος ενεργός"
+
+#: iot/templates/iot/regie.html:42
+#: parcelles/templates/parcelles/detail.html:31
+msgid "Débit"
+msgstr "Παροχή"
+
+#: iot/templates/iot/regie.html:46
+#: parcelles/templates/parcelles/detail.html:32
+msgid "Pression"
+msgstr "Πίεση"
+
+#: iot/templates/iot/regie.html:50
+msgid "Puissance"
+msgstr "Ισχύς"
+
+#: iot/templates/iot/regie.html:62
+msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
+msgstr "Καμία συσκευή IoT. Προσθέστε μέσω της διαχείρισης ή των Αισθητήρων."
+
+#: irrigation/models.py:20 parcelles/models.py:14
+msgid "Goutte à goutte"
+msgstr "Στάγδην"
+
+#: irrigation/models.py:21 parcelles/models.py:15
+msgid "Aspersion"
+msgstr "Καταιονισμός"
+
+#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
+msgid "Pivot"
+msgstr "Pivot"
+
+#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
+msgid "Enrouleur"
+msgstr "Καρούλι"
+
+#: irrigation/models.py:24 parcelles/models.py:18
+msgid "Micro-aspersion"
+msgstr "Μικροκαταιονισμός"
+
+#: irrigation/models.py:25
+msgid "Micro-jet"
+msgstr "Μικροεκτοξευτήρας"
+
+#: irrigation/models.py:26
+msgid "Submersion"
+msgstr "Κατάκλυση"
+
+#: irrigation/models.py:29 parcelles/models.py:22
+msgid "Active"
+msgstr "Ενεργή"
+
+#: irrigation/models.py:30 parcelles/models.py:23
+msgid "Inactive"
+msgstr "Ανενεργή"
+
+#: irrigation/models.py:50
+msgid "zone d'irrigation"
+msgstr "ζώνη άρδευσης"
+
+#: irrigation/models.py:51
+msgid "zones d'irrigation"
+msgstr "ζώνες άρδευσης"
+
+#: irrigation/models.py:60
+msgid "Quotidien"
+msgstr "Ημερήσιο"
+
+#: irrigation/models.py:61
+msgid "Tous les 2 jours"
+msgstr "Κάθε 2 ημέρες"
+
+#: irrigation/models.py:62
+msgid "Tous les 3 jours"
+msgstr "Κάθε 3 ημέρες"
+
+#: irrigation/models.py:63 irrigation/models.py:241
+msgid "Hebdomadaire"
+msgstr "Εβδομαδιαίο"
+
+#: irrigation/models.py:64
+msgid "Personnalisé"
+msgstr "Προσαρμοσμένο"
+
+#: irrigation/models.py:67
+msgid "Par durée"
+msgstr "Ανά διάρκεια"
+
+#: irrigation/models.py:68
+msgid "Par volume"
+msgstr "Ανά όγκο"
+
+#: irrigation/models.py:69
+msgid "Par pluviométrie"
+msgstr "Ανά βροχόπτωση"
+
+#: irrigation/models.py:94
+msgid "programme d'irrigation"
+msgstr "πρόγραμμα άρδευσης"
+
+#: irrigation/models.py:95
+msgid "programmes d'irrigation"
+msgstr "προγράμματα άρδευσης"
+
+#: irrigation/models.py:105 irrigation/models.py:157
+msgid "Auto"
+msgstr "Αυτόματο"
+
+#: irrigation/models.py:106
+msgid "IoT"
+msgstr "IoT"
+
+#: irrigation/models.py:123
+msgid "session d'irrigation"
+msgstr "συνεδρία άρδευσης"
+
+#: irrigation/models.py:124
+msgid "sessions d'irrigation"
+msgstr "συνεδρίες άρδευσης"
+
+#: irrigation/models.py:130 operations/models.py:24
+msgid "Opérationnelle"
+msgstr "Λειτουργική"
+
+#: irrigation/models.py:132 operations/models.py:26
+msgid "En panne"
+msgstr "Σε βλάβη"
+
+#: irrigation/models.py:147
+msgid "station de pompage"
+msgstr "αντλιοστάσιο"
+
+#: irrigation/models.py:148
+msgid "stations de pompage"
+msgstr "αντλιοστάσια"
+
+#: irrigation/models.py:158
+msgid "Capteur"
+msgstr "Αισθητήρας"
+
+#: irrigation/models.py:161
+msgid "Actif"
+msgstr "Ενεργό"
+
+#: irrigation/models.py:162 planning/models.py:32
+msgid "Terminé"
+msgstr "Ολοκληρωμένο"
+
+#: irrigation/models.py:163 planning/models.py:33
+msgid "Annulé"
+msgstr "Ακυρωμένο"
+
+#: irrigation/models.py:182
+msgid "événement de bassinage"
+msgstr "συμβάν ποτίσματος"
+
+#: irrigation/models.py:183
+msgid "événements de bassinage"
+msgstr "συμβάντα ποτίσματος"
+
+#: irrigation/models.py:205
+msgid "relevé compteur eau"
+msgstr "μέτρηση μετρητή νερού"
+
+#: irrigation/models.py:206
+msgid "relevés compteur eau"
+msgstr "μετρήσεις μετρητή νερού"
+
+#: irrigation/models.py:231
+msgid "relevé énergie"
+msgstr "μέτρηση ενέργειας"
+
+#: irrigation/models.py:232
+msgid "relevés énergie"
+msgstr "μετρήσεις ενέργειας"
+
+#: irrigation/models.py:239
+msgid "Annuel"
+msgstr "Ετήσιο"
+
+#: irrigation/models.py:240
+msgid "Mensuel"
+msgstr "Μηνιαίο"
+
+#: irrigation/models.py:252
+msgid "quota eau"
+msgstr "ποσόστωση νερού"
+
+#: irrigation/models.py:253
+msgid "quotas eau"
+msgstr "ποσοστώσεις νερού"
+
+#: irrigation/models.py:278
+msgid "score DTI"
+msgstr "σκορ DTI"
+
+#: irrigation/models.py:279
+msgid "scores DTI"
+msgstr "σκορ DTI"
+
+#: irrigation/models.py:285
+msgid "Faible"
+msgstr "Χαμηλό"
+
+#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
+msgid "Moyen"
+msgstr "Μεσαίο"
+
+#: irrigation/models.py:287
+msgid "Élevé"
+msgstr "Υψηλό"
+
+#: irrigation/models.py:288 planning/models.py:256
+msgid "Critique"
+msgstr "Κρίσιμο"
+
+#: irrigation/models.py:306
+msgid "événement de gel"
+msgstr "συμβάν παγετού"
+
+#: irrigation/models.py:307
+msgid "événements de gel"
+msgstr "συμβάντα παγετού"
+
+#: irrigation/models.py:326
+msgid "donnée NDVI"
+msgstr "δεδομένο NDVI"
+
+#: irrigation/models.py:327
+msgid "données NDVI"
+msgstr "δεδομένα NDVI"
+
+#: irrigation/models.py:345
+msgid "détection de perte invisible"
+msgstr "εντοπισμός αόρατης απώλειας"
+
+#: irrigation/models.py:346
+msgid "détections de pertes invisibles"
+msgstr "εντοπισμοί αόρατων απωλειών"
+
+#: irrigation/templates/irrigation/bassinage.html:20
+msgid "Aucun événement de bassinage."
+msgstr "Κανένα συμβάν ποτίσματος."
+
+#: irrigation/templates/irrigation/irrigation.html:10
+msgid "Volumes irrigués récents"
+msgstr "Πρόσφατοι αρδευμένοι όγκοι"
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "Aucune zone."
+msgstr "Καμία ζώνη."
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "actif"
+msgstr "ενεργό"
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "inactif"
+msgstr "ανενεργό"
+
+#: irrigation/templates/irrigation/irrigation.html:37
+msgid "Aucun programme."
+msgstr "Κανένα πρόγραμμα."
+
+#: irrigation/templates/irrigation/irrigation.html:46
+msgid "Aucune session."
+msgstr "Καμία συνεδρία."
+
+#: irrigation/templates/irrigation/irrigation.html:55
+msgid "Aucune station."
+msgstr "Κανένας σταθμός."
+
+#: irrigation/views.py:36
+msgid "Zones"
+msgstr "Ζώνες"
+
+#: irrigation/views.py:37
+msgid "Programmes"
+msgstr "Προγράμματα"
+
+#: irrigation/views.py:39
+msgid "Stations"
+msgstr "Σταθμοί"
+
+#: mail/models.py:15 mail/templates/mail/detail.html:14
+#: mail/templates/mail/outbox.html:28
+msgid "Échec"
+msgstr "Αποτυχία"
+
+#: mail/models.py:22
+msgid "destinataires"
+msgstr "παραλήπτες"
+
+#: mail/models.py:23
+msgid "copie"
+msgstr "κοινοποίηση"
+
+#: mail/models.py:24
+msgid "objet"
+msgstr "θέμα"
+
+#: mail/models.py:25 messagerie/models.py:99 messagerie/models.py:102
+#, fuzzy
+#| msgid "Messagerie"
+msgid "message"
+msgstr "Μηνύματα"
+
+#: mail/models.py:26 messagerie/models.py:120
+msgid "pièces jointes"
+msgstr "συνημμένα"
+
+#: mail/models.py:31
+msgid "e-mail"
+msgstr "e-mail"
+
+#: mail/models.py:32
+msgid "e-mails"
+msgstr "e-mails"
+
+#: mail/templates/mail/compose.html:6 mail/templates/mail/outbox.html:10
+#: mail/views.py:83 mail/views.py:116
+msgid "Nouveau mail"
+msgstr "Νέο email"
+
+#: mail/templates/mail/compose.html:18 mail/templates/mail/detail.html:21
+#: mail/templates/mail/outbox.html:23
+#: messagerie/templates/messagerie/_new_modal.html:30
+msgid "À"
+msgstr "Προς"
+
+#: mail/templates/mail/compose.html:18
+msgid "séparez par des virgules"
+msgstr "διαχωρίστε με κόμματα"
+
+#: mail/templates/mail/compose.html:30 mail/templates/mail/detail.html:22
+msgid "Cc"
+msgstr "Κοιν."
+
+#: mail/templates/mail/compose.html:30
+#: messagerie/templates/messagerie/new.html:26
+msgid "optionnel"
+msgstr "προαιρετικό"
+
+#: mail/templates/mail/compose.html:36
+msgid "Objet"
+msgstr "Θέμα"
+
+#: mail/templates/mail/compose.html:42
+#: messagerie/templates/messagerie/_new_modal.html:55
+#, fuzzy
+#| msgid "Messagerie"
+msgid "Message"
+msgstr "Μηνύματα"
+
+#: mail/templates/mail/compose.html:49
+msgid "Joindre des fichiers"
+msgstr "Επισύναψη αρχείων"
+
+#: mail/templates/mail/detail.html:7
+msgid "Retour"
+msgstr "Επιστροφή"
+
+#: mail/templates/mail/detail.html:23
+msgid "Le"
+msgstr "Στις"
+
+#: mail/templates/mail/detail.html:40
+msgid "Erreur d'envoi"
+msgstr "Σφάλμα αποστολής"
+
+#: mail/templates/mail/outbox.html:7
+msgid "Envoyés"
+msgstr "Απεσταλμένα"
+
+#: mail/templates/mail/outbox.html:37
+msgid "Aucun e-mail envoyé pour le moment."
+msgstr "Κανένα email απεσταλμένο προς το παρόν."
+
+#: mail/views.py:73
+msgid "Indiquez au moins un destinataire valide."
+msgstr "Καθορίστε τουλάχιστον έναν έγκυρο παραλήπτη."
+
+#: mail/views.py:75
+#, python-format
+msgid "Adresses invalides ignorées : %(list)s"
+msgstr "Άκυρες διευθύνσεις που αγνοήθηκαν: %(list)s"
+
+#: mail/views.py:77
+msgid "L'objet est obligatoire."
+msgstr "Το θέμα είναι υποχρεωτικό."
+
+#: messagerie/models.py:24
+#, python-format
+msgid "Extension non autorisée : %(ext)s. Extensions acceptées : %(list)s."
+msgstr "Μη επιτρεπόμενη επέκταση: %(ext)s. Αποδεκτές επεκτάσεις: %(list)s."
+
+#: messagerie/models.py:29
+#, python-format
+msgid "Le fichier dépasse la taille maximale de 5 Mo (%(got)s Mo reçus)."
+msgstr ""
+"Το αρχείο υπερβαίνει το μέγιστο μέγεθος των 5 MB (%(got)s MB ελήφθησαν)."
+
+#: messagerie/models.py:41
+msgid "groupe"
+msgstr "ομάδα"
+
+#: messagerie/models.py:42
+msgid "nom du groupe"
+msgstr "όνομα ομάδας"
+
+#: messagerie/models.py:51
+#, fuzzy
+#| msgid "Facturation"
+msgid "conversation"
+msgstr "Τιμολόγηση"
+
+#: messagerie/models.py:52
+#, fuzzy
+#| msgid "Interventions"
+msgid "conversations"
+msgstr "Παρεμβάσεις"
+
+#: messagerie/models.py:64 messagerie/templates/messagerie/_new_modal.html:25
+msgid "Groupe"
+msgstr "Ομάδα"
+
+#: messagerie/models.py:88
+msgid "membre de conversation"
+msgstr "μέλος συνομιλίας"
+
+#: messagerie/models.py:89
+msgid "membres de conversation"
+msgstr "μέλη συνομιλίας"
+
+#: messagerie/models.py:103
+#, fuzzy
+#| msgid "Messagerie"
+msgid "messages"
+msgstr "Μηνύματα"
+
+#: messagerie/models.py:114
+msgid "fichier"
+msgstr "αρχείο"
+
+#: messagerie/models.py:119
+msgid "pièce jointe"
+msgstr "συνημμένο"
+
+#: messagerie/templates/messagerie/_messages.html:25
+msgid "Démarrez la conversation 👋"
+msgstr "Ξεκινήστε τη συνομιλία 👋"
+
+#: messagerie/templates/messagerie/_new_modal.html:8
+#: messagerie/templates/messagerie/_sidebar.html:5
+#: messagerie/templates/messagerie/inbox.html:21
+msgid "Nouveau message"
+msgstr "Νέο μήνυμα"
+
+#: messagerie/templates/messagerie/_new_modal.html:20
+msgid "Direct"
+msgstr "Απευθείας"
+
+#: messagerie/templates/messagerie/_new_modal.html:33
+msgid "— Choisir un agriculteur —"
+msgstr "— Επιλέξτε αγρότη —"
+
+#: messagerie/templates/messagerie/_new_modal.html:40
+#: messagerie/templates/messagerie/new.html:26
+msgid "Nom du groupe"
+msgstr "Όνομα ομάδας"
+
+#: messagerie/templates/messagerie/_new_modal.html:41
+msgid "ex: Équipe irrigation"
+msgstr "π.χ.: Ομάδα άρδευσης"
+
+#: messagerie/templates/messagerie/_new_modal.html:45
+msgid "Membres"
+msgstr "Μέλη"
+
+#: messagerie/templates/messagerie/_new_modal.html:50
+msgid "Ctrl/Cmd + clic pour en sélectionner plusieurs."
+msgstr "Ctrl/Cmd + κλικ για επιλογή πολλών."
+
+#: messagerie/templates/messagerie/_new_modal.html:56
+msgid "Écrivez votre message…"
+msgstr "Γράψτε το μήνυμά σας…"
+
+#: messagerie/templates/messagerie/_sidebar.html:4
+msgid "Chat"
+msgstr "Συνομιλία"
+
+#: messagerie/templates/messagerie/_sidebar.html:23
+msgid "Aucun message"
+msgstr "Κανένα μήνυμα"
+
+#: messagerie/templates/messagerie/_sidebar.html:31
+msgid "Aucune conversation pour le moment."
+msgstr "Καμία συνομιλία προς το παρόν."
+
+#: messagerie/templates/messagerie/_sidebar.html:32
+msgid "Démarrer une conversation"
+msgstr "Έναρξη συνομιλίας"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "participants"
+msgstr "συμμετέχοντες"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "Conversation privée"
+msgstr "Ιδιωτική συνομιλία"
+
+#: messagerie/templates/messagerie/detail.html:48
+msgid "Joindre un fichier"
+msgstr "Επισύναψη αρχείου"
+
+#: messagerie/templates/messagerie/detail.html:56
+msgid "Écrire un message…"
+msgstr "Γράψτε ένα μήνυμα…"
+
+#: messagerie/templates/messagerie/detail.html:58
+msgid "Dicter le message"
+msgstr "Υπαγόρευση μηνύματος"
+
+#: messagerie/templates/messagerie/detail.html:62
+msgid "Reformuler avec l’IA"
+msgstr "Αναδιατύπωση με AI"
+
+#: messagerie/templates/messagerie/inbox.html:17
+msgid "Sélectionnez une conversation"
+msgstr "Επιλέξτε μια συνομιλία"
+
+#: messagerie/templates/messagerie/inbox.html:18
+msgid "ou démarrez-en une nouvelle"
+msgstr "ή ξεκινήστε μια νέα"
+
+#: messagerie/templates/messagerie/new.html:12
+msgid "Participants"
+msgstr "Συμμετέχοντες"
+
+#: messagerie/templates/messagerie/new.html:28
+msgid "Ex. Équipe récolte"
+msgstr "Π.χ. Ομάδα συγκομιδής"
+
+#: messagerie/templates/messagerie/new.html:30
+msgid ""
+"Renseignez un nom ou cochez plusieurs participants pour créer un groupe."
+msgstr ""
+"Συμπληρώστε ένα όνομα ή επιλέξτε πολλούς συμμετέχοντες για να δημιουργήσετε "
+"μια ομάδα."
+
+#: messagerie/templates/messagerie/new.html:35
+#: sondages/templates/sondages/create.html:38
+msgid "Créer"
+msgstr "Δημιουργία"
+
+#: messagerie/templates/messagerie/new.html:41
+msgid ""
+"Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
+"Ajoutez des membres d'équipe et liez-leur un compte."
+msgstr ""
+"Κανένας άλλος χρήστης στην εκμετάλλευσή σας προς επικοινωνία προς το παρόν. "
+"Προσθέστε μέλη ομάδας και συνδέστε τους έναν λογαριασμό."
+
+#: messagerie/views.py:60
+msgid "📎 Pièce jointe"
+msgstr "📎 Συνημμένο"
+
+#: meteo/models.py:9
+msgid "Toutes les heures"
+msgstr "Κάθε ώρα"
+
+#: meteo/models.py:10
+msgid "Toutes les 6 heures"
+msgstr "Κάθε 6 ώρες"
+
+#: meteo/models.py:11
+msgid "Toutes les 12 heures"
+msgstr "Κάθε 12 ώρες"
+
+#: meteo/models.py:12
+msgid "Quotidienne"
+msgstr "Ημερήσια"
+
+#: meteo/models.py:18
+msgid "slug"
+msgstr "slug"
+
+#: meteo/models.py:24
+msgid "capture automatique"
+msgstr "αυτόματη καταγραφή"
+
+#: meteo/models.py:26
+msgid "fréquence"
+msgstr "συχνότητα"
+
+#: meteo/models.py:28
+msgid "dernière capture auto"
+msgstr "τελευταία αυτόματη καταγραφή"
+
+#: meteo/models.py:31
+msgid "ville météo"
+msgstr "πόλη καιρού"
+
+#: meteo/models.py:32
+msgid "villes météo"
+msgstr "πόλεις καιρού"
+
+#: meteo/models.py:46
+msgid "lieu"
+msgstr "τοποθεσία"
+
+#: meteo/models.py:49
+msgid "température (°C)"
+msgstr "θερμοκρασία (°C)"
+
+#: meteo/models.py:50
+msgid "humidité (%)"
+msgstr "υγρασία (%)"
+
+#: meteo/models.py:51
+msgid "vent (km/h)"
+msgstr "άνεμος (km/h)"
+
+#: meteo/models.py:52
+msgid "pluie (mm)"
+msgstr "βροχή (mm)"
+
+#: meteo/models.py:53
+msgid "ET0 (mm)"
+msgstr "ET0 (mm)"
+
+#: meteo/models.py:54
+#, fuzzy
+#| msgid "Notifications"
+msgid "conditions"
+msgstr "Ειδοποιήσεις"
+
+#: meteo/models.py:55
+msgid "capturé le"
+msgstr "καταγράφηκε στις"
+
+#: meteo/models.py:58
+msgid "relevé météo"
+msgstr "μετεωρολογική μέτρηση"
+
+#: meteo/models.py:59
+msgid "relevés météo"
+msgstr "μετεωρολογικές μετρήσεις"
+
+#: meteo/templates/meteo/index.html:10
+msgid "Vos villes en un coup d'œil"
+msgstr "Οι πόλεις σας με μια ματιά"
+
+#: meteo/templates/meteo/index.html:14 meteo/templates/meteo/index.html:61
+msgid "Ajouter une ville"
+msgstr "Προσθήκη πόλης"
+
+#: meteo/templates/meteo/index.html:37
+msgid "Retirer"
+msgstr "Αφαίρεση"
+
+#: meteo/templates/meteo/index.html:52
+msgid "Ajoutez une ville pour suivre sa météo."
+msgstr "Προσθέστε μια πόλη για να παρακολουθείτε τον καιρό της."
+
+#: meteo/templates/meteo/index.html:70
+msgid "Rechercher une commune"
+msgstr "Αναζήτηση δήμου"
+
+#: meteo/templates/meteo/index.html:71
+msgid "ex: Avignon"
+msgstr "π.χ.: Avignon"
+
+#: meteo/templates/meteo/index.html:73
+msgid "Tapez un nom puis Entrée pour rechercher."
+msgstr "Πληκτρολογήστε ένα όνομα και Enter για αναζήτηση."
+
+#: meteo/templates/meteo/meteo.html:10
+msgid "Toutes les villes"
+msgstr "Όλες οι πόλεις"
+
+#: meteo/templates/meteo/meteo.html:27
+#, fuzzy
+#| msgid "Capteurs"
+msgid "Capturer"
+msgstr "Αισθητήρες"
+
+#: meteo/templates/meteo/meteo.html:41
+msgid "Capture automatique"
+msgstr "Αυτόματη καταγραφή"
+
+#: meteo/templates/meteo/meteo.html:45
+msgid "Activée"
+msgstr "Ενεργοποιημένη"
+
+#: meteo/templates/meteo/meteo.html:53
+msgid "Dernière capture auto"
+msgstr "Τελευταία αυτόματη καταγραφή"
+
+#: meteo/templates/meteo/meteo.html:55
+msgid ""
+"Un relevé de cette ville est enregistré automatiquement à la fréquence "
+"choisie."
+msgstr ""
+"Μια μέτρηση αυτής της πόλης καταγράφεται αυτόματα με την επιλεγμένη "
+"συχνότητα."
+
+#: meteo/templates/meteo/meteo.html:61
+msgid "Impossible de récupérer la météo."
+msgstr "Αδυναμία ανάκτησης του καιρού."
+
+#: meteo/templates/meteo/meteo.html:76
+msgid "Ressenti"
+msgstr "Αίσθηση"
+
+#: meteo/templates/meteo/meteo.html:79 meteo/templates/meteo/meteo.html:95
+#: meteo/templates/meteo/meteo.html:145
+msgid "Pluie"
+msgstr "Βροχή"
+
+#: meteo/templates/meteo/meteo.html:86
+msgid "Prévisions 7 jours"
+msgstr "Πρόγνωση 7 ημερών"
+
+#: meteo/templates/meteo/meteo.html:96
+msgid "Proba."
+msgstr "Πιθαν."
+
+#: meteo/templates/meteo/meteo.html:97
+msgid "Évapotranspiration (FAO-56)"
+msgstr "Εξατμισοδιαπνοή (FAO-56)"
+
+#: meteo/templates/meteo/meteo.html:110
+msgid "Évolution"
+msgstr "Εξέλιξη"
+
+#: meteo/templates/meteo/meteo.html:113
+msgid "Température (°C)"
+msgstr "Θερμοκρασία (°C)"
+
+#: meteo/templates/meteo/meteo.html:117
+#, python-format
+msgid "Humidité (%%)"
+msgstr "Υγρασία (%%)"
+
+#: meteo/templates/meteo/meteo.html:121
+msgid "Vent (km/h)"
+msgstr "Άνεμος (km/h)"
+
+#: meteo/templates/meteo/meteo.html:125
+msgid "Pluie (mm)"
+msgstr "Βροχή (mm)"
+
+#: meteo/templates/meteo/meteo.html:135
+msgid "Historique des relevés"
+msgstr "Ιστορικό μετρήσεων"
+
+#: meteo/views.py:89
+msgid "Capture automatique mise à jour."
+msgstr "Η αυτόματη καταγραφή ενημερώθηκε."
+
+#: meteo/views.py:118
+msgid "Lieu introuvable."
+msgstr "Η τοποθεσία δεν βρέθηκε."
+
+#: meteo/views.py:197
+msgid "Relevé météo capturé."
+msgstr "Η μετεωρολογική μέτρηση καταγράφηκε."
+
+#: meteo/views.py:198
+#, python-format
+msgid "Échec de la capture : %(e)s"
+msgstr "Αποτυχία καταγραφής: %(e)s"
+
+#: notifications/models.py:17 planning/models.py:40
+msgid "Urgente"
+msgstr "Επείγουσα"
+
+#: notifications/models.py:31
+msgid "notification"
+msgstr "ειδοποίηση"
+
+#: notifications/models.py:32
+msgid "notifications"
+msgstr "ειδοποιήσεις"
+
+#: notifications/models.py:49
+msgid "règle de notification"
+msgstr "κανόνας ειδοποίησης"
+
+#: notifications/models.py:50
+msgid "règles de notification"
+msgstr "κανόνες ειδοποίησης"
+
+#: notifications/templates/notifications/center.html:10
+msgid "Tout marquer comme lu"
+msgstr "Σήμανση όλων ως αναγνωσμένα"
+
+#: notifications/templates/notifications/center.html:27
+msgid "Aucune notification."
+msgstr "Καμία ειδοποίηση."
+
+#: notifications/templates/notifications/center.html:31
+msgid "Règles d'alerte"
+msgstr "Κανόνες ειδοποίησης"
+
+#: notifications/templates/notifications/center.html:37
+msgid "activée"
+msgstr "ενεργοποιημένη"
+
+#: notifications/templates/notifications/center.html:37
+msgid "désactivée"
+msgstr "απενεργοποιημένη"
+
+#: notifications/templates/notifications/center.html:42
+msgid "Aucune règle définie."
+msgstr "Κανένας ορισμένος κανόνας."
+
+#: operations/models.py:16 operations/models.py:151
+msgid "Pompe"
+msgstr "Αντλία"
+
+#: operations/models.py:17 operations/models.py:143
+msgid "Tracteur"
+msgstr "Τρακτέρ"
+
+#: operations/models.py:20 operations/models.py:144
+msgid "Pulvérisateur"
+msgstr "Ψεκαστήρας"
+
+#: operations/models.py:27
+msgid "Réformée"
+msgstr "Αποσυρμένο"
+
+#: operations/models.py:44
+msgid "machine"
+msgstr "μηχάνημα"
+
+#: operations/models.py:45
+msgid "machines"
+msgstr "μηχανήματα"
+
+#: operations/models.py:54
+msgid "Utilisation"
+msgstr "Χρήση"
+
+#: operations/models.py:56 operations/models.py:85
+msgid "Réparation"
+msgstr "Επισκευή"
+
+#: operations/models.py:57
+msgid "Inspection"
+msgstr "Επιθεώρηση"
+
+#: operations/models.py:79
+msgid "Vidange"
+msgstr "Αλλαγή λαδιών"
+
+#: operations/models.py:80
+msgid "Filtres"
+msgstr "Φίλτρα"
+
+#: operations/models.py:81
+msgid "Courroies"
+msgstr "Ιμάντες"
+
+#: operations/models.py:82
+msgid "Pneumatiques"
+msgstr "Ελαστικά"
+
+#: operations/models.py:83
+msgid "Freins"
+msgstr "Φρένα"
+
+#: operations/models.py:84
+msgid "Révision complète"
+msgstr "Πλήρης επισκευή"
+
+#: operations/models.py:86
+msgid "Contrôle technique"
+msgstr "Τεχνικός έλεγχος"
+
+#: operations/models.py:105
+msgid "entretien"
+msgstr "συντήρηση"
+
+#: operations/models.py:106
+msgid "entretiens"
+msgstr "συντηρήσεις"
+
+#: operations/models.py:112
+msgid "Labour"
+msgstr "Όργωμα"
+
+#: operations/models.py:134
+msgid "affectation d'engin"
+msgstr "ανάθεση μηχανήματος"
+
+#: operations/models.py:135
+msgid "affectations d'engins"
+msgstr "αναθέσεις μηχανημάτων"
+
+#: operations/models.py:145
+msgid "Semoir"
+msgstr "Σπαρτική μηχανή"
+
+#: operations/models.py:146
+msgid "Épandeur"
+msgstr "Λιπασματοδιανομέας"
+
+#: operations/models.py:147
+msgid "Moissonneuse"
+msgstr "Θεριζοαλωνιστική"
+
+#: operations/models.py:148
+msgid "Charrue"
+msgstr "Άροτρο"
+
+#: operations/models.py:149
+msgid "Cultivateur"
+msgstr "Καλλιεργητής"
+
+#: operations/models.py:150
+msgid "Benne"
+msgstr "Καρότσα"
+
+#: operations/models.py:170
+msgid "modèle d'engin (catalogue)"
+msgstr "μοντέλο μηχανήματος (κατάλογος)"
+
+#: operations/models.py:171
+msgid "catalogue d'engins"
+msgstr "κατάλογος μηχανημάτων"
+
+#: operations/templates/operations/parc_materiel.html:16
 msgid "prochain entretien"
-msgstr ""
+msgstr "επόμενη συντήρηση"
 
+#: operations/templates/operations/parc_materiel.html:21
 msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Κανένα μηχάνημα. Προσθέστε μέσω της διαχείρισης ή του API."
 
-msgid "Gravitaire"
-msgstr ""
+#: pac/models.py:9
+msgid "DPB — Droits à paiement de base"
+msgstr "DPB — Δικαιώματα βασικής ενίσχυσης"
 
-msgid "Jachère"
-msgstr ""
+#: pac/models.py:10
+msgid "Éco-régime"
+msgstr "Οικολογικό σχήμα"
 
+#: pac/models.py:11
+msgid "Paiement redistributif"
+msgstr "Αναδιανεμητική ενίσχυση"
+
+#: pac/models.py:12
+msgid "Aide jeune agriculteur"
+msgstr "Ενίσχυση νέου γεωργού"
+
+#: pac/models.py:13
+msgid "Aides couplées"
+msgstr "Συνδεδεμένες ενισχύσεις"
+
+#: pac/models.py:14
+msgid "ICHN — Indemnité handicap naturel"
+msgstr "ICHN — Αποζημίωση φυσικών μειονεκτημάτων"
+
+#: pac/models.py:15
+msgid "MAEC — Mesures agro-environnementales"
+msgstr "MAEC — Αγρο-περιβαλλοντικά μέτρα"
+
+#: pac/models.py:17
+msgid "Assurance récolte"
+msgstr "Ασφάλιση συγκομιδής"
+
+#: pac/models.py:21
+msgid "Prévu"
+msgstr "Προβλεπόμενο"
+
+#: pac/models.py:22
+msgid "Accordé"
+msgstr "Εγκεκριμένο"
+
+#: pac/models.py:23 pac/templates/pac/pac.html:34
+msgid "Payé"
+msgstr "Πληρωμένο"
+
+#: pac/models.py:29
+msgid "catégorie"
+msgstr "κατηγορία"
+
+#: pac/models.py:30
+msgid "libellé"
+msgstr "ετικέτα"
+
+#: pac/models.py:31
+msgid "montant (€)"
+msgstr "ποσό (€)"
+
+#: pac/models.py:32 parcelles/models.py:32
 msgid "surface (ha)"
-msgstr ""
+msgstr "έκταση (ha)"
 
+#: pac/models.py:33
+msgid "statut"
+msgstr "κατάσταση"
+
+#: pac/models.py:37
+msgid "aide PAC"
+msgstr "ενίσχυση ΚΑΠ"
+
+#: pac/models.py:38
+msgid "aides PAC"
+msgstr "ενισχύσεις ΚΑΠ"
+
+#: pac/templates/pac/pac.html:10
+msgid "Politique Agricole Commune · suivi des aides par campagne"
+msgstr "Κοινή Αγροτική Πολιτική · παρακολούθηση ενισχύσεων ανά περίοδο"
+
+#: pac/templates/pac/pac.html:22 pac/templates/pac/pac.html:89
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une aide"
+msgstr "Ενεργοποίηση κωδικού"
+
+#: pac/templates/pac/pac.html:30
+msgid "Montant total estimé"
+msgstr "Συνολικό εκτιμώμενο ποσό"
+
+#: pac/templates/pac/pac.html:38
+msgid "Surface concernée"
+msgstr "Σχετική έκταση"
+
+#: pac/templates/pac/pac.html:42
+msgid "Nombre d'aides"
+msgstr "Αριθμός ενισχύσεων"
+
+#: pac/templates/pac/pac.html:54 pac/templates/pac/pac.html:124
+msgid "Libellé"
+msgstr "Ετικέτα"
+
+#: pac/templates/pac/pac.html:74
+msgid "Supprimer cette aide ?"
+msgstr "Διαγραφή αυτής της ενίσχυσης;"
+
+#: pac/templates/pac/pac.html:87
+msgid "Aucune aide PAC pour cette campagne."
+msgstr "Καμία ενίσχυση ΚΑΠ για αυτήν την περίοδο."
+
+#: pac/templates/pac/pac.html:96
+msgid ""
+"Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et"
+" leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
+msgstr ""
+"Παρακολουθήστε εδώ τις ενισχύσεις ΚΑΠ (DPB, οικολογικό σχήμα, ICHN, MAEC, "
+"βιολογικά…) ανά περίοδο και την κατάστασή τους (προβλεπόμενο / εγκεκριμένο /"
+" πληρωμένο). Επίσημη δήλωση μέσω TéléPAC."
+
+#: pac/templates/pac/pac.html:105
+msgid "Nouvelle aide PAC"
+msgstr "Νέα ενίσχυση ΚΑΠ"
+
+#: pac/templates/pac/pac.html:125
+msgid "ex: Éco-régime niveau 2"
+msgstr "π.χ.: Οικολογικό σχήμα επίπεδο 2"
+
+#: pac/templates/pac/pac.html:130
+msgid "Montant (€)"
+msgstr "Ποσό (€)"
+
+#: parcelles/models.py:19
+msgid "Gravitaire"
+msgstr "Βαρυτική"
+
+#: parcelles/models.py:24
+msgid "Jachère"
+msgstr "Αγρανάπαυση"
+
+#: parcelles/models.py:37
 msgid "polygone"
-msgstr ""
+msgstr "πολύγωνο"
 
+#: parcelles/models.py:42
 msgid "type d'irrigation"
-msgstr ""
+msgstr "τύπος άρδευσης"
 
+#: parcelles/models.py:44
 msgid "débit théorique (m³/h)"
-msgstr ""
+msgstr "θεωρητική παροχή (m³/h)"
 
+#: parcelles/models.py:45
 msgid "nombre de buses"
-msgstr ""
+msgstr "αριθμός ακροφυσίων"
 
+#: parcelles/models.py:46
 msgid "débit buse (L/h)"
-msgstr ""
+msgstr "παροχή ακροφυσίου (L/h)"
 
+#: parcelles/models.py:47
 msgid "écart entre rangs (m)"
-msgstr ""
+msgstr "απόσταση μεταξύ γραμμών (m)"
 
+#: parcelles/models.py:48
 msgid "écart entre émetteurs (m)"
-msgstr ""
+msgstr "απόσταση μεταξύ σταλακτήρων (m)"
 
+#: parcelles/models.py:49
 msgid "pression de service (bar)"
-msgstr ""
+msgstr "πίεση λειτουργίας (bar)"
 
+#: parcelles/models.py:52
 msgid "culture"
-msgstr ""
+msgstr "καλλιέργεια"
 
+#: parcelles/models.py:53
 msgid "variété"
-msgstr ""
+msgstr "ποικιλία"
 
+#: parcelles/models.py:54 parcelles/models.py:93
 msgid "coefficient Kc"
-msgstr ""
+msgstr "συντελεστής Kc"
 
+#: parcelles/models.py:55
 msgid "âge des plants (ans)"
-msgstr ""
+msgstr "ηλικία φυτών (έτη)"
 
+#: parcelles/models.py:56
 msgid "date de plantation"
-msgstr ""
+msgstr "ημερομηνία φύτευσης"
 
+#: parcelles/models.py:57
 msgid "densité (pieds/ha)"
-msgstr ""
+msgstr "πυκνότητα (φυτά/ha)"
 
+#: parcelles/models.py:61
 msgid "profondeur racinaire"
-msgstr ""
+msgstr "βάθος ριζικού συστήματος"
 
+#: parcelles/models.py:62
 msgid "profondeur racinaire (cm)"
-msgstr ""
+msgstr "βάθος ριζικού συστήματος (cm)"
 
+#: parcelles/models.py:63
 msgid "rétention sol (mm/m)"
-msgstr ""
+msgstr "συγκράτηση εδάφους (mm/m)"
 
+#: parcelles/models.py:64
 msgid "pH du sol"
-msgstr ""
+msgstr "pH εδάφους"
 
+#: parcelles/models.py:67
 msgid "réf. cadastrale"
-msgstr ""
+msgstr "κτηματολογικός αρ."
 
+#: parcelles/models.py:68
 msgid "commune"
-msgstr ""
+msgstr "δήμος"
 
+#: parcelles/models.py:69
 msgid "surface officielle (ha)"
-msgstr ""
+msgstr "επίσημη έκταση (ha)"
 
+#: parcelles/models.py:70
+msgid "données cadastre (brut IGN)"
+msgstr "δεδομένα κτηματολογίου (ακατέργαστα IGN)"
+
+#: parcelles/models.py:71
+msgid "date d'acquisition"
+msgstr "ημερομηνία απόκτησης"
+
+#: parcelles/models.py:76
 msgid "parcelle"
-msgstr ""
+msgstr "αγροτεμάχιο"
 
+#: parcelles/models.py:77
 msgid "parcelles"
-msgstr ""
+msgstr "αγροτεμάχια"
 
+#: parcelles/models.py:89
 msgid "stade"
-msgstr ""
+msgstr "στάδιο"
 
+#: parcelles/models.py:91
 msgid "début"
-msgstr ""
+msgstr "έναρξη"
 
+#: parcelles/models.py:92
 msgid "fin"
-msgstr ""
+msgstr "λήξη"
 
+#: parcelles/models.py:94
 msgid "profondeur racinaire (m)"
-msgstr ""
+msgstr "βάθος ριζικού συστήματος (m)"
 
+#: parcelles/models.py:98
 msgid "stade cultural"
-msgstr ""
+msgstr "καλλιεργητικό στάδιο"
 
+#: parcelles/models.py:99
 msgid "stades culturaux"
-msgstr ""
+msgstr "καλλιεργητικά στάδια"
 
+#: parcelles/templates/parcelles/confirm_delete.html:7
 msgid "Supprimer la parcelle ?"
-msgstr ""
+msgstr "Διαγραφή αγροτεμαχίου;"
 
+#: parcelles/templates/parcelles/confirm_delete.html:9
 #, python-format
 msgid "La parcelle « %(name)s » sera définitivement supprimée."
-msgstr ""
+msgstr "Το αγροτεμάχιο «%(name)s» θα διαγραφεί οριστικά."
 
-msgid "Supprimer"
-msgstr ""
-
+#: parcelles/templates/parcelles/detail.html:12
 msgid "Modifier"
-msgstr ""
+msgstr "Επεξεργασία"
 
+#: parcelles/templates/parcelles/detail.html:19
 msgid "Culture & sol"
-msgstr ""
+msgstr "Καλλιέργεια & έδαφος"
 
+#: parcelles/templates/parcelles/detail.html:21
 msgid "Variété"
-msgstr ""
+msgstr "Ποικιλία"
 
+#: parcelles/templates/parcelles/detail.html:23
 msgid "Type de sol"
-msgstr ""
+msgstr "Τύπος εδάφους"
 
+#: parcelles/templates/parcelles/detail.html:33
+#: parcelles/templates/parcelles/list.html:93
 msgid "Commune"
-msgstr ""
+msgstr "Δήμος"
 
+#: parcelles/templates/parcelles/detail.html:38
 msgid "Retour aux parcelles"
-msgstr ""
+msgstr "Επιστροφή στα αγροτεμάχια"
 
+#: parcelles/templates/parcelles/form.html:8
 msgid "Étape"
-msgstr ""
+msgstr "Βήμα"
 
+#: parcelles/templates/parcelles/form.html:21
 msgid "Identité & localisation"
-msgstr ""
+msgstr "Ταυτότητα & τοποθεσία"
 
+#: parcelles/templates/parcelles/form.html:33
 msgid "Cliquez sur la carte pour positionner la parcelle."
-msgstr ""
+msgstr "Κάντε κλικ στον χάρτη για να τοποθετήσετε το αγροτεμάχιο."
 
+#: parcelles/templates/parcelles/form.html:84
 msgid "Cadastre & statut"
-msgstr ""
+msgstr "Κτηματολόγιο & κατάσταση"
 
+#: parcelles/templates/parcelles/form.html:94
 msgid "Précédent"
-msgstr ""
+msgstr "Προηγούμενο"
 
+#: parcelles/templates/parcelles/form.html:96
 msgid "Suivant"
-msgstr ""
+msgstr "Επόμενο"
 
-msgid "+ Nouvelle parcelle"
-msgstr ""
+#: parcelles/templates/parcelles/list.html:13
+msgid "Carte satellite · Cadastre IGN · Surfaces"
+msgstr "Δορυφορικός χάρτης · Κτηματολόγιο IGN · Εκτάσεις"
 
+#: parcelles/templates/parcelles/list.html:24
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles actives"
+msgstr "Αγροτεμάχια"
+
+#: parcelles/templates/parcelles/list.html:28
+msgid "Surface totale"
+msgstr "Συνολική έκταση"
+
+#: parcelles/templates/parcelles/list.html:32
+msgid "Stress hydrique"
+msgstr "Υδατική καταπόνηση"
+
+#: parcelles/templates/parcelles/list.html:36
+msgid "Humidité moyenne"
+msgstr "Μέση υγρασία"
+
+#: parcelles/templates/parcelles/list.html:45
+msgid "Rechercher un lieu…"
+msgstr "Αναζήτηση τοποθεσίας…"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Carte"
+msgstr "Χάρτης"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Liste"
+msgstr "Λίστα"
+
+#: parcelles/templates/parcelles/list.html:62
+msgid ""
+"Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
+"Enregistrer."
+msgstr ""
+"Κάντε κλικ στα αγροτεμάχια προς προσθήκη (ξανακλικ για αποεπιλογή), και μετά"
+" Αποθήκευση."
+
+#: parcelles/templates/parcelles/list.html:70
+msgid "parcelle(s) sélectionnée(s)"
+msgstr "επιλεγμένο(α) αγροτεμάχιο(α)"
+
+#: parcelles/templates/parcelles/list.html:92
+msgid "Réf. cadastrale"
+msgstr "Κτηματολογικός αρ."
+
+#: parcelles/templates/parcelles/list.html:94
+msgid "Acquise le"
+msgstr "Αποκτήθηκε στις"
+
+#: parcelles/templates/parcelles/list.html:116
+msgid ""
+"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+msgstr ""
+"Κανένα αγροτεμάχιο. Κάντε κλικ στο «Προσθήκη» για να επιλέξετε στον χάρτη."
+
+#: parcelles/templates/parcelles/list.html:122
+msgid "Analyses des parcelles — bientôt."
+msgstr "Αναλύσεις αγροτεμαχίων — σύντομα."
+
+#: parcelles/views.py:132
 msgid "Configurez d'abord votre exploitation."
-msgstr ""
+msgstr "Ρυθμίστε πρώτα την εκμετάλλευσή σας."
 
-msgid "Configurer"
-msgstr ""
-
-msgid "Aucune parcelle pour le moment."
-msgstr ""
-
-msgid "Créer ma première parcelle"
-msgstr ""
-
+#: parcelles/views.py:141
 msgid "Parcelle créée."
-msgstr ""
+msgstr "Το αγροτεμάχιο δημιουργήθηκε."
 
+#: parcelles/views.py:149
 msgid "Nouvelle parcelle"
-msgstr ""
+msgstr "Νέο αγροτεμάχιο"
 
+#: parcelles/views.py:172
 msgid "Parcelle mise à jour."
-msgstr ""
+msgstr "Το αγροτεμάχιο ενημερώθηκε."
 
+#: parcelles/views.py:179
 #, python-format
 msgid "Modifier %(n)s"
-msgstr ""
+msgstr "Επεξεργασία %(n)s"
 
+#: parcelles/views.py:189
 msgid "Parcelle supprimée."
-msgstr ""
+msgstr "Το αγροτεμάχιο διαγράφηκε."
 
+#: planning/models.py:29
 msgid "Planifié"
-msgstr ""
+msgstr "Προγραμματισμένο"
 
+#: planning/models.py:31
 msgid "En pause"
-msgstr ""
+msgstr "Σε παύση"
 
+#: planning/models.py:34
 msgid "Reporté"
-msgstr ""
+msgstr "Αναβλήθηκε"
 
+#: planning/models.py:43
 msgid "Non applicable"
-msgstr ""
+msgstr "Μη εφαρμόσιμο"
 
+#: planning/models.py:44
 msgid "À facturer"
-msgstr ""
+msgstr "Προς τιμολόγηση"
 
+#: planning/models.py:45
 msgid "Facturé"
-msgstr ""
+msgstr "Τιμολογήθηκε"
 
+#: planning/models.py:46
 msgid "Avoir"
-msgstr ""
+msgstr "Πιστωτικό"
 
+#: planning/models.py:80
 msgid "tâche de planning"
-msgstr ""
+msgstr "εργασία προγραμματισμού"
 
+#: planning/models.py:81
 msgid "tâches de planning"
-msgstr ""
+msgstr "εργασίες προγραμματισμού"
 
+#: planning/models.py:100
 msgid "affectation technicien"
-msgstr ""
+msgstr "ανάθεση τεχνικού"
 
+#: planning/models.py:101
 msgid "affectations techniciens"
-msgstr ""
+msgstr "αναθέσεις τεχνικών"
 
+#: planning/models.py:106
 msgid "Photo"
-msgstr ""
+msgstr "Φωτογραφία"
 
+#: planning/models.py:107
 msgid "Plan"
-msgstr ""
+msgstr "Σχέδιο"
 
+#: planning/models.py:108
 msgid "Schéma"
-msgstr ""
+msgstr "Διάγραμμα"
 
-msgid "Document"
-msgstr ""
-
+#: planning/models.py:126
 msgid "Démarrage"
-msgstr ""
+msgstr "Εκκίνηση"
 
+#: planning/models.py:127
 msgid "Pause"
-msgstr ""
+msgstr "Παύση"
 
+#: planning/models.py:128
 msgid "Reprise"
-msgstr ""
+msgstr "Επανέναρξη"
 
+#: planning/models.py:129
 msgid "Fin"
-msgstr ""
+msgstr "Λήξη"
 
+#: planning/models.py:145
 msgid "Congé payé"
-msgstr ""
+msgstr "Άδεια μετ’ αποδοχών"
 
+#: planning/models.py:147
 msgid "Maladie"
-msgstr ""
+msgstr "Ασθένεια"
 
+#: planning/models.py:148
 msgid "Formation"
-msgstr ""
+msgstr "Εκπαίδευση"
 
+#: planning/models.py:149
 msgid "Sans solde"
-msgstr ""
+msgstr "Άνευ αποδοχών"
 
+#: planning/models.py:153
 msgid "Matin"
-msgstr ""
+msgstr "Πρωί"
 
+#: planning/models.py:154
 msgid "Après-midi"
-msgstr ""
+msgstr "Απόγευμα"
 
+#: planning/models.py:155
 msgid "Journée"
-msgstr ""
+msgstr "Ημέρα"
 
+#: planning/models.py:158
 msgid "Demandé"
-msgstr ""
+msgstr "Αιτηθέν"
 
+#: planning/models.py:159
 msgid "Approuvé"
-msgstr ""
+msgstr "Εγκεκριμένο"
 
+#: planning/models.py:160
 msgid "Refusé"
-msgstr ""
+msgstr "Απορριφθέν"
 
+#: planning/models.py:178
 msgid "absence"
-msgstr ""
+msgstr "απουσία"
 
+#: planning/models.py:179
 msgid "absences"
-msgstr ""
+msgstr "απουσίες"
 
+#: planning/models.py:206
 msgid "Outil à main"
-msgstr ""
+msgstr "Εργαλείο χειρός"
 
+#: planning/models.py:207
 msgid "Outil de coupe"
-msgstr ""
+msgstr "Εργαλείο κοπής"
 
+#: planning/models.py:208
 msgid "Outil motorisé"
-msgstr ""
+msgstr "Μηχανοκίνητο εργαλείο"
 
+#: planning/models.py:209
 msgid "Engin"
-msgstr ""
+msgstr "Μηχάνημα"
 
+#: planning/models.py:211
 msgid "Arrosage"
-msgstr ""
+msgstr "Πότισμα"
 
+#: planning/models.py:212
 msgid "Mesure"
-msgstr ""
+msgstr "Μέτρηση"
 
+#: planning/models.py:217 planning/models.py:253
+#: planning/templates/planning/planning.html:27
 msgid "Bon"
-msgstr ""
+msgstr "Καλό"
 
+#: planning/models.py:219
 msgid "À réparer"
-msgstr ""
+msgstr "Προς επισκευή"
 
+#: planning/models.py:220
 msgid "Hors service"
-msgstr ""
+msgstr "Εκτός λειτουργίας"
 
+#: planning/models.py:231
 msgid "matériel"
-msgstr ""
+msgstr "εξοπλισμός"
 
+#: planning/models.py:232
 msgid "catalogue matériel"
-msgstr ""
+msgstr "κατάλογος εξοπλισμού"
 
+#: planning/models.py:255
 msgid "Mauvais"
-msgstr ""
+msgstr "Κακό"
 
+#: planning/models.py:260
 msgid "Complété"
-msgstr ""
+msgstr "Ολοκληρωμένο"
 
+#: planning/models.py:262
 msgid "Archivé"
-msgstr ""
+msgstr "Αρχειοθετημένο"
 
+#: planning/models.py:295
 msgid "bon d'intervention"
-msgstr ""
+msgstr "δελτίο εργασίας"
 
+#: planning/models.py:296
 msgid "bons d'intervention"
-msgstr ""
+msgstr "δελτία εργασίας"
 
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:80
 msgid "Bon d'intervention"
-msgstr ""
+msgstr "Δελτίο εργασίας"
 
+#: planning/templates/planning/bon_intervention.html:17
 msgid "Technicien"
-msgstr ""
+msgstr "Τεχνικός"
 
+#: planning/templates/planning/bon_intervention.html:21
 msgid "Travaux réalisés"
-msgstr ""
+msgstr "Εργασίες που εκτελέστηκαν"
 
+#: planning/templates/planning/bon_intervention.html:26
 msgid "Produits utilisés"
-msgstr ""
+msgstr "Προϊόντα που χρησιμοποιήθηκαν"
 
+#: planning/templates/planning/bon_intervention.html:30
 msgid "Qté"
-msgstr ""
+msgstr "Ποσ."
 
+#: planning/templates/planning/bon_intervention.html:34
 msgid "Ajouter un produit"
-msgstr ""
+msgstr "Προσθήκη προϊόντος"
 
+#: planning/templates/planning/bon_intervention.html:38
 msgid "Observations"
-msgstr ""
+msgstr "Παρατηρήσεις"
 
+#: planning/templates/planning/bon_intervention.html:43
 msgid "Signature du technicien"
-msgstr ""
+msgstr "Υπογραφή τεχνικού"
 
+#: planning/templates/planning/bon_intervention.html:45
 msgid "Effacer"
-msgstr ""
+msgstr "Διαγραφή"
 
+#: planning/templates/planning/bon_intervention.html:46
 msgid "Nom du signataire"
-msgstr ""
+msgstr "Όνομα υπογράφοντος"
 
+#: planning/templates/planning/bon_intervention.html:50
 msgid "Enregistrer le brouillon"
-msgstr ""
+msgstr "Αποθήκευση πρόχειρου"
 
+#: planning/templates/planning/bon_intervention.html:51
 msgid "Valider le bon"
-msgstr ""
+msgstr "Επικύρωση δελτίου"
 
+#: planning/templates/planning/planning.html:7
 msgid "Planning des interventions"
-msgstr ""
+msgstr "Πρόγραμμα εργασιών"
 
+#: planning/templates/planning/planning.html:17
 msgid "Tâches planifiées"
-msgstr ""
+msgstr "Προγραμματισμένες εργασίες"
 
+#: planning/templates/planning/planning.html:32
 msgid "Aucune tâche planifiée."
-msgstr ""
+msgstr "Καμία προγραμματισμένη εργασία."
 
+#: planning/templates/planning/planning.html:37
 msgid "Backlog"
-msgstr ""
+msgstr "Εκκρεμότητες"
 
+#: planning/templates/planning/planning.html:44
 msgid "Backlog vide."
-msgstr ""
+msgstr "Καμία εκκρεμότητα."
 
+#: planning/views.py:33
 msgid "Jour"
-msgstr ""
+msgstr "Ημέρα"
 
+#: planning/views.py:33
 msgid "Semaine"
-msgstr ""
+msgstr "Εβδομάδα"
 
+#: planning/views.py:33
 msgid "Mois"
-msgstr ""
+msgstr "Μήνας"
 
+#: planning/views.py:74
 msgid "Bon d'intervention enregistré."
-msgstr ""
+msgstr "Το δελτίο εργασίας καταχωρήθηκε."
 
+#: public/models.py:17
 msgid "lead capturé"
-msgstr ""
+msgstr "καταγεγραμμένο lead"
 
+#: public/models.py:18
 msgid "leads capturés"
-msgstr ""
+msgstr "καταγεγραμμένα leads"
 
-msgid "Activer mon compte"
-msgstr ""
-
-msgid "Saisissez le code d'activation reçu par email après votre paiement (format HOLS-XXXX-XXXX)."
-msgstr ""
-
-msgid "Activer"
-msgstr ""
-
+#: public/templates/public/home.html:3
 msgid "Irrigation de précision pour agriculteurs"
-msgstr ""
+msgstr "Άρδευση ακριβείας για αγρότες"
 
-msgid "Pilotez votre irrigation, économisez l'eau et l'énergie."
-msgstr ""
+#: public/templates/public/home.html:13 public/templates/public/home.html:471
+msgid "Domaines"
+msgstr "Τομείς"
 
-msgid "IoT temps réel, score d'efficience DTI, assistant IA et conformité subventions — pensés pour les agriculteurs."
-msgstr ""
+#: public/templates/public/home.html:14 public/templates/public/home.html:307
+#: public/templates/public/home.html:472
+msgid "Tarif"
+msgstr "Τιμή"
 
-msgid "Démarrer"
-msgstr ""
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "Η εκμετάλλευσή σας, χωρίς να την κρατάτε στο μυαλό σας."
 
-msgid "Guide gratuit : lire ses analyses de sol"
-msgstr ""
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "Ο βοηθός που θυμάται, υπολογίζει και αποδεικνύει για εσάς."
 
-msgid "Votre email"
-msgstr ""
+#: public/templates/public/home.html:47
+msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
+msgstr "59,90 € χωρίς ΦΠΑ/μήνα ανά εκμετάλλευση, απεριόριστοι χρήστες."
 
-msgid "Recevoir"
-msgstr ""
+#: public/templates/public/home.html:53
+msgid "Commencer maintenant"
+msgstr "Ξεκινήστε τώρα"
 
-msgid "Discuter avec Alex 🌱"
-msgstr ""
+#: public/templates/public/home.html:57
+msgid "Voir ce qu'il fait"
+msgstr "Δείτε τι κάνει"
 
-msgid "Posez votre question…"
-msgstr ""
+#: public/templates/public/home.html:61
+#: templates/partials/install_banner.html:23
+msgid "Télécharger l'app"
+msgstr "Κατεβάστε την εφαρμογή"
 
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Χωρίς δέσμευση"
+
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Δεδομένα φιλοξενούμενα στη Γαλλία"
+
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Καθοδηγούμενη εκκίνηση περιλαμβάνεται"
+
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Αγροτική εκμετάλλευση στο ηλιοβασίλεμα"
+
+#: public/templates/public/home.html:87
+msgid "Le métier n'a pas changé."
+msgstr "Το επάγγελμα δεν άλλαξε."
+
+#: public/templates/public/home.html:90
+msgid "Sa charge administrative et mentale, si."
+msgstr "Το διοικητικό και ψυχικό του φορτίο, ναι."
+
+#: public/templates/public/home.html:98
+msgid "La réglementation qui s'empile"
+msgstr "Η νομοθεσία που συσσωρεύεται"
+
+#: public/templates/public/home.html:100
+msgid "Plan Eau 2030"
+msgstr "Σχέδιο Νερού 2030"
+
+#: public/templates/public/home.html:102
+msgid "E-facturation obligatoire"
+msgstr "Υποχρεωτική ηλεκτρονική τιμολόγηση"
+
+#: public/templates/public/home.html:103
+msgid "Traçabilité renforcée"
+msgstr "Ενισχυμένη ιχνηλασιμότητα"
+
+#: public/templates/public/home.html:110
+msgid "L'économie qui pèse autrement"
+msgstr "Η οικονομία που βαραίνει διαφορετικά"
+
+#: public/templates/public/home.html:112
+msgid "Marges sous pression"
+msgstr "Περιθώρια υπό πίεση"
+
+#: public/templates/public/home.html:113
+msgid "Charges en hausse"
+msgstr "Δαπάνες σε άνοδο"
+
+#: public/templates/public/home.html:114
+msgid "Financement complexe"
+msgstr "Πολύπλοκη χρηματοδότηση"
+
+#: public/templates/public/home.html:115 public/templates/public/home.html:290
+msgid "Dossiers de subvention"
+msgstr "Φάκελοι επιδότησης"
+
+#: public/templates/public/home.html:122
+msgid "La main-d'œuvre à gérer"
+msgstr "Το εργατικό δυναμικό προς διαχείριση"
+
+#: public/templates/public/home.html:124
+msgid "Saisonniers et apprentis"
+msgstr "Εποχικοί και μαθητευόμενοι"
+
+#: public/templates/public/home.html:125
+msgid "Associés et salariés"
+msgstr "Εταίροι και μισθωτοί"
+
+#: public/templates/public/home.html:126
+msgid "Transmission incertaine"
+msgstr "Αβέβαιη μεταβίβαση"
+
+#: public/templates/public/home.html:127
+msgid "Formation continue"
+msgstr "Συνεχής εκπαίδευση"
+
+#: public/templates/public/home.html:139
+msgid "Ce que disent les agriculteurs français"
+msgstr "Τι λένε οι Γάλλοι αγρότες"
+
+#: public/templates/public/home.html:142
+msgid "Des chiffres qui parlent d'eux-mêmes."
+msgstr "Αριθμοί που μιλούν από μόνοι τους."
+
+#: public/templates/public/home.html:149
+msgid "des agriculteurs veulent travailler moins"
+msgstr "των αγροτών θέλουν να δουλεύουν λιγότερο"
+
+#: public/templates/public/home.html:150
+msgid "PRISM 2023 — priorité n°1 à 3 ans"
+msgstr "PRISM 2023 — προτεραιότητα Νο1 στα 3 χρόνια"
+
+#: public/templates/public/home.html:154
+msgid "choisissent de réduire leurs charges"
+msgstr "επιλέγουν να μειώσουν τις δαπάνες τους"
+
+#: public/templates/public/home.html:155
+msgid "PRISM 2023 — vs maximiser la productivité"
+msgstr "PRISM 2023 — έναντι μεγιστοποίησης της παραγωγικότητας"
+
+#: public/templates/public/home.html:159
+msgid "subissent le changement climatique"
+msgstr "υφίστανται την κλιματική αλλαγή"
+
+#: public/templates/public/home.html:160
+msgid "VoxAgri 2025 — effet négatif sur l'exploitation"
+msgstr "VoxAgri 2025 — αρνητική επίδραση στην εκμετάλλευση"
+
+#: public/templates/public/home.html:164
+msgid "veulent plus d'accompagnement"
+msgstr "θέλουν περισσότερη υποστήριξη"
+
+#: public/templates/public/home.html:165
+msgid "PRISM 2023 — ou de meilleure qualité"
+msgstr "PRISM 2023 — ή καλύτερης ποιότητας"
+
+#: public/templates/public/home.html:175
+msgid "La charge invisible"
+msgstr "Το αόρατο φορτίο"
+
+#: public/templates/public/home.html:178
+msgid ""
+"Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
+"prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
+"l'apprenti — c'est un autre travail."
+msgstr ""
+"Ξέρετε τι κάνατε στο αγροτεμάχιο 3 πριν από έξι εβδομάδες. Να το αποδείξετε "
+"σε έναν ελεγκτή, να το βρείτε για έναν φάκελο, να το μεταδώσετε στον "
+"μαθητευόμενο — είναι μια άλλη δουλειά."
+
+#: public/templates/public/home.html:181
+msgid ""
+"Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
+"ce qui se colle par-dessus."
+msgstr ""
+"Και αυτή τη δουλειά, την κάνετε το βράδυ. Το φορτίο δεν είναι το επάγγελμα, "
+"είναι αυτό που κολλάει από πάνω."
+
+#: public/templates/public/home.html:182
+#, python-format
+msgid ""
+"48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
+"priorité n°1."
+msgstr ""
+"Το 48 %% των αγροτών αναφέρουν τον «έλεγχο του χρόνου εργασίας» ως "
+"προτεραιότητα Νο1."
+
+#: public/templates/public/home.html:194
+msgid "Agriculteur submergé par la paperasse administrative"
+msgstr "Αγρότης κατακλυσμένος από τη διοικητική γραφειοκρατία"
+
+#: public/templates/public/home.html:201
+msgid "5 problèmes. 1 réponse."
+msgstr "5 προβλήματα. 1 απάντηση."
+
+#: public/templates/public/home.html:203
+msgid "Votre exploitation mérite un assistant qui ne dort jamais."
+msgstr "Η εκμετάλλευσή σας αξίζει έναν βοηθό που δεν κοιμάται ποτέ."
+
+#: public/templates/public/home.html:206
+msgid ""
+"Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
+"temps de travail, charges, adaptation climatique, gestion d'équipe et "
+"accompagnement. Disponible à la voix, sur le tracteur, à 22h."
+msgstr ""
+"Το Holystyl απαντά στις 5 μεγάλες ανησυχίες των Γάλλων αγροτών: χρόνος "
+"εργασίας, δαπάνες, κλιματική προσαρμογή, διαχείριση ομάδας και υποστήριξη. "
+"Διαθέσιμο φωνητικά, πάνω στο τρακτέρ, στις 22:00."
+
+#: public/templates/public/home.html:211
+msgid "« Je n'ai pas le temps »"
+msgstr "«Δεν έχω χρόνο»"
+
+#: public/templates/public/home.html:212
+msgid "automatise les rapports et la traçabilité"
+msgstr "αυτοματοποιεί τις αναφορές και την ιχνηλασιμότητα"
+
+#: public/templates/public/home.html:215
+msgid "« Je dois réduire mes charges »"
+msgstr "«Πρέπει να μειώσω τις δαπάνες μου»"
+
+#: public/templates/public/home.html:216
+msgid "tableau de bord financier en temps réel"
+msgstr "οικονομικός πίνακας ελέγχου σε πραγματικό χρόνο"
+
+#: public/templates/public/home.html:219
+msgid "« Le climat change »"
+msgstr "«Το κλίμα αλλάζει»"
+
+#: public/templates/public/home.html:220
+msgid "alertes météo, suivi parcellaire, aide à la décision"
+msgstr ""
+"μετεωρολογικές ειδοποιήσεις, παρακολούθηση αγροτεμαχίων, υποστήριξη λήψης "
+"αποφάσεων"
+
+#: public/templates/public/home.html:223
+msgid "« Je gère des saisonniers »"
+msgstr "«Διαχειρίζομαι εποχικούς»"
+
+#: public/templates/public/home.html:224
+msgid "module Équipe & Tâches avec rappels automatiques"
+msgstr "ενότητα Ομάδα & Εργασίες με αυτόματες υπενθυμίσεις"
+
+#: public/templates/public/home.html:227
+msgid "« Je ne sais pas à qui demander »"
+msgstr "«Δεν ξέρω σε ποιον να απευθυνθώ»"
+
+#: public/templates/public/home.html:228
+msgid "IA disponible 24h/24 sur vos questions"
+msgstr "AI διαθέσιμο 24/7 για τις ερωτήσεις σας"
+
+#: public/templates/public/home.html:240
+msgid "Tout ce qu'il couvre"
+msgstr "Όλα όσα καλύπτει"
+
+#: public/templates/public/home.html:243
+msgid "Dix domaines. Un seul outil."
+msgstr "Δέκα τομείς. Ένα μόνο εργαλείο."
+
+#: public/templates/public/home.html:250
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation et eau"
+msgstr "Άρδευση"
+
+#: public/templates/public/home.html:251
+msgid "Programmes, quotas, capteurs IoT"
+msgstr "Προγράμματα, ποσοστώσεις, αισθητήρες IoT"
+
+#: public/templates/public/home.html:255
+msgid "Charges et marges"
+msgstr "Δαπάνες και περιθώρια"
+
+#: public/templates/public/home.html:256
+msgid "Suivi économique en temps réel"
+msgstr "Οικονομική παρακολούθηση σε πραγματικό χρόνο"
+
+#: public/templates/public/home.html:261
+msgid "Maintenance, alertes, historique"
+msgstr "Συντήρηση, ειδοποιήσεις, ιστορικό"
+
+#: public/templates/public/home.html:266
+msgid "Traitements, travaux, traçabilité"
+msgstr "Επεμβάσεις, εργασίες, ιχνηλασιμότητα"
+
+#: public/templates/public/home.html:271
+msgid "Résultats, recommandations"
+msgstr "Αποτελέσματα, συστάσεις"
+
+#: public/templates/public/home.html:275
+msgid "Récoltes"
+msgstr "Συγκομιδές"
+
+#: public/templates/public/home.html:276
+msgid "Volumes, qualité, rendements"
+msgstr "Όγκοι, ποιότητα, αποδόσεις"
+
+#: public/templates/public/home.html:280
+msgid "Équipe et planning"
+msgstr "Ομάδα και προγραμματισμός"
+
+#: public/templates/public/home.html:281
+msgid "Saisonniers, apprentis, associés"
+msgstr "Εποχικοί, μαθητευόμενοι, εταίροι"
+
+#: public/templates/public/home.html:285
+msgid "Conformité réglementaire"
+msgstr "Κανονιστική συμμόρφωση"
+
+#: public/templates/public/home.html:286
+msgid "Taxonomie EU, Plan Eau 2030"
+msgstr "Ταξινομία ΕΕ, Σχέδιο Νερού 2030"
+
+#: public/templates/public/home.html:291
+msgid "JEI, CIR, aides PAC"
+msgstr "JEI, CIR, ενισχύσεις ΚΑΠ"
+
+#: public/templates/public/home.html:295
+msgid "Météo et alertes"
+msgstr "Καιρός και ειδοποιήσεις"
+
+#: public/templates/public/home.html:296
+msgid "Gel, ETP, prévisions 7 jours"
+msgstr "Παγετός, ETP, πρόγνωση 7 ημερών"
+
+#: public/templates/public/home.html:309
+msgid "Simple et transparent."
+msgstr "Απλό και διαφανές."
+
+#: public/templates/public/home.html:315
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "par mois · par exploitation"
+msgstr "Η εκμετάλλευσή μου"
+
+#: public/templates/public/home.html:317
+msgid "Tous vos utilisateurs inclus — sans engagement"
+msgstr "Όλοι οι χρήστες σας περιλαμβάνονται — χωρίς δέσμευση"
+
+#: public/templates/public/home.html:322
+msgid "Assistant vocal illimité"
+msgstr "Απεριόριστος φωνητικός βοηθός"
+
+#: public/templates/public/home.html:323
+msgid "Tous les modules inclus"
+msgstr "Όλες οι ενότητες περιλαμβάνονται"
+
+#: public/templates/public/home.html:325
+msgid "Support réactif"
+msgstr "Άμεση υποστήριξη"
+
+#: public/templates/public/home.html:326
+msgid "Mises à jour automatiques"
+msgstr "Αυτόματες ενημερώσεις"
+
+#: public/templates/public/home.html:328
+msgid "Utilisateurs illimités par exploitation"
+msgstr "Απεριόριστοι χρήστες ανά εκμετάλλευση"
+
+#: public/templates/public/home.html:329
+msgid "Accès mobile et tablette"
+msgstr "Πρόσβαση από κινητό και tablet"
+
+#: public/templates/public/home.html:335
+msgid "S'abonner maintenant"
+msgstr "Εγγραφείτε τώρα"
+
+#: public/templates/public/home.html:337
+msgid "Paiement sécurisé par Stripe · Résiliation en 1 clic"
+msgstr "Ασφαλής πληρωμή μέσω Stripe · Ακύρωση με 1 κλικ"
+
+#: public/templates/public/home.html:347
+msgid "Guide gratuit"
+msgstr "Δωρεάν οδηγός"
+
+#: public/templates/public/home.html:349
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Lire ses analyses de sol"
+msgstr "Αναλύσεις εδάφους"
+
+#: public/templates/public/home.html:352
+msgid ""
+"Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre"
+" exploitation. Téléchargement immédiat."
+msgstr ""
+"Κατανοήστε τα αποτελέσματα των αναλύσεών σας και πάρτε τις σωστές αποφάσεις "
+"για την εκμετάλλευσή σας. Άμεση λήψη."
+
+#: public/templates/public/home.html:358
+msgid "pH & impact cultures"
+msgstr "pH & επίδραση στις καλλιέργειες"
+
+#: public/templates/public/home.html:362
+msgid "Matière organique"
+msgstr "Οργανική ουσία"
+
+#: public/templates/public/home.html:366
+msgid "N, P, K décryptés"
+msgstr "N, P, K αποκωδικοποιημένα"
+
+#: public/templates/public/home.html:370
+msgid "Recommandations concrètes"
+msgstr "Συγκεκριμένες συστάσεις"
+
+#: public/templates/public/home.html:378
+msgid "Recevoir le guide"
+msgstr "Λήψη του οδηγού"
+
+#: public/templates/public/home.html:381
+msgid "Aucun spam. Votre email ne sera jamais revendu."
+msgstr "Καθόλου spam. Το email σας δεν θα πωληθεί ποτέ."
+
+#: public/templates/public/home.html:390
+msgid "Questions fréquentes"
+msgstr "Συχνές ερωτήσεις"
+
+#: public/templates/public/home.html:396
+msgid "Holystyl peut-il vraiment m'aider à travailler moins ?"
+msgstr "Μπορεί πραγματικά το Holystyl να με βοηθήσει να δουλεύω λιγότερο;"
+
+#: public/templates/public/home.html:400
+#, python-format
+msgid ""
+"Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi"
+" de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
+"l'administratif — la priorité n°1 de 48 %% des agriculteurs."
+msgstr ""
+"Ναι. Αυτοματοποιώντας την ιχνηλασιμότητα, τις κανονιστικές αναφορές και την "
+"παρακολούθηση των αγροτεμαχίων σας, το Holystyl σας εξοικονομεί τις ώρες που"
+" περνάτε το βράδυ στη διοικητική εργασία — την προτεραιότητα Νο1 του 48 %% "
+"των αγροτών."
+
+#: public/templates/public/home.html:405
+msgid "Est-ce que l'assistant comprend mes questions techniques ?"
+msgstr "Καταλαβαίνει ο βοηθός τις τεχνικές ερωτήσεις μου;"
+
+#: public/templates/public/home.html:409
+msgid ""
+"Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
+"fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
+"l'écrit comme à la voix, 24h/24."
+msgstr ""
+"Ναι. Ο βοηθός AI είναι εξειδικευμένος για τη γεωργία: άρδευση, λίπανση (N, "
+"P, K), καιρός, νομοθεσία ή αναλύσεις εδάφους — γραπτά όπως και φωνητικά, "
+"24/7."
+
+#: public/templates/public/home.html:414
+msgid "Comment démarrer avec Holystyl ?"
+msgstr "Πώς να ξεκινήσω με το Holystyl;"
+
+#: public/templates/public/home.html:418
+msgid ""
+"Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à "
+"pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
+"équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
+"IoT) et est opérationnel le jour même, depuis votre smartphone ou "
+"ordinateur."
+msgstr ""
+"Δημιουργήστε τον λογαριασμό σας online σε 2 λεπτά. Ένας οδηγός ρύθμισης βήμα"
+" προς βήμα σας συνοδεύει για να προσθέσετε τα αγροτεμάχια, τις καλλιέργειες "
+"και την ομάδα σας. Το Holystyl συνδέεται με το σύστημα άρδευσής σας (Vyrsa, "
+"αισθητήρες IoT) και είναι λειτουργικό την ίδια ημέρα, από το smartphone ή "
+"τον υπολογιστή σας."
+
+#: public/templates/public/home.html:423
+msgid "Holystyl m'aide-t-il à réduire mes charges ?"
+msgstr "Με βοηθάει το Holystyl να μειώσω τις δαπάνες μου;"
+
+#: public/templates/public/home.html:427
+msgid ""
+"Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
+"réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
+"aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
+msgstr ""
+"Ναι. Ο οικονομικός πίνακας ελέγχου παρακολουθεί τις δαπάνες και τα περιθώριά"
+" σας σε πραγματικό χρόνο, εντοπίζει τα κονδύλια που βαραίνουν και σας βοηθά "
+"να αποφασίσετε. Διαχειρίζεστε επίσης τις ποσοστώσεις νερού και τον εξοπλισμό"
+" σας για να αποφύγετε τις περιττές δαπάνες."
+
+#: public/templates/public/home.html:432
+msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
+msgstr "Λειτουργεί η εφαρμογή χωρίς internet στο αγροτεμάχιο;"
+
+#: public/templates/public/home.html:436
+msgid ""
+"Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
+"réseau ; les données se synchronisent automatiquement dès que la connexion "
+"revient."
+msgstr ""
+"Ναι. Συμβουλεύεστε και καταχωρείτε τις επεμβάσεις σας στο πεδίο ακόμη και "
+"χωρίς δίκτυο· τα δεδομένα συγχρονίζονται αυτόματα μόλις επανέλθει η σύνδεση."
+
+#: public/templates/public/home.html:441
+msgid "Mes données m'appartiennent-elles ?"
+msgstr "Μου ανήκουν τα δεδομένα μου;"
+
+#: public/templates/public/home.html:445
+msgid ""
+"Absolument. Vos données vous appartiennent et restent confidentielles : "
+"hébergées en France, jamais revendues, exportables ou supprimables à tout "
+"moment."
+msgstr ""
+"Απολύτως. Τα δεδομένα σας ανήκουν σε εσάς και παραμένουν εμπιστευτικά: "
+"φιλοξενούμενα στη Γαλλία, ποτέ μη πωλούμενα, εξαγώγιμα ή διαγράψιμα ανά πάσα"
+" στιγμή."
+
+#: public/templates/public/home.html:463
+msgid ""
+"Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
+"Holystyl."
+msgstr ""
+"Έξυπνος βοηθός για αγροτικές εκμεταλλεύσεις. Σχεδιασμένος με το δίκτυο "
+"Holystyl."
+
+#: public/templates/public/home.html:478
+msgid "Accès"
+msgstr "Πρόσβαση"
+
+#: public/templates/public/home.html:481
+msgid "S'abonner"
+msgstr "Εγγραφή"
+
+#: public/templates/public/home.html:488
+msgid "© 2026 Holystyl · Tous droits réservés"
+msgstr "© 2026 Holystyl · Με την επιφύλαξη παντός δικαιώματος"
+
+#: public/templates/public/home.html:490
+msgid "Mentions légales"
+msgstr "Νομικές πληροφορίες"
+
+#: public/templates/public/home.html:492
+msgid "Confidentialité"
+msgstr "Απόρρητο"
+
+#: public/templates/public/home.html:493
+msgid "Registre transparence UE 238841"
+msgstr "Μητρώο διαφάνειας ΕΕ 238841"
+
+#: public/views.py:26
 msgid "Merci ! Votre guide arrive par email."
-msgstr ""
+msgstr "Ευχαριστούμε! Ο οδηγός σας έρχεται με email."
 
-msgid "Votre accès Holystyl est activé !"
-msgstr ""
+#: sondages/models.py:15
+msgid "question"
+msgstr "ερώτηση"
 
-msgid "Code invalide ou déjà utilisé."
-msgstr ""
+#: sondages/models.py:17
+msgid "clôturé"
+msgstr "κλειστό"
 
-msgid "Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
-msgstr ""
+#: sondages/models.py:20
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondage"
+msgstr "Δημοσκόπηση"
 
+#: sondages/models.py:21
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondages"
+msgstr "Δημοσκόπηση"
+
+#: sondages/models.py:48
+msgid "texte"
+msgstr "κείμενο"
+
+#: sondages/models.py:52 sondages/models.py:53
+#: sondages/templates/sondages/liste.html:27
+msgid "choix"
+msgstr "επιλογή"
+
+#: sondages/models.py:67
+msgid "vote"
+msgstr "ψήφος"
+
+#: sondages/models.py:68
+msgid "votes"
+msgstr "ψήφοι"
+
+#: sondages/templates/sondages/create.html:6
+#: sondages/templates/sondages/liste.html:10 sondages/views.py:45
+#: sondages/views.py:58
+msgid "Nouveau sondage"
+msgstr "Νέα δημοσκόπηση"
+
+#: sondages/templates/sondages/create.html:17
+msgid "Question"
+msgstr "Ερώτηση"
+
+#: sondages/templates/sondages/create.html:19
+msgid "Ex. Quelle parcelle irriguer en priorité ?"
+msgstr "Π.χ. Ποιο αγροτεμάχιο να αρδεύσω κατά προτεραιότητα;"
+
+#: sondages/templates/sondages/create.html:24
+#: sondages/templates/sondages/create.html:27
+#: sondages/templates/sondages/create.html:48
+msgid "Choix"
+msgstr "Επιλογές"
+
+#: sondages/templates/sondages/create.html:32
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter un choix"
+msgstr "Ενεργοποίηση κωδικού"
+
+#: sondages/templates/sondages/detail.html:7
+#: sondages/templates/sondages/liste.html:7 sondages/views.py:30
+#, fuzzy
+#| msgid "Sondage"
+msgid "Sondages"
+msgstr "Δημοσκόπηση"
+
+#: sondages/templates/sondages/detail.html:14
+#: sondages/templates/sondages/liste.html:21
+msgid "Clôturé"
+msgstr "Κλειστό"
+
+#: sondages/templates/sondages/detail.html:35
+#, python-format
+msgid "%(n)s vote au total"
+msgid_plural "%(n)s votes au total"
+msgstr[0] "%(n)s ψήφος συνολικά"
+msgstr[1] "%(n)s ψήφοι συνολικά"
+
+#: sondages/templates/sondages/detail.html:46
+msgid "Voter"
+msgstr "Ψηφίστε"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Rouvrir le sondage"
+msgstr "Επαναφορά δημοσκόπησης"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Clôturer le sondage"
+msgstr "Κλείσιμο δημοσκόπησης"
+
+#: sondages/templates/sondages/liste.html:23
+msgid "Voté"
+msgstr "Ψηφίστηκε"
+
+#: sondages/templates/sondages/liste.html:27
+#, python-format
+msgid "%(n)s vote"
+msgid_plural "%(n)s votes"
+msgstr[0] "%(n)s ψήφος"
+msgstr[1] "%(n)s ψήφοι"
+
+#: sondages/templates/sondages/liste.html:33
+msgid "Aucun sondage pour le moment. Créez-en un !"
+msgstr "Καμία δημοσκόπηση προς το παρόν. Δημιουργήστε μία!"
+
+#: sondages/views.py:40
+msgid "La question est obligatoire."
+msgstr "Η ερώτηση είναι υποχρεωτική."
+
+#: sondages/views.py:42
+msgid "Proposez au moins deux choix."
+msgstr "Προτείνετε τουλάχιστον δύο επιλογές."
+
+#: templates/partials/cookie_banner.html:6
+msgid ""
+"Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
+msgstr ""
+"Χρησιμοποιούμε cookies απαραίτητα για τη λειτουργία του Holystyl (ΓΚΠΔ)."
+
+#: templates/partials/cookie_banner.html:8
 msgid "J'ai compris"
-msgstr ""
+msgstr "Κατάλαβα"
 
+#: templates/partials/header.html:13
 msgid "Heure locale"
 msgstr "Τοπική ώρα"
 
-msgid "Langue"
-msgstr ""
-
+#: templates/partials/header.html:33
 msgid "Thème"
-msgstr ""
+msgstr "Θέμα"
 
+#: templates/partials/header.html:64
 msgid "Déconnexion"
-msgstr ""
+msgstr "Αποσύνδεση"
 
+#: templates/partials/install_banner.html:13
 msgid "Installer Holystyl"
-msgstr ""
+msgstr "Εγκατάσταση Holystyl"
 
+#: templates/partials/install_banner.html:15
 msgid "Partager puis « Sur l’écran d’accueil »."
-msgstr ""
+msgstr "Κοινοποίηση και μετά «Στην αρχική οθόνη»."
 
+#: templates/partials/install_banner.html:16
 msgid "Accédez plus vite depuis votre écran d’accueil."
-msgstr ""
+msgstr "Αποκτήστε πρόσβαση γρηγορότερα από την αρχική σας οθόνη."
 
-msgid "Télécharger l'app"
-msgstr ""
-
+#: templates/partials/install_banner.html:25
 msgid "Plus tard"
-msgstr ""
+msgstr "Αργότερα"
 
-msgid "Fermer"
-msgstr ""
+#: templates/partials/lang_switcher.html:27
+msgid "Langue"
+msgstr "Γλώσσα"
 
+#: templates/partials/nav_flyout.html:17
 msgid "Bientôt"
 msgstr "Σύντομα"
 
+#: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
-msgstr ""
+msgstr "Ας ξαναδώσουμε νόημα στο επάγγελμά μας"
+
+#~ msgid "Administration"
+#~ msgstr "Διαχείριση"
