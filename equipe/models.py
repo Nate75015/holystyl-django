@@ -12,6 +12,7 @@ from core.models import TimeStampedModel
 
 class TeamMember(TimeStampedModel):
     class Role(models.TextChoices):
+        ASSOCIE = "associe", _("Associé")
         CHEF = "chef", _("Chef d'équipe")
         OUVRIER = "ouvrier", _("Ouvrier")
         SAISONNIER = "saisonnier", _("Saisonnier")

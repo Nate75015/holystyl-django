@@ -2,22 +2,53 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6">
-  <h2 class="text-xl font-semibold">{% trans "Équipe" %}</h2>
+<section class="space-y-6" x-data="{ add: {% if form.errors %}true{% else %}false{% endif %} }">
+
+  <div class="flex items-center justify-between gap-4">
+    <h2 class="text-xl font-semibold">{% trans "Équipe" %}</h2>
+    <button type="button" @click="add = !add"
+            class="md-btn-primary px-4" style="background:#28738f;">
+      <span class="material-icons-round text-[18px]">person_add</span>{% trans "Ajouter un membre" %}
+    </button>
+  </div>
+
+  {# ── Formulaire d'ajout d'un membre ─────────────────────────────── #}
+  <div x-show="add" x-cloak class="md-card">
+    <h3 class="mb-4 text-lg font-semibold">{% trans "Ajouter un membre" %}</h3>
+
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+      {% include "equipe/_member_fields.html" %}
+
+      <div class="flex items-center justify-end gap-2 pt-1">
+        <button type="button" @click="add = false"
+                class="rounded-xl border-2 border-[#d6d3c8] px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-[#f4f2ec] dark:border-[#2a3f4d] dark:text-slate-300 dark:hover:bg-white/5">
+          {% trans "Annuler" %}
+        </button>
+        <button type="submit" class="md-btn-primary px-5" style="background:#28738f;">{% trans "Ajouter" %}</button>
+      </div>
+    </form>
+  </div>
+
+  {# ── Liste des membres ──────────────────────────────────────────── #}
   {% if members %}
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {% for m in members %}
         <div class="md-card flex items-center gap-3">
-          <span class="grid h-10 w-10 place-items-center rounded-full text-white" style="background: {{ m.color }}">{{ m.name|slice:":1"|upper }}</span>
-          <div class="min-w-0">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-white" style="background: {{ m.color }}">{{ m.name|slice:":1"|upper }}</span>
+          <div class="min-w-0 flex-1">
             <p class="font-medium">{{ m.name }} {% if m.is_online %}<span class="ml-1 inline-block h-2 w-2 rounded-full bg-green-500"></span>{% endif %}</p>
             <p class="truncate text-xs text-slate-400">{{ m.get_role_display }} · {{ m.phone|default:"—" }}</p>
           </div>
+          <a href="{% url 'equipe:membre_edit' m.pk %}" title="{% trans 'Modifier' %}"
+             class="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-slate-400 transition hover:bg-black/5 hover:text-[#28738f] dark:hover:bg-white/10">
+            <span class="material-icons-round text-[18px]">edit</span>
+          </a>
         </div>
       {% endfor %}
     </div>
   {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API." %}</p></div>
+    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucun membre d'équipe pour le moment. Cliquez sur « Ajouter un membre » pour commencer." %}</p></div>
   {% endif %}
 </section>
 {% endblock %}

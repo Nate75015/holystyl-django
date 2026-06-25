@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl space-y-6">
+
+  <div class="flex items-center gap-3">
+    <a href="{% url 'equipe:equipe' %}" title="{% trans 'Retour' %}"
+       class="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-slate-400 transition hover:bg-black/5 dark:hover:bg-white/10">
+      <span class="material-icons-round text-[20px]">arrow_back</span>
+    </a>
+    <h2 class="text-xl font-semibold">{% trans "Modifier le membre" %}</h2>
+  </div>
+
+  <div class="md-card">
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+      {% include "equipe/_member_fields.html" %}
+
+      <div class="flex items-center justify-end gap-2 pt-1">
+        <a href="{% url 'equipe:equipe' %}"
+           class="rounded-xl border-2 border-[#d6d3c8] px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-[#f4f2ec] dark:border-[#2a3f4d] dark:text-slate-300 dark:hover:bg-white/5">
+          {% trans "Annuler" %}
+        </a>
+        <button type="submit" class="md-btn-primary px-5" style="background:#28738f;">{% trans "Enregistrer" %}</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

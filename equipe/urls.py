@@ -6,6 +6,7 @@ app_name = "equipe"
 
 urlpatterns = [
     path("equipe/", views.equipe, name="equipe"),
+    path("equipe/<int:pk>/modifier/", views.membre_edit, name="membre_edit"),
     path("taches/", views.taches, name="taches"),
     path("mes-taches/", views.mes_taches, name="mes_taches"),
     path("localisation/<str:token>/", views.location_share, name="location_share"),
