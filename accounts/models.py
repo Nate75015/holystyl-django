@@ -14,6 +14,15 @@ class User(AbstractUser):
     email = models.EmailField(_("adresse email"), unique=True)
     full_name = models.CharField(_("nom complet"), max_length=255, blank=True)
 
+    # first_name / last_name sont hérités d'AbstractUser (prénom / nom).
+    birth_date = models.DateField(_("date de naissance"), null=True, blank=True)
+
+    # Adresse postale
+    address_number = models.CharField(_("n° de rue"), max_length=20, blank=True)
+    address_street = models.CharField(_("rue"), max_length=255, blank=True)
+    address_zip = models.CharField(_("code postal"), max_length=16, blank=True)
+    address_city = models.CharField(_("ville"), max_length=128, blank=True)
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
@@ -25,6 +34,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def save(self, *args, **kwargs):
+        # full_name reste la source d'affichage (display_name) : on le dérive
+        # du prénom + nom dès qu'ils sont renseignés.
+        derived = f"{self.first_name} {self.last_name}".strip()
+        if derived:
+            self.full_name = derived
+        super().save(*args, **kwargs)
 
     @property
     def display_name(self) -> str:
