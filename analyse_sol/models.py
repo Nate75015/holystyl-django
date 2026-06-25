@@ -1,7 +1,17 @@
 """Analyses de sol — analyses chimiques de sol par parcelle."""
 
 from django.db import models
+from django.utils import timezone
+from django.utils.text import get_valid_filename
 from django.utils.translation import gettext_lazy as _
+
+
+def document_upload_path(instance, filename):
+    """Range le document dans : analyses_sol/<parcelle>/<année>/<mois>/<fichier>."""
+    parcelle = getattr(instance.parcelle, "name", "") or "parcelle"
+    parcelle = get_valid_filename(parcelle) or "parcelle"
+    d = instance.date or timezone.now()
+    return f"analyses_sol/{parcelle}/{d:%Y}/{d:%m}/{get_valid_filename(filename)}"
 
 
 class AnalyseSol(models.Model):
@@ -18,7 +28,7 @@ class AnalyseSol(models.Model):
     matiere_organique = models.FloatField(null=True, blank=True)
     calcaire_total = models.FloatField(null=True, blank=True)
     laboratoire = models.CharField(max_length=255, blank=True)
-    document = models.FileField(_("document"), upload_to="analyses_sol/", null=True, blank=True)
+    document = models.FileField(_("document"), upload_to=document_upload_path, null=True, blank=True)
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

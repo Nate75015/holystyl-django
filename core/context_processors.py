@@ -75,7 +75,13 @@ def layout(request):
         {
             "label": _("Environnement"), "key": "environnement",
             "items": [
-                {"label": _("Laboratoire"), "url_name": "analyses:laboratoire", "icon": "science"},
+                {"label": _("Biodiversité"), "url_name": "environnement:biodiversite", "icon": "eco"},
+                {"label": _("Bilan eau"), "url_name": "environnement:bilan_eau", "icon": "water_drop"},
+                {"label": _("Bilan azoté"), "url_name": "environnement:bilan_azote", "icon": "science"},
+                {"label": _("Empreinte carbone"), "url_name": "environnement:empreinte_carbone", "icon": "cloud"},
+                {"label": _("Rapport environnemental"), "url_name": "environnement:rapport", "icon": "assessment"},
+                {"label": _("Santé végétale"), "url_name": "environnement:sante_vegetale", "icon": "local_florist"},
+                {"label": _("Taxonomie EU"), "url_name": "environnement:taxonomie", "icon": "fact_check"},
             ],
         },
         {
@@ -129,11 +135,15 @@ def layout(request):
     if user is not None and user.is_authenticated:
         unread_notifications = user.notifications.filter(read=False).count()
 
+    # Section ouverte par défaut dans le panneau latéral (jamais vide → toujours visible)
+    default_section = active_section or (nav_sections[0]["key"] if nav_sections else "")
+
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
         "nav_primary": nav_primary,
         "nav_sections": nav_sections,
         "active_section": active_section,
         "active_url_name": active_url_name,
+        "default_section": default_section,
         "unread_notifications": unread_notifications,
     }

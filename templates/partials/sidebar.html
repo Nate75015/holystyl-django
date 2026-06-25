@@ -12,7 +12,7 @@
   <nav class="flex-1 space-y-1 overflow-y-auto px-3 pb-4 pt-12">
     {% for section in nav_sections %}
       <button type="button"
-              @click="nav = nav === '{{ section.key }}' ? null : '{{ section.key }}'"
+              @click="nav = '{{ section.key }}'"
               class="sidebar-link flex w-full items-center justify-between"
               :class="nav === '{{ section.key }}' ? 'sidebar-link-active' : ''">
         <span>{{ section.label }}</span>

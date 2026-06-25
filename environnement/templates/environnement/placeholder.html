@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+  <div class="flex items-center gap-3">
+    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
+      <span class="material-icons-round text-[22px]">{{ icon }}</span>
+    </span>
+    <div>
+      <h2 class="text-xl font-semibold">{{ title }}</h2>
+      <p class="mt-0.5 text-sm text-slate-400">{{ desc }}</p>
+    </div>
+  </div>
+
+  <div class="md-card flex flex-col items-center justify-center py-16 text-center">
+    <span class="material-icons-round mb-3 text-[44px] text-slate-300 dark:text-slate-600">{{ icon }}</span>
+    <p class="font-medium">{% trans "Module en préparation" %}</p>
+    <p class="mt-1 max-w-md text-sm text-slate-400">{% trans "Cette section sera bientôt disponible." %}</p>
+  </div>
+</section>
+{% endblock %}

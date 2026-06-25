@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "analyse_sol",
     "meteo",
     "pac",
+    "environnement",
     "finances",
     "billing",
     "public",

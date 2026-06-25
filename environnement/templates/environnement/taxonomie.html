@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ modal: false }">
+
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-semibold">{% trans "Taxonomie EU" %}</h2>
+      <p class="mt-1 text-sm text-slate-400">{% trans "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)" %}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <form method="get" id="campagne-form">
+        <select name="campagne" onchange="document.getElementById('campagne-form').submit()"
+                class="rounded-full text-sm">
+          {% for a in annees %}<option value="{{ a }}" {% if a == campagne %}selected{% endif %}>{% trans "Campagne" %} {{ a }}</option>{% endfor %}
+        </select>
+      </form>
+      <button type="button" @click="modal = true"
+              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une fiche" %}
+      </button>
+    </div>
+  </div>
+
+  {# KPIs : part alignée #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Chiffre d'affaires aligné" %}</p>
+      <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ pct_ca }} %</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "CapEx aligné" %}</p>
+      <p class="mt-1 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ pct_capex }} %</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "OpEx aligné" %}</p>
+      <p class="mt-1 text-2xl font-bold text-orange-500 dark:text-orange-400">{{ pct_opex }} %</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Fiches alignées" %}</p>
+      <p class="mt-1 text-2xl font-bold">{{ nb_alignes }}<span class="text-base font-normal text-slate-400">/{{ nb_fiches }}</span></p>
+    </div>
+  </div>
+
+  {# Liste des fiches #}
+  {% if fiches %}
+    <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+          <tr>
+            <th class="px-4 py-3">{% trans "Activité" %}</th>
+            <th class="px-4 py-3">{% trans "Objectif" %}</th>
+            <th class="px-4 py-3">{% trans "Statut" %}</th>
+            <th class="px-4 py-3 text-right">CA (€)</th>
+            <th class="px-4 py-3 text-right">CapEx (€)</th>
+            <th class="px-4 py-3 text-right">OpEx (€)</th>
+            <th class="px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+          {% for f in fiches %}
+            <tr>
+              <td class="px-4 py-3 font-medium">{{ f.libelle }}{% if f.code_nace %} <span class="text-xs text-slate-400">· {{ f.code_nace }}</span>{% endif %}</td>
+              <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ f.get_objectif_display }}</td>
+              <td class="px-4 py-3">
+                {% if f.statut == 'aligne' %}<span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400">{% trans "Aligné" %}</span>
+                {% elif f.statut == 'eligible' %}<span class="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-400">{% trans "Éligible" %}</span>
+                {% else %}<span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-white/10 dark:text-slate-300">{% trans "Non éligible" %}</span>{% endif %}
+              </td>
+              <td class="px-4 py-3 text-right">{{ f.chiffre_affaires|default_if_none:"—" }}</td>
+              <td class="px-4 py-3 text-right">{{ f.capex|default_if_none:"—" }}</td>
+              <td class="px-4 py-3 text-right">{{ f.opex|default_if_none:"—" }}</td>
+              <td class="px-4 py-3 text-right">
+                <form method="post" action="{% url 'environnement:taxonomie_delete' f.pk %}" onsubmit="return confirm('{% trans "Supprimer cette fiche ?" %}')">
+                  {% csrf_token %}
+                  <button type="submit" class="text-slate-400 transition hover:text-red-500"><span class="material-icons-round text-[18px]">delete</span></button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="md-card flex flex-col items-center justify-center py-12 text-center">
+      <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">fact_check</span>
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Aucune fiche pour cette campagne." %}</p>
+      <button type="button" @click="modal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une fiche" %}
+      </button>
+    </div>
+  {% endif %}
+
+  <div class="flex items-start gap-2 rounded-xl bg-brand/5 px-3 py-2.5 text-xs text-slate-500 dark:bg-white/5 dark:text-slate-400">
+    <span class="material-icons-round text-[16px] text-brand">info</span>
+    <span>{% trans "Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs montrent la part alignée du CA, des CapEx et des OpEx." %}</span>
+  </div>
+
+  {# Modal : nouvelle fiche #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4">
+    <div @click.self="modal = false" class="flex max-h-full w-full max-w-2xl items-start justify-center">
+      <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Nouvelle fiche d'activité" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+        <form method="post" action="{% url 'environnement:taxonomie_create' %}" class="space-y-4">
+          {% csrf_token %}
+
+          <div class="grid grid-cols-2 gap-3">
+            <div class="col-span-2 sm:col-span-1">
+              <label class="mb-1 block text-sm font-medium">{% trans "Activité" %} <span class="text-red-500">*</span></label>
+              <input name="libelle" required placeholder="{% trans 'ex: Production de noix' %}"
+                     class="w-full rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Code NACE" %}</label>
+              <input name="code_nace" placeholder="ex: A1.25" class="w-full rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Campagne" %}</label>
+              <input name="campagne" type="number" value="{{ campagne }}" min="2020" max="2100" class="w-full rounded-lg text-sm">
+            </div>
+            <div class="col-span-2">
+              <label class="mb-1 block text-sm font-medium">{% trans "Objectif de contribution" %}</label>
+              <select name="objectif" class="w-full rounded-lg text-sm">
+                {% for value, label in objectifs %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+
+          {# Conditions d'alignement #}
+          <div class="rounded-xl border border-slate-200 p-3 dark:border-white/10">
+            <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "Conditions" %}</p>
+            <div class="space-y-2 text-sm">
+              <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="eligible" class="h-4 w-4 accent-brand">{% trans "Activité éligible (figure dans la Taxonomie)" %}</label>
+              <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="contribution" class="h-4 w-4 accent-brand">{% trans "Contribution substantielle vérifiée" %}</label>
+              <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="garanties" class="h-4 w-4 accent-brand">{% trans "Garanties minimales respectées" %}</label>
+            </div>
+          </div>
+
+          {# DNSH par objectif #}
+          <div class="rounded-xl border border-slate-200 p-3 dark:border-white/10">
+            <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "DNSH — ne nuit pas significativement à :" %}</p>
+            <p class="mb-2 text-xs text-slate-400">{% trans "À cocher pour les objectifs autres que celui de contribution." %}</p>
+            <div class="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+              {% for value, label in objectifs %}
+                <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="dnsh_{{ value }}" class="h-4 w-4 accent-brand">{{ label }}</label>
+              {% endfor %}
+            </div>
+          </div>
+
+          {# Données financières #}
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "CA (€)" %}</label>
+              <input name="chiffre_affaires" type="number" step="0.01" class="w-full rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">CapEx (€)</label>
+              <input name="capex" type="number" step="0.01" class="w-full rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">OpEx (€)</label>
+              <input name="opex" type="number" step="0.01" class="w-full rounded-lg text-sm">
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Justification" %}</label>
+            <textarea name="justification" rows="2" class="w-full rounded-lg text-sm"></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">{% trans "Ajouter" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

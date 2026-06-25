@@ -1,14 +1,11 @@
 {% load i18n %}
 {% comment %}Colonne « sous-menu de section » dans le flux : pousse le contenu vers la
 droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% endcomment %}
-<div x-show="nav" x-cloak
+<div x-cloak
      class="nav-flyout sticky top-0 z-20 h-screen w-56 shrink-0 overflow-y-auto border-r">
   {% for section in nav_sections %}
     <div x-show="nav === '{{ section.key }}'" class="p-4">
-      <div class="mb-2 flex items-center justify-between">
-        <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">{{ section.label }}</p>
-        <button type="button" @click="nav = null" class="text-slate-400 hover:text-slate-600" title="{% trans 'Fermer' %}">✕</button>
-      </div>
+      <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{{ section.label }}</p>
       {% for sub in section.items %}
         {% if sub.url_name %}
           <a href="{% url sub.url_name %}"
