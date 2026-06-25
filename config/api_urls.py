@@ -10,7 +10,6 @@ from administration.api import smtp_config, smtp_send_test, smtp_test
 from agronomie.api import CultureKcViewSet, FertigationViewSet, SaisonViewSet, TypeSolViewSet
 from analyses.api import AnalysisResultViewSet, BiodiversiteFicheViewSet
 from analyse_sol.api import AnalyseSolViewSet
-from billing.api import ActivationActivateView, ActivationVerifyView, SubscriptionListView
 from equipe.api import TaskViewSet, TeamMemberViewSet
 from finances.api import (
     BilanView,
@@ -123,10 +122,6 @@ urlpatterns = [
     path("ai/reports/", AiReportListView.as_view(), name="api-ai-reports"),
     # Bilan ROI
     path("bilan/", BilanView.as_view(), name="api-bilan"),
-    # Billing / activation
-    path("activation/verify/", ActivationVerifyView.as_view(), name="api-activation-verify"),
-    path("activation/activate/", ActivationActivateView.as_view(), name="api-activation-activate"),
-    path("subscriptions/", SubscriptionListView.as_view(), name="api-subscriptions"),
     # Administration SMTP
     path("admin/smtp/", smtp_config, name="api-smtp-config"),
     path("admin/smtp/test/", smtp_test, name="api-smtp-test"),

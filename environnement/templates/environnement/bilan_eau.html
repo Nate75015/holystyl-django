@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-semibold">{% trans "Bilan Eau" %}</h2>
+      <p class="mt-1 text-sm text-slate-400">{% trans "Consommation d'eau d'irrigation · Sessions réelles" %}</p>
+    </div>
+    <a href="{% url 'environnement:bilan_eau_export' %}"
+       class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium transition hover:border-brand hover:text-brand dark:border-white/10">
+      <span class="material-icons-round text-[18px]">download</span>{% trans "Export" %}
+    </a>
+  </div>
+
+  {# KPIs #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Irrigation totale" %}</p>
+      <p class="mt-1 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ total_m3 }} m³</p>
+      <p class="text-xs text-slate-400">{% trans "cumul des sessions" %}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Sessions" %}</p>
+      <p class="mt-1 text-2xl font-bold">{{ nb_sessions }}</p>
+      <p class="text-xs text-slate-400">{% trans "sessions enregistrées" %}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Quota utilisé" %}</p>
+      <p class="mt-1 text-2xl font-bold {% if pct_quota > 90 %}text-red-500{% else %}text-emerald-600 dark:text-emerald-400{% endif %}">{{ pct_quota }}%</p>
+      <p class="text-xs text-slate-400">{{ quota_display }} m³ {% trans "alloués" %}</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <p class="text-xs text-slate-400">{% trans "Coût eau" %}</p>
+      <p class="mt-1 text-2xl font-bold text-orange-500 dark:text-orange-400">{{ cout }} €</p>
+      <p class="text-xs text-slate-400">{{ prix_m3 }} €/m³ {% trans "estimé" %}</p>
+    </div>
+  </div>
+
+  {# Consommation mensuelle #}
+  <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+    <h3 class="mb-3 text-sm font-semibold">{% trans "Consommation mensuelle (m³)" %}</h3>
+    {% if monthly_chart.labels %}
+      {{ monthly_chart|json_script:"be-monthly" }}
+      <div class="h-56"><canvas id="chart-monthly"></canvas></div>
+    {% else %}
+      <p class="py-10 text-center text-sm text-slate-400">{% trans "Aucune session d'irrigation enregistrée" %}</p>
+    {% endif %}
+  </div>
+
+  {# Consommation quotidienne par parcelle (un graphe par parcelle) #}
+  <div>
+    <h3 class="mb-2 text-sm font-semibold">{% trans "Consommation par parcelle (m³/jour)" %}</h3>
+    {% if parcelle_charts %}
+      {{ parcelle_charts|json_script:"be-parcelles" }}
+      <div class="grid gap-3 sm:grid-cols-2">
+        {% for pc in parcelle_charts %}
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+            <div class="mb-2 flex items-baseline justify-between">
+              <p class="font-medium">{{ pc.nom }}</p>
+              <p class="text-sm text-slate-400">{{ pc.total }} m³</p>
+            </div>
+            {% if pc.labels %}
+              <div class="h-44"><canvas id="chart-parc-{{ forloop.counter0 }}"></canvas></div>
+            {% else %}
+              <p class="py-10 text-center text-xs text-slate-400">{% trans "Aucune session d'irrigation" %}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% elif has_parcelles %}
+      <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <p class="py-6 text-center text-sm text-slate-400">{% trans "Aucune session d'irrigation enregistrée pour vos parcelles." %}</p>
+      </div>
+    {% else %}
+      <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <p class="py-6 text-center text-sm text-slate-400">{% trans "Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation par parcelle." %}</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}{{ block.super }}
+<script>
+  (function () {
+    if (typeof Chart === 'undefined') return;
+    function opts() {
+      return {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { maxTicksLimit: 8, font: { size: 10 } }, grid: { display: false } },
+          y: { beginAtZero: true, ticks: { maxTicksLimit: 6, font: { size: 10 } } }
+        }
+      };
+    }
+    function mkBar(canvas, labels, data, color) {
+      new Chart(canvas, {
+        type: 'bar',
+        data: { labels: labels, datasets: [{ data: data, backgroundColor: color, borderRadius: 6, maxBarThickness: 40 }] },
+        options: opts()
+      });
+    }
+    // Mensuel
+    var mel = document.getElementById('be-monthly'), mc = document.getElementById('chart-monthly');
+    if (mel && mc) { var m = JSON.parse(mel.textContent); mkBar(mc, m.labels, m.data, '#3b82f6'); }
+    // Un graphe par parcelle (m³/jour)
+    var pel = document.getElementById('be-parcelles');
+    if (pel) {
+      JSON.parse(pel.textContent).forEach(function (pc, i) {
+        var c = document.getElementById('chart-parc-' + i);
+        if (c) mkBar(c, pc.labels, pc.data, '#0ea5e9');
+      });
+    }
+  })();
+</script>
+{% endblock %}

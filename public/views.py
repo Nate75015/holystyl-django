@@ -1,4 +1,4 @@
-"""Vues publiques : landing SEO, lead magnet, activation, chat Alex."""
+"""Vues publiques : landing SEO, lead magnet, chat Alex."""
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,9 +7,6 @@ from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-
-from billing.services import activate_code
-from exploitations.models import Exploitation
 
 from .services import alex_chat, capture_lead
 
@@ -42,16 +39,3 @@ def alex(request):
         payload = {}
     answer = alex_chat(payload.get("messages", []))
     return JsonResponse({"response": answer})
-
-
-@login_required
-def activer(request):
-    """Page d'activation : saisie d'un code post-paiement."""
-    if request.method == "POST":
-        code = request.POST.get("code", "").strip()
-        exploitation = Exploitation.objects.filter(owner=request.user).first()
-        if activate_code(code, request.user, exploitation):
-            messages.success(request, _("Votre accès Holystyl est activé !"))
-            return redirect("core:dashboard")
-        messages.error(request, _("Code invalide ou déjà utilisé."))
-    return render(request, "public/activer.html", {"page_title": _("Activer mon compte")})

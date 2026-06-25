@@ -97,8 +97,6 @@ def layout(request):
             "label": _("Mon compte"), "key": "compte",
             "items": [
                 {"label": _("Mon exploitation"), "url_name": "exploitations:settings", "icon": "home_work"},
-                {"label": _("Activer un code"), "url_name": "public:activer", "icon": "vpn_key"},
-                {"label": _("Administration"), "url_name": "administration:admin_panel", "icon": "settings"},
             ],
         },
     ]
