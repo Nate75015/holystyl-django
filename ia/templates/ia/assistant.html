@@ -1,31 +1,55 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block content %}
-<section class="mx-auto flex h-[calc(100vh-9rem)] max-w-5xl gap-4" x-data="assistant()">
+{% block main_padding %}{% endblock %}
 
-  {# Barre latérale : conversations passées #}
-  <aside class="hidden w-60 shrink-0 flex-col md:flex">
-    <a href="?new"
-       class="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand px-3 py-2 text-sm font-medium text-white transition hover:opacity-90">
-      <span class="material-icons-round text-[16px]">add</span>{% trans "Nouvelle conversation" %}
-    </a>
-    <p class="mt-4 px-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "Conversations" %}</p>
-    <div class="mt-1 flex-1 space-y-0.5 overflow-y-auto">
-      {% for c in conversations %}
-        <a href="?thread={{ c.thread }}"
-           class="block rounded-lg px-3 py-2 transition hover:bg-black/5 dark:hover:bg-white/10 {% if c.thread == current_thread %}bg-black/5 dark:bg-white/10{% endif %}">
-          <p class="truncate text-sm font-medium">{{ c.title }}</p>
-          <p class="text-[11px] text-slate-400">{{ c.last|date:"d/m H:i" }}</p>
+{% block content %}
+<section class="flex h-[calc(100vh-3.25rem)] w-full" x-data="assistant()">
+
+  {% comment %}Rail latéral repliable (façon Claude) : fin par défaut, se déplie au
+  survol en panneau flottant qui recouvre le chat sans le décaler. Collé au nav
+  blanc et au bord supérieur, sans coin arrondi.{% endcomment %}
+  <aside class="relative hidden w-14 shrink-0 md:block"
+         x-data="{ open: false }"
+         @mouseenter="open = true" @mouseleave="open = false">
+    <div class="absolute inset-y-0 left-0 z-20 flex flex-col overflow-hidden border-r border-slate-200 bg-[#fafaf7] transition-all duration-200 ease-out dark:border-white/10 dark:bg-[#0b1620]"
+         :class="open ? 'w-64 shadow-xl' : 'w-14'">
+
+      {# Actions (icônes alignées à gauche, collées au nav blanc) #}
+      <div class="flex flex-col gap-0.5 py-2">
+        {# Nouvelle conversation #}
+        <a href="?new" title="{% trans 'Nouvelle conversation' %}"
+           class="flex items-center gap-3 rounded-xl py-2 pl-1.5 pr-2 transition hover:bg-black/5 dark:hover:bg-white/10">
+          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-white">
+            <span class="material-icons-round text-[18px]">add</span>
+          </span>
+          <span x-show="open" x-cloak class="whitespace-nowrap text-sm font-medium">{% trans "Nouvelle conversation" %}</span>
         </a>
-      {% empty %}
-        <p class="px-3 py-2 text-xs text-slate-400">{% trans "Aucune conversation." %}</p>
-      {% endfor %}
+        {# En-tête historique #}
+        <div class="flex items-center gap-3 rounded-xl py-2 pl-1.5 pr-2 text-slate-400">
+          <span class="grid h-7 w-7 shrink-0 place-items-center"><span class="material-icons-round text-[20px]">forum</span></span>
+          <span x-show="open" x-cloak class="whitespace-nowrap text-xs font-semibold uppercase tracking-wide">{% trans "Conversations" %}</span>
+        </div>
+      </div>
+
+      {# Liste des conversations — apparaît au dépliage #}
+      <div class="flex-1 space-y-0.5 overflow-y-auto pb-2 pl-1.5 pr-2 transition-opacity duration-150"
+           x-show="open" x-cloak>
+        {% for c in conversations %}
+          <a href="?thread={{ c.thread }}"
+             class="block rounded-lg px-2.5 py-2 transition hover:bg-black/5 dark:hover:bg-white/10 {% if c.thread == current_thread %}bg-black/5 dark:bg-white/10{% endif %}">
+            <p class="truncate text-sm font-medium">{{ c.title }}</p>
+            <p class="text-[11px] text-slate-400">{{ c.last|date:"d/m H:i" }}</p>
+          </a>
+        {% empty %}
+          <p class="px-2.5 py-2 text-xs text-slate-400">{% trans "Aucune conversation." %}</p>
+        {% endfor %}
+      </div>
     </div>
   </aside>
 
   {# Colonne principale (chat) #}
-  <div class="flex flex-1 flex-col">
+  <div class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-24 pt-6 lg:px-8 lg:pb-6">
 
   <div class="mb-3 flex items-center justify-end md:hidden">
     <a href="?new"
