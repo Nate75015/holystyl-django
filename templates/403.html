@@ -1,0 +1,6 @@
+{% extends "errors/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Accès refusé" %}{% endblock %}
+{% block code %}403{% endblock %}
+{% block heading %}{% trans "Accès refusé" %}{% endblock %}
+{% block message %}{% trans "Vous n'avez pas l'autorisation d'accéder à cette page." %}{% endblock %}

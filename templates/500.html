@@ -1,0 +1,6 @@
+{% extends "errors/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Erreur interne" %}{% endblock %}
+{% block code %}500{% endblock %}
+{% block heading %}{% trans "Une erreur est survenue" %}{% endblock %}
+{% block message %}{% trans "Le problème vient de notre côté. Réessayez dans un instant — si cela persiste, contactez le support." %}{% endblock %}
