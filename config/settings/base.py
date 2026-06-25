@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Tiers
     "rest_framework",
     "channels",
+    "satkaar_agenda",  # moteur de calendrier (Event/RRULE) — backend du planning
     # Apps métier Holystyl (ajoutées au fil des tranches)
     "core",
     "accounts",
