@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 11:16+0200\n"
+"POT-Creation-Date: 2026-06-25 17:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,2011 +17,3684 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: accounts/admin.py:17
+
+#: accounts/admin.py:17 exploitations/views.py:61
 msgid "Identité"
-msgstr ""
+msgstr "Identidade"
 
 #: accounts/admin.py:18
 msgid "Permissions"
-msgstr ""
+msgstr "Permissões"
 
 #: accounts/admin.py:19
 msgid "Dates"
-msgstr ""
+msgstr "Datas"
 
 #: accounts/forms.py:15
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: accounts/forms.py:23
 msgid "Nom complet"
-msgstr ""
+msgstr "Nome completo"
 
 #: accounts/models.py:14
 msgid "adresse email"
-msgstr ""
+msgstr "endereço de email"
 
 #: accounts/models.py:15
 msgid "nom complet"
-msgstr ""
+msgstr "nome completo"
 
 #: accounts/models.py:23
 msgid "utilisateur"
-msgstr ""
+msgstr "utilizador"
 
 #: accounts/models.py:24
 msgid "utilisateurs"
-msgstr ""
+msgstr "utilizadores"
 
 #: accounts/templates/accounts/login.html:3
 #: accounts/templates/accounts/login.html:12
+#: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
-msgstr "Entrar"
+msgstr "Iniciar sessão"
 
 #: accounts/templates/accounts/login.html:23
 #: accounts/templates/accounts/register.html:26
-#: public/templates/public/home.html:18
 msgid "Se connecter"
-msgstr "Iniciar sessão"
+msgstr "Entrar"
 
 #: accounts/templates/accounts/login.html:26
 msgid "Pas de compte ?"
-msgstr ""
+msgstr "Não tem conta?"
 
 #: accounts/templates/accounts/login.html:26
 #: accounts/templates/accounts/register.html:3
 #: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
-msgstr ""
+msgstr "Criar uma conta"
 
 #: accounts/templates/accounts/register.html:23
+#: public/templates/public/home.html:25
 msgid "S'inscrire"
-msgstr "Registar"
+msgstr "Registar-se"
 
 #: accounts/templates/accounts/register.html:26
 msgid "Déjà un compte ?"
-msgstr ""
+msgstr "Já tem conta?"
 
 #: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
-msgstr ""
+msgstr "Erro"
 
 #: administration/models.py:31
 msgid "configuration SMTP"
-msgstr ""
+msgstr "configuração SMTP"
 
 #: administration/models.py:32
 msgid "configurations SMTP"
-msgstr ""
+msgstr "configurações SMTP"
 
-#: administration/templates/administration/admin.html:6
-msgid "Administration — Email (SMTP)"
-msgstr ""
-
-#: administration/templates/administration/admin.html:10
-msgid "Serveur"
-msgstr ""
-
-#: administration/templates/administration/admin.html:11
-msgid "Port"
-msgstr ""
-
-#: administration/templates/administration/admin.html:14 ia/models.py:13
-msgid "Utilisateur"
-msgstr ""
-
-#: administration/templates/administration/admin.html:15
-msgid "Mot de passe"
-msgstr ""
-
-#: administration/templates/administration/admin.html:18
-msgid "Nom expéditeur"
-msgstr ""
-
-#: administration/templates/administration/admin.html:19
-msgid "Email expéditeur"
-msgstr ""
-
-#: administration/templates/administration/admin.html:21
-msgid "SSL (port 465)"
-msgstr ""
-
-#: administration/templates/administration/admin.html:22
-msgid "Activé"
-msgstr ""
-
-#: administration/templates/administration/admin.html:25
-msgid "Dernier test"
-msgstr ""
-
-#: administration/templates/administration/admin.html:28
-#: exploitations/templates/exploitations/settings.html:23
-#: parcelles/templates/parcelles/form.html:97
-msgid "Enregistrer"
-msgstr "Guardar"
-
-#: administration/views.py:32
-msgid "Configuration SMTP enregistrée."
-msgstr ""
-
-#: administration/views.py:35 core/context_processors.py:78
-msgid "Administration"
-msgstr "Administração"
-
-#: agronomie/models.py:16
+#: agronomie/models.py:16 agronomie/templates/agronomie/cultures.html:16
 msgid "Céréales"
-msgstr ""
+msgstr "Cereais"
 
-#: agronomie/models.py:17
+#: agronomie/models.py:17 agronomie/templates/agronomie/cultures.html:17
 msgid "Légumes"
-msgstr ""
+msgstr "Legumes"
 
-#: agronomie/models.py:18
+#: agronomie/models.py:18 agronomie/templates/agronomie/cultures.html:18
 msgid "Fruits"
-msgstr ""
+msgstr "Frutas"
 
-#: agronomie/models.py:19
+#: agronomie/models.py:19 agronomie/templates/agronomie/cultures.html:19
 msgid "Vigne"
-msgstr ""
+msgstr "Vinha"
 
-#: agronomie/models.py:20
+#: agronomie/models.py:20 agronomie/templates/agronomie/cultures.html:20
 msgid "Oléagineux"
-msgstr ""
+msgstr "Oleaginosas"
 
-#: agronomie/models.py:21
+#: agronomie/models.py:21 agronomie/templates/agronomie/cultures.html:21
 msgid "Fourrage"
-msgstr ""
+msgstr "Forragem"
 
-#: agronomie/models.py:22
+#: agronomie/models.py:22 agronomie/templates/agronomie/cultures.html:22
 msgid "Maraîchage"
-msgstr ""
+msgstr "Horticultura"
 
-#: agronomie/models.py:23 finances/models.py:24 finances/models.py:50
-#: operations/models.py:21 operations/models.py:93 operations/models.py:148
-#: operations/models.py:180 operations/models.py:213 planning/models.py:110
+#: agronomie/models.py:23 exploitations/models.py:21 exploitations/models.py:34
+#: finances/models.py:24 finances/models.py:50 interventions/models.py:26
+#: operations/models.py:21 operations/models.py:87 operations/models.py:119
+#: operations/models.py:152 pac/models.py:18 planning/models.py:110
 #: planning/models.py:150 planning/models.py:214
 msgid "Autre"
-msgstr ""
+msgstr "Outro"
 
-#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:104
-#: equipe/models.py:22 exploitations/models.py:20 iot/models.py:40
+#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:107
+#: agronomie/models.py:132 equipe/models.py:22 exploitations/models.py:42
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:17
 #: operations/models.py:30 parcelles/models.py:31
 msgid "nom"
-msgstr ""
+msgstr "nome"
 
 #: agronomie/models.py:26
 msgid "nom scientifique"
-msgstr ""
+msgstr "nome científico"
 
 #: agronomie/models.py:39
 msgid "culture (Kc)"
-msgstr ""
+msgstr "cultura (Kc)"
 
 #: agronomie/models.py:40
 msgid "cultures (Kc)"
-msgstr ""
+msgstr "culturas (Kc)"
 
-#: agronomie/models.py:51
+#: agronomie/models.py:51 agronomie/templates/agronomie/types_sol.html:16
 msgid "Sableux"
-msgstr ""
+msgstr "Arenoso"
 
-#: agronomie/models.py:52
+#: agronomie/models.py:52 agronomie/templates/agronomie/types_sol.html:17
 msgid "Limoneux"
-msgstr ""
+msgstr "Limoso"
 
-#: agronomie/models.py:53
+#: agronomie/models.py:53 agronomie/templates/agronomie/types_sol.html:18
 msgid "Argileux"
-msgstr ""
+msgstr "Argiloso"
 
-#: agronomie/models.py:54
+#: agronomie/models.py:54 agronomie/templates/agronomie/types_sol.html:19
 msgid "Limon argileux"
-msgstr ""
+msgstr "Limo argiloso"
 
-#: agronomie/models.py:55
+#: agronomie/models.py:55 agronomie/templates/agronomie/types_sol.html:20
 msgid "Sablo-limoneux"
-msgstr ""
+msgstr "Areno-limoso"
 
-#: agronomie/models.py:56
+#: agronomie/models.py:56 agronomie/templates/agronomie/types_sol.html:21
 msgid "Argilo-limoneux"
-msgstr ""
+msgstr "Argilo-limoso"
 
 #: agronomie/models.py:60
 msgid "capacité de rétention (mm)"
-msgstr ""
+msgstr "capacidade de retenção (mm)"
 
-#: agronomie/models.py:61
+#: agronomie/models.py:61 agronomie/templates/agronomie/types_sol.html:108
 msgid "pH typique"
-msgstr ""
+msgstr "pH típico"
 
 #: agronomie/models.py:67 parcelles/models.py:60
 msgid "type de sol"
-msgstr ""
+msgstr "tipo de solo"
 
-#: agronomie/models.py:68
+#: agronomie/models.py:68 agronomie/templates/agronomie/types_sol.html:128
 msgid "types de sol"
-msgstr ""
+msgstr "tipos de solo"
 
 #: agronomie/models.py:91
 msgid "fertigation"
-msgstr ""
+msgstr "fertirrigação"
 
 #: agronomie/models.py:92
 msgid "fertigations"
-msgstr ""
+msgstr "fertirrigações"
 
-#: agronomie/models.py:105
-msgid "date de début"
-msgstr ""
+#: agronomie/models.py:108
+msgid "type"
+msgstr "tipo"
 
-#: agronomie/models.py:106
-msgid "date de fin"
-msgstr ""
+#: agronomie/models.py:109
+msgid "N %"
+msgstr "N %"
 
-#: agronomie/models.py:107 agronomie/templates/agronomie/saisons.html:12
-msgid "active"
-msgstr ""
+#: agronomie/models.py:110
+msgid "P %"
+msgstr "P %"
 
 #: agronomie/models.py:111
-msgid "saison"
-msgstr ""
+msgid "K %"
+msgstr "K %"
 
 #: agronomie/models.py:112
+msgid "solubilité"
+msgstr "solubilidade"
+
+#: agronomie/models.py:113
+msgid "effet pH"
+msgstr "efeito pH"
+
+#: agronomie/models.py:116 agronomie/models.py:117
+msgid "engrais"
+msgstr "fertilizante"
+
+#: agronomie/models.py:133
+msgid "date de début"
+msgstr "data de início"
+
+#: agronomie/models.py:134
+msgid "date de fin"
+msgstr "data de fim"
+
+#: agronomie/models.py:135 agronomie/templates/agronomie/saisons.html:12
+msgid "active"
+msgstr "ativa"
+
+#: agronomie/models.py:139
+msgid "saison"
+msgstr "época"
+
+#: agronomie/models.py:140
 msgid "saisons"
-msgstr ""
+msgstr "épocas"
 
-#: agronomie/templates/agronomie/cultures_kc.html:6
-msgid "Cultures & coefficients Kc"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:15
+#: agronomie/templates/agronomie/types_sol.html:15
+#: interventions/templates/interventions/interventions.html:82
+msgid "Toutes"
+msgstr "Todas"
 
-#: agronomie/templates/agronomie/cultures_kc.html:12
-#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:33
-#: parcelles/templates/parcelles/form.html:38
-#: parcelles/templates/parcelles/list.html:22
-msgid "Culture"
-msgstr ""
-
-#: agronomie/templates/agronomie/cultures_kc.html:13
-#: finances/templates/finances/charges.html:14
-msgid "Catégorie"
-msgstr ""
-
-#: agronomie/templates/agronomie/cultures_kc.html:17
-msgid "Source"
-msgstr ""
-
-#: agronomie/templates/agronomie/cultures_kc.html:35
-msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
-msgstr ""
-
-#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:34
-#: core/context_processors.py:37
-msgid "Saisons"
-msgstr "Estações"
-
-#: agronomie/templates/agronomie/saisons.html:19
-msgid "Aucune saison définie."
-msgstr ""
-
-#: agronomie/templates/agronomie/types_sol.html:6 agronomie/views.py:26
-#: core/context_processors.py:36
-msgid "Types de sol"
-msgstr "Tipos de solo"
-
-#: agronomie/templates/agronomie/types_sol.html:14
-msgid "Rétention"
-msgstr ""
-
-#: agronomie/templates/agronomie/types_sol.html:21
-msgid "Aucun type de sol. Ajoutez-en via l'admin."
-msgstr ""
-
-#: agronomie/views.py:17 core/context_processors.py:35
+#: agronomie/templates/agronomie/cultures.html:35 agronomie/views.py:46
 msgid "Cultures & Kc"
-msgstr ""
+msgstr "Növények & Kc"
 
-#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
-msgid "Sol"
-msgstr ""
-
-#: analyses/models.py:15 finances/models.py:18
-#: finances/templates/finances/subvention_pdf.html:31
-msgid "Eau"
-msgstr ""
-
-#: analyses/models.py:16
-msgid "Foliaire"
-msgstr ""
-
-#: analyses/models.py:17
-msgid "Plante"
-msgstr ""
-
-#: analyses/models.py:20
-msgid "OCR en attente"
-msgstr ""
-
-#: analyses/models.py:21
-msgid "OCR effectué"
-msgstr ""
-
-#: analyses/models.py:22 planning/models.py:261
-msgid "Validé"
-msgstr ""
-
-#: analyses/models.py:45
-msgid "rapport d'analyse"
-msgstr ""
-
-#: analyses/models.py:46
-msgid "rapports d'analyse"
-msgstr ""
-
-#: analyses/models.py:68
-msgid "analyse de sol"
-msgstr ""
-
-#: analyses/models.py:69
-msgid "analyses de sol"
-msgstr ""
-
-#: analyses/models.py:87
-msgid "fiche biodiversité"
-msgstr ""
-
-#: analyses/models.py:88
-msgid "fiches biodiversité"
-msgstr ""
-
-#: analyses/templates/analyses/analyses_sol.html:6 analyses/views.py:27
-#: core/context_processors.py:46
-msgid "Analyses de sol"
-msgstr "Análises de solo"
-
-#: analyses/templates/analyses/analyses_sol.html:19
-#: analyses/templates/analyses/laboratoire.html:12
-msgid "Labo"
-msgstr ""
-
-#: analyses/templates/analyses/analyses_sol.html:25
-msgid "Aucune analyse de sol."
-msgstr ""
-
-#: analyses/templates/analyses/laboratoire.html:6 analyses/views.py:20
-#: core/context_processors.py:45
-msgid "Laboratoire"
-msgstr "Laboratório"
-
-#: analyses/templates/analyses/laboratoire.html:7
-msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
-msgstr ""
-
-#: analyses/templates/analyses/laboratoire.html:12
-#: iot/templates/iot/capteurs.html:13
-#: parcelles/templates/parcelles/detail.html:30
-#: planning/templates/planning/bon_intervention.html:16
-msgid "Type"
-msgstr ""
-
-#: analyses/templates/analyses/laboratoire.html:12
-#: finances/templates/finances/charges.html:14
-msgid "Date"
-msgstr ""
-
-#: analyses/templates/analyses/laboratoire.html:12
-#: finances/templates/finances/facturation.html:11
-#: iot/templates/iot/capteurs.html:16
-#: parcelles/templates/parcelles/list.html:25
-msgid "Statut"
-msgstr ""
-
-#: analyses/templates/analyses/laboratoire.html:29
-msgid "Aucun rapport. Importez un PDF via l'API (extraction Gemini)."
-msgstr ""
-
-#: billing/models.py:13 equipe/models.py:92 finances/models.py:116
-#: iot/models.py:90
-msgid "En attente"
-msgstr ""
-
-#: billing/models.py:14
-msgid "Utilisé"
-msgstr ""
-
-#: billing/models.py:15
-msgid "Expiré"
-msgstr ""
-
-#: billing/models.py:16 billing/models.py:43 irrigation/models.py:163
-#: planning/models.py:33
-msgid "Annulé"
-msgstr ""
-
-#: billing/models.py:31
-msgid "code d'activation"
-msgstr ""
-
-#: billing/models.py:32
-msgid "codes d'activation"
-msgstr ""
-
-#: billing/models.py:41 irrigation/models.py:161
-msgid "Actif"
-msgstr ""
-
-#: billing/models.py:42
-msgid "Impayé"
-msgstr ""
-
-#: billing/models.py:44
-msgid "Essai"
-msgstr ""
-
-#: billing/models.py:45
-msgid "Non payé"
-msgstr ""
-
-#: billing/models.py:58
-msgid "abonnement"
-msgstr ""
-
-#: billing/models.py:59
-msgid "abonnements"
-msgstr ""
-
-#: core/context_processors.py:15
-msgid "Pulse"
-msgstr ""
-
-#: core/context_processors.py:16 core/context_processors.py:34
-#: core/templates/core/dashboard.html:25
-#: finances/templates/finances/subvention_pdf.html:47
-#: parcelles/templates/parcelles/list.html:7 parcelles/views.py:27
-msgid "Parcelles"
-msgstr "Parcelas"
-
-#: core/context_processors.py:17 core/context_processors.py:26
-#: finances/templates/finances/subvention_pdf.html:49
-#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:20
-#: operations/models.py:79 operations/models.py:178
-#: parcelles/templates/parcelles/detail.html:28
-#: parcelles/templates/parcelles/form.html:66
-#: parcelles/templates/parcelles/list.html:24
-msgid "Irrigation"
-msgstr "Irrigação"
-
-#: core/context_processors.py:18 core/context_processors.py:28
-msgid "Capteurs"
-msgstr "Sensores"
-
-#: core/context_processors.py:19 ia/models.py:14
-msgid "Assistant"
-msgstr "Assistente"
-
-#: core/context_processors.py:23
-msgid "Pilotage hydrique"
-msgstr ""
-
-#: core/context_processors.py:25 iot/templates/iot/regie.html:7 iot/views.py:28
-msgid "Régie SCADA"
-msgstr ""
-
-#: core/context_processors.py:27
-msgid "Bassinage"
-msgstr "Aspersão antigeada"
-
-#: core/context_processors.py:32
-msgid "Cultures & Terrain"
-msgstr ""
-
-#: core/context_processors.py:41
-msgid "Opérations & Analyses"
-msgstr ""
-
-#: core/context_processors.py:43
-#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
-msgid "Parc matériel"
-msgstr "Equipamento"
-
-#: core/context_processors.py:44
-#: operations/templates/operations/interventions.html:6 operations/views.py:27
-msgid "Interventions"
-msgstr "Intervenções"
-
-#: core/context_processors.py:50
-msgid "Économie"
-msgstr ""
-
-#: core/context_processors.py:52
-#: finances/templates/finances/bilan_economique.html:16
-#: finances/templates/finances/charges.html:7
-#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
-msgid "Charges"
-msgstr "Despesas"
-
-#: core/context_processors.py:53
-#: finances/templates/finances/bilan_economique.html:7
-#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:32
-msgid "Bilan économique"
-msgstr "Balanço económico"
-
-#: core/context_processors.py:54 finances/templates/finances/facturation.html:6
-#: finances/views.py:40
-msgid "Facturation"
-msgstr "Faturação"
-
-#: core/context_processors.py:58
-msgid "Planning & Équipe"
-msgstr ""
-
-#: core/context_processors.py:60 planning/views.py:34
-msgid "Planning"
-msgstr "Planeamento"
-
-#: core/context_processors.py:61 equipe/templates/equipe/mes_taches.html:6
-#: equipe/views.py:37
-msgid "Mes tâches"
-msgstr "As minhas tarefas"
-
-#: core/context_processors.py:62 equipe/templates/equipe/equipe.html:6
-#: equipe/views.py:21
-msgid "Équipe"
-msgstr "Equipa"
-
-#: core/context_processors.py:63 equipe/templates/equipe/taches.html:6
-#: equipe/views.py:28
-msgid "Tâches"
-msgstr "Tarefas"
-
-#: core/context_processors.py:67
-msgid "Assistant & alertes"
-msgstr ""
-
-#: core/context_processors.py:69 ia/views.py:31
-msgid "Assistant IA"
-msgstr ""
-
-#: core/context_processors.py:70
-#: notifications/templates/notifications/center.html:7
-#: notifications/views.py:18
-msgid "Notifications"
-msgstr "Notificações"
-
-#: core/context_processors.py:74
-msgid "Mon compte"
-msgstr ""
-
-#: core/context_processors.py:76
-#: exploitations/templates/exploitations/settings.html:8
-#: exploitations/views.py:32
-msgid "Mon exploitation"
-msgstr "A minha exploração"
-
-#: core/context_processors.py:77
-msgid "Activer un code"
-msgstr ""
-
-#: core/templates/core/dashboard.html:8
-msgid "Bienvenue sur Holystyl 👋"
-msgstr ""
-
-#: core/templates/core/dashboard.html:10
+#: agronomie/templates/agronomie/cultures.html:36
 msgid ""
-"Commencez par configurer votre exploitation pour activer le tableau de bord."
-msgstr ""
+"Base de données cultures françaises — Coefficients culturaux FAO-56 / ARVALIS"
+msgstr "Base de dados de culturas francesas — Coeficientes culturais FAO-56 / ARVALIS"
 
-#: core/templates/core/dashboard.html:12
-#: exploitations/templates/exploitations/settings.html:8
-msgid "Configurer mon exploitation"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:41
+#: agronomie/templates/agronomie/cultures.html:56
+msgid "Méthode"
+msgstr "Método"
 
-#: core/templates/core/dashboard.html:20
-msgid "+ Parcelle"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:45
+#: agronomie/templates/agronomie/cultures.html:233
+#: agronomie/templates/agronomie/types_sol.html:54
+#: agronomie/templates/agronomie/types_sol.html:213
+#: environnement/templates/environnement/taxonomie.html:178
+#: exploitations/templates/exploitations/settings.html:140
+#: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
+#: parcelles/templates/parcelles/list.html:17
+msgid "Ajouter"
+msgstr "Adicionar"
 
-#: core/templates/core/dashboard.html:27
-msgid "actives"
-msgstr ""
-
-#: core/templates/core/dashboard.html:30
-#: finances/templates/finances/subvention_pdf.html:30
-#: parcelles/templates/parcelles/list.html:23
-msgid "Surface"
-msgstr ""
-
-#: core/templates/core/dashboard.html:34
-msgid "Quota eau"
-msgstr ""
-
-#: core/templates/core/dashboard.html:41
-#: finances/templates/finances/subvention_pdf.html:33
-msgid "Score DTI"
-msgstr ""
-
-#: core/templates/core/dashboard.html:43
-msgid "Disponible Tranche 2"
-msgstr ""
-
-#: core/templates/core/dashboard.html:49
+#: agronomie/templates/agronomie/cultures.html:61
 msgid ""
-"Les modules temps réel (IoT/SCADA), l'irrigation et l'assistant IA seront "
-"activés dans les prochaines tranches."
-msgstr ""
-
-#: equipe/models.py:15
-msgid "Chef d'équipe"
-msgstr ""
-
-#: equipe/models.py:16
-msgid "Ouvrier"
-msgstr ""
-
-#: equipe/models.py:17
-msgid "Saisonnier"
-msgstr ""
-
-#: equipe/models.py:18
-msgid "Prestataire"
-msgstr ""
-
-#: equipe/models.py:24
-msgid "téléphone"
-msgstr ""
-
-#: equipe/models.py:42
-msgid "membre d'équipe"
-msgstr ""
-
-#: equipe/models.py:43
-msgid "membres d'équipe"
-msgstr ""
-
-#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
-msgid "Haute"
-msgstr ""
-
-#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
-msgid "Normale"
-msgstr ""
-
-#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
-msgid "Basse"
-msgstr ""
-
-#: equipe/models.py:57
-msgid "À faire"
-msgstr ""
-
-#: equipe/models.py:58 operations/models.py:97 planning/models.py:30
-msgid "En cours"
-msgstr ""
-
-#: equipe/models.py:59 iot/models.py:93 operations/models.py:98
-msgid "Terminée"
-msgstr ""
-
-#: equipe/models.py:60
-msgid "Validée"
-msgstr ""
-
-#: equipe/models.py:63
-msgid "titre"
-msgstr ""
-
-#: equipe/models.py:77
-msgid "tâche"
-msgstr ""
-
-#: equipe/models.py:78
-msgid "tâches"
-msgstr ""
-
-#: equipe/models.py:93
-msgid "Envoyé"
-msgstr ""
-
-#: equipe/models.py:94
-msgid "Échoué"
-msgstr ""
-
-#: equipe/models.py:105
-msgid "rappel de tâche"
-msgstr ""
-
-#: equipe/models.py:106
-msgid "rappels de tâche"
-msgstr ""
-
-#: equipe/templates/equipe/equipe.html:20
-msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:3
-msgid "Partage de position"
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:9
-#: equipe/templates/equipe/location_share.html:13
-msgid "Partager ma position"
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:11
-#, python-format
-msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:16
-msgid "Lien expiré"
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:17
-msgid "Ce lien de partage n'est plus valide."
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:28
-msgid "Géolocalisation non supportée."
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:34
-msgid "Position partagée ✅"
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:35
-msgid "Erreur lors du partage."
-msgstr ""
-
-#: equipe/templates/equipe/location_share.html:36
-msgid "Accès à la position refusé."
-msgstr ""
-
-#: equipe/templates/equipe/mes_taches.html:20
-msgid "Aucune tâche assignée."
-msgstr ""
-
-#: equipe/templates/equipe/taches.html:13
-msgid "non assignée"
-msgstr ""
-
-#: equipe/templates/equipe/taches.html:20
-msgid "Aucune tâche."
-msgstr ""
-
-#: exploitations/models.py:18
-msgid "propriétaire"
-msgstr ""
-
-#: exploitations/models.py:21
-msgid "adresse"
-msgstr ""
-
-#: exploitations/models.py:22
-msgid "ville"
-msgstr ""
-
-#: exploitations/models.py:23
-msgid "code postal"
-msgstr ""
-
-#: exploitations/models.py:24
-msgid "latitude"
-msgstr ""
-
-#: exploitations/models.py:25
-msgid "longitude"
-msgstr ""
-
-#: exploitations/models.py:26
-msgid "surface totale (ha)"
-msgstr ""
-
-#: exploitations/models.py:27
-msgid "quota eau (m³)"
-msgstr ""
-
-#: exploitations/models.py:28
-msgid "eau consommée (m³)"
-msgstr ""
-
-#: exploitations/models.py:31
-msgid "exploitation"
-msgstr ""
-
-#: exploitations/models.py:32
-msgid "exploitations"
-msgstr ""
-
-#: exploitations/templates/exploitations/settings.html:10
-msgid "Informations de base utilisées partout dans l'application."
-msgstr ""
-
-#: exploitations/templates/exploitations/settings.html:24
-#: parcelles/templates/parcelles/confirm_delete.html:14
-msgid "Annuler"
-msgstr "Cancelar"
-
-#: exploitations/views.py:24
-msgid "Exploitation enregistrée."
-msgstr ""
-
-#: finances/models.py:15
-msgid "Semences"
-msgstr ""
-
-#: finances/models.py:16
-msgid "Engrais"
-msgstr ""
-
-#: finances/models.py:17
-msgid "Phytosanitaires"
-msgstr ""
-
-#: finances/models.py:19 finances/templates/finances/subvention_pdf.html:32
-msgid "Énergie"
-msgstr ""
-
-#: finances/models.py:20
-msgid "Main d'œuvre"
-msgstr ""
-
-#: finances/models.py:21 ia/models.py:34
-msgid "Matériel"
-msgstr ""
-
-#: finances/models.py:22 operations/models.py:179 planning/models.py:213
-msgid "Transport"
-msgstr ""
-
-#: finances/models.py:23
-msgid "Assurance"
-msgstr ""
-
-#: finances/models.py:36
-msgid "charge"
-msgstr ""
-
-#: finances/models.py:37
-msgid "charges"
-msgstr ""
-
-#: finances/models.py:43
-msgid "Vente céréales"
-msgstr ""
-
-#: finances/models.py:44
-msgid "Vente fruits"
-msgstr ""
-
-#: finances/models.py:45
-msgid "Vente légumes"
-msgstr ""
-
-#: finances/models.py:46
-msgid "Aide PAC"
-msgstr ""
-
-#: finances/models.py:47
-msgid "Subvention"
-msgstr ""
-
-#: finances/models.py:48
-msgid "Location"
-msgstr ""
-
-#: finances/models.py:49
-msgid "Prestation"
-msgstr ""
-
-#: finances/models.py:65
-msgid "revenu"
-msgstr ""
-
-#: finances/models.py:66
-msgid "revenus"
-msgstr ""
-
-#: finances/models.py:72
-msgid "Extra"
-msgstr ""
-
-#: finances/models.py:73
-msgid "Catégorie 1"
-msgstr ""
-
-#: finances/models.py:74
-msgid "Catégorie 2"
-msgstr ""
-
-#: finances/models.py:75
-msgid "Déclassé"
-msgstr ""
-
-#: finances/models.py:88
-msgid "récolte"
-msgstr ""
-
-#: finances/models.py:89
-msgid "récoltes"
-msgstr ""
-
-#: finances/models.py:105
-msgid "client"
-msgstr ""
-
-#: finances/models.py:106
-msgid "clients"
-msgstr ""
-
-#: finances/models.py:115 planning/models.py:259
-msgid "Brouillon"
-msgstr ""
-
-#: finances/models.py:117
-msgid "Payée"
-msgstr ""
-
-#: finances/models.py:118
-msgid "En retard"
-msgstr ""
-
-#: finances/models.py:119 operations/models.py:99
-msgid "Annulée"
-msgstr ""
-
-#: finances/models.py:136
-msgid "facture"
-msgstr ""
-
-#: finances/models.py:137
-msgid "factures"
-msgstr ""
-
-#: finances/models.py:149
-msgid "Taxonomie Verte EU"
-msgstr ""
-
-#: finances/models.py:150
-msgid "Plan Eau 2026"
-msgstr ""
-
-#: finances/models.py:155
-msgid "En génération"
-msgstr ""
-
-#: finances/models.py:156
-msgid "Prêt"
-msgstr ""
-
-#: finances/models.py:168
-msgid "export subvention"
-msgstr ""
-
-#: finances/models.py:169
-msgid "exports subvention"
-msgstr ""
-
-#: finances/templates/finances/bilan_economique.html:9
-msgid "Revenus CSV"
-msgstr ""
-
-#: finances/templates/finances/bilan_economique.html:10
-msgid "Dossier subvention PDF"
-msgstr ""
-
-#: finances/templates/finances/bilan_economique.html:15
-#: finances/templates/finances/subvention_pdf.html:40
-msgid "Revenus"
-msgstr ""
-
-#: finances/templates/finances/bilan_economique.html:17
-#: finances/templates/finances/subvention_pdf.html:42
-msgid "Résultat net"
-msgstr ""
-
-#: finances/templates/finances/bilan_economique.html:18
-msgid "Marge / ha"
-msgstr ""
-
-#: finances/templates/finances/bilan_economique.html:23
-#, python-format
-msgid "Consommation : %(eau)s m³ d'eau · %(energie)s kWh d'énergie."
-msgstr ""
-
-#: finances/templates/finances/charges.html:8
-msgid "Export CSV"
-msgstr ""
-
-#: finances/templates/finances/charges.html:14
-msgid "Montant"
-msgstr ""
-
-#: finances/templates/finances/charges.html:14
-msgid "Fournisseur"
-msgstr ""
-
-#: finances/templates/finances/charges.html:29
-msgid "Aucune charge enregistrée."
-msgstr ""
-
-#: finances/templates/finances/facturation.html:11
-msgid "Client"
-msgstr ""
-
-#: finances/templates/finances/facturation.html:11
-msgid "Émission"
-msgstr ""
-
-#: finances/templates/finances/facturation.html:27
-msgid "Aucune facture."
-msgstr ""
-
-#: finances/templates/finances/subvention_pdf.html:22
-msgid "Dossier de subvention"
-msgstr ""
-
-#: finances/templates/finances/subvention_pdf.html:24
-msgid "Année"
-msgstr ""
-
-#: finances/templates/finances/subvention_pdf.html:49
-#: iot/templates/iot/capteurs.html:12
-#: parcelles/templates/parcelles/list.html:21
-msgid "Nom"
-msgstr ""
-
-#: finances/templates/finances/subvention_pdf.html:49
-msgid "Surface (ha)"
-msgstr ""
-
-#: finances/templates/finances/subvention_pdf.html:56
-msgid "Document généré par Holystyl."
-msgstr ""
-
-#: ia/models.py:25
-msgid "conversation IA"
-msgstr ""
-
-#: ia/models.py:26
-msgid "conversations IA"
-msgstr ""
-
-#: ia/models.py:32
-msgid "Parcelle"
-msgstr ""
-
-#: ia/models.py:35 planning/templates/planning/bon_intervention.html:29
-msgid "Produit"
-msgstr ""
-
-#: ia/models.py:36
-msgid "Général"
-msgstr ""
-
-#: ia/models.py:44
-msgid "terme vocal"
-msgstr ""
-
-#: ia/models.py:45
-msgid "dictionnaire vocal"
-msgstr ""
-
-#: ia/models.py:67
-msgid "rapport quotidien"
-msgstr ""
-
-#: ia/models.py:68
-msgid "rapports quotidiens"
-msgstr ""
-
-#: ia/templates/ia/assistant.html:7
-msgid "Assistant Holystyl"
-msgstr ""
-
-#: ia/templates/ia/assistant.html:9
-msgid "IA non configurée"
-msgstr ""
-
-#: ia/templates/ia/assistant.html:29
-msgid "Demandez quelque chose…"
-msgstr ""
-
-#: ia/templates/ia/assistant.html:30
-msgid "Dictée vocale"
-msgstr ""
-
-#: ia/templates/ia/assistant.html:31 public/templates/public/home.html:44
-msgid "Envoyer"
-msgstr ""
-
-#: ia/templates/ia/assistant.html:58
-msgid "Reconnaissance vocale non supportée par ce navigateur."
-msgstr ""
-
-#: iot/models.py:16
-msgid "Débitmètre"
-msgstr ""
-
-#: iot/models.py:17
-msgid "Capteur de pression"
-msgstr ""
-
-#: iot/models.py:18
-msgid "Station météo"
-msgstr ""
-
-#: iot/models.py:19
-msgid "Contrôleur de vanne"
-msgstr ""
-
-#: iot/models.py:20
-msgid "Contrôleur de pompe"
-msgstr ""
-
-#: iot/models.py:21
-msgid "Humidité du sol"
-msgstr ""
-
-#: iot/models.py:22
-msgid "Compteur d'énergie"
-msgstr ""
-
-#: iot/models.py:23 iot/models.py:30
-msgid "Générique"
-msgstr ""
-
-#: iot/models.py:33
-msgid "En ligne"
-msgstr ""
-
-#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
-msgid "Hors ligne"
-msgstr ""
-
-#: iot/models.py:35 iot/models.py:131
-msgid "Avertissement"
-msgstr ""
-
-#: iot/models.py:44
-msgid "identifiant device"
-msgstr ""
-
-#: iot/models.py:56
-msgid "device IoT"
-msgstr ""
-
-#: iot/models.py:57
-msgid "devices IoT"
-msgstr ""
-
-#: iot/models.py:82
-msgid "télémétrie"
-msgstr ""
-
-#: iot/models.py:83
-msgid "télémétries"
-msgstr ""
-
-#: iot/models.py:91
-msgid "Envoyée"
-msgstr ""
-
-#: iot/models.py:92
-msgid "Accusée"
-msgstr ""
-
-#: iot/models.py:94
-msgid "Échouée"
-msgstr ""
-
-#: iot/models.py:95
-msgid "Expirée"
-msgstr ""
-
-#: iot/models.py:109
-msgid "commande IoT"
-msgstr ""
-
-#: iot/models.py:110
-msgid "commandes IoT"
-msgstr ""
-
-#: iot/models.py:116
-msgid "Fuite détectée"
-msgstr ""
-
-#: iot/models.py:117
-msgid "Pression basse"
-msgstr ""
-
-#: iot/models.py:118
-msgid "Pression haute"
-msgstr ""
-
-#: iot/models.py:119
-msgid "Débit bas"
-msgstr ""
-
-#: iot/models.py:120
-msgid "Débit élevé"
-msgstr ""
-
-#: iot/models.py:121
-msgid "Panne de pompe"
-msgstr ""
-
-#: iot/models.py:122
-msgid "Baisse d'uniformité"
-msgstr ""
-
-#: iot/models.py:123
-msgid "Pic d'énergie"
-msgstr ""
-
-#: iot/models.py:125
-msgid "Seuil dépassé"
-msgstr ""
-
-#: iot/models.py:126
-msgid "Risque de gel"
-msgstr ""
-
-#: iot/models.py:127
-msgid "Perte invisible"
-msgstr ""
-
-#: iot/models.py:130
-msgid "Info"
-msgstr ""
-
-#: iot/models.py:132
-msgid "Danger"
-msgstr ""
-
-#: iot/models.py:148
-msgid "alerte IoT"
-msgstr ""
-
-#: iot/models.py:149
-msgid "alertes IoT"
-msgstr ""
-
-#: iot/models.py:156
-msgid "Température gel"
-msgstr ""
-
-#: iot/models.py:157
-msgid "Pression min"
-msgstr ""
-
-#: iot/models.py:158
-msgid "Pression max"
-msgstr ""
-
-#: iot/models.py:159
-msgid "Débit min"
-msgstr ""
-
-#: iot/models.py:160
-msgid "Débit max"
-msgstr ""
-
-#: iot/models.py:161
-msgid "kWh/m³ max"
-msgstr ""
-
-#: iot/models.py:162
-msgid "Humidité sol min"
-msgstr ""
-
-#: iot/models.py:163
-msgid "Humidité sol max"
-msgstr ""
-
-#: iot/models.py:164
-msgid "Perte invisible %"
-msgstr ""
-
-#: iot/models.py:176
-msgid "seuil"
-msgstr ""
-
-#: iot/models.py:177
-msgid "seuils"
-msgstr ""
-
-#: iot/templates/iot/capteurs.html:6 iot/views.py:36
-msgid "Capteurs & IoT"
-msgstr ""
-
-#: iot/templates/iot/capteurs.html:14
-msgid "Marque"
-msgstr ""
-
-#: iot/templates/iot/capteurs.html:15
-msgid "Firmware"
-msgstr ""
-
-#: iot/templates/iot/capteurs.html:17
-msgid "Vu"
-msgstr ""
-
-#: iot/templates/iot/capteurs.html:35
-msgid "Aucun capteur enregistré."
-msgstr ""
-
-#: iot/templates/iot/regie.html:10
-msgid "Temps réel actif"
-msgstr ""
-
-#: iot/templates/iot/regie.html:37 parcelles/templates/parcelles/detail.html:31
-msgid "Débit"
-msgstr ""
-
-#: iot/templates/iot/regie.html:38 parcelles/templates/parcelles/detail.html:32
-msgid "Pression"
-msgstr ""
-
-#: iot/templates/iot/regie.html:39
-msgid "Puissance"
-msgstr ""
-
-#: iot/templates/iot/regie.html:40
-msgid "Humidité"
-msgstr ""
-
-#: iot/templates/iot/regie.html:46
-msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
-msgstr ""
-
-#: irrigation/models.py:20 parcelles/models.py:14
-msgid "Goutte à goutte"
-msgstr ""
-
-#: irrigation/models.py:21 parcelles/models.py:15
-msgid "Aspersion"
-msgstr ""
-
-#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
-msgid "Pivot"
-msgstr ""
-
-#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
-msgid "Enrouleur"
-msgstr ""
-
-#: irrigation/models.py:24 parcelles/models.py:18
-msgid "Micro-aspersion"
-msgstr ""
-
-#: irrigation/models.py:25
-msgid "Micro-jet"
-msgstr ""
-
-#: irrigation/models.py:26
-msgid "Submersion"
-msgstr ""
-
-#: irrigation/models.py:29 parcelles/models.py:22
-msgid "Active"
-msgstr ""
-
-#: irrigation/models.py:30 parcelles/models.py:23
-msgid "Inactive"
-msgstr ""
-
-#: irrigation/models.py:31 irrigation/models.py:131 operations/models.py:25
-#: operations/models.py:55 operations/models.py:91
-msgid "Maintenance"
-msgstr ""
-
-#: irrigation/models.py:50
-msgid "zone d'irrigation"
-msgstr ""
-
-#: irrigation/models.py:51
-msgid "zones d'irrigation"
-msgstr ""
-
-#: irrigation/models.py:60
-msgid "Quotidien"
-msgstr ""
-
-#: irrigation/models.py:61
-msgid "Tous les 2 jours"
-msgstr ""
-
-#: irrigation/models.py:62
-msgid "Tous les 3 jours"
-msgstr ""
-
-#: irrigation/models.py:63 irrigation/models.py:241
-msgid "Hebdomadaire"
-msgstr ""
-
-#: irrigation/models.py:64
-msgid "Personnalisé"
-msgstr ""
-
-#: irrigation/models.py:67
-msgid "Par durée"
-msgstr ""
-
-#: irrigation/models.py:68
-msgid "Par volume"
-msgstr ""
-
-#: irrigation/models.py:69
-msgid "Par pluviométrie"
-msgstr ""
-
-#: irrigation/models.py:72 irrigation/models.py:104 irrigation/models.py:156
-#: irrigation/models.py:191 irrigation/models.py:215 operations/models.py:103
-msgid "Manuel"
-msgstr ""
-
-#: irrigation/models.py:73 operations/models.py:102
-msgid "Vocal"
-msgstr ""
-
-#: irrigation/models.py:74 irrigation/models.py:107 operations/models.py:104
-msgid "IA"
-msgstr ""
-
-#: irrigation/models.py:94
-msgid "programme d'irrigation"
-msgstr ""
-
-#: irrigation/models.py:95
-msgid "programmes d'irrigation"
-msgstr ""
-
-#: irrigation/models.py:105 irrigation/models.py:157
-msgid "Auto"
-msgstr ""
-
-#: irrigation/models.py:106
-msgid "IoT"
-msgstr ""
-
-#: irrigation/models.py:123
-msgid "session d'irrigation"
-msgstr ""
-
-#: irrigation/models.py:124
-msgid "sessions d'irrigation"
-msgstr ""
-
-#: irrigation/models.py:130 operations/models.py:24
-msgid "Opérationnelle"
-msgstr ""
-
-#: irrigation/models.py:132 operations/models.py:26
-msgid "En panne"
-msgstr ""
-
-#: irrigation/models.py:147
-msgid "station de pompage"
-msgstr ""
-
-#: irrigation/models.py:148
-msgid "stations de pompage"
-msgstr ""
-
-#: irrigation/models.py:158
-msgid "Capteur"
-msgstr ""
-
-#: irrigation/models.py:162 planning/models.py:32
-msgid "Terminé"
-msgstr ""
-
-#: irrigation/models.py:182
-msgid "événement de bassinage"
-msgstr ""
-
-#: irrigation/models.py:183
-msgid "événements de bassinage"
-msgstr ""
-
-#: irrigation/models.py:205
-msgid "relevé compteur eau"
-msgstr ""
-
-#: irrigation/models.py:206
-msgid "relevés compteur eau"
-msgstr ""
-
-#: irrigation/models.py:231
-msgid "relevé énergie"
-msgstr ""
-
-#: irrigation/models.py:232
-msgid "relevés énergie"
-msgstr ""
-
-#: irrigation/models.py:239
-msgid "Annuel"
-msgstr ""
-
-#: irrigation/models.py:240
-msgid "Mensuel"
-msgstr ""
-
-#: irrigation/models.py:252
-msgid "quota eau"
-msgstr ""
-
-#: irrigation/models.py:253
-msgid "quotas eau"
-msgstr ""
-
-#: irrigation/models.py:278
-msgid "score DTI"
-msgstr ""
-
-#: irrigation/models.py:279
-msgid "scores DTI"
-msgstr ""
-
-#: irrigation/models.py:285
-msgid "Faible"
-msgstr ""
-
-#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
-msgid "Moyen"
-msgstr ""
-
-#: irrigation/models.py:287
-msgid "Élevé"
-msgstr ""
-
-#: irrigation/models.py:288 planning/models.py:256
-msgid "Critique"
-msgstr ""
-
-#: irrigation/models.py:306
-msgid "événement de gel"
-msgstr ""
-
-#: irrigation/models.py:307
-msgid "événements de gel"
-msgstr ""
-
-#: irrigation/models.py:326
-msgid "donnée NDVI"
-msgstr ""
-
-#: irrigation/models.py:327
-msgid "données NDVI"
-msgstr ""
-
-#: irrigation/models.py:345
-msgid "détection de perte invisible"
-msgstr ""
-
-#: irrigation/models.py:346
-msgid "détections de pertes invisibles"
-msgstr ""
-
-#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:43
-msgid "Bassinage anti-gel"
-msgstr ""
-
-#: irrigation/templates/irrigation/bassinage.html:20
-msgid "Aucun événement de bassinage."
-msgstr ""
-
-#: irrigation/templates/irrigation/irrigation.html:21
-msgid "Aucune zone."
-msgstr ""
-
-#: irrigation/templates/irrigation/irrigation.html:28
-msgid "actif"
-msgstr ""
-
-#: irrigation/templates/irrigation/irrigation.html:28
-msgid "inactif"
-msgstr ""
-
-#: irrigation/templates/irrigation/irrigation.html:30
-msgid "Aucun programme."
-msgstr ""
-
-#: irrigation/templates/irrigation/irrigation.html:39
-msgid "Aucune session."
-msgstr ""
-
-#: irrigation/templates/irrigation/irrigation.html:48
-msgid "Aucune station."
-msgstr ""
-
-#: irrigation/views.py:22
-msgid "Zones"
-msgstr ""
-
-#: irrigation/views.py:23
-msgid "Programmes"
-msgstr ""
-
-#: irrigation/views.py:24
-msgid "Sessions"
-msgstr ""
-
-#: irrigation/views.py:25
-msgid "Stations"
-msgstr ""
-
-#: notifications/models.py:17 planning/models.py:40
-msgid "Urgente"
-msgstr ""
-
-#: notifications/models.py:31
-msgid "notification"
-msgstr ""
-
-#: notifications/models.py:32
-msgid "notifications"
-msgstr ""
-
-#: notifications/models.py:49
-msgid "règle de notification"
-msgstr ""
-
-#: notifications/models.py:50
-msgid "règles de notification"
-msgstr ""
-
-#: notifications/templates/notifications/center.html:10
-msgid "Tout marquer comme lu"
-msgstr ""
-
-#: notifications/templates/notifications/center.html:27
-msgid "Aucune notification."
-msgstr ""
-
-#: notifications/templates/notifications/center.html:31
-msgid "Règles d'alerte"
-msgstr ""
-
-#: notifications/templates/notifications/center.html:37
-msgid "activée"
-msgstr ""
-
-#: notifications/templates/notifications/center.html:37
-msgid "désactivée"
-msgstr ""
-
-#: notifications/templates/notifications/center.html:42
-msgid "Aucune règle définie."
-msgstr ""
-
-#: operations/models.py:16 operations/models.py:212
-msgid "Pompe"
-msgstr ""
-
-#: operations/models.py:17 operations/models.py:204
-msgid "Tracteur"
-msgstr ""
-
-#: operations/models.py:20 operations/models.py:205
-msgid "Pulvérisateur"
-msgstr ""
-
-#: operations/models.py:27
-msgid "Réformée"
-msgstr ""
-
-#: operations/models.py:44
-msgid "machine"
-msgstr ""
-
-#: operations/models.py:45
-msgid "machines"
-msgstr ""
-
-#: operations/models.py:54
-msgid "Utilisation"
-msgstr ""
-
-#: operations/models.py:56 operations/models.py:146
-msgid "Réparation"
-msgstr ""
-
-#: operations/models.py:57
-msgid "Inspection"
-msgstr ""
-
-#: operations/models.py:80 operations/models.py:175
-msgid "Traitement"
-msgstr ""
-
-#: operations/models.py:81 operations/models.py:177
-msgid "Fertilisation"
-msgstr ""
-
-#: operations/models.py:82 operations/models.py:176
-msgid "Récolte"
-msgstr ""
-
-#: operations/models.py:83 operations/models.py:174
-msgid "Semis"
-msgstr ""
-
-#: operations/models.py:84
-msgid "Travail du sol"
-msgstr ""
-
-#: operations/models.py:85
-msgid "Taille"
-msgstr ""
-
-#: operations/models.py:86
-msgid "Palissage"
-msgstr ""
-
-#: operations/models.py:87
-msgid "Désherbage"
-msgstr ""
-
-#: operations/models.py:88
-msgid "Éclaircissage"
-msgstr ""
-
-#: operations/models.py:89
-msgid "Effeuillage"
-msgstr ""
-
-#: operations/models.py:90
-msgid "Vendange"
-msgstr ""
-
-#: operations/models.py:92
-msgid "Observation"
-msgstr ""
-
-#: operations/models.py:96
-msgid "Planifiée"
-msgstr ""
-
-#: operations/models.py:129
-msgid "intervention"
-msgstr ""
-
-#: operations/models.py:130
-msgid "interventions"
-msgstr ""
-
-#: operations/models.py:140
-msgid "Vidange"
-msgstr ""
-
-#: operations/models.py:141
-msgid "Filtres"
-msgstr ""
-
-#: operations/models.py:142
-msgid "Courroies"
-msgstr ""
-
-#: operations/models.py:143
-msgid "Pneumatiques"
-msgstr ""
-
-#: operations/models.py:144
-msgid "Freins"
-msgstr ""
-
-#: operations/models.py:145
-msgid "Révision complète"
-msgstr ""
-
-#: operations/models.py:147
-msgid "Contrôle technique"
-msgstr ""
-
-#: operations/models.py:166
-msgid "entretien"
-msgstr ""
-
-#: operations/models.py:167
-msgid "entretiens"
-msgstr ""
-
-#: operations/models.py:173
-msgid "Labour"
-msgstr ""
-
-#: operations/models.py:195
-msgid "affectation d'engin"
-msgstr ""
-
-#: operations/models.py:196
-msgid "affectations d'engins"
-msgstr ""
-
-#: operations/models.py:206
-msgid "Semoir"
-msgstr ""
-
-#: operations/models.py:207
-msgid "Épandeur"
-msgstr ""
-
-#: operations/models.py:208
-msgid "Moissonneuse"
-msgstr ""
-
-#: operations/models.py:209
-msgid "Charrue"
-msgstr ""
-
-#: operations/models.py:210
-msgid "Cultivateur"
-msgstr ""
-
-#: operations/models.py:211
-msgid "Benne"
-msgstr ""
-
-#: operations/models.py:231
-msgid "modèle d'engin (catalogue)"
-msgstr ""
-
-#: operations/models.py:232
-msgid "catalogue d'engins"
-msgstr ""
-
-#: operations/templates/operations/interventions.html:23
-msgid "Aucune intervention enregistrée."
-msgstr ""
-
-#: operations/templates/operations/parc_materiel.html:16
-msgid "prochain entretien"
-msgstr ""
-
-#: operations/templates/operations/parc_materiel.html:21
-msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
-msgstr ""
-
-#: parcelles/models.py:19
-msgid "Gravitaire"
-msgstr ""
-
-#: parcelles/models.py:24
-msgid "Jachère"
-msgstr ""
-
-#: parcelles/models.py:32
-msgid "surface (ha)"
-msgstr ""
-
-#: parcelles/models.py:37
-msgid "polygone"
-msgstr ""
-
-#: parcelles/models.py:42
-msgid "type d'irrigation"
-msgstr ""
-
-#: parcelles/models.py:44
-msgid "débit théorique (m³/h)"
-msgstr ""
-
-#: parcelles/models.py:45
-msgid "nombre de buses"
-msgstr ""
-
-#: parcelles/models.py:46
-msgid "débit buse (L/h)"
-msgstr ""
-
-#: parcelles/models.py:47
-msgid "écart entre rangs (m)"
-msgstr ""
-
-#: parcelles/models.py:48
-msgid "écart entre émetteurs (m)"
-msgstr ""
-
-#: parcelles/models.py:49
-msgid "pression de service (bar)"
-msgstr ""
-
-#: parcelles/models.py:52
-msgid "culture"
-msgstr ""
-
-#: parcelles/models.py:53
-msgid "variété"
-msgstr ""
-
-#: parcelles/models.py:54 parcelles/models.py:91
-msgid "coefficient Kc"
-msgstr ""
-
-#: parcelles/models.py:55
-msgid "âge des plants (ans)"
-msgstr ""
-
-#: parcelles/models.py:56
-msgid "date de plantation"
-msgstr ""
-
-#: parcelles/models.py:57
-msgid "densité (pieds/ha)"
-msgstr ""
-
-#: parcelles/models.py:61
-msgid "profondeur racinaire"
-msgstr ""
-
-#: parcelles/models.py:62
-msgid "profondeur racinaire (cm)"
-msgstr ""
-
-#: parcelles/models.py:63
-msgid "rétention sol (mm/m)"
-msgstr ""
-
-#: parcelles/models.py:64
-msgid "pH du sol"
-msgstr ""
-
-#: parcelles/models.py:67
-msgid "réf. cadastrale"
-msgstr ""
-
-#: parcelles/models.py:68
-msgid "commune"
-msgstr ""
-
-#: parcelles/models.py:69
-msgid "surface officielle (ha)"
-msgstr ""
-
-#: parcelles/models.py:74
-msgid "parcelle"
-msgstr ""
-
-#: parcelles/models.py:75
-msgid "parcelles"
-msgstr ""
-
-#: parcelles/models.py:87
-msgid "stade"
-msgstr ""
-
-#: parcelles/models.py:89
-msgid "début"
-msgstr ""
-
-#: parcelles/models.py:90
-msgid "fin"
-msgstr ""
-
-#: parcelles/models.py:92
-msgid "profondeur racinaire (m)"
-msgstr ""
-
-#: parcelles/models.py:96
-msgid "stade cultural"
-msgstr ""
-
-#: parcelles/models.py:97
-msgid "stades culturaux"
-msgstr ""
-
-#: parcelles/templates/parcelles/confirm_delete.html:7
-msgid "Supprimer la parcelle ?"
-msgstr ""
-
-#: parcelles/templates/parcelles/confirm_delete.html:9
-#, python-format
-msgid "La parcelle « %(name)s » sera définitivement supprimée."
-msgstr ""
-
+"Le besoin en eau est calculé avec la formule ETc = ETP × Kc, où l'ETP est "
+"l'évapotranspiration potentielle (données météo) et le Kc est le coefficient "
+"cultural qui varie selon le stade phénologique de la plante. Le système "
+"soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
+"calculer la dose d'irrigation nette."
+msgstr "A necessidade de água é calculada com a fórmula ETc = ETP × Kc, em que a ETP é a evapotranspiração potencial (dados meteorológicos) e o Kc é o coeficiente cultural que varia consoante o estádio fenológico da planta. O sistema subtrai a chuva eficaz e tem em conta a reserva utilizável do solo para calcular a dose de rega líquida."
+
+#: agronomie/templates/agronomie/cultures.html:66
+msgid "Levée → début développement"
+msgstr "Emergência → início do desenvolvimento"
+
+#: agronomie/templates/agronomie/cultures.html:70
+msgid "Pleine croissance végétative"
+msgstr "Pleno crescimento vegetativo"
+
+#: agronomie/templates/agronomie/cultures.html:74
+msgid "Maturation → récolte"
+msgstr "Maturação → colheita"
+
+#: agronomie/templates/agronomie/cultures.html:83
+msgid "Rechercher une culture, un nom scientifique, une source…"
+msgstr "Pesquisar uma cultura, um nome científico, uma fonte…"
+
+#: agronomie/templates/agronomie/cultures.html:101
+#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:34
+#: parcelles/templates/parcelles/form.html:38
+#: parcelles/templates/parcelles/list.html:91
+msgid "Culture"
+msgstr "Cultura"
+
+#: agronomie/templates/agronomie/cultures.html:102
+#: agronomie/templates/agronomie/cultures.html:186
+msgid "Nom scientifique"
+msgstr "Nome científico"
+
+#: agronomie/templates/agronomie/cultures.html:103
+#: agronomie/templates/agronomie/cultures.html:192
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:53
+#: pac/templates/pac/pac.html:117
+msgid "Catégorie"
+msgstr "Categoria"
+
+#: agronomie/templates/agronomie/cultures.html:107
+#: agronomie/templates/agronomie/cultures.html:220
+msgid "Source"
+msgstr "Fonte"
+
+#: agronomie/templates/agronomie/cultures.html:122
+#: agronomie/templates/agronomie/cultures.html:160
+#: agronomie/templates/agronomie/types_sol.html:97
+#: agronomie/templates/agronomie/types_sol.html:151
 #: parcelles/templates/parcelles/confirm_delete.html:13
 #: parcelles/templates/parcelles/detail.html:13
 msgid "Supprimer"
 msgstr "Eliminar"
+
+#: agronomie/templates/agronomie/cultures.html:132
+msgid "Aucune culture ne correspond à la recherche."
+msgstr "Nenhuma cultura corresponde à pesquisa."
+
+#: agronomie/templates/agronomie/cultures.html:137
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "cultures"
+msgstr "Növények & Kc"
+
+#: agronomie/templates/agronomie/cultures.html:150
+msgid "Supprimer la culture ?"
+msgstr "Eliminar a cultura?"
+
+#: agronomie/templates/agronomie/cultures.html:152
+msgid "sera supprimée définitivement."
+msgstr "será eliminada definitivamente."
+
+#: agronomie/templates/agronomie/cultures.html:158
+#: agronomie/templates/agronomie/cultures.html:232
+#: agronomie/templates/agronomie/fertigation.html:216
+#: agronomie/templates/agronomie/types_sol.html:149
+#: agronomie/templates/agronomie/types_sol.html:212
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:128
+#: environnement/templates/environnement/taxonomie.html:177
+#: exploitations/templates/exploitations/settings.html:50
+#: exploitations/templates/exploitations/settings.html:139
+#: interventions/templates/interventions/interventions.html:174
+#: mail/templates/mail/compose.html:56
+#: messagerie/templates/messagerie/_new_modal.html:61
+#: messagerie/templates/messagerie/new.html:34
+#: meteo/templates/meteo/index.html:76 pac/templates/pac/pac.html:145
+#: parcelles/templates/parcelles/confirm_delete.html:14
+#: parcelles/templates/parcelles/list.html:75
+#: sondages/templates/sondages/create.html:37
+msgid "Annuler"
+msgstr "Cancelar"
+
+#: agronomie/templates/agronomie/cultures.html:173
+msgid "Nouvelle culture"
+msgstr "Nova cultura"
+
+#: agronomie/templates/agronomie/cultures.html:180
+msgid "Nom commun"
+msgstr "Nome comum"
+
+#: agronomie/templates/agronomie/cultures.html:226
+#: agronomie/templates/agronomie/types_sol.html:207
+#: interventions/templates/interventions/interventions.html:169
+msgid "Notes"
+msgstr "Notas"
+
+#: agronomie/templates/agronomie/fertigation.html:19 agronomie/views.py:162
+#: core/context_processors.py:50
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Fertigation"
+msgstr "Öntözés"
+
+#: agronomie/templates/agronomie/fertigation.html:20
+msgid "Gestion N/P/K · Directive Nitrates · Calcul doses"
+msgstr "Gestão N/P/K · Diretiva Nitratos · Cálculo de doses"
+
+#: agronomie/templates/agronomie/fertigation.html:24
+msgid "Enregistrer apport"
+msgstr "Registar aplicação"
+
+#: agronomie/templates/agronomie/fertigation.html:33
+msgid "Directive Nitrates 91/676/CEE"
+msgstr "Diretiva Nitratos 91/676/CEE"
+
+#: agronomie/templates/agronomie/fertigation.html:41
+msgid ""
+"Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
+"vos apports cumulés."
+msgstr "Limite de 170 kg N/ha/ano em zona vulnerável. O sistema acompanha automaticamente as suas aplicações acumuladas."
+
+#: agronomie/templates/agronomie/fertigation.html:49
+msgid "Catalogue engrais"
+msgstr "Catálogo de fertilizantes"
+
+#: agronomie/templates/agronomie/fertigation.html:52
+msgid "Calcul doses"
+msgstr "Cálculo de doses"
+
+#: agronomie/templates/agronomie/fertigation.html:55
+msgid "Historique"
+msgstr "Histórico"
+
+#: agronomie/templates/agronomie/fertigation.html:63
+#: agronomie/templates/agronomie/fertigation.html:92 finances/models.py:16
+msgid "Engrais"
+msgstr "Fertilizante"
+
+#: agronomie/templates/agronomie/fertigation.html:64
+#: interventions/templates/interventions/interventions.html:129
+#: iot/templates/iot/capteurs.html:21
+#: parcelles/templates/parcelles/detail.html:30
+#: planning/templates/planning/bon_intervention.html:16
+msgid "Type"
+msgstr "Tipo"
+
+#: agronomie/templates/agronomie/fertigation.html:68
+msgid "Solubilité"
+msgstr "Solubilidade"
+
+#: agronomie/templates/agronomie/fertigation.html:69
+msgid "pH effet"
+msgstr "efeito pH"
+
+#: agronomie/templates/agronomie/fertigation.html:99
+msgid "Dose produit (kg/ha)"
+msgstr "Dose de produto (kg/ha)"
+
+#: agronomie/templates/agronomie/fertigation.html:106
+msgid "Azote (N)"
+msgstr "Azoto (N)"
+
+#: agronomie/templates/agronomie/fertigation.html:110
+msgid "Phosphore (P)"
+msgstr "Fósforo (P)"
+
+#: agronomie/templates/agronomie/fertigation.html:114
+msgid "Potassium (K)"
+msgstr "Potássio (K)"
+
+#: agronomie/templates/agronomie/fertigation.html:118
+#, python-format
+msgid "Éléments apportés = dose produit × titre (%%) ÷ 100."
+msgstr "Elementos aplicados = dose de produto × título (%%) ÷ 100."
+
+#: agronomie/templates/agronomie/fertigation.html:128
+#: agronomie/templates/agronomie/fertigation.html:175
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:44
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:110
+#: finances/templates/finances/charges.html:14
+#: meteo/templates/meteo/meteo.html:140
+msgid "Date"
+msgstr "Data"
+
+#: agronomie/templates/agronomie/fertigation.html:129
+#: agronomie/templates/agronomie/fertigation.html:180
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:45
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:103 ia/models.py:33
+#: interventions/templates/interventions/interventions.html:155
+#: parcelles/templates/parcelles/list.html:89
+msgid "Parcelle"
+msgstr "Parcela"
+
+#: agronomie/templates/agronomie/fertigation.html:130
+#: agronomie/templates/agronomie/fertigation.html:188 ia/models.py:36
+#: interventions/templates/interventions/interventions.html:164
+#: planning/templates/planning/bon_intervention.html:29
+#: public/templates/public/home.html:469
+msgid "Produit"
+msgstr "Produto"
+
+#: agronomie/templates/agronomie/fertigation.html:134
+msgid "Volume"
+msgstr "Volume"
+
+#: agronomie/templates/agronomie/fertigation.html:155
+msgid "Aucun apport enregistré."
+msgstr "Nenhuma aplicação registada."
+
+#: agronomie/templates/agronomie/fertigation.html:156
+msgid ""
+"Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
+msgstr "Clique em «Registar aplicação» para adicionar uma aplicação de fertirrigação."
+
+#: agronomie/templates/agronomie/fertigation.html:167
+msgid "Enregistrer un apport"
+msgstr "Registar uma aplicação"
+
+#: agronomie/templates/agronomie/fertigation.html:211
+msgid "Volume (L)"
+msgstr "Volume (L)"
+
+#: agronomie/templates/agronomie/fertigation.html:217
+#: exploitations/templates/exploitations/settings.html:52
+#: interventions/templates/interventions/interventions.html:33
+#: interventions/templates/interventions/interventions.html:175
+#: meteo/templates/meteo/meteo.html:52
+#: parcelles/templates/parcelles/form.html:97
+#: parcelles/templates/parcelles/list.html:76
+msgid "Enregistrer"
+msgstr "Registar"
+
+#: agronomie/templates/agronomie/fertigation.html:221
+msgid ""
+"Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un apport."
+msgstr "Adicione primeiro uma parcela à sua exploração para registar uma aplicação."
+
+#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:132
+#: core/context_processors.py:67
+msgid "Saisons"
+msgstr "Szezonok"
+
+#: agronomie/templates/agronomie/saisons.html:19
+msgid "Aucune saison définie."
+msgstr "Nenhuma época definida."
+
+#: agronomie/templates/agronomie/types_sol.html:44 agronomie/views.py:99
+#: core/context_processors.py:49
+msgid "Types de sol"
+msgstr "Talajtípusok"
+
+#: agronomie/templates/agronomie/types_sol.html:45
+msgid "Caractéristiques hydriques et agronomiques par texture"
+msgstr "Características hídricas e agronómicas por textura"
+
+#: agronomie/templates/agronomie/types_sol.html:50
+msgid "Réserve Utile"
+msgstr "Reserva Utilizável"
+
+#: agronomie/templates/agronomie/types_sol.html:64
+msgid "Réserve Utile (RU)"
+msgstr "Reserva Utilizável (RU)"
+
+#: agronomie/templates/agronomie/types_sol.html:69
+msgid ""
+"La réserve utile est la quantité d'eau disponible pour la plante entre la "
+"capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
+"est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
+"calculer la dose d'irrigation nette et le seuil de déclenchement."
+msgstr "A reserva utilizável é a quantidade de água disponível para a planta entre a capacidade de campo (CC) e o ponto de emurchecimento permanente (PEP). É expressa em mm de água por metro de solo. O sistema utiliza a RU para calcular a dose de rega líquida e o limiar de acionamento."
+
+#: agronomie/templates/agronomie/types_sol.html:77
+msgid "Rechercher un type de sol, une texture…"
+msgstr "Pesquisar um tipo de solo, uma textura…"
+
+#: agronomie/templates/agronomie/types_sol.html:104
+msgid "Rétention"
+msgstr "Retenção"
+
+#: agronomie/templates/agronomie/types_sol.html:112
+msgid "Conductivité"
+msgstr "Condutividade"
+
+#: agronomie/templates/agronomie/types_sol.html:116
+msgid "Densité"
+msgstr "Densidade"
+
+#: agronomie/templates/agronomie/types_sol.html:124
+msgid "Aucun type de sol ne correspond à la recherche."
+msgstr "Nenhum tipo de solo corresponde à pesquisa."
+
+#: agronomie/templates/agronomie/types_sol.html:141
+msgid "Supprimer ce type de sol ?"
+msgstr "Eliminar este tipo de solo?"
+
+#: agronomie/templates/agronomie/types_sol.html:143
+msgid "sera supprimé définitivement."
+msgstr "será eliminado definitivamente."
+
+#: agronomie/templates/agronomie/types_sol.html:164
+#, fuzzy
+#| msgid "Types de sol"
+msgid "Nouveau type de sol"
+msgstr "Talajtípusok"
+
+#: agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Nome"
+
+#: agronomie/templates/agronomie/types_sol.html:176
+msgid "Texture"
+msgstr "Textura"
+
+#: agronomie/templates/agronomie/types_sol.html:186
+msgid "Rétention (mm)"
+msgstr "Retenção (mm)"
+
+#: agronomie/templates/agronomie/types_sol.html:196
+msgid "Conductivité (mm/h)"
+msgstr "Condutividade (mm/h)"
+
+#: agronomie/templates/agronomie/types_sol.html:201
+msgid "Densité (g/cm³)"
+msgstr "Densidade (g/cm³)"
+
+#: analyse_sol/models.py:31
+msgid "document"
+msgstr "documento"
+
+#: analyse_sol/models.py:36
+msgid "analyse de sol"
+msgstr "análise de solo"
+
+#: analyse_sol/models.py:37
+msgid "analyses de sol"
+msgstr "análises de solo"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:9
+#: analyse_sol/views.py:43 core/context_processors.py:52
+#: public/templates/public/home.html:270
+msgid "Analyses de sol"
+msgstr "Talajvizsgálatok"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:10
+msgid "Résultats d'analyses par parcelle · import de documents"
+msgstr "Resultados de análises por parcela · importação de documentos"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:14
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:83
+msgid "Importer une analyse"
+msgstr "Importar uma análise"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:21
+#: parcelles/templates/parcelles/list.html:51
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Analyses"
+msgstr "Talajvizsgálatok"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:25
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles analysées"
+msgstr "Parcellák"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:29
+msgid "pH moyen"
+msgstr "pH médio"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:33
+#, python-format
+msgid "MO moyenne (%%)"
+msgstr "MO média (%%)"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:46
+msgid "Laboratoire"
+msgstr "Laboratórium"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:52
+#: planning/models.py:109
+msgid "Document"
+msgstr "Documento"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:69
+msgid "Voir"
+msgstr "Ver"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:81
+msgid "Aucune analyse de sol enregistrée."
+msgstr "Nenhuma análise de solo registada."
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:94
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Importer une analyse de sol"
+msgstr "Talajvizsgálatok"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:117
+msgid "Document (PDF, image…)"
+msgstr "Documento (PDF, imagem…)"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:124
+msgid ""
+"Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
+"document par OCR/IA à l'import."
+msgstr "Os valores (pH, MO, N-P-K, laboratório…) são extraídos automaticamente do documento por OCR/IA na importação."
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:129
+msgid "Importer"
+msgstr "Importar"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:133
+msgid ""
+"Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
+msgstr "Adicione primeiro uma parcela (As Minhas Parcelas) para lhe associar uma análise."
+
+#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
+msgid "Sol"
+msgstr "Solo"
+
+#: analyses/models.py:15 finances/models.py:18
+#: finances/templates/finances/bilan_economique.html:30
+#: finances/templates/finances/subvention_pdf.html:31
+msgid "Eau"
+msgstr "Água"
+
+#: analyses/models.py:16
+msgid "Foliaire"
+msgstr "Foliar"
+
+#: analyses/models.py:17
+msgid "Plante"
+msgstr "Planta"
+
+#: analyses/models.py:20
+msgid "OCR en attente"
+msgstr "OCR pendente"
+
+#: analyses/models.py:21
+msgid "OCR effectué"
+msgstr "OCR efetuado"
+
+#: analyses/models.py:22 planning/models.py:261
+msgid "Validé"
+msgstr "Validado"
+
+#: analyses/models.py:45
+msgid "rapport d'analyse"
+msgstr "relatório de análise"
+
+#: analyses/models.py:46
+msgid "rapports d'analyse"
+msgstr "relatórios de análise"
+
+#: analyses/models.py:64
+msgid "fiche biodiversité"
+msgstr "ficha de biodiversidade"
+
+#: analyses/models.py:65
+msgid "fiches biodiversité"
+msgstr "fichas de biodiversidade"
+
+#: core/context_processors.py:19 core/context_processors.py:28
+msgid "Accueil"
+msgstr "Kezdőlap"
+
+#: core/context_processors.py:20 core/templates/core/dashboard.html:67
+#: finances/templates/finances/subvention_pdf.html:47
+msgid "Parcelles"
+msgstr "Parcellák"
+
+#: core/context_processors.py:21 core/context_processors.py:53
+#: finances/templates/finances/subvention_pdf.html:49
+#: interventions/models.py:12
+#: interventions/templates/interventions/interventions.html:46
+#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:34
+#: operations/models.py:117 parcelles/templates/parcelles/detail.html:28
+#: parcelles/templates/parcelles/form.html:66
+msgid "Irrigation"
+msgstr "Öntözés"
+
+#: core/context_processors.py:22 core/context_processors.py:90
+#: planning/views.py:34
+msgid "Planning"
+msgstr "Tervezés"
+
+#: core/context_processors.py:23 ia/models.py:14
+msgid "Assistant"
+msgstr "Asszisztens"
+
+#: core/context_processors.py:30 templates/partials/header.html:5
+msgid "Tableau de bord"
+msgstr "Irányítópult"
+
+#: core/context_processors.py:31
+msgid "Assistant IA"
+msgstr "MI-asszisztens"
+
+#: core/context_processors.py:35
+msgid "Communication"
+msgstr "Kommunikáció"
+
+#: core/context_processors.py:37
+#: notifications/templates/notifications/center.html:7
+#: notifications/views.py:18 templates/partials/header.html:22
+msgid "Notifications"
+msgstr "Értesítések"
+
+#: core/context_processors.py:38 messagerie/views.py:75
+msgid "Messagerie"
+msgstr "Üzenetek"
+
+#: core/context_processors.py:39 mail/templates/mail/outbox.html:7
+#: mail/views.py:39
+msgid "Mail"
+msgstr "Levelezés"
+
+#: core/context_processors.py:40
+msgid "Sondage"
+msgstr "Szavazás"
+
+#: core/context_processors.py:44
+msgid "Cultures & Terrain"
+msgstr "Növények & Terület"
+
+#: core/context_processors.py:46 parcelles/templates/parcelles/list.html:12
+#: parcelles/views.py:48
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Mes Parcelles"
+msgstr "Parcellák"
+
+#: core/context_processors.py:47 meteo/templates/meteo/index.html:9
+#: meteo/views.py:73
+msgid "Météo"
+msgstr "Meteorologia"
+
+#: core/context_processors.py:48
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "Cultures"
+msgstr "Növények & Kc"
+
+#: core/context_processors.py:51
+#: interventions/templates/interventions/interventions.html:26
+#: interventions/views.py:49 public/templates/public/home.html:265
+msgid "Interventions"
+msgstr "Beavatkozások"
+
+#: core/context_processors.py:54 iot/templates/iot/regie.html:7 iot/views.py:28
+msgid "Régie SCADA"
+msgstr "SCADA-vezérlés"
+
+#: core/context_processors.py:55
+msgid "Capteurs"
+msgstr "Érzékelők"
+
+#: core/context_processors.py:59 planning/models.py:210
+msgid "Protection"
+msgstr "Védelem"
+
+#: core/context_processors.py:61
+#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:56
+msgid "Bassinage anti-gel"
+msgstr "Fagyvédelmi öntözés"
+
+#: core/context_processors.py:65
+msgid "Économie"
+msgstr "Gazdaság"
+
+#: core/context_processors.py:68
+#: finances/templates/finances/bilan_economique.html:16
+#: finances/templates/finances/charges.html:7
+#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
+#: finances/views.py:51
+msgid "Charges"
+msgstr "Költségek"
+
+#: core/context_processors.py:69
+#: finances/templates/finances/bilan_economique.html:7
+#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:58
+msgid "Bilan économique"
+msgstr "Gazdasági mérleg"
+
+#: core/context_processors.py:70 finances/templates/finances/facturation.html:6
+#: finances/views.py:66
+msgid "Facturation"
+msgstr "Számlázás"
+
+#: core/context_processors.py:71 pac/templates/pac/pac.html:9 pac/views.py:56
+msgid "PAC"
+msgstr "PAC"
+
+#: core/context_processors.py:72
+#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
+#: public/templates/public/home.html:260
+msgid "Parc matériel"
+msgstr "Géppark"
+
+#: core/context_processors.py:76
+msgid "Environnement"
+msgstr "Környezet"
+
+#: core/context_processors.py:78 environnement/views.py:50
+msgid "Biodiversité"
+msgstr "Biodiversidade"
+
+#: core/context_processors.py:79
+msgid "Bilan eau"
+msgstr "Balanço hídrico"
+
+#: core/context_processors.py:80 environnement/views.py:137
+msgid "Bilan azoté"
+msgstr "Balanço de azoto"
+
+#: core/context_processors.py:81 environnement/views.py:144
+msgid "Empreinte carbone"
+msgstr "Pegada de carbono"
+
+#: core/context_processors.py:82 environnement/views.py:151
+#, fuzzy
+#| msgid "Environnement"
+msgid "Rapport environnemental"
+msgstr "Környezet"
+
+#: core/context_processors.py:83 environnement/views.py:158
+msgid "Santé végétale"
+msgstr "Saúde vegetal"
+
+#: core/context_processors.py:84
+#: environnement/templates/environnement/taxonomie.html:9
+#: environnement/views.py:196 public/templates/public/home.html:101
+msgid "Taxonomie EU"
+msgstr "Taxonomia UE"
+
+#: core/context_processors.py:88
+msgid "RH"
+msgstr "HR"
+
+#: core/context_processors.py:91 equipe/templates/equipe/equipe.html:6
+#: equipe/views.py:21
+msgid "Équipe"
+msgstr "Csapat"
+
+#: core/context_processors.py:92 equipe/templates/equipe/taches.html:6
+#: equipe/views.py:28
+msgid "Tâches"
+msgstr "Feladatok"
+
+#: core/context_processors.py:93 equipe/templates/equipe/mes_taches.html:6
+#: equipe/views.py:37
+msgid "Mes tâches"
+msgstr "Saját feladatok"
+
+#: core/context_processors.py:97
+msgid "Mon compte"
+msgstr "Fiókom"
+
+#: core/context_processors.py:99
+#: exploitations/templates/exploitations/settings.html:13
+#: exploitations/views.py:92 meteo/templates/meteo/index.html:26
+#: templates/partials/header.html:59
+msgid "Mon exploitation"
+msgstr "Gazdaságom"
+
+#: core/templates/core/dashboard.html:8
+msgid "Bienvenue sur Holystyl 👋"
+msgstr "Bem-vindo à Holystyl 👋"
+
+#: core/templates/core/dashboard.html:10
+msgid ""
+"Commencez par configurer votre exploitation pour activer le tableau de bord."
+msgstr "Comece por configurar a sua exploração para ativar o painel de controlo."
+
+#: core/templates/core/dashboard.html:12
+#: exploitations/templates/exploitations/settings.html:13
+msgid "Configurer mon exploitation"
+msgstr "Configurar a minha exploração"
+
+#: core/templates/core/dashboard.html:20
+msgid "+ Parcelle"
+msgstr "+ Parcela"
+
+#: core/templates/core/dashboard.html:26
+msgid "Efficience DTI"
+msgstr "Eficiência DTI"
+
+#: core/templates/core/dashboard.html:32
+msgid "Aucun score DTI calculé."
+msgstr "Nenhuma pontuação DTI calculada."
+
+#: core/templates/core/dashboard.html:41
+msgid "Météo & ETP"
+msgstr "Meteorologia & ETP"
+
+#: core/templates/core/dashboard.html:42
+msgid "Localisation manquante"
+msgstr "Localização em falta"
+
+#: core/templates/core/dashboard.html:46
+msgid "Température"
+msgstr "Temperatura"
+
+#: core/templates/core/dashboard.html:47 iot/templates/iot/regie.html:54
+#: meteo/templates/meteo/meteo.html:77 meteo/templates/meteo/meteo.html:143
+msgid "Humidité"
+msgstr "Humidade"
+
+#: core/templates/core/dashboard.html:48 meteo/templates/meteo/meteo.html:78
+#: meteo/templates/meteo/meteo.html:98 meteo/templates/meteo/meteo.html:144
+msgid "Vent"
+msgstr "Vento"
+
+#: core/templates/core/dashboard.html:61
+msgid "Chargement météo…"
+msgstr "A carregar meteorologia…"
+
+#: core/templates/core/dashboard.html:67
+msgid "actives"
+msgstr "ativas"
+
+#: core/templates/core/dashboard.html:68
+#: finances/templates/finances/subvention_pdf.html:30
+#: pac/templates/pac/pac.html:55 parcelles/templates/parcelles/list.html:90
+msgid "Surface"
+msgstr "Superfície"
+
+#: core/templates/core/dashboard.html:69
+msgid "Quota eau"
+msgstr "Quota de água"
+
+#: core/templates/core/dashboard.html:70
+msgid "Alertes actives"
+msgstr "Alertas ativos"
+
+#: core/templates/core/dashboard.html:76
+msgid "Historique DTI"
+msgstr "Histórico DTI"
+
+#: core/templates/core/dashboard.html:78
+msgid "Pas encore de données."
+msgstr "Ainda não há dados."
+
+#: core/templates/core/dashboard.html:81
+msgid "Consommation d'eau"
+msgstr "Consumo de água"
+
+#: core/templates/core/dashboard.html:83
+msgid "Pas encore de relevés."
+msgstr "Ainda não há registos."
+
+#: core/templates/core/dashboard.html:89
+msgid "Alertes"
+msgstr "Alertas"
+
+#: core/templates/core/dashboard.html:96
+msgid "Aucune alerte active. 🌿"
+msgstr "Nenhum alerta ativo. 🌿"
+
+#: environnement/models.py:11
+msgid "Atténuation du changement climatique"
+msgstr "Mitigação das alterações climáticas"
+
+#: environnement/models.py:12
+msgid "Adaptation au changement climatique"
+msgstr "Adaptação às alterações climáticas"
+
+#: environnement/models.py:13
+msgid "Eau et ressources marines"
+msgstr "Água e recursos marinhos"
+
+#: environnement/models.py:14
+#, fuzzy
+#| msgid "Économie"
+msgid "Économie circulaire"
+msgstr "Gazdaság"
+
+#: environnement/models.py:15
+msgid "Prévention de la pollution"
+msgstr "Prevenção da poluição"
+
+#: environnement/models.py:16
+msgid "Biodiversité et écosystèmes"
+msgstr "Biodiversidade e ecossistemas"
+
+#: environnement/models.py:21 pac/models.py:28
+msgid "campagne"
+msgstr "campanha"
+
+#: environnement/models.py:22
+msgid "activité"
+msgstr "atividade"
+
+#: environnement/models.py:23
+msgid "code NACE"
+msgstr "código NACE"
+
+#: environnement/models.py:25
+msgid "objectif de contribution"
+msgstr "objetivo de contribuição"
+
+#: environnement/models.py:27
+msgid "éligible"
+msgstr "elegível"
+
+#: environnement/models.py:28
+msgid "contribution substantielle"
+msgstr "contribuição substancial"
+
+#: environnement/models.py:30
+msgid "DNSH par objectif"
+msgstr "DNSH por objetivo"
+
+#: environnement/models.py:31
+msgid "garanties minimales"
+msgstr "garantias mínimas"
+
+#: environnement/models.py:32 exploitations/models.py:89
+msgid "chiffre d'affaires (€)"
+msgstr "volume de negócios (€)"
+
+#: environnement/models.py:33
+msgid "CapEx (€)"
+msgstr "CapEx (€)"
+
+#: environnement/models.py:34
+msgid "OpEx (€)"
+msgstr "OpEx (€)"
+
+#: environnement/models.py:35
+#, fuzzy
+#| msgid "Notifications"
+msgid "justification"
+msgstr "Értesítések"
+
+#: environnement/models.py:39
+msgid "activité Taxonomie"
+msgstr "atividade Taxonomia"
+
+#: environnement/models.py:40
+msgid "activités Taxonomie"
+msgstr "atividades Taxonomia"
+
+#: environnement/templates/environnement/bilan_eau.html:9
+#: environnement/views.py:113
+msgid "Bilan Eau"
+msgstr "Balanço Hídrico"
+
+#: environnement/templates/environnement/bilan_eau.html:10
+msgid "Consommation d'eau d'irrigation · Sessions réelles"
+msgstr "Consumo de água de rega · Sessões reais"
+
+#: environnement/templates/environnement/bilan_eau.html:14
+msgid "Export"
+msgstr "Exportar"
+
+#: environnement/templates/environnement/bilan_eau.html:21
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation totale"
+msgstr "Öntözés"
+
+#: environnement/templates/environnement/bilan_eau.html:23
+msgid "cumul des sessions"
+msgstr "acumulado das sessões"
+
+#: environnement/templates/environnement/bilan_eau.html:26
+#: irrigation/views.py:38
+msgid "Sessions"
+msgstr "Sessões"
+
+#: environnement/templates/environnement/bilan_eau.html:28
+msgid "sessions enregistrées"
+msgstr "sessões registadas"
+
+#: environnement/templates/environnement/bilan_eau.html:31
+msgid "Quota utilisé"
+msgstr "Quota utilizada"
+
+#: environnement/templates/environnement/bilan_eau.html:33
+msgid "alloués"
+msgstr "atribuídos"
+
+#: environnement/templates/environnement/bilan_eau.html:36
+msgid "Coût eau"
+msgstr "Custo da água"
+
+#: environnement/templates/environnement/bilan_eau.html:38
+msgid "estimé"
+msgstr "estimado"
+
+#: environnement/templates/environnement/bilan_eau.html:44
+msgid "Consommation mensuelle (m³)"
+msgstr "Consumo mensal (m³)"
+
+#: environnement/templates/environnement/bilan_eau.html:49
+msgid "Aucune session d'irrigation enregistrée"
+msgstr "Nenhuma sessão de rega registada"
+
+#: environnement/templates/environnement/bilan_eau.html:55
+msgid "Consommation par parcelle (m³/jour)"
+msgstr "Consumo por parcela (m³/dia)"
+
+#: environnement/templates/environnement/bilan_eau.html:68
+msgid "Aucune session d'irrigation"
+msgstr "Nenhuma sessão de rega"
+
+#: environnement/templates/environnement/bilan_eau.html:75
+msgid "Aucune session d'irrigation enregistrée pour vos parcelles."
+msgstr "Nenhuma sessão de rega registada para as suas parcelas."
+
+#: environnement/templates/environnement/bilan_eau.html:79
+msgid ""
+"Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
+"par parcelle."
+msgstr "Nenhuma parcela registada. Crie as suas parcelas para ver o consumo por parcela."
+
+#: environnement/templates/environnement/placeholder.html:18
+msgid "Module en préparation"
+msgstr "Módulo em preparação"
+
+#: environnement/templates/environnement/placeholder.html:19
+msgid "Cette section sera bientôt disponible."
+msgstr "Esta secção estará disponível em breve."
+
+#: environnement/templates/environnement/taxonomie.html:10
+msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
+msgstr "Regulamento (UE) 2020/852 · alinhamento das atividades (VN / CapEx / OpEx)"
+
+#: environnement/templates/environnement/taxonomie.html:16
+#: environnement/templates/environnement/taxonomie.html:123
+#: pac/templates/pac/pac.html:17 pac/templates/pac/pac.html:112
+msgid "Campagne"
+msgstr "Campanha"
+
+#: environnement/templates/environnement/taxonomie.html:21
+#: environnement/templates/environnement/taxonomie.html:90
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une fiche"
+msgstr "Kód aktiválása"
+
+#: environnement/templates/environnement/taxonomie.html:29
+msgid "Chiffre d'affaires aligné"
+msgstr "Volume de negócios alinhado"
+
+#: environnement/templates/environnement/taxonomie.html:33
+msgid "CapEx aligné"
+msgstr "CapEx alinhado"
+
+#: environnement/templates/environnement/taxonomie.html:37
+msgid "OpEx aligné"
+msgstr "OpEx alinhado"
+
+#: environnement/templates/environnement/taxonomie.html:41
+msgid "Fiches alignées"
+msgstr "Fichas alinhadas"
+
+#: environnement/templates/environnement/taxonomie.html:52
+#: environnement/templates/environnement/taxonomie.html:114
+msgid "Activité"
+msgstr "Atividade"
+
+#: environnement/templates/environnement/taxonomie.html:53
+msgid "Objectif"
+msgstr "Objetivo"
+
+#: environnement/templates/environnement/taxonomie.html:54
+#: finances/templates/finances/facturation.html:11
+#: interventions/templates/interventions/interventions.html:136
+#: iot/templates/iot/capteurs.html:24 pac/templates/pac/pac.html:57
+#: pac/templates/pac/pac.html:138
+msgid "Statut"
+msgstr "Estado"
+
+#: environnement/templates/environnement/taxonomie.html:67
+msgid "Aligné"
+msgstr "Alinhado"
+
+#: environnement/templates/environnement/taxonomie.html:68
+msgid "Éligible"
+msgstr "Elegível"
+
+#: environnement/templates/environnement/taxonomie.html:69
+msgid "Non éligible"
+msgstr "Não elegível"
+
+#: environnement/templates/environnement/taxonomie.html:75
+msgid "Supprimer cette fiche ?"
+msgstr "Eliminar esta ficha?"
+
+#: environnement/templates/environnement/taxonomie.html:88
+msgid "Aucune fiche pour cette campagne."
+msgstr "Nenhuma ficha para esta campanha."
+
+#: environnement/templates/environnement/taxonomie.html:97
+msgid ""
+"Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
+"objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
+"montrent la part alignée du CA, des CapEx et des OpEx."
+msgstr "Uma atividade está ALINHADA se: elegível + contribuição substancial para 1 objetivo + DNSH (não prejudica os outros 5) + garantias mínimas. Os KPI mostram a parte alinhada do VN, do CapEx e do OpEx."
+
+#: environnement/templates/environnement/taxonomie.html:106
+msgid "Nouvelle fiche d'activité"
+msgstr "Nova ficha de atividade"
+
+#: environnement/templates/environnement/taxonomie.html:115
+msgid "ex: Production de noix"
+msgstr "ex: Produção de nozes"
+
+#: environnement/templates/environnement/taxonomie.html:119
+msgid "Code NACE"
+msgstr "Código NACE"
+
+#: environnement/templates/environnement/taxonomie.html:127
+msgid "Objectif de contribution"
+msgstr "Objetivo de contribuição"
+
+#: environnement/templates/environnement/taxonomie.html:136
+#: meteo/templates/meteo/meteo.html:141
+#, fuzzy
+#| msgid "Communication"
+msgid "Conditions"
+msgstr "Kommunikáció"
+
+#: environnement/templates/environnement/taxonomie.html:138
+msgid "Activité éligible (figure dans la Taxonomie)"
+msgstr "Atividade elegível (consta da Taxonomia)"
+
+#: environnement/templates/environnement/taxonomie.html:139
+msgid "Contribution substantielle vérifiée"
+msgstr "Contribuição substancial verificada"
+
+#: environnement/templates/environnement/taxonomie.html:140
+msgid "Garanties minimales respectées"
+msgstr "Garantias mínimas cumpridas"
+
+#: environnement/templates/environnement/taxonomie.html:146
+msgid "DNSH — ne nuit pas significativement à :"
+msgstr "DNSH — não prejudica significativamente:"
+
+#: environnement/templates/environnement/taxonomie.html:147
+msgid "À cocher pour les objectifs autres que celui de contribution."
+msgstr "A assinalar para os objetivos diferentes do de contribuição."
+
+#: environnement/templates/environnement/taxonomie.html:158
+msgid "CA (€)"
+msgstr "VN (€)"
+
+#: environnement/templates/environnement/taxonomie.html:172
+#, fuzzy
+#| msgid "Notifications"
+msgid "Justification"
+msgstr "Értesítések"
+
+#: environnement/views.py:51
+msgid ""
+"Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
+"couverts végétaux et infrastructures agro-écologiques (IAE)."
+msgstr "Acompanhe a biodiversidade das suas parcelas: auxiliares, polinizadores, coberturas vegetais e infraestruturas agroecológicas (IAE)."
+
+#: environnement/views.py:138
+msgid ""
+"Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
+"reliquats et pression sur la directive Nitrates."
+msgstr "Balanço de azoto (método do balanço): entradas, exportações pelas culturas, resíduos e pressão sobre a diretiva Nitratos."
+
+#: environnement/views.py:145
+msgid ""
+"Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
+"sols (diagnostic type GES / label bas-carbone)."
+msgstr "Emissões de gases com efeito de estufa da exploração e armazenamento de carbono dos solos (diagnóstico tipo GEE / rótulo baixo carbono)."
+
+#: environnement/views.py:152
+msgid ""
+"Synthèse environnementale de l'exploitation, exportable, regroupant les "
+"indicateurs (eau, azote, carbone, biodiversité)."
+msgstr "Síntese ambiental da exploração, exportável, reunindo os indicadores (água, azoto, carbono, biodiversidade)."
+
+#: environnement/views.py:159
+msgid ""
+"Suivi sanitaire des cultures : maladies, ravageurs, observations et "
+"indicateurs de fréquence de traitement (IFT)."
+msgstr "Acompanhamento sanitário das culturas: doenças, pragas, observações e indicadores de frequência de tratamento (IFT)."
+
+#: equipe/models.py:15
+msgid "Chef d'équipe"
+msgstr "Chefe de equipa"
+
+#: equipe/models.py:16
+msgid "Ouvrier"
+msgstr "Operário"
+
+#: equipe/models.py:17
+msgid "Saisonnier"
+msgstr "Sazonal"
+
+#: equipe/models.py:18
+msgid "Prestataire"
+msgstr "Prestador"
+
+#: equipe/models.py:24
+msgid "téléphone"
+msgstr "telefone"
+
+#: equipe/models.py:42
+msgid "membre d'équipe"
+msgstr "membro de equipa"
+
+#: equipe/models.py:43
+msgid "membres d'équipe"
+msgstr "membros de equipa"
+
+#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
+msgid "Haute"
+msgstr "Alta"
+
+#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
+msgid "Normale"
+msgstr "Normal"
+
+#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
+msgid "Basse"
+msgstr "Baixa"
+
+#: equipe/models.py:57
+msgid "À faire"
+msgstr "Por fazer"
+
+#: equipe/models.py:58 interventions/models.py:30 planning/models.py:30
+msgid "En cours"
+msgstr "Em curso"
+
+#: equipe/models.py:59 interventions/models.py:31 iot/models.py:93
+msgid "Terminée"
+msgstr "Concluída"
+
+#: equipe/models.py:60
+msgid "Validée"
+msgstr "Validada"
+
+#: equipe/models.py:63
+msgid "titre"
+msgstr "título"
+
+#: equipe/models.py:77
+msgid "tâche"
+msgstr "tarefa"
+
+#: equipe/models.py:78
+msgid "tâches"
+msgstr "tarefas"
+
+#: equipe/models.py:92 finances/models.py:116 iot/models.py:90
+msgid "En attente"
+msgstr "Pendente"
+
+#: equipe/models.py:93 mail/models.py:14 mail/templates/mail/detail.html:16
+#: mail/templates/mail/outbox.html:30
+msgid "Envoyé"
+msgstr "Enviado"
+
+#: equipe/models.py:94
+msgid "Échoué"
+msgstr "Falhado"
+
+#: equipe/models.py:105
+msgid "rappel de tâche"
+msgstr "lembrete de tarefa"
+
+#: equipe/models.py:106
+msgid "rappels de tâche"
+msgstr "lembretes de tarefa"
+
+#: equipe/templates/equipe/equipe.html:20
+msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
+msgstr "Nenhum membro de equipa. Adicione através do admin ou da API."
+
+#: equipe/templates/equipe/location_share.html:3
+msgid "Partage de position"
+msgstr "Partilha de localização"
+
+#: equipe/templates/equipe/location_share.html:9
+#: equipe/templates/equipe/location_share.html:13
+msgid "Partager ma position"
+msgstr "Partilhar a minha localização"
+
+#: equipe/templates/equipe/location_share.html:11
+#, python-format
+msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
+msgstr "Olá %(name)s, partilhe a sua localização com a sua equipa."
+
+#: equipe/templates/equipe/location_share.html:16
+msgid "Lien expiré"
+msgstr "Ligação expirada"
+
+#: equipe/templates/equipe/location_share.html:17
+msgid "Ce lien de partage n'est plus valide."
+msgstr "Esta ligação de partilha já não é válida."
+
+#: equipe/templates/equipe/location_share.html:28
+msgid "Géolocalisation non supportée."
+msgstr "Geolocalização não suportada."
+
+#: equipe/templates/equipe/location_share.html:34
+msgid "Position partagée ✅"
+msgstr "Localização partilhada ✅"
+
+#: equipe/templates/equipe/location_share.html:35
+msgid "Erreur lors du partage."
+msgstr "Erro ao partilhar."
+
+#: equipe/templates/equipe/location_share.html:36
+msgid "Accès à la position refusé."
+msgstr "Acesso à localização recusado."
+
+#: equipe/templates/equipe/mes_taches.html:20
+msgid "Aucune tâche assignée."
+msgstr "Nenhuma tarefa atribuída."
+
+#: equipe/templates/equipe/taches.html:13
+msgid "non assignée"
+msgstr "não atribuída"
+
+#: equipe/templates/equipe/taches.html:20
+msgid "Aucune tâche."
+msgstr "Nenhuma tarefa."
+
+#: exploitations/models.py:15
+msgid "Exploitation individuelle"
+msgstr "Exploração individual"
+
+#: exploitations/models.py:16
+msgid "EARL"
+msgstr "EARL"
+
+#: exploitations/models.py:17
+msgid "GAEC"
+msgstr "GAEC"
+
+#: exploitations/models.py:18
+msgid "SCEA"
+msgstr "SCEA"
+
+#: exploitations/models.py:19
+msgid "SCEV"
+msgstr "SCEV"
+
+#: exploitations/models.py:20
+msgid "SARL"
+msgstr "SARL"
+
+#: exploitations/models.py:24
+#, fuzzy
+#| msgid "Interventions"
+msgid "Conventionnel"
+msgstr "Beavatkozások"
+
+#: exploitations/models.py:25 pac/models.py:16
+msgid "Agriculture biologique"
+msgstr "Agricultura biológica"
+
+#: exploitations/models.py:26
+msgid "En conversion bio"
+msgstr "Em conversão biológica"
+
+#: exploitations/models.py:27
+#, fuzzy
+#| msgid "Environnement"
+msgid "Haute Valeur Environnementale"
+msgstr "Környezet"
+
+#: exploitations/models.py:30
+msgid "Forage"
+msgstr "Furo"
+
+#: exploitations/models.py:31
+msgid "Rivière / cours d'eau"
+msgstr "Rio / curso de água"
+
+#: exploitations/models.py:32
+msgid "Réseau collectif"
+msgstr "Rede coletiva"
+
+#: exploitations/models.py:33
+msgid "Retenue / bassin"
+msgstr "Albufeira / reservatório"
+
+#: exploitations/models.py:40
+msgid "propriétaire"
+msgstr "proprietário"
+
+#: exploitations/models.py:45
+msgid "prénom"
+msgstr "nome próprio"
+
+#: exploitations/models.py:46
+msgid "date de naissance"
+msgstr "data de nascimento"
+
+#: exploitations/models.py:47 exploitations/models.py:118
+msgid "raison sociale"
+msgstr "denominação social"
+
+#: exploitations/models.py:48 exploitations/models.py:120
+msgid "forme juridique"
+msgstr "forma jurídica"
+
+#: exploitations/models.py:49 exploitations/models.py:122
+msgid "SIRET"
+msgstr "SIRET"
+
+#: exploitations/models.py:50 exploitations/models.py:123
+msgid "n° PACAGE"
+msgstr "n.º PACAGE"
+
+#: exploitations/models.py:51 exploitations/models.py:124
+msgid "TVA intracommunautaire"
+msgstr "IVA intracomunitário"
+
+#: exploitations/models.py:52 exploitations/models.py:125
+msgid "année d'installation"
+msgstr "ano de instalação"
+
+#: exploitations/models.py:55
+msgid "téléphone 1"
+msgstr "telefone 1"
+
+#: exploitations/models.py:56
+msgid "téléphone 2"
+msgstr "telefone 2"
+
+#: exploitations/models.py:57
+msgid "email"
+msgstr "email"
+
+#: exploitations/models.py:58
+msgid "site web"
+msgstr "site web"
+
+#: exploitations/models.py:61
+msgid "adresse"
+msgstr "morada"
+
+#: exploitations/models.py:62
+msgid "ville"
+msgstr "cidade"
+
+#: exploitations/models.py:63
+msgid "code postal"
+msgstr "código postal"
+
+#: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
+msgid "latitude"
+msgstr "latitude"
+
+#: exploitations/models.py:65 meteo/models.py:20 meteo/models.py:48
+msgid "longitude"
+msgstr "longitude"
+
+#: exploitations/models.py:68
+msgid "surface totale (ha)"
+msgstr "superfície total (ha)"
+
+#: exploitations/models.py:69
+msgid "SAU — surface agricole utile (ha)"
+msgstr "SAU — superfície agrícola útil (ha)"
+
+#: exploitations/models.py:71
+msgid "type d'agriculture"
+msgstr "tipo de agricultura"
+
+#: exploitations/models.py:73
+msgid "productions principales"
+msgstr "produções principais"
+
+#: exploitations/models.py:74
+msgid "cheptel"
+msgstr "efetivo pecuário"
+
+#: exploitations/models.py:77
+msgid "quota eau (m³)"
+msgstr "quota de água (m³)"
+
+#: exploitations/models.py:78
+msgid "eau consommée (m³)"
+msgstr "água consumida (m³)"
+
+#: exploitations/models.py:79
+msgid "prix de l'eau (€/m³)"
+msgstr "preço da água (€/m³)"
+
+#: exploitations/models.py:80
+msgid "source d'eau"
+msgstr "fonte de água"
+
+#: exploitations/models.py:81
+msgid "surface irrigable (ha)"
+msgstr "superfície irrigável (ha)"
+
+#: exploitations/models.py:84
+msgid "niveau HVE"
+msgstr "nível HVE"
+
+#: exploitations/models.py:85
+#, fuzzy
+#| msgid "Notifications"
+msgid "certifications & labels"
+msgstr "Értesítések"
+
+#: exploitations/models.py:85
+msgid "Bio, AOP/IGP, Label Rouge…"
+msgstr "Biológico, DOP/IGP, Label Rouge…"
+
+#: exploitations/models.py:88
+msgid "main-d'œuvre (ETP)"
+msgstr "mão de obra (ETC)"
+
+#: exploitations/models.py:92
+msgid "exploitation"
+msgstr "exploração"
+
+#: exploitations/models.py:93
+msgid "exploitations"
+msgstr "explorações"
+
+#: exploitations/models.py:117
+msgid "rôle / libellé"
+msgstr "função / designação"
+
+#: exploitations/models.py:129
+msgid "société liée"
+msgstr "sociedade ligada"
+
+#: exploitations/models.py:130
+msgid "sociétés liées"
+msgstr "sociedades ligadas"
+
+#: exploitations/templates/exploitations/settings.html:15
+msgid "Profil de l'exploitation — utilisé partout dans l'application."
+msgstr "Perfil da exploração — utilizado em toda a aplicação."
+
+#: exploitations/templates/exploitations/settings.html:64
+msgid "Sociétés liées"
+msgstr "Sociedades ligadas"
+
+#: exploitations/templates/exploitations/settings.html:68
+#: exploitations/templates/exploitations/settings.html:99
+msgid "Ajouter une entreprise"
+msgstr "Adicionar uma empresa"
+
+#: exploitations/templates/exploitations/settings.html:81
+msgid "Supprimer cette société ?"
+msgstr "Eliminar esta sociedade?"
+
+#: exploitations/templates/exploitations/settings.html:89
+msgid ""
+"Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
+"à l'exploitation."
+msgstr "Nenhuma sociedade ligada. Adicione uma empresa (GAEC, SCI fundiária…) associada à exploração."
+
+#: exploitations/templates/exploitations/settings.html:105
+msgid "Raison sociale"
+msgstr "Denominação social"
+
+#: exploitations/templates/exploitations/settings.html:107
+msgid "Tapez ≥ 3 lettres pour rechercher dans l'annuaire officiel."
+msgstr "Escreva ≥ 3 letras para pesquisar no diretório oficial."
+
+#: exploitations/templates/exploitations/settings.html:111
+msgid "Rôle / libellé"
+msgstr "Função / designação"
+
+#: exploitations/templates/exploitations/settings.html:112
+msgid "ex: SCI foncière"
+msgstr "ex: SCI fundiária"
+
+#: exploitations/templates/exploitations/settings.html:115
+msgid "Forme juridique"
+msgstr "Forma jurídica"
+
+#: exploitations/templates/exploitations/settings.html:126
+msgid "N° PACAGE"
+msgstr "N.º PACAGE"
+
+#: exploitations/templates/exploitations/settings.html:130
+msgid "TVA intra."
+msgstr "IVA intra."
+
+#: exploitations/templates/exploitations/settings.html:134
+#: finances/templates/finances/subvention_pdf.html:24
+msgid "Année"
+msgstr "Ano"
+
+#: exploitations/views.py:54
+msgid "Exploitation enregistrée."
+msgstr "Exploração registada."
+
+#: exploitations/views.py:63
+msgid "Juridique"
+msgstr "Jurídico"
+
+#: exploitations/views.py:65 public/templates/public/home.html:482
+msgid "Contact"
+msgstr "Contacto"
+
+#: exploitations/views.py:67
+msgid "Localisation"
+msgstr "Localização"
+
+#: exploitations/views.py:69
+msgid "Caractéristiques agricoles"
+msgstr "Características agrícolas"
+
+#: exploitations/views.py:71
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Eau & irrigation"
+msgstr "Öntözés"
+
+#: exploitations/views.py:73
+#, fuzzy
+#| msgid "Notifications"
+msgid "Certifications & labels"
+msgstr "Értesítések"
+
+#: exploitations/views.py:75
+#, fuzzy
+#| msgid "Économie"
+msgid "Économique"
+msgstr "Gazdaság"
+
+#: exploitations/views.py:117
+msgid "Société ajoutée."
+msgstr "Sociedade adicionada."
+
+#: finances/models.py:15
+msgid "Semences"
+msgstr "Sementes"
+
+#: finances/models.py:17
+msgid "Phytosanitaires"
+msgstr "Fitossanitários"
+
+#: finances/models.py:19 finances/templates/finances/bilan_economique.html:31
+#: finances/templates/finances/subvention_pdf.html:32
+msgid "Énergie"
+msgstr "Energia"
+
+#: finances/models.py:20
+msgid "Main d'œuvre"
+msgstr "Mão de obra"
+
+#: finances/models.py:21 ia/models.py:35
+msgid "Matériel"
+msgstr "Equipamento"
+
+#: finances/models.py:22 operations/models.py:118 planning/models.py:213
+msgid "Transport"
+msgstr "Transporte"
+
+#: finances/models.py:23
+msgid "Assurance"
+msgstr "Seguro"
+
+#: finances/models.py:36
+msgid "charge"
+msgstr "encargo"
+
+#: finances/models.py:37
+msgid "charges"
+msgstr "encargos"
+
+#: finances/models.py:43
+msgid "Vente céréales"
+msgstr "Venda de cereais"
+
+#: finances/models.py:44
+msgid "Vente fruits"
+msgstr "Venda de frutas"
+
+#: finances/models.py:45
+msgid "Vente légumes"
+msgstr "Venda de legumes"
+
+#: finances/models.py:46
+msgid "Aide PAC"
+msgstr "Ajuda PAC"
+
+#: finances/models.py:47
+msgid "Subvention"
+msgstr "Subvenção"
+
+#: finances/models.py:48
+msgid "Location"
+msgstr "Aluguer"
+
+#: finances/models.py:49
+msgid "Prestation"
+msgstr "Prestação"
+
+#: finances/models.py:65
+msgid "revenu"
+msgstr "rendimento"
+
+#: finances/models.py:66
+msgid "revenus"
+msgstr "rendimentos"
+
+#: finances/models.py:72
+msgid "Extra"
+msgstr "Extra"
+
+#: finances/models.py:73
+msgid "Catégorie 1"
+msgstr "Categoria 1"
+
+#: finances/models.py:74
+msgid "Catégorie 2"
+msgstr "Categoria 2"
+
+#: finances/models.py:75
+msgid "Déclassé"
+msgstr "Desclassificado"
+
+#: finances/models.py:88
+msgid "récolte"
+msgstr "colheita"
+
+#: finances/models.py:89
+msgid "récoltes"
+msgstr "colheitas"
+
+#: finances/models.py:105
+msgid "client"
+msgstr "cliente"
+
+#: finances/models.py:106
+msgid "clients"
+msgstr "clientes"
+
+#: finances/models.py:115 planning/models.py:259
+msgid "Brouillon"
+msgstr "Rascunho"
+
+#: finances/models.py:117
+msgid "Payée"
+msgstr "Paga"
+
+#: finances/models.py:118
+msgid "En retard"
+msgstr "Em atraso"
+
+#: finances/models.py:119 interventions/models.py:32
+msgid "Annulée"
+msgstr "Anulada"
+
+#: finances/models.py:136
+msgid "facture"
+msgstr "fatura"
+
+#: finances/models.py:137
+msgid "factures"
+msgstr "faturas"
+
+#: finances/models.py:149
+msgid "Taxonomie Verte EU"
+msgstr "Taxonomia Verde UE"
+
+#: finances/models.py:150
+msgid "Plan Eau 2026"
+msgstr "Plano da Água 2026"
+
+#: finances/models.py:155
+msgid "En génération"
+msgstr "Em geração"
+
+#: finances/models.py:156
+msgid "Prêt"
+msgstr "Pronto"
+
+#: finances/models.py:168
+msgid "export subvention"
+msgstr "exportação de subvenção"
+
+#: finances/models.py:169
+msgid "exports subvention"
+msgstr "exportações de subvenção"
+
+#: finances/templates/finances/bilan_economique.html:9
+msgid "Revenus CSV"
+msgstr "Rendimentos CSV"
+
+#: finances/templates/finances/bilan_economique.html:10
+msgid "Dossier subvention PDF"
+msgstr "Processo de subvenção PDF"
+
+#: finances/templates/finances/bilan_economique.html:15
+#: finances/templates/finances/subvention_pdf.html:40 finances/views.py:50
+msgid "Revenus"
+msgstr "Rendimentos"
+
+#: finances/templates/finances/bilan_economique.html:17
+#: finances/templates/finances/subvention_pdf.html:42
+msgid "Résultat net"
+msgstr "Resultado líquido"
+
+#: finances/templates/finances/bilan_economique.html:18
+msgid "Marge / ha"
+msgstr "Margem / ha"
+
+#: finances/templates/finances/bilan_economique.html:23
+msgid "Revenus vs charges (par mois)"
+msgstr "Rendimentos vs encargos (por mês)"
+
+#: finances/templates/finances/bilan_economique.html:25
+msgid "Pas encore de données financières."
+msgstr "Ainda não há dados financeiros."
+
+#: finances/templates/finances/bilan_economique.html:28
+msgid "Consommation"
+msgstr "Consumo"
+
+#: finances/templates/finances/charges.html:8
+msgid "Export CSV"
+msgstr "Exportar CSV"
+
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:56
+msgid "Montant"
+msgstr "Montante"
+
+#: finances/templates/finances/charges.html:14
+msgid "Fournisseur"
+msgstr "Fornecedor"
+
+#: finances/templates/finances/charges.html:29
+msgid "Aucune charge enregistrée."
+msgstr "Nenhum encargo registado."
+
+#: finances/templates/finances/facturation.html:11
+msgid "Client"
+msgstr "Cliente"
+
+#: finances/templates/finances/facturation.html:11
+msgid "Émission"
+msgstr "Emissão"
+
+#: finances/templates/finances/facturation.html:27
+msgid "Aucune facture."
+msgstr "Nenhuma fatura."
+
+#: finances/templates/finances/subvention_pdf.html:22
+msgid "Dossier de subvention"
+msgstr "Processo de subvenção"
+
+#: finances/templates/finances/subvention_pdf.html:33
+msgid "Score DTI"
+msgstr "Pontuação DTI"
+
+#: finances/templates/finances/subvention_pdf.html:49
+#: pac/templates/pac/pac.html:134
+msgid "Surface (ha)"
+msgstr "Superfície (ha)"
+
+#: finances/templates/finances/subvention_pdf.html:56
+msgid "Document généré par Holystyl."
+msgstr "Documento gerado pela Holystyl."
+
+#: ia/models.py:13
+msgid "Utilisateur"
+msgstr "Utilizador"
+
+#: ia/models.py:26
+msgid "conversation IA"
+msgstr "conversa IA"
+
+#: ia/models.py:27
+msgid "conversations IA"
+msgstr "conversas IA"
+
+#: ia/models.py:37
+msgid "Général"
+msgstr "Geral"
+
+#: ia/models.py:45
+msgid "terme vocal"
+msgstr "termo vocal"
+
+#: ia/models.py:46
+msgid "dictionnaire vocal"
+msgstr "dicionário vocal"
+
+#: ia/models.py:68
+msgid "rapport quotidien"
+msgstr "relatório diário"
+
+#: ia/models.py:69
+msgid "rapports quotidiens"
+msgstr "relatórios diários"
+
+#: ia/templates/ia/assistant.html:11 ia/templates/ia/assistant.html:33
+#: messagerie/templates/messagerie/new.html:6 messagerie/views.py:207
+msgid "Nouvelle conversation"
+msgstr "Nova conversa"
+
+#: ia/templates/ia/assistant.html:13
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversations"
+msgstr "Kommunikáció"
+
+#: ia/templates/ia/assistant.html:22
+msgid "Aucune conversation."
+msgstr "Nenhuma conversa."
+
+#: ia/templates/ia/assistant.html:39
+msgid "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles."
+msgstr "IA não configurada — adicione GEMINI_API_KEY para obter respostas reais."
+
+#: ia/templates/ia/assistant.html:49
+msgid "Bonjour, je suis Eric."
+msgstr "Olá, sou o Eric."
+
+#: ia/templates/ia/assistant.html:51
+msgid ""
+"Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
+"cultures, la fertilisation ou vos analyses."
+msgstr "O seu consultor agrónomo. Coloque-me as suas questões sobre rega, culturas, fertilização ou as suas análises."
+
+#: ia/templates/ia/assistant.html:89
+msgid "Décrivez votre besoin…"
+msgstr "Descreva a sua necessidade…"
+
+#: ia/templates/ia/assistant.html:92
+msgid "Entrée pour envoyer · Maj+Entrée pour saut de ligne"
+msgstr "Enter para enviar · Shift+Enter para mudar de linha"
+
+#: ia/templates/ia/assistant.html:95
+msgid "Dictée vocale"
+msgstr "Ditado vocal"
+
+#: ia/templates/ia/assistant.html:100 mail/templates/mail/compose.html:58
+#: messagerie/templates/messagerie/_new_modal.html:62
+msgid "Envoyer"
+msgstr "Enviar"
+
+#: ia/templates/ia/assistant.html:105
+msgid "Eric peut commettre des erreurs. Vérifiez les informations importantes."
+msgstr "O Eric pode cometer erros. Verifique as informações importantes."
+
+#: ia/templates/ia/assistant.html:150
+#: messagerie/templates/messagerie/detail.html:105
+msgid "Reconnaissance vocale non supportée par ce navigateur."
+msgstr "Reconhecimento de voz não suportado por este navegador."
+
+#: ia/views.py:40 messagerie/models.py:66
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversation"
+msgstr "Kommunikáció"
+
+#: ia/views.py:68
+msgid "Eric"
+msgstr "Eric"
+
+#: interventions/models.py:13
+#: interventions/templates/interventions/interventions.html:55
+#: operations/models.py:114
+msgid "Traitement"
+msgstr "Tratamento"
+
+#: interventions/models.py:14
+#: interventions/templates/interventions/interventions.html:64
+#: operations/models.py:116
+msgid "Fertilisation"
+msgstr "Fertilização"
+
+#: interventions/models.py:15
+#: interventions/templates/interventions/interventions.html:73
+#: operations/models.py:115
+msgid "Récolte"
+msgstr "Colheita"
+
+#: interventions/models.py:16 operations/models.py:113
+msgid "Semis"
+msgstr "Sementeira"
+
+#: interventions/models.py:17
+msgid "Travail du sol"
+msgstr "Mobilização do solo"
+
+#: interventions/models.py:18
+msgid "Taille"
+msgstr "Poda"
+
+#: interventions/models.py:19
+msgid "Palissage"
+msgstr "Empa"
+
+#: interventions/models.py:20
+msgid "Désherbage"
+msgstr "Monda química"
+
+#: interventions/models.py:21
+msgid "Éclaircissage"
+msgstr "Desbaste"
+
+#: interventions/models.py:22
+msgid "Effeuillage"
+msgstr "Desfolha"
+
+#: interventions/models.py:23
+msgid "Vendange"
+msgstr "Vindima"
+
+#: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:131
+#: operations/models.py:25 operations/models.py:55
+msgid "Maintenance"
+msgstr "Manutenção"
+
+#: interventions/models.py:25
+msgid "Observation"
+msgstr "Observação"
+
+#: interventions/models.py:29
+msgid "Planifiée"
+msgstr "Planeada"
+
+#: interventions/models.py:35 irrigation/models.py:73
+msgid "Vocal"
+msgstr "Vocal"
+
+#: interventions/models.py:36 irrigation/models.py:72 irrigation/models.py:104
+#: irrigation/models.py:156 irrigation/models.py:191 irrigation/models.py:215
+msgid "Manuel"
+msgstr "Manual"
+
+#: interventions/models.py:37 irrigation/models.py:74 irrigation/models.py:107
+msgid "IA"
+msgstr "IA"
+
+#: interventions/models.py:62
+msgid "intervention"
+msgstr "intervenção"
+
+#: interventions/models.py:63
+msgid "interventions"
+msgstr "intervenções"
+
+#: interventions/templates/interventions/interventions.html:28
+#, python-format
+msgid "Journal des opérations culturales · %(n)s intervention"
+msgid_plural "Journal des opérations culturales · %(n)s interventions"
+msgstr[0] "Diário das operações culturais · %(n)s intervenção"
+msgstr[1] "Diário das operações culturais · %(n)s intervenções"
+
+#: interventions/templates/interventions/interventions.html:103
+msgid "Aucune intervention enregistrée."
+msgstr "Nenhuma intervenção registada."
+
+#: interventions/templates/interventions/interventions.html:106
+msgid "Enregistrer la première intervention"
+msgstr "Registar a primeira intervenção"
+
+#: interventions/templates/interventions/interventions.html:112
+msgid "Aucune intervention pour ce filtre."
+msgstr "Nenhuma intervenção para este filtro."
+
+#: interventions/templates/interventions/interventions.html:121
+#, fuzzy
+#| msgid "Interventions"
+msgid "Nouvelle intervention"
+msgstr "Beavatkozások"
+
+#: interventions/templates/interventions/interventions.html:144
+msgid "Titre"
+msgstr "Título"
+
+#: interventions/templates/interventions/interventions.html:150
+msgid "Date / heure"
+msgstr "Data / hora"
+
+#: interventions/templates/interventions/interventions.html:158
+msgid "—"
+msgstr "—"
+
+#: iot/models.py:16
+msgid "Débitmètre"
+msgstr "Caudalímetro"
+
+#: iot/models.py:17
+msgid "Capteur de pression"
+msgstr "Sensor de pressão"
+
+#: iot/models.py:18
+msgid "Station météo"
+msgstr "Estação meteorológica"
+
+#: iot/models.py:19
+msgid "Contrôleur de vanne"
+msgstr "Controlador de válvula"
+
+#: iot/models.py:20
+msgid "Contrôleur de pompe"
+msgstr "Controlador de bomba"
+
+#: iot/models.py:21
+msgid "Humidité du sol"
+msgstr "Humidade do solo"
+
+#: iot/models.py:22
+msgid "Compteur d'énergie"
+msgstr "Contador de energia"
+
+#: iot/models.py:23 iot/models.py:30
+msgid "Générique"
+msgstr "Genérico"
+
+#: iot/models.py:33
+msgid "En ligne"
+msgstr "Online"
+
+#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
+msgid "Hors ligne"
+msgstr "Offline"
+
+#: iot/models.py:35 iot/models.py:131
+msgid "Avertissement"
+msgstr "Aviso"
+
+#: iot/models.py:44
+msgid "identifiant device"
+msgstr "identificador do dispositivo"
+
+#: iot/models.py:56
+msgid "device IoT"
+msgstr "dispositivo IoT"
+
+#: iot/models.py:57
+msgid "devices IoT"
+msgstr "dispositivos IoT"
+
+#: iot/models.py:82
+msgid "télémétrie"
+msgstr "telemetria"
+
+#: iot/models.py:83
+msgid "télémétries"
+msgstr "telemetrias"
+
+#: iot/models.py:91
+msgid "Envoyée"
+msgstr "Enviada"
+
+#: iot/models.py:92
+msgid "Accusée"
+msgstr "Confirmada"
+
+#: iot/models.py:94
+msgid "Échouée"
+msgstr "Falhada"
+
+#: iot/models.py:95
+msgid "Expirée"
+msgstr "Expirada"
+
+#: iot/models.py:109
+msgid "commande IoT"
+msgstr "comando IoT"
+
+#: iot/models.py:110
+msgid "commandes IoT"
+msgstr "comandos IoT"
+
+#: iot/models.py:116
+msgid "Fuite détectée"
+msgstr "Fuga detetada"
+
+#: iot/models.py:117
+msgid "Pression basse"
+msgstr "Pressão baixa"
+
+#: iot/models.py:118
+msgid "Pression haute"
+msgstr "Pressão alta"
+
+#: iot/models.py:119
+msgid "Débit bas"
+msgstr "Caudal baixo"
+
+#: iot/models.py:120
+msgid "Débit élevé"
+msgstr "Caudal elevado"
+
+#: iot/models.py:121
+msgid "Panne de pompe"
+msgstr "Avaria da bomba"
+
+#: iot/models.py:122
+msgid "Baisse d'uniformité"
+msgstr "Quebra de uniformidade"
+
+#: iot/models.py:123
+msgid "Pic d'énergie"
+msgstr "Pico de energia"
+
+#: iot/models.py:125
+msgid "Seuil dépassé"
+msgstr "Limiar ultrapassado"
+
+#: iot/models.py:126
+msgid "Risque de gel"
+msgstr "Risco de geada"
+
+#: iot/models.py:127
+msgid "Perte invisible"
+msgstr "Perda invisível"
+
+#: iot/models.py:130
+msgid "Info"
+msgstr "Info"
+
+#: iot/models.py:132
+msgid "Danger"
+msgstr "Perigo"
+
+#: iot/models.py:148
+msgid "alerte IoT"
+msgstr "alerta IoT"
+
+#: iot/models.py:149
+msgid "alertes IoT"
+msgstr "alertas IoT"
+
+#: iot/models.py:156
+msgid "Température gel"
+msgstr "Temperatura de geada"
+
+#: iot/models.py:157
+msgid "Pression min"
+msgstr "Pressão mín."
+
+#: iot/models.py:158
+msgid "Pression max"
+msgstr "Pressão máx."
+
+#: iot/models.py:159
+msgid "Débit min"
+msgstr "Caudal mín."
+
+#: iot/models.py:160
+msgid "Débit max"
+msgstr "Caudal máx."
+
+#: iot/models.py:161
+msgid "kWh/m³ max"
+msgstr "kWh/m³ máx."
+
+#: iot/models.py:162
+msgid "Humidité sol min"
+msgstr "Humidade do solo mín."
+
+#: iot/models.py:163
+msgid "Humidité sol max"
+msgstr "Humidade do solo máx."
+
+#: iot/models.py:164
+msgid "Perte invisible %"
+msgstr "Perda invisível %"
+
+#: iot/models.py:176
+msgid "seuil"
+msgstr "limiar"
+
+#: iot/models.py:177
+msgid "seuils"
+msgstr "limiares"
+
+#: iot/templates/iot/capteurs.html:6 iot/views.py:60
+msgid "Capteurs & IoT"
+msgstr "Sensores & IoT"
+
+#: iot/templates/iot/capteurs.html:10
+msgid "Télémétrie récente"
+msgstr "Telemetria recente"
+
+#: iot/templates/iot/capteurs.html:22
+msgid "Marque"
+msgstr "Marca"
+
+#: iot/templates/iot/capteurs.html:23
+msgid "Firmware"
+msgstr "Firmware"
+
+#: iot/templates/iot/capteurs.html:25
+msgid "Vu"
+msgstr "Visto"
+
+#: iot/templates/iot/capteurs.html:43
+msgid "Aucun capteur enregistré."
+msgstr "Nenhum sensor registado."
+
+#: iot/templates/iot/regie.html:10
+msgid "Temps réel actif"
+msgstr "Tempo real ativo"
+
+#: iot/templates/iot/regie.html:42 parcelles/templates/parcelles/detail.html:31
+msgid "Débit"
+msgstr "Caudal"
+
+#: iot/templates/iot/regie.html:46 parcelles/templates/parcelles/detail.html:32
+msgid "Pression"
+msgstr "Pressão"
+
+#: iot/templates/iot/regie.html:50
+msgid "Puissance"
+msgstr "Potência"
+
+#: iot/templates/iot/regie.html:62
+msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
+msgstr "Nenhum dispositivo IoT. Adicione através do admin ou de Sensores."
+
+#: irrigation/models.py:20 parcelles/models.py:14
+msgid "Goutte à goutte"
+msgstr "Gota a gota"
+
+#: irrigation/models.py:21 parcelles/models.py:15
+msgid "Aspersion"
+msgstr "Aspersão"
+
+#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
+msgid "Pivot"
+msgstr "Pivô"
+
+#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
+msgid "Enrouleur"
+msgstr "Enrolador"
+
+#: irrigation/models.py:24 parcelles/models.py:18
+msgid "Micro-aspersion"
+msgstr "Microaspersão"
+
+#: irrigation/models.py:25
+msgid "Micro-jet"
+msgstr "Microjato"
+
+#: irrigation/models.py:26
+msgid "Submersion"
+msgstr "Submersão"
+
+#: irrigation/models.py:29 parcelles/models.py:22
+msgid "Active"
+msgstr "Ativa"
+
+#: irrigation/models.py:30 parcelles/models.py:23
+msgid "Inactive"
+msgstr "Inativa"
+
+#: irrigation/models.py:50
+msgid "zone d'irrigation"
+msgstr "zona de rega"
+
+#: irrigation/models.py:51
+msgid "zones d'irrigation"
+msgstr "zonas de rega"
+
+#: irrigation/models.py:60
+msgid "Quotidien"
+msgstr "Diário"
+
+#: irrigation/models.py:61
+msgid "Tous les 2 jours"
+msgstr "De 2 em 2 dias"
+
+#: irrigation/models.py:62
+msgid "Tous les 3 jours"
+msgstr "De 3 em 3 dias"
+
+#: irrigation/models.py:63 irrigation/models.py:241
+msgid "Hebdomadaire"
+msgstr "Semanal"
+
+#: irrigation/models.py:64
+msgid "Personnalisé"
+msgstr "Personalizado"
+
+#: irrigation/models.py:67
+msgid "Par durée"
+msgstr "Por duração"
+
+#: irrigation/models.py:68
+msgid "Par volume"
+msgstr "Por volume"
+
+#: irrigation/models.py:69
+msgid "Par pluviométrie"
+msgstr "Por pluviometria"
+
+#: irrigation/models.py:94
+msgid "programme d'irrigation"
+msgstr "programa de rega"
+
+#: irrigation/models.py:95
+msgid "programmes d'irrigation"
+msgstr "programas de rega"
+
+#: irrigation/models.py:105 irrigation/models.py:157
+msgid "Auto"
+msgstr "Auto"
+
+#: irrigation/models.py:106
+msgid "IoT"
+msgstr "IoT"
+
+#: irrigation/models.py:123
+msgid "session d'irrigation"
+msgstr "sessão de rega"
+
+#: irrigation/models.py:124
+msgid "sessions d'irrigation"
+msgstr "sessões de rega"
+
+#: irrigation/models.py:130 operations/models.py:24
+msgid "Opérationnelle"
+msgstr "Operacional"
+
+#: irrigation/models.py:132 operations/models.py:26
+msgid "En panne"
+msgstr "Avariada"
+
+#: irrigation/models.py:147
+msgid "station de pompage"
+msgstr "estação de bombagem"
+
+#: irrigation/models.py:148
+msgid "stations de pompage"
+msgstr "estações de bombagem"
+
+#: irrigation/models.py:158
+msgid "Capteur"
+msgstr "Sensor"
+
+#: irrigation/models.py:161
+msgid "Actif"
+msgstr "Ativo"
+
+#: irrigation/models.py:162 planning/models.py:32
+msgid "Terminé"
+msgstr "Concluído"
+
+#: irrigation/models.py:163 planning/models.py:33
+msgid "Annulé"
+msgstr "Cancelado"
+
+#: irrigation/models.py:182
+msgid "événement de bassinage"
+msgstr "evento de rega de arrefecimento"
+
+#: irrigation/models.py:183
+msgid "événements de bassinage"
+msgstr "eventos de rega de arrefecimento"
+
+#: irrigation/models.py:205
+msgid "relevé compteur eau"
+msgstr "leitura do contador de água"
+
+#: irrigation/models.py:206
+msgid "relevés compteur eau"
+msgstr "leituras do contador de água"
+
+#: irrigation/models.py:231
+msgid "relevé énergie"
+msgstr "leitura de energia"
+
+#: irrigation/models.py:232
+msgid "relevés énergie"
+msgstr "leituras de energia"
+
+#: irrigation/models.py:239
+msgid "Annuel"
+msgstr "Anual"
+
+#: irrigation/models.py:240
+msgid "Mensuel"
+msgstr "Mensal"
+
+#: irrigation/models.py:252
+msgid "quota eau"
+msgstr "quota de água"
+
+#: irrigation/models.py:253
+msgid "quotas eau"
+msgstr "quotas de água"
+
+#: irrigation/models.py:278
+msgid "score DTI"
+msgstr "pontuação DTI"
+
+#: irrigation/models.py:279
+msgid "scores DTI"
+msgstr "pontuações DTI"
+
+#: irrigation/models.py:285
+msgid "Faible"
+msgstr "Fraco"
+
+#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
+msgid "Moyen"
+msgstr "Médio"
+
+#: irrigation/models.py:287
+msgid "Élevé"
+msgstr "Elevado"
+
+#: irrigation/models.py:288 planning/models.py:256
+msgid "Critique"
+msgstr "Crítico"
+
+#: irrigation/models.py:306
+msgid "événement de gel"
+msgstr "evento de geada"
+
+#: irrigation/models.py:307
+msgid "événements de gel"
+msgstr "eventos de geada"
+
+#: irrigation/models.py:326
+msgid "donnée NDVI"
+msgstr "dado NDVI"
+
+#: irrigation/models.py:327
+msgid "données NDVI"
+msgstr "dados NDVI"
+
+#: irrigation/models.py:345
+msgid "détection de perte invisible"
+msgstr "deteção de perda invisível"
+
+#: irrigation/models.py:346
+msgid "détections de pertes invisibles"
+msgstr "deteções de perdas invisíveis"
+
+#: irrigation/templates/irrigation/bassinage.html:20
+msgid "Aucun événement de bassinage."
+msgstr "Nenhum evento de rega de arrefecimento."
+
+#: irrigation/templates/irrigation/irrigation.html:10
+msgid "Volumes irrigués récents"
+msgstr "Volumes regados recentes"
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "Aucune zone."
+msgstr "Nenhuma zona."
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "actif"
+msgstr "ativo"
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "inactif"
+msgstr "inativo"
+
+#: irrigation/templates/irrigation/irrigation.html:37
+msgid "Aucun programme."
+msgstr "Nenhum programa."
+
+#: irrigation/templates/irrigation/irrigation.html:46
+msgid "Aucune session."
+msgstr "Nenhuma sessão."
+
+#: irrigation/templates/irrigation/irrigation.html:55
+msgid "Aucune station."
+msgstr "Nenhuma estação."
+
+#: irrigation/views.py:36
+msgid "Zones"
+msgstr "Zonas"
+
+#: irrigation/views.py:37
+msgid "Programmes"
+msgstr "Programas"
+
+#: irrigation/views.py:39
+msgid "Stations"
+msgstr "Estações"
+
+#: mail/models.py:15 mail/templates/mail/detail.html:14
+#: mail/templates/mail/outbox.html:28
+msgid "Échec"
+msgstr "Falha"
+
+#: mail/models.py:22
+msgid "destinataires"
+msgstr "destinatários"
+
+#: mail/models.py:23
+msgid "copie"
+msgstr "cópia"
+
+#: mail/models.py:24
+msgid "objet"
+msgstr "assunto"
+
+#: mail/models.py:25 messagerie/models.py:99 messagerie/models.py:102
+#, fuzzy
+#| msgid "Messagerie"
+msgid "message"
+msgstr "Üzenetek"
+
+#: mail/models.py:26 messagerie/models.py:120
+msgid "pièces jointes"
+msgstr "anexos"
+
+#: mail/models.py:31
+msgid "e-mail"
+msgstr "e-mail"
+
+#: mail/models.py:32
+msgid "e-mails"
+msgstr "e-mails"
+
+#: mail/templates/mail/compose.html:6 mail/templates/mail/outbox.html:10
+#: mail/views.py:83 mail/views.py:116
+msgid "Nouveau mail"
+msgstr "Novo email"
+
+#: mail/templates/mail/compose.html:18 mail/templates/mail/detail.html:21
+#: mail/templates/mail/outbox.html:23
+#: messagerie/templates/messagerie/_new_modal.html:30
+msgid "À"
+msgstr "Para"
+
+#: mail/templates/mail/compose.html:18
+msgid "séparez par des virgules"
+msgstr "separe por vírgulas"
+
+#: mail/templates/mail/compose.html:30 mail/templates/mail/detail.html:22
+msgid "Cc"
+msgstr "Cc"
+
+#: mail/templates/mail/compose.html:30
+#: messagerie/templates/messagerie/new.html:26
+msgid "optionnel"
+msgstr "opcional"
+
+#: mail/templates/mail/compose.html:36
+msgid "Objet"
+msgstr "Assunto"
+
+#: mail/templates/mail/compose.html:42
+#: messagerie/templates/messagerie/_new_modal.html:55
+#, fuzzy
+#| msgid "Messagerie"
+msgid "Message"
+msgstr "Üzenetek"
+
+#: mail/templates/mail/compose.html:49
+msgid "Joindre des fichiers"
+msgstr "Anexar ficheiros"
+
+#: mail/templates/mail/detail.html:7
+msgid "Retour"
+msgstr "Voltar"
+
+#: mail/templates/mail/detail.html:23
+msgid "Le"
+msgstr "Em"
+
+#: mail/templates/mail/detail.html:40
+msgid "Erreur d'envoi"
+msgstr "Erro de envio"
+
+#: mail/templates/mail/outbox.html:7
+msgid "Envoyés"
+msgstr "Enviados"
+
+#: mail/templates/mail/outbox.html:37
+msgid "Aucun e-mail envoyé pour le moment."
+msgstr "Nenhum e-mail enviado de momento."
+
+#: mail/views.py:73
+msgid "Indiquez au moins un destinataire valide."
+msgstr "Indique pelo menos um destinatário válido."
+
+#: mail/views.py:75
+#, python-format
+msgid "Adresses invalides ignorées : %(list)s"
+msgstr "Endereços inválidos ignorados: %(list)s"
+
+#: mail/views.py:77
+msgid "L'objet est obligatoire."
+msgstr "O assunto é obrigatório."
+
+#: messagerie/models.py:24
+#, python-format
+msgid "Extension non autorisée : %(ext)s. Extensions acceptées : %(list)s."
+msgstr "Extensão não autorizada: %(ext)s. Extensões aceites: %(list)s."
+
+#: messagerie/models.py:29
+#, python-format
+msgid "Le fichier dépasse la taille maximale de 5 Mo (%(got)s Mo reçus)."
+msgstr "O ficheiro excede o tamanho máximo de 5 MB (%(got)s MB recebidos)."
+
+#: messagerie/models.py:41
+msgid "groupe"
+msgstr "grupo"
+
+#: messagerie/models.py:42
+msgid "nom du groupe"
+msgstr "nome do grupo"
+
+#: messagerie/models.py:51
+#, fuzzy
+#| msgid "Facturation"
+msgid "conversation"
+msgstr "Számlázás"
+
+#: messagerie/models.py:52
+#, fuzzy
+#| msgid "Interventions"
+msgid "conversations"
+msgstr "Beavatkozások"
+
+#: messagerie/models.py:64 messagerie/templates/messagerie/_new_modal.html:25
+msgid "Groupe"
+msgstr "Grupo"
+
+#: messagerie/models.py:88
+msgid "membre de conversation"
+msgstr "membro de conversa"
+
+#: messagerie/models.py:89
+msgid "membres de conversation"
+msgstr "membros de conversa"
+
+#: messagerie/models.py:103
+#, fuzzy
+#| msgid "Messagerie"
+msgid "messages"
+msgstr "Üzenetek"
+
+#: messagerie/models.py:114
+msgid "fichier"
+msgstr "ficheiro"
+
+#: messagerie/models.py:119
+msgid "pièce jointe"
+msgstr "anexo"
+
+#: messagerie/templates/messagerie/_messages.html:25
+msgid "Démarrez la conversation 👋"
+msgstr "Inicie a conversa 👋"
+
+#: messagerie/templates/messagerie/_new_modal.html:8
+#: messagerie/templates/messagerie/_sidebar.html:5
+#: messagerie/templates/messagerie/inbox.html:21
+msgid "Nouveau message"
+msgstr "Nova mensagem"
+
+#: messagerie/templates/messagerie/_new_modal.html:20
+msgid "Direct"
+msgstr "Direta"
+
+#: messagerie/templates/messagerie/_new_modal.html:33
+msgid "— Choisir un agriculteur —"
+msgstr "— Escolher um agricultor —"
+
+#: messagerie/templates/messagerie/_new_modal.html:40
+#: messagerie/templates/messagerie/new.html:26
+msgid "Nom du groupe"
+msgstr "Nome do grupo"
+
+#: messagerie/templates/messagerie/_new_modal.html:41
+msgid "ex: Équipe irrigation"
+msgstr "ex: Equipa de rega"
+
+#: messagerie/templates/messagerie/_new_modal.html:45
+msgid "Membres"
+msgstr "Membros"
+
+#: messagerie/templates/messagerie/_new_modal.html:50
+msgid "Ctrl/Cmd + clic pour en sélectionner plusieurs."
+msgstr "Ctrl/Cmd + clique para selecionar vários."
+
+#: messagerie/templates/messagerie/_new_modal.html:56
+msgid "Écrivez votre message…"
+msgstr "Escreva a sua mensagem…"
+
+#: messagerie/templates/messagerie/_sidebar.html:4
+msgid "Chat"
+msgstr "Chat"
+
+#: messagerie/templates/messagerie/_sidebar.html:23
+msgid "Aucun message"
+msgstr "Nenhuma mensagem"
+
+#: messagerie/templates/messagerie/_sidebar.html:31
+msgid "Aucune conversation pour le moment."
+msgstr "Nenhuma conversa de momento."
+
+#: messagerie/templates/messagerie/_sidebar.html:32
+msgid "Démarrer une conversation"
+msgstr "Iniciar uma conversa"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "participants"
+msgstr "participantes"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "Conversation privée"
+msgstr "Conversa privada"
+
+#: messagerie/templates/messagerie/detail.html:48
+msgid "Joindre un fichier"
+msgstr "Anexar um ficheiro"
+
+#: messagerie/templates/messagerie/detail.html:56
+msgid "Écrire un message…"
+msgstr "Escrever uma mensagem…"
+
+#: messagerie/templates/messagerie/detail.html:58
+msgid "Dicter le message"
+msgstr "Ditar a mensagem"
+
+#: messagerie/templates/messagerie/detail.html:62
+msgid "Reformuler avec l’IA"
+msgstr "Reformular com a IA"
+
+#: messagerie/templates/messagerie/inbox.html:17
+msgid "Sélectionnez une conversation"
+msgstr "Selecione uma conversa"
+
+#: messagerie/templates/messagerie/inbox.html:18
+msgid "ou démarrez-en une nouvelle"
+msgstr "ou inicie uma nova"
+
+#: messagerie/templates/messagerie/new.html:12
+msgid "Participants"
+msgstr "Participantes"
+
+#: messagerie/templates/messagerie/new.html:28
+msgid "Ex. Équipe récolte"
+msgstr "Ex. Equipa de colheita"
+
+#: messagerie/templates/messagerie/new.html:30
+msgid ""
+"Renseignez un nom ou cochez plusieurs participants pour créer un groupe."
+msgstr "Indique um nome ou assinale vários participantes para criar um grupo."
+
+#: messagerie/templates/messagerie/new.html:35
+#: sondages/templates/sondages/create.html:38
+msgid "Créer"
+msgstr "Criar"
+
+#: messagerie/templates/messagerie/new.html:41
+msgid ""
+"Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
+"Ajoutez des membres d'équipe et liez-leur un compte."
+msgstr "Nenhum outro utilizador na sua exploração para contactar de momento. Adicione membros de equipa e associe-lhes uma conta."
+
+#: messagerie/views.py:60
+msgid "📎 Pièce jointe"
+msgstr "📎 Anexo"
+
+#: meteo/models.py:9
+msgid "Toutes les heures"
+msgstr "A cada hora"
+
+#: meteo/models.py:10
+msgid "Toutes les 6 heures"
+msgstr "A cada 6 horas"
+
+#: meteo/models.py:11
+msgid "Toutes les 12 heures"
+msgstr "A cada 12 horas"
+
+#: meteo/models.py:12
+msgid "Quotidienne"
+msgstr "Diária"
+
+#: meteo/models.py:18
+msgid "slug"
+msgstr "slug"
+
+#: meteo/models.py:24
+msgid "capture automatique"
+msgstr "captura automática"
+
+#: meteo/models.py:26
+msgid "fréquence"
+msgstr "frequência"
+
+#: meteo/models.py:28
+msgid "dernière capture auto"
+msgstr "última captura automática"
+
+#: meteo/models.py:31
+msgid "ville météo"
+msgstr "cidade meteorológica"
+
+#: meteo/models.py:32
+msgid "villes météo"
+msgstr "cidades meteorológicas"
+
+#: meteo/models.py:46
+msgid "lieu"
+msgstr "local"
+
+#: meteo/models.py:49
+msgid "température (°C)"
+msgstr "temperatura (°C)"
+
+#: meteo/models.py:50
+msgid "humidité (%)"
+msgstr "humidade (%)"
+
+#: meteo/models.py:51
+msgid "vent (km/h)"
+msgstr "vento (km/h)"
+
+#: meteo/models.py:52
+msgid "pluie (mm)"
+msgstr "chuva (mm)"
+
+#: meteo/models.py:53
+msgid "ET0 (mm)"
+msgstr "ET0 (mm)"
+
+#: meteo/models.py:54
+#, fuzzy
+#| msgid "Notifications"
+msgid "conditions"
+msgstr "Értesítések"
+
+#: meteo/models.py:55
+msgid "capturé le"
+msgstr "capturado em"
+
+#: meteo/models.py:58
+msgid "relevé météo"
+msgstr "registo meteorológico"
+
+#: meteo/models.py:59
+msgid "relevés météo"
+msgstr "registos meteorológicos"
+
+#: meteo/templates/meteo/index.html:10
+msgid "Vos villes en un coup d'œil"
+msgstr "As suas cidades num relance"
+
+#: meteo/templates/meteo/index.html:14 meteo/templates/meteo/index.html:61
+msgid "Ajouter une ville"
+msgstr "Adicionar uma cidade"
+
+#: meteo/templates/meteo/index.html:37
+msgid "Retirer"
+msgstr "Remover"
+
+#: meteo/templates/meteo/index.html:52
+msgid "Ajoutez une ville pour suivre sa météo."
+msgstr "Adicione uma cidade para acompanhar a sua meteorologia."
+
+#: meteo/templates/meteo/index.html:70
+msgid "Rechercher une commune"
+msgstr "Pesquisar uma localidade"
+
+#: meteo/templates/meteo/index.html:71
+msgid "ex: Avignon"
+msgstr "ex: Avignon"
+
+#: meteo/templates/meteo/index.html:73
+msgid "Tapez un nom puis Entrée pour rechercher."
+msgstr "Escreva um nome e prima Enter para pesquisar."
+
+#: meteo/templates/meteo/meteo.html:10
+msgid "Toutes les villes"
+msgstr "Todas as cidades"
+
+#: meteo/templates/meteo/meteo.html:27
+#, fuzzy
+#| msgid "Capteurs"
+msgid "Capturer"
+msgstr "Érzékelők"
+
+#: meteo/templates/meteo/meteo.html:41
+msgid "Capture automatique"
+msgstr "Captura automática"
+
+#: meteo/templates/meteo/meteo.html:45
+msgid "Activée"
+msgstr "Ativada"
+
+#: meteo/templates/meteo/meteo.html:53
+msgid "Dernière capture auto"
+msgstr "Última captura automática"
+
+#: meteo/templates/meteo/meteo.html:55
+msgid ""
+"Un relevé de cette ville est enregistré automatiquement à la fréquence "
+"choisie."
+msgstr "Um registo desta cidade é guardado automaticamente com a frequência escolhida."
+
+#: meteo/templates/meteo/meteo.html:61
+msgid "Impossible de récupérer la météo."
+msgstr "Não foi possível obter a meteorologia."
+
+#: meteo/templates/meteo/meteo.html:76
+msgid "Ressenti"
+msgstr "Sensação"
+
+#: meteo/templates/meteo/meteo.html:79 meteo/templates/meteo/meteo.html:95
+#: meteo/templates/meteo/meteo.html:145
+msgid "Pluie"
+msgstr "Chuva"
+
+#: meteo/templates/meteo/meteo.html:86
+msgid "Prévisions 7 jours"
+msgstr "Previsões a 7 dias"
+
+#: meteo/templates/meteo/meteo.html:96
+msgid "Proba."
+msgstr "Prob."
+
+#: meteo/templates/meteo/meteo.html:97
+msgid "Évapotranspiration (FAO-56)"
+msgstr "Evapotranspiração (FAO-56)"
+
+#: meteo/templates/meteo/meteo.html:110
+msgid "Évolution"
+msgstr "Evolução"
+
+#: meteo/templates/meteo/meteo.html:113
+msgid "Température (°C)"
+msgstr "Temperatura (°C)"
+
+#: meteo/templates/meteo/meteo.html:117
+#, python-format
+msgid "Humidité (%%)"
+msgstr "Humidade (%%)"
+
+#: meteo/templates/meteo/meteo.html:121
+msgid "Vent (km/h)"
+msgstr "Vento (km/h)"
+
+#: meteo/templates/meteo/meteo.html:125
+msgid "Pluie (mm)"
+msgstr "Chuva (mm)"
+
+#: meteo/templates/meteo/meteo.html:135
+msgid "Historique des relevés"
+msgstr "Histórico dos registos"
+
+#: meteo/views.py:89
+msgid "Capture automatique mise à jour."
+msgstr "Captura automática atualizada."
+
+#: meteo/views.py:118
+msgid "Lieu introuvable."
+msgstr "Local não encontrado."
+
+#: meteo/views.py:197
+msgid "Relevé météo capturé."
+msgstr "Registo meteorológico capturado."
+
+#: meteo/views.py:198
+#, python-format
+msgid "Échec de la capture : %(e)s"
+msgstr "Falha na captura: %(e)s"
+
+#: notifications/models.py:17 planning/models.py:40
+msgid "Urgente"
+msgstr "Urgente"
+
+#: notifications/models.py:31
+msgid "notification"
+msgstr "notificação"
+
+#: notifications/models.py:32
+msgid "notifications"
+msgstr "notificações"
+
+#: notifications/models.py:49
+msgid "règle de notification"
+msgstr "regra de notificação"
+
+#: notifications/models.py:50
+msgid "règles de notification"
+msgstr "regras de notificação"
+
+#: notifications/templates/notifications/center.html:10
+msgid "Tout marquer comme lu"
+msgstr "Marcar tudo como lido"
+
+#: notifications/templates/notifications/center.html:27
+msgid "Aucune notification."
+msgstr "Nenhuma notificação."
+
+#: notifications/templates/notifications/center.html:31
+msgid "Règles d'alerte"
+msgstr "Regras de alerta"
+
+#: notifications/templates/notifications/center.html:37
+msgid "activée"
+msgstr "ativada"
+
+#: notifications/templates/notifications/center.html:37
+msgid "désactivée"
+msgstr "desativada"
+
+#: notifications/templates/notifications/center.html:42
+msgid "Aucune règle définie."
+msgstr "Nenhuma regra definida."
+
+#: operations/models.py:16 operations/models.py:151
+msgid "Pompe"
+msgstr "Bomba"
+
+#: operations/models.py:17 operations/models.py:143
+msgid "Tracteur"
+msgstr "Trator"
+
+#: operations/models.py:20 operations/models.py:144
+msgid "Pulvérisateur"
+msgstr "Pulverizador"
+
+#: operations/models.py:27
+msgid "Réformée"
+msgstr "Abatida"
+
+#: operations/models.py:44
+msgid "machine"
+msgstr "máquina"
+
+#: operations/models.py:45
+msgid "machines"
+msgstr "máquinas"
+
+#: operations/models.py:54
+msgid "Utilisation"
+msgstr "Utilização"
+
+#: operations/models.py:56 operations/models.py:85
+msgid "Réparation"
+msgstr "Reparação"
+
+#: operations/models.py:57
+msgid "Inspection"
+msgstr "Inspeção"
+
+#: operations/models.py:79
+msgid "Vidange"
+msgstr "Mudança de óleo"
+
+#: operations/models.py:80
+msgid "Filtres"
+msgstr "Filtros"
+
+#: operations/models.py:81
+msgid "Courroies"
+msgstr "Correias"
+
+#: operations/models.py:82
+msgid "Pneumatiques"
+msgstr "Pneus"
+
+#: operations/models.py:83
+msgid "Freins"
+msgstr "Travões"
+
+#: operations/models.py:84
+msgid "Révision complète"
+msgstr "Revisão completa"
+
+#: operations/models.py:86
+msgid "Contrôle technique"
+msgstr "Inspeção técnica"
+
+#: operations/models.py:105
+msgid "entretien"
+msgstr "manutenção"
+
+#: operations/models.py:106
+msgid "entretiens"
+msgstr "manutenções"
+
+#: operations/models.py:112
+msgid "Labour"
+msgstr "Lavoura"
+
+#: operations/models.py:134
+msgid "affectation d'engin"
+msgstr "afetação de máquina"
+
+#: operations/models.py:135
+msgid "affectations d'engins"
+msgstr "afetações de máquinas"
+
+#: operations/models.py:145
+msgid "Semoir"
+msgstr "Semeador"
+
+#: operations/models.py:146
+msgid "Épandeur"
+msgstr "Espalhador"
+
+#: operations/models.py:147
+msgid "Moissonneuse"
+msgstr "Ceifeira-debulhadora"
+
+#: operations/models.py:148
+msgid "Charrue"
+msgstr "Charrua"
+
+#: operations/models.py:149
+msgid "Cultivateur"
+msgstr "Cultivador"
+
+#: operations/models.py:150
+msgid "Benne"
+msgstr "Reboque basculante"
+
+#: operations/models.py:170
+msgid "modèle d'engin (catalogue)"
+msgstr "modelo de máquina (catálogo)"
+
+#: operations/models.py:171
+msgid "catalogue d'engins"
+msgstr "catálogo de máquinas"
+
+#: operations/templates/operations/parc_materiel.html:16
+msgid "prochain entretien"
+msgstr "próxima manutenção"
+
+#: operations/templates/operations/parc_materiel.html:21
+msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
+msgstr "Nenhuma máquina. Adicione através do admin ou da API."
+
+#: pac/models.py:9
+msgid "DPB — Droits à paiement de base"
+msgstr "DPB — Direitos a pagamento de base"
+
+#: pac/models.py:10
+msgid "Éco-régime"
+msgstr "Eco-regime"
+
+#: pac/models.py:11
+msgid "Paiement redistributif"
+msgstr "Pagamento redistributivo"
+
+#: pac/models.py:12
+msgid "Aide jeune agriculteur"
+msgstr "Ajuda a jovem agricultor"
+
+#: pac/models.py:13
+msgid "Aides couplées"
+msgstr "Ajudas associadas"
+
+#: pac/models.py:14
+msgid "ICHN — Indemnité handicap naturel"
+msgstr "ICHN — Indemnização por desvantagem natural"
+
+#: pac/models.py:15
+msgid "MAEC — Mesures agro-environnementales"
+msgstr "MAEC — Medidas agroambientais"
+
+#: pac/models.py:17
+msgid "Assurance récolte"
+msgstr "Seguro de colheita"
+
+#: pac/models.py:21
+msgid "Prévu"
+msgstr "Previsto"
+
+#: pac/models.py:22
+msgid "Accordé"
+msgstr "Concedido"
+
+#: pac/models.py:23 pac/templates/pac/pac.html:34
+msgid "Payé"
+msgstr "Pago"
+
+#: pac/models.py:29
+msgid "catégorie"
+msgstr "categoria"
+
+#: pac/models.py:30
+msgid "libellé"
+msgstr "designação"
+
+#: pac/models.py:31
+msgid "montant (€)"
+msgstr "montante (€)"
+
+#: pac/models.py:32 parcelles/models.py:32
+msgid "surface (ha)"
+msgstr "superfície (ha)"
+
+#: pac/models.py:33
+msgid "statut"
+msgstr "estado"
+
+#: pac/models.py:37
+msgid "aide PAC"
+msgstr "ajuda PAC"
+
+#: pac/models.py:38
+msgid "aides PAC"
+msgstr "ajudas PAC"
+
+#: pac/templates/pac/pac.html:10
+msgid "Politique Agricole Commune · suivi des aides par campagne"
+msgstr "Política Agrícola Comum · acompanhamento das ajudas por campanha"
+
+#: pac/templates/pac/pac.html:22 pac/templates/pac/pac.html:89
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une aide"
+msgstr "Kód aktiválása"
+
+#: pac/templates/pac/pac.html:30
+msgid "Montant total estimé"
+msgstr "Montante total estimado"
+
+#: pac/templates/pac/pac.html:38
+msgid "Surface concernée"
+msgstr "Superfície abrangida"
+
+#: pac/templates/pac/pac.html:42
+msgid "Nombre d'aides"
+msgstr "Número de ajudas"
+
+#: pac/templates/pac/pac.html:54 pac/templates/pac/pac.html:124
+msgid "Libellé"
+msgstr "Designação"
+
+#: pac/templates/pac/pac.html:74
+msgid "Supprimer cette aide ?"
+msgstr "Eliminar esta ajuda?"
+
+#: pac/templates/pac/pac.html:87
+msgid "Aucune aide PAC pour cette campagne."
+msgstr "Nenhuma ajuda PAC para esta campanha."
+
+#: pac/templates/pac/pac.html:96
+msgid ""
+"Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et "
+"leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
+msgstr "Acompanhe aqui as suas ajudas PAC (DPB, eco-regime, ICHN, MAEC, bio…) por campanha e o respetivo estado (previsto / concedido / pago). Declaração oficial através do TéléPAC."
+
+#: pac/templates/pac/pac.html:105
+msgid "Nouvelle aide PAC"
+msgstr "Nova ajuda PAC"
+
+#: pac/templates/pac/pac.html:125
+msgid "ex: Éco-régime niveau 2"
+msgstr "ex: Eco-regime nível 2"
+
+#: pac/templates/pac/pac.html:130
+msgid "Montant (€)"
+msgstr "Montante (€)"
+
+#: parcelles/models.py:19
+msgid "Gravitaire"
+msgstr "Gravítico"
+
+#: parcelles/models.py:24
+msgid "Jachère"
+msgstr "Pousio"
+
+#: parcelles/models.py:37
+msgid "polygone"
+msgstr "polígono"
+
+#: parcelles/models.py:42
+msgid "type d'irrigation"
+msgstr "tipo de rega"
+
+#: parcelles/models.py:44
+msgid "débit théorique (m³/h)"
+msgstr "caudal teórico (m³/h)"
+
+#: parcelles/models.py:45
+msgid "nombre de buses"
+msgstr "número de bocais"
+
+#: parcelles/models.py:46
+msgid "débit buse (L/h)"
+msgstr "caudal do bocal (L/h)"
+
+#: parcelles/models.py:47
+msgid "écart entre rangs (m)"
+msgstr "distância entre linhas (m)"
+
+#: parcelles/models.py:48
+msgid "écart entre émetteurs (m)"
+msgstr "distância entre emissores (m)"
+
+#: parcelles/models.py:49
+msgid "pression de service (bar)"
+msgstr "pressão de serviço (bar)"
+
+#: parcelles/models.py:52
+msgid "culture"
+msgstr "cultura"
+
+#: parcelles/models.py:53
+msgid "variété"
+msgstr "variedade"
+
+#: parcelles/models.py:54 parcelles/models.py:93
+msgid "coefficient Kc"
+msgstr "coeficiente Kc"
+
+#: parcelles/models.py:55
+msgid "âge des plants (ans)"
+msgstr "idade das plantas (anos)"
+
+#: parcelles/models.py:56
+msgid "date de plantation"
+msgstr "data de plantação"
+
+#: parcelles/models.py:57
+msgid "densité (pieds/ha)"
+msgstr "densidade (plantas/ha)"
+
+#: parcelles/models.py:61
+msgid "profondeur racinaire"
+msgstr "profundidade radicular"
+
+#: parcelles/models.py:62
+msgid "profondeur racinaire (cm)"
+msgstr "profundidade radicular (cm)"
+
+#: parcelles/models.py:63
+msgid "rétention sol (mm/m)"
+msgstr "retenção do solo (mm/m)"
+
+#: parcelles/models.py:64
+msgid "pH du sol"
+msgstr "pH do solo"
+
+#: parcelles/models.py:67
+msgid "réf. cadastrale"
+msgstr "ref. cadastral"
+
+#: parcelles/models.py:68
+msgid "commune"
+msgstr "freguesia"
+
+#: parcelles/models.py:69
+msgid "surface officielle (ha)"
+msgstr "superfície oficial (ha)"
+
+#: parcelles/models.py:70
+msgid "données cadastre (brut IGN)"
+msgstr "dados do cadastro (bruto IGN)"
+
+#: parcelles/models.py:71
+msgid "date d'acquisition"
+msgstr "data de aquisição"
+
+#: parcelles/models.py:76
+msgid "parcelle"
+msgstr "parcela"
+
+#: parcelles/models.py:77
+msgid "parcelles"
+msgstr "parcelas"
+
+#: parcelles/models.py:89
+msgid "stade"
+msgstr "estádio"
+
+#: parcelles/models.py:91
+msgid "début"
+msgstr "início"
+
+#: parcelles/models.py:92
+msgid "fin"
+msgstr "fim"
+
+#: parcelles/models.py:94
+msgid "profondeur racinaire (m)"
+msgstr "profundidade radicular (m)"
+
+#: parcelles/models.py:98
+msgid "stade cultural"
+msgstr "estádio cultural"
+
+#: parcelles/models.py:99
+msgid "stades culturaux"
+msgstr "estádios culturais"
+
+#: parcelles/templates/parcelles/confirm_delete.html:7
+msgid "Supprimer la parcelle ?"
+msgstr "Eliminar a parcela?"
+
+#: parcelles/templates/parcelles/confirm_delete.html:9
+#, python-format
+msgid "La parcelle « %(name)s » sera définitivement supprimée."
+msgstr "A parcela «%(name)s» será eliminada definitivamente."
 
 #: parcelles/templates/parcelles/detail.html:12
 msgid "Modifier"
@@ -2029,463 +3702,1084 @@ msgstr "Editar"
 
 #: parcelles/templates/parcelles/detail.html:19
 msgid "Culture & sol"
-msgstr ""
+msgstr "Cultura & solo"
 
 #: parcelles/templates/parcelles/detail.html:21
 msgid "Variété"
-msgstr ""
+msgstr "Variedade"
 
 #: parcelles/templates/parcelles/detail.html:23
 msgid "Type de sol"
-msgstr ""
+msgstr "Tipo de solo"
 
 #: parcelles/templates/parcelles/detail.html:33
+#: parcelles/templates/parcelles/list.html:93
 msgid "Commune"
-msgstr ""
+msgstr "Freguesia"
 
 #: parcelles/templates/parcelles/detail.html:38
 msgid "Retour aux parcelles"
-msgstr ""
+msgstr "Voltar às parcelas"
 
 #: parcelles/templates/parcelles/form.html:8
 msgid "Étape"
-msgstr ""
+msgstr "Etapa"
 
 #: parcelles/templates/parcelles/form.html:21
 msgid "Identité & localisation"
-msgstr ""
+msgstr "Identidade & localização"
 
 #: parcelles/templates/parcelles/form.html:33
 msgid "Cliquez sur la carte pour positionner la parcelle."
-msgstr ""
+msgstr "Clique no mapa para posicionar a parcela."
 
 #: parcelles/templates/parcelles/form.html:84
 msgid "Cadastre & statut"
-msgstr ""
+msgstr "Cadastro & estado"
 
 #: parcelles/templates/parcelles/form.html:94
 msgid "Précédent"
-msgstr ""
+msgstr "Anterior"
 
 #: parcelles/templates/parcelles/form.html:96
 msgid "Suivant"
-msgstr ""
+msgstr "Seguinte"
 
-#: parcelles/templates/parcelles/list.html:8
-msgid "+ Nouvelle parcelle"
-msgstr ""
+#: parcelles/templates/parcelles/list.html:13
+msgid "Carte satellite · Cadastre IGN · Surfaces"
+msgstr "Mapa de satélite · Cadastro IGN · Superfícies"
 
-#: parcelles/templates/parcelles/list.html:13 parcelles/views.py:35
+#: parcelles/templates/parcelles/list.html:24
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles actives"
+msgstr "Parcellák"
+
+#: parcelles/templates/parcelles/list.html:28
+msgid "Surface totale"
+msgstr "Superfície total"
+
+#: parcelles/templates/parcelles/list.html:32
+msgid "Stress hydrique"
+msgstr "Stress hídrico"
+
+#: parcelles/templates/parcelles/list.html:36
+msgid "Humidité moyenne"
+msgstr "Humidade média"
+
+#: parcelles/templates/parcelles/list.html:45
+msgid "Rechercher un lieu…"
+msgstr "Pesquisar um local…"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Carte"
+msgstr "Mapa"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Liste"
+msgstr "Lista"
+
+#: parcelles/templates/parcelles/list.html:62
+msgid ""
+"Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
+"Enregistrer."
+msgstr "Clique nas parcelas a adicionar (volte a clicar para desselecionar) e depois Registar."
+
+#: parcelles/templates/parcelles/list.html:70
+msgid "parcelle(s) sélectionnée(s)"
+msgstr "parcela(s) selecionada(s)"
+
+#: parcelles/templates/parcelles/list.html:92
+msgid "Réf. cadastrale"
+msgstr "Ref. cadastral"
+
+#: parcelles/templates/parcelles/list.html:94
+msgid "Acquise le"
+msgstr "Adquirida em"
+
+#: parcelles/templates/parcelles/list.html:116
+msgid ""
+"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+msgstr "Nenhuma parcela. Clique em «Adicionar» para selecionar no mapa."
+
+#: parcelles/templates/parcelles/list.html:122
+msgid "Analyses des parcelles — bientôt."
+msgstr "Análises das parcelas — em breve."
+
+#: parcelles/views.py:132
 msgid "Configurez d'abord votre exploitation."
-msgstr ""
+msgstr "Configure primeiro a sua exploração."
 
-#: parcelles/templates/parcelles/list.html:14
-msgid "Configurer"
-msgstr ""
-
-#: parcelles/templates/parcelles/list.html:43
-msgid "Aucune parcelle pour le moment."
-msgstr ""
-
-#: parcelles/templates/parcelles/list.html:44
-msgid "Créer ma première parcelle"
-msgstr ""
-
-#: parcelles/views.py:44
+#: parcelles/views.py:141
 msgid "Parcelle créée."
-msgstr ""
+msgstr "Parcela criada."
 
-#: parcelles/views.py:52
+#: parcelles/views.py:149
 msgid "Nouvelle parcelle"
-msgstr ""
+msgstr "Nova parcela"
 
-#: parcelles/views.py:75
+#: parcelles/views.py:172
 msgid "Parcelle mise à jour."
-msgstr ""
+msgstr "Parcela atualizada."
 
-#: parcelles/views.py:82
+#: parcelles/views.py:179
 #, python-format
 msgid "Modifier %(n)s"
-msgstr ""
+msgstr "Editar %(n)s"
 
-#: parcelles/views.py:92
+#: parcelles/views.py:189
 msgid "Parcelle supprimée."
-msgstr ""
+msgstr "Parcela eliminada."
 
 #: planning/models.py:29
 msgid "Planifié"
-msgstr ""
+msgstr "Planeado"
 
 #: planning/models.py:31
 msgid "En pause"
-msgstr ""
+msgstr "Em pausa"
 
 #: planning/models.py:34
 msgid "Reporté"
-msgstr ""
+msgstr "Adiado"
 
 #: planning/models.py:43
 msgid "Non applicable"
-msgstr ""
+msgstr "Não aplicável"
 
 #: planning/models.py:44
 msgid "À facturer"
-msgstr ""
+msgstr "A faturar"
 
 #: planning/models.py:45
 msgid "Facturé"
-msgstr ""
+msgstr "Faturado"
 
 #: planning/models.py:46
 msgid "Avoir"
-msgstr ""
+msgstr "Nota de crédito"
 
 #: planning/models.py:80
 msgid "tâche de planning"
-msgstr ""
+msgstr "tarefa de planeamento"
 
 #: planning/models.py:81
 msgid "tâches de planning"
-msgstr ""
+msgstr "tarefas de planeamento"
 
 #: planning/models.py:100
 msgid "affectation technicien"
-msgstr ""
+msgstr "afetação de técnico"
 
 #: planning/models.py:101
 msgid "affectations techniciens"
-msgstr ""
+msgstr "afetações de técnicos"
 
 #: planning/models.py:106
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
 #: planning/models.py:107
 msgid "Plan"
-msgstr ""
+msgstr "Planta"
 
 #: planning/models.py:108
 msgid "Schéma"
-msgstr ""
-
-#: planning/models.py:109
-msgid "Document"
-msgstr ""
+msgstr "Esquema"
 
 #: planning/models.py:126
 msgid "Démarrage"
-msgstr ""
+msgstr "Arranque"
 
 #: planning/models.py:127
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: planning/models.py:128
 msgid "Reprise"
-msgstr ""
+msgstr "Retoma"
 
 #: planning/models.py:129
 msgid "Fin"
-msgstr ""
+msgstr "Fim"
 
 #: planning/models.py:145
 msgid "Congé payé"
-msgstr ""
+msgstr "Férias pagas"
 
 #: planning/models.py:147
 msgid "Maladie"
-msgstr ""
+msgstr "Doença"
 
 #: planning/models.py:148
 msgid "Formation"
-msgstr ""
+msgstr "Formação"
 
 #: planning/models.py:149
 msgid "Sans solde"
-msgstr ""
+msgstr "Sem vencimento"
 
 #: planning/models.py:153
 msgid "Matin"
-msgstr ""
+msgstr "Manhã"
 
 #: planning/models.py:154
 msgid "Après-midi"
-msgstr ""
+msgstr "Tarde"
 
 #: planning/models.py:155
 msgid "Journée"
-msgstr ""
+msgstr "Dia inteiro"
 
 #: planning/models.py:158
 msgid "Demandé"
-msgstr ""
+msgstr "Solicitado"
 
 #: planning/models.py:159
 msgid "Approuvé"
-msgstr ""
+msgstr "Aprovado"
 
 #: planning/models.py:160
 msgid "Refusé"
-msgstr ""
+msgstr "Recusado"
 
 #: planning/models.py:178
 msgid "absence"
-msgstr ""
+msgstr "ausência"
 
 #: planning/models.py:179
 msgid "absences"
-msgstr ""
+msgstr "ausências"
 
 #: planning/models.py:206
 msgid "Outil à main"
-msgstr ""
+msgstr "Ferramenta manual"
 
 #: planning/models.py:207
 msgid "Outil de coupe"
-msgstr ""
+msgstr "Ferramenta de corte"
 
 #: planning/models.py:208
 msgid "Outil motorisé"
-msgstr ""
+msgstr "Ferramenta motorizada"
 
 #: planning/models.py:209
 msgid "Engin"
-msgstr ""
-
-#: planning/models.py:210
-msgid "Protection"
-msgstr ""
+msgstr "Máquina"
 
 #: planning/models.py:211
 msgid "Arrosage"
-msgstr ""
+msgstr "Rega"
 
 #: planning/models.py:212
 msgid "Mesure"
-msgstr ""
+msgstr "Medição"
 
 #: planning/models.py:217 planning/models.py:253
 #: planning/templates/planning/planning.html:27
 msgid "Bon"
-msgstr ""
+msgstr "Bom"
 
 #: planning/models.py:219
 msgid "À réparer"
-msgstr ""
+msgstr "A reparar"
 
 #: planning/models.py:220
 msgid "Hors service"
-msgstr ""
+msgstr "Fora de serviço"
 
 #: planning/models.py:231
 msgid "matériel"
-msgstr ""
+msgstr "equipamento"
 
 #: planning/models.py:232
 msgid "catalogue matériel"
-msgstr ""
+msgstr "catálogo de equipamentos"
 
 #: planning/models.py:255
 msgid "Mauvais"
-msgstr ""
+msgstr "Mau"
 
 #: planning/models.py:260
 msgid "Complété"
-msgstr ""
+msgstr "Concluído"
 
 #: planning/models.py:262
 msgid "Archivé"
-msgstr ""
+msgstr "Arquivado"
 
 #: planning/models.py:295
 msgid "bon d'intervention"
-msgstr ""
+msgstr "ordem de intervenção"
 
 #: planning/models.py:296
 msgid "bons d'intervention"
-msgstr ""
+msgstr "ordens de intervenção"
 
 #: planning/templates/planning/bon_intervention.html:7 planning/views.py:80
 msgid "Bon d'intervention"
-msgstr ""
+msgstr "Ordem de intervenção"
 
 #: planning/templates/planning/bon_intervention.html:17
 msgid "Technicien"
-msgstr ""
+msgstr "Técnico"
 
 #: planning/templates/planning/bon_intervention.html:21
 msgid "Travaux réalisés"
-msgstr ""
+msgstr "Trabalhos realizados"
 
 #: planning/templates/planning/bon_intervention.html:26
 msgid "Produits utilisés"
-msgstr ""
+msgstr "Produtos utilizados"
 
 #: planning/templates/planning/bon_intervention.html:30
 msgid "Qté"
-msgstr ""
+msgstr "Qtd."
 
 #: planning/templates/planning/bon_intervention.html:34
 msgid "Ajouter un produit"
-msgstr ""
+msgstr "Adicionar um produto"
 
 #: planning/templates/planning/bon_intervention.html:38
 msgid "Observations"
-msgstr ""
+msgstr "Observações"
 
 #: planning/templates/planning/bon_intervention.html:43
 msgid "Signature du technicien"
-msgstr ""
+msgstr "Assinatura do técnico"
 
 #: planning/templates/planning/bon_intervention.html:45
 msgid "Effacer"
-msgstr ""
+msgstr "Limpar"
 
 #: planning/templates/planning/bon_intervention.html:46
 msgid "Nom du signataire"
-msgstr ""
+msgstr "Nome do signatário"
 
 #: planning/templates/planning/bon_intervention.html:50
 msgid "Enregistrer le brouillon"
-msgstr ""
+msgstr "Guardar o rascunho"
 
 #: planning/templates/planning/bon_intervention.html:51
 msgid "Valider le bon"
-msgstr ""
+msgstr "Validar a ordem"
 
 #: planning/templates/planning/planning.html:7
 msgid "Planning des interventions"
-msgstr ""
+msgstr "Planeamento das intervenções"
 
 #: planning/templates/planning/planning.html:17
 msgid "Tâches planifiées"
-msgstr ""
+msgstr "Tarefas planeadas"
 
 #: planning/templates/planning/planning.html:32
 msgid "Aucune tâche planifiée."
-msgstr ""
+msgstr "Nenhuma tarefa planeada."
 
 #: planning/templates/planning/planning.html:37
 msgid "Backlog"
-msgstr ""
+msgstr "Backlog"
 
 #: planning/templates/planning/planning.html:44
 msgid "Backlog vide."
-msgstr ""
+msgstr "Backlog vazio."
 
 #: planning/views.py:33
 msgid "Jour"
-msgstr ""
+msgstr "Dia"
 
 #: planning/views.py:33
 msgid "Semaine"
-msgstr ""
+msgstr "Semana"
 
 #: planning/views.py:33
 msgid "Mois"
-msgstr ""
+msgstr "Mês"
 
 #: planning/views.py:74
 msgid "Bon d'intervention enregistré."
-msgstr ""
+msgstr "Ordem de intervenção registada."
 
 #: public/models.py:17
 msgid "lead capturé"
-msgstr ""
+msgstr "lead captado"
 
 #: public/models.py:18
 msgid "leads capturés"
-msgstr ""
-
-#: public/templates/public/activer.html:6 public/views.py:57
-msgid "Activer mon compte"
-msgstr ""
-
-#: public/templates/public/activer.html:9
-msgid ""
-"Saisissez le code d'activation reçu par email après votre paiement (format "
-"HOLS-XXXX-XXXX)."
-msgstr ""
-
-#: public/templates/public/activer.html:14
-msgid "Activer"
-msgstr ""
+msgstr "leads captados"
 
 #: public/templates/public/home.html:3
 msgid "Irrigation de précision pour agriculteurs"
-msgstr ""
+msgstr "Rega de precisão para agricultores"
 
-#: public/templates/public/home.html:12
-msgid "Pilotez votre irrigation, économisez l'eau et l'énergie."
-msgstr ""
+#: public/templates/public/home.html:13 public/templates/public/home.html:471
+msgid "Domaines"
+msgstr "Domínios"
 
-#: public/templates/public/home.html:14
+#: public/templates/public/home.html:14 public/templates/public/home.html:307
+#: public/templates/public/home.html:472
+msgid "Tarif"
+msgstr "Tarifa"
+
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "A sua exploração, sem ter de a guardar na cabeça."
+
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "O assistente que memoriza, calcula e comprova por si."
+
+#: public/templates/public/home.html:47
+msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
+msgstr "59,90 € sem IVA/mês por exploração, utilizadores ilimitados."
+
+#: public/templates/public/home.html:53
+msgid "Commencer maintenant"
+msgstr "Começar agora"
+
+#: public/templates/public/home.html:57
+msgid "Voir ce qu'il fait"
+msgstr "Ver o que faz"
+
+#: public/templates/public/home.html:61
+#: templates/partials/install_banner.html:23
+msgid "Télécharger l'app"
+msgstr "Descarregar a app"
+
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Sem compromisso"
+
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Dados alojados em França"
+
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Acompanhamento guiado incluído"
+
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Exploração agrícola ao pôr do sol"
+
+#: public/templates/public/home.html:87
+msgid "Le métier n'a pas changé."
+msgstr "O ofício não mudou."
+
+#: public/templates/public/home.html:90
+msgid "Sa charge administrative et mentale, si."
+msgstr "A sua carga administrativa e mental, sim."
+
+#: public/templates/public/home.html:98
+msgid "La réglementation qui s'empile"
+msgstr "A regulamentação que se acumula"
+
+#: public/templates/public/home.html:100
+msgid "Plan Eau 2030"
+msgstr "Plano da Água 2030"
+
+#: public/templates/public/home.html:102
+msgid "E-facturation obligatoire"
+msgstr "Faturação eletrónica obrigatória"
+
+#: public/templates/public/home.html:103
+msgid "Traçabilité renforcée"
+msgstr "Rastreabilidade reforçada"
+
+#: public/templates/public/home.html:110
+msgid "L'économie qui pèse autrement"
+msgstr "A economia que pesa de outra forma"
+
+#: public/templates/public/home.html:112
+msgid "Marges sous pression"
+msgstr "Margens sob pressão"
+
+#: public/templates/public/home.html:113
+msgid "Charges en hausse"
+msgstr "Encargos em alta"
+
+#: public/templates/public/home.html:114
+msgid "Financement complexe"
+msgstr "Financiamento complexo"
+
+#: public/templates/public/home.html:115 public/templates/public/home.html:290
+msgid "Dossiers de subvention"
+msgstr "Processos de subvenção"
+
+#: public/templates/public/home.html:122
+msgid "La main-d'œuvre à gérer"
+msgstr "A mão de obra a gerir"
+
+#: public/templates/public/home.html:124
+msgid "Saisonniers et apprentis"
+msgstr "Sazonais e aprendizes"
+
+#: public/templates/public/home.html:125
+msgid "Associés et salariés"
+msgstr "Sócios e assalariados"
+
+#: public/templates/public/home.html:126
+msgid "Transmission incertaine"
+msgstr "Transmissão incerta"
+
+#: public/templates/public/home.html:127
+msgid "Formation continue"
+msgstr "Formação contínua"
+
+#: public/templates/public/home.html:139
+msgid "Ce que disent les agriculteurs français"
+msgstr "O que dizem os agricultores franceses"
+
+#: public/templates/public/home.html:142
+msgid "Des chiffres qui parlent d'eux-mêmes."
+msgstr "Números que falam por si."
+
+#: public/templates/public/home.html:149
+msgid "des agriculteurs veulent travailler moins"
+msgstr "dos agricultores querem trabalhar menos"
+
+#: public/templates/public/home.html:150
+msgid "PRISM 2023 — priorité n°1 à 3 ans"
+msgstr "PRISM 2023 — prioridade n.º 1 a 3 anos"
+
+#: public/templates/public/home.html:154
+msgid "choisissent de réduire leurs charges"
+msgstr "optam por reduzir os seus encargos"
+
+#: public/templates/public/home.html:155
+msgid "PRISM 2023 — vs maximiser la productivité"
+msgstr "PRISM 2023 — vs maximizar a produtividade"
+
+#: public/templates/public/home.html:159
+msgid "subissent le changement climatique"
+msgstr "sofrem as alterações climáticas"
+
+#: public/templates/public/home.html:160
+msgid "VoxAgri 2025 — effet négatif sur l'exploitation"
+msgstr "VoxAgri 2025 — efeito negativo na exploração"
+
+#: public/templates/public/home.html:164
+msgid "veulent plus d'accompagnement"
+msgstr "querem mais acompanhamento"
+
+#: public/templates/public/home.html:165
+msgid "PRISM 2023 — ou de meilleure qualité"
+msgstr "PRISM 2023 — ou de melhor qualidade"
+
+#: public/templates/public/home.html:175
+msgid "La charge invisible"
+msgstr "A carga invisível"
+
+#: public/templates/public/home.html:178
 msgid ""
-"IoT temps réel, score d'efficience DTI, assistant IA et conformité "
-"subventions — pensés pour les agriculteurs."
-msgstr ""
+"Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
+"prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
+"l'apprenti — c'est un autre travail."
+msgstr "Sabe o que fez na parcela 3 há seis semanas. Prová-lo a um inspetor, encontrá-lo para um processo, transmiti-lo ao aprendiz — é outro trabalho."
 
-#: public/templates/public/home.html:17
-msgid "Démarrer"
-msgstr ""
+#: public/templates/public/home.html:181
+msgid ""
+"Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
+"ce qui se colle par-dessus."
+msgstr "E esse trabalho fá-lo à noite. A carga não é o ofício, é o que se cola por cima."
 
-#: public/templates/public/home.html:24
-msgid "Guide gratuit : lire ses analyses de sol"
-msgstr ""
+#: public/templates/public/home.html:182
+#, python-format
+msgid ""
+"48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
+"priorité n°1."
+msgstr "48 %% dos agricultores apontam «controlar o tempo de trabalho» como prioridade n.º 1."
 
-#: public/templates/public/home.html:27
-msgid "Votre email"
-msgstr ""
+#: public/templates/public/home.html:194
+msgid "Agriculteur submergé par la paperasse administrative"
+msgstr "Agricultor submerso em papelada administrativa"
 
-#: public/templates/public/home.html:28
-msgid "Recevoir"
-msgstr ""
+#: public/templates/public/home.html:201
+msgid "5 problèmes. 1 réponse."
+msgstr "5 problemas. 1 resposta."
 
-#: public/templates/public/home.html:34
-msgid "Discuter avec Alex 🌱"
-msgstr ""
+#: public/templates/public/home.html:203
+msgid "Votre exploitation mérite un assistant qui ne dort jamais."
+msgstr "A sua exploração merece um assistente que nunca dorme."
 
-#: public/templates/public/home.html:43
-msgid "Posez votre question…"
-msgstr ""
+#: public/templates/public/home.html:206
+msgid ""
+"Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
+"temps de travail, charges, adaptation climatique, gestion d'équipe et "
+"accompagnement. Disponible à la voix, sur le tracteur, à 22h."
+msgstr "A Holystyl responde às 5 grandes preocupações dos agricultores franceses: tempo de trabalho, encargos, adaptação climática, gestão de equipa e acompanhamento. Disponível por voz, no trator, às 22h."
 
-#: public/views.py:29
+#: public/templates/public/home.html:211
+msgid "« Je n'ai pas le temps »"
+msgstr "«Não tenho tempo»"
+
+#: public/templates/public/home.html:212
+msgid "automatise les rapports et la traçabilité"
+msgstr "automatiza os relatórios e a rastreabilidade"
+
+#: public/templates/public/home.html:215
+msgid "« Je dois réduire mes charges »"
+msgstr "«Tenho de reduzir os meus encargos»"
+
+#: public/templates/public/home.html:216
+msgid "tableau de bord financier en temps réel"
+msgstr "painel financeiro em tempo real"
+
+#: public/templates/public/home.html:219
+msgid "« Le climat change »"
+msgstr "«O clima muda»"
+
+#: public/templates/public/home.html:220
+msgid "alertes météo, suivi parcellaire, aide à la décision"
+msgstr "alertas meteorológicos, acompanhamento parcelar, apoio à decisão"
+
+#: public/templates/public/home.html:223
+msgid "« Je gère des saisonniers »"
+msgstr "«Faço a gestão de sazonais»"
+
+#: public/templates/public/home.html:224
+msgid "module Équipe & Tâches avec rappels automatiques"
+msgstr "módulo Equipa & Tarefas com lembretes automáticos"
+
+#: public/templates/public/home.html:227
+msgid "« Je ne sais pas à qui demander »"
+msgstr "«Não sei a quem perguntar»"
+
+#: public/templates/public/home.html:228
+msgid "IA disponible 24h/24 sur vos questions"
+msgstr "IA disponível 24h/24 para as suas questões"
+
+#: public/templates/public/home.html:240
+msgid "Tout ce qu'il couvre"
+msgstr "Tudo o que abrange"
+
+#: public/templates/public/home.html:243
+msgid "Dix domaines. Un seul outil."
+msgstr "Dez domínios. Uma única ferramenta."
+
+#: public/templates/public/home.html:250
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation et eau"
+msgstr "Öntözés"
+
+#: public/templates/public/home.html:251
+msgid "Programmes, quotas, capteurs IoT"
+msgstr "Programas, quotas, sensores IoT"
+
+#: public/templates/public/home.html:255
+msgid "Charges et marges"
+msgstr "Encargos e margens"
+
+#: public/templates/public/home.html:256
+msgid "Suivi économique en temps réel"
+msgstr "Acompanhamento económico em tempo real"
+
+#: public/templates/public/home.html:261
+msgid "Maintenance, alertes, historique"
+msgstr "Manutenção, alertas, histórico"
+
+#: public/templates/public/home.html:266
+msgid "Traitements, travaux, traçabilité"
+msgstr "Tratamentos, trabalhos, rastreabilidade"
+
+#: public/templates/public/home.html:271
+msgid "Résultats, recommandations"
+msgstr "Resultados, recomendações"
+
+#: public/templates/public/home.html:275
+msgid "Récoltes"
+msgstr "Colheitas"
+
+#: public/templates/public/home.html:276
+msgid "Volumes, qualité, rendements"
+msgstr "Volumes, qualidade, rendimentos"
+
+#: public/templates/public/home.html:280
+msgid "Équipe et planning"
+msgstr "Equipa e planeamento"
+
+#: public/templates/public/home.html:281
+msgid "Saisonniers, apprentis, associés"
+msgstr "Sazonais, aprendizes, sócios"
+
+#: public/templates/public/home.html:285
+msgid "Conformité réglementaire"
+msgstr "Conformidade regulamentar"
+
+#: public/templates/public/home.html:286
+msgid "Taxonomie EU, Plan Eau 2030"
+msgstr "Taxonomia UE, Plano da Água 2030"
+
+#: public/templates/public/home.html:291
+msgid "JEI, CIR, aides PAC"
+msgstr "JEI, CIR, ajudas PAC"
+
+#: public/templates/public/home.html:295
+msgid "Météo et alertes"
+msgstr "Meteorologia e alertas"
+
+#: public/templates/public/home.html:296
+msgid "Gel, ETP, prévisions 7 jours"
+msgstr "Geada, ETP, previsões a 7 dias"
+
+#: public/templates/public/home.html:309
+msgid "Simple et transparent."
+msgstr "Simples e transparente."
+
+#: public/templates/public/home.html:315
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "par mois · par exploitation"
+msgstr "Gazdaságom"
+
+#: public/templates/public/home.html:317
+msgid "Tous vos utilisateurs inclus — sans engagement"
+msgstr "Todos os seus utilizadores incluídos — sem compromisso"
+
+#: public/templates/public/home.html:322
+msgid "Assistant vocal illimité"
+msgstr "Assistente vocal ilimitado"
+
+#: public/templates/public/home.html:323
+msgid "Tous les modules inclus"
+msgstr "Todos os módulos incluídos"
+
+#: public/templates/public/home.html:325
+msgid "Support réactif"
+msgstr "Apoio rápido"
+
+#: public/templates/public/home.html:326
+msgid "Mises à jour automatiques"
+msgstr "Atualizações automáticas"
+
+#: public/templates/public/home.html:328
+msgid "Utilisateurs illimités par exploitation"
+msgstr "Utilizadores ilimitados por exploração"
+
+#: public/templates/public/home.html:329
+msgid "Accès mobile et tablette"
+msgstr "Acesso móvel e tablet"
+
+#: public/templates/public/home.html:335
+msgid "S'abonner maintenant"
+msgstr "Subscrever agora"
+
+#: public/templates/public/home.html:337
+msgid "Paiement sécurisé par Stripe · Résiliation en 1 clic"
+msgstr "Pagamento seguro através da Stripe · Cancelamento com 1 clique"
+
+#: public/templates/public/home.html:347
+msgid "Guide gratuit"
+msgstr "Guia gratuito"
+
+#: public/templates/public/home.html:349
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Lire ses analyses de sol"
+msgstr "Talajvizsgálatok"
+
+#: public/templates/public/home.html:352
+msgid ""
+"Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre "
+"exploitation. Téléchargement immédiat."
+msgstr "Compreenda os resultados das suas análises e tome as decisões certas para a sua exploração. Descarregamento imediato."
+
+#: public/templates/public/home.html:358
+msgid "pH & impact cultures"
+msgstr "pH & impacto nas culturas"
+
+#: public/templates/public/home.html:362
+msgid "Matière organique"
+msgstr "Matéria orgânica"
+
+#: public/templates/public/home.html:366
+msgid "N, P, K décryptés"
+msgstr "N, P, K descodificados"
+
+#: public/templates/public/home.html:370
+msgid "Recommandations concrètes"
+msgstr "Recomendações concretas"
+
+#: public/templates/public/home.html:378
+msgid "Recevoir le guide"
+msgstr "Receber o guia"
+
+#: public/templates/public/home.html:381
+msgid "Aucun spam. Votre email ne sera jamais revendu."
+msgstr "Sem spam. O seu email nunca será revendido."
+
+#: public/templates/public/home.html:390
+msgid "Questions fréquentes"
+msgstr "Perguntas frequentes"
+
+#: public/templates/public/home.html:396
+msgid "Holystyl peut-il vraiment m'aider à travailler moins ?"
+msgstr "A Holystyl pode realmente ajudar-me a trabalhar menos?"
+
+#: public/templates/public/home.html:400
+#, python-format
+msgid ""
+"Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
+"de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
+"l'administratif — la priorité n°1 de 48 %% des agriculteurs."
+msgstr "Sim. Ao automatizar a rastreabilidade, os relatórios regulamentares e o acompanhamento das suas parcelas, a Holystyl faz-lhe poupar as horas passadas à noite com a parte administrativa — a prioridade n.º 1 de 48 %% dos agricultores."
+
+#: public/templates/public/home.html:405
+msgid "Est-ce que l'assistant comprend mes questions techniques ?"
+msgstr "O assistente compreende as minhas questões técnicas?"
+
+#: public/templates/public/home.html:409
+msgid ""
+"Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
+"fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
+"l'écrit comme à la voix, 24h/24."
+msgstr "Sim. O assistente de IA é especializado em agricultura: rega, fertilização (N, P, K), meteorologia, regulamentação ou análises de solo — por escrito e por voz, 24h/24."
+
+#: public/templates/public/home.html:414
+msgid "Comment démarrer avec Holystyl ?"
+msgstr "Como começar com a Holystyl?"
+
+#: public/templates/public/home.html:418
+msgid ""
+"Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à "
+"pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
+"équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
+"IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
+msgstr "Crie a sua conta online em 2 minutos. Um guia de configuração passo a passo acompanha-o para adicionar as suas parcelas, as suas culturas e a sua equipa. A Holystyl liga-se ao seu sistema de rega (Vyrsa, sensores IoT) e fica operacional no próprio dia, a partir do seu smartphone ou computador."
+
+#: public/templates/public/home.html:423
+msgid "Holystyl m'aide-t-il à réduire mes charges ?"
+msgstr "A Holystyl ajuda-me a reduzir os meus encargos?"
+
+#: public/templates/public/home.html:427
+msgid ""
+"Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
+"réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
+"aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
+msgstr "Sim. O painel financeiro acompanha os seus encargos e as suas margens em tempo real, identifica as rubricas que pesam e ajuda-o a decidir. Também gere as suas quotas de água e o seu equipamento para evitar despesas desnecessárias."
+
+#: public/templates/public/home.html:432
+msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
+msgstr "A aplicação funciona sem internet na parcela?"
+
+#: public/templates/public/home.html:436
+msgid ""
+"Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
+"réseau ; les données se synchronisent automatiquement dès que la connexion "
+"revient."
+msgstr "Sim. Consulta e regista as suas intervenções no terreno mesmo sem rede; os dados sincronizam-se automaticamente assim que a ligação regressa."
+
+#: public/templates/public/home.html:441
+msgid "Mes données m'appartiennent-elles ?"
+msgstr "Os meus dados pertencem-me?"
+
+#: public/templates/public/home.html:445
+msgid ""
+"Absolument. Vos données vous appartiennent et restent confidentielles : "
+"hébergées en France, jamais revendues, exportables ou supprimables à tout "
+"moment."
+msgstr "Absolutamente. Os seus dados pertencem-lhe e permanecem confidenciais: alojados em França, nunca revendidos, exportáveis ou elimináveis a qualquer momento."
+
+#: public/templates/public/home.html:463
+msgid ""
+"Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
+"Holystyl."
+msgstr "Assistente inteligente para explorações agrícolas. Concebido com a rede Holystyl."
+
+#: public/templates/public/home.html:478
+msgid "Accès"
+msgstr "Acesso"
+
+#: public/templates/public/home.html:481
+msgid "S'abonner"
+msgstr "Subscrever"
+
+#: public/templates/public/home.html:488
+msgid "© 2026 Holystyl · Tous droits réservés"
+msgstr "© 2026 Holystyl · Todos os direitos reservados"
+
+#: public/templates/public/home.html:490
+msgid "Mentions légales"
+msgstr "Avisos legais"
+
+#: public/templates/public/home.html:492
+msgid "Confidentialité"
+msgstr "Privacidade"
+
+#: public/templates/public/home.html:493
+msgid "Registre transparence UE 238841"
+msgstr "Registo de transparência UE 238841"
+
+#: public/views.py:26
 msgid "Merci ! Votre guide arrive par email."
-msgstr ""
+msgstr "Obrigado! O seu guia chega por email."
 
-#: public/views.py:54
-msgid "Votre accès Holystyl est activé !"
-msgstr ""
+#: sondages/models.py:15
+msgid "question"
+msgstr "questão"
 
-#: public/views.py:56
-msgid "Code invalide ou déjà utilisé."
-msgstr ""
+#: sondages/models.py:17
+msgid "clôturé"
+msgstr "encerrado"
+
+#: sondages/models.py:20
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondage"
+msgstr "Szavazás"
+
+#: sondages/models.py:21
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondages"
+msgstr "Szavazás"
+
+#: sondages/models.py:48
+msgid "texte"
+msgstr "texto"
+
+#: sondages/models.py:52 sondages/models.py:53
+#: sondages/templates/sondages/liste.html:27
+msgid "choix"
+msgstr "opção"
+
+#: sondages/models.py:67
+msgid "vote"
+msgstr "voto"
+
+#: sondages/models.py:68
+msgid "votes"
+msgstr "votos"
+
+#: sondages/templates/sondages/create.html:6
+#: sondages/templates/sondages/liste.html:10 sondages/views.py:45
+#: sondages/views.py:58
+msgid "Nouveau sondage"
+msgstr "Nova sondagem"
+
+#: sondages/templates/sondages/create.html:17
+msgid "Question"
+msgstr "Questão"
+
+#: sondages/templates/sondages/create.html:19
+msgid "Ex. Quelle parcelle irriguer en priorité ?"
+msgstr "Ex. Que parcela regar prioritariamente?"
+
+#: sondages/templates/sondages/create.html:24
+#: sondages/templates/sondages/create.html:27
+#: sondages/templates/sondages/create.html:48
+msgid "Choix"
+msgstr "Opções"
+
+#: sondages/templates/sondages/create.html:32
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter un choix"
+msgstr "Kód aktiválása"
+
+#: sondages/templates/sondages/detail.html:7
+#: sondages/templates/sondages/liste.html:7 sondages/views.py:30
+#, fuzzy
+#| msgid "Sondage"
+msgid "Sondages"
+msgstr "Szavazás"
+
+#: sondages/templates/sondages/detail.html:14
+#: sondages/templates/sondages/liste.html:21
+msgid "Clôturé"
+msgstr "Encerrado"
+
+#: sondages/templates/sondages/detail.html:35
+#, python-format
+msgid "%(n)s vote au total"
+msgid_plural "%(n)s votes au total"
+msgstr[0] "%(n)s voto no total"
+msgstr[1] "%(n)s votos no total"
+
+#: sondages/templates/sondages/detail.html:46
+msgid "Voter"
+msgstr "Votar"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Rouvrir le sondage"
+msgstr "Reabrir a sondagem"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Clôturer le sondage"
+msgstr "Encerrar a sondagem"
+
+#: sondages/templates/sondages/liste.html:23
+msgid "Voté"
+msgstr "Votado"
+
+#: sondages/templates/sondages/liste.html:27
+#, python-format
+msgid "%(n)s vote"
+msgid_plural "%(n)s votes"
+msgstr[0] "%(n)s voto"
+msgstr[1] "%(n)s votos"
+
+#: sondages/templates/sondages/liste.html:33
+msgid "Aucun sondage pour le moment. Créez-en un !"
+msgstr "Nenhuma sondagem de momento. Crie uma!"
+
+#: sondages/views.py:40
+msgid "La question est obligatoire."
+msgstr "A questão é obrigatória."
+
+#: sondages/views.py:42
+msgid "Proposez au moins deux choix."
+msgstr "Proponha pelo menos duas opções."
 
 #: templates/partials/cookie_banner.html:6
 msgid ""
 "Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
-msgstr ""
+msgstr "Utilizamos cookies essenciais ao funcionamento da Holystyl (RGPD)."
 
 #: templates/partials/cookie_banner.html:8
 msgid "J'ai compris"
-msgstr ""
+msgstr "Compreendi"
 
-#: templates/partials/header.html:5
-msgid "Tableau de bord"
-msgstr ""
+#: templates/partials/header.html:13
+msgid "Heure locale"
+msgstr "Helyi idő"
 
-#: templates/partials/header.html:19
+#: templates/partials/header.html:33
 msgid "Thème"
-msgstr ""
+msgstr "Tema"
 
-#: templates/partials/sidebar.html:16
-msgid "Bientôt"
-msgstr ""
-
-#: templates/partials/sidebar.html:21
-msgid "Plus"
-msgstr ""
-
-#: templates/partials/sidebar.html:46
+#: templates/partials/header.html:64
 msgid "Déconnexion"
-msgstr "Sair"
+msgstr "Terminar sessão"
+
+#: templates/partials/install_banner.html:13
+msgid "Installer Holystyl"
+msgstr "Instalar a Holystyl"
+
+#: templates/partials/install_banner.html:15
+msgid "Partager puis « Sur l’écran d’accueil »."
+msgstr "Partilhar e depois «Adicionar ao ecrã principal»."
+
+#: templates/partials/install_banner.html:16
+msgid "Accédez plus vite depuis votre écran d’accueil."
+msgstr "Aceda mais rapidamente a partir do seu ecrã principal."
+
+#: templates/partials/install_banner.html:25
+msgid "Plus tard"
+msgstr "Mais tarde"
+
+#: templates/partials/lang_switcher.html:27
+msgid "Langue"
+msgstr "Idioma"
+
+#: templates/partials/nav_flyout.html:17
+msgid "Bientôt"
+msgstr "Hamarosan"
+
+#: templates/partials/sidebar.html:8
+msgid "Remettons du sens dans notre métier"
+msgstr "Devolvamos sentido ao nosso ofício"
+
+#~ msgid "Administration"
+#~ msgstr "Adminisztráció"

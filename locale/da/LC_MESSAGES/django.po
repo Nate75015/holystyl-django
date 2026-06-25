@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 16:53+0200\n"
+"POT-Creation-Date: 2026-06-25 17:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,1874 +18,4768 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: accounts/admin.py:17 exploitations/views.py:61
 msgid "Identité"
-msgstr ""
+msgstr "Identitet"
 
+#: accounts/admin.py:18
 msgid "Permissions"
-msgstr ""
+msgstr "Tilladelser"
 
+#: accounts/admin.py:19
 msgid "Dates"
-msgstr ""
+msgstr "Datoer"
 
+#: accounts/forms.py:15
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
+#: accounts/forms.py:23
 msgid "Nom complet"
-msgstr ""
+msgstr "Fulde navn"
 
+#: accounts/models.py:14
 msgid "adresse email"
-msgstr ""
+msgstr "e-mailadresse"
 
+#: accounts/models.py:15
 msgid "nom complet"
-msgstr ""
+msgstr "fulde navn"
 
+#: accounts/models.py:23
 msgid "utilisateur"
-msgstr ""
+msgstr "bruger"
 
+#: accounts/models.py:24
 msgid "utilisateurs"
-msgstr ""
+msgstr "brugere"
 
+#: accounts/templates/accounts/login.html:3
+#: accounts/templates/accounts/login.html:12
+#: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
-msgstr ""
+msgstr "Log ind"
 
+#: accounts/templates/accounts/login.html:23
+#: accounts/templates/accounts/register.html:26
 msgid "Se connecter"
-msgstr ""
+msgstr "Log ind"
 
+#: accounts/templates/accounts/login.html:26
 msgid "Pas de compte ?"
-msgstr ""
+msgstr "Ingen konto?"
 
+#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/register.html:3
+#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
-msgstr ""
+msgstr "Opret en konto"
 
+#: accounts/templates/accounts/register.html:23
+#: public/templates/public/home.html:25
 msgid "S'inscrire"
-msgstr ""
+msgstr "Tilmeld dig"
 
+#: accounts/templates/accounts/register.html:26
 msgid "Déjà un compte ?"
-msgstr ""
+msgstr "Har du allerede en konto?"
 
+#: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
-msgstr ""
+msgstr "Fejl"
 
+#: administration/models.py:31
 msgid "configuration SMTP"
-msgstr ""
+msgstr "SMTP-konfiguration"
 
+#: administration/models.py:32
 msgid "configurations SMTP"
-msgstr ""
+msgstr "SMTP-konfigurationer"
 
-msgid "Administration — Email (SMTP)"
-msgstr ""
-
-msgid "Serveur"
-msgstr ""
-
-msgid "Port"
-msgstr ""
-
-msgid "Utilisateur"
-msgstr ""
-
-msgid "Mot de passe"
-msgstr ""
-
-msgid "Nom expéditeur"
-msgstr ""
-
-msgid "Email expéditeur"
-msgstr ""
-
-msgid "SSL (port 465)"
-msgstr ""
-
-msgid "Activé"
-msgstr ""
-
-msgid "Dernier test"
-msgstr ""
-
-msgid "Enregistrer"
-msgstr ""
-
-msgid "Configuration SMTP enregistrée."
-msgstr ""
-
-msgid "Administration"
-msgstr "Administration"
-
+#: agronomie/models.py:16 agronomie/templates/agronomie/cultures.html:16
 msgid "Céréales"
-msgstr ""
+msgstr "Korn"
 
+#: agronomie/models.py:17 agronomie/templates/agronomie/cultures.html:17
 msgid "Légumes"
-msgstr ""
+msgstr "Grøntsager"
 
+#: agronomie/models.py:18 agronomie/templates/agronomie/cultures.html:18
 msgid "Fruits"
-msgstr ""
+msgstr "Frugt"
 
+#: agronomie/models.py:19 agronomie/templates/agronomie/cultures.html:19
 msgid "Vigne"
-msgstr ""
+msgstr "Vin"
 
+#: agronomie/models.py:20 agronomie/templates/agronomie/cultures.html:20
 msgid "Oléagineux"
-msgstr ""
+msgstr "Olieafgrøder"
 
+#: agronomie/models.py:21 agronomie/templates/agronomie/cultures.html:21
 msgid "Fourrage"
-msgstr ""
+msgstr "Foder"
 
+#: agronomie/models.py:22 agronomie/templates/agronomie/cultures.html:22
 msgid "Maraîchage"
-msgstr ""
+msgstr "Frilandsgrøntsager"
 
+#: agronomie/models.py:23 exploitations/models.py:21 exploitations/models.py:34
+#: finances/models.py:24 finances/models.py:50 interventions/models.py:26
+#: operations/models.py:21 operations/models.py:87 operations/models.py:119
+#: operations/models.py:152 pac/models.py:18 planning/models.py:110
+#: planning/models.py:150 planning/models.py:214
 msgid "Autre"
-msgstr ""
+msgstr "Andet"
 
+#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:107
+#: agronomie/models.py:132 equipe/models.py:22 exploitations/models.py:42
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:17
+#: operations/models.py:30 parcelles/models.py:31
 msgid "nom"
-msgstr ""
+msgstr "navn"
 
+#: agronomie/models.py:26
 msgid "nom scientifique"
-msgstr ""
+msgstr "videnskabeligt navn"
 
+#: agronomie/models.py:39
 msgid "culture (Kc)"
-msgstr ""
+msgstr "afgrøde (Kc)"
 
+#: agronomie/models.py:40
 msgid "cultures (Kc)"
-msgstr ""
+msgstr "afgrøder (Kc)"
 
+#: agronomie/models.py:51 agronomie/templates/agronomie/types_sol.html:16
 msgid "Sableux"
-msgstr ""
+msgstr "Sandet"
 
+#: agronomie/models.py:52 agronomie/templates/agronomie/types_sol.html:17
 msgid "Limoneux"
-msgstr ""
+msgstr "Siltet"
 
+#: agronomie/models.py:53 agronomie/templates/agronomie/types_sol.html:18
 msgid "Argileux"
-msgstr ""
+msgstr "Leret"
 
+#: agronomie/models.py:54 agronomie/templates/agronomie/types_sol.html:19
 msgid "Limon argileux"
-msgstr ""
+msgstr "Lersilt"
 
+#: agronomie/models.py:55 agronomie/templates/agronomie/types_sol.html:20
 msgid "Sablo-limoneux"
-msgstr ""
+msgstr "Sandsilt"
 
+#: agronomie/models.py:56 agronomie/templates/agronomie/types_sol.html:21
 msgid "Argilo-limoneux"
-msgstr ""
+msgstr "Lersilt"
 
+#: agronomie/models.py:60
 msgid "capacité de rétention (mm)"
-msgstr ""
+msgstr "vandholdende kapacitet (mm)"
 
+#: agronomie/models.py:61 agronomie/templates/agronomie/types_sol.html:108
 msgid "pH typique"
-msgstr ""
+msgstr "typisk pH"
 
+#: agronomie/models.py:67 parcelles/models.py:60
 msgid "type de sol"
-msgstr ""
+msgstr "jordtype"
 
+#: agronomie/models.py:68 agronomie/templates/agronomie/types_sol.html:128
 msgid "types de sol"
-msgstr ""
+msgstr "jordtyper"
 
+#: agronomie/models.py:91
 msgid "fertigation"
-msgstr ""
+msgstr "fertigation"
 
+#: agronomie/models.py:92
 msgid "fertigations"
-msgstr ""
+msgstr "fertigationer"
 
+#: agronomie/models.py:108
+msgid "type"
+msgstr "type"
+
+#: agronomie/models.py:109
+msgid "N %"
+msgstr "N %"
+
+#: agronomie/models.py:110
+msgid "P %"
+msgstr "P %"
+
+#: agronomie/models.py:111
+msgid "K %"
+msgstr "K %"
+
+#: agronomie/models.py:112
+msgid "solubilité"
+msgstr "opløselighed"
+
+#: agronomie/models.py:113
+msgid "effet pH"
+msgstr "pH-effekt"
+
+#: agronomie/models.py:116 agronomie/models.py:117
+msgid "engrais"
+msgstr "gødning"
+
+#: agronomie/models.py:133
 msgid "date de début"
-msgstr ""
+msgstr "startdato"
 
+#: agronomie/models.py:134
 msgid "date de fin"
-msgstr ""
+msgstr "slutdato"
 
+#: agronomie/models.py:135 agronomie/templates/agronomie/saisons.html:12
 msgid "active"
-msgstr ""
+msgstr "aktiv"
 
+#: agronomie/models.py:139
 msgid "saison"
-msgstr ""
+msgstr "sæson"
 
+#: agronomie/models.py:140
 msgid "saisons"
-msgstr ""
+msgstr "sæsoner"
 
-msgid "Cultures & coefficients Kc"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:15
+#: agronomie/templates/agronomie/types_sol.html:15
+#: interventions/templates/interventions/interventions.html:82
+msgid "Toutes"
+msgstr "Alle"
 
-msgid "Culture"
-msgstr ""
-
-msgid "Catégorie"
-msgstr ""
-
-msgid "Source"
-msgstr ""
-
-msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
-msgstr ""
-
-msgid "Saisons"
-msgstr "Sæsoner"
-
-msgid "Aucune saison définie."
-msgstr ""
-
-msgid "Types de sol"
-msgstr "Jordtyper"
-
-msgid "Rétention"
-msgstr ""
-
-msgid "Aucun type de sol. Ajoutez-en via l'admin."
-msgstr ""
-
+#: agronomie/templates/agronomie/cultures.html:35 agronomie/views.py:46
 msgid "Cultures & Kc"
 msgstr "Afgrøder & Kc"
 
-msgid "Sol"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:36
+msgid ""
+"Base de données cultures françaises — Coefficients culturaux FAO-56 / ARVALIS"
+msgstr "Database over franske afgrøder — afgrødekoefficienter FAO-56 / ARVALIS"
 
-msgid "Eau"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:41
+#: agronomie/templates/agronomie/cultures.html:56
+msgid "Méthode"
+msgstr "Metode"
 
-msgid "Foliaire"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:45
+#: agronomie/templates/agronomie/cultures.html:233
+#: agronomie/templates/agronomie/types_sol.html:54
+#: agronomie/templates/agronomie/types_sol.html:213
+#: environnement/templates/environnement/taxonomie.html:178
+#: exploitations/templates/exploitations/settings.html:140
+#: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
+#: parcelles/templates/parcelles/list.html:17
+msgid "Ajouter"
+msgstr "Tilføj"
 
-msgid "Plante"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:61
+msgid ""
+"Le besoin en eau est calculé avec la formule ETc = ETP × Kc, où l'ETP est "
+"l'évapotranspiration potentielle (données météo) et le Kc est le coefficient "
+"cultural qui varie selon le stade phénologique de la plante. Le système "
+"soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
+"calculer la dose d'irrigation nette."
+msgstr "Vandbehovet beregnes med formlen ETc = ETP × Kc, hvor ETP er den potentielle evapotranspiration (vejrdata) og Kc er afgrødekoefficienten, der varierer afhængigt af plantens fænologiske stadie. Systemet fratrækker den effektive nedbør og tager højde for jordens nyttige vandreserve for at beregne den nette vandingsdosis."
 
-msgid "OCR en attente"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:66
+msgid "Levée → début développement"
+msgstr "Fremspiring → tidlig udvikling"
 
-msgid "OCR effectué"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:70
+msgid "Pleine croissance végétative"
+msgstr "Fuld vegetativ vækst"
 
-msgid "Validé"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:74
+msgid "Maturation → récolte"
+msgstr "Modning → høst"
 
-msgid "rapport d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:83
+msgid "Rechercher une culture, un nom scientifique, une source…"
+msgstr "Søg efter en afgrøde, et videnskabeligt navn, en kilde…"
 
-msgid "rapports d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:101
+#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:34
+#: parcelles/templates/parcelles/form.html:38
+#: parcelles/templates/parcelles/list.html:91
+msgid "Culture"
+msgstr "Afgrøde"
 
+#: agronomie/templates/agronomie/cultures.html:102
+#: agronomie/templates/agronomie/cultures.html:186
+msgid "Nom scientifique"
+msgstr "Videnskabeligt navn"
+
+#: agronomie/templates/agronomie/cultures.html:103
+#: agronomie/templates/agronomie/cultures.html:192
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:53
+#: pac/templates/pac/pac.html:117
+msgid "Catégorie"
+msgstr "Kategori"
+
+#: agronomie/templates/agronomie/cultures.html:107
+#: agronomie/templates/agronomie/cultures.html:220
+msgid "Source"
+msgstr "Kilde"
+
+#: agronomie/templates/agronomie/cultures.html:122
+#: agronomie/templates/agronomie/cultures.html:160
+#: agronomie/templates/agronomie/types_sol.html:97
+#: agronomie/templates/agronomie/types_sol.html:151
+#: parcelles/templates/parcelles/confirm_delete.html:13
+#: parcelles/templates/parcelles/detail.html:13
+msgid "Supprimer"
+msgstr "Slet"
+
+#: agronomie/templates/agronomie/cultures.html:132
+msgid "Aucune culture ne correspond à la recherche."
+msgstr "Ingen afgrøde matcher søgningen."
+
+#: agronomie/templates/agronomie/cultures.html:137
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "cultures"
+msgstr "Afgrøder & Kc"
+
+#: agronomie/templates/agronomie/cultures.html:150
+msgid "Supprimer la culture ?"
+msgstr "Slet afgrøden?"
+
+#: agronomie/templates/agronomie/cultures.html:152
+msgid "sera supprimée définitivement."
+msgstr "slettes permanent."
+
+#: agronomie/templates/agronomie/cultures.html:158
+#: agronomie/templates/agronomie/cultures.html:232
+#: agronomie/templates/agronomie/fertigation.html:216
+#: agronomie/templates/agronomie/types_sol.html:149
+#: agronomie/templates/agronomie/types_sol.html:212
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:128
+#: environnement/templates/environnement/taxonomie.html:177
+#: exploitations/templates/exploitations/settings.html:50
+#: exploitations/templates/exploitations/settings.html:139
+#: interventions/templates/interventions/interventions.html:174
+#: mail/templates/mail/compose.html:56
+#: messagerie/templates/messagerie/_new_modal.html:61
+#: messagerie/templates/messagerie/new.html:34
+#: meteo/templates/meteo/index.html:76 pac/templates/pac/pac.html:145
+#: parcelles/templates/parcelles/confirm_delete.html:14
+#: parcelles/templates/parcelles/list.html:75
+#: sondages/templates/sondages/create.html:37
+msgid "Annuler"
+msgstr "Annuller"
+
+#: agronomie/templates/agronomie/cultures.html:173
+msgid "Nouvelle culture"
+msgstr "Ny afgrøde"
+
+#: agronomie/templates/agronomie/cultures.html:180
+msgid "Nom commun"
+msgstr "Almindeligt navn"
+
+#: agronomie/templates/agronomie/cultures.html:226
+#: agronomie/templates/agronomie/types_sol.html:207
+#: interventions/templates/interventions/interventions.html:169
+msgid "Notes"
+msgstr "Noter"
+
+#: agronomie/templates/agronomie/fertigation.html:19 agronomie/views.py:162
+#: core/context_processors.py:50
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Fertigation"
+msgstr "Vanding"
+
+#: agronomie/templates/agronomie/fertigation.html:20
+msgid "Gestion N/P/K · Directive Nitrates · Calcul doses"
+msgstr "N/P/K-styring · Nitratdirektiv · Dosisberegning"
+
+#: agronomie/templates/agronomie/fertigation.html:24
+msgid "Enregistrer apport"
+msgstr "Registrer tilførsel"
+
+#: agronomie/templates/agronomie/fertigation.html:33
+msgid "Directive Nitrates 91/676/CEE"
+msgstr "Nitratdirektiv 91/676/EØF"
+
+#: agronomie/templates/agronomie/fertigation.html:41
+msgid ""
+"Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
+"vos apports cumulés."
+msgstr "Loft på 170 kg N/ha/år i sårbare zoner. Systemet følger automatisk dine akkumulerede tilførsler."
+
+#: agronomie/templates/agronomie/fertigation.html:49
+msgid "Catalogue engrais"
+msgstr "Gødningskatalog"
+
+#: agronomie/templates/agronomie/fertigation.html:52
+msgid "Calcul doses"
+msgstr "Dosisberegning"
+
+#: agronomie/templates/agronomie/fertigation.html:55
+msgid "Historique"
+msgstr "Historik"
+
+#: agronomie/templates/agronomie/fertigation.html:63
+#: agronomie/templates/agronomie/fertigation.html:92 finances/models.py:16
+msgid "Engrais"
+msgstr "Gødning"
+
+#: agronomie/templates/agronomie/fertigation.html:64
+#: interventions/templates/interventions/interventions.html:129
+#: iot/templates/iot/capteurs.html:21
+#: parcelles/templates/parcelles/detail.html:30
+#: planning/templates/planning/bon_intervention.html:16
+msgid "Type"
+msgstr "Type"
+
+#: agronomie/templates/agronomie/fertigation.html:68
+msgid "Solubilité"
+msgstr "Opløselighed"
+
+#: agronomie/templates/agronomie/fertigation.html:69
+msgid "pH effet"
+msgstr "pH-effekt"
+
+#: agronomie/templates/agronomie/fertigation.html:99
+msgid "Dose produit (kg/ha)"
+msgstr "Produktdosis (kg/ha)"
+
+#: agronomie/templates/agronomie/fertigation.html:106
+msgid "Azote (N)"
+msgstr "Kvælstof (N)"
+
+#: agronomie/templates/agronomie/fertigation.html:110
+msgid "Phosphore (P)"
+msgstr "Fosfor (P)"
+
+#: agronomie/templates/agronomie/fertigation.html:114
+msgid "Potassium (K)"
+msgstr "Kalium (K)"
+
+#: agronomie/templates/agronomie/fertigation.html:118
+#, python-format
+msgid "Éléments apportés = dose produit × titre (%%) ÷ 100."
+msgstr "Tilførte elementer = produktdosis × indhold (%%) ÷ 100."
+
+#: agronomie/templates/agronomie/fertigation.html:128
+#: agronomie/templates/agronomie/fertigation.html:175
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:44
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:110
+#: finances/templates/finances/charges.html:14
+#: meteo/templates/meteo/meteo.html:140
+msgid "Date"
+msgstr "Dato"
+
+#: agronomie/templates/agronomie/fertigation.html:129
+#: agronomie/templates/agronomie/fertigation.html:180
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:45
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:103 ia/models.py:33
+#: interventions/templates/interventions/interventions.html:155
+#: parcelles/templates/parcelles/list.html:89
+msgid "Parcelle"
+msgstr "Mark"
+
+#: agronomie/templates/agronomie/fertigation.html:130
+#: agronomie/templates/agronomie/fertigation.html:188 ia/models.py:36
+#: interventions/templates/interventions/interventions.html:164
+#: planning/templates/planning/bon_intervention.html:29
+#: public/templates/public/home.html:469
+msgid "Produit"
+msgstr "Produkt"
+
+#: agronomie/templates/agronomie/fertigation.html:134
+msgid "Volume"
+msgstr "Volumen"
+
+#: agronomie/templates/agronomie/fertigation.html:155
+msgid "Aucun apport enregistré."
+msgstr "Ingen tilførsel registreret."
+
+#: agronomie/templates/agronomie/fertigation.html:156
+msgid ""
+"Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
+msgstr "Klik på »Registrer tilførsel« for at tilføje en fertigationstilførsel."
+
+#: agronomie/templates/agronomie/fertigation.html:167
+msgid "Enregistrer un apport"
+msgstr "Registrer en tilførsel"
+
+#: agronomie/templates/agronomie/fertigation.html:211
+msgid "Volume (L)"
+msgstr "Volumen (L)"
+
+#: agronomie/templates/agronomie/fertigation.html:217
+#: exploitations/templates/exploitations/settings.html:52
+#: interventions/templates/interventions/interventions.html:33
+#: interventions/templates/interventions/interventions.html:175
+#: meteo/templates/meteo/meteo.html:52
+#: parcelles/templates/parcelles/form.html:97
+#: parcelles/templates/parcelles/list.html:76
+msgid "Enregistrer"
+msgstr "Gem"
+
+#: agronomie/templates/agronomie/fertigation.html:221
+msgid ""
+"Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un apport."
+msgstr "Tilføj først en mark til din bedrift for at registrere en tilførsel."
+
+#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:132
+#: core/context_processors.py:67
+msgid "Saisons"
+msgstr "Sæsoner"
+
+#: agronomie/templates/agronomie/saisons.html:19
+msgid "Aucune saison définie."
+msgstr "Ingen sæson defineret."
+
+#: agronomie/templates/agronomie/types_sol.html:44 agronomie/views.py:99
+#: core/context_processors.py:49
+msgid "Types de sol"
+msgstr "Jordtyper"
+
+#: agronomie/templates/agronomie/types_sol.html:45
+msgid "Caractéristiques hydriques et agronomiques par texture"
+msgstr "Hydrauliske og agronomiske egenskaber efter tekstur"
+
+#: agronomie/templates/agronomie/types_sol.html:50
+msgid "Réserve Utile"
+msgstr "Nyttig vandreserve"
+
+#: agronomie/templates/agronomie/types_sol.html:64
+msgid "Réserve Utile (RU)"
+msgstr "Nyttig vandreserve (RU)"
+
+#: agronomie/templates/agronomie/types_sol.html:69
+msgid ""
+"La réserve utile est la quantité d'eau disponible pour la plante entre la "
+"capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
+"est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
+"calculer la dose d'irrigation nette et le seuil de déclenchement."
+msgstr "Den nyttige vandreserve er den mængde vand, der er tilgængelig for planten mellem markkapacitet (CC) og det permanente visnepunkt (PFP). Den udtrykkes i mm vand pr. meter jord. Systemet bruger RU til at beregne den nette vandingsdosis og udløsningstærsklen."
+
+#: agronomie/templates/agronomie/types_sol.html:77
+msgid "Rechercher un type de sol, une texture…"
+msgstr "Søg efter en jordtype, en tekstur…"
+
+#: agronomie/templates/agronomie/types_sol.html:104
+msgid "Rétention"
+msgstr "Tilbageholdelse"
+
+#: agronomie/templates/agronomie/types_sol.html:112
+msgid "Conductivité"
+msgstr "Ledningsevne"
+
+#: agronomie/templates/agronomie/types_sol.html:116
+msgid "Densité"
+msgstr "Densitet"
+
+#: agronomie/templates/agronomie/types_sol.html:124
+msgid "Aucun type de sol ne correspond à la recherche."
+msgstr "Ingen jordtype matcher søgningen."
+
+#: agronomie/templates/agronomie/types_sol.html:141
+msgid "Supprimer ce type de sol ?"
+msgstr "Slet denne jordtype?"
+
+#: agronomie/templates/agronomie/types_sol.html:143
+msgid "sera supprimé définitivement."
+msgstr "slettes permanent."
+
+#: agronomie/templates/agronomie/types_sol.html:164
+#, fuzzy
+#| msgid "Types de sol"
+msgid "Nouveau type de sol"
+msgstr "Jordtyper"
+
+#: agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Navn"
+
+#: agronomie/templates/agronomie/types_sol.html:176
+msgid "Texture"
+msgstr "Tekstur"
+
+#: agronomie/templates/agronomie/types_sol.html:186
+msgid "Rétention (mm)"
+msgstr "Tilbageholdelse (mm)"
+
+#: agronomie/templates/agronomie/types_sol.html:196
+msgid "Conductivité (mm/h)"
+msgstr "Ledningsevne (mm/t)"
+
+#: agronomie/templates/agronomie/types_sol.html:201
+msgid "Densité (g/cm³)"
+msgstr "Densitet (g/cm³)"
+
+#: analyse_sol/models.py:31
+msgid "document"
+msgstr "dokument"
+
+#: analyse_sol/models.py:36
 msgid "analyse de sol"
-msgstr ""
+msgstr "jordanalyse"
 
+#: analyse_sol/models.py:37
 msgid "analyses de sol"
-msgstr ""
+msgstr "jordanalyser"
 
-msgid "fiche biodiversité"
-msgstr ""
-
-msgid "fiches biodiversité"
-msgstr ""
-
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:9
+#: analyse_sol/views.py:43 core/context_processors.py:52
+#: public/templates/public/home.html:270
 msgid "Analyses de sol"
 msgstr "Jordanalyser"
 
-msgid "Labo"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:10
+msgid "Résultats d'analyses par parcelle · import de documents"
+msgstr "Analyseresultater pr. mark · import af dokumenter"
 
-msgid "Aucune analyse de sol."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:14
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:83
+msgid "Importer une analyse"
+msgstr "Importer en analyse"
 
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:21
+#: parcelles/templates/parcelles/list.html:51
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Analyses"
+msgstr "Jordanalyser"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:25
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles analysées"
+msgstr "Marker"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:29
+msgid "pH moyen"
+msgstr "Gennemsnitlig pH"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:33
+#, python-format
+msgid "MO moyenne (%%)"
+msgstr "Gennemsnitligt OM (%%)"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:46
 msgid "Laboratoire"
 msgstr "Laboratorium"
 
-msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:52
+#: planning/models.py:109
+msgid "Document"
+msgstr "Dokument"
 
-msgid "Type"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:69
+msgid "Voir"
+msgstr "Vis"
 
-msgid "Date"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:81
+msgid "Aucune analyse de sol enregistrée."
+msgstr "Ingen jordanalyse registreret."
 
-msgid "Statut"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:94
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Importer une analyse de sol"
+msgstr "Jordanalyser"
 
-msgid "Aucun rapport. Importez un PDF via l'API (extraction Gemini)."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:117
+msgid "Document (PDF, image…)"
+msgstr "Dokument (PDF, billede…)"
 
-msgid "En attente"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:124
+msgid ""
+"Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
+"document par OCR/IA à l'import."
+msgstr "Værdierne (pH, OM, N-P-K, laboratorium…) udtrækkes automatisk fra dokumentet via OCR/AI ved import."
 
-msgid "Utilisé"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:129
+msgid "Importer"
+msgstr "Importer"
 
-msgid "Expiré"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:133
+msgid ""
+"Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
+msgstr "Tilføj først en mark (Mine marker) for at knytte en analyse til den."
 
-msgid "Annulé"
-msgstr ""
+#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
+msgid "Sol"
+msgstr "Jord"
 
-msgid "code d'activation"
-msgstr ""
+#: analyses/models.py:15 finances/models.py:18
+#: finances/templates/finances/bilan_economique.html:30
+#: finances/templates/finances/subvention_pdf.html:31
+msgid "Eau"
+msgstr "Vand"
 
-msgid "codes d'activation"
-msgstr ""
+#: analyses/models.py:16
+msgid "Foliaire"
+msgstr "Blad"
 
-msgid "Actif"
-msgstr ""
+#: analyses/models.py:17
+msgid "Plante"
+msgstr "Plante"
 
-msgid "Impayé"
-msgstr ""
+#: analyses/models.py:20
+msgid "OCR en attente"
+msgstr "OCR afventer"
 
-msgid "Essai"
-msgstr ""
+#: analyses/models.py:21
+msgid "OCR effectué"
+msgstr "OCR udført"
 
-msgid "Non payé"
-msgstr ""
+#: analyses/models.py:22 planning/models.py:261
+msgid "Validé"
+msgstr "Valideret"
 
-msgid "abonnement"
-msgstr ""
+#: analyses/models.py:45
+msgid "rapport d'analyse"
+msgstr "analyserapport"
 
-msgid "abonnements"
-msgstr ""
+#: analyses/models.py:46
+msgid "rapports d'analyse"
+msgstr "analyserapporter"
 
+#: analyses/models.py:64
+msgid "fiche biodiversité"
+msgstr "biodiversitetsark"
+
+#: analyses/models.py:65
+msgid "fiches biodiversité"
+msgstr "biodiversitetsark"
+
+#: core/context_processors.py:19 core/context_processors.py:28
 msgid "Accueil"
 msgstr "Hjem"
 
+#: core/context_processors.py:20 core/templates/core/dashboard.html:67
+#: finances/templates/finances/subvention_pdf.html:47
 msgid "Parcelles"
 msgstr "Marker"
 
+#: core/context_processors.py:21 core/context_processors.py:53
+#: finances/templates/finances/subvention_pdf.html:49
+#: interventions/models.py:12
+#: interventions/templates/interventions/interventions.html:46
+#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:34
+#: operations/models.py:117 parcelles/templates/parcelles/detail.html:28
+#: parcelles/templates/parcelles/form.html:66
 msgid "Irrigation"
 msgstr "Vanding"
 
+#: core/context_processors.py:22 core/context_processors.py:90
+#: planning/views.py:34
 msgid "Planning"
 msgstr "Planlægning"
 
+#: core/context_processors.py:23 ia/models.py:14
 msgid "Assistant"
 msgstr "Assistent"
 
+#: core/context_processors.py:30 templates/partials/header.html:5
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
+#: core/context_processors.py:31
 msgid "Assistant IA"
 msgstr "AI-assistent"
 
+#: core/context_processors.py:35
 msgid "Communication"
 msgstr "Kommunikation"
 
+#: core/context_processors.py:37
+#: notifications/templates/notifications/center.html:7
+#: notifications/views.py:18 templates/partials/header.html:22
 msgid "Notifications"
 msgstr "Notifikationer"
 
+#: core/context_processors.py:38 messagerie/views.py:75
 msgid "Messagerie"
 msgstr "Beskeder"
 
+#: core/context_processors.py:39 mail/templates/mail/outbox.html:7
+#: mail/views.py:39
 msgid "Mail"
 msgstr "E-mail"
 
+#: core/context_processors.py:40
 msgid "Sondage"
 msgstr "Afstemning"
 
+#: core/context_processors.py:44
 msgid "Cultures & Terrain"
 msgstr "Afgrøder & Jord"
 
-msgid "Régie SCADA"
-msgstr "SCADA-styring"
+#: core/context_processors.py:46 parcelles/templates/parcelles/list.html:12
+#: parcelles/views.py:48
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Mes Parcelles"
+msgstr "Marker"
 
-msgid "Capteurs"
-msgstr "Sensorer"
+#: core/context_processors.py:47 meteo/templates/meteo/index.html:9
+#: meteo/views.py:73
+msgid "Météo"
+msgstr "Vejr"
 
-msgid "Protection"
-msgstr "Beskyttelse"
+#: core/context_processors.py:48
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "Cultures"
+msgstr "Afgrøder & Kc"
 
-msgid "Bassinage anti-gel"
-msgstr "Frostsikringsvanding"
-
+#: core/context_processors.py:51
+#: interventions/templates/interventions/interventions.html:26
+#: interventions/views.py:49 public/templates/public/home.html:265
 msgid "Interventions"
 msgstr "Indsatser"
 
+#: core/context_processors.py:54 iot/templates/iot/regie.html:7 iot/views.py:28
+msgid "Régie SCADA"
+msgstr "SCADA-styring"
+
+#: core/context_processors.py:55
+msgid "Capteurs"
+msgstr "Sensorer"
+
+#: core/context_processors.py:59 planning/models.py:210
+msgid "Protection"
+msgstr "Beskyttelse"
+
+#: core/context_processors.py:61
+#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:56
+msgid "Bassinage anti-gel"
+msgstr "Frostsikringsvanding"
+
+#: core/context_processors.py:65
 msgid "Économie"
 msgstr "Økonomi"
 
+#: core/context_processors.py:68
+#: finances/templates/finances/bilan_economique.html:16
+#: finances/templates/finances/charges.html:7
+#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
+#: finances/views.py:51
 msgid "Charges"
 msgstr "Omkostninger"
 
+#: core/context_processors.py:69
+#: finances/templates/finances/bilan_economique.html:7
+#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:58
 msgid "Bilan économique"
 msgstr "Økonomisk oversigt"
 
+#: core/context_processors.py:70 finances/templates/finances/facturation.html:6
+#: finances/views.py:66
 msgid "Facturation"
 msgstr "Fakturering"
 
+#: core/context_processors.py:71 pac/templates/pac/pac.html:9 pac/views.py:56
+msgid "PAC"
+msgstr "Landbrugsstøtte (CAP)"
+
+#: core/context_processors.py:72
+#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
+#: public/templates/public/home.html:260
 msgid "Parc matériel"
 msgstr "Maskinpark"
 
+#: core/context_processors.py:76
 msgid "Environnement"
 msgstr "Miljø"
 
+#: core/context_processors.py:78 environnement/views.py:50
+msgid "Biodiversité"
+msgstr "Biodiversitet"
+
+#: core/context_processors.py:79
+msgid "Bilan eau"
+msgstr "Vandregnskab"
+
+#: core/context_processors.py:80 environnement/views.py:137
+msgid "Bilan azoté"
+msgstr "Kvælstofregnskab"
+
+#: core/context_processors.py:81 environnement/views.py:144
+msgid "Empreinte carbone"
+msgstr "CO2-aftryk"
+
+#: core/context_processors.py:82 environnement/views.py:151
+#, fuzzy
+#| msgid "Environnement"
+msgid "Rapport environnemental"
+msgstr "Miljø"
+
+#: core/context_processors.py:83 environnement/views.py:158
+msgid "Santé végétale"
+msgstr "Plantesundhed"
+
+#: core/context_processors.py:84
+#: environnement/templates/environnement/taxonomie.html:9
+#: environnement/views.py:196 public/templates/public/home.html:101
+msgid "Taxonomie EU"
+msgstr "EU-taksonomi"
+
+#: core/context_processors.py:88
 msgid "RH"
 msgstr "HR"
 
+#: core/context_processors.py:91 equipe/templates/equipe/equipe.html:6
+#: equipe/views.py:21
 msgid "Équipe"
 msgstr "Team"
 
+#: core/context_processors.py:92 equipe/templates/equipe/taches.html:6
+#: equipe/views.py:28
 msgid "Tâches"
 msgstr "Opgaver"
 
+#: core/context_processors.py:93 equipe/templates/equipe/mes_taches.html:6
+#: equipe/views.py:37
 msgid "Mes tâches"
 msgstr "Mine opgaver"
 
+#: core/context_processors.py:97
 msgid "Mon compte"
 msgstr "Min konto"
 
+#: core/context_processors.py:99
+#: exploitations/templates/exploitations/settings.html:13
+#: exploitations/views.py:92 meteo/templates/meteo/index.html:26
+#: templates/partials/header.html:59
 msgid "Mon exploitation"
 msgstr "Min bedrift"
 
-msgid "Activer un code"
+#: core/templates/core/dashboard.html:8
+msgid "Bienvenue sur Holystyl 👋"
+msgstr "Velkommen til Holystyl 👋"
+
+#: core/templates/core/dashboard.html:10
+msgid ""
+"Commencez par configurer votre exploitation pour activer le tableau de bord."
+msgstr "Begynd med at konfigurere din bedrift for at aktivere dashboardet."
+
+#: core/templates/core/dashboard.html:12
+#: exploitations/templates/exploitations/settings.html:13
+msgid "Configurer mon exploitation"
+msgstr "Konfigurer min bedrift"
+
+#: core/templates/core/dashboard.html:20
+msgid "+ Parcelle"
+msgstr "+ Mark"
+
+#: core/templates/core/dashboard.html:26
+msgid "Efficience DTI"
+msgstr "DTI-effektivitet"
+
+#: core/templates/core/dashboard.html:32
+msgid "Aucun score DTI calculé."
+msgstr "Ingen DTI-score beregnet."
+
+#: core/templates/core/dashboard.html:41
+msgid "Météo & ETP"
+msgstr "Vejr og ETP"
+
+#: core/templates/core/dashboard.html:42
+msgid "Localisation manquante"
+msgstr "Placering mangler"
+
+#: core/templates/core/dashboard.html:46
+msgid "Température"
+msgstr "Temperatur"
+
+#: core/templates/core/dashboard.html:47 iot/templates/iot/regie.html:54
+#: meteo/templates/meteo/meteo.html:77 meteo/templates/meteo/meteo.html:143
+msgid "Humidité"
+msgstr "Fugtighed"
+
+#: core/templates/core/dashboard.html:48 meteo/templates/meteo/meteo.html:78
+#: meteo/templates/meteo/meteo.html:98 meteo/templates/meteo/meteo.html:144
+msgid "Vent"
+msgstr "Vind"
+
+#: core/templates/core/dashboard.html:61
+msgid "Chargement météo…"
+msgstr "Indlæser vejr…"
+
+#: core/templates/core/dashboard.html:67
+msgid "actives"
+msgstr "aktive"
+
+#: core/templates/core/dashboard.html:68
+#: finances/templates/finances/subvention_pdf.html:30
+#: pac/templates/pac/pac.html:55 parcelles/templates/parcelles/list.html:90
+msgid "Surface"
+msgstr "Areal"
+
+#: core/templates/core/dashboard.html:69
+msgid "Quota eau"
+msgstr "Vandkvote"
+
+#: core/templates/core/dashboard.html:70
+msgid "Alertes actives"
+msgstr "Aktive advarsler"
+
+#: core/templates/core/dashboard.html:76
+msgid "Historique DTI"
+msgstr "DTI-historik"
+
+#: core/templates/core/dashboard.html:78
+msgid "Pas encore de données."
+msgstr "Ingen data endnu."
+
+#: core/templates/core/dashboard.html:81
+msgid "Consommation d'eau"
+msgstr "Vandforbrug"
+
+#: core/templates/core/dashboard.html:83
+msgid "Pas encore de relevés."
+msgstr "Ingen aflæsninger endnu."
+
+#: core/templates/core/dashboard.html:89
+msgid "Alertes"
+msgstr "Advarsler"
+
+#: core/templates/core/dashboard.html:96
+msgid "Aucune alerte active. 🌿"
+msgstr "Ingen aktive advarsler. 🌿"
+
+#: environnement/models.py:11
+msgid "Atténuation du changement climatique"
+msgstr "Modvirkning af klimaforandringer"
+
+#: environnement/models.py:12
+msgid "Adaptation au changement climatique"
+msgstr "Tilpasning til klimaforandringer"
+
+#: environnement/models.py:13
+msgid "Eau et ressources marines"
+msgstr "Vand og marine ressourcer"
+
+#: environnement/models.py:14
+#, fuzzy
+#| msgid "Économie"
+msgid "Économie circulaire"
+msgstr "Økonomi"
+
+#: environnement/models.py:15
+msgid "Prévention de la pollution"
+msgstr "Forureningsforebyggelse"
+
+#: environnement/models.py:16
+msgid "Biodiversité et écosystèmes"
+msgstr "Biodiversitet og økosystemer"
+
+#: environnement/models.py:21 pac/models.py:28
+msgid "campagne"
+msgstr "kampagne"
+
+#: environnement/models.py:22
+msgid "activité"
+msgstr "aktivitet"
+
+#: environnement/models.py:23
+msgid "code NACE"
+msgstr "NACE-kode"
+
+#: environnement/models.py:25
+msgid "objectif de contribution"
+msgstr "bidragsmål"
+
+#: environnement/models.py:27
+msgid "éligible"
+msgstr "berettiget"
+
+#: environnement/models.py:28
+msgid "contribution substantielle"
+msgstr "væsentligt bidrag"
+
+#: environnement/models.py:30
+msgid "DNSH par objectif"
+msgstr "DNSH pr. mål"
+
+#: environnement/models.py:31
+msgid "garanties minimales"
+msgstr "minimumsgarantier"
+
+#: environnement/models.py:32 exploitations/models.py:89
+msgid "chiffre d'affaires (€)"
+msgstr "omsætning (€)"
+
+#: environnement/models.py:33
+msgid "CapEx (€)"
+msgstr "CapEx (€)"
+
+#: environnement/models.py:34
+msgid "OpEx (€)"
+msgstr "OpEx (€)"
+
+#: environnement/models.py:35
+#, fuzzy
+#| msgid "Notifications"
+msgid "justification"
+msgstr "Notifikationer"
+
+#: environnement/models.py:39
+msgid "activité Taxonomie"
+msgstr "taksonomiaktivitet"
+
+#: environnement/models.py:40
+msgid "activités Taxonomie"
+msgstr "taksonomiaktiviteter"
+
+#: environnement/templates/environnement/bilan_eau.html:9
+#: environnement/views.py:113
+msgid "Bilan Eau"
+msgstr "Vandregnskab"
+
+#: environnement/templates/environnement/bilan_eau.html:10
+msgid "Consommation d'eau d'irrigation · Sessions réelles"
+msgstr "Vandforbrug til vanding · faktiske sessioner"
+
+#: environnement/templates/environnement/bilan_eau.html:14
+msgid "Export"
+msgstr "Eksport"
+
+#: environnement/templates/environnement/bilan_eau.html:21
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation totale"
+msgstr "Vanding"
+
+#: environnement/templates/environnement/bilan_eau.html:23
+msgid "cumul des sessions"
+msgstr "sum af sessioner"
+
+#: environnement/templates/environnement/bilan_eau.html:26
+#: irrigation/views.py:38
+msgid "Sessions"
+msgstr "Sessioner"
+
+#: environnement/templates/environnement/bilan_eau.html:28
+msgid "sessions enregistrées"
+msgstr "registrerede sessioner"
+
+#: environnement/templates/environnement/bilan_eau.html:31
+msgid "Quota utilisé"
+msgstr "Anvendt kvote"
+
+#: environnement/templates/environnement/bilan_eau.html:33
+msgid "alloués"
+msgstr "tildelt"
+
+#: environnement/templates/environnement/bilan_eau.html:36
+msgid "Coût eau"
+msgstr "Vandomkostning"
+
+#: environnement/templates/environnement/bilan_eau.html:38
+msgid "estimé"
+msgstr "anslået"
+
+#: environnement/templates/environnement/bilan_eau.html:44
+msgid "Consommation mensuelle (m³)"
+msgstr "Månedligt forbrug (m³)"
+
+#: environnement/templates/environnement/bilan_eau.html:49
+msgid "Aucune session d'irrigation enregistrée"
+msgstr "Ingen vandingssession registreret"
+
+#: environnement/templates/environnement/bilan_eau.html:55
+msgid "Consommation par parcelle (m³/jour)"
+msgstr "Forbrug pr. mark (m³/dag)"
+
+#: environnement/templates/environnement/bilan_eau.html:68
+msgid "Aucune session d'irrigation"
+msgstr "Ingen vandingssession"
+
+#: environnement/templates/environnement/bilan_eau.html:75
+msgid "Aucune session d'irrigation enregistrée pour vos parcelles."
+msgstr "Ingen vandingssession registreret for dine marker."
+
+#: environnement/templates/environnement/bilan_eau.html:79
+msgid ""
+"Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
+"par parcelle."
+msgstr "Ingen mark registreret. Opret dine marker for at se forbruget pr. mark."
+
+#: environnement/templates/environnement/placeholder.html:18
+msgid "Module en préparation"
+msgstr "Modul under udarbejdelse"
+
+#: environnement/templates/environnement/placeholder.html:19
+msgid "Cette section sera bientôt disponible."
+msgstr "Denne sektion bliver snart tilgængelig."
+
+#: environnement/templates/environnement/taxonomie.html:10
+msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
+msgstr "Forordning (EU) 2020/852 · tilpasning af aktiviteter (omsætning / CapEx / OpEx)"
+
+#: environnement/templates/environnement/taxonomie.html:16
+#: environnement/templates/environnement/taxonomie.html:123
+#: pac/templates/pac/pac.html:17 pac/templates/pac/pac.html:112
+msgid "Campagne"
+msgstr "Kampagne"
+
+#: environnement/templates/environnement/taxonomie.html:21
+#: environnement/templates/environnement/taxonomie.html:90
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une fiche"
 msgstr "Aktivér en kode"
 
-msgid "Bienvenue sur Holystyl 👋"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:29
+msgid "Chiffre d'affaires aligné"
+msgstr "Tilpasset omsætning"
 
-msgid "Commencez par configurer votre exploitation pour activer le tableau de bord."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:33
+msgid "CapEx aligné"
+msgstr "Tilpasset CapEx"
 
-msgid "Configurer mon exploitation"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:37
+msgid "OpEx aligné"
+msgstr "Tilpasset OpEx"
 
-msgid "+ Parcelle"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:41
+msgid "Fiches alignées"
+msgstr "Tilpassede ark"
 
-msgid "Efficience DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:52
+#: environnement/templates/environnement/taxonomie.html:114
+msgid "Activité"
+msgstr "Aktivitet"
 
-msgid "Aucun score DTI calculé."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:53
+msgid "Objectif"
+msgstr "Mål"
 
-msgid "Météo & ETP"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:54
+#: finances/templates/finances/facturation.html:11
+#: interventions/templates/interventions/interventions.html:136
+#: iot/templates/iot/capteurs.html:24 pac/templates/pac/pac.html:57
+#: pac/templates/pac/pac.html:138
+msgid "Statut"
+msgstr "Status"
 
-msgid "Localisation manquante"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:67
+msgid "Aligné"
+msgstr "Tilpasset"
 
-msgid "Température"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:68
+msgid "Éligible"
+msgstr "Berettiget"
 
-msgid "Humidité"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:69
+msgid "Non éligible"
+msgstr "Ikke berettiget"
 
-msgid "Vent"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:75
+msgid "Supprimer cette fiche ?"
+msgstr "Slet dette ark?"
 
-msgid "Chargement météo…"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:88
+msgid "Aucune fiche pour cette campagne."
+msgstr "Intet ark for denne kampagne."
 
-msgid "actives"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:97
+msgid ""
+"Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
+"objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
+"montrent la part alignée du CA, des CapEx et des OpEx."
+msgstr "En aktivitet er TILPASSET hvis: berettiget + væsentligt bidrag til 1 mål + DNSH (skader ikke de 5 andre) + minimumsgarantier. KPI'erne viser den tilpassede andel af omsætning, CapEx og OpEx."
 
-msgid "Surface"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:106
+msgid "Nouvelle fiche d'activité"
+msgstr "Nyt aktivitetsark"
 
-msgid "Quota eau"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:115
+msgid "ex: Production de noix"
+msgstr "f.eks. Produktion af valnødder"
 
-msgid "Alertes actives"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:119
+msgid "Code NACE"
+msgstr "NACE-kode"
 
-msgid "Historique DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:127
+msgid "Objectif de contribution"
+msgstr "Bidragsmål"
 
-msgid "Pas encore de données."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:136
+#: meteo/templates/meteo/meteo.html:141
+#, fuzzy
+#| msgid "Communication"
+msgid "Conditions"
+msgstr "Kommunikation"
 
-msgid "Consommation d'eau"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:138
+msgid "Activité éligible (figure dans la Taxonomie)"
+msgstr "Berettiget aktivitet (indgår i taksonomien)"
 
-msgid "Pas encore de relevés."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:139
+msgid "Contribution substantielle vérifiée"
+msgstr "Væsentligt bidrag verificeret"
 
-msgid "Alertes"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:140
+msgid "Garanties minimales respectées"
+msgstr "Minimumsgarantier overholdt"
 
-msgid "Aucune alerte active. 🌿"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:146
+msgid "DNSH — ne nuit pas significativement à :"
+msgstr "DNSH — skader ikke væsentligt:"
 
+#: environnement/templates/environnement/taxonomie.html:147
+msgid "À cocher pour les objectifs autres que celui de contribution."
+msgstr "Markeres for andre mål end bidragsmålet."
+
+#: environnement/templates/environnement/taxonomie.html:158
+msgid "CA (€)"
+msgstr "Omsætning (€)"
+
+#: environnement/templates/environnement/taxonomie.html:172
+#, fuzzy
+#| msgid "Notifications"
+msgid "Justification"
+msgstr "Notifikationer"
+
+#: environnement/views.py:51
+msgid ""
+"Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
+"couverts végétaux et infrastructures agro-écologiques (IAE)."
+msgstr "Følg biodiversiteten på dine marker: nyttedyr, bestøvere, dækafgrøder og agroøkologiske infrastrukturer (IAE)."
+
+#: environnement/views.py:138
+msgid ""
+"Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
+"reliquats et pression sur la directive Nitrates."
+msgstr "Kvælstofregnskab (balancemetode): tilførsler, afgrødernes optag, restmængder og pres i forhold til nitratdirektivet."
+
+#: environnement/views.py:145
+msgid ""
+"Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
+"sols (diagnostic type GES / label bas-carbone)."
+msgstr "Bedriftens drivhusgasudledning og kulstoflagring i jorden (GHG-diagnose / lavkulstofmærke)."
+
+#: environnement/views.py:152
+msgid ""
+"Synthèse environnementale de l'exploitation, exportable, regroupant les "
+"indicateurs (eau, azote, carbone, biodiversité)."
+msgstr "Miljøsammendrag for bedriften, eksporterbart, der samler indikatorerne (vand, kvælstof, kulstof, biodiversitet)."
+
+#: environnement/views.py:159
+msgid ""
+"Suivi sanitaire des cultures : maladies, ravageurs, observations et "
+"indicateurs de fréquence de traitement (IFT)."
+msgstr "Sundhedsovervågning af afgrøder: sygdomme, skadedyr, observationer og indikatorer for behandlingshyppighed (IFT)."
+
+#: equipe/models.py:15
 msgid "Chef d'équipe"
-msgstr ""
+msgstr "Teamleder"
 
+#: equipe/models.py:16
 msgid "Ouvrier"
-msgstr ""
+msgstr "Arbejder"
 
+#: equipe/models.py:17
 msgid "Saisonnier"
-msgstr ""
+msgstr "Sæsonarbejder"
 
+#: equipe/models.py:18
 msgid "Prestataire"
-msgstr ""
+msgstr "Underleverandør"
 
+#: equipe/models.py:24
 msgid "téléphone"
-msgstr ""
+msgstr "telefon"
 
+#: equipe/models.py:42
 msgid "membre d'équipe"
-msgstr ""
+msgstr "teammedlem"
 
+#: equipe/models.py:43
 msgid "membres d'équipe"
-msgstr ""
+msgstr "teammedlemmer"
 
+#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
 msgid "Haute"
-msgstr ""
+msgstr "Høj"
 
+#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
 msgid "Normale"
-msgstr ""
+msgstr "Normal"
 
+#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
 msgid "Basse"
-msgstr ""
+msgstr "Lav"
 
+#: equipe/models.py:57
 msgid "À faire"
-msgstr ""
+msgstr "At gøre"
 
+#: equipe/models.py:58 interventions/models.py:30 planning/models.py:30
 msgid "En cours"
-msgstr ""
+msgstr "I gang"
 
+#: equipe/models.py:59 interventions/models.py:31 iot/models.py:93
 msgid "Terminée"
-msgstr ""
+msgstr "Afsluttet"
 
+#: equipe/models.py:60
 msgid "Validée"
-msgstr ""
+msgstr "Valideret"
 
+#: equipe/models.py:63
 msgid "titre"
-msgstr ""
+msgstr "titel"
 
+#: equipe/models.py:77
 msgid "tâche"
-msgstr ""
+msgstr "opgave"
 
+#: equipe/models.py:78
 msgid "tâches"
-msgstr ""
+msgstr "opgaver"
 
+#: equipe/models.py:92 finances/models.py:116 iot/models.py:90
+msgid "En attente"
+msgstr "Afventer"
+
+#: equipe/models.py:93 mail/models.py:14 mail/templates/mail/detail.html:16
+#: mail/templates/mail/outbox.html:30
 msgid "Envoyé"
-msgstr ""
+msgstr "Sendt"
 
+#: equipe/models.py:94
 msgid "Échoué"
-msgstr ""
+msgstr "Mislykkedes"
 
+#: equipe/models.py:105
 msgid "rappel de tâche"
-msgstr ""
+msgstr "opgavepåmindelse"
 
+#: equipe/models.py:106
 msgid "rappels de tâche"
-msgstr ""
+msgstr "opgavepåmindelser"
 
+#: equipe/templates/equipe/equipe.html:20
 msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Ingen teammedlemmer. Tilføj dem via admin eller API."
 
+#: equipe/templates/equipe/location_share.html:3
 msgid "Partage de position"
-msgstr ""
+msgstr "Deling af position"
 
+#: equipe/templates/equipe/location_share.html:9
+#: equipe/templates/equipe/location_share.html:13
 msgid "Partager ma position"
-msgstr ""
+msgstr "Del min position"
 
+#: equipe/templates/equipe/location_share.html:11
 #, python-format
 msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
-msgstr ""
+msgstr "Hej %(name)s, del din position med dit team."
 
+#: equipe/templates/equipe/location_share.html:16
 msgid "Lien expiré"
-msgstr ""
+msgstr "Linket er udløbet"
 
+#: equipe/templates/equipe/location_share.html:17
 msgid "Ce lien de partage n'est plus valide."
-msgstr ""
+msgstr "Dette delingslink er ikke længere gyldigt."
 
+#: equipe/templates/equipe/location_share.html:28
 msgid "Géolocalisation non supportée."
-msgstr ""
+msgstr "Geolokalisering understøttes ikke."
 
+#: equipe/templates/equipe/location_share.html:34
 msgid "Position partagée ✅"
-msgstr ""
+msgstr "Position delt ✅"
 
+#: equipe/templates/equipe/location_share.html:35
 msgid "Erreur lors du partage."
-msgstr ""
+msgstr "Fejl ved deling."
 
+#: equipe/templates/equipe/location_share.html:36
 msgid "Accès à la position refusé."
-msgstr ""
+msgstr "Adgang til positionen nægtet."
 
+#: equipe/templates/equipe/mes_taches.html:20
 msgid "Aucune tâche assignée."
-msgstr ""
+msgstr "Ingen tildelt opgave."
 
+#: equipe/templates/equipe/taches.html:13
 msgid "non assignée"
-msgstr ""
+msgstr "ikke tildelt"
 
+#: equipe/templates/equipe/taches.html:20
 msgid "Aucune tâche."
-msgstr ""
+msgstr "Ingen opgave."
 
+#: exploitations/models.py:15
+msgid "Exploitation individuelle"
+msgstr "Enkeltmandsbedrift"
+
+#: exploitations/models.py:16
+msgid "EARL"
+msgstr "EARL"
+
+#: exploitations/models.py:17
+msgid "GAEC"
+msgstr "GAEC"
+
+#: exploitations/models.py:18
+msgid "SCEA"
+msgstr "SCEA"
+
+#: exploitations/models.py:19
+msgid "SCEV"
+msgstr "SCEV"
+
+#: exploitations/models.py:20
+msgid "SARL"
+msgstr "SARL"
+
+#: exploitations/models.py:24
+#, fuzzy
+#| msgid "Interventions"
+msgid "Conventionnel"
+msgstr "Indsatser"
+
+#: exploitations/models.py:25 pac/models.py:16
+msgid "Agriculture biologique"
+msgstr "Økologisk landbrug"
+
+#: exploitations/models.py:26
+msgid "En conversion bio"
+msgstr "Under omlægning til økologi"
+
+#: exploitations/models.py:27
+#, fuzzy
+#| msgid "Environnement"
+msgid "Haute Valeur Environnementale"
+msgstr "Miljø"
+
+#: exploitations/models.py:30
+msgid "Forage"
+msgstr "Boring"
+
+#: exploitations/models.py:31
+msgid "Rivière / cours d'eau"
+msgstr "Flod / vandløb"
+
+#: exploitations/models.py:32
+msgid "Réseau collectif"
+msgstr "Fælles net"
+
+#: exploitations/models.py:33
+msgid "Retenue / bassin"
+msgstr "Reservoir / bassin"
+
+#: exploitations/models.py:40
 msgid "propriétaire"
-msgstr ""
+msgstr "ejer"
 
+#: exploitations/models.py:45
+msgid "prénom"
+msgstr "fornavn"
+
+#: exploitations/models.py:46
+msgid "date de naissance"
+msgstr "fødselsdato"
+
+#: exploitations/models.py:47 exploitations/models.py:118
+msgid "raison sociale"
+msgstr "firmanavn"
+
+#: exploitations/models.py:48 exploitations/models.py:120
+msgid "forme juridique"
+msgstr "juridisk form"
+
+#: exploitations/models.py:49 exploitations/models.py:122
+msgid "SIRET"
+msgstr "SIRET"
+
+#: exploitations/models.py:50 exploitations/models.py:123
+msgid "n° PACAGE"
+msgstr "PACAGE-nr."
+
+#: exploitations/models.py:51 exploitations/models.py:124
+msgid "TVA intracommunautaire"
+msgstr "EU-momsnummer"
+
+#: exploitations/models.py:52 exploitations/models.py:125
+msgid "année d'installation"
+msgstr "etableringsår"
+
+#: exploitations/models.py:55
+msgid "téléphone 1"
+msgstr "telefon 1"
+
+#: exploitations/models.py:56
+msgid "téléphone 2"
+msgstr "telefon 2"
+
+#: exploitations/models.py:57
+msgid "email"
+msgstr "e-mail"
+
+#: exploitations/models.py:58
+msgid "site web"
+msgstr "hjemmeside"
+
+#: exploitations/models.py:61
 msgid "adresse"
-msgstr ""
+msgstr "adresse"
 
+#: exploitations/models.py:62
 msgid "ville"
-msgstr ""
+msgstr "by"
 
+#: exploitations/models.py:63
 msgid "code postal"
-msgstr ""
+msgstr "postnummer"
 
+#: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
-msgstr ""
+msgstr "breddegrad"
 
+#: exploitations/models.py:65 meteo/models.py:20 meteo/models.py:48
 msgid "longitude"
-msgstr ""
+msgstr "længdegrad"
 
+#: exploitations/models.py:68
 msgid "surface totale (ha)"
-msgstr ""
+msgstr "samlet areal (ha)"
 
+#: exploitations/models.py:69
+msgid "SAU — surface agricole utile (ha)"
+msgstr "SAU — udnyttet landbrugsareal (ha)"
+
+#: exploitations/models.py:71
+msgid "type d'agriculture"
+msgstr "landbrugstype"
+
+#: exploitations/models.py:73
+msgid "productions principales"
+msgstr "hovedproduktioner"
+
+#: exploitations/models.py:74
+msgid "cheptel"
+msgstr "besætning"
+
+#: exploitations/models.py:77
 msgid "quota eau (m³)"
-msgstr ""
+msgstr "vandkvote (m³)"
 
+#: exploitations/models.py:78
 msgid "eau consommée (m³)"
-msgstr ""
+msgstr "forbrugt vand (m³)"
 
+#: exploitations/models.py:79
+msgid "prix de l'eau (€/m³)"
+msgstr "vandpris (€/m³)"
+
+#: exploitations/models.py:80
+msgid "source d'eau"
+msgstr "vandkilde"
+
+#: exploitations/models.py:81
+msgid "surface irrigable (ha)"
+msgstr "areal til vanding (ha)"
+
+#: exploitations/models.py:84
+msgid "niveau HVE"
+msgstr "HVE-niveau"
+
+#: exploitations/models.py:85
+#, fuzzy
+#| msgid "Notifications"
+msgid "certifications & labels"
+msgstr "Notifikationer"
+
+#: exploitations/models.py:85
+msgid "Bio, AOP/IGP, Label Rouge…"
+msgstr "Økologisk, AOP/IGP, Label Rouge…"
+
+#: exploitations/models.py:88
+msgid "main-d'œuvre (ETP)"
+msgstr "arbejdskraft (årsværk)"
+
+#: exploitations/models.py:92
 msgid "exploitation"
-msgstr ""
+msgstr "bedrift"
 
+#: exploitations/models.py:93
 msgid "exploitations"
-msgstr ""
+msgstr "bedrifter"
 
-msgid "Informations de base utilisées partout dans l'application."
-msgstr ""
+#: exploitations/models.py:117
+msgid "rôle / libellé"
+msgstr "rolle / betegnelse"
 
-msgid "Annuler"
-msgstr ""
+#: exploitations/models.py:129
+msgid "société liée"
+msgstr "tilknyttet virksomhed"
 
-msgid "Exploitation enregistrée."
-msgstr ""
+#: exploitations/models.py:130
+msgid "sociétés liées"
+msgstr "tilknyttede virksomheder"
 
-msgid "Semences"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:15
+msgid "Profil de l'exploitation — utilisé partout dans l'application."
+msgstr "Bedriftsprofil — bruges overalt i applikationen."
 
-msgid "Engrais"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:64
+msgid "Sociétés liées"
+msgstr "Tilknyttede virksomheder"
 
-msgid "Phytosanitaires"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:68
+#: exploitations/templates/exploitations/settings.html:99
+msgid "Ajouter une entreprise"
+msgstr "Tilføj en virksomhed"
 
-msgid "Énergie"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:81
+msgid "Supprimer cette société ?"
+msgstr "Slet denne virksomhed?"
 
-msgid "Main d'œuvre"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:89
+msgid ""
+"Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
+"à l'exploitation."
+msgstr "Ingen tilknyttet virksomhed. Tilføj en virksomhed (GAEC, ejendoms-SCI…) tilknyttet bedriften."
 
-msgid "Matériel"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:105
+msgid "Raison sociale"
+msgstr "Firmanavn"
 
-msgid "Transport"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:107
+msgid "Tapez ≥ 3 lettres pour rechercher dans l'annuaire officiel."
+msgstr "Skriv ≥ 3 bogstaver for at søge i det officielle register."
 
-msgid "Assurance"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:111
+msgid "Rôle / libellé"
+msgstr "Rolle / betegnelse"
 
-msgid "charge"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:112
+msgid "ex: SCI foncière"
+msgstr "f.eks. ejendoms-SCI"
 
-msgid "charges"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:115
+msgid "Forme juridique"
+msgstr "Juridisk form"
 
-msgid "Vente céréales"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:126
+msgid "N° PACAGE"
+msgstr "PACAGE-nr."
 
-msgid "Vente fruits"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:130
+msgid "TVA intra."
+msgstr "EU-moms"
 
-msgid "Vente légumes"
-msgstr ""
-
-msgid "Aide PAC"
-msgstr ""
-
-msgid "Subvention"
-msgstr ""
-
-msgid "Location"
-msgstr ""
-
-msgid "Prestation"
-msgstr ""
-
-msgid "revenu"
-msgstr ""
-
-msgid "revenus"
-msgstr ""
-
-msgid "Extra"
-msgstr ""
-
-msgid "Catégorie 1"
-msgstr ""
-
-msgid "Catégorie 2"
-msgstr ""
-
-msgid "Déclassé"
-msgstr ""
-
-msgid "récolte"
-msgstr ""
-
-msgid "récoltes"
-msgstr ""
-
-msgid "client"
-msgstr ""
-
-msgid "clients"
-msgstr ""
-
-msgid "Brouillon"
-msgstr ""
-
-msgid "Payée"
-msgstr ""
-
-msgid "En retard"
-msgstr ""
-
-msgid "Annulée"
-msgstr ""
-
-msgid "facture"
-msgstr ""
-
-msgid "factures"
-msgstr ""
-
-msgid "Taxonomie Verte EU"
-msgstr ""
-
-msgid "Plan Eau 2026"
-msgstr ""
-
-msgid "En génération"
-msgstr ""
-
-msgid "Prêt"
-msgstr ""
-
-msgid "export subvention"
-msgstr ""
-
-msgid "exports subvention"
-msgstr ""
-
-msgid "Revenus CSV"
-msgstr ""
-
-msgid "Dossier subvention PDF"
-msgstr ""
-
-msgid "Revenus"
-msgstr ""
-
-msgid "Résultat net"
-msgstr ""
-
-msgid "Marge / ha"
-msgstr ""
-
-msgid "Revenus vs charges (par mois)"
-msgstr ""
-
-msgid "Pas encore de données financières."
-msgstr ""
-
-msgid "Consommation"
-msgstr ""
-
-msgid "Export CSV"
-msgstr ""
-
-msgid "Montant"
-msgstr ""
-
-msgid "Fournisseur"
-msgstr ""
-
-msgid "Aucune charge enregistrée."
-msgstr ""
-
-msgid "Client"
-msgstr ""
-
-msgid "Émission"
-msgstr ""
-
-msgid "Aucune facture."
-msgstr ""
-
-msgid "Dossier de subvention"
-msgstr ""
-
+#: exploitations/templates/exploitations/settings.html:134
+#: finances/templates/finances/subvention_pdf.html:24
 msgid "Année"
-msgstr ""
+msgstr "År"
 
+#: exploitations/views.py:54
+msgid "Exploitation enregistrée."
+msgstr "Bedrift gemt."
+
+#: exploitations/views.py:63
+msgid "Juridique"
+msgstr "Juridisk"
+
+#: exploitations/views.py:65 public/templates/public/home.html:482
+msgid "Contact"
+msgstr "Kontakt"
+
+#: exploitations/views.py:67
+msgid "Localisation"
+msgstr "Placering"
+
+#: exploitations/views.py:69
+msgid "Caractéristiques agricoles"
+msgstr "Landbrugsmæssige egenskaber"
+
+#: exploitations/views.py:71
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Eau & irrigation"
+msgstr "Vanding"
+
+#: exploitations/views.py:73
+#, fuzzy
+#| msgid "Notifications"
+msgid "Certifications & labels"
+msgstr "Notifikationer"
+
+#: exploitations/views.py:75
+#, fuzzy
+#| msgid "Économie"
+msgid "Économique"
+msgstr "Økonomi"
+
+#: exploitations/views.py:117
+msgid "Société ajoutée."
+msgstr "Virksomhed tilføjet."
+
+#: finances/models.py:15
+msgid "Semences"
+msgstr "Frø"
+
+#: finances/models.py:17
+msgid "Phytosanitaires"
+msgstr "Plantebeskyttelsesmidler"
+
+#: finances/models.py:19 finances/templates/finances/bilan_economique.html:31
+#: finances/templates/finances/subvention_pdf.html:32
+msgid "Énergie"
+msgstr "Energi"
+
+#: finances/models.py:20
+msgid "Main d'œuvre"
+msgstr "Arbejdskraft"
+
+#: finances/models.py:21 ia/models.py:35
+msgid "Matériel"
+msgstr "Materiel"
+
+#: finances/models.py:22 operations/models.py:118 planning/models.py:213
+msgid "Transport"
+msgstr "Transport"
+
+#: finances/models.py:23
+msgid "Assurance"
+msgstr "Forsikring"
+
+#: finances/models.py:36
+msgid "charge"
+msgstr "omkostning"
+
+#: finances/models.py:37
+msgid "charges"
+msgstr "omkostninger"
+
+#: finances/models.py:43
+msgid "Vente céréales"
+msgstr "Salg af korn"
+
+#: finances/models.py:44
+msgid "Vente fruits"
+msgstr "Salg af frugt"
+
+#: finances/models.py:45
+msgid "Vente légumes"
+msgstr "Salg af grøntsager"
+
+#: finances/models.py:46
+msgid "Aide PAC"
+msgstr "CAP-støtte"
+
+#: finances/models.py:47
+msgid "Subvention"
+msgstr "Tilskud"
+
+#: finances/models.py:48
+msgid "Location"
+msgstr "Udlejning"
+
+#: finances/models.py:49
+msgid "Prestation"
+msgstr "Serviceydelse"
+
+#: finances/models.py:65
+msgid "revenu"
+msgstr "indtægt"
+
+#: finances/models.py:66
+msgid "revenus"
+msgstr "indtægter"
+
+#: finances/models.py:72
+msgid "Extra"
+msgstr "Ekstra"
+
+#: finances/models.py:73
+msgid "Catégorie 1"
+msgstr "Kategori 1"
+
+#: finances/models.py:74
+msgid "Catégorie 2"
+msgstr "Kategori 2"
+
+#: finances/models.py:75
+msgid "Déclassé"
+msgstr "Nedklassificeret"
+
+#: finances/models.py:88
+msgid "récolte"
+msgstr "høst"
+
+#: finances/models.py:89
+msgid "récoltes"
+msgstr "høst"
+
+#: finances/models.py:105
+msgid "client"
+msgstr "kunde"
+
+#: finances/models.py:106
+msgid "clients"
+msgstr "kunder"
+
+#: finances/models.py:115 planning/models.py:259
+msgid "Brouillon"
+msgstr "Kladde"
+
+#: finances/models.py:117
+msgid "Payée"
+msgstr "Betalt"
+
+#: finances/models.py:118
+msgid "En retard"
+msgstr "Forsinket"
+
+#: finances/models.py:119 interventions/models.py:32
+msgid "Annulée"
+msgstr "Annulleret"
+
+#: finances/models.py:136
+msgid "facture"
+msgstr "faktura"
+
+#: finances/models.py:137
+msgid "factures"
+msgstr "fakturaer"
+
+#: finances/models.py:149
+msgid "Taxonomie Verte EU"
+msgstr "EU's grønne taksonomi"
+
+#: finances/models.py:150
+msgid "Plan Eau 2026"
+msgstr "Vandplan 2026"
+
+#: finances/models.py:155
+msgid "En génération"
+msgstr "Genereres"
+
+#: finances/models.py:156
+msgid "Prêt"
+msgstr "Klar"
+
+#: finances/models.py:168
+msgid "export subvention"
+msgstr "tilskudseksport"
+
+#: finances/models.py:169
+msgid "exports subvention"
+msgstr "tilskudseksporter"
+
+#: finances/templates/finances/bilan_economique.html:9
+msgid "Revenus CSV"
+msgstr "Indtægter CSV"
+
+#: finances/templates/finances/bilan_economique.html:10
+msgid "Dossier subvention PDF"
+msgstr "Tilskudsmappe PDF"
+
+#: finances/templates/finances/bilan_economique.html:15
+#: finances/templates/finances/subvention_pdf.html:40 finances/views.py:50
+msgid "Revenus"
+msgstr "Indtægter"
+
+#: finances/templates/finances/bilan_economique.html:17
+#: finances/templates/finances/subvention_pdf.html:42
+msgid "Résultat net"
+msgstr "Nettoresultat"
+
+#: finances/templates/finances/bilan_economique.html:18
+msgid "Marge / ha"
+msgstr "Margin / ha"
+
+#: finances/templates/finances/bilan_economique.html:23
+msgid "Revenus vs charges (par mois)"
+msgstr "Indtægter vs. omkostninger (pr. måned)"
+
+#: finances/templates/finances/bilan_economique.html:25
+msgid "Pas encore de données financières."
+msgstr "Ingen finansielle data endnu."
+
+#: finances/templates/finances/bilan_economique.html:28
+msgid "Consommation"
+msgstr "Forbrug"
+
+#: finances/templates/finances/charges.html:8
+msgid "Export CSV"
+msgstr "CSV-eksport"
+
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:56
+msgid "Montant"
+msgstr "Beløb"
+
+#: finances/templates/finances/charges.html:14
+msgid "Fournisseur"
+msgstr "Leverandør"
+
+#: finances/templates/finances/charges.html:29
+msgid "Aucune charge enregistrée."
+msgstr "Ingen omkostning registreret."
+
+#: finances/templates/finances/facturation.html:11
+msgid "Client"
+msgstr "Kunde"
+
+#: finances/templates/finances/facturation.html:11
+msgid "Émission"
+msgstr "Udstedelse"
+
+#: finances/templates/finances/facturation.html:27
+msgid "Aucune facture."
+msgstr "Ingen faktura."
+
+#: finances/templates/finances/subvention_pdf.html:22
+msgid "Dossier de subvention"
+msgstr "Tilskudsmappe"
+
+#: finances/templates/finances/subvention_pdf.html:33
 msgid "Score DTI"
-msgstr ""
+msgstr "DTI-score"
 
-msgid "Nom"
-msgstr ""
-
+#: finances/templates/finances/subvention_pdf.html:49
+#: pac/templates/pac/pac.html:134
 msgid "Surface (ha)"
-msgstr ""
+msgstr "Areal (ha)"
 
+#: finances/templates/finances/subvention_pdf.html:56
 msgid "Document généré par Holystyl."
-msgstr ""
+msgstr "Dokument genereret af Holystyl."
 
+#: ia/models.py:13
+msgid "Utilisateur"
+msgstr "Bruger"
+
+#: ia/models.py:26
 msgid "conversation IA"
-msgstr ""
+msgstr "AI-samtale"
 
+#: ia/models.py:27
 msgid "conversations IA"
-msgstr ""
+msgstr "AI-samtaler"
 
-msgid "Parcelle"
-msgstr ""
-
-msgid "Produit"
-msgstr ""
-
+#: ia/models.py:37
 msgid "Général"
-msgstr ""
+msgstr "Generelt"
 
+#: ia/models.py:45
 msgid "terme vocal"
-msgstr ""
+msgstr "taleterm"
 
+#: ia/models.py:46
 msgid "dictionnaire vocal"
-msgstr ""
+msgstr "taleordbog"
 
+#: ia/models.py:68
 msgid "rapport quotidien"
-msgstr ""
+msgstr "daglig rapport"
 
+#: ia/models.py:69
 msgid "rapports quotidiens"
-msgstr ""
+msgstr "daglige rapporter"
 
-msgid "Assistant Holystyl"
-msgstr ""
+#: ia/templates/ia/assistant.html:11 ia/templates/ia/assistant.html:33
+#: messagerie/templates/messagerie/new.html:6 messagerie/views.py:207
+msgid "Nouvelle conversation"
+msgstr "Ny samtale"
 
-msgid "IA non configurée"
-msgstr ""
+#: ia/templates/ia/assistant.html:13
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversations"
+msgstr "Kommunikation"
 
-msgid "Demandez quelque chose…"
-msgstr ""
+#: ia/templates/ia/assistant.html:22
+msgid "Aucune conversation."
+msgstr "Ingen samtale."
 
+#: ia/templates/ia/assistant.html:39
+msgid "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles."
+msgstr "AI ikke konfigureret — tilføj GEMINI_API_KEY for rigtige svar."
+
+#: ia/templates/ia/assistant.html:49
+msgid "Bonjour, je suis Eric."
+msgstr "Hej, jeg er Eric."
+
+#: ia/templates/ia/assistant.html:51
+msgid ""
+"Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
+"cultures, la fertilisation ou vos analyses."
+msgstr "Din agronomiske rådgiver. Stil mig dine spørgsmål om vanding, afgrøder, gødskning eller dine analyser."
+
+#: ia/templates/ia/assistant.html:89
+msgid "Décrivez votre besoin…"
+msgstr "Beskriv dit behov…"
+
+#: ia/templates/ia/assistant.html:92
+msgid "Entrée pour envoyer · Maj+Entrée pour saut de ligne"
+msgstr "Enter for at sende · Shift+Enter for linjeskift"
+
+#: ia/templates/ia/assistant.html:95
 msgid "Dictée vocale"
-msgstr ""
+msgstr "Stemmediktering"
 
+#: ia/templates/ia/assistant.html:100 mail/templates/mail/compose.html:58
+#: messagerie/templates/messagerie/_new_modal.html:62
 msgid "Envoyer"
-msgstr ""
+msgstr "Send"
 
+#: ia/templates/ia/assistant.html:105
+msgid "Eric peut commettre des erreurs. Vérifiez les informations importantes."
+msgstr "Eric kan begå fejl. Tjek vigtige oplysninger."
+
+#: ia/templates/ia/assistant.html:150
+#: messagerie/templates/messagerie/detail.html:105
 msgid "Reconnaissance vocale non supportée par ce navigateur."
-msgstr ""
-
-msgid "Débitmètre"
-msgstr ""
-
-msgid "Capteur de pression"
-msgstr ""
-
-msgid "Station météo"
-msgstr ""
-
-msgid "Contrôleur de vanne"
-msgstr ""
-
-msgid "Contrôleur de pompe"
-msgstr ""
-
-msgid "Humidité du sol"
-msgstr ""
-
-msgid "Compteur d'énergie"
-msgstr ""
-
-msgid "Générique"
-msgstr ""
-
-msgid "En ligne"
-msgstr ""
-
-msgid "Hors ligne"
-msgstr ""
-
-msgid "Avertissement"
-msgstr ""
-
-msgid "identifiant device"
-msgstr ""
-
-msgid "device IoT"
-msgstr ""
-
-msgid "devices IoT"
-msgstr ""
-
-msgid "télémétrie"
-msgstr ""
-
-msgid "télémétries"
-msgstr ""
-
-msgid "Envoyée"
-msgstr ""
-
-msgid "Accusée"
-msgstr ""
-
-msgid "Échouée"
-msgstr ""
-
-msgid "Expirée"
-msgstr ""
-
-msgid "commande IoT"
-msgstr ""
-
-msgid "commandes IoT"
-msgstr ""
-
-msgid "Fuite détectée"
-msgstr ""
-
-msgid "Pression basse"
-msgstr ""
-
-msgid "Pression haute"
-msgstr ""
-
-msgid "Débit bas"
-msgstr ""
-
-msgid "Débit élevé"
-msgstr ""
-
-msgid "Panne de pompe"
-msgstr ""
-
-msgid "Baisse d'uniformité"
-msgstr ""
-
-msgid "Pic d'énergie"
-msgstr ""
-
-msgid "Seuil dépassé"
-msgstr ""
-
-msgid "Risque de gel"
-msgstr ""
-
-msgid "Perte invisible"
-msgstr ""
-
-msgid "Info"
-msgstr ""
-
-msgid "Danger"
-msgstr ""
-
-msgid "alerte IoT"
-msgstr ""
-
-msgid "alertes IoT"
-msgstr ""
-
-msgid "Température gel"
-msgstr ""
-
-msgid "Pression min"
-msgstr ""
-
-msgid "Pression max"
-msgstr ""
-
-msgid "Débit min"
-msgstr ""
-
-msgid "Débit max"
-msgstr ""
-
-msgid "kWh/m³ max"
-msgstr ""
-
-msgid "Humidité sol min"
-msgstr ""
-
-msgid "Humidité sol max"
-msgstr ""
-
-msgid "Perte invisible %"
-msgstr ""
-
-msgid "seuil"
-msgstr ""
-
-msgid "seuils"
-msgstr ""
-
-msgid "Capteurs & IoT"
-msgstr ""
-
-msgid "Télémétrie récente"
-msgstr ""
-
-msgid "Marque"
-msgstr ""
-
-msgid "Firmware"
-msgstr ""
-
-msgid "Vu"
-msgstr ""
-
-msgid "Aucun capteur enregistré."
-msgstr ""
-
-msgid "Temps réel actif"
-msgstr ""
-
-msgid "Débit"
-msgstr ""
-
-msgid "Pression"
-msgstr ""
-
-msgid "Puissance"
-msgstr ""
-
-msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
-msgstr ""
-
-msgid "Goutte à goutte"
-msgstr ""
-
-msgid "Aspersion"
-msgstr ""
-
-msgid "Pivot"
-msgstr ""
-
-msgid "Enrouleur"
-msgstr ""
-
-msgid "Micro-aspersion"
-msgstr ""
-
-msgid "Micro-jet"
-msgstr ""
-
-msgid "Submersion"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Maintenance"
-msgstr ""
-
-msgid "zone d'irrigation"
-msgstr ""
-
-msgid "zones d'irrigation"
-msgstr ""
-
-msgid "Quotidien"
-msgstr ""
-
-msgid "Tous les 2 jours"
-msgstr ""
-
-msgid "Tous les 3 jours"
-msgstr ""
-
-msgid "Hebdomadaire"
-msgstr ""
-
-msgid "Personnalisé"
-msgstr ""
-
-msgid "Par durée"
-msgstr ""
-
-msgid "Par volume"
-msgstr ""
-
-msgid "Par pluviométrie"
-msgstr ""
-
-msgid "Manuel"
-msgstr ""
-
-msgid "Vocal"
-msgstr ""
-
-msgid "IA"
-msgstr ""
-
-msgid "programme d'irrigation"
-msgstr ""
-
-msgid "programmes d'irrigation"
-msgstr ""
-
-msgid "Auto"
-msgstr ""
-
-msgid "IoT"
-msgstr ""
-
-msgid "session d'irrigation"
-msgstr ""
-
-msgid "sessions d'irrigation"
-msgstr ""
-
-msgid "Opérationnelle"
-msgstr ""
-
-msgid "En panne"
-msgstr ""
-
-msgid "station de pompage"
-msgstr ""
-
-msgid "stations de pompage"
-msgstr ""
-
-msgid "Capteur"
-msgstr ""
-
-msgid "Terminé"
-msgstr ""
-
-msgid "événement de bassinage"
-msgstr ""
-
-msgid "événements de bassinage"
-msgstr ""
-
-msgid "relevé compteur eau"
-msgstr ""
-
-msgid "relevés compteur eau"
-msgstr ""
-
-msgid "relevé énergie"
-msgstr ""
-
-msgid "relevés énergie"
-msgstr ""
-
-msgid "Annuel"
-msgstr ""
-
-msgid "Mensuel"
-msgstr ""
-
-msgid "quota eau"
-msgstr ""
-
-msgid "quotas eau"
-msgstr ""
-
-msgid "score DTI"
-msgstr ""
-
-msgid "scores DTI"
-msgstr ""
-
-msgid "Faible"
-msgstr ""
-
-msgid "Moyen"
-msgstr ""
-
-msgid "Élevé"
-msgstr ""
-
-msgid "Critique"
-msgstr ""
-
-msgid "événement de gel"
-msgstr ""
-
-msgid "événements de gel"
-msgstr ""
-
-msgid "donnée NDVI"
-msgstr ""
-
-msgid "données NDVI"
-msgstr ""
-
-msgid "détection de perte invisible"
-msgstr ""
-
-msgid "détections de pertes invisibles"
-msgstr ""
-
-msgid "Aucun événement de bassinage."
-msgstr ""
-
-msgid "Volumes irrigués récents"
-msgstr ""
-
-msgid "Aucune zone."
-msgstr ""
-
-msgid "actif"
-msgstr ""
-
-msgid "inactif"
-msgstr ""
-
-msgid "Aucun programme."
-msgstr ""
-
-msgid "Aucune session."
-msgstr ""
-
-msgid "Aucune station."
-msgstr ""
-
-msgid "Zones"
-msgstr ""
-
-msgid "Programmes"
-msgstr ""
-
-msgid "Sessions"
-msgstr ""
-
-msgid "Stations"
-msgstr ""
-
-msgid "Urgente"
-msgstr ""
-
-msgid "notification"
-msgstr ""
-
-msgid "notifications"
-msgstr ""
-
-msgid "règle de notification"
-msgstr ""
-
-msgid "règles de notification"
-msgstr ""
-
-msgid "Tout marquer comme lu"
-msgstr ""
-
-msgid "Aucune notification."
-msgstr ""
-
-msgid "Règles d'alerte"
-msgstr ""
-
-msgid "activée"
-msgstr ""
-
-msgid "désactivée"
-msgstr ""
-
-msgid "Aucune règle définie."
-msgstr ""
-
-msgid "Pompe"
-msgstr ""
-
-msgid "Tracteur"
-msgstr ""
-
-msgid "Pulvérisateur"
-msgstr ""
-
-msgid "Réformée"
-msgstr ""
-
-msgid "machine"
-msgstr ""
-
-msgid "machines"
-msgstr ""
-
-msgid "Utilisation"
-msgstr ""
-
-msgid "Réparation"
-msgstr ""
-
-msgid "Inspection"
-msgstr ""
-
+msgstr "Talegenkendelse understøttes ikke af denne browser."
+
+#: ia/views.py:40 messagerie/models.py:66
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversation"
+msgstr "Kommunikation"
+
+#: ia/views.py:68
+msgid "Eric"
+msgstr "Eric"
+
+#: interventions/models.py:13
+#: interventions/templates/interventions/interventions.html:55
+#: operations/models.py:114
 msgid "Traitement"
-msgstr ""
+msgstr "Behandling"
 
+#: interventions/models.py:14
+#: interventions/templates/interventions/interventions.html:64
+#: operations/models.py:116
 msgid "Fertilisation"
-msgstr ""
+msgstr "Gødskning"
 
+#: interventions/models.py:15
+#: interventions/templates/interventions/interventions.html:73
+#: operations/models.py:115
 msgid "Récolte"
-msgstr ""
+msgstr "Høst"
 
+#: interventions/models.py:16 operations/models.py:113
 msgid "Semis"
-msgstr ""
+msgstr "Såning"
 
+#: interventions/models.py:17
 msgid "Travail du sol"
-msgstr ""
+msgstr "Jordbearbejdning"
 
+#: interventions/models.py:18
 msgid "Taille"
-msgstr ""
+msgstr "Beskæring"
 
+#: interventions/models.py:19
 msgid "Palissage"
-msgstr ""
+msgstr "Opbinding"
 
+#: interventions/models.py:20
 msgid "Désherbage"
-msgstr ""
+msgstr "Ukrudtsbekæmpelse"
 
+#: interventions/models.py:21
 msgid "Éclaircissage"
-msgstr ""
+msgstr "Udtynding"
 
+#: interventions/models.py:22
 msgid "Effeuillage"
-msgstr ""
+msgstr "Bladfjernelse"
 
+#: interventions/models.py:23
 msgid "Vendange"
-msgstr ""
+msgstr "Vinhøst"
 
+#: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:131
+#: operations/models.py:25 operations/models.py:55
+msgid "Maintenance"
+msgstr "Vedligeholdelse"
+
+#: interventions/models.py:25
 msgid "Observation"
-msgstr ""
+msgstr "Observation"
 
+#: interventions/models.py:29
 msgid "Planifiée"
-msgstr ""
+msgstr "Planlagt"
 
+#: interventions/models.py:35 irrigation/models.py:73
+msgid "Vocal"
+msgstr "Tale"
+
+#: interventions/models.py:36 irrigation/models.py:72 irrigation/models.py:104
+#: irrigation/models.py:156 irrigation/models.py:191 irrigation/models.py:215
+msgid "Manuel"
+msgstr "Manuel"
+
+#: interventions/models.py:37 irrigation/models.py:74 irrigation/models.py:107
+msgid "IA"
+msgstr "AI"
+
+#: interventions/models.py:62
 msgid "intervention"
-msgstr ""
+msgstr "indgreb"
 
+#: interventions/models.py:63
 msgid "interventions"
-msgstr ""
+msgstr "indgreb"
 
-msgid "Vidange"
-msgstr ""
+#: interventions/templates/interventions/interventions.html:28
+#, python-format
+msgid "Journal des opérations culturales · %(n)s intervention"
+msgid_plural "Journal des opérations culturales · %(n)s interventions"
+msgstr[0] "Logbog over dyrkningsoperationer · %(n)s indgreb"
+msgstr[1] "Logbog over dyrkningsoperationer · %(n)s indgreb"
 
-msgid "Filtres"
-msgstr ""
-
-msgid "Courroies"
-msgstr ""
-
-msgid "Pneumatiques"
-msgstr ""
-
-msgid "Freins"
-msgstr ""
-
-msgid "Révision complète"
-msgstr ""
-
-msgid "Contrôle technique"
-msgstr ""
-
-msgid "entretien"
-msgstr ""
-
-msgid "entretiens"
-msgstr ""
-
-msgid "Labour"
-msgstr ""
-
-msgid "affectation d'engin"
-msgstr ""
-
-msgid "affectations d'engins"
-msgstr ""
-
-msgid "Semoir"
-msgstr ""
-
-msgid "Épandeur"
-msgstr ""
-
-msgid "Moissonneuse"
-msgstr ""
-
-msgid "Charrue"
-msgstr ""
-
-msgid "Cultivateur"
-msgstr ""
-
-msgid "Benne"
-msgstr ""
-
-msgid "modèle d'engin (catalogue)"
-msgstr ""
-
-msgid "catalogue d'engins"
-msgstr ""
-
+#: interventions/templates/interventions/interventions.html:103
 msgid "Aucune intervention enregistrée."
-msgstr ""
+msgstr "Intet indgreb registreret."
 
+#: interventions/templates/interventions/interventions.html:106
+msgid "Enregistrer la première intervention"
+msgstr "Registrer det første indgreb"
+
+#: interventions/templates/interventions/interventions.html:112
+msgid "Aucune intervention pour ce filtre."
+msgstr "Intet indgreb for dette filter."
+
+#: interventions/templates/interventions/interventions.html:121
+#, fuzzy
+#| msgid "Interventions"
+msgid "Nouvelle intervention"
+msgstr "Indsatser"
+
+#: interventions/templates/interventions/interventions.html:144
+msgid "Titre"
+msgstr "Titel"
+
+#: interventions/templates/interventions/interventions.html:150
+msgid "Date / heure"
+msgstr "Dato / tid"
+
+#: interventions/templates/interventions/interventions.html:158
+msgid "—"
+msgstr "—"
+
+#: iot/models.py:16
+msgid "Débitmètre"
+msgstr "Flowmåler"
+
+#: iot/models.py:17
+msgid "Capteur de pression"
+msgstr "Tryksensor"
+
+#: iot/models.py:18
+msgid "Station météo"
+msgstr "Vejrstation"
+
+#: iot/models.py:19
+msgid "Contrôleur de vanne"
+msgstr "Ventilstyring"
+
+#: iot/models.py:20
+msgid "Contrôleur de pompe"
+msgstr "Pumpestyring"
+
+#: iot/models.py:21
+msgid "Humidité du sol"
+msgstr "Jordfugtighed"
+
+#: iot/models.py:22
+msgid "Compteur d'énergie"
+msgstr "Energimåler"
+
+#: iot/models.py:23 iot/models.py:30
+msgid "Générique"
+msgstr "Generisk"
+
+#: iot/models.py:33
+msgid "En ligne"
+msgstr "Online"
+
+#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
+msgid "Hors ligne"
+msgstr "Offline"
+
+#: iot/models.py:35 iot/models.py:131
+msgid "Avertissement"
+msgstr "Advarsel"
+
+#: iot/models.py:44
+msgid "identifiant device"
+msgstr "enheds-id"
+
+#: iot/models.py:56
+msgid "device IoT"
+msgstr "IoT-enhed"
+
+#: iot/models.py:57
+msgid "devices IoT"
+msgstr "IoT-enheder"
+
+#: iot/models.py:82
+msgid "télémétrie"
+msgstr "telemetri"
+
+#: iot/models.py:83
+msgid "télémétries"
+msgstr "telemetrier"
+
+#: iot/models.py:91
+msgid "Envoyée"
+msgstr "Sendt"
+
+#: iot/models.py:92
+msgid "Accusée"
+msgstr "Bekræftet"
+
+#: iot/models.py:94
+msgid "Échouée"
+msgstr "Mislykkedes"
+
+#: iot/models.py:95
+msgid "Expirée"
+msgstr "Udløbet"
+
+#: iot/models.py:109
+msgid "commande IoT"
+msgstr "IoT-kommando"
+
+#: iot/models.py:110
+msgid "commandes IoT"
+msgstr "IoT-kommandoer"
+
+#: iot/models.py:116
+msgid "Fuite détectée"
+msgstr "Lækage registreret"
+
+#: iot/models.py:117
+msgid "Pression basse"
+msgstr "Lavt tryk"
+
+#: iot/models.py:118
+msgid "Pression haute"
+msgstr "Højt tryk"
+
+#: iot/models.py:119
+msgid "Débit bas"
+msgstr "Lavt flow"
+
+#: iot/models.py:120
+msgid "Débit élevé"
+msgstr "Højt flow"
+
+#: iot/models.py:121
+msgid "Panne de pompe"
+msgstr "Pumpefejl"
+
+#: iot/models.py:122
+msgid "Baisse d'uniformité"
+msgstr "Faldende uniformitet"
+
+#: iot/models.py:123
+msgid "Pic d'énergie"
+msgstr "Energispids"
+
+#: iot/models.py:125
+msgid "Seuil dépassé"
+msgstr "Tærskel overskredet"
+
+#: iot/models.py:126
+msgid "Risque de gel"
+msgstr "Frostrisiko"
+
+#: iot/models.py:127
+msgid "Perte invisible"
+msgstr "Usynligt tab"
+
+#: iot/models.py:130
+msgid "Info"
+msgstr "Info"
+
+#: iot/models.py:132
+msgid "Danger"
+msgstr "Fare"
+
+#: iot/models.py:148
+msgid "alerte IoT"
+msgstr "IoT-advarsel"
+
+#: iot/models.py:149
+msgid "alertes IoT"
+msgstr "IoT-advarsler"
+
+#: iot/models.py:156
+msgid "Température gel"
+msgstr "Frosttemperatur"
+
+#: iot/models.py:157
+msgid "Pression min"
+msgstr "Min. tryk"
+
+#: iot/models.py:158
+msgid "Pression max"
+msgstr "Maks. tryk"
+
+#: iot/models.py:159
+msgid "Débit min"
+msgstr "Min. flow"
+
+#: iot/models.py:160
+msgid "Débit max"
+msgstr "Maks. flow"
+
+#: iot/models.py:161
+msgid "kWh/m³ max"
+msgstr "kWh/m³ maks."
+
+#: iot/models.py:162
+msgid "Humidité sol min"
+msgstr "Min. jordfugtighed"
+
+#: iot/models.py:163
+msgid "Humidité sol max"
+msgstr "Maks. jordfugtighed"
+
+#: iot/models.py:164
+msgid "Perte invisible %"
+msgstr "Usynligt tab %"
+
+#: iot/models.py:176
+msgid "seuil"
+msgstr "tærskel"
+
+#: iot/models.py:177
+msgid "seuils"
+msgstr "tærskler"
+
+#: iot/templates/iot/capteurs.html:6 iot/views.py:60
+msgid "Capteurs & IoT"
+msgstr "Sensorer og IoT"
+
+#: iot/templates/iot/capteurs.html:10
+msgid "Télémétrie récente"
+msgstr "Nylig telemetri"
+
+#: iot/templates/iot/capteurs.html:22
+msgid "Marque"
+msgstr "Mærke"
+
+#: iot/templates/iot/capteurs.html:23
+msgid "Firmware"
+msgstr "Firmware"
+
+#: iot/templates/iot/capteurs.html:25
+msgid "Vu"
+msgstr "Set"
+
+#: iot/templates/iot/capteurs.html:43
+msgid "Aucun capteur enregistré."
+msgstr "Ingen sensor registreret."
+
+#: iot/templates/iot/regie.html:10
+msgid "Temps réel actif"
+msgstr "Realtid aktiv"
+
+#: iot/templates/iot/regie.html:42 parcelles/templates/parcelles/detail.html:31
+msgid "Débit"
+msgstr "Flow"
+
+#: iot/templates/iot/regie.html:46 parcelles/templates/parcelles/detail.html:32
+msgid "Pression"
+msgstr "Tryk"
+
+#: iot/templates/iot/regie.html:50
+msgid "Puissance"
+msgstr "Effekt"
+
+#: iot/templates/iot/regie.html:62
+msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
+msgstr "Ingen IoT-enhed. Tilføj dem via admin eller Sensorer."
+
+#: irrigation/models.py:20 parcelles/models.py:14
+msgid "Goutte à goutte"
+msgstr "Dråbevanding"
+
+#: irrigation/models.py:21 parcelles/models.py:15
+msgid "Aspersion"
+msgstr "Sprinkling"
+
+#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
+msgid "Pivot"
+msgstr "Pivot"
+
+#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
+msgid "Enrouleur"
+msgstr "Vandingsvogn"
+
+#: irrigation/models.py:24 parcelles/models.py:18
+msgid "Micro-aspersion"
+msgstr "Mikrosprinkling"
+
+#: irrigation/models.py:25
+msgid "Micro-jet"
+msgstr "Mikrojet"
+
+#: irrigation/models.py:26
+msgid "Submersion"
+msgstr "Oversvømmelse"
+
+#: irrigation/models.py:29 parcelles/models.py:22
+msgid "Active"
+msgstr "Aktiv"
+
+#: irrigation/models.py:30 parcelles/models.py:23
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: irrigation/models.py:50
+msgid "zone d'irrigation"
+msgstr "vandingszone"
+
+#: irrigation/models.py:51
+msgid "zones d'irrigation"
+msgstr "vandingszoner"
+
+#: irrigation/models.py:60
+msgid "Quotidien"
+msgstr "Dagligt"
+
+#: irrigation/models.py:61
+msgid "Tous les 2 jours"
+msgstr "Hver 2. dag"
+
+#: irrigation/models.py:62
+msgid "Tous les 3 jours"
+msgstr "Hver 3. dag"
+
+#: irrigation/models.py:63 irrigation/models.py:241
+msgid "Hebdomadaire"
+msgstr "Ugentligt"
+
+#: irrigation/models.py:64
+msgid "Personnalisé"
+msgstr "Tilpasset"
+
+#: irrigation/models.py:67
+msgid "Par durée"
+msgstr "Efter varighed"
+
+#: irrigation/models.py:68
+msgid "Par volume"
+msgstr "Efter volumen"
+
+#: irrigation/models.py:69
+msgid "Par pluviométrie"
+msgstr "Efter nedbør"
+
+#: irrigation/models.py:94
+msgid "programme d'irrigation"
+msgstr "vandingsprogram"
+
+#: irrigation/models.py:95
+msgid "programmes d'irrigation"
+msgstr "vandingsprogrammer"
+
+#: irrigation/models.py:105 irrigation/models.py:157
+msgid "Auto"
+msgstr "Auto"
+
+#: irrigation/models.py:106
+msgid "IoT"
+msgstr "IoT"
+
+#: irrigation/models.py:123
+msgid "session d'irrigation"
+msgstr "vandingssession"
+
+#: irrigation/models.py:124
+msgid "sessions d'irrigation"
+msgstr "vandingssessioner"
+
+#: irrigation/models.py:130 operations/models.py:24
+msgid "Opérationnelle"
+msgstr "Driftsklar"
+
+#: irrigation/models.py:132 operations/models.py:26
+msgid "En panne"
+msgstr "I stykker"
+
+#: irrigation/models.py:147
+msgid "station de pompage"
+msgstr "pumpestation"
+
+#: irrigation/models.py:148
+msgid "stations de pompage"
+msgstr "pumpestationer"
+
+#: irrigation/models.py:158
+msgid "Capteur"
+msgstr "Sensor"
+
+#: irrigation/models.py:161
+msgid "Actif"
+msgstr "Aktiv"
+
+#: irrigation/models.py:162 planning/models.py:32
+msgid "Terminé"
+msgstr "Afsluttet"
+
+#: irrigation/models.py:163 planning/models.py:33
+msgid "Annulé"
+msgstr "Annulleret"
+
+#: irrigation/models.py:182
+msgid "événement de bassinage"
+msgstr "frostvandingshændelse"
+
+#: irrigation/models.py:183
+msgid "événements de bassinage"
+msgstr "frostvandingshændelser"
+
+#: irrigation/models.py:205
+msgid "relevé compteur eau"
+msgstr "vandmåleraflæsning"
+
+#: irrigation/models.py:206
+msgid "relevés compteur eau"
+msgstr "vandmåleraflæsninger"
+
+#: irrigation/models.py:231
+msgid "relevé énergie"
+msgstr "energiaflæsning"
+
+#: irrigation/models.py:232
+msgid "relevés énergie"
+msgstr "energiaflæsninger"
+
+#: irrigation/models.py:239
+msgid "Annuel"
+msgstr "Årligt"
+
+#: irrigation/models.py:240
+msgid "Mensuel"
+msgstr "Månedligt"
+
+#: irrigation/models.py:252
+msgid "quota eau"
+msgstr "vandkvote"
+
+#: irrigation/models.py:253
+msgid "quotas eau"
+msgstr "vandkvoter"
+
+#: irrigation/models.py:278
+msgid "score DTI"
+msgstr "DTI-score"
+
+#: irrigation/models.py:279
+msgid "scores DTI"
+msgstr "DTI-scorer"
+
+#: irrigation/models.py:285
+msgid "Faible"
+msgstr "Lav"
+
+#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
+msgid "Moyen"
+msgstr "Mellem"
+
+#: irrigation/models.py:287
+msgid "Élevé"
+msgstr "Høj"
+
+#: irrigation/models.py:288 planning/models.py:256
+msgid "Critique"
+msgstr "Kritisk"
+
+#: irrigation/models.py:306
+msgid "événement de gel"
+msgstr "frosthændelse"
+
+#: irrigation/models.py:307
+msgid "événements de gel"
+msgstr "frosthændelser"
+
+#: irrigation/models.py:326
+msgid "donnée NDVI"
+msgstr "NDVI-data"
+
+#: irrigation/models.py:327
+msgid "données NDVI"
+msgstr "NDVI-data"
+
+#: irrigation/models.py:345
+msgid "détection de perte invisible"
+msgstr "registrering af usynligt tab"
+
+#: irrigation/models.py:346
+msgid "détections de pertes invisibles"
+msgstr "registreringer af usynlige tab"
+
+#: irrigation/templates/irrigation/bassinage.html:20
+msgid "Aucun événement de bassinage."
+msgstr "Ingen frostvandingshændelse."
+
+#: irrigation/templates/irrigation/irrigation.html:10
+msgid "Volumes irrigués récents"
+msgstr "Nylige vandingsmængder"
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "Aucune zone."
+msgstr "Ingen zone."
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "actif"
+msgstr "aktiv"
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "inactif"
+msgstr "inaktiv"
+
+#: irrigation/templates/irrigation/irrigation.html:37
+msgid "Aucun programme."
+msgstr "Intet program."
+
+#: irrigation/templates/irrigation/irrigation.html:46
+msgid "Aucune session."
+msgstr "Ingen session."
+
+#: irrigation/templates/irrigation/irrigation.html:55
+msgid "Aucune station."
+msgstr "Ingen station."
+
+#: irrigation/views.py:36
+msgid "Zones"
+msgstr "Zoner"
+
+#: irrigation/views.py:37
+msgid "Programmes"
+msgstr "Programmer"
+
+#: irrigation/views.py:39
+msgid "Stations"
+msgstr "Stationer"
+
+#: mail/models.py:15 mail/templates/mail/detail.html:14
+#: mail/templates/mail/outbox.html:28
+msgid "Échec"
+msgstr "Fejl"
+
+#: mail/models.py:22
+msgid "destinataires"
+msgstr "modtagere"
+
+#: mail/models.py:23
+msgid "copie"
+msgstr "kopi"
+
+#: mail/models.py:24
+msgid "objet"
+msgstr "emne"
+
+#: mail/models.py:25 messagerie/models.py:99 messagerie/models.py:102
+#, fuzzy
+#| msgid "Messagerie"
+msgid "message"
+msgstr "Beskeder"
+
+#: mail/models.py:26 messagerie/models.py:120
+msgid "pièces jointes"
+msgstr "vedhæftede filer"
+
+#: mail/models.py:31
+msgid "e-mail"
+msgstr "e-mail"
+
+#: mail/models.py:32
+msgid "e-mails"
+msgstr "e-mails"
+
+#: mail/templates/mail/compose.html:6 mail/templates/mail/outbox.html:10
+#: mail/views.py:83 mail/views.py:116
+msgid "Nouveau mail"
+msgstr "Ny mail"
+
+#: mail/templates/mail/compose.html:18 mail/templates/mail/detail.html:21
+#: mail/templates/mail/outbox.html:23
+#: messagerie/templates/messagerie/_new_modal.html:30
+msgid "À"
+msgstr "Til"
+
+#: mail/templates/mail/compose.html:18
+msgid "séparez par des virgules"
+msgstr "adskil med kommaer"
+
+#: mail/templates/mail/compose.html:30 mail/templates/mail/detail.html:22
+msgid "Cc"
+msgstr "Cc"
+
+#: mail/templates/mail/compose.html:30
+#: messagerie/templates/messagerie/new.html:26
+msgid "optionnel"
+msgstr "valgfri"
+
+#: mail/templates/mail/compose.html:36
+msgid "Objet"
+msgstr "Emne"
+
+#: mail/templates/mail/compose.html:42
+#: messagerie/templates/messagerie/_new_modal.html:55
+#, fuzzy
+#| msgid "Messagerie"
+msgid "Message"
+msgstr "Beskeder"
+
+#: mail/templates/mail/compose.html:49
+msgid "Joindre des fichiers"
+msgstr "Vedhæft filer"
+
+#: mail/templates/mail/detail.html:7
+msgid "Retour"
+msgstr "Tilbage"
+
+#: mail/templates/mail/detail.html:23
+msgid "Le"
+msgstr "Den"
+
+#: mail/templates/mail/detail.html:40
+msgid "Erreur d'envoi"
+msgstr "Afsendelsesfejl"
+
+#: mail/templates/mail/outbox.html:7
+msgid "Envoyés"
+msgstr "Sendte"
+
+#: mail/templates/mail/outbox.html:37
+msgid "Aucun e-mail envoyé pour le moment."
+msgstr "Ingen e-mail sendt endnu."
+
+#: mail/views.py:73
+msgid "Indiquez au moins un destinataire valide."
+msgstr "Angiv mindst én gyldig modtager."
+
+#: mail/views.py:75
+#, python-format
+msgid "Adresses invalides ignorées : %(list)s"
+msgstr "Ugyldige adresser ignoreret: %(list)s"
+
+#: mail/views.py:77
+msgid "L'objet est obligatoire."
+msgstr "Emnet er obligatorisk."
+
+#: messagerie/models.py:24
+#, python-format
+msgid "Extension non autorisée : %(ext)s. Extensions acceptées : %(list)s."
+msgstr "Filtype ikke tilladt: %(ext)s. Accepterede filtyper: %(list)s."
+
+#: messagerie/models.py:29
+#, python-format
+msgid "Le fichier dépasse la taille maximale de 5 Mo (%(got)s Mo reçus)."
+msgstr "Filen overskrider den maksimale størrelse på 5 MB (%(got)s MB modtaget)."
+
+#: messagerie/models.py:41
+msgid "groupe"
+msgstr "gruppe"
+
+#: messagerie/models.py:42
+msgid "nom du groupe"
+msgstr "gruppenavn"
+
+#: messagerie/models.py:51
+#, fuzzy
+#| msgid "Facturation"
+msgid "conversation"
+msgstr "Fakturering"
+
+#: messagerie/models.py:52
+#, fuzzy
+#| msgid "Interventions"
+msgid "conversations"
+msgstr "Indsatser"
+
+#: messagerie/models.py:64 messagerie/templates/messagerie/_new_modal.html:25
+msgid "Groupe"
+msgstr "Gruppe"
+
+#: messagerie/models.py:88
+msgid "membre de conversation"
+msgstr "samtaledeltager"
+
+#: messagerie/models.py:89
+msgid "membres de conversation"
+msgstr "samtaledeltagere"
+
+#: messagerie/models.py:103
+#, fuzzy
+#| msgid "Messagerie"
+msgid "messages"
+msgstr "Beskeder"
+
+#: messagerie/models.py:114
+msgid "fichier"
+msgstr "fil"
+
+#: messagerie/models.py:119
+msgid "pièce jointe"
+msgstr "vedhæftet fil"
+
+#: messagerie/templates/messagerie/_messages.html:25
+msgid "Démarrez la conversation 👋"
+msgstr "Start samtalen 👋"
+
+#: messagerie/templates/messagerie/_new_modal.html:8
+#: messagerie/templates/messagerie/_sidebar.html:5
+#: messagerie/templates/messagerie/inbox.html:21
+msgid "Nouveau message"
+msgstr "Ny besked"
+
+#: messagerie/templates/messagerie/_new_modal.html:20
+msgid "Direct"
+msgstr "Direkte"
+
+#: messagerie/templates/messagerie/_new_modal.html:33
+msgid "— Choisir un agriculteur —"
+msgstr "— Vælg en landmand —"
+
+#: messagerie/templates/messagerie/_new_modal.html:40
+#: messagerie/templates/messagerie/new.html:26
+msgid "Nom du groupe"
+msgstr "Gruppenavn"
+
+#: messagerie/templates/messagerie/_new_modal.html:41
+msgid "ex: Équipe irrigation"
+msgstr "f.eks. Vandingsteam"
+
+#: messagerie/templates/messagerie/_new_modal.html:45
+msgid "Membres"
+msgstr "Medlemmer"
+
+#: messagerie/templates/messagerie/_new_modal.html:50
+msgid "Ctrl/Cmd + clic pour en sélectionner plusieurs."
+msgstr "Ctrl/Cmd + klik for at vælge flere."
+
+#: messagerie/templates/messagerie/_new_modal.html:56
+msgid "Écrivez votre message…"
+msgstr "Skriv din besked…"
+
+#: messagerie/templates/messagerie/_sidebar.html:4
+msgid "Chat"
+msgstr "Chat"
+
+#: messagerie/templates/messagerie/_sidebar.html:23
+msgid "Aucun message"
+msgstr "Ingen besked"
+
+#: messagerie/templates/messagerie/_sidebar.html:31
+msgid "Aucune conversation pour le moment."
+msgstr "Ingen samtale endnu."
+
+#: messagerie/templates/messagerie/_sidebar.html:32
+msgid "Démarrer une conversation"
+msgstr "Start en samtale"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "participants"
+msgstr "deltagere"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "Conversation privée"
+msgstr "Privat samtale"
+
+#: messagerie/templates/messagerie/detail.html:48
+msgid "Joindre un fichier"
+msgstr "Vedhæft en fil"
+
+#: messagerie/templates/messagerie/detail.html:56
+msgid "Écrire un message…"
+msgstr "Skriv en besked…"
+
+#: messagerie/templates/messagerie/detail.html:58
+msgid "Dicter le message"
+msgstr "Dikter beskeden"
+
+#: messagerie/templates/messagerie/detail.html:62
+msgid "Reformuler avec l’IA"
+msgstr "Omformuler med AI"
+
+#: messagerie/templates/messagerie/inbox.html:17
+msgid "Sélectionnez une conversation"
+msgstr "Vælg en samtale"
+
+#: messagerie/templates/messagerie/inbox.html:18
+msgid "ou démarrez-en une nouvelle"
+msgstr "eller start en ny"
+
+#: messagerie/templates/messagerie/new.html:12
+msgid "Participants"
+msgstr "Deltagere"
+
+#: messagerie/templates/messagerie/new.html:28
+msgid "Ex. Équipe récolte"
+msgstr "F.eks. Høstteam"
+
+#: messagerie/templates/messagerie/new.html:30
+msgid ""
+"Renseignez un nom ou cochez plusieurs participants pour créer un groupe."
+msgstr "Angiv et navn eller marker flere deltagere for at oprette en gruppe."
+
+#: messagerie/templates/messagerie/new.html:35
+#: sondages/templates/sondages/create.html:38
+msgid "Créer"
+msgstr "Opret"
+
+#: messagerie/templates/messagerie/new.html:41
+msgid ""
+"Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
+"Ajoutez des membres d'équipe et liez-leur un compte."
+msgstr "Ingen anden bruger i din bedrift at kontakte i øjeblikket. Tilføj teammedlemmer og knyt en konto til dem."
+
+#: messagerie/views.py:60
+msgid "📎 Pièce jointe"
+msgstr "📎 Vedhæftet fil"
+
+#: meteo/models.py:9
+msgid "Toutes les heures"
+msgstr "Hver time"
+
+#: meteo/models.py:10
+msgid "Toutes les 6 heures"
+msgstr "Hver 6. time"
+
+#: meteo/models.py:11
+msgid "Toutes les 12 heures"
+msgstr "Hver 12. time"
+
+#: meteo/models.py:12
+msgid "Quotidienne"
+msgstr "Dagligt"
+
+#: meteo/models.py:18
+msgid "slug"
+msgstr "slug"
+
+#: meteo/models.py:24
+msgid "capture automatique"
+msgstr "automatisk registrering"
+
+#: meteo/models.py:26
+msgid "fréquence"
+msgstr "frekvens"
+
+#: meteo/models.py:28
+msgid "dernière capture auto"
+msgstr "seneste auto-registrering"
+
+#: meteo/models.py:31
+msgid "ville météo"
+msgstr "vejrby"
+
+#: meteo/models.py:32
+msgid "villes météo"
+msgstr "vejrbyer"
+
+#: meteo/models.py:46
+msgid "lieu"
+msgstr "sted"
+
+#: meteo/models.py:49
+msgid "température (°C)"
+msgstr "temperatur (°C)"
+
+#: meteo/models.py:50
+msgid "humidité (%)"
+msgstr "fugtighed (%)"
+
+#: meteo/models.py:51
+msgid "vent (km/h)"
+msgstr "vind (km/t)"
+
+#: meteo/models.py:52
+msgid "pluie (mm)"
+msgstr "nedbør (mm)"
+
+#: meteo/models.py:53
+msgid "ET0 (mm)"
+msgstr "ET0 (mm)"
+
+#: meteo/models.py:54
+#, fuzzy
+#| msgid "Notifications"
+msgid "conditions"
+msgstr "Notifikationer"
+
+#: meteo/models.py:55
+msgid "capturé le"
+msgstr "registreret den"
+
+#: meteo/models.py:58
+msgid "relevé météo"
+msgstr "vejraflæsning"
+
+#: meteo/models.py:59
+msgid "relevés météo"
+msgstr "vejraflæsninger"
+
+#: meteo/templates/meteo/index.html:10
+msgid "Vos villes en un coup d'œil"
+msgstr "Dine byer på et øjeblik"
+
+#: meteo/templates/meteo/index.html:14 meteo/templates/meteo/index.html:61
+msgid "Ajouter une ville"
+msgstr "Tilføj en by"
+
+#: meteo/templates/meteo/index.html:37
+msgid "Retirer"
+msgstr "Fjern"
+
+#: meteo/templates/meteo/index.html:52
+msgid "Ajoutez une ville pour suivre sa météo."
+msgstr "Tilføj en by for at følge dens vejr."
+
+#: meteo/templates/meteo/index.html:70
+msgid "Rechercher une commune"
+msgstr "Søg efter en kommune"
+
+#: meteo/templates/meteo/index.html:71
+msgid "ex: Avignon"
+msgstr "f.eks. Avignon"
+
+#: meteo/templates/meteo/index.html:73
+msgid "Tapez un nom puis Entrée pour rechercher."
+msgstr "Skriv et navn og tryk Enter for at søge."
+
+#: meteo/templates/meteo/meteo.html:10
+msgid "Toutes les villes"
+msgstr "Alle byer"
+
+#: meteo/templates/meteo/meteo.html:27
+#, fuzzy
+#| msgid "Capteurs"
+msgid "Capturer"
+msgstr "Sensorer"
+
+#: meteo/templates/meteo/meteo.html:41
+msgid "Capture automatique"
+msgstr "Automatisk registrering"
+
+#: meteo/templates/meteo/meteo.html:45
+msgid "Activée"
+msgstr "Aktiveret"
+
+#: meteo/templates/meteo/meteo.html:53
+msgid "Dernière capture auto"
+msgstr "Seneste auto-registrering"
+
+#: meteo/templates/meteo/meteo.html:55
+msgid ""
+"Un relevé de cette ville est enregistré automatiquement à la fréquence "
+"choisie."
+msgstr "En aflæsning af denne by registreres automatisk med den valgte frekvens."
+
+#: meteo/templates/meteo/meteo.html:61
+msgid "Impossible de récupérer la météo."
+msgstr "Kan ikke hente vejret."
+
+#: meteo/templates/meteo/meteo.html:76
+msgid "Ressenti"
+msgstr "Føles som"
+
+#: meteo/templates/meteo/meteo.html:79 meteo/templates/meteo/meteo.html:95
+#: meteo/templates/meteo/meteo.html:145
+msgid "Pluie"
+msgstr "Nedbør"
+
+#: meteo/templates/meteo/meteo.html:86
+msgid "Prévisions 7 jours"
+msgstr "7-dages prognose"
+
+#: meteo/templates/meteo/meteo.html:96
+msgid "Proba."
+msgstr "Sandsynl."
+
+#: meteo/templates/meteo/meteo.html:97
+msgid "Évapotranspiration (FAO-56)"
+msgstr "Evapotranspiration (FAO-56)"
+
+#: meteo/templates/meteo/meteo.html:110
+msgid "Évolution"
+msgstr "Udvikling"
+
+#: meteo/templates/meteo/meteo.html:113
+msgid "Température (°C)"
+msgstr "Temperatur (°C)"
+
+#: meteo/templates/meteo/meteo.html:117
+#, python-format
+msgid "Humidité (%%)"
+msgstr "Fugtighed (%%)"
+
+#: meteo/templates/meteo/meteo.html:121
+msgid "Vent (km/h)"
+msgstr "Vind (km/t)"
+
+#: meteo/templates/meteo/meteo.html:125
+msgid "Pluie (mm)"
+msgstr "Nedbør (mm)"
+
+#: meteo/templates/meteo/meteo.html:135
+msgid "Historique des relevés"
+msgstr "Aflæsningshistorik"
+
+#: meteo/views.py:89
+msgid "Capture automatique mise à jour."
+msgstr "Automatisk registrering opdateret."
+
+#: meteo/views.py:118
+msgid "Lieu introuvable."
+msgstr "Sted ikke fundet."
+
+#: meteo/views.py:197
+msgid "Relevé météo capturé."
+msgstr "Vejraflæsning registreret."
+
+#: meteo/views.py:198
+#, python-format
+msgid "Échec de la capture : %(e)s"
+msgstr "Registrering mislykkedes: %(e)s"
+
+#: notifications/models.py:17 planning/models.py:40
+msgid "Urgente"
+msgstr "Hastende"
+
+#: notifications/models.py:31
+msgid "notification"
+msgstr "notifikation"
+
+#: notifications/models.py:32
+msgid "notifications"
+msgstr "notifikationer"
+
+#: notifications/models.py:49
+msgid "règle de notification"
+msgstr "notifikationsregel"
+
+#: notifications/models.py:50
+msgid "règles de notification"
+msgstr "notifikationsregler"
+
+#: notifications/templates/notifications/center.html:10
+msgid "Tout marquer comme lu"
+msgstr "Marker alt som læst"
+
+#: notifications/templates/notifications/center.html:27
+msgid "Aucune notification."
+msgstr "Ingen notifikation."
+
+#: notifications/templates/notifications/center.html:31
+msgid "Règles d'alerte"
+msgstr "Advarselsregler"
+
+#: notifications/templates/notifications/center.html:37
+msgid "activée"
+msgstr "aktiveret"
+
+#: notifications/templates/notifications/center.html:37
+msgid "désactivée"
+msgstr "deaktiveret"
+
+#: notifications/templates/notifications/center.html:42
+msgid "Aucune règle définie."
+msgstr "Ingen regel defineret."
+
+#: operations/models.py:16 operations/models.py:151
+msgid "Pompe"
+msgstr "Pumpe"
+
+#: operations/models.py:17 operations/models.py:143
+msgid "Tracteur"
+msgstr "Traktor"
+
+#: operations/models.py:20 operations/models.py:144
+msgid "Pulvérisateur"
+msgstr "Sprøjte"
+
+#: operations/models.py:27
+msgid "Réformée"
+msgstr "Udrangeret"
+
+#: operations/models.py:44
+msgid "machine"
+msgstr "maskine"
+
+#: operations/models.py:45
+msgid "machines"
+msgstr "maskiner"
+
+#: operations/models.py:54
+msgid "Utilisation"
+msgstr "Anvendelse"
+
+#: operations/models.py:56 operations/models.py:85
+msgid "Réparation"
+msgstr "Reparation"
+
+#: operations/models.py:57
+msgid "Inspection"
+msgstr "Inspektion"
+
+#: operations/models.py:79
+msgid "Vidange"
+msgstr "Olieskift"
+
+#: operations/models.py:80
+msgid "Filtres"
+msgstr "Filtre"
+
+#: operations/models.py:81
+msgid "Courroies"
+msgstr "Remme"
+
+#: operations/models.py:82
+msgid "Pneumatiques"
+msgstr "Dæk"
+
+#: operations/models.py:83
+msgid "Freins"
+msgstr "Bremser"
+
+#: operations/models.py:84
+msgid "Révision complète"
+msgstr "Komplet eftersyn"
+
+#: operations/models.py:86
+msgid "Contrôle technique"
+msgstr "Teknisk kontrol"
+
+#: operations/models.py:105
+msgid "entretien"
+msgstr "vedligeholdelse"
+
+#: operations/models.py:106
+msgid "entretiens"
+msgstr "vedligeholdelser"
+
+#: operations/models.py:112
+msgid "Labour"
+msgstr "Pløjning"
+
+#: operations/models.py:134
+msgid "affectation d'engin"
+msgstr "maskintildeling"
+
+#: operations/models.py:135
+msgid "affectations d'engins"
+msgstr "maskintildelinger"
+
+#: operations/models.py:145
+msgid "Semoir"
+msgstr "Såmaskine"
+
+#: operations/models.py:146
+msgid "Épandeur"
+msgstr "Gødningsspreder"
+
+#: operations/models.py:147
+msgid "Moissonneuse"
+msgstr "Mejetærsker"
+
+#: operations/models.py:148
+msgid "Charrue"
+msgstr "Plov"
+
+#: operations/models.py:149
+msgid "Cultivateur"
+msgstr "Kultivator"
+
+#: operations/models.py:150
+msgid "Benne"
+msgstr "Tipvogn"
+
+#: operations/models.py:170
+msgid "modèle d'engin (catalogue)"
+msgstr "maskinmodel (katalog)"
+
+#: operations/models.py:171
+msgid "catalogue d'engins"
+msgstr "maskinkatalog"
+
+#: operations/templates/operations/parc_materiel.html:16
 msgid "prochain entretien"
-msgstr ""
+msgstr "næste vedligeholdelse"
 
+#: operations/templates/operations/parc_materiel.html:21
 msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Ingen maskine. Tilføj dem via admin eller API."
 
-msgid "Gravitaire"
-msgstr ""
+#: pac/models.py:9
+msgid "DPB — Droits à paiement de base"
+msgstr "DPB — grundbetalingsrettigheder"
 
-msgid "Jachère"
-msgstr ""
+#: pac/models.py:10
+msgid "Éco-régime"
+msgstr "Eco-scheme"
 
+#: pac/models.py:11
+msgid "Paiement redistributif"
+msgstr "Omfordelingsbetaling"
+
+#: pac/models.py:12
+msgid "Aide jeune agriculteur"
+msgstr "Støtte til unge landmænd"
+
+#: pac/models.py:13
+msgid "Aides couplées"
+msgstr "Koblet støtte"
+
+#: pac/models.py:14
+msgid "ICHN — Indemnité handicap naturel"
+msgstr "ICHN — godtgørelse for naturbetingede ulemper"
+
+#: pac/models.py:15
+msgid "MAEC — Mesures agro-environnementales"
+msgstr "MAEC — agro-miljøforanstaltninger"
+
+#: pac/models.py:17
+msgid "Assurance récolte"
+msgstr "Høstforsikring"
+
+#: pac/models.py:21
+msgid "Prévu"
+msgstr "Planlagt"
+
+#: pac/models.py:22
+msgid "Accordé"
+msgstr "Bevilget"
+
+#: pac/models.py:23 pac/templates/pac/pac.html:34
+msgid "Payé"
+msgstr "Betalt"
+
+#: pac/models.py:29
+msgid "catégorie"
+msgstr "kategori"
+
+#: pac/models.py:30
+msgid "libellé"
+msgstr "betegnelse"
+
+#: pac/models.py:31
+msgid "montant (€)"
+msgstr "beløb (€)"
+
+#: pac/models.py:32 parcelles/models.py:32
 msgid "surface (ha)"
-msgstr ""
+msgstr "areal (ha)"
 
+#: pac/models.py:33
+msgid "statut"
+msgstr "status"
+
+#: pac/models.py:37
+msgid "aide PAC"
+msgstr "CAP-støtte"
+
+#: pac/models.py:38
+msgid "aides PAC"
+msgstr "CAP-støtter"
+
+#: pac/templates/pac/pac.html:10
+msgid "Politique Agricole Commune · suivi des aides par campagne"
+msgstr "Fælles landbrugspolitik · opfølgning på støtter pr. kampagne"
+
+#: pac/templates/pac/pac.html:22 pac/templates/pac/pac.html:89
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une aide"
+msgstr "Aktivér en kode"
+
+#: pac/templates/pac/pac.html:30
+msgid "Montant total estimé"
+msgstr "Anslået samlet beløb"
+
+#: pac/templates/pac/pac.html:38
+msgid "Surface concernée"
+msgstr "Berørt areal"
+
+#: pac/templates/pac/pac.html:42
+msgid "Nombre d'aides"
+msgstr "Antal støtter"
+
+#: pac/templates/pac/pac.html:54 pac/templates/pac/pac.html:124
+msgid "Libellé"
+msgstr "Betegnelse"
+
+#: pac/templates/pac/pac.html:74
+msgid "Supprimer cette aide ?"
+msgstr "Slet denne støtte?"
+
+#: pac/templates/pac/pac.html:87
+msgid "Aucune aide PAC pour cette campagne."
+msgstr "Ingen CAP-støtte for denne kampagne."
+
+#: pac/templates/pac/pac.html:96
+msgid ""
+"Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et "
+"leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
+msgstr "Følg her dine CAP-støtter (DPB, eco-scheme, ICHN, MAEC, økologi…) pr. kampagne og deres status (planlagt / bevilget / betalt). Officiel anmeldelse via TéléPAC."
+
+#: pac/templates/pac/pac.html:105
+msgid "Nouvelle aide PAC"
+msgstr "Ny CAP-støtte"
+
+#: pac/templates/pac/pac.html:125
+msgid "ex: Éco-régime niveau 2"
+msgstr "f.eks. Eco-scheme niveau 2"
+
+#: pac/templates/pac/pac.html:130
+msgid "Montant (€)"
+msgstr "Beløb (€)"
+
+#: parcelles/models.py:19
+msgid "Gravitaire"
+msgstr "Gravitation"
+
+#: parcelles/models.py:24
+msgid "Jachère"
+msgstr "Brak"
+
+#: parcelles/models.py:37
 msgid "polygone"
-msgstr ""
+msgstr "polygon"
 
+#: parcelles/models.py:42
 msgid "type d'irrigation"
-msgstr ""
+msgstr "vandingstype"
 
+#: parcelles/models.py:44
 msgid "débit théorique (m³/h)"
-msgstr ""
+msgstr "teoretisk flow (m³/t)"
 
+#: parcelles/models.py:45
 msgid "nombre de buses"
-msgstr ""
+msgstr "antal dyser"
 
+#: parcelles/models.py:46
 msgid "débit buse (L/h)"
-msgstr ""
+msgstr "dyseflow (L/t)"
 
+#: parcelles/models.py:47
 msgid "écart entre rangs (m)"
-msgstr ""
+msgstr "rækkeafstand (m)"
 
+#: parcelles/models.py:48
 msgid "écart entre émetteurs (m)"
-msgstr ""
+msgstr "afstand mellem dryp (m)"
 
+#: parcelles/models.py:49
 msgid "pression de service (bar)"
-msgstr ""
+msgstr "driftstryk (bar)"
 
+#: parcelles/models.py:52
 msgid "culture"
-msgstr ""
+msgstr "afgrøde"
 
+#: parcelles/models.py:53
 msgid "variété"
-msgstr ""
+msgstr "sort"
 
+#: parcelles/models.py:54 parcelles/models.py:93
 msgid "coefficient Kc"
-msgstr ""
+msgstr "Kc-koefficient"
 
+#: parcelles/models.py:55
 msgid "âge des plants (ans)"
-msgstr ""
+msgstr "planternes alder (år)"
 
+#: parcelles/models.py:56
 msgid "date de plantation"
-msgstr ""
+msgstr "plantedato"
 
+#: parcelles/models.py:57
 msgid "densité (pieds/ha)"
-msgstr ""
+msgstr "plantetæthed (planter/ha)"
 
+#: parcelles/models.py:61
 msgid "profondeur racinaire"
-msgstr ""
+msgstr "roddybde"
 
+#: parcelles/models.py:62
 msgid "profondeur racinaire (cm)"
-msgstr ""
+msgstr "roddybde (cm)"
 
+#: parcelles/models.py:63
 msgid "rétention sol (mm/m)"
-msgstr ""
+msgstr "jordens vandholdeevne (mm/m)"
 
+#: parcelles/models.py:64
 msgid "pH du sol"
-msgstr ""
+msgstr "jordens pH"
 
+#: parcelles/models.py:67
 msgid "réf. cadastrale"
-msgstr ""
+msgstr "matrikelreference"
 
+#: parcelles/models.py:68
 msgid "commune"
-msgstr ""
+msgstr "kommune"
 
+#: parcelles/models.py:69
 msgid "surface officielle (ha)"
-msgstr ""
+msgstr "officielt areal (ha)"
 
+#: parcelles/models.py:70
+msgid "données cadastre (brut IGN)"
+msgstr "matrikeldata (rå IGN)"
+
+#: parcelles/models.py:71
+msgid "date d'acquisition"
+msgstr "erhvervelsesdato"
+
+#: parcelles/models.py:76
 msgid "parcelle"
-msgstr ""
+msgstr "mark"
 
+#: parcelles/models.py:77
 msgid "parcelles"
-msgstr ""
+msgstr "marker"
 
+#: parcelles/models.py:89
 msgid "stade"
-msgstr ""
+msgstr "stadie"
 
+#: parcelles/models.py:91
 msgid "début"
-msgstr ""
+msgstr "start"
 
+#: parcelles/models.py:92
 msgid "fin"
-msgstr ""
+msgstr "slut"
 
+#: parcelles/models.py:94
 msgid "profondeur racinaire (m)"
-msgstr ""
+msgstr "roddybde (m)"
 
+#: parcelles/models.py:98
 msgid "stade cultural"
-msgstr ""
+msgstr "vækststadie"
 
+#: parcelles/models.py:99
 msgid "stades culturaux"
-msgstr ""
+msgstr "vækststadier"
 
+#: parcelles/templates/parcelles/confirm_delete.html:7
 msgid "Supprimer la parcelle ?"
-msgstr ""
+msgstr "Slet marken?"
 
+#: parcelles/templates/parcelles/confirm_delete.html:9
 #, python-format
 msgid "La parcelle « %(name)s » sera définitivement supprimée."
-msgstr ""
+msgstr "Marken »%(name)s« slettes permanent."
 
-msgid "Supprimer"
-msgstr ""
-
+#: parcelles/templates/parcelles/detail.html:12
 msgid "Modifier"
-msgstr ""
+msgstr "Rediger"
 
+#: parcelles/templates/parcelles/detail.html:19
 msgid "Culture & sol"
-msgstr ""
+msgstr "Afgrøde og jord"
 
+#: parcelles/templates/parcelles/detail.html:21
 msgid "Variété"
-msgstr ""
+msgstr "Sort"
 
+#: parcelles/templates/parcelles/detail.html:23
 msgid "Type de sol"
-msgstr ""
+msgstr "Jordtype"
 
+#: parcelles/templates/parcelles/detail.html:33
+#: parcelles/templates/parcelles/list.html:93
 msgid "Commune"
-msgstr ""
+msgstr "Kommune"
 
+#: parcelles/templates/parcelles/detail.html:38
 msgid "Retour aux parcelles"
-msgstr ""
+msgstr "Tilbage til marker"
 
+#: parcelles/templates/parcelles/form.html:8
 msgid "Étape"
-msgstr ""
+msgstr "Trin"
 
+#: parcelles/templates/parcelles/form.html:21
 msgid "Identité & localisation"
-msgstr ""
+msgstr "Identitet og placering"
 
+#: parcelles/templates/parcelles/form.html:33
 msgid "Cliquez sur la carte pour positionner la parcelle."
-msgstr ""
+msgstr "Klik på kortet for at placere marken."
 
+#: parcelles/templates/parcelles/form.html:84
 msgid "Cadastre & statut"
-msgstr ""
+msgstr "Matrikel og status"
 
+#: parcelles/templates/parcelles/form.html:94
 msgid "Précédent"
-msgstr ""
+msgstr "Forrige"
 
+#: parcelles/templates/parcelles/form.html:96
 msgid "Suivant"
-msgstr ""
+msgstr "Næste"
 
-msgid "+ Nouvelle parcelle"
-msgstr ""
+#: parcelles/templates/parcelles/list.html:13
+msgid "Carte satellite · Cadastre IGN · Surfaces"
+msgstr "Satellitkort · IGN-matrikel · arealer"
 
+#: parcelles/templates/parcelles/list.html:24
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles actives"
+msgstr "Marker"
+
+#: parcelles/templates/parcelles/list.html:28
+msgid "Surface totale"
+msgstr "Samlet areal"
+
+#: parcelles/templates/parcelles/list.html:32
+msgid "Stress hydrique"
+msgstr "Vandstress"
+
+#: parcelles/templates/parcelles/list.html:36
+msgid "Humidité moyenne"
+msgstr "Gennemsnitlig fugtighed"
+
+#: parcelles/templates/parcelles/list.html:45
+msgid "Rechercher un lieu…"
+msgstr "Søg efter et sted…"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Carte"
+msgstr "Kort"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Liste"
+msgstr "Liste"
+
+#: parcelles/templates/parcelles/list.html:62
+msgid ""
+"Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
+"Enregistrer."
+msgstr "Klik på de marker, der skal tilføjes (klik igen for at fravælge), og gem derefter."
+
+#: parcelles/templates/parcelles/list.html:70
+msgid "parcelle(s) sélectionnée(s)"
+msgstr "valgt(e) mark(er)"
+
+#: parcelles/templates/parcelles/list.html:92
+msgid "Réf. cadastrale"
+msgstr "Matrikelreference"
+
+#: parcelles/templates/parcelles/list.html:94
+msgid "Acquise le"
+msgstr "Erhvervet den"
+
+#: parcelles/templates/parcelles/list.html:116
+msgid ""
+"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+msgstr "Ingen mark. Klik på »Tilføj« for at vælge dem på kortet."
+
+#: parcelles/templates/parcelles/list.html:122
+msgid "Analyses des parcelles — bientôt."
+msgstr "Markanalyser — kommer snart."
+
+#: parcelles/views.py:132
 msgid "Configurez d'abord votre exploitation."
-msgstr ""
+msgstr "Konfigurer først din bedrift."
 
-msgid "Configurer"
-msgstr ""
-
-msgid "Aucune parcelle pour le moment."
-msgstr ""
-
-msgid "Créer ma première parcelle"
-msgstr ""
-
+#: parcelles/views.py:141
 msgid "Parcelle créée."
-msgstr ""
+msgstr "Mark oprettet."
 
+#: parcelles/views.py:149
 msgid "Nouvelle parcelle"
-msgstr ""
+msgstr "Ny mark"
 
+#: parcelles/views.py:172
 msgid "Parcelle mise à jour."
-msgstr ""
+msgstr "Mark opdateret."
 
+#: parcelles/views.py:179
 #, python-format
 msgid "Modifier %(n)s"
-msgstr ""
+msgstr "Rediger %(n)s"
 
+#: parcelles/views.py:189
 msgid "Parcelle supprimée."
-msgstr ""
+msgstr "Mark slettet."
 
+#: planning/models.py:29
 msgid "Planifié"
-msgstr ""
+msgstr "Planlagt"
 
+#: planning/models.py:31
 msgid "En pause"
-msgstr ""
+msgstr "På pause"
 
+#: planning/models.py:34
 msgid "Reporté"
-msgstr ""
+msgstr "Udskudt"
 
+#: planning/models.py:43
 msgid "Non applicable"
-msgstr ""
+msgstr "Ikke relevant"
 
+#: planning/models.py:44
 msgid "À facturer"
-msgstr ""
+msgstr "Skal faktureres"
 
+#: planning/models.py:45
 msgid "Facturé"
-msgstr ""
+msgstr "Faktureret"
 
+#: planning/models.py:46
 msgid "Avoir"
-msgstr ""
+msgstr "Kreditnota"
 
+#: planning/models.py:80
 msgid "tâche de planning"
-msgstr ""
+msgstr "planlægningsopgave"
 
+#: planning/models.py:81
 msgid "tâches de planning"
-msgstr ""
+msgstr "planlægningsopgaver"
 
+#: planning/models.py:100
 msgid "affectation technicien"
-msgstr ""
+msgstr "teknikertildeling"
 
+#: planning/models.py:101
 msgid "affectations techniciens"
-msgstr ""
+msgstr "teknikertildelinger"
 
+#: planning/models.py:106
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
+#: planning/models.py:107
 msgid "Plan"
-msgstr ""
+msgstr "Plan"
 
+#: planning/models.py:108
 msgid "Schéma"
-msgstr ""
+msgstr "Skema"
 
-msgid "Document"
-msgstr ""
-
+#: planning/models.py:126
 msgid "Démarrage"
-msgstr ""
+msgstr "Start"
 
+#: planning/models.py:127
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
+#: planning/models.py:128
 msgid "Reprise"
-msgstr ""
+msgstr "Genoptagelse"
 
+#: planning/models.py:129
 msgid "Fin"
-msgstr ""
+msgstr "Slut"
 
+#: planning/models.py:145
 msgid "Congé payé"
-msgstr ""
+msgstr "Betalt ferie"
 
+#: planning/models.py:147
 msgid "Maladie"
-msgstr ""
+msgstr "Sygdom"
 
+#: planning/models.py:148
 msgid "Formation"
-msgstr ""
+msgstr "Uddannelse"
 
+#: planning/models.py:149
 msgid "Sans solde"
-msgstr ""
+msgstr "Uden løn"
 
+#: planning/models.py:153
 msgid "Matin"
-msgstr ""
+msgstr "Formiddag"
 
+#: planning/models.py:154
 msgid "Après-midi"
-msgstr ""
+msgstr "Eftermiddag"
 
+#: planning/models.py:155
 msgid "Journée"
-msgstr ""
+msgstr "Hele dagen"
 
+#: planning/models.py:158
 msgid "Demandé"
-msgstr ""
+msgstr "Anmodet"
 
+#: planning/models.py:159
 msgid "Approuvé"
-msgstr ""
+msgstr "Godkendt"
 
+#: planning/models.py:160
 msgid "Refusé"
-msgstr ""
+msgstr "Afvist"
 
+#: planning/models.py:178
 msgid "absence"
-msgstr ""
+msgstr "fravær"
 
+#: planning/models.py:179
 msgid "absences"
-msgstr ""
+msgstr "fravær"
 
+#: planning/models.py:206
 msgid "Outil à main"
-msgstr ""
+msgstr "Håndværktøj"
 
+#: planning/models.py:207
 msgid "Outil de coupe"
-msgstr ""
+msgstr "Skæreværktøj"
 
+#: planning/models.py:208
 msgid "Outil motorisé"
-msgstr ""
+msgstr "Motoriseret værktøj"
 
+#: planning/models.py:209
 msgid "Engin"
-msgstr ""
+msgstr "Maskine"
 
+#: planning/models.py:211
 msgid "Arrosage"
-msgstr ""
+msgstr "Vanding"
 
+#: planning/models.py:212
 msgid "Mesure"
-msgstr ""
+msgstr "Måling"
 
+#: planning/models.py:217 planning/models.py:253
+#: planning/templates/planning/planning.html:27
 msgid "Bon"
-msgstr ""
+msgstr "God"
 
+#: planning/models.py:219
 msgid "À réparer"
-msgstr ""
+msgstr "Skal repareres"
 
+#: planning/models.py:220
 msgid "Hors service"
-msgstr ""
+msgstr "Ude af drift"
 
+#: planning/models.py:231
 msgid "matériel"
-msgstr ""
+msgstr "materiel"
 
+#: planning/models.py:232
 msgid "catalogue matériel"
-msgstr ""
+msgstr "materielkatalog"
 
+#: planning/models.py:255
 msgid "Mauvais"
-msgstr ""
+msgstr "Dårlig"
 
+#: planning/models.py:260
 msgid "Complété"
-msgstr ""
+msgstr "Fuldført"
 
+#: planning/models.py:262
 msgid "Archivé"
-msgstr ""
+msgstr "Arkiveret"
 
+#: planning/models.py:295
 msgid "bon d'intervention"
-msgstr ""
+msgstr "arbejdsseddel"
 
+#: planning/models.py:296
 msgid "bons d'intervention"
-msgstr ""
+msgstr "arbejdssedler"
 
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:80
 msgid "Bon d'intervention"
-msgstr ""
+msgstr "Arbejdsseddel"
 
+#: planning/templates/planning/bon_intervention.html:17
 msgid "Technicien"
-msgstr ""
+msgstr "Tekniker"
 
+#: planning/templates/planning/bon_intervention.html:21
 msgid "Travaux réalisés"
-msgstr ""
+msgstr "Udført arbejde"
 
+#: planning/templates/planning/bon_intervention.html:26
 msgid "Produits utilisés"
-msgstr ""
+msgstr "Anvendte produkter"
 
+#: planning/templates/planning/bon_intervention.html:30
 msgid "Qté"
-msgstr ""
+msgstr "Antal"
 
+#: planning/templates/planning/bon_intervention.html:34
 msgid "Ajouter un produit"
-msgstr ""
+msgstr "Tilføj et produkt"
 
+#: planning/templates/planning/bon_intervention.html:38
 msgid "Observations"
-msgstr ""
+msgstr "Bemærkninger"
 
+#: planning/templates/planning/bon_intervention.html:43
 msgid "Signature du technicien"
-msgstr ""
+msgstr "Teknikerens underskrift"
 
+#: planning/templates/planning/bon_intervention.html:45
 msgid "Effacer"
-msgstr ""
+msgstr "Ryd"
 
+#: planning/templates/planning/bon_intervention.html:46
 msgid "Nom du signataire"
-msgstr ""
+msgstr "Underskriverens navn"
 
+#: planning/templates/planning/bon_intervention.html:50
 msgid "Enregistrer le brouillon"
-msgstr ""
+msgstr "Gem kladden"
 
+#: planning/templates/planning/bon_intervention.html:51
 msgid "Valider le bon"
-msgstr ""
+msgstr "Godkend sedlen"
 
+#: planning/templates/planning/planning.html:7
 msgid "Planning des interventions"
-msgstr ""
+msgstr "Planlægning af indgreb"
 
+#: planning/templates/planning/planning.html:17
 msgid "Tâches planifiées"
-msgstr ""
+msgstr "Planlagte opgaver"
 
+#: planning/templates/planning/planning.html:32
 msgid "Aucune tâche planifiée."
-msgstr ""
+msgstr "Ingen planlagt opgave."
 
+#: planning/templates/planning/planning.html:37
 msgid "Backlog"
-msgstr ""
+msgstr "Backlog"
 
+#: planning/templates/planning/planning.html:44
 msgid "Backlog vide."
-msgstr ""
+msgstr "Tom backlog."
 
+#: planning/views.py:33
 msgid "Jour"
-msgstr ""
+msgstr "Dag"
 
+#: planning/views.py:33
 msgid "Semaine"
-msgstr ""
+msgstr "Uge"
 
+#: planning/views.py:33
 msgid "Mois"
-msgstr ""
+msgstr "Måned"
 
+#: planning/views.py:74
 msgid "Bon d'intervention enregistré."
-msgstr ""
+msgstr "Arbejdsseddel gemt."
 
+#: public/models.py:17
 msgid "lead capturé"
-msgstr ""
+msgstr "opfanget lead"
 
+#: public/models.py:18
 msgid "leads capturés"
-msgstr ""
+msgstr "opfangede leads"
 
-msgid "Activer mon compte"
-msgstr ""
-
-msgid "Saisissez le code d'activation reçu par email après votre paiement (format HOLS-XXXX-XXXX)."
-msgstr ""
-
-msgid "Activer"
-msgstr ""
-
+#: public/templates/public/home.html:3
 msgid "Irrigation de précision pour agriculteurs"
-msgstr ""
+msgstr "Præcisionsvanding til landmænd"
 
-msgid "Pilotez votre irrigation, économisez l'eau et l'énergie."
-msgstr ""
+#: public/templates/public/home.html:13 public/templates/public/home.html:471
+msgid "Domaines"
+msgstr "Områder"
 
-msgid "IoT temps réel, score d'efficience DTI, assistant IA et conformité subventions — pensés pour les agriculteurs."
-msgstr ""
+#: public/templates/public/home.html:14 public/templates/public/home.html:307
+#: public/templates/public/home.html:472
+msgid "Tarif"
+msgstr "Pris"
 
-msgid "Démarrer"
-msgstr ""
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "Din bedrift, uden at du skal huske det hele."
 
-msgid "Guide gratuit : lire ses analyses de sol"
-msgstr ""
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "Assistenten, der husker, beregner og dokumenterer for dig."
 
-msgid "Votre email"
-msgstr ""
+#: public/templates/public/home.html:47
+msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
+msgstr "59,90 € ekskl. moms/måned pr. bedrift, ubegrænset antal brugere."
 
-msgid "Recevoir"
-msgstr ""
+#: public/templates/public/home.html:53
+msgid "Commencer maintenant"
+msgstr "Kom i gang nu"
 
-msgid "Discuter avec Alex 🌱"
-msgstr ""
+#: public/templates/public/home.html:57
+msgid "Voir ce qu'il fait"
+msgstr "Se hvad den kan"
 
-msgid "Posez votre question…"
-msgstr ""
+#: public/templates/public/home.html:61
+#: templates/partials/install_banner.html:23
+msgid "Télécharger l'app"
+msgstr "Download appen"
 
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Uden binding"
+
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Data hostet i Frankrig"
+
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Guidet opstart inkluderet"
+
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Landbrugsbedrift ved solnedgang"
+
+#: public/templates/public/home.html:87
+msgid "Le métier n'a pas changé."
+msgstr "Faget har ikke ændret sig."
+
+#: public/templates/public/home.html:90
+msgid "Sa charge administrative et mentale, si."
+msgstr "Det har dets administrative og mentale byrde til gengæld."
+
+#: public/templates/public/home.html:98
+msgid "La réglementation qui s'empile"
+msgstr "Reglerne, der hober sig op"
+
+#: public/templates/public/home.html:100
+msgid "Plan Eau 2030"
+msgstr "Vandplan 2030"
+
+#: public/templates/public/home.html:102
+msgid "E-facturation obligatoire"
+msgstr "Obligatorisk e-fakturering"
+
+#: public/templates/public/home.html:103
+msgid "Traçabilité renforcée"
+msgstr "Skærpet sporbarhed"
+
+#: public/templates/public/home.html:110
+msgid "L'économie qui pèse autrement"
+msgstr "Økonomien, der vejer på en anden måde"
+
+#: public/templates/public/home.html:112
+msgid "Marges sous pression"
+msgstr "Marginer under pres"
+
+#: public/templates/public/home.html:113
+msgid "Charges en hausse"
+msgstr "Stigende omkostninger"
+
+#: public/templates/public/home.html:114
+msgid "Financement complexe"
+msgstr "Kompleks finansiering"
+
+#: public/templates/public/home.html:115 public/templates/public/home.html:290
+msgid "Dossiers de subvention"
+msgstr "Tilskudsansøgninger"
+
+#: public/templates/public/home.html:122
+msgid "La main-d'œuvre à gérer"
+msgstr "Arbejdskraften, der skal styres"
+
+#: public/templates/public/home.html:124
+msgid "Saisonniers et apprentis"
+msgstr "Sæsonarbejdere og lærlinge"
+
+#: public/templates/public/home.html:125
+msgid "Associés et salariés"
+msgstr "Partnere og ansatte"
+
+#: public/templates/public/home.html:126
+msgid "Transmission incertaine"
+msgstr "Usikkert generationsskifte"
+
+#: public/templates/public/home.html:127
+msgid "Formation continue"
+msgstr "Efteruddannelse"
+
+#: public/templates/public/home.html:139
+msgid "Ce que disent les agriculteurs français"
+msgstr "Hvad franske landmænd siger"
+
+#: public/templates/public/home.html:142
+msgid "Des chiffres qui parlent d'eux-mêmes."
+msgstr "Tal, der taler for sig selv."
+
+#: public/templates/public/home.html:149
+msgid "des agriculteurs veulent travailler moins"
+msgstr "af landmændene vil arbejde mindre"
+
+#: public/templates/public/home.html:150
+msgid "PRISM 2023 — priorité n°1 à 3 ans"
+msgstr "PRISM 2023 — prioritet nr. 1 på 3 år"
+
+#: public/templates/public/home.html:154
+msgid "choisissent de réduire leurs charges"
+msgstr "vælger at reducere deres omkostninger"
+
+#: public/templates/public/home.html:155
+msgid "PRISM 2023 — vs maximiser la productivité"
+msgstr "PRISM 2023 — vs. at maksimere produktiviteten"
+
+#: public/templates/public/home.html:159
+msgid "subissent le changement climatique"
+msgstr "er ramt af klimaforandringerne"
+
+#: public/templates/public/home.html:160
+msgid "VoxAgri 2025 — effet négatif sur l'exploitation"
+msgstr "VoxAgri 2025 — negativ effekt på bedriften"
+
+#: public/templates/public/home.html:164
+msgid "veulent plus d'accompagnement"
+msgstr "ønsker mere rådgivning"
+
+#: public/templates/public/home.html:165
+msgid "PRISM 2023 — ou de meilleure qualité"
+msgstr "PRISM 2023 — eller af bedre kvalitet"
+
+#: public/templates/public/home.html:175
+msgid "La charge invisible"
+msgstr "Den usynlige byrde"
+
+#: public/templates/public/home.html:178
+msgid ""
+"Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
+"prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
+"l'apprenti — c'est un autre travail."
+msgstr "Du ved, hvad du gjorde på mark 3 for seks uger siden. At dokumentere det for en kontrollør, finde det igen til en ansøgning, videregive det til lærlingen — det er et helt andet arbejde."
+
+#: public/templates/public/home.html:181
+msgid ""
+"Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
+"ce qui se colle par-dessus."
+msgstr "Og det arbejde laver du om aftenen. Byrden er ikke faget — det er det, der lægger sig oven på."
+
+#: public/templates/public/home.html:182
+#, python-format
+msgid ""
+"48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
+"priorité n°1."
+msgstr "48 %% af landmændene nævner »at styre arbejdstiden« som prioritet nr. 1."
+
+#: public/templates/public/home.html:194
+msgid "Agriculteur submergé par la paperasse administrative"
+msgstr "Landmand overvældet af administrativt papirarbejde"
+
+#: public/templates/public/home.html:201
+msgid "5 problèmes. 1 réponse."
+msgstr "5 problemer. 1 løsning."
+
+#: public/templates/public/home.html:203
+msgid "Votre exploitation mérite un assistant qui ne dort jamais."
+msgstr "Din bedrift fortjener en assistent, der aldrig sover."
+
+#: public/templates/public/home.html:206
+msgid ""
+"Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
+"temps de travail, charges, adaptation climatique, gestion d'équipe et "
+"accompagnement. Disponible à la voix, sur le tracteur, à 22h."
+msgstr "Holystyl svarer på de 5 store bekymringer hos franske landmænd: arbejdstid, omkostninger, klimatilpasning, teamstyring og rådgivning. Tilgængelig med stemmen, på traktoren, kl. 22."
+
+#: public/templates/public/home.html:211
+msgid "« Je n'ai pas le temps »"
+msgstr "»Jeg har ikke tid«"
+
+#: public/templates/public/home.html:212
+msgid "automatise les rapports et la traçabilité"
+msgstr "automatiserer rapporter og sporbarhed"
+
+#: public/templates/public/home.html:215
+msgid "« Je dois réduire mes charges »"
+msgstr "»Jeg skal reducere mine omkostninger«"
+
+#: public/templates/public/home.html:216
+msgid "tableau de bord financier en temps réel"
+msgstr "finansielt dashboard i realtid"
+
+#: public/templates/public/home.html:219
+msgid "« Le climat change »"
+msgstr "»Klimaet ændrer sig«"
+
+#: public/templates/public/home.html:220
+msgid "alertes météo, suivi parcellaire, aide à la décision"
+msgstr "vejradvarsler, markovervågning, beslutningsstøtte"
+
+#: public/templates/public/home.html:223
+msgid "« Je gère des saisonniers »"
+msgstr "»Jeg har sæsonarbejdere«"
+
+#: public/templates/public/home.html:224
+msgid "module Équipe & Tâches avec rappels automatiques"
+msgstr "Team- og opgavemodul med automatiske påmindelser"
+
+#: public/templates/public/home.html:227
+msgid "« Je ne sais pas à qui demander »"
+msgstr "»Jeg ved ikke, hvem jeg skal spørge«"
+
+#: public/templates/public/home.html:228
+msgid "IA disponible 24h/24 sur vos questions"
+msgstr "AI tilgængelig døgnet rundt til dine spørgsmål"
+
+#: public/templates/public/home.html:240
+msgid "Tout ce qu'il couvre"
+msgstr "Alt det, den dækker"
+
+#: public/templates/public/home.html:243
+msgid "Dix domaines. Un seul outil."
+msgstr "Ti områder. Ét enkelt værktøj."
+
+#: public/templates/public/home.html:250
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation et eau"
+msgstr "Vanding"
+
+#: public/templates/public/home.html:251
+msgid "Programmes, quotas, capteurs IoT"
+msgstr "Programmer, kvoter, IoT-sensorer"
+
+#: public/templates/public/home.html:255
+msgid "Charges et marges"
+msgstr "Omkostninger og marginer"
+
+#: public/templates/public/home.html:256
+msgid "Suivi économique en temps réel"
+msgstr "Økonomisk opfølgning i realtid"
+
+#: public/templates/public/home.html:261
+msgid "Maintenance, alertes, historique"
+msgstr "Vedligeholdelse, advarsler, historik"
+
+#: public/templates/public/home.html:266
+msgid "Traitements, travaux, traçabilité"
+msgstr "Behandlinger, arbejde, sporbarhed"
+
+#: public/templates/public/home.html:271
+msgid "Résultats, recommandations"
+msgstr "Resultater, anbefalinger"
+
+#: public/templates/public/home.html:275
+msgid "Récoltes"
+msgstr "Høst"
+
+#: public/templates/public/home.html:276
+msgid "Volumes, qualité, rendements"
+msgstr "Mængder, kvalitet, udbytter"
+
+#: public/templates/public/home.html:280
+msgid "Équipe et planning"
+msgstr "Team og planlægning"
+
+#: public/templates/public/home.html:281
+msgid "Saisonniers, apprentis, associés"
+msgstr "Sæsonarbejdere, lærlinge, partnere"
+
+#: public/templates/public/home.html:285
+msgid "Conformité réglementaire"
+msgstr "Lovmæssig overholdelse"
+
+#: public/templates/public/home.html:286
+msgid "Taxonomie EU, Plan Eau 2030"
+msgstr "EU-taksonomi, vandplan 2030"
+
+#: public/templates/public/home.html:291
+msgid "JEI, CIR, aides PAC"
+msgstr "JEI, CIR, CAP-støtter"
+
+#: public/templates/public/home.html:295
+msgid "Météo et alertes"
+msgstr "Vejr og advarsler"
+
+#: public/templates/public/home.html:296
+msgid "Gel, ETP, prévisions 7 jours"
+msgstr "Frost, ETP, 7-dages prognose"
+
+#: public/templates/public/home.html:309
+msgid "Simple et transparent."
+msgstr "Enkelt og gennemsigtigt."
+
+#: public/templates/public/home.html:315
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "par mois · par exploitation"
+msgstr "Min bedrift"
+
+#: public/templates/public/home.html:317
+msgid "Tous vos utilisateurs inclus — sans engagement"
+msgstr "Alle dine brugere inkluderet — uden binding"
+
+#: public/templates/public/home.html:322
+msgid "Assistant vocal illimité"
+msgstr "Ubegrænset stemmeassistent"
+
+#: public/templates/public/home.html:323
+msgid "Tous les modules inclus"
+msgstr "Alle moduler inkluderet"
+
+#: public/templates/public/home.html:325
+msgid "Support réactif"
+msgstr "Hurtig support"
+
+#: public/templates/public/home.html:326
+msgid "Mises à jour automatiques"
+msgstr "Automatiske opdateringer"
+
+#: public/templates/public/home.html:328
+msgid "Utilisateurs illimités par exploitation"
+msgstr "Ubegrænset antal brugere pr. bedrift"
+
+#: public/templates/public/home.html:329
+msgid "Accès mobile et tablette"
+msgstr "Adgang via mobil og tablet"
+
+#: public/templates/public/home.html:335
+msgid "S'abonner maintenant"
+msgstr "Abonnér nu"
+
+#: public/templates/public/home.html:337
+msgid "Paiement sécurisé par Stripe · Résiliation en 1 clic"
+msgstr "Sikker betaling via Stripe · opsigelse med ét klik"
+
+#: public/templates/public/home.html:347
+msgid "Guide gratuit"
+msgstr "Gratis guide"
+
+#: public/templates/public/home.html:349
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Lire ses analyses de sol"
+msgstr "Jordanalyser"
+
+#: public/templates/public/home.html:352
+msgid ""
+"Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre "
+"exploitation. Téléchargement immédiat."
+msgstr "Forstå dine analyseresultater og træf de rigtige beslutninger for din bedrift. Øjeblikkelig download."
+
+#: public/templates/public/home.html:358
+msgid "pH & impact cultures"
+msgstr "pH og indvirkning på afgrøder"
+
+#: public/templates/public/home.html:362
+msgid "Matière organique"
+msgstr "Organisk materiale"
+
+#: public/templates/public/home.html:366
+msgid "N, P, K décryptés"
+msgstr "N, P, K forklaret"
+
+#: public/templates/public/home.html:370
+msgid "Recommandations concrètes"
+msgstr "Konkrete anbefalinger"
+
+#: public/templates/public/home.html:378
+msgid "Recevoir le guide"
+msgstr "Modtag guiden"
+
+#: public/templates/public/home.html:381
+msgid "Aucun spam. Votre email ne sera jamais revendu."
+msgstr "Ingen spam. Din e-mail bliver aldrig videresolgt."
+
+#: public/templates/public/home.html:390
+msgid "Questions fréquentes"
+msgstr "Ofte stillede spørgsmål"
+
+#: public/templates/public/home.html:396
+msgid "Holystyl peut-il vraiment m'aider à travailler moins ?"
+msgstr "Kan Holystyl virkelig hjælpe mig med at arbejde mindre?"
+
+#: public/templates/public/home.html:400
+#, python-format
+msgid ""
+"Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
+"de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
+"l'administratif — la priorité n°1 de 48 %% des agriculteurs."
+msgstr "Ja. Ved at automatisere sporbarhed, lovpligtige rapporter og overvågningen af dine marker sparer Holystyl dig de timer, du bruger om aftenen på administration — prioritet nr. 1 for 48 %% af landmændene."
+
+#: public/templates/public/home.html:405
+msgid "Est-ce que l'assistant comprend mes questions techniques ?"
+msgstr "Forstår assistenten mine tekniske spørgsmål?"
+
+#: public/templates/public/home.html:409
+msgid ""
+"Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
+"fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
+"l'écrit comme à la voix, 24h/24."
+msgstr "Ja. AI-assistenten er specialiseret i landbrug: vanding, gødskning (N, P, K), vejr, regler eller jordanalyser — både skriftligt og med stemmen, døgnet rundt."
+
+#: public/templates/public/home.html:414
+msgid "Comment démarrer avec Holystyl ?"
+msgstr "Hvordan kommer jeg i gang med Holystyl?"
+
+#: public/templates/public/home.html:418
+msgid ""
+"Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à "
+"pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
+"équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
+"IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
+msgstr "Opret din konto online på 2 minutter. En trinvis konfigurationsguide hjælper dig med at tilføje dine marker, dine afgrøder og dit team. Holystyl forbindes til dit vandingssystem (Vyrsa, IoT-sensorer) og er driftsklar samme dag, fra din smartphone eller computer."
+
+#: public/templates/public/home.html:423
+msgid "Holystyl m'aide-t-il à réduire mes charges ?"
+msgstr "Hjælper Holystyl mig med at reducere mine omkostninger?"
+
+#: public/templates/public/home.html:427
+msgid ""
+"Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
+"réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
+"aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
+msgstr "Ja. Det finansielle dashboard følger dine omkostninger og marginer i realtid, identificerer de poster, der vejer tungt, og hjælper dig med at prioritere. Du styrer også dine vandkvoter og dit materiel for at undgå unødvendige udgifter."
+
+#: public/templates/public/home.html:432
+msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
+msgstr "Virker applikationen uden internet ude på marken?"
+
+#: public/templates/public/home.html:436
+msgid ""
+"Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
+"réseau ; les données se synchronisent automatiquement dès que la connexion "
+"revient."
+msgstr "Ja. Du kan se og registrere dine indgreb i marken selv uden netværk; data synkroniseres automatisk, så snart forbindelsen vender tilbage."
+
+#: public/templates/public/home.html:441
+msgid "Mes données m'appartiennent-elles ?"
+msgstr "Tilhører mine data mig?"
+
+#: public/templates/public/home.html:445
+msgid ""
+"Absolument. Vos données vous appartiennent et restent confidentielles : "
+"hébergées en France, jamais revendues, exportables ou supprimables à tout "
+"moment."
+msgstr "Helt sikkert. Dine data tilhører dig og forbliver fortrolige: hostet i Frankrig, aldrig videresolgt, eksporterbare eller sletbare når som helst."
+
+#: public/templates/public/home.html:463
+msgid ""
+"Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
+"Holystyl."
+msgstr "Intelligent assistent til landbrugsbedrifter. Udviklet sammen med Holystyl-netværket."
+
+#: public/templates/public/home.html:478
+msgid "Accès"
+msgstr "Adgang"
+
+#: public/templates/public/home.html:481
+msgid "S'abonner"
+msgstr "Abonnér"
+
+#: public/templates/public/home.html:488
+msgid "© 2026 Holystyl · Tous droits réservés"
+msgstr "© 2026 Holystyl · Alle rettigheder forbeholdes"
+
+#: public/templates/public/home.html:490
+msgid "Mentions légales"
+msgstr "Juridiske oplysninger"
+
+#: public/templates/public/home.html:492
+msgid "Confidentialité"
+msgstr "Fortrolighed"
+
+#: public/templates/public/home.html:493
+msgid "Registre transparence UE 238841"
+msgstr "EU-åbenhedsregister 238841"
+
+#: public/views.py:26
 msgid "Merci ! Votre guide arrive par email."
-msgstr ""
+msgstr "Tak! Din guide kommer på e-mail."
 
-msgid "Votre accès Holystyl est activé !"
-msgstr ""
+#: sondages/models.py:15
+msgid "question"
+msgstr "spørgsmål"
 
-msgid "Code invalide ou déjà utilisé."
-msgstr ""
+#: sondages/models.py:17
+msgid "clôturé"
+msgstr "lukket"
 
-msgid "Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
-msgstr ""
+#: sondages/models.py:20
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondage"
+msgstr "Afstemning"
 
+#: sondages/models.py:21
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondages"
+msgstr "Afstemning"
+
+#: sondages/models.py:48
+msgid "texte"
+msgstr "tekst"
+
+#: sondages/models.py:52 sondages/models.py:53
+#: sondages/templates/sondages/liste.html:27
+msgid "choix"
+msgstr "valg"
+
+#: sondages/models.py:67
+msgid "vote"
+msgstr "stemme"
+
+#: sondages/models.py:68
+msgid "votes"
+msgstr "stemmer"
+
+#: sondages/templates/sondages/create.html:6
+#: sondages/templates/sondages/liste.html:10 sondages/views.py:45
+#: sondages/views.py:58
+msgid "Nouveau sondage"
+msgstr "Ny afstemning"
+
+#: sondages/templates/sondages/create.html:17
+msgid "Question"
+msgstr "Spørgsmål"
+
+#: sondages/templates/sondages/create.html:19
+msgid "Ex. Quelle parcelle irriguer en priorité ?"
+msgstr "F.eks. Hvilken mark skal vandes først?"
+
+#: sondages/templates/sondages/create.html:24
+#: sondages/templates/sondages/create.html:27
+#: sondages/templates/sondages/create.html:48
+msgid "Choix"
+msgstr "Valg"
+
+#: sondages/templates/sondages/create.html:32
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter un choix"
+msgstr "Aktivér en kode"
+
+#: sondages/templates/sondages/detail.html:7
+#: sondages/templates/sondages/liste.html:7 sondages/views.py:30
+#, fuzzy
+#| msgid "Sondage"
+msgid "Sondages"
+msgstr "Afstemning"
+
+#: sondages/templates/sondages/detail.html:14
+#: sondages/templates/sondages/liste.html:21
+msgid "Clôturé"
+msgstr "Lukket"
+
+#: sondages/templates/sondages/detail.html:35
+#, python-format
+msgid "%(n)s vote au total"
+msgid_plural "%(n)s votes au total"
+msgstr[0] "%(n)s stemme i alt"
+msgstr[1] "%(n)s stemmer i alt"
+
+#: sondages/templates/sondages/detail.html:46
+msgid "Voter"
+msgstr "Stem"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Rouvrir le sondage"
+msgstr "Genåbn afstemningen"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Clôturer le sondage"
+msgstr "Luk afstemningen"
+
+#: sondages/templates/sondages/liste.html:23
+msgid "Voté"
+msgstr "Stemt"
+
+#: sondages/templates/sondages/liste.html:27
+#, python-format
+msgid "%(n)s vote"
+msgid_plural "%(n)s votes"
+msgstr[0] "%(n)s stemme"
+msgstr[1] "%(n)s stemmer"
+
+#: sondages/templates/sondages/liste.html:33
+msgid "Aucun sondage pour le moment. Créez-en un !"
+msgstr "Ingen afstemning endnu. Opret en!"
+
+#: sondages/views.py:40
+msgid "La question est obligatoire."
+msgstr "Spørgsmålet er obligatorisk."
+
+#: sondages/views.py:42
+msgid "Proposez au moins deux choix."
+msgstr "Foreslå mindst to valg."
+
+#: templates/partials/cookie_banner.html:6
+msgid ""
+"Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
+msgstr "Vi bruger cookies, der er nødvendige for, at Holystyl fungerer (GDPR)."
+
+#: templates/partials/cookie_banner.html:8
 msgid "J'ai compris"
-msgstr ""
+msgstr "Jeg har forstået"
 
+#: templates/partials/header.html:13
 msgid "Heure locale"
 msgstr "Lokal tid"
 
-msgid "Langue"
-msgstr ""
-
+#: templates/partials/header.html:33
 msgid "Thème"
-msgstr ""
+msgstr "Tema"
 
+#: templates/partials/header.html:64
 msgid "Déconnexion"
-msgstr ""
+msgstr "Log ud"
 
+#: templates/partials/install_banner.html:13
 msgid "Installer Holystyl"
-msgstr ""
+msgstr "Installer Holystyl"
 
+#: templates/partials/install_banner.html:15
 msgid "Partager puis « Sur l’écran d’accueil »."
-msgstr ""
+msgstr "Del og derefter »Føj til hjemmeskærm«."
 
+#: templates/partials/install_banner.html:16
 msgid "Accédez plus vite depuis votre écran d’accueil."
-msgstr ""
+msgstr "Få hurtigere adgang fra din hjemmeskærm."
 
-msgid "Télécharger l'app"
-msgstr ""
-
+#: templates/partials/install_banner.html:25
 msgid "Plus tard"
-msgstr ""
+msgstr "Senere"
 
-msgid "Fermer"
-msgstr ""
+#: templates/partials/lang_switcher.html:27
+msgid "Langue"
+msgstr "Sprog"
 
+#: templates/partials/nav_flyout.html:17
 msgid "Bientôt"
 msgstr "Kommer snart"
 
+#: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
-msgstr ""
+msgstr "Lad os give mening til vores fag igen"
+
+#~ msgid "Administration"
+#~ msgstr "Administration"

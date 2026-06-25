@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 16:53+0200\n"
+"POT-Creation-Date: 2026-06-25 17:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,1874 +18,4857 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
+#: accounts/admin.py:17 exploitations/views.py:61
 msgid "Identité"
-msgstr ""
+msgstr "Identitate"
 
+#: accounts/admin.py:18
 msgid "Permissions"
-msgstr ""
+msgstr "Permisiuni"
 
+#: accounts/admin.py:19
 msgid "Dates"
-msgstr ""
+msgstr "Date"
 
+#: accounts/forms.py:15
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
+#: accounts/forms.py:23
 msgid "Nom complet"
-msgstr ""
+msgstr "Nume complet"
 
+#: accounts/models.py:14
 msgid "adresse email"
-msgstr ""
+msgstr "adresă de email"
 
+#: accounts/models.py:15
 msgid "nom complet"
-msgstr ""
+msgstr "nume complet"
 
+#: accounts/models.py:23
 msgid "utilisateur"
-msgstr ""
+msgstr "utilizator"
 
+#: accounts/models.py:24
 msgid "utilisateurs"
-msgstr ""
+msgstr "utilizatori"
 
+#: accounts/templates/accounts/login.html:3
+#: accounts/templates/accounts/login.html:12
+#: public/templates/public/home.html:21 public/templates/public/home.html:480
 msgid "Connexion"
-msgstr ""
+msgstr "Autentificare"
 
+#: accounts/templates/accounts/login.html:23
+#: accounts/templates/accounts/register.html:26
 msgid "Se connecter"
-msgstr ""
+msgstr "Conectează-te"
 
+#: accounts/templates/accounts/login.html:26
 msgid "Pas de compte ?"
-msgstr ""
+msgstr "Nu ai cont?"
 
+#: accounts/templates/accounts/login.html:26
+#: accounts/templates/accounts/register.html:3
+#: accounts/templates/accounts/register.html:12
 msgid "Créer un compte"
-msgstr ""
+msgstr "Creează un cont"
 
+#: accounts/templates/accounts/register.html:23
+#: public/templates/public/home.html:25
 msgid "S'inscrire"
-msgstr ""
+msgstr "Înregistrează-te"
 
+#: accounts/templates/accounts/register.html:26
 msgid "Déjà un compte ?"
-msgstr ""
+msgstr "Ai deja un cont?"
 
+#: administration/models.py:15 finances/models.py:157 iot/models.py:36
 msgid "Erreur"
-msgstr ""
+msgstr "Eroare"
 
+#: administration/models.py:31
 msgid "configuration SMTP"
-msgstr ""
+msgstr "configurație SMTP"
 
+#: administration/models.py:32
 msgid "configurations SMTP"
-msgstr ""
+msgstr "configurații SMTP"
 
-msgid "Administration — Email (SMTP)"
-msgstr ""
-
-msgid "Serveur"
-msgstr ""
-
-msgid "Port"
-msgstr ""
-
-msgid "Utilisateur"
-msgstr ""
-
-msgid "Mot de passe"
-msgstr ""
-
-msgid "Nom expéditeur"
-msgstr ""
-
-msgid "Email expéditeur"
-msgstr ""
-
-msgid "SSL (port 465)"
-msgstr ""
-
-msgid "Activé"
-msgstr ""
-
-msgid "Dernier test"
-msgstr ""
-
-msgid "Enregistrer"
-msgstr ""
-
-msgid "Configuration SMTP enregistrée."
-msgstr ""
-
-msgid "Administration"
-msgstr "Administrare"
-
+#: agronomie/models.py:16 agronomie/templates/agronomie/cultures.html:16
 msgid "Céréales"
-msgstr ""
+msgstr "Cereale"
 
+#: agronomie/models.py:17 agronomie/templates/agronomie/cultures.html:17
 msgid "Légumes"
-msgstr ""
+msgstr "Legume"
 
+#: agronomie/models.py:18 agronomie/templates/agronomie/cultures.html:18
 msgid "Fruits"
-msgstr ""
+msgstr "Fructe"
 
+#: agronomie/models.py:19 agronomie/templates/agronomie/cultures.html:19
 msgid "Vigne"
-msgstr ""
+msgstr "Viță de vie"
 
+#: agronomie/models.py:20 agronomie/templates/agronomie/cultures.html:20
 msgid "Oléagineux"
-msgstr ""
+msgstr "Plante oleaginoase"
 
+#: agronomie/models.py:21 agronomie/templates/agronomie/cultures.html:21
 msgid "Fourrage"
-msgstr ""
+msgstr "Furaje"
 
+#: agronomie/models.py:22 agronomie/templates/agronomie/cultures.html:22
 msgid "Maraîchage"
-msgstr ""
+msgstr "Cultură de legume"
 
+#: agronomie/models.py:23 exploitations/models.py:21
+#: exploitations/models.py:34 finances/models.py:24 finances/models.py:50
+#: interventions/models.py:26 operations/models.py:21 operations/models.py:87
+#: operations/models.py:119 operations/models.py:152 pac/models.py:18
+#: planning/models.py:110 planning/models.py:150 planning/models.py:214
 msgid "Autre"
-msgstr ""
+msgstr "Altul"
 
+#: agronomie/models.py:25 agronomie/models.py:58 agronomie/models.py:107
+#: agronomie/models.py:132 equipe/models.py:22 exploitations/models.py:42
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:17
+#: operations/models.py:30 parcelles/models.py:31
 msgid "nom"
-msgstr ""
+msgstr "nume"
 
+#: agronomie/models.py:26
 msgid "nom scientifique"
-msgstr ""
+msgstr "nume științific"
 
+#: agronomie/models.py:39
 msgid "culture (Kc)"
-msgstr ""
+msgstr "cultură (Kc)"
 
+#: agronomie/models.py:40
 msgid "cultures (Kc)"
-msgstr ""
+msgstr "culturi (Kc)"
 
+#: agronomie/models.py:51 agronomie/templates/agronomie/types_sol.html:16
 msgid "Sableux"
-msgstr ""
+msgstr "Nisipos"
 
+#: agronomie/models.py:52 agronomie/templates/agronomie/types_sol.html:17
 msgid "Limoneux"
-msgstr ""
+msgstr "Lutos"
 
+#: agronomie/models.py:53 agronomie/templates/agronomie/types_sol.html:18
 msgid "Argileux"
-msgstr ""
+msgstr "Argilos"
 
+#: agronomie/models.py:54 agronomie/templates/agronomie/types_sol.html:19
 msgid "Limon argileux"
-msgstr ""
+msgstr "Lut argilos"
 
+#: agronomie/models.py:55 agronomie/templates/agronomie/types_sol.html:20
 msgid "Sablo-limoneux"
-msgstr ""
+msgstr "Nisipo-lutos"
 
+#: agronomie/models.py:56 agronomie/templates/agronomie/types_sol.html:21
 msgid "Argilo-limoneux"
-msgstr ""
+msgstr "Argilo-lutos"
 
+#: agronomie/models.py:60
 msgid "capacité de rétention (mm)"
-msgstr ""
+msgstr "capacitate de reținere (mm)"
 
+#: agronomie/models.py:61 agronomie/templates/agronomie/types_sol.html:108
 msgid "pH typique"
-msgstr ""
+msgstr "pH tipic"
 
+#: agronomie/models.py:67 parcelles/models.py:60
 msgid "type de sol"
-msgstr ""
+msgstr "tip de sol"
 
+#: agronomie/models.py:68 agronomie/templates/agronomie/types_sol.html:128
 msgid "types de sol"
-msgstr ""
+msgstr "tipuri de sol"
 
+#: agronomie/models.py:91
 msgid "fertigation"
-msgstr ""
+msgstr "fertirigare"
 
+#: agronomie/models.py:92
 msgid "fertigations"
-msgstr ""
+msgstr "fertirigări"
 
+#: agronomie/models.py:108
+msgid "type"
+msgstr "tip"
+
+#: agronomie/models.py:109
+msgid "N %"
+msgstr "N %"
+
+#: agronomie/models.py:110
+msgid "P %"
+msgstr "P %"
+
+#: agronomie/models.py:111
+msgid "K %"
+msgstr "K %"
+
+#: agronomie/models.py:112
+msgid "solubilité"
+msgstr "solubilitate"
+
+#: agronomie/models.py:113
+msgid "effet pH"
+msgstr "efect pH"
+
+#: agronomie/models.py:116 agronomie/models.py:117
+msgid "engrais"
+msgstr "îngrășământ"
+
+#: agronomie/models.py:133
 msgid "date de début"
-msgstr ""
+msgstr "dată de început"
 
+#: agronomie/models.py:134
 msgid "date de fin"
-msgstr ""
+msgstr "dată de sfârșit"
 
+#: agronomie/models.py:135 agronomie/templates/agronomie/saisons.html:12
 msgid "active"
-msgstr ""
+msgstr "activă"
 
+#: agronomie/models.py:139
 msgid "saison"
-msgstr ""
+msgstr "sezon"
 
+#: agronomie/models.py:140
 msgid "saisons"
-msgstr ""
+msgstr "sezoane"
 
-msgid "Cultures & coefficients Kc"
-msgstr ""
+#: agronomie/templates/agronomie/cultures.html:15
+#: agronomie/templates/agronomie/types_sol.html:15
+#: interventions/templates/interventions/interventions.html:82
+msgid "Toutes"
+msgstr "Toate"
 
-msgid "Culture"
-msgstr ""
-
-msgid "Catégorie"
-msgstr ""
-
-msgid "Source"
-msgstr ""
-
-msgid "Aucune culture dans le référentiel. Ajoutez-en via l'admin."
-msgstr ""
-
-msgid "Saisons"
-msgstr "Sezoane"
-
-msgid "Aucune saison définie."
-msgstr ""
-
-msgid "Types de sol"
-msgstr "Tipuri de sol"
-
-msgid "Rétention"
-msgstr ""
-
-msgid "Aucun type de sol. Ajoutez-en via l'admin."
-msgstr ""
-
+#: agronomie/templates/agronomie/cultures.html:35 agronomie/views.py:46
 msgid "Cultures & Kc"
 msgstr "Culturi & Kc"
 
-msgid "Sol"
+#: agronomie/templates/agronomie/cultures.html:36
+msgid ""
+"Base de données cultures françaises — Coefficients culturaux FAO-56 / "
+"ARVALIS"
 msgstr ""
+"Bază de date culturi franceze — Coeficienți culturali FAO-56 / ARVALIS"
 
-msgid "Eau"
+#: agronomie/templates/agronomie/cultures.html:41
+#: agronomie/templates/agronomie/cultures.html:56
+msgid "Méthode"
+msgstr "Metodă"
+
+#: agronomie/templates/agronomie/cultures.html:45
+#: agronomie/templates/agronomie/cultures.html:233
+#: agronomie/templates/agronomie/types_sol.html:54
+#: agronomie/templates/agronomie/types_sol.html:213
+#: environnement/templates/environnement/taxonomie.html:178
+#: exploitations/templates/exploitations/settings.html:140
+#: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
+#: parcelles/templates/parcelles/list.html:17
+msgid "Ajouter"
+msgstr "Adaugă"
+
+#: agronomie/templates/agronomie/cultures.html:61
+msgid ""
+"Le besoin en eau est calculé avec la formule ETc = ETP × Kc, où l'ETP est "
+"l'évapotranspiration potentielle (données météo) et le Kc est le coefficient"
+" cultural qui varie selon le stade phénologique de la plante. Le système "
+"soustrait la pluie efficace et tient compte de la réserve utile du sol pour "
+"calculer la dose d'irrigation nette."
 msgstr ""
+"Necesarul de apă este calculat cu formula ETc = ETP × Kc, unde ETP este "
+"evapotranspirația potențială (date meteo), iar Kc este coeficientul cultural"
+" care variază în funcție de stadiul fenologic al plantei. Sistemul scade "
+"ploaia efectivă și ține cont de rezerva utilă a solului pentru a calcula "
+"doza netă de irigare."
 
-msgid "Foliaire"
+#: agronomie/templates/agronomie/cultures.html:66
+msgid "Levée → début développement"
+msgstr "Răsărire → început de dezvoltare"
+
+#: agronomie/templates/agronomie/cultures.html:70
+msgid "Pleine croissance végétative"
+msgstr "Creștere vegetativă maximă"
+
+#: agronomie/templates/agronomie/cultures.html:74
+msgid "Maturation → récolte"
+msgstr "Maturare → recoltare"
+
+#: agronomie/templates/agronomie/cultures.html:83
+msgid "Rechercher une culture, un nom scientifique, une source…"
+msgstr "Caută o cultură, un nume științific, o sursă…"
+
+#: agronomie/templates/agronomie/cultures.html:101
+#: finances/templates/finances/subvention_pdf.html:49 ia/models.py:34
+#: parcelles/templates/parcelles/form.html:38
+#: parcelles/templates/parcelles/list.html:91
+msgid "Culture"
+msgstr "Cultură"
+
+#: agronomie/templates/agronomie/cultures.html:102
+#: agronomie/templates/agronomie/cultures.html:186
+msgid "Nom scientifique"
+msgstr "Nume științific"
+
+#: agronomie/templates/agronomie/cultures.html:103
+#: agronomie/templates/agronomie/cultures.html:192
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:53
+#: pac/templates/pac/pac.html:117
+msgid "Catégorie"
+msgstr "Categorie"
+
+#: agronomie/templates/agronomie/cultures.html:107
+#: agronomie/templates/agronomie/cultures.html:220
+msgid "Source"
+msgstr "Sursă"
+
+#: agronomie/templates/agronomie/cultures.html:122
+#: agronomie/templates/agronomie/cultures.html:160
+#: agronomie/templates/agronomie/types_sol.html:97
+#: agronomie/templates/agronomie/types_sol.html:151
+#: parcelles/templates/parcelles/confirm_delete.html:13
+#: parcelles/templates/parcelles/detail.html:13
+msgid "Supprimer"
+msgstr "Șterge"
+
+#: agronomie/templates/agronomie/cultures.html:132
+msgid "Aucune culture ne correspond à la recherche."
+msgstr "Nicio cultură nu corespunde căutării."
+
+#: agronomie/templates/agronomie/cultures.html:137
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "cultures"
+msgstr "Culturi & Kc"
+
+#: agronomie/templates/agronomie/cultures.html:150
+msgid "Supprimer la culture ?"
+msgstr "Ștergi cultura?"
+
+#: agronomie/templates/agronomie/cultures.html:152
+msgid "sera supprimée définitivement."
+msgstr "va fi ștearsă definitiv."
+
+#: agronomie/templates/agronomie/cultures.html:158
+#: agronomie/templates/agronomie/cultures.html:232
+#: agronomie/templates/agronomie/fertigation.html:216
+#: agronomie/templates/agronomie/types_sol.html:149
+#: agronomie/templates/agronomie/types_sol.html:212
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:128
+#: environnement/templates/environnement/taxonomie.html:177
+#: exploitations/templates/exploitations/settings.html:50
+#: exploitations/templates/exploitations/settings.html:139
+#: interventions/templates/interventions/interventions.html:174
+#: mail/templates/mail/compose.html:56
+#: messagerie/templates/messagerie/_new_modal.html:61
+#: messagerie/templates/messagerie/new.html:34
+#: meteo/templates/meteo/index.html:76 pac/templates/pac/pac.html:145
+#: parcelles/templates/parcelles/confirm_delete.html:14
+#: parcelles/templates/parcelles/list.html:75
+#: sondages/templates/sondages/create.html:37
+msgid "Annuler"
+msgstr "Anulează"
+
+#: agronomie/templates/agronomie/cultures.html:173
+msgid "Nouvelle culture"
+msgstr "Cultură nouă"
+
+#: agronomie/templates/agronomie/cultures.html:180
+msgid "Nom commun"
+msgstr "Nume comun"
+
+#: agronomie/templates/agronomie/cultures.html:226
+#: agronomie/templates/agronomie/types_sol.html:207
+#: interventions/templates/interventions/interventions.html:169
+msgid "Notes"
+msgstr "Note"
+
+#: agronomie/templates/agronomie/fertigation.html:19 agronomie/views.py:162
+#: core/context_processors.py:50
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Fertigation"
+msgstr "Irigare"
+
+#: agronomie/templates/agronomie/fertigation.html:20
+msgid "Gestion N/P/K · Directive Nitrates · Calcul doses"
+msgstr "Gestiune N/P/K · Directiva Nitrați · Calcul doze"
+
+#: agronomie/templates/agronomie/fertigation.html:24
+msgid "Enregistrer apport"
+msgstr "Înregistrează aport"
+
+#: agronomie/templates/agronomie/fertigation.html:33
+msgid "Directive Nitrates 91/676/CEE"
+msgstr "Directiva Nitrați 91/676/CEE"
+
+#: agronomie/templates/agronomie/fertigation.html:41
+msgid ""
+"Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement "
+"vos apports cumulés."
 msgstr ""
+"Plafon 170 kg N/ha/an în zonă vulnerabilă. Sistemul urmărește automat "
+"aporturile dvs. cumulate."
 
-msgid "Plante"
+#: agronomie/templates/agronomie/fertigation.html:49
+msgid "Catalogue engrais"
+msgstr "Catalog îngrășăminte"
+
+#: agronomie/templates/agronomie/fertigation.html:52
+msgid "Calcul doses"
+msgstr "Calcul doze"
+
+#: agronomie/templates/agronomie/fertigation.html:55
+msgid "Historique"
+msgstr "Istoric"
+
+#: agronomie/templates/agronomie/fertigation.html:63
+#: agronomie/templates/agronomie/fertigation.html:92 finances/models.py:16
+msgid "Engrais"
+msgstr "Îngrășământ"
+
+#: agronomie/templates/agronomie/fertigation.html:64
+#: interventions/templates/interventions/interventions.html:129
+#: iot/templates/iot/capteurs.html:21
+#: parcelles/templates/parcelles/detail.html:30
+#: planning/templates/planning/bon_intervention.html:16
+msgid "Type"
+msgstr "Tip"
+
+#: agronomie/templates/agronomie/fertigation.html:68
+msgid "Solubilité"
+msgstr "Solubilitate"
+
+#: agronomie/templates/agronomie/fertigation.html:69
+msgid "pH effet"
+msgstr "efect pH"
+
+#: agronomie/templates/agronomie/fertigation.html:99
+msgid "Dose produit (kg/ha)"
+msgstr "Doză produs (kg/ha)"
+
+#: agronomie/templates/agronomie/fertigation.html:106
+msgid "Azote (N)"
+msgstr "Azot (N)"
+
+#: agronomie/templates/agronomie/fertigation.html:110
+msgid "Phosphore (P)"
+msgstr "Fosfor (P)"
+
+#: agronomie/templates/agronomie/fertigation.html:114
+msgid "Potassium (K)"
+msgstr "Potasiu (K)"
+
+#: agronomie/templates/agronomie/fertigation.html:118
+#, python-format
+msgid "Éléments apportés = dose produit × titre (%%) ÷ 100."
+msgstr "Elemente aportate = doză produs × titru (%%) ÷ 100."
+
+#: agronomie/templates/agronomie/fertigation.html:128
+#: agronomie/templates/agronomie/fertigation.html:175
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:44
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:110
+#: finances/templates/finances/charges.html:14
+#: meteo/templates/meteo/meteo.html:140
+msgid "Date"
+msgstr "Dată"
+
+#: agronomie/templates/agronomie/fertigation.html:129
+#: agronomie/templates/agronomie/fertigation.html:180
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:45
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:103 ia/models.py:33
+#: interventions/templates/interventions/interventions.html:155
+#: parcelles/templates/parcelles/list.html:89
+msgid "Parcelle"
+msgstr "Parcelă"
+
+#: agronomie/templates/agronomie/fertigation.html:130
+#: agronomie/templates/agronomie/fertigation.html:188 ia/models.py:36
+#: interventions/templates/interventions/interventions.html:164
+#: planning/templates/planning/bon_intervention.html:29
+#: public/templates/public/home.html:469
+msgid "Produit"
+msgstr "Produs"
+
+#: agronomie/templates/agronomie/fertigation.html:134
+msgid "Volume"
+msgstr "Volum"
+
+#: agronomie/templates/agronomie/fertigation.html:155
+msgid "Aucun apport enregistré."
+msgstr "Niciun aport înregistrat."
+
+#: agronomie/templates/agronomie/fertigation.html:156
+msgid ""
+"Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
 msgstr ""
+"Apăsați pe „Înregistrează aport” pentru a adăuga un aport de fertirigare."
 
-msgid "OCR en attente"
+#: agronomie/templates/agronomie/fertigation.html:167
+msgid "Enregistrer un apport"
+msgstr "Înregistrează un aport"
+
+#: agronomie/templates/agronomie/fertigation.html:211
+msgid "Volume (L)"
+msgstr "Volum (L)"
+
+#: agronomie/templates/agronomie/fertigation.html:217
+#: exploitations/templates/exploitations/settings.html:52
+#: interventions/templates/interventions/interventions.html:33
+#: interventions/templates/interventions/interventions.html:175
+#: meteo/templates/meteo/meteo.html:52
+#: parcelles/templates/parcelles/form.html:97
+#: parcelles/templates/parcelles/list.html:76
+msgid "Enregistrer"
+msgstr "Salvează"
+
+#: agronomie/templates/agronomie/fertigation.html:221
+msgid ""
+"Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un "
+"apport."
 msgstr ""
+"Adăugați mai întâi o parcelă la exploatația dvs. pentru a înregistra un "
+"aport."
 
-msgid "OCR effectué"
+#: agronomie/templates/agronomie/saisons.html:6 agronomie/views.py:132
+#: core/context_processors.py:67
+msgid "Saisons"
+msgstr "Sezoane"
+
+#: agronomie/templates/agronomie/saisons.html:19
+msgid "Aucune saison définie."
+msgstr "Niciun sezon definit."
+
+#: agronomie/templates/agronomie/types_sol.html:44 agronomie/views.py:99
+#: core/context_processors.py:49
+msgid "Types de sol"
+msgstr "Tipuri de sol"
+
+#: agronomie/templates/agronomie/types_sol.html:45
+msgid "Caractéristiques hydriques et agronomiques par texture"
+msgstr "Caracteristici hidrice și agronomice după textură"
+
+#: agronomie/templates/agronomie/types_sol.html:50
+msgid "Réserve Utile"
+msgstr "Rezervă Utilă"
+
+#: agronomie/templates/agronomie/types_sol.html:64
+msgid "Réserve Utile (RU)"
+msgstr "Rezervă Utilă (RU)"
+
+#: agronomie/templates/agronomie/types_sol.html:69
+msgid ""
+"La réserve utile est la quantité d'eau disponible pour la plante entre la "
+"capacité au champ (CC) et le point de flétrissement permanent (PFP). Elle "
+"est exprimée en mm d'eau par mètre de sol. Le système utilise la RU pour "
+"calculer la dose d'irrigation nette et le seuil de déclenchement."
 msgstr ""
+"Rezerva utilă este cantitatea de apă disponibilă pentru plantă între "
+"capacitatea de câmp (CC) și punctul de ofilire permanentă (POP). Este "
+"exprimată în mm de apă pe metru de sol. Sistemul utilizează RU pentru a "
+"calcula doza netă de irigare și pragul de declanșare."
 
-msgid "Validé"
-msgstr ""
+#: agronomie/templates/agronomie/types_sol.html:77
+msgid "Rechercher un type de sol, une texture…"
+msgstr "Caută un tip de sol, o textură…"
 
-msgid "rapport d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/types_sol.html:104
+msgid "Rétention"
+msgstr "Reținere"
 
-msgid "rapports d'analyse"
-msgstr ""
+#: agronomie/templates/agronomie/types_sol.html:112
+msgid "Conductivité"
+msgstr "Conductivitate"
 
+#: agronomie/templates/agronomie/types_sol.html:116
+msgid "Densité"
+msgstr "Densitate"
+
+#: agronomie/templates/agronomie/types_sol.html:124
+msgid "Aucun type de sol ne correspond à la recherche."
+msgstr "Niciun tip de sol nu corespunde căutării."
+
+#: agronomie/templates/agronomie/types_sol.html:141
+msgid "Supprimer ce type de sol ?"
+msgstr "Ștergi acest tip de sol?"
+
+#: agronomie/templates/agronomie/types_sol.html:143
+msgid "sera supprimé définitivement."
+msgstr "va fi șters definitiv."
+
+#: agronomie/templates/agronomie/types_sol.html:164
+#, fuzzy
+#| msgid "Types de sol"
+msgid "Nouveau type de sol"
+msgstr "Tipuri de sol"
+
+#: agronomie/templates/agronomie/types_sol.html:171
+#: finances/templates/finances/subvention_pdf.html:49
+#: iot/templates/iot/capteurs.html:20
+msgid "Nom"
+msgstr "Nume"
+
+#: agronomie/templates/agronomie/types_sol.html:176
+msgid "Texture"
+msgstr "Textură"
+
+#: agronomie/templates/agronomie/types_sol.html:186
+msgid "Rétention (mm)"
+msgstr "Reținere (mm)"
+
+#: agronomie/templates/agronomie/types_sol.html:196
+msgid "Conductivité (mm/h)"
+msgstr "Conductivitate (mm/h)"
+
+#: agronomie/templates/agronomie/types_sol.html:201
+msgid "Densité (g/cm³)"
+msgstr "Densitate (g/cm³)"
+
+#: analyse_sol/models.py:31
+msgid "document"
+msgstr "document"
+
+#: analyse_sol/models.py:36
 msgid "analyse de sol"
-msgstr ""
+msgstr "analiză de sol"
 
+#: analyse_sol/models.py:37
 msgid "analyses de sol"
-msgstr ""
+msgstr "analize de sol"
 
-msgid "fiche biodiversité"
-msgstr ""
-
-msgid "fiches biodiversité"
-msgstr ""
-
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:9
+#: analyse_sol/views.py:43 core/context_processors.py:52
+#: public/templates/public/home.html:270
 msgid "Analyses de sol"
 msgstr "Analize de sol"
 
-msgid "Labo"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:10
+msgid "Résultats d'analyses par parcelle · import de documents"
+msgstr "Rezultate de analize pe parcelă · import de documente"
 
-msgid "Aucune analyse de sol."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:14
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:83
+msgid "Importer une analyse"
+msgstr "Importă o analiză"
 
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:21
+#: parcelles/templates/parcelles/list.html:51
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Analyses"
+msgstr "Analize de sol"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:25
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles analysées"
+msgstr "Parcele"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:29
+msgid "pH moyen"
+msgstr "pH mediu"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:33
+#, python-format
+msgid "MO moyenne (%%)"
+msgstr "MO medie (%%)"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:46
 msgid "Laboratoire"
 msgstr "Laborator"
 
-msgid "Rapports d'analyse (sol, eau, foliaire) avec extraction IA des valeurs."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:52
+#: planning/models.py:109
+msgid "Document"
+msgstr "Document"
 
-msgid "Type"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:69
+msgid "Voir"
+msgstr "Vezi"
 
-msgid "Date"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:81
+msgid "Aucune analyse de sol enregistrée."
+msgstr "Nicio analiză de sol înregistrată."
 
-msgid "Statut"
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:94
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Importer une analyse de sol"
+msgstr "Analize de sol"
 
-msgid "Aucun rapport. Importez un PDF via l'API (extraction Gemini)."
-msgstr ""
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:117
+msgid "Document (PDF, image…)"
+msgstr "Document (PDF, imagine…)"
 
-msgid "En attente"
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:124
+msgid ""
+"Les valeurs (pH, MO, N-P-K, laboratoire…) sont extraites automatiquement du "
+"document par OCR/IA à l'import."
 msgstr ""
+"Valorile (pH, MO, N-P-K, laborator…) sunt extrase automat din document prin "
+"OCR/IA la import."
 
-msgid "Utilisé"
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:129
+msgid "Importer"
+msgstr "Importă"
+
+#: analyse_sol/templates/analyse_sol/analyses_sol.html:133
+msgid ""
+"Ajoutez d'abord une parcelle (Mes Parcelles) pour y rattacher une analyse."
 msgstr ""
+"Adăugați mai întâi o parcelă (Parcelele Mele) pentru a atașa o analiză."
 
-msgid "Expiré"
-msgstr ""
+#: analyses/models.py:14 parcelles/templates/parcelles/form.html:55
+msgid "Sol"
+msgstr "Sol"
 
-msgid "Annulé"
-msgstr ""
+#: analyses/models.py:15 finances/models.py:18
+#: finances/templates/finances/bilan_economique.html:30
+#: finances/templates/finances/subvention_pdf.html:31
+msgid "Eau"
+msgstr "Apă"
 
-msgid "code d'activation"
-msgstr ""
+#: analyses/models.py:16
+msgid "Foliaire"
+msgstr "Foliar"
 
-msgid "codes d'activation"
-msgstr ""
+#: analyses/models.py:17
+msgid "Plante"
+msgstr "Plantă"
 
-msgid "Actif"
-msgstr ""
+#: analyses/models.py:20
+msgid "OCR en attente"
+msgstr "OCR în așteptare"
 
-msgid "Impayé"
-msgstr ""
+#: analyses/models.py:21
+msgid "OCR effectué"
+msgstr "OCR efectuat"
 
-msgid "Essai"
-msgstr ""
+#: analyses/models.py:22 planning/models.py:261
+msgid "Validé"
+msgstr "Validat"
 
-msgid "Non payé"
-msgstr ""
+#: analyses/models.py:45
+msgid "rapport d'analyse"
+msgstr "raport de analiză"
 
-msgid "abonnement"
-msgstr ""
+#: analyses/models.py:46
+msgid "rapports d'analyse"
+msgstr "rapoarte de analiză"
 
-msgid "abonnements"
-msgstr ""
+#: analyses/models.py:64
+msgid "fiche biodiversité"
+msgstr "fișă biodiversitate"
 
+#: analyses/models.py:65
+msgid "fiches biodiversité"
+msgstr "fișe biodiversitate"
+
+#: core/context_processors.py:19 core/context_processors.py:28
 msgid "Accueil"
 msgstr "Acasă"
 
+#: core/context_processors.py:20 core/templates/core/dashboard.html:67
+#: finances/templates/finances/subvention_pdf.html:47
 msgid "Parcelles"
 msgstr "Parcele"
 
+#: core/context_processors.py:21 core/context_processors.py:53
+#: finances/templates/finances/subvention_pdf.html:49
+#: interventions/models.py:12
+#: interventions/templates/interventions/interventions.html:46
+#: irrigation/templates/irrigation/irrigation.html:6 irrigation/views.py:34
+#: operations/models.py:117 parcelles/templates/parcelles/detail.html:28
+#: parcelles/templates/parcelles/form.html:66
 msgid "Irrigation"
 msgstr "Irigare"
 
+#: core/context_processors.py:22 core/context_processors.py:90
+#: planning/views.py:34
 msgid "Planning"
 msgstr "Planificare"
 
+#: core/context_processors.py:23 ia/models.py:14
 msgid "Assistant"
 msgstr "Asistent"
 
+#: core/context_processors.py:30 templates/partials/header.html:5
 msgid "Tableau de bord"
 msgstr "Tablou de bord"
 
+#: core/context_processors.py:31
 msgid "Assistant IA"
 msgstr "Asistent IA"
 
+#: core/context_processors.py:35
 msgid "Communication"
 msgstr "Comunicare"
 
+#: core/context_processors.py:37
+#: notifications/templates/notifications/center.html:7
+#: notifications/views.py:18 templates/partials/header.html:22
 msgid "Notifications"
 msgstr "Notificări"
 
+#: core/context_processors.py:38 messagerie/views.py:75
 msgid "Messagerie"
 msgstr "Mesagerie"
 
+#: core/context_processors.py:39 mail/templates/mail/outbox.html:7
+#: mail/views.py:39
 msgid "Mail"
 msgstr "E-mail"
 
+#: core/context_processors.py:40
 msgid "Sondage"
 msgstr "Sondaj"
 
+#: core/context_processors.py:44
 msgid "Cultures & Terrain"
 msgstr "Culturi & Teren"
 
-msgid "Régie SCADA"
-msgstr "Control SCADA"
+#: core/context_processors.py:46 parcelles/templates/parcelles/list.html:12
+#: parcelles/views.py:48
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Mes Parcelles"
+msgstr "Parcele"
 
-msgid "Capteurs"
-msgstr "Senzori"
+#: core/context_processors.py:47 meteo/templates/meteo/index.html:9
+#: meteo/views.py:73
+msgid "Météo"
+msgstr "Vremea"
 
-msgid "Protection"
-msgstr "Protecție"
+#: core/context_processors.py:48
+#, fuzzy
+#| msgid "Cultures & Kc"
+msgid "Cultures"
+msgstr "Culturi & Kc"
 
-msgid "Bassinage anti-gel"
-msgstr "Aspersiune antiîngheț"
-
+#: core/context_processors.py:51
+#: interventions/templates/interventions/interventions.html:26
+#: interventions/views.py:49 public/templates/public/home.html:265
 msgid "Interventions"
 msgstr "Intervenții"
 
+#: core/context_processors.py:54 iot/templates/iot/regie.html:7
+#: iot/views.py:28
+msgid "Régie SCADA"
+msgstr "Control SCADA"
+
+#: core/context_processors.py:55
+msgid "Capteurs"
+msgstr "Senzori"
+
+#: core/context_processors.py:59 planning/models.py:210
+msgid "Protection"
+msgstr "Protecție"
+
+#: core/context_processors.py:61
+#: irrigation/templates/irrigation/bassinage.html:6 irrigation/views.py:56
+msgid "Bassinage anti-gel"
+msgstr "Aspersiune antiîngheț"
+
+#: core/context_processors.py:65
 msgid "Économie"
 msgstr "Economie"
 
+#: core/context_processors.py:68
+#: finances/templates/finances/bilan_economique.html:16
+#: finances/templates/finances/charges.html:7
+#: finances/templates/finances/subvention_pdf.html:41 finances/views.py:21
+#: finances/views.py:51
 msgid "Charges"
 msgstr "Cheltuieli"
 
+#: core/context_processors.py:69
+#: finances/templates/finances/bilan_economique.html:7
+#: finances/templates/finances/subvention_pdf.html:38 finances/views.py:58
 msgid "Bilan économique"
 msgstr "Bilanț economic"
 
+#: core/context_processors.py:70
+#: finances/templates/finances/facturation.html:6 finances/views.py:66
 msgid "Facturation"
 msgstr "Facturare"
 
+#: core/context_processors.py:71 pac/templates/pac/pac.html:9 pac/views.py:56
+msgid "PAC"
+msgstr "PAC"
+
+#: core/context_processors.py:72
+#: operations/templates/operations/parc_materiel.html:6 operations/views.py:20
+#: public/templates/public/home.html:260
 msgid "Parc matériel"
 msgstr "Parc de utilaje"
 
+#: core/context_processors.py:76
 msgid "Environnement"
 msgstr "Mediu"
 
+#: core/context_processors.py:78 environnement/views.py:50
+msgid "Biodiversité"
+msgstr "Biodiversitate"
+
+#: core/context_processors.py:79
+msgid "Bilan eau"
+msgstr "Bilanț apă"
+
+#: core/context_processors.py:80 environnement/views.py:137
+msgid "Bilan azoté"
+msgstr "Bilanț de azot"
+
+#: core/context_processors.py:81 environnement/views.py:144
+msgid "Empreinte carbone"
+msgstr "Amprentă de carbon"
+
+#: core/context_processors.py:82 environnement/views.py:151
+#, fuzzy
+#| msgid "Environnement"
+msgid "Rapport environnemental"
+msgstr "Mediu"
+
+#: core/context_processors.py:83 environnement/views.py:158
+msgid "Santé végétale"
+msgstr "Sănătatea plantelor"
+
+#: core/context_processors.py:84
+#: environnement/templates/environnement/taxonomie.html:9
+#: environnement/views.py:196 public/templates/public/home.html:101
+msgid "Taxonomie EU"
+msgstr "Taxonomie UE"
+
+#: core/context_processors.py:88
 msgid "RH"
 msgstr "Resurse umane"
 
+#: core/context_processors.py:91 equipe/templates/equipe/equipe.html:6
+#: equipe/views.py:21
 msgid "Équipe"
 msgstr "Echipă"
 
+#: core/context_processors.py:92 equipe/templates/equipe/taches.html:6
+#: equipe/views.py:28
 msgid "Tâches"
 msgstr "Sarcini"
 
+#: core/context_processors.py:93 equipe/templates/equipe/mes_taches.html:6
+#: equipe/views.py:37
 msgid "Mes tâches"
 msgstr "Sarcinile mele"
 
+#: core/context_processors.py:97
 msgid "Mon compte"
 msgstr "Contul meu"
 
+#: core/context_processors.py:99
+#: exploitations/templates/exploitations/settings.html:13
+#: exploitations/views.py:92 meteo/templates/meteo/index.html:26
+#: templates/partials/header.html:59
 msgid "Mon exploitation"
 msgstr "Exploatația mea"
 
-msgid "Activer un code"
+#: core/templates/core/dashboard.html:8
+msgid "Bienvenue sur Holystyl 👋"
+msgstr "Bun venit pe Holystyl 👋"
+
+#: core/templates/core/dashboard.html:10
+msgid ""
+"Commencez par configurer votre exploitation pour activer le tableau de bord."
+msgstr ""
+"Începeți prin configurarea exploatației pentru a activa tabloul de bord."
+
+#: core/templates/core/dashboard.html:12
+#: exploitations/templates/exploitations/settings.html:13
+msgid "Configurer mon exploitation"
+msgstr "Configurează exploatația mea"
+
+#: core/templates/core/dashboard.html:20
+msgid "+ Parcelle"
+msgstr "+ Parcelă"
+
+#: core/templates/core/dashboard.html:26
+msgid "Efficience DTI"
+msgstr "Eficiență DTI"
+
+#: core/templates/core/dashboard.html:32
+msgid "Aucun score DTI calculé."
+msgstr "Niciun scor DTI calculat."
+
+#: core/templates/core/dashboard.html:41
+msgid "Météo & ETP"
+msgstr "Vremea & ETP"
+
+#: core/templates/core/dashboard.html:42
+msgid "Localisation manquante"
+msgstr "Localizare lipsă"
+
+#: core/templates/core/dashboard.html:46
+msgid "Température"
+msgstr "Temperatură"
+
+#: core/templates/core/dashboard.html:47 iot/templates/iot/regie.html:54
+#: meteo/templates/meteo/meteo.html:77 meteo/templates/meteo/meteo.html:143
+msgid "Humidité"
+msgstr "Umiditate"
+
+#: core/templates/core/dashboard.html:48 meteo/templates/meteo/meteo.html:78
+#: meteo/templates/meteo/meteo.html:98 meteo/templates/meteo/meteo.html:144
+msgid "Vent"
+msgstr "Vânt"
+
+#: core/templates/core/dashboard.html:61
+msgid "Chargement météo…"
+msgstr "Se încarcă vremea…"
+
+#: core/templates/core/dashboard.html:67
+msgid "actives"
+msgstr "active"
+
+#: core/templates/core/dashboard.html:68
+#: finances/templates/finances/subvention_pdf.html:30
+#: pac/templates/pac/pac.html:55 parcelles/templates/parcelles/list.html:90
+msgid "Surface"
+msgstr "Suprafață"
+
+#: core/templates/core/dashboard.html:69
+msgid "Quota eau"
+msgstr "Cotă apă"
+
+#: core/templates/core/dashboard.html:70
+msgid "Alertes actives"
+msgstr "Alerte active"
+
+#: core/templates/core/dashboard.html:76
+msgid "Historique DTI"
+msgstr "Istoric DTI"
+
+#: core/templates/core/dashboard.html:78
+msgid "Pas encore de données."
+msgstr "Încă nu există date."
+
+#: core/templates/core/dashboard.html:81
+msgid "Consommation d'eau"
+msgstr "Consum de apă"
+
+#: core/templates/core/dashboard.html:83
+msgid "Pas encore de relevés."
+msgstr "Încă nu există citiri."
+
+#: core/templates/core/dashboard.html:89
+msgid "Alertes"
+msgstr "Alerte"
+
+#: core/templates/core/dashboard.html:96
+msgid "Aucune alerte active. 🌿"
+msgstr "Nicio alertă activă. 🌿"
+
+#: environnement/models.py:11
+msgid "Atténuation du changement climatique"
+msgstr "Atenuarea schimbărilor climatice"
+
+#: environnement/models.py:12
+msgid "Adaptation au changement climatique"
+msgstr "Adaptarea la schimbările climatice"
+
+#: environnement/models.py:13
+msgid "Eau et ressources marines"
+msgstr "Apă și resurse marine"
+
+#: environnement/models.py:14
+#, fuzzy
+#| msgid "Économie"
+msgid "Économie circulaire"
+msgstr "Economie"
+
+#: environnement/models.py:15
+msgid "Prévention de la pollution"
+msgstr "Prevenirea poluării"
+
+#: environnement/models.py:16
+msgid "Biodiversité et écosystèmes"
+msgstr "Biodiversitate și ecosisteme"
+
+#: environnement/models.py:21 pac/models.py:28
+msgid "campagne"
+msgstr "campanie"
+
+#: environnement/models.py:22
+msgid "activité"
+msgstr "activitate"
+
+#: environnement/models.py:23
+msgid "code NACE"
+msgstr "cod NACE"
+
+#: environnement/models.py:25
+msgid "objectif de contribution"
+msgstr "obiectiv de contribuție"
+
+#: environnement/models.py:27
+msgid "éligible"
+msgstr "eligibil"
+
+#: environnement/models.py:28
+msgid "contribution substantielle"
+msgstr "contribuție substanțială"
+
+#: environnement/models.py:30
+msgid "DNSH par objectif"
+msgstr "DNSH pe obiectiv"
+
+#: environnement/models.py:31
+msgid "garanties minimales"
+msgstr "garanții minime"
+
+#: environnement/models.py:32 exploitations/models.py:89
+msgid "chiffre d'affaires (€)"
+msgstr "cifră de afaceri (€)"
+
+#: environnement/models.py:33
+msgid "CapEx (€)"
+msgstr "CapEx (€)"
+
+#: environnement/models.py:34
+msgid "OpEx (€)"
+msgstr "OpEx (€)"
+
+#: environnement/models.py:35
+#, fuzzy
+#| msgid "Notifications"
+msgid "justification"
+msgstr "Notificări"
+
+#: environnement/models.py:39
+msgid "activité Taxonomie"
+msgstr "activitate Taxonomie"
+
+#: environnement/models.py:40
+msgid "activités Taxonomie"
+msgstr "activități Taxonomie"
+
+#: environnement/templates/environnement/bilan_eau.html:9
+#: environnement/views.py:113
+msgid "Bilan Eau"
+msgstr "Bilanț Apă"
+
+#: environnement/templates/environnement/bilan_eau.html:10
+msgid "Consommation d'eau d'irrigation · Sessions réelles"
+msgstr "Consum de apă de irigare · Sesiuni reale"
+
+#: environnement/templates/environnement/bilan_eau.html:14
+msgid "Export"
+msgstr "Export"
+
+#: environnement/templates/environnement/bilan_eau.html:21
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation totale"
+msgstr "Irigare"
+
+#: environnement/templates/environnement/bilan_eau.html:23
+msgid "cumul des sessions"
+msgstr "cumul al sesiunilor"
+
+#: environnement/templates/environnement/bilan_eau.html:26
+#: irrigation/views.py:38
+msgid "Sessions"
+msgstr "Sesiuni"
+
+#: environnement/templates/environnement/bilan_eau.html:28
+msgid "sessions enregistrées"
+msgstr "sesiuni înregistrate"
+
+#: environnement/templates/environnement/bilan_eau.html:31
+msgid "Quota utilisé"
+msgstr "Cotă utilizată"
+
+#: environnement/templates/environnement/bilan_eau.html:33
+msgid "alloués"
+msgstr "alocați"
+
+#: environnement/templates/environnement/bilan_eau.html:36
+msgid "Coût eau"
+msgstr "Cost apă"
+
+#: environnement/templates/environnement/bilan_eau.html:38
+msgid "estimé"
+msgstr "estimat"
+
+#: environnement/templates/environnement/bilan_eau.html:44
+msgid "Consommation mensuelle (m³)"
+msgstr "Consum lunar (m³)"
+
+#: environnement/templates/environnement/bilan_eau.html:49
+msgid "Aucune session d'irrigation enregistrée"
+msgstr "Nicio sesiune de irigare înregistrată"
+
+#: environnement/templates/environnement/bilan_eau.html:55
+msgid "Consommation par parcelle (m³/jour)"
+msgstr "Consum pe parcelă (m³/zi)"
+
+#: environnement/templates/environnement/bilan_eau.html:68
+msgid "Aucune session d'irrigation"
+msgstr "Nicio sesiune de irigare"
+
+#: environnement/templates/environnement/bilan_eau.html:75
+msgid "Aucune session d'irrigation enregistrée pour vos parcelles."
+msgstr "Nicio sesiune de irigare înregistrată pentru parcelele dvs."
+
+#: environnement/templates/environnement/bilan_eau.html:79
+msgid ""
+"Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation "
+"par parcelle."
+msgstr ""
+"Nicio parcelă înregistrată. Creați-vă parcelele pentru a vedea consumul pe "
+"parcelă."
+
+#: environnement/templates/environnement/placeholder.html:18
+msgid "Module en préparation"
+msgstr "Modul în pregătire"
+
+#: environnement/templates/environnement/placeholder.html:19
+msgid "Cette section sera bientôt disponible."
+msgstr "Această secțiune va fi disponibilă în curând."
+
+#: environnement/templates/environnement/taxonomie.html:10
+msgid "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)"
+msgstr ""
+"Regulamentul (UE) 2020/852 · alinierea activităților (CA / CapEx / OpEx)"
+
+#: environnement/templates/environnement/taxonomie.html:16
+#: environnement/templates/environnement/taxonomie.html:123
+#: pac/templates/pac/pac.html:17 pac/templates/pac/pac.html:112
+msgid "Campagne"
+msgstr "Campanie"
+
+#: environnement/templates/environnement/taxonomie.html:21
+#: environnement/templates/environnement/taxonomie.html:90
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une fiche"
 msgstr "Activează un cod"
 
-msgid "Bienvenue sur Holystyl 👋"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:29
+msgid "Chiffre d'affaires aligné"
+msgstr "Cifră de afaceri aliniată"
 
-msgid "Commencez par configurer votre exploitation pour activer le tableau de bord."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:33
+msgid "CapEx aligné"
+msgstr "CapEx aliniat"
 
-msgid "Configurer mon exploitation"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:37
+msgid "OpEx aligné"
+msgstr "OpEx aliniat"
 
-msgid "+ Parcelle"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:41
+msgid "Fiches alignées"
+msgstr "Fișe aliniate"
 
-msgid "Efficience DTI"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:52
+#: environnement/templates/environnement/taxonomie.html:114
+msgid "Activité"
+msgstr "Activitate"
 
-msgid "Aucun score DTI calculé."
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:53
+msgid "Objectif"
+msgstr "Obiectiv"
 
-msgid "Météo & ETP"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:54
+#: finances/templates/finances/facturation.html:11
+#: interventions/templates/interventions/interventions.html:136
+#: iot/templates/iot/capteurs.html:24 pac/templates/pac/pac.html:57
+#: pac/templates/pac/pac.html:138
+msgid "Statut"
+msgstr "Stare"
 
-msgid "Localisation manquante"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:67
+msgid "Aligné"
+msgstr "Aliniat"
 
-msgid "Température"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:68
+msgid "Éligible"
+msgstr "Eligibil"
 
-msgid "Humidité"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:69
+msgid "Non éligible"
+msgstr "Neeligibil"
 
-msgid "Vent"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:75
+msgid "Supprimer cette fiche ?"
+msgstr "Ștergi această fișă?"
 
-msgid "Chargement météo…"
-msgstr ""
+#: environnement/templates/environnement/taxonomie.html:88
+msgid "Aucune fiche pour cette campagne."
+msgstr "Nicio fișă pentru această campanie."
 
-msgid "actives"
+#: environnement/templates/environnement/taxonomie.html:97
+msgid ""
+"Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 "
+"objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs "
+"montrent la part alignée du CA, des CapEx et des OpEx."
 msgstr ""
+"O activitate este ALINIATĂ dacă: eligibilă + contribuție substanțială la 1 "
+"obiectiv + DNSH (nu dăunează celorlalte 5) + garanții minime. KPI-urile "
+"arată partea aliniată a CA, a CapEx și a OpEx."
 
-msgid "Surface"
+#: environnement/templates/environnement/taxonomie.html:106
+msgid "Nouvelle fiche d'activité"
+msgstr "Fișă de activitate nouă"
+
+#: environnement/templates/environnement/taxonomie.html:115
+msgid "ex: Production de noix"
+msgstr "ex: Producție de nuci"
+
+#: environnement/templates/environnement/taxonomie.html:119
+msgid "Code NACE"
+msgstr "Cod NACE"
+
+#: environnement/templates/environnement/taxonomie.html:127
+msgid "Objectif de contribution"
+msgstr "Obiectiv de contribuție"
+
+#: environnement/templates/environnement/taxonomie.html:136
+#: meteo/templates/meteo/meteo.html:141
+#, fuzzy
+#| msgid "Communication"
+msgid "Conditions"
+msgstr "Comunicare"
+
+#: environnement/templates/environnement/taxonomie.html:138
+msgid "Activité éligible (figure dans la Taxonomie)"
+msgstr "Activitate eligibilă (figurează în Taxonomie)"
+
+#: environnement/templates/environnement/taxonomie.html:139
+msgid "Contribution substantielle vérifiée"
+msgstr "Contribuție substanțială verificată"
+
+#: environnement/templates/environnement/taxonomie.html:140
+msgid "Garanties minimales respectées"
+msgstr "Garanții minime respectate"
+
+#: environnement/templates/environnement/taxonomie.html:146
+msgid "DNSH — ne nuit pas significativement à :"
+msgstr "DNSH — nu dăunează semnificativ:"
+
+#: environnement/templates/environnement/taxonomie.html:147
+msgid "À cocher pour les objectifs autres que celui de contribution."
+msgstr "De bifat pentru obiectivele altele decât cel de contribuție."
+
+#: environnement/templates/environnement/taxonomie.html:158
+msgid "CA (€)"
+msgstr "CA (€)"
+
+#: environnement/templates/environnement/taxonomie.html:172
+#, fuzzy
+#| msgid "Notifications"
+msgid "Justification"
+msgstr "Notificări"
+
+#: environnement/views.py:51
+msgid ""
+"Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
+"couverts végétaux et infrastructures agro-écologiques (IAE)."
 msgstr ""
+"Urmăriți biodiversitatea parcelelor dvs.: insecte auxiliare, polenizatori, "
+"culturi de acoperire și infrastructuri agro-ecologice (IAE)."
 
-msgid "Quota eau"
+#: environnement/views.py:138
+msgid ""
+"Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
+"reliquats et pression sur la directive Nitrates."
 msgstr ""
+"Bilanț de azot (metoda bilanțului): intrări, exporturi prin culturi, "
+"reziduuri și presiune asupra directivei Nitrați."
 
-msgid "Alertes actives"
+#: environnement/views.py:145
+msgid ""
+"Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
+"sols (diagnostic type GES / label bas-carbone)."
 msgstr ""
+"Emisii de gaze cu efect de seră ale exploatației și stocarea carbonului în "
+"soluri (diagnostic de tip GES / etichetă cu emisii reduse de carbon)."
 
-msgid "Historique DTI"
+#: environnement/views.py:152
+msgid ""
+"Synthèse environnementale de l'exploitation, exportable, regroupant les "
+"indicateurs (eau, azote, carbone, biodiversité)."
 msgstr ""
+"Sinteză de mediu a exploatației, exportabilă, care reunește indicatorii "
+"(apă, azot, carbon, biodiversitate)."
 
-msgid "Pas encore de données."
+#: environnement/views.py:159
+msgid ""
+"Suivi sanitaire des cultures : maladies, ravageurs, observations et "
+"indicateurs de fréquence de traitement (IFT)."
 msgstr ""
+"Monitorizare sanitară a culturilor: boli, dăunători, observații și "
+"indicatori de frecvență a tratamentelor (IFT)."
 
-msgid "Consommation d'eau"
-msgstr ""
-
-msgid "Pas encore de relevés."
-msgstr ""
-
-msgid "Alertes"
-msgstr ""
-
-msgid "Aucune alerte active. 🌿"
-msgstr ""
-
+#: equipe/models.py:15
 msgid "Chef d'équipe"
-msgstr ""
+msgstr "Șef de echipă"
 
+#: equipe/models.py:16
 msgid "Ouvrier"
-msgstr ""
+msgstr "Muncitor"
 
+#: equipe/models.py:17
 msgid "Saisonnier"
-msgstr ""
+msgstr "Sezonier"
 
+#: equipe/models.py:18
 msgid "Prestataire"
-msgstr ""
+msgstr "Prestator"
 
+#: equipe/models.py:24
 msgid "téléphone"
-msgstr ""
+msgstr "telefon"
 
+#: equipe/models.py:42
 msgid "membre d'équipe"
-msgstr ""
+msgstr "membru al echipei"
 
+#: equipe/models.py:43
 msgid "membres d'équipe"
-msgstr ""
+msgstr "membri ai echipei"
 
+#: equipe/models.py:52 notifications/models.py:16 planning/models.py:39
 msgid "Haute"
-msgstr ""
+msgstr "Ridicată"
 
+#: equipe/models.py:53 notifications/models.py:15 planning/models.py:38
 msgid "Normale"
-msgstr ""
+msgstr "Normală"
 
+#: equipe/models.py:54 notifications/models.py:14 planning/models.py:37
 msgid "Basse"
-msgstr ""
+msgstr "Scăzută"
 
+#: equipe/models.py:57
 msgid "À faire"
-msgstr ""
+msgstr "De făcut"
 
+#: equipe/models.py:58 interventions/models.py:30 planning/models.py:30
 msgid "En cours"
-msgstr ""
+msgstr "În curs"
 
+#: equipe/models.py:59 interventions/models.py:31 iot/models.py:93
 msgid "Terminée"
-msgstr ""
+msgstr "Finalizată"
 
+#: equipe/models.py:60
 msgid "Validée"
-msgstr ""
+msgstr "Validată"
 
+#: equipe/models.py:63
 msgid "titre"
-msgstr ""
+msgstr "titlu"
 
+#: equipe/models.py:77
 msgid "tâche"
-msgstr ""
+msgstr "sarcină"
 
+#: equipe/models.py:78
 msgid "tâches"
-msgstr ""
+msgstr "sarcini"
 
+#: equipe/models.py:92 finances/models.py:116 iot/models.py:90
+msgid "En attente"
+msgstr "În așteptare"
+
+#: equipe/models.py:93 mail/models.py:14 mail/templates/mail/detail.html:16
+#: mail/templates/mail/outbox.html:30
 msgid "Envoyé"
-msgstr ""
+msgstr "Trimis"
 
+#: equipe/models.py:94
 msgid "Échoué"
-msgstr ""
+msgstr "Eșuat"
 
+#: equipe/models.py:105
 msgid "rappel de tâche"
-msgstr ""
+msgstr "memento de sarcină"
 
+#: equipe/models.py:106
 msgid "rappels de tâche"
-msgstr ""
+msgstr "mementouri de sarcină"
 
+#: equipe/templates/equipe/equipe.html:20
 msgid "Aucun membre d'équipe. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Niciun membru al echipei. Adăugați prin admin sau API."
 
+#: equipe/templates/equipe/location_share.html:3
 msgid "Partage de position"
-msgstr ""
+msgstr "Partajare poziție"
 
+#: equipe/templates/equipe/location_share.html:9
+#: equipe/templates/equipe/location_share.html:13
 msgid "Partager ma position"
-msgstr ""
+msgstr "Partajează poziția mea"
 
+#: equipe/templates/equipe/location_share.html:11
 #, python-format
 msgid "Bonjour %(name)s, partagez votre position avec votre équipe."
-msgstr ""
+msgstr "Bună ziua %(name)s, partajați-vă poziția cu echipa dvs."
 
+#: equipe/templates/equipe/location_share.html:16
 msgid "Lien expiré"
-msgstr ""
+msgstr "Link expirat"
 
+#: equipe/templates/equipe/location_share.html:17
 msgid "Ce lien de partage n'est plus valide."
-msgstr ""
+msgstr "Acest link de partajare nu mai este valabil."
 
+#: equipe/templates/equipe/location_share.html:28
 msgid "Géolocalisation non supportée."
-msgstr ""
+msgstr "Geolocalizare neacceptată."
 
+#: equipe/templates/equipe/location_share.html:34
 msgid "Position partagée ✅"
-msgstr ""
+msgstr "Poziție partajată ✅"
 
+#: equipe/templates/equipe/location_share.html:35
 msgid "Erreur lors du partage."
-msgstr ""
+msgstr "Eroare la partajare."
 
+#: equipe/templates/equipe/location_share.html:36
 msgid "Accès à la position refusé."
-msgstr ""
+msgstr "Acces la poziție refuzat."
 
+#: equipe/templates/equipe/mes_taches.html:20
 msgid "Aucune tâche assignée."
-msgstr ""
+msgstr "Nicio sarcină atribuită."
 
+#: equipe/templates/equipe/taches.html:13
 msgid "non assignée"
-msgstr ""
+msgstr "neatribuită"
 
+#: equipe/templates/equipe/taches.html:20
 msgid "Aucune tâche."
-msgstr ""
+msgstr "Nicio sarcină."
 
+#: exploitations/models.py:15
+msgid "Exploitation individuelle"
+msgstr "Exploatație individuală"
+
+#: exploitations/models.py:16
+msgid "EARL"
+msgstr "EARL"
+
+#: exploitations/models.py:17
+msgid "GAEC"
+msgstr "GAEC"
+
+#: exploitations/models.py:18
+msgid "SCEA"
+msgstr "SCEA"
+
+#: exploitations/models.py:19
+msgid "SCEV"
+msgstr "SCEV"
+
+#: exploitations/models.py:20
+msgid "SARL"
+msgstr "SARL"
+
+#: exploitations/models.py:24
+#, fuzzy
+#| msgid "Interventions"
+msgid "Conventionnel"
+msgstr "Intervenții"
+
+#: exploitations/models.py:25 pac/models.py:16
+msgid "Agriculture biologique"
+msgstr "Agricultură ecologică"
+
+#: exploitations/models.py:26
+msgid "En conversion bio"
+msgstr "În conversie ecologică"
+
+#: exploitations/models.py:27
+#, fuzzy
+#| msgid "Environnement"
+msgid "Haute Valeur Environnementale"
+msgstr "Mediu"
+
+#: exploitations/models.py:30
+msgid "Forage"
+msgstr "Foraj"
+
+#: exploitations/models.py:31
+msgid "Rivière / cours d'eau"
+msgstr "Râu / curs de apă"
+
+#: exploitations/models.py:32
+msgid "Réseau collectif"
+msgstr "Rețea colectivă"
+
+#: exploitations/models.py:33
+msgid "Retenue / bassin"
+msgstr "Acumulare / bazin"
+
+#: exploitations/models.py:40
 msgid "propriétaire"
-msgstr ""
+msgstr "proprietar"
 
+#: exploitations/models.py:45
+msgid "prénom"
+msgstr "prenume"
+
+#: exploitations/models.py:46
+msgid "date de naissance"
+msgstr "dată de naștere"
+
+#: exploitations/models.py:47 exploitations/models.py:118
+msgid "raison sociale"
+msgstr "denumire socială"
+
+#: exploitations/models.py:48 exploitations/models.py:120
+msgid "forme juridique"
+msgstr "formă juridică"
+
+#: exploitations/models.py:49 exploitations/models.py:122
+msgid "SIRET"
+msgstr "SIRET"
+
+#: exploitations/models.py:50 exploitations/models.py:123
+msgid "n° PACAGE"
+msgstr "nr. PACAGE"
+
+#: exploitations/models.py:51 exploitations/models.py:124
+msgid "TVA intracommunautaire"
+msgstr "TVA intracomunitar"
+
+#: exploitations/models.py:52 exploitations/models.py:125
+msgid "année d'installation"
+msgstr "an de instalare"
+
+#: exploitations/models.py:55
+msgid "téléphone 1"
+msgstr "telefon 1"
+
+#: exploitations/models.py:56
+msgid "téléphone 2"
+msgstr "telefon 2"
+
+#: exploitations/models.py:57
+msgid "email"
+msgstr "email"
+
+#: exploitations/models.py:58
+msgid "site web"
+msgstr "site web"
+
+#: exploitations/models.py:61
 msgid "adresse"
-msgstr ""
+msgstr "adresă"
 
+#: exploitations/models.py:62
 msgid "ville"
-msgstr ""
+msgstr "oraș"
 
+#: exploitations/models.py:63
 msgid "code postal"
-msgstr ""
+msgstr "cod poștal"
 
+#: exploitations/models.py:64 meteo/models.py:19 meteo/models.py:47
 msgid "latitude"
-msgstr ""
+msgstr "latitudine"
 
+#: exploitations/models.py:65 meteo/models.py:20 meteo/models.py:48
 msgid "longitude"
-msgstr ""
+msgstr "longitudine"
 
+#: exploitations/models.py:68
 msgid "surface totale (ha)"
-msgstr ""
+msgstr "suprafață totală (ha)"
 
+#: exploitations/models.py:69
+msgid "SAU — surface agricole utile (ha)"
+msgstr "SAU — suprafață agricolă utilă (ha)"
+
+#: exploitations/models.py:71
+msgid "type d'agriculture"
+msgstr "tip de agricultură"
+
+#: exploitations/models.py:73
+msgid "productions principales"
+msgstr "producții principale"
+
+#: exploitations/models.py:74
+msgid "cheptel"
+msgstr "efectiv de animale"
+
+#: exploitations/models.py:77
 msgid "quota eau (m³)"
-msgstr ""
+msgstr "cotă apă (m³)"
 
+#: exploitations/models.py:78
 msgid "eau consommée (m³)"
-msgstr ""
+msgstr "apă consumată (m³)"
 
+#: exploitations/models.py:79
+msgid "prix de l'eau (€/m³)"
+msgstr "preț apă (€/m³)"
+
+#: exploitations/models.py:80
+msgid "source d'eau"
+msgstr "sursă de apă"
+
+#: exploitations/models.py:81
+msgid "surface irrigable (ha)"
+msgstr "suprafață irigabilă (ha)"
+
+#: exploitations/models.py:84
+msgid "niveau HVE"
+msgstr "nivel HVE"
+
+#: exploitations/models.py:85
+#, fuzzy
+#| msgid "Notifications"
+msgid "certifications & labels"
+msgstr "Notificări"
+
+#: exploitations/models.py:85
+msgid "Bio, AOP/IGP, Label Rouge…"
+msgstr "Bio, AOP/IGP, Label Rouge…"
+
+#: exploitations/models.py:88
+msgid "main-d'œuvre (ETP)"
+msgstr "forță de muncă (ENI)"
+
+#: exploitations/models.py:92
 msgid "exploitation"
-msgstr ""
+msgstr "exploatație"
 
+#: exploitations/models.py:93
 msgid "exploitations"
-msgstr ""
+msgstr "exploatații"
 
-msgid "Informations de base utilisées partout dans l'application."
-msgstr ""
+#: exploitations/models.py:117
+msgid "rôle / libellé"
+msgstr "rol / etichetă"
 
-msgid "Annuler"
-msgstr ""
+#: exploitations/models.py:129
+msgid "société liée"
+msgstr "societate asociată"
 
-msgid "Exploitation enregistrée."
-msgstr ""
+#: exploitations/models.py:130
+msgid "sociétés liées"
+msgstr "societăți asociate"
 
-msgid "Semences"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:15
+msgid "Profil de l'exploitation — utilisé partout dans l'application."
+msgstr "Profilul exploatației — utilizat peste tot în aplicație."
 
-msgid "Engrais"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:64
+msgid "Sociétés liées"
+msgstr "Societăți asociate"
 
-msgid "Phytosanitaires"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:68
+#: exploitations/templates/exploitations/settings.html:99
+msgid "Ajouter une entreprise"
+msgstr "Adaugă o întreprindere"
 
-msgid "Énergie"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:81
+msgid "Supprimer cette société ?"
+msgstr "Ștergi această societate?"
 
-msgid "Main d'œuvre"
+#: exploitations/templates/exploitations/settings.html:89
+msgid ""
+"Aucune société liée. Ajoutez une entreprise (GAEC, SCI foncière…) rattachée "
+"à l'exploitation."
 msgstr ""
+"Nicio societate asociată. Adăugați o întreprindere (GAEC, SCI funciară…) "
+"atașată exploatației."
 
-msgid "Matériel"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:105
+msgid "Raison sociale"
+msgstr "Denumire socială"
 
-msgid "Transport"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:107
+msgid "Tapez ≥ 3 lettres pour rechercher dans l'annuaire officiel."
+msgstr "Tastați ≥ 3 litere pentru a căuta în registrul oficial."
 
-msgid "Assurance"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:111
+msgid "Rôle / libellé"
+msgstr "Rol / etichetă"
 
-msgid "charge"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:112
+msgid "ex: SCI foncière"
+msgstr "ex: SCI funciară"
 
-msgid "charges"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:115
+msgid "Forme juridique"
+msgstr "Formă juridică"
 
-msgid "Vente céréales"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:126
+msgid "N° PACAGE"
+msgstr "Nr. PACAGE"
 
-msgid "Vente fruits"
-msgstr ""
+#: exploitations/templates/exploitations/settings.html:130
+msgid "TVA intra."
+msgstr "TVA intra."
 
-msgid "Vente légumes"
-msgstr ""
-
-msgid "Aide PAC"
-msgstr ""
-
-msgid "Subvention"
-msgstr ""
-
-msgid "Location"
-msgstr ""
-
-msgid "Prestation"
-msgstr ""
-
-msgid "revenu"
-msgstr ""
-
-msgid "revenus"
-msgstr ""
-
-msgid "Extra"
-msgstr ""
-
-msgid "Catégorie 1"
-msgstr ""
-
-msgid "Catégorie 2"
-msgstr ""
-
-msgid "Déclassé"
-msgstr ""
-
-msgid "récolte"
-msgstr ""
-
-msgid "récoltes"
-msgstr ""
-
-msgid "client"
-msgstr ""
-
-msgid "clients"
-msgstr ""
-
-msgid "Brouillon"
-msgstr ""
-
-msgid "Payée"
-msgstr ""
-
-msgid "En retard"
-msgstr ""
-
-msgid "Annulée"
-msgstr ""
-
-msgid "facture"
-msgstr ""
-
-msgid "factures"
-msgstr ""
-
-msgid "Taxonomie Verte EU"
-msgstr ""
-
-msgid "Plan Eau 2026"
-msgstr ""
-
-msgid "En génération"
-msgstr ""
-
-msgid "Prêt"
-msgstr ""
-
-msgid "export subvention"
-msgstr ""
-
-msgid "exports subvention"
-msgstr ""
-
-msgid "Revenus CSV"
-msgstr ""
-
-msgid "Dossier subvention PDF"
-msgstr ""
-
-msgid "Revenus"
-msgstr ""
-
-msgid "Résultat net"
-msgstr ""
-
-msgid "Marge / ha"
-msgstr ""
-
-msgid "Revenus vs charges (par mois)"
-msgstr ""
-
-msgid "Pas encore de données financières."
-msgstr ""
-
-msgid "Consommation"
-msgstr ""
-
-msgid "Export CSV"
-msgstr ""
-
-msgid "Montant"
-msgstr ""
-
-msgid "Fournisseur"
-msgstr ""
-
-msgid "Aucune charge enregistrée."
-msgstr ""
-
-msgid "Client"
-msgstr ""
-
-msgid "Émission"
-msgstr ""
-
-msgid "Aucune facture."
-msgstr ""
-
-msgid "Dossier de subvention"
-msgstr ""
-
+#: exploitations/templates/exploitations/settings.html:134
+#: finances/templates/finances/subvention_pdf.html:24
 msgid "Année"
-msgstr ""
+msgstr "An"
 
+#: exploitations/views.py:54
+msgid "Exploitation enregistrée."
+msgstr "Exploatație înregistrată."
+
+#: exploitations/views.py:63
+msgid "Juridique"
+msgstr "Juridic"
+
+#: exploitations/views.py:65 public/templates/public/home.html:482
+msgid "Contact"
+msgstr "Contact"
+
+#: exploitations/views.py:67
+msgid "Localisation"
+msgstr "Localizare"
+
+#: exploitations/views.py:69
+msgid "Caractéristiques agricoles"
+msgstr "Caracteristici agricole"
+
+#: exploitations/views.py:71
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Eau & irrigation"
+msgstr "Irigare"
+
+#: exploitations/views.py:73
+#, fuzzy
+#| msgid "Notifications"
+msgid "Certifications & labels"
+msgstr "Notificări"
+
+#: exploitations/views.py:75
+#, fuzzy
+#| msgid "Économie"
+msgid "Économique"
+msgstr "Economie"
+
+#: exploitations/views.py:117
+msgid "Société ajoutée."
+msgstr "Societate adăugată."
+
+#: finances/models.py:15
+msgid "Semences"
+msgstr "Semințe"
+
+#: finances/models.py:17
+msgid "Phytosanitaires"
+msgstr "Produse fitosanitare"
+
+#: finances/models.py:19 finances/templates/finances/bilan_economique.html:31
+#: finances/templates/finances/subvention_pdf.html:32
+msgid "Énergie"
+msgstr "Energie"
+
+#: finances/models.py:20
+msgid "Main d'œuvre"
+msgstr "Forță de muncă"
+
+#: finances/models.py:21 ia/models.py:35
+msgid "Matériel"
+msgstr "Echipamente"
+
+#: finances/models.py:22 operations/models.py:118 planning/models.py:213
+msgid "Transport"
+msgstr "Transport"
+
+#: finances/models.py:23
+msgid "Assurance"
+msgstr "Asigurare"
+
+#: finances/models.py:36
+msgid "charge"
+msgstr "cheltuială"
+
+#: finances/models.py:37
+msgid "charges"
+msgstr "cheltuieli"
+
+#: finances/models.py:43
+msgid "Vente céréales"
+msgstr "Vânzare cereale"
+
+#: finances/models.py:44
+msgid "Vente fruits"
+msgstr "Vânzare fructe"
+
+#: finances/models.py:45
+msgid "Vente légumes"
+msgstr "Vânzare legume"
+
+#: finances/models.py:46
+msgid "Aide PAC"
+msgstr "Ajutor PAC"
+
+#: finances/models.py:47
+msgid "Subvention"
+msgstr "Subvenție"
+
+#: finances/models.py:48
+msgid "Location"
+msgstr "Închiriere"
+
+#: finances/models.py:49
+msgid "Prestation"
+msgstr "Prestare"
+
+#: finances/models.py:65
+msgid "revenu"
+msgstr "venit"
+
+#: finances/models.py:66
+msgid "revenus"
+msgstr "venituri"
+
+#: finances/models.py:72
+msgid "Extra"
+msgstr "Extra"
+
+#: finances/models.py:73
+msgid "Catégorie 1"
+msgstr "Categoria 1"
+
+#: finances/models.py:74
+msgid "Catégorie 2"
+msgstr "Categoria 2"
+
+#: finances/models.py:75
+msgid "Déclassé"
+msgstr "Declasat"
+
+#: finances/models.py:88
+msgid "récolte"
+msgstr "recoltă"
+
+#: finances/models.py:89
+msgid "récoltes"
+msgstr "recolte"
+
+#: finances/models.py:105
+msgid "client"
+msgstr "client"
+
+#: finances/models.py:106
+msgid "clients"
+msgstr "clienți"
+
+#: finances/models.py:115 planning/models.py:259
+msgid "Brouillon"
+msgstr "Ciornă"
+
+#: finances/models.py:117
+msgid "Payée"
+msgstr "Plătită"
+
+#: finances/models.py:118
+msgid "En retard"
+msgstr "Întârziată"
+
+#: finances/models.py:119 interventions/models.py:32
+msgid "Annulée"
+msgstr "Anulată"
+
+#: finances/models.py:136
+msgid "facture"
+msgstr "factură"
+
+#: finances/models.py:137
+msgid "factures"
+msgstr "facturi"
+
+#: finances/models.py:149
+msgid "Taxonomie Verte EU"
+msgstr "Taxonomie Verde UE"
+
+#: finances/models.py:150
+msgid "Plan Eau 2026"
+msgstr "Plan Apă 2026"
+
+#: finances/models.py:155
+msgid "En génération"
+msgstr "În generare"
+
+#: finances/models.py:156
+msgid "Prêt"
+msgstr "Gata"
+
+#: finances/models.py:168
+msgid "export subvention"
+msgstr "export subvenție"
+
+#: finances/models.py:169
+msgid "exports subvention"
+msgstr "exporturi subvenție"
+
+#: finances/templates/finances/bilan_economique.html:9
+msgid "Revenus CSV"
+msgstr "Venituri CSV"
+
+#: finances/templates/finances/bilan_economique.html:10
+msgid "Dossier subvention PDF"
+msgstr "Dosar subvenție PDF"
+
+#: finances/templates/finances/bilan_economique.html:15
+#: finances/templates/finances/subvention_pdf.html:40 finances/views.py:50
+msgid "Revenus"
+msgstr "Venituri"
+
+#: finances/templates/finances/bilan_economique.html:17
+#: finances/templates/finances/subvention_pdf.html:42
+msgid "Résultat net"
+msgstr "Rezultat net"
+
+#: finances/templates/finances/bilan_economique.html:18
+msgid "Marge / ha"
+msgstr "Marjă / ha"
+
+#: finances/templates/finances/bilan_economique.html:23
+msgid "Revenus vs charges (par mois)"
+msgstr "Venituri vs cheltuieli (pe lună)"
+
+#: finances/templates/finances/bilan_economique.html:25
+msgid "Pas encore de données financières."
+msgstr "Încă nu există date financiare."
+
+#: finances/templates/finances/bilan_economique.html:28
+msgid "Consommation"
+msgstr "Consum"
+
+#: finances/templates/finances/charges.html:8
+msgid "Export CSV"
+msgstr "Export CSV"
+
+#: finances/templates/finances/charges.html:14 pac/templates/pac/pac.html:56
+msgid "Montant"
+msgstr "Sumă"
+
+#: finances/templates/finances/charges.html:14
+msgid "Fournisseur"
+msgstr "Furnizor"
+
+#: finances/templates/finances/charges.html:29
+msgid "Aucune charge enregistrée."
+msgstr "Nicio cheltuială înregistrată."
+
+#: finances/templates/finances/facturation.html:11
+msgid "Client"
+msgstr "Client"
+
+#: finances/templates/finances/facturation.html:11
+msgid "Émission"
+msgstr "Emitere"
+
+#: finances/templates/finances/facturation.html:27
+msgid "Aucune facture."
+msgstr "Nicio factură."
+
+#: finances/templates/finances/subvention_pdf.html:22
+msgid "Dossier de subvention"
+msgstr "Dosar de subvenție"
+
+#: finances/templates/finances/subvention_pdf.html:33
 msgid "Score DTI"
-msgstr ""
+msgstr "Scor DTI"
 
-msgid "Nom"
-msgstr ""
-
+#: finances/templates/finances/subvention_pdf.html:49
+#: pac/templates/pac/pac.html:134
 msgid "Surface (ha)"
-msgstr ""
+msgstr "Suprafață (ha)"
 
+#: finances/templates/finances/subvention_pdf.html:56
 msgid "Document généré par Holystyl."
-msgstr ""
+msgstr "Document generat de Holystyl."
 
+#: ia/models.py:13
+msgid "Utilisateur"
+msgstr "Utilizator"
+
+#: ia/models.py:26
 msgid "conversation IA"
-msgstr ""
+msgstr "conversație IA"
 
+#: ia/models.py:27
 msgid "conversations IA"
-msgstr ""
+msgstr "conversații IA"
 
-msgid "Parcelle"
-msgstr ""
-
-msgid "Produit"
-msgstr ""
-
+#: ia/models.py:37
 msgid "Général"
-msgstr ""
+msgstr "General"
 
+#: ia/models.py:45
 msgid "terme vocal"
-msgstr ""
+msgstr "termen vocal"
 
+#: ia/models.py:46
 msgid "dictionnaire vocal"
-msgstr ""
+msgstr "dicționar vocal"
 
+#: ia/models.py:68
 msgid "rapport quotidien"
-msgstr ""
+msgstr "raport zilnic"
 
+#: ia/models.py:69
 msgid "rapports quotidiens"
-msgstr ""
+msgstr "rapoarte zilnice"
 
-msgid "Assistant Holystyl"
-msgstr ""
+#: ia/templates/ia/assistant.html:11 ia/templates/ia/assistant.html:33
+#: messagerie/templates/messagerie/new.html:6 messagerie/views.py:207
+msgid "Nouvelle conversation"
+msgstr "Conversație nouă"
 
-msgid "IA non configurée"
-msgstr ""
+#: ia/templates/ia/assistant.html:13
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversations"
+msgstr "Comunicare"
 
-msgid "Demandez quelque chose…"
-msgstr ""
+#: ia/templates/ia/assistant.html:22
+msgid "Aucune conversation."
+msgstr "Nicio conversație."
 
+#: ia/templates/ia/assistant.html:39
+msgid "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles."
+msgstr "IA neconfigurată — adăugați GEMINI_API_KEY pentru răspunsuri reale."
+
+#: ia/templates/ia/assistant.html:49
+msgid "Bonjour, je suis Eric."
+msgstr "Bună ziua, sunt Eric."
+
+#: ia/templates/ia/assistant.html:51
+msgid ""
+"Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les "
+"cultures, la fertilisation ou vos analyses."
+msgstr ""
+"Consilierul dvs. agronom. Adresați-mi întrebări despre irigare, culturi, "
+"fertilizare sau analizele dvs."
+
+#: ia/templates/ia/assistant.html:89
+msgid "Décrivez votre besoin…"
+msgstr "Descrieți nevoia dvs.…"
+
+#: ia/templates/ia/assistant.html:92
+msgid "Entrée pour envoyer · Maj+Entrée pour saut de ligne"
+msgstr "Enter pentru a trimite · Shift+Enter pentru rând nou"
+
+#: ia/templates/ia/assistant.html:95
 msgid "Dictée vocale"
-msgstr ""
+msgstr "Dictare vocală"
 
+#: ia/templates/ia/assistant.html:100 mail/templates/mail/compose.html:58
+#: messagerie/templates/messagerie/_new_modal.html:62
 msgid "Envoyer"
-msgstr ""
+msgstr "Trimite"
 
+#: ia/templates/ia/assistant.html:105
+msgid ""
+"Eric peut commettre des erreurs. Vérifiez les informations importantes."
+msgstr "Eric poate face greșeli. Verificați informațiile importante."
+
+#: ia/templates/ia/assistant.html:150
+#: messagerie/templates/messagerie/detail.html:105
 msgid "Reconnaissance vocale non supportée par ce navigateur."
-msgstr ""
-
-msgid "Débitmètre"
-msgstr ""
-
-msgid "Capteur de pression"
-msgstr ""
-
-msgid "Station météo"
-msgstr ""
-
-msgid "Contrôleur de vanne"
-msgstr ""
-
-msgid "Contrôleur de pompe"
-msgstr ""
-
-msgid "Humidité du sol"
-msgstr ""
-
-msgid "Compteur d'énergie"
-msgstr ""
-
-msgid "Générique"
-msgstr ""
-
-msgid "En ligne"
-msgstr ""
-
-msgid "Hors ligne"
-msgstr ""
-
-msgid "Avertissement"
-msgstr ""
-
-msgid "identifiant device"
-msgstr ""
-
-msgid "device IoT"
-msgstr ""
-
-msgid "devices IoT"
-msgstr ""
-
-msgid "télémétrie"
-msgstr ""
-
-msgid "télémétries"
-msgstr ""
-
-msgid "Envoyée"
-msgstr ""
-
-msgid "Accusée"
-msgstr ""
-
-msgid "Échouée"
-msgstr ""
-
-msgid "Expirée"
-msgstr ""
-
-msgid "commande IoT"
-msgstr ""
-
-msgid "commandes IoT"
-msgstr ""
-
-msgid "Fuite détectée"
-msgstr ""
-
-msgid "Pression basse"
-msgstr ""
-
-msgid "Pression haute"
-msgstr ""
-
-msgid "Débit bas"
-msgstr ""
-
-msgid "Débit élevé"
-msgstr ""
-
-msgid "Panne de pompe"
-msgstr ""
-
-msgid "Baisse d'uniformité"
-msgstr ""
-
-msgid "Pic d'énergie"
-msgstr ""
-
-msgid "Seuil dépassé"
-msgstr ""
-
-msgid "Risque de gel"
-msgstr ""
-
-msgid "Perte invisible"
-msgstr ""
-
-msgid "Info"
-msgstr ""
-
-msgid "Danger"
-msgstr ""
-
-msgid "alerte IoT"
-msgstr ""
-
-msgid "alertes IoT"
-msgstr ""
-
-msgid "Température gel"
-msgstr ""
-
-msgid "Pression min"
-msgstr ""
-
-msgid "Pression max"
-msgstr ""
-
-msgid "Débit min"
-msgstr ""
-
-msgid "Débit max"
-msgstr ""
-
-msgid "kWh/m³ max"
-msgstr ""
-
-msgid "Humidité sol min"
-msgstr ""
-
-msgid "Humidité sol max"
-msgstr ""
-
-msgid "Perte invisible %"
-msgstr ""
-
-msgid "seuil"
-msgstr ""
-
-msgid "seuils"
-msgstr ""
-
-msgid "Capteurs & IoT"
-msgstr ""
-
-msgid "Télémétrie récente"
-msgstr ""
-
-msgid "Marque"
-msgstr ""
-
-msgid "Firmware"
-msgstr ""
-
-msgid "Vu"
-msgstr ""
-
-msgid "Aucun capteur enregistré."
-msgstr ""
-
-msgid "Temps réel actif"
-msgstr ""
-
-msgid "Débit"
-msgstr ""
-
-msgid "Pression"
-msgstr ""
-
-msgid "Puissance"
-msgstr ""
-
-msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
-msgstr ""
-
-msgid "Goutte à goutte"
-msgstr ""
-
-msgid "Aspersion"
-msgstr ""
-
-msgid "Pivot"
-msgstr ""
-
-msgid "Enrouleur"
-msgstr ""
-
-msgid "Micro-aspersion"
-msgstr ""
-
-msgid "Micro-jet"
-msgstr ""
-
-msgid "Submersion"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Maintenance"
-msgstr ""
-
-msgid "zone d'irrigation"
-msgstr ""
-
-msgid "zones d'irrigation"
-msgstr ""
-
-msgid "Quotidien"
-msgstr ""
-
-msgid "Tous les 2 jours"
-msgstr ""
-
-msgid "Tous les 3 jours"
-msgstr ""
-
-msgid "Hebdomadaire"
-msgstr ""
-
-msgid "Personnalisé"
-msgstr ""
-
-msgid "Par durée"
-msgstr ""
-
-msgid "Par volume"
-msgstr ""
-
-msgid "Par pluviométrie"
-msgstr ""
-
-msgid "Manuel"
-msgstr ""
-
-msgid "Vocal"
-msgstr ""
-
-msgid "IA"
-msgstr ""
-
-msgid "programme d'irrigation"
-msgstr ""
-
-msgid "programmes d'irrigation"
-msgstr ""
-
-msgid "Auto"
-msgstr ""
-
-msgid "IoT"
-msgstr ""
-
-msgid "session d'irrigation"
-msgstr ""
-
-msgid "sessions d'irrigation"
-msgstr ""
-
-msgid "Opérationnelle"
-msgstr ""
-
-msgid "En panne"
-msgstr ""
-
-msgid "station de pompage"
-msgstr ""
-
-msgid "stations de pompage"
-msgstr ""
-
-msgid "Capteur"
-msgstr ""
-
-msgid "Terminé"
-msgstr ""
-
-msgid "événement de bassinage"
-msgstr ""
-
-msgid "événements de bassinage"
-msgstr ""
-
-msgid "relevé compteur eau"
-msgstr ""
-
-msgid "relevés compteur eau"
-msgstr ""
-
-msgid "relevé énergie"
-msgstr ""
-
-msgid "relevés énergie"
-msgstr ""
-
-msgid "Annuel"
-msgstr ""
-
-msgid "Mensuel"
-msgstr ""
-
-msgid "quota eau"
-msgstr ""
-
-msgid "quotas eau"
-msgstr ""
-
-msgid "score DTI"
-msgstr ""
-
-msgid "scores DTI"
-msgstr ""
-
-msgid "Faible"
-msgstr ""
-
-msgid "Moyen"
-msgstr ""
-
-msgid "Élevé"
-msgstr ""
-
-msgid "Critique"
-msgstr ""
-
-msgid "événement de gel"
-msgstr ""
-
-msgid "événements de gel"
-msgstr ""
-
-msgid "donnée NDVI"
-msgstr ""
-
-msgid "données NDVI"
-msgstr ""
-
-msgid "détection de perte invisible"
-msgstr ""
-
-msgid "détections de pertes invisibles"
-msgstr ""
-
-msgid "Aucun événement de bassinage."
-msgstr ""
-
-msgid "Volumes irrigués récents"
-msgstr ""
-
-msgid "Aucune zone."
-msgstr ""
-
-msgid "actif"
-msgstr ""
-
-msgid "inactif"
-msgstr ""
-
-msgid "Aucun programme."
-msgstr ""
-
-msgid "Aucune session."
-msgstr ""
-
-msgid "Aucune station."
-msgstr ""
-
-msgid "Zones"
-msgstr ""
-
-msgid "Programmes"
-msgstr ""
-
-msgid "Sessions"
-msgstr ""
-
-msgid "Stations"
-msgstr ""
-
-msgid "Urgente"
-msgstr ""
-
-msgid "notification"
-msgstr ""
-
-msgid "notifications"
-msgstr ""
-
-msgid "règle de notification"
-msgstr ""
-
-msgid "règles de notification"
-msgstr ""
-
-msgid "Tout marquer comme lu"
-msgstr ""
-
-msgid "Aucune notification."
-msgstr ""
-
-msgid "Règles d'alerte"
-msgstr ""
-
-msgid "activée"
-msgstr ""
-
-msgid "désactivée"
-msgstr ""
-
-msgid "Aucune règle définie."
-msgstr ""
-
-msgid "Pompe"
-msgstr ""
-
-msgid "Tracteur"
-msgstr ""
-
-msgid "Pulvérisateur"
-msgstr ""
-
-msgid "Réformée"
-msgstr ""
-
-msgid "machine"
-msgstr ""
-
-msgid "machines"
-msgstr ""
-
-msgid "Utilisation"
-msgstr ""
-
-msgid "Réparation"
-msgstr ""
-
-msgid "Inspection"
-msgstr ""
-
+msgstr "Recunoaștere vocală neacceptată de acest browser."
+
+#: ia/views.py:40 messagerie/models.py:66
+#, fuzzy
+#| msgid "Communication"
+msgid "Conversation"
+msgstr "Comunicare"
+
+#: ia/views.py:68
+msgid "Eric"
+msgstr "Eric"
+
+#: interventions/models.py:13
+#: interventions/templates/interventions/interventions.html:55
+#: operations/models.py:114
 msgid "Traitement"
-msgstr ""
+msgstr "Tratament"
 
+#: interventions/models.py:14
+#: interventions/templates/interventions/interventions.html:64
+#: operations/models.py:116
 msgid "Fertilisation"
-msgstr ""
+msgstr "Fertilizare"
 
+#: interventions/models.py:15
+#: interventions/templates/interventions/interventions.html:73
+#: operations/models.py:115
 msgid "Récolte"
-msgstr ""
+msgstr "Recoltare"
 
+#: interventions/models.py:16 operations/models.py:113
 msgid "Semis"
-msgstr ""
+msgstr "Semănat"
 
+#: interventions/models.py:17
 msgid "Travail du sol"
-msgstr ""
+msgstr "Lucrarea solului"
 
+#: interventions/models.py:18
 msgid "Taille"
-msgstr ""
+msgstr "Tăiere"
 
+#: interventions/models.py:19
 msgid "Palissage"
-msgstr ""
+msgstr "Palisare"
 
+#: interventions/models.py:20
 msgid "Désherbage"
-msgstr ""
+msgstr "Combaterea buruienilor"
 
+#: interventions/models.py:21
 msgid "Éclaircissage"
-msgstr ""
+msgstr "Rărire"
 
+#: interventions/models.py:22
 msgid "Effeuillage"
-msgstr ""
+msgstr "Defoliere"
 
+#: interventions/models.py:23
 msgid "Vendange"
-msgstr ""
+msgstr "Cules de struguri"
 
+#: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:131
+#: operations/models.py:25 operations/models.py:55
+msgid "Maintenance"
+msgstr "Întreținere"
+
+#: interventions/models.py:25
 msgid "Observation"
-msgstr ""
+msgstr "Observație"
 
+#: interventions/models.py:29
 msgid "Planifiée"
-msgstr ""
+msgstr "Planificată"
 
+#: interventions/models.py:35 irrigation/models.py:73
+msgid "Vocal"
+msgstr "Vocal"
+
+#: interventions/models.py:36 irrigation/models.py:72 irrigation/models.py:104
+#: irrigation/models.py:156 irrigation/models.py:191 irrigation/models.py:215
+msgid "Manuel"
+msgstr "Manual"
+
+#: interventions/models.py:37 irrigation/models.py:74 irrigation/models.py:107
+msgid "IA"
+msgstr "IA"
+
+#: interventions/models.py:62
 msgid "intervention"
-msgstr ""
+msgstr "intervenție"
 
+#: interventions/models.py:63
 msgid "interventions"
-msgstr ""
+msgstr "intervenții"
 
-msgid "Vidange"
-msgstr ""
+#: interventions/templates/interventions/interventions.html:28
+#, python-format
+msgid "Journal des opérations culturales · %(n)s intervention"
+msgid_plural "Journal des opérations culturales · %(n)s interventions"
+msgstr[0] "Jurnalul operațiunilor de cultură · %(n)s intervenție"
+msgstr[1] "Jurnalul operațiunilor de cultură · %(n)s intervenții"
+msgstr[2] "Jurnalul operațiunilor de cultură · %(n)s de intervenții"
 
-msgid "Filtres"
-msgstr ""
-
-msgid "Courroies"
-msgstr ""
-
-msgid "Pneumatiques"
-msgstr ""
-
-msgid "Freins"
-msgstr ""
-
-msgid "Révision complète"
-msgstr ""
-
-msgid "Contrôle technique"
-msgstr ""
-
-msgid "entretien"
-msgstr ""
-
-msgid "entretiens"
-msgstr ""
-
-msgid "Labour"
-msgstr ""
-
-msgid "affectation d'engin"
-msgstr ""
-
-msgid "affectations d'engins"
-msgstr ""
-
-msgid "Semoir"
-msgstr ""
-
-msgid "Épandeur"
-msgstr ""
-
-msgid "Moissonneuse"
-msgstr ""
-
-msgid "Charrue"
-msgstr ""
-
-msgid "Cultivateur"
-msgstr ""
-
-msgid "Benne"
-msgstr ""
-
-msgid "modèle d'engin (catalogue)"
-msgstr ""
-
-msgid "catalogue d'engins"
-msgstr ""
-
+#: interventions/templates/interventions/interventions.html:103
 msgid "Aucune intervention enregistrée."
-msgstr ""
+msgstr "Nicio intervenție înregistrată."
 
+#: interventions/templates/interventions/interventions.html:106
+msgid "Enregistrer la première intervention"
+msgstr "Înregistrează prima intervenție"
+
+#: interventions/templates/interventions/interventions.html:112
+msgid "Aucune intervention pour ce filtre."
+msgstr "Nicio intervenție pentru acest filtru."
+
+#: interventions/templates/interventions/interventions.html:121
+#, fuzzy
+#| msgid "Interventions"
+msgid "Nouvelle intervention"
+msgstr "Intervenții"
+
+#: interventions/templates/interventions/interventions.html:144
+msgid "Titre"
+msgstr "Titlu"
+
+#: interventions/templates/interventions/interventions.html:150
+msgid "Date / heure"
+msgstr "Dată / oră"
+
+#: interventions/templates/interventions/interventions.html:158
+msgid "—"
+msgstr "—"
+
+#: iot/models.py:16
+msgid "Débitmètre"
+msgstr "Debitmetru"
+
+#: iot/models.py:17
+msgid "Capteur de pression"
+msgstr "Senzor de presiune"
+
+#: iot/models.py:18
+msgid "Station météo"
+msgstr "Stație meteo"
+
+#: iot/models.py:19
+msgid "Contrôleur de vanne"
+msgstr "Controler de vană"
+
+#: iot/models.py:20
+msgid "Contrôleur de pompe"
+msgstr "Controler de pompă"
+
+#: iot/models.py:21
+msgid "Humidité du sol"
+msgstr "Umiditatea solului"
+
+#: iot/models.py:22
+msgid "Compteur d'énergie"
+msgstr "Contor de energie"
+
+#: iot/models.py:23 iot/models.py:30
+msgid "Générique"
+msgstr "Generic"
+
+#: iot/models.py:33
+msgid "En ligne"
+msgstr "Online"
+
+#: iot/models.py:34 iot/models.py:124 iot/templates/iot/regie.html:10
+msgid "Hors ligne"
+msgstr "Offline"
+
+#: iot/models.py:35 iot/models.py:131
+msgid "Avertissement"
+msgstr "Avertizare"
+
+#: iot/models.py:44
+msgid "identifiant device"
+msgstr "identificator dispozitiv"
+
+#: iot/models.py:56
+msgid "device IoT"
+msgstr "dispozitiv IoT"
+
+#: iot/models.py:57
+msgid "devices IoT"
+msgstr "dispozitive IoT"
+
+#: iot/models.py:82
+msgid "télémétrie"
+msgstr "telemetrie"
+
+#: iot/models.py:83
+msgid "télémétries"
+msgstr "telemetrii"
+
+#: iot/models.py:91
+msgid "Envoyée"
+msgstr "Trimisă"
+
+#: iot/models.py:92
+msgid "Accusée"
+msgstr "Confirmată"
+
+#: iot/models.py:94
+msgid "Échouée"
+msgstr "Eșuată"
+
+#: iot/models.py:95
+msgid "Expirée"
+msgstr "Expirată"
+
+#: iot/models.py:109
+msgid "commande IoT"
+msgstr "comandă IoT"
+
+#: iot/models.py:110
+msgid "commandes IoT"
+msgstr "comenzi IoT"
+
+#: iot/models.py:116
+msgid "Fuite détectée"
+msgstr "Scurgere detectată"
+
+#: iot/models.py:117
+msgid "Pression basse"
+msgstr "Presiune scăzută"
+
+#: iot/models.py:118
+msgid "Pression haute"
+msgstr "Presiune ridicată"
+
+#: iot/models.py:119
+msgid "Débit bas"
+msgstr "Debit scăzut"
+
+#: iot/models.py:120
+msgid "Débit élevé"
+msgstr "Debit ridicat"
+
+#: iot/models.py:121
+msgid "Panne de pompe"
+msgstr "Defecțiune pompă"
+
+#: iot/models.py:122
+msgid "Baisse d'uniformité"
+msgstr "Scădere de uniformitate"
+
+#: iot/models.py:123
+msgid "Pic d'énergie"
+msgstr "Vârf de energie"
+
+#: iot/models.py:125
+msgid "Seuil dépassé"
+msgstr "Prag depășit"
+
+#: iot/models.py:126
+msgid "Risque de gel"
+msgstr "Risc de îngheț"
+
+#: iot/models.py:127
+msgid "Perte invisible"
+msgstr "Pierdere invizibilă"
+
+#: iot/models.py:130
+msgid "Info"
+msgstr "Info"
+
+#: iot/models.py:132
+msgid "Danger"
+msgstr "Pericol"
+
+#: iot/models.py:148
+msgid "alerte IoT"
+msgstr "alertă IoT"
+
+#: iot/models.py:149
+msgid "alertes IoT"
+msgstr "alerte IoT"
+
+#: iot/models.py:156
+msgid "Température gel"
+msgstr "Temperatură îngheț"
+
+#: iot/models.py:157
+msgid "Pression min"
+msgstr "Presiune min"
+
+#: iot/models.py:158
+msgid "Pression max"
+msgstr "Presiune max"
+
+#: iot/models.py:159
+msgid "Débit min"
+msgstr "Debit min"
+
+#: iot/models.py:160
+msgid "Débit max"
+msgstr "Debit max"
+
+#: iot/models.py:161
+msgid "kWh/m³ max"
+msgstr "kWh/m³ max"
+
+#: iot/models.py:162
+msgid "Humidité sol min"
+msgstr "Umiditate sol min"
+
+#: iot/models.py:163
+msgid "Humidité sol max"
+msgstr "Umiditate sol max"
+
+#: iot/models.py:164
+msgid "Perte invisible %"
+msgstr "Pierdere invizibilă %"
+
+#: iot/models.py:176
+msgid "seuil"
+msgstr "prag"
+
+#: iot/models.py:177
+msgid "seuils"
+msgstr "praguri"
+
+#: iot/templates/iot/capteurs.html:6 iot/views.py:60
+msgid "Capteurs & IoT"
+msgstr "Senzori & IoT"
+
+#: iot/templates/iot/capteurs.html:10
+msgid "Télémétrie récente"
+msgstr "Telemetrie recentă"
+
+#: iot/templates/iot/capteurs.html:22
+msgid "Marque"
+msgstr "Marcă"
+
+#: iot/templates/iot/capteurs.html:23
+msgid "Firmware"
+msgstr "Firmware"
+
+#: iot/templates/iot/capteurs.html:25
+msgid "Vu"
+msgstr "Văzut"
+
+#: iot/templates/iot/capteurs.html:43
+msgid "Aucun capteur enregistré."
+msgstr "Niciun senzor înregistrat."
+
+#: iot/templates/iot/regie.html:10
+msgid "Temps réel actif"
+msgstr "Timp real activ"
+
+#: iot/templates/iot/regie.html:42
+#: parcelles/templates/parcelles/detail.html:31
+msgid "Débit"
+msgstr "Debit"
+
+#: iot/templates/iot/regie.html:46
+#: parcelles/templates/parcelles/detail.html:32
+msgid "Pression"
+msgstr "Presiune"
+
+#: iot/templates/iot/regie.html:50
+msgid "Puissance"
+msgstr "Putere"
+
+#: iot/templates/iot/regie.html:62
+msgid "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs."
+msgstr "Niciun dispozitiv IoT. Adăugați prin admin sau Senzori."
+
+#: irrigation/models.py:20 parcelles/models.py:14
+msgid "Goutte à goutte"
+msgstr "Picurare"
+
+#: irrigation/models.py:21 parcelles/models.py:15
+msgid "Aspersion"
+msgstr "Aspersiune"
+
+#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:17
+msgid "Pivot"
+msgstr "Pivot"
+
+#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:16
+msgid "Enrouleur"
+msgstr "Tambur"
+
+#: irrigation/models.py:24 parcelles/models.py:18
+msgid "Micro-aspersion"
+msgstr "Micro-aspersiune"
+
+#: irrigation/models.py:25
+msgid "Micro-jet"
+msgstr "Micro-jet"
+
+#: irrigation/models.py:26
+msgid "Submersion"
+msgstr "Submersie"
+
+#: irrigation/models.py:29 parcelles/models.py:22
+msgid "Active"
+msgstr "Activă"
+
+#: irrigation/models.py:30 parcelles/models.py:23
+msgid "Inactive"
+msgstr "Inactivă"
+
+#: irrigation/models.py:50
+msgid "zone d'irrigation"
+msgstr "zonă de irigare"
+
+#: irrigation/models.py:51
+msgid "zones d'irrigation"
+msgstr "zone de irigare"
+
+#: irrigation/models.py:60
+msgid "Quotidien"
+msgstr "Zilnic"
+
+#: irrigation/models.py:61
+msgid "Tous les 2 jours"
+msgstr "La fiecare 2 zile"
+
+#: irrigation/models.py:62
+msgid "Tous les 3 jours"
+msgstr "La fiecare 3 zile"
+
+#: irrigation/models.py:63 irrigation/models.py:241
+msgid "Hebdomadaire"
+msgstr "Săptămânal"
+
+#: irrigation/models.py:64
+msgid "Personnalisé"
+msgstr "Personalizat"
+
+#: irrigation/models.py:67
+msgid "Par durée"
+msgstr "După durată"
+
+#: irrigation/models.py:68
+msgid "Par volume"
+msgstr "După volum"
+
+#: irrigation/models.py:69
+msgid "Par pluviométrie"
+msgstr "După pluviometrie"
+
+#: irrigation/models.py:94
+msgid "programme d'irrigation"
+msgstr "program de irigare"
+
+#: irrigation/models.py:95
+msgid "programmes d'irrigation"
+msgstr "programe de irigare"
+
+#: irrigation/models.py:105 irrigation/models.py:157
+msgid "Auto"
+msgstr "Auto"
+
+#: irrigation/models.py:106
+msgid "IoT"
+msgstr "IoT"
+
+#: irrigation/models.py:123
+msgid "session d'irrigation"
+msgstr "sesiune de irigare"
+
+#: irrigation/models.py:124
+msgid "sessions d'irrigation"
+msgstr "sesiuni de irigare"
+
+#: irrigation/models.py:130 operations/models.py:24
+msgid "Opérationnelle"
+msgstr "Operațională"
+
+#: irrigation/models.py:132 operations/models.py:26
+msgid "En panne"
+msgstr "Defectă"
+
+#: irrigation/models.py:147
+msgid "station de pompage"
+msgstr "stație de pompare"
+
+#: irrigation/models.py:148
+msgid "stations de pompage"
+msgstr "stații de pompare"
+
+#: irrigation/models.py:158
+msgid "Capteur"
+msgstr "Senzor"
+
+#: irrigation/models.py:161
+msgid "Actif"
+msgstr "Activ"
+
+#: irrigation/models.py:162 planning/models.py:32
+msgid "Terminé"
+msgstr "Finalizat"
+
+#: irrigation/models.py:163 planning/models.py:33
+msgid "Annulé"
+msgstr "Anulat"
+
+#: irrigation/models.py:182
+msgid "événement de bassinage"
+msgstr "eveniment de udare"
+
+#: irrigation/models.py:183
+msgid "événements de bassinage"
+msgstr "evenimente de udare"
+
+#: irrigation/models.py:205
+msgid "relevé compteur eau"
+msgstr "citire contor apă"
+
+#: irrigation/models.py:206
+msgid "relevés compteur eau"
+msgstr "citiri contor apă"
+
+#: irrigation/models.py:231
+msgid "relevé énergie"
+msgstr "citire energie"
+
+#: irrigation/models.py:232
+msgid "relevés énergie"
+msgstr "citiri energie"
+
+#: irrigation/models.py:239
+msgid "Annuel"
+msgstr "Anual"
+
+#: irrigation/models.py:240
+msgid "Mensuel"
+msgstr "Lunar"
+
+#: irrigation/models.py:252
+msgid "quota eau"
+msgstr "cotă apă"
+
+#: irrigation/models.py:253
+msgid "quotas eau"
+msgstr "cote apă"
+
+#: irrigation/models.py:278
+msgid "score DTI"
+msgstr "scor DTI"
+
+#: irrigation/models.py:279
+msgid "scores DTI"
+msgstr "scoruri DTI"
+
+#: irrigation/models.py:285
+msgid "Faible"
+msgstr "Scăzut"
+
+#: irrigation/models.py:286 planning/models.py:218 planning/models.py:254
+msgid "Moyen"
+msgstr "Mediu"
+
+#: irrigation/models.py:287
+msgid "Élevé"
+msgstr "Ridicat"
+
+#: irrigation/models.py:288 planning/models.py:256
+msgid "Critique"
+msgstr "Critic"
+
+#: irrigation/models.py:306
+msgid "événement de gel"
+msgstr "eveniment de îngheț"
+
+#: irrigation/models.py:307
+msgid "événements de gel"
+msgstr "evenimente de îngheț"
+
+#: irrigation/models.py:326
+msgid "donnée NDVI"
+msgstr "date NDVI"
+
+#: irrigation/models.py:327
+msgid "données NDVI"
+msgstr "date NDVI"
+
+#: irrigation/models.py:345
+msgid "détection de perte invisible"
+msgstr "detecție de pierdere invizibilă"
+
+#: irrigation/models.py:346
+msgid "détections de pertes invisibles"
+msgstr "detecții de pierderi invizibile"
+
+#: irrigation/templates/irrigation/bassinage.html:20
+msgid "Aucun événement de bassinage."
+msgstr "Niciun eveniment de udare."
+
+#: irrigation/templates/irrigation/irrigation.html:10
+msgid "Volumes irrigués récents"
+msgstr "Volume irigate recente"
+
+#: irrigation/templates/irrigation/irrigation.html:28
+msgid "Aucune zone."
+msgstr "Nicio zonă."
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "actif"
+msgstr "activ"
+
+#: irrigation/templates/irrigation/irrigation.html:35
+msgid "inactif"
+msgstr "inactiv"
+
+#: irrigation/templates/irrigation/irrigation.html:37
+msgid "Aucun programme."
+msgstr "Niciun program."
+
+#: irrigation/templates/irrigation/irrigation.html:46
+msgid "Aucune session."
+msgstr "Nicio sesiune."
+
+#: irrigation/templates/irrigation/irrigation.html:55
+msgid "Aucune station."
+msgstr "Nicio stație."
+
+#: irrigation/views.py:36
+msgid "Zones"
+msgstr "Zone"
+
+#: irrigation/views.py:37
+msgid "Programmes"
+msgstr "Programe"
+
+#: irrigation/views.py:39
+msgid "Stations"
+msgstr "Stații"
+
+#: mail/models.py:15 mail/templates/mail/detail.html:14
+#: mail/templates/mail/outbox.html:28
+msgid "Échec"
+msgstr "Eșec"
+
+#: mail/models.py:22
+msgid "destinataires"
+msgstr "destinatari"
+
+#: mail/models.py:23
+msgid "copie"
+msgstr "copie"
+
+#: mail/models.py:24
+msgid "objet"
+msgstr "subiect"
+
+#: mail/models.py:25 messagerie/models.py:99 messagerie/models.py:102
+#, fuzzy
+#| msgid "Messagerie"
+msgid "message"
+msgstr "Mesagerie"
+
+#: mail/models.py:26 messagerie/models.py:120
+msgid "pièces jointes"
+msgstr "atașamente"
+
+#: mail/models.py:31
+msgid "e-mail"
+msgstr "e-mail"
+
+#: mail/models.py:32
+msgid "e-mails"
+msgstr "e-mailuri"
+
+#: mail/templates/mail/compose.html:6 mail/templates/mail/outbox.html:10
+#: mail/views.py:83 mail/views.py:116
+msgid "Nouveau mail"
+msgstr "Mail nou"
+
+#: mail/templates/mail/compose.html:18 mail/templates/mail/detail.html:21
+#: mail/templates/mail/outbox.html:23
+#: messagerie/templates/messagerie/_new_modal.html:30
+msgid "À"
+msgstr "Către"
+
+#: mail/templates/mail/compose.html:18
+msgid "séparez par des virgules"
+msgstr "separați prin virgule"
+
+#: mail/templates/mail/compose.html:30 mail/templates/mail/detail.html:22
+msgid "Cc"
+msgstr "Cc"
+
+#: mail/templates/mail/compose.html:30
+#: messagerie/templates/messagerie/new.html:26
+msgid "optionnel"
+msgstr "opțional"
+
+#: mail/templates/mail/compose.html:36
+msgid "Objet"
+msgstr "Subiect"
+
+#: mail/templates/mail/compose.html:42
+#: messagerie/templates/messagerie/_new_modal.html:55
+#, fuzzy
+#| msgid "Messagerie"
+msgid "Message"
+msgstr "Mesagerie"
+
+#: mail/templates/mail/compose.html:49
+msgid "Joindre des fichiers"
+msgstr "Atașează fișiere"
+
+#: mail/templates/mail/detail.html:7
+msgid "Retour"
+msgstr "Înapoi"
+
+#: mail/templates/mail/detail.html:23
+msgid "Le"
+msgstr "În data de"
+
+#: mail/templates/mail/detail.html:40
+msgid "Erreur d'envoi"
+msgstr "Eroare la trimitere"
+
+#: mail/templates/mail/outbox.html:7
+msgid "Envoyés"
+msgstr "Trimise"
+
+#: mail/templates/mail/outbox.html:37
+msgid "Aucun e-mail envoyé pour le moment."
+msgstr "Niciun e-mail trimis deocamdată."
+
+#: mail/views.py:73
+msgid "Indiquez au moins un destinataire valide."
+msgstr "Indicați cel puțin un destinatar valid."
+
+#: mail/views.py:75
+#, python-format
+msgid "Adresses invalides ignorées : %(list)s"
+msgstr "Adrese invalide ignorate: %(list)s"
+
+#: mail/views.py:77
+msgid "L'objet est obligatoire."
+msgstr "Subiectul este obligatoriu."
+
+#: messagerie/models.py:24
+#, python-format
+msgid "Extension non autorisée : %(ext)s. Extensions acceptées : %(list)s."
+msgstr "Extensie neautorizată: %(ext)s. Extensii acceptate: %(list)s."
+
+#: messagerie/models.py:29
+#, python-format
+msgid "Le fichier dépasse la taille maximale de 5 Mo (%(got)s Mo reçus)."
+msgstr "Fișierul depășește dimensiunea maximă de 5 Mo (%(got)s Mo primiți)."
+
+#: messagerie/models.py:41
+msgid "groupe"
+msgstr "grup"
+
+#: messagerie/models.py:42
+msgid "nom du groupe"
+msgstr "nume grup"
+
+#: messagerie/models.py:51
+#, fuzzy
+#| msgid "Facturation"
+msgid "conversation"
+msgstr "Facturare"
+
+#: messagerie/models.py:52
+#, fuzzy
+#| msgid "Interventions"
+msgid "conversations"
+msgstr "Intervenții"
+
+#: messagerie/models.py:64 messagerie/templates/messagerie/_new_modal.html:25
+msgid "Groupe"
+msgstr "Grup"
+
+#: messagerie/models.py:88
+msgid "membre de conversation"
+msgstr "membru al conversației"
+
+#: messagerie/models.py:89
+msgid "membres de conversation"
+msgstr "membri ai conversației"
+
+#: messagerie/models.py:103
+#, fuzzy
+#| msgid "Messagerie"
+msgid "messages"
+msgstr "Mesagerie"
+
+#: messagerie/models.py:114
+msgid "fichier"
+msgstr "fișier"
+
+#: messagerie/models.py:119
+msgid "pièce jointe"
+msgstr "atașament"
+
+#: messagerie/templates/messagerie/_messages.html:25
+msgid "Démarrez la conversation 👋"
+msgstr "Începeți conversația 👋"
+
+#: messagerie/templates/messagerie/_new_modal.html:8
+#: messagerie/templates/messagerie/_sidebar.html:5
+#: messagerie/templates/messagerie/inbox.html:21
+msgid "Nouveau message"
+msgstr "Mesaj nou"
+
+#: messagerie/templates/messagerie/_new_modal.html:20
+msgid "Direct"
+msgstr "Direct"
+
+#: messagerie/templates/messagerie/_new_modal.html:33
+msgid "— Choisir un agriculteur —"
+msgstr "— Alegeți un agricultor —"
+
+#: messagerie/templates/messagerie/_new_modal.html:40
+#: messagerie/templates/messagerie/new.html:26
+msgid "Nom du groupe"
+msgstr "Nume grup"
+
+#: messagerie/templates/messagerie/_new_modal.html:41
+msgid "ex: Équipe irrigation"
+msgstr "ex: Echipă irigare"
+
+#: messagerie/templates/messagerie/_new_modal.html:45
+msgid "Membres"
+msgstr "Membri"
+
+#: messagerie/templates/messagerie/_new_modal.html:50
+msgid "Ctrl/Cmd + clic pour en sélectionner plusieurs."
+msgstr "Ctrl/Cmd + clic pentru a selecta mai mulți."
+
+#: messagerie/templates/messagerie/_new_modal.html:56
+msgid "Écrivez votre message…"
+msgstr "Scrieți mesajul dvs.…"
+
+#: messagerie/templates/messagerie/_sidebar.html:4
+msgid "Chat"
+msgstr "Chat"
+
+#: messagerie/templates/messagerie/_sidebar.html:23
+msgid "Aucun message"
+msgstr "Niciun mesaj"
+
+#: messagerie/templates/messagerie/_sidebar.html:31
+msgid "Aucune conversation pour le moment."
+msgstr "Nicio conversație deocamdată."
+
+#: messagerie/templates/messagerie/_sidebar.html:32
+msgid "Démarrer une conversation"
+msgstr "Începe o conversație"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "participants"
+msgstr "participanți"
+
+#: messagerie/templates/messagerie/detail.html:27
+msgid "Conversation privée"
+msgstr "Conversație privată"
+
+#: messagerie/templates/messagerie/detail.html:48
+msgid "Joindre un fichier"
+msgstr "Atașează un fișier"
+
+#: messagerie/templates/messagerie/detail.html:56
+msgid "Écrire un message…"
+msgstr "Scrie un mesaj…"
+
+#: messagerie/templates/messagerie/detail.html:58
+msgid "Dicter le message"
+msgstr "Dictează mesajul"
+
+#: messagerie/templates/messagerie/detail.html:62
+msgid "Reformuler avec l’IA"
+msgstr "Reformulează cu IA"
+
+#: messagerie/templates/messagerie/inbox.html:17
+msgid "Sélectionnez une conversation"
+msgstr "Selectați o conversație"
+
+#: messagerie/templates/messagerie/inbox.html:18
+msgid "ou démarrez-en une nouvelle"
+msgstr "sau începeți una nouă"
+
+#: messagerie/templates/messagerie/new.html:12
+msgid "Participants"
+msgstr "Participanți"
+
+#: messagerie/templates/messagerie/new.html:28
+msgid "Ex. Équipe récolte"
+msgstr "Ex. Echipă recoltare"
+
+#: messagerie/templates/messagerie/new.html:30
+msgid ""
+"Renseignez un nom ou cochez plusieurs participants pour créer un groupe."
+msgstr ""
+"Completați un nume sau bifați mai mulți participanți pentru a crea un grup."
+
+#: messagerie/templates/messagerie/new.html:35
+#: sondages/templates/sondages/create.html:38
+msgid "Créer"
+msgstr "Creează"
+
+#: messagerie/templates/messagerie/new.html:41
+msgid ""
+"Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. "
+"Ajoutez des membres d'équipe et liez-leur un compte."
+msgstr ""
+"Niciun alt utilizator în exploatația dvs. de contactat deocamdată. Adăugați "
+"membri ai echipei și asociați-le un cont."
+
+#: messagerie/views.py:60
+msgid "📎 Pièce jointe"
+msgstr "📎 Atașament"
+
+#: meteo/models.py:9
+msgid "Toutes les heures"
+msgstr "În fiecare oră"
+
+#: meteo/models.py:10
+msgid "Toutes les 6 heures"
+msgstr "La fiecare 6 ore"
+
+#: meteo/models.py:11
+msgid "Toutes les 12 heures"
+msgstr "La fiecare 12 ore"
+
+#: meteo/models.py:12
+msgid "Quotidienne"
+msgstr "Zilnică"
+
+#: meteo/models.py:18
+msgid "slug"
+msgstr "slug"
+
+#: meteo/models.py:24
+msgid "capture automatique"
+msgstr "captură automată"
+
+#: meteo/models.py:26
+msgid "fréquence"
+msgstr "frecvență"
+
+#: meteo/models.py:28
+msgid "dernière capture auto"
+msgstr "ultima captură auto"
+
+#: meteo/models.py:31
+msgid "ville météo"
+msgstr "oraș meteo"
+
+#: meteo/models.py:32
+msgid "villes météo"
+msgstr "orașe meteo"
+
+#: meteo/models.py:46
+msgid "lieu"
+msgstr "loc"
+
+#: meteo/models.py:49
+msgid "température (°C)"
+msgstr "temperatură (°C)"
+
+#: meteo/models.py:50
+msgid "humidité (%)"
+msgstr "umiditate (%)"
+
+#: meteo/models.py:51
+msgid "vent (km/h)"
+msgstr "vânt (km/h)"
+
+#: meteo/models.py:52
+msgid "pluie (mm)"
+msgstr "ploaie (mm)"
+
+#: meteo/models.py:53
+msgid "ET0 (mm)"
+msgstr "ET0 (mm)"
+
+#: meteo/models.py:54
+#, fuzzy
+#| msgid "Notifications"
+msgid "conditions"
+msgstr "Notificări"
+
+#: meteo/models.py:55
+msgid "capturé le"
+msgstr "capturat la"
+
+#: meteo/models.py:58
+msgid "relevé météo"
+msgstr "citire meteo"
+
+#: meteo/models.py:59
+msgid "relevés météo"
+msgstr "citiri meteo"
+
+#: meteo/templates/meteo/index.html:10
+msgid "Vos villes en un coup d'œil"
+msgstr "Orașele dvs. dintr-o privire"
+
+#: meteo/templates/meteo/index.html:14 meteo/templates/meteo/index.html:61
+msgid "Ajouter une ville"
+msgstr "Adaugă un oraș"
+
+#: meteo/templates/meteo/index.html:37
+msgid "Retirer"
+msgstr "Elimină"
+
+#: meteo/templates/meteo/index.html:52
+msgid "Ajoutez une ville pour suivre sa météo."
+msgstr "Adăugați un oraș pentru a-i urmări vremea."
+
+#: meteo/templates/meteo/index.html:70
+msgid "Rechercher une commune"
+msgstr "Caută o localitate"
+
+#: meteo/templates/meteo/index.html:71
+msgid "ex: Avignon"
+msgstr "ex: Avignon"
+
+#: meteo/templates/meteo/index.html:73
+msgid "Tapez un nom puis Entrée pour rechercher."
+msgstr "Tastați un nume apoi Enter pentru a căuta."
+
+#: meteo/templates/meteo/meteo.html:10
+msgid "Toutes les villes"
+msgstr "Toate orașele"
+
+#: meteo/templates/meteo/meteo.html:27
+#, fuzzy
+#| msgid "Capteurs"
+msgid "Capturer"
+msgstr "Senzori"
+
+#: meteo/templates/meteo/meteo.html:41
+msgid "Capture automatique"
+msgstr "Captură automată"
+
+#: meteo/templates/meteo/meteo.html:45
+msgid "Activée"
+msgstr "Activată"
+
+#: meteo/templates/meteo/meteo.html:53
+msgid "Dernière capture auto"
+msgstr "Ultima captură auto"
+
+#: meteo/templates/meteo/meteo.html:55
+msgid ""
+"Un relevé de cette ville est enregistré automatiquement à la fréquence "
+"choisie."
+msgstr "O citire a acestui oraș se înregistrează automat la frecvența aleasă."
+
+#: meteo/templates/meteo/meteo.html:61
+msgid "Impossible de récupérer la météo."
+msgstr "Imposibil de preluat vremea."
+
+#: meteo/templates/meteo/meteo.html:76
+msgid "Ressenti"
+msgstr "Resimțit"
+
+#: meteo/templates/meteo/meteo.html:79 meteo/templates/meteo/meteo.html:95
+#: meteo/templates/meteo/meteo.html:145
+msgid "Pluie"
+msgstr "Ploaie"
+
+#: meteo/templates/meteo/meteo.html:86
+msgid "Prévisions 7 jours"
+msgstr "Prognoză 7 zile"
+
+#: meteo/templates/meteo/meteo.html:96
+msgid "Proba."
+msgstr "Prob."
+
+#: meteo/templates/meteo/meteo.html:97
+msgid "Évapotranspiration (FAO-56)"
+msgstr "Evapotranspirație (FAO-56)"
+
+#: meteo/templates/meteo/meteo.html:110
+msgid "Évolution"
+msgstr "Evoluție"
+
+#: meteo/templates/meteo/meteo.html:113
+msgid "Température (°C)"
+msgstr "Temperatură (°C)"
+
+#: meteo/templates/meteo/meteo.html:117
+#, python-format
+msgid "Humidité (%%)"
+msgstr "Umiditate (%%)"
+
+#: meteo/templates/meteo/meteo.html:121
+msgid "Vent (km/h)"
+msgstr "Vânt (km/h)"
+
+#: meteo/templates/meteo/meteo.html:125
+msgid "Pluie (mm)"
+msgstr "Ploaie (mm)"
+
+#: meteo/templates/meteo/meteo.html:135
+msgid "Historique des relevés"
+msgstr "Istoricul citirilor"
+
+#: meteo/views.py:89
+msgid "Capture automatique mise à jour."
+msgstr "Captură automată actualizată."
+
+#: meteo/views.py:118
+msgid "Lieu introuvable."
+msgstr "Loc negăsit."
+
+#: meteo/views.py:197
+msgid "Relevé météo capturé."
+msgstr "Citire meteo capturată."
+
+#: meteo/views.py:198
+#, python-format
+msgid "Échec de la capture : %(e)s"
+msgstr "Eșec la captură: %(e)s"
+
+#: notifications/models.py:17 planning/models.py:40
+msgid "Urgente"
+msgstr "Urgentă"
+
+#: notifications/models.py:31
+msgid "notification"
+msgstr "notificare"
+
+#: notifications/models.py:32
+msgid "notifications"
+msgstr "notificări"
+
+#: notifications/models.py:49
+msgid "règle de notification"
+msgstr "regulă de notificare"
+
+#: notifications/models.py:50
+msgid "règles de notification"
+msgstr "reguli de notificare"
+
+#: notifications/templates/notifications/center.html:10
+msgid "Tout marquer comme lu"
+msgstr "Marchează tot ca citit"
+
+#: notifications/templates/notifications/center.html:27
+msgid "Aucune notification."
+msgstr "Nicio notificare."
+
+#: notifications/templates/notifications/center.html:31
+msgid "Règles d'alerte"
+msgstr "Reguli de alertă"
+
+#: notifications/templates/notifications/center.html:37
+msgid "activée"
+msgstr "activată"
+
+#: notifications/templates/notifications/center.html:37
+msgid "désactivée"
+msgstr "dezactivată"
+
+#: notifications/templates/notifications/center.html:42
+msgid "Aucune règle définie."
+msgstr "Nicio regulă definită."
+
+#: operations/models.py:16 operations/models.py:151
+msgid "Pompe"
+msgstr "Pompă"
+
+#: operations/models.py:17 operations/models.py:143
+msgid "Tracteur"
+msgstr "Tractor"
+
+#: operations/models.py:20 operations/models.py:144
+msgid "Pulvérisateur"
+msgstr "Pulverizator"
+
+#: operations/models.py:27
+msgid "Réformée"
+msgstr "Casată"
+
+#: operations/models.py:44
+msgid "machine"
+msgstr "utilaj"
+
+#: operations/models.py:45
+msgid "machines"
+msgstr "utilaje"
+
+#: operations/models.py:54
+msgid "Utilisation"
+msgstr "Utilizare"
+
+#: operations/models.py:56 operations/models.py:85
+msgid "Réparation"
+msgstr "Reparație"
+
+#: operations/models.py:57
+msgid "Inspection"
+msgstr "Inspecție"
+
+#: operations/models.py:79
+msgid "Vidange"
+msgstr "Schimb de ulei"
+
+#: operations/models.py:80
+msgid "Filtres"
+msgstr "Filtre"
+
+#: operations/models.py:81
+msgid "Courroies"
+msgstr "Curele"
+
+#: operations/models.py:82
+msgid "Pneumatiques"
+msgstr "Anvelope"
+
+#: operations/models.py:83
+msgid "Freins"
+msgstr "Frâne"
+
+#: operations/models.py:84
+msgid "Révision complète"
+msgstr "Revizie completă"
+
+#: operations/models.py:86
+msgid "Contrôle technique"
+msgstr "Inspecție tehnică"
+
+#: operations/models.py:105
+msgid "entretien"
+msgstr "întreținere"
+
+#: operations/models.py:106
+msgid "entretiens"
+msgstr "întrețineri"
+
+#: operations/models.py:112
+msgid "Labour"
+msgstr "Arătură"
+
+#: operations/models.py:134
+msgid "affectation d'engin"
+msgstr "alocare de utilaj"
+
+#: operations/models.py:135
+msgid "affectations d'engins"
+msgstr "alocări de utilaje"
+
+#: operations/models.py:145
+msgid "Semoir"
+msgstr "Semănătoare"
+
+#: operations/models.py:146
+msgid "Épandeur"
+msgstr "Mașină de împrăștiat"
+
+#: operations/models.py:147
+msgid "Moissonneuse"
+msgstr "Combină"
+
+#: operations/models.py:148
+msgid "Charrue"
+msgstr "Plug"
+
+#: operations/models.py:149
+msgid "Cultivateur"
+msgstr "Cultivator"
+
+#: operations/models.py:150
+msgid "Benne"
+msgstr "Remorcă basculantă"
+
+#: operations/models.py:170
+msgid "modèle d'engin (catalogue)"
+msgstr "model de utilaj (catalog)"
+
+#: operations/models.py:171
+msgid "catalogue d'engins"
+msgstr "catalog de utilaje"
+
+#: operations/templates/operations/parc_materiel.html:16
 msgid "prochain entretien"
-msgstr ""
+msgstr "următoarea întreținere"
 
+#: operations/templates/operations/parc_materiel.html:21
 msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
-msgstr ""
+msgstr "Niciun utilaj. Adăugați prin admin sau API."
 
-msgid "Gravitaire"
-msgstr ""
+#: pac/models.py:9
+msgid "DPB — Droits à paiement de base"
+msgstr "DPB — Drepturi la plata de bază"
 
-msgid "Jachère"
-msgstr ""
+#: pac/models.py:10
+msgid "Éco-régime"
+msgstr "Eco-schemă"
 
+#: pac/models.py:11
+msgid "Paiement redistributif"
+msgstr "Plată redistributivă"
+
+#: pac/models.py:12
+msgid "Aide jeune agriculteur"
+msgstr "Ajutor tânăr fermier"
+
+#: pac/models.py:13
+msgid "Aides couplées"
+msgstr "Ajutoare cuplate"
+
+#: pac/models.py:14
+msgid "ICHN — Indemnité handicap naturel"
+msgstr "ICHN — Indemnizație handicap natural"
+
+#: pac/models.py:15
+msgid "MAEC — Mesures agro-environnementales"
+msgstr "MAEC — Măsuri agro-mediu"
+
+#: pac/models.py:17
+msgid "Assurance récolte"
+msgstr "Asigurare recoltă"
+
+#: pac/models.py:21
+msgid "Prévu"
+msgstr "Prevăzut"
+
+#: pac/models.py:22
+msgid "Accordé"
+msgstr "Acordat"
+
+#: pac/models.py:23 pac/templates/pac/pac.html:34
+msgid "Payé"
+msgstr "Plătit"
+
+#: pac/models.py:29
+msgid "catégorie"
+msgstr "categorie"
+
+#: pac/models.py:30
+msgid "libellé"
+msgstr "etichetă"
+
+#: pac/models.py:31
+msgid "montant (€)"
+msgstr "sumă (€)"
+
+#: pac/models.py:32 parcelles/models.py:32
 msgid "surface (ha)"
-msgstr ""
+msgstr "suprafață (ha)"
 
+#: pac/models.py:33
+msgid "statut"
+msgstr "stare"
+
+#: pac/models.py:37
+msgid "aide PAC"
+msgstr "ajutor PAC"
+
+#: pac/models.py:38
+msgid "aides PAC"
+msgstr "ajutoare PAC"
+
+#: pac/templates/pac/pac.html:10
+msgid "Politique Agricole Commune · suivi des aides par campagne"
+msgstr "Politica Agricolă Comună · monitorizarea ajutoarelor pe campanie"
+
+#: pac/templates/pac/pac.html:22 pac/templates/pac/pac.html:89
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une aide"
+msgstr "Activează un cod"
+
+#: pac/templates/pac/pac.html:30
+msgid "Montant total estimé"
+msgstr "Sumă totală estimată"
+
+#: pac/templates/pac/pac.html:38
+msgid "Surface concernée"
+msgstr "Suprafață vizată"
+
+#: pac/templates/pac/pac.html:42
+msgid "Nombre d'aides"
+msgstr "Număr de ajutoare"
+
+#: pac/templates/pac/pac.html:54 pac/templates/pac/pac.html:124
+msgid "Libellé"
+msgstr "Etichetă"
+
+#: pac/templates/pac/pac.html:74
+msgid "Supprimer cette aide ?"
+msgstr "Ștergi acest ajutor?"
+
+#: pac/templates/pac/pac.html:87
+msgid "Aucune aide PAC pour cette campagne."
+msgstr "Niciun ajutor PAC pentru această campanie."
+
+#: pac/templates/pac/pac.html:96
+msgid ""
+"Suivez ici vos aides PAC (DPB, éco-régime, ICHN, MAEC, bio…) par campagne et"
+" leur statut (prévu / accordé / payé). Déclaration officielle via TéléPAC."
+msgstr ""
+"Urmăriți aici ajutoarele dvs. PAC (DPB, eco-schemă, ICHN, MAEC, bio…) pe "
+"campanie și starea lor (prevăzut / acordat / plătit). Declarație oficială "
+"prin TéléPAC."
+
+#: pac/templates/pac/pac.html:105
+msgid "Nouvelle aide PAC"
+msgstr "Ajutor PAC nou"
+
+#: pac/templates/pac/pac.html:125
+msgid "ex: Éco-régime niveau 2"
+msgstr "ex: Eco-schemă nivel 2"
+
+#: pac/templates/pac/pac.html:130
+msgid "Montant (€)"
+msgstr "Sumă (€)"
+
+#: parcelles/models.py:19
+msgid "Gravitaire"
+msgstr "Gravitațional"
+
+#: parcelles/models.py:24
+msgid "Jachère"
+msgstr "Pârloagă"
+
+#: parcelles/models.py:37
 msgid "polygone"
-msgstr ""
+msgstr "poligon"
 
+#: parcelles/models.py:42
 msgid "type d'irrigation"
-msgstr ""
+msgstr "tip de irigare"
 
+#: parcelles/models.py:44
 msgid "débit théorique (m³/h)"
-msgstr ""
+msgstr "debit teoretic (m³/h)"
 
+#: parcelles/models.py:45
 msgid "nombre de buses"
-msgstr ""
+msgstr "număr de duze"
 
+#: parcelles/models.py:46
 msgid "débit buse (L/h)"
-msgstr ""
+msgstr "debit duză (L/h)"
 
+#: parcelles/models.py:47
 msgid "écart entre rangs (m)"
-msgstr ""
+msgstr "distanță între rânduri (m)"
 
+#: parcelles/models.py:48
 msgid "écart entre émetteurs (m)"
-msgstr ""
+msgstr "distanță între emițători (m)"
 
+#: parcelles/models.py:49
 msgid "pression de service (bar)"
-msgstr ""
+msgstr "presiune de serviciu (bar)"
 
+#: parcelles/models.py:52
 msgid "culture"
-msgstr ""
+msgstr "cultură"
 
+#: parcelles/models.py:53
 msgid "variété"
-msgstr ""
+msgstr "varietate"
 
+#: parcelles/models.py:54 parcelles/models.py:93
 msgid "coefficient Kc"
-msgstr ""
+msgstr "coeficient Kc"
 
+#: parcelles/models.py:55
 msgid "âge des plants (ans)"
-msgstr ""
+msgstr "vârsta plantelor (ani)"
 
+#: parcelles/models.py:56
 msgid "date de plantation"
-msgstr ""
+msgstr "dată de plantare"
 
+#: parcelles/models.py:57
 msgid "densité (pieds/ha)"
-msgstr ""
+msgstr "densitate (plante/ha)"
 
+#: parcelles/models.py:61
 msgid "profondeur racinaire"
-msgstr ""
+msgstr "adâncime de înrădăcinare"
 
+#: parcelles/models.py:62
 msgid "profondeur racinaire (cm)"
-msgstr ""
+msgstr "adâncime de înrădăcinare (cm)"
 
+#: parcelles/models.py:63
 msgid "rétention sol (mm/m)"
-msgstr ""
+msgstr "reținere sol (mm/m)"
 
+#: parcelles/models.py:64
 msgid "pH du sol"
-msgstr ""
+msgstr "pH-ul solului"
 
+#: parcelles/models.py:67
 msgid "réf. cadastrale"
-msgstr ""
+msgstr "ref. cadastrală"
 
+#: parcelles/models.py:68
 msgid "commune"
-msgstr ""
+msgstr "localitate"
 
+#: parcelles/models.py:69
 msgid "surface officielle (ha)"
-msgstr ""
+msgstr "suprafață oficială (ha)"
 
+#: parcelles/models.py:70
+msgid "données cadastre (brut IGN)"
+msgstr "date cadastru (brut IGN)"
+
+#: parcelles/models.py:71
+msgid "date d'acquisition"
+msgstr "dată de achiziție"
+
+#: parcelles/models.py:76
 msgid "parcelle"
-msgstr ""
+msgstr "parcelă"
 
+#: parcelles/models.py:77
 msgid "parcelles"
-msgstr ""
+msgstr "parcele"
 
+#: parcelles/models.py:89
 msgid "stade"
-msgstr ""
+msgstr "stadiu"
 
+#: parcelles/models.py:91
 msgid "début"
-msgstr ""
+msgstr "început"
 
+#: parcelles/models.py:92
 msgid "fin"
-msgstr ""
+msgstr "sfârșit"
 
+#: parcelles/models.py:94
 msgid "profondeur racinaire (m)"
-msgstr ""
+msgstr "adâncime de înrădăcinare (m)"
 
+#: parcelles/models.py:98
 msgid "stade cultural"
-msgstr ""
+msgstr "stadiu cultural"
 
+#: parcelles/models.py:99
 msgid "stades culturaux"
-msgstr ""
+msgstr "stadii culturale"
 
+#: parcelles/templates/parcelles/confirm_delete.html:7
 msgid "Supprimer la parcelle ?"
-msgstr ""
+msgstr "Ștergi parcela?"
 
+#: parcelles/templates/parcelles/confirm_delete.html:9
 #, python-format
 msgid "La parcelle « %(name)s » sera définitivement supprimée."
-msgstr ""
+msgstr "Parcela „%(name)s” va fi ștearsă definitiv."
 
-msgid "Supprimer"
-msgstr ""
-
+#: parcelles/templates/parcelles/detail.html:12
 msgid "Modifier"
-msgstr ""
+msgstr "Modifică"
 
+#: parcelles/templates/parcelles/detail.html:19
 msgid "Culture & sol"
-msgstr ""
+msgstr "Cultură & sol"
 
+#: parcelles/templates/parcelles/detail.html:21
 msgid "Variété"
-msgstr ""
+msgstr "Varietate"
 
+#: parcelles/templates/parcelles/detail.html:23
 msgid "Type de sol"
-msgstr ""
+msgstr "Tip de sol"
 
+#: parcelles/templates/parcelles/detail.html:33
+#: parcelles/templates/parcelles/list.html:93
 msgid "Commune"
-msgstr ""
+msgstr "Localitate"
 
+#: parcelles/templates/parcelles/detail.html:38
 msgid "Retour aux parcelles"
-msgstr ""
+msgstr "Înapoi la parcele"
 
+#: parcelles/templates/parcelles/form.html:8
 msgid "Étape"
-msgstr ""
+msgstr "Etapă"
 
+#: parcelles/templates/parcelles/form.html:21
 msgid "Identité & localisation"
-msgstr ""
+msgstr "Identitate & localizare"
 
+#: parcelles/templates/parcelles/form.html:33
 msgid "Cliquez sur la carte pour positionner la parcelle."
-msgstr ""
+msgstr "Apăsați pe hartă pentru a poziționa parcela."
 
+#: parcelles/templates/parcelles/form.html:84
 msgid "Cadastre & statut"
-msgstr ""
+msgstr "Cadastru & stare"
 
+#: parcelles/templates/parcelles/form.html:94
 msgid "Précédent"
-msgstr ""
+msgstr "Anterior"
 
+#: parcelles/templates/parcelles/form.html:96
 msgid "Suivant"
-msgstr ""
+msgstr "Următor"
 
-msgid "+ Nouvelle parcelle"
-msgstr ""
+#: parcelles/templates/parcelles/list.html:13
+msgid "Carte satellite · Cadastre IGN · Surfaces"
+msgstr "Hartă satelit · Cadastru IGN · Suprafețe"
 
+#: parcelles/templates/parcelles/list.html:24
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles actives"
+msgstr "Parcele"
+
+#: parcelles/templates/parcelles/list.html:28
+msgid "Surface totale"
+msgstr "Suprafață totală"
+
+#: parcelles/templates/parcelles/list.html:32
+msgid "Stress hydrique"
+msgstr "Stres hidric"
+
+#: parcelles/templates/parcelles/list.html:36
+msgid "Humidité moyenne"
+msgstr "Umiditate medie"
+
+#: parcelles/templates/parcelles/list.html:45
+msgid "Rechercher un lieu…"
+msgstr "Caută un loc…"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Carte"
+msgstr "Hartă"
+
+#: parcelles/templates/parcelles/list.html:51
+msgid "Liste"
+msgstr "Listă"
+
+#: parcelles/templates/parcelles/list.html:62
+msgid ""
+"Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis "
+"Enregistrer."
+msgstr ""
+"Apăsați pe parcelele de adăugat (apăsați din nou pentru a deselecta), apoi "
+"Salvează."
+
+#: parcelles/templates/parcelles/list.html:70
+msgid "parcelle(s) sélectionnée(s)"
+msgstr "parcelă(e) selectată(e)"
+
+#: parcelles/templates/parcelles/list.html:92
+msgid "Réf. cadastrale"
+msgstr "Ref. cadastrală"
+
+#: parcelles/templates/parcelles/list.html:94
+msgid "Acquise le"
+msgstr "Achiziționată la"
+
+#: parcelles/templates/parcelles/list.html:116
+msgid ""
+"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+msgstr "Nicio parcelă. Apăsați pe „Adaugă” pentru a selecta pe hartă."
+
+#: parcelles/templates/parcelles/list.html:122
+msgid "Analyses des parcelles — bientôt."
+msgstr "Analize ale parcelelor — în curând."
+
+#: parcelles/views.py:132
 msgid "Configurez d'abord votre exploitation."
-msgstr ""
+msgstr "Configurați mai întâi exploatația dvs."
 
-msgid "Configurer"
-msgstr ""
-
-msgid "Aucune parcelle pour le moment."
-msgstr ""
-
-msgid "Créer ma première parcelle"
-msgstr ""
-
+#: parcelles/views.py:141
 msgid "Parcelle créée."
-msgstr ""
+msgstr "Parcelă creată."
 
+#: parcelles/views.py:149
 msgid "Nouvelle parcelle"
-msgstr ""
+msgstr "Parcelă nouă"
 
+#: parcelles/views.py:172
 msgid "Parcelle mise à jour."
-msgstr ""
+msgstr "Parcelă actualizată."
 
+#: parcelles/views.py:179
 #, python-format
 msgid "Modifier %(n)s"
-msgstr ""
+msgstr "Modifică %(n)s"
 
+#: parcelles/views.py:189
 msgid "Parcelle supprimée."
-msgstr ""
+msgstr "Parcelă ștearsă."
 
+#: planning/models.py:29
 msgid "Planifié"
-msgstr ""
+msgstr "Planificat"
 
+#: planning/models.py:31
 msgid "En pause"
-msgstr ""
+msgstr "În pauză"
 
+#: planning/models.py:34
 msgid "Reporté"
-msgstr ""
+msgstr "Amânat"
 
+#: planning/models.py:43
 msgid "Non applicable"
-msgstr ""
+msgstr "Neaplicabil"
 
+#: planning/models.py:44
 msgid "À facturer"
-msgstr ""
+msgstr "De facturat"
 
+#: planning/models.py:45
 msgid "Facturé"
-msgstr ""
+msgstr "Facturat"
 
+#: planning/models.py:46
 msgid "Avoir"
-msgstr ""
+msgstr "Notă de credit"
 
+#: planning/models.py:80
 msgid "tâche de planning"
-msgstr ""
+msgstr "sarcină de planificare"
 
+#: planning/models.py:81
 msgid "tâches de planning"
-msgstr ""
+msgstr "sarcini de planificare"
 
+#: planning/models.py:100
 msgid "affectation technicien"
-msgstr ""
+msgstr "alocare tehnician"
 
+#: planning/models.py:101
 msgid "affectations techniciens"
-msgstr ""
+msgstr "alocări tehnicieni"
 
+#: planning/models.py:106
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
+#: planning/models.py:107
 msgid "Plan"
-msgstr ""
+msgstr "Plan"
 
+#: planning/models.py:108
 msgid "Schéma"
-msgstr ""
+msgstr "Schemă"
 
-msgid "Document"
-msgstr ""
-
+#: planning/models.py:126
 msgid "Démarrage"
-msgstr ""
+msgstr "Pornire"
 
+#: planning/models.py:127
 msgid "Pause"
-msgstr ""
+msgstr "Pauză"
 
+#: planning/models.py:128
 msgid "Reprise"
-msgstr ""
+msgstr "Reluare"
 
+#: planning/models.py:129
 msgid "Fin"
-msgstr ""
+msgstr "Sfârșit"
 
+#: planning/models.py:145
 msgid "Congé payé"
-msgstr ""
+msgstr "Concediu plătit"
 
+#: planning/models.py:147
 msgid "Maladie"
-msgstr ""
+msgstr "Boală"
 
+#: planning/models.py:148
 msgid "Formation"
-msgstr ""
+msgstr "Formare"
 
+#: planning/models.py:149
 msgid "Sans solde"
-msgstr ""
+msgstr "Fără plată"
 
+#: planning/models.py:153
 msgid "Matin"
-msgstr ""
+msgstr "Dimineață"
 
+#: planning/models.py:154
 msgid "Après-midi"
-msgstr ""
+msgstr "După-amiază"
 
+#: planning/models.py:155
 msgid "Journée"
-msgstr ""
+msgstr "Zi întreagă"
 
+#: planning/models.py:158
 msgid "Demandé"
-msgstr ""
+msgstr "Solicitat"
 
+#: planning/models.py:159
 msgid "Approuvé"
-msgstr ""
+msgstr "Aprobat"
 
+#: planning/models.py:160
 msgid "Refusé"
-msgstr ""
+msgstr "Refuzat"
 
+#: planning/models.py:178
 msgid "absence"
-msgstr ""
+msgstr "absență"
 
+#: planning/models.py:179
 msgid "absences"
-msgstr ""
+msgstr "absențe"
 
+#: planning/models.py:206
 msgid "Outil à main"
-msgstr ""
+msgstr "Unealtă de mână"
 
+#: planning/models.py:207
 msgid "Outil de coupe"
-msgstr ""
+msgstr "Unealtă de tăiere"
 
+#: planning/models.py:208
 msgid "Outil motorisé"
-msgstr ""
+msgstr "Unealtă motorizată"
 
+#: planning/models.py:209
 msgid "Engin"
-msgstr ""
+msgstr "Utilaj"
 
+#: planning/models.py:211
 msgid "Arrosage"
-msgstr ""
+msgstr "Udare"
 
+#: planning/models.py:212
 msgid "Mesure"
-msgstr ""
+msgstr "Măsurare"
 
+#: planning/models.py:217 planning/models.py:253
+#: planning/templates/planning/planning.html:27
 msgid "Bon"
-msgstr ""
+msgstr "Bun"
 
+#: planning/models.py:219
 msgid "À réparer"
-msgstr ""
+msgstr "De reparat"
 
+#: planning/models.py:220
 msgid "Hors service"
-msgstr ""
+msgstr "Scos din uz"
 
+#: planning/models.py:231
 msgid "matériel"
-msgstr ""
+msgstr "echipament"
 
+#: planning/models.py:232
 msgid "catalogue matériel"
-msgstr ""
+msgstr "catalog echipamente"
 
+#: planning/models.py:255
 msgid "Mauvais"
-msgstr ""
+msgstr "Slab"
 
+#: planning/models.py:260
 msgid "Complété"
-msgstr ""
+msgstr "Completat"
 
+#: planning/models.py:262
 msgid "Archivé"
-msgstr ""
+msgstr "Arhivat"
 
+#: planning/models.py:295
 msgid "bon d'intervention"
-msgstr ""
+msgstr "bon de intervenție"
 
+#: planning/models.py:296
 msgid "bons d'intervention"
-msgstr ""
+msgstr "bonuri de intervenție"
 
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:80
 msgid "Bon d'intervention"
-msgstr ""
+msgstr "Bon de intervenție"
 
+#: planning/templates/planning/bon_intervention.html:17
 msgid "Technicien"
-msgstr ""
+msgstr "Tehnician"
 
+#: planning/templates/planning/bon_intervention.html:21
 msgid "Travaux réalisés"
-msgstr ""
+msgstr "Lucrări realizate"
 
+#: planning/templates/planning/bon_intervention.html:26
 msgid "Produits utilisés"
-msgstr ""
+msgstr "Produse utilizate"
 
+#: planning/templates/planning/bon_intervention.html:30
 msgid "Qté"
-msgstr ""
+msgstr "Cant."
 
+#: planning/templates/planning/bon_intervention.html:34
 msgid "Ajouter un produit"
-msgstr ""
+msgstr "Adaugă un produs"
 
+#: planning/templates/planning/bon_intervention.html:38
 msgid "Observations"
-msgstr ""
+msgstr "Observații"
 
+#: planning/templates/planning/bon_intervention.html:43
 msgid "Signature du technicien"
-msgstr ""
+msgstr "Semnătura tehnicianului"
 
+#: planning/templates/planning/bon_intervention.html:45
 msgid "Effacer"
-msgstr ""
+msgstr "Șterge"
 
+#: planning/templates/planning/bon_intervention.html:46
 msgid "Nom du signataire"
-msgstr ""
+msgstr "Numele semnatarului"
 
+#: planning/templates/planning/bon_intervention.html:50
 msgid "Enregistrer le brouillon"
-msgstr ""
+msgstr "Salvează ciorna"
 
+#: planning/templates/planning/bon_intervention.html:51
 msgid "Valider le bon"
-msgstr ""
+msgstr "Validează bonul"
 
+#: planning/templates/planning/planning.html:7
 msgid "Planning des interventions"
-msgstr ""
+msgstr "Planificarea intervențiilor"
 
+#: planning/templates/planning/planning.html:17
 msgid "Tâches planifiées"
-msgstr ""
+msgstr "Sarcini planificate"
 
+#: planning/templates/planning/planning.html:32
 msgid "Aucune tâche planifiée."
-msgstr ""
+msgstr "Nicio sarcină planificată."
 
+#: planning/templates/planning/planning.html:37
 msgid "Backlog"
-msgstr ""
+msgstr "Backlog"
 
+#: planning/templates/planning/planning.html:44
 msgid "Backlog vide."
-msgstr ""
+msgstr "Backlog gol."
 
+#: planning/views.py:33
 msgid "Jour"
-msgstr ""
+msgstr "Zi"
 
+#: planning/views.py:33
 msgid "Semaine"
-msgstr ""
+msgstr "Săptămână"
 
+#: planning/views.py:33
 msgid "Mois"
-msgstr ""
+msgstr "Lună"
 
+#: planning/views.py:74
 msgid "Bon d'intervention enregistré."
-msgstr ""
+msgstr "Bon de intervenție înregistrat."
 
+#: public/models.py:17
 msgid "lead capturé"
-msgstr ""
+msgstr "lead capturat"
 
+#: public/models.py:18
 msgid "leads capturés"
-msgstr ""
+msgstr "lead-uri capturate"
 
-msgid "Activer mon compte"
-msgstr ""
-
-msgid "Saisissez le code d'activation reçu par email après votre paiement (format HOLS-XXXX-XXXX)."
-msgstr ""
-
-msgid "Activer"
-msgstr ""
-
+#: public/templates/public/home.html:3
 msgid "Irrigation de précision pour agriculteurs"
-msgstr ""
+msgstr "Irigare de precizie pentru agricultori"
 
-msgid "Pilotez votre irrigation, économisez l'eau et l'énergie."
-msgstr ""
+#: public/templates/public/home.html:13 public/templates/public/home.html:471
+msgid "Domaines"
+msgstr "Domenii"
 
-msgid "IoT temps réel, score d'efficience DTI, assistant IA et conformité subventions — pensés pour les agriculteurs."
-msgstr ""
+#: public/templates/public/home.html:14 public/templates/public/home.html:307
+#: public/templates/public/home.html:472
+msgid "Tarif"
+msgstr "Tarif"
 
-msgid "Démarrer"
-msgstr ""
+#: public/templates/public/home.html:41
+msgid "Votre exploitation, sans la garder en tête."
+msgstr "Exploatația dvs., fără să o țineți în minte."
 
-msgid "Guide gratuit : lire ses analyses de sol"
-msgstr ""
+#: public/templates/public/home.html:44
+msgid "L'assistant qui retient, calcule et prouve à votre place."
+msgstr "Asistentul care reține, calculează și demonstrează în locul dvs."
 
-msgid "Votre email"
-msgstr ""
+#: public/templates/public/home.html:47
+msgid "59,90 € HT/mois par exploitation, utilisateurs illimités."
+msgstr "59,90 € fără TVA/lună per exploatație, utilizatori nelimitați."
 
-msgid "Recevoir"
-msgstr ""
+#: public/templates/public/home.html:53
+msgid "Commencer maintenant"
+msgstr "Începe acum"
 
-msgid "Discuter avec Alex 🌱"
-msgstr ""
+#: public/templates/public/home.html:57
+msgid "Voir ce qu'il fait"
+msgstr "Vezi ce face"
 
-msgid "Posez votre question…"
-msgstr ""
+#: public/templates/public/home.html:61
+#: templates/partials/install_banner.html:23
+msgid "Télécharger l'app"
+msgstr "Descarcă aplicația"
 
+#: public/templates/public/home.html:66
+msgid "Sans engagement"
+msgstr "Fără angajament"
+
+#: public/templates/public/home.html:67 public/templates/public/home.html:327
+msgid "Données hébergées en France"
+msgstr "Date găzduite în Franța"
+
+#: public/templates/public/home.html:68 public/templates/public/home.html:324
+msgid "Prise en main guidée incluse"
+msgstr "Inițiere ghidată inclusă"
+
+#: public/templates/public/home.html:75
+msgid "Exploitation agricole au coucher du soleil"
+msgstr "Exploatație agricolă la apus"
+
+#: public/templates/public/home.html:87
+msgid "Le métier n'a pas changé."
+msgstr "Meseria nu s-a schimbat."
+
+#: public/templates/public/home.html:90
+msgid "Sa charge administrative et mentale, si."
+msgstr "Povara ei administrativă și mentală, da."
+
+#: public/templates/public/home.html:98
+msgid "La réglementation qui s'empile"
+msgstr "Reglementările care se acumulează"
+
+#: public/templates/public/home.html:100
+msgid "Plan Eau 2030"
+msgstr "Plan Apă 2030"
+
+#: public/templates/public/home.html:102
+msgid "E-facturation obligatoire"
+msgstr "E-facturare obligatorie"
+
+#: public/templates/public/home.html:103
+msgid "Traçabilité renforcée"
+msgstr "Trasabilitate consolidată"
+
+#: public/templates/public/home.html:110
+msgid "L'économie qui pèse autrement"
+msgstr "Economia care apasă altfel"
+
+#: public/templates/public/home.html:112
+msgid "Marges sous pression"
+msgstr "Marje sub presiune"
+
+#: public/templates/public/home.html:113
+msgid "Charges en hausse"
+msgstr "Cheltuieli în creștere"
+
+#: public/templates/public/home.html:114
+msgid "Financement complexe"
+msgstr "Finanțare complexă"
+
+#: public/templates/public/home.html:115 public/templates/public/home.html:290
+msgid "Dossiers de subvention"
+msgstr "Dosare de subvenție"
+
+#: public/templates/public/home.html:122
+msgid "La main-d'œuvre à gérer"
+msgstr "Forța de muncă de gestionat"
+
+#: public/templates/public/home.html:124
+msgid "Saisonniers et apprentis"
+msgstr "Sezonieri și ucenici"
+
+#: public/templates/public/home.html:125
+msgid "Associés et salariés"
+msgstr "Asociați și salariați"
+
+#: public/templates/public/home.html:126
+msgid "Transmission incertaine"
+msgstr "Succesiune incertă"
+
+#: public/templates/public/home.html:127
+msgid "Formation continue"
+msgstr "Formare continuă"
+
+#: public/templates/public/home.html:139
+msgid "Ce que disent les agriculteurs français"
+msgstr "Ce spun agricultorii francezi"
+
+#: public/templates/public/home.html:142
+msgid "Des chiffres qui parlent d'eux-mêmes."
+msgstr "Cifre care vorbesc de la sine."
+
+#: public/templates/public/home.html:149
+msgid "des agriculteurs veulent travailler moins"
+msgstr "dintre agricultori vor să lucreze mai puțin"
+
+#: public/templates/public/home.html:150
+msgid "PRISM 2023 — priorité n°1 à 3 ans"
+msgstr "PRISM 2023 — prioritatea nr. 1 la 3 ani"
+
+#: public/templates/public/home.html:154
+msgid "choisissent de réduire leurs charges"
+msgstr "aleg să-și reducă cheltuielile"
+
+#: public/templates/public/home.html:155
+msgid "PRISM 2023 — vs maximiser la productivité"
+msgstr "PRISM 2023 — vs maximizarea productivității"
+
+#: public/templates/public/home.html:159
+msgid "subissent le changement climatique"
+msgstr "suportă schimbările climatice"
+
+#: public/templates/public/home.html:160
+msgid "VoxAgri 2025 — effet négatif sur l'exploitation"
+msgstr "VoxAgri 2025 — efect negativ asupra exploatației"
+
+#: public/templates/public/home.html:164
+msgid "veulent plus d'accompagnement"
+msgstr "vor mai multă îndrumare"
+
+#: public/templates/public/home.html:165
+msgid "PRISM 2023 — ou de meilleure qualité"
+msgstr "PRISM 2023 — sau de calitate mai bună"
+
+#: public/templates/public/home.html:175
+msgid "La charge invisible"
+msgstr "Povara invizibilă"
+
+#: public/templates/public/home.html:178
+msgid ""
+"Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le "
+"prouver à un contrôleur, le retrouver pour un dossier, le transmettre à "
+"l'apprenti — c'est un autre travail."
+msgstr ""
+"Știți ce ați făcut pe parcela 3 acum șase săptămâni. Să demonstrați asta "
+"unui inspector, să o regăsiți pentru un dosar, să o transmiteți ucenicului —"
+" este o altă muncă."
+
+#: public/templates/public/home.html:181
+msgid ""
+"Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est "
+"ce qui se colle par-dessus."
+msgstr ""
+"Și această muncă o faceți seara. Povara nu este meseria, ci ceea ce se "
+"lipește deasupra."
+
+#: public/templates/public/home.html:182
+#, python-format
+msgid ""
+"48 %% des agriculteurs citent « maîtriser le temps de travail » comme "
+"priorité n°1."
+msgstr ""
+"48 %% dintre agricultori menționează „controlul timpului de lucru” ca "
+"prioritate nr. 1."
+
+#: public/templates/public/home.html:194
+msgid "Agriculteur submergé par la paperasse administrative"
+msgstr "Agricultor copleșit de hârțogăria administrativă"
+
+#: public/templates/public/home.html:201
+msgid "5 problèmes. 1 réponse."
+msgstr "5 probleme. 1 răspuns."
+
+#: public/templates/public/home.html:203
+msgid "Votre exploitation mérite un assistant qui ne dort jamais."
+msgstr "Exploatația dvs. merită un asistent care nu doarme niciodată."
+
+#: public/templates/public/home.html:206
+msgid ""
+"Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
+"temps de travail, charges, adaptation climatique, gestion d'équipe et "
+"accompagnement. Disponible à la voix, sur le tracteur, à 22h."
+msgstr ""
+"Holystyl răspunde celor 5 mari preocupări ale agricultorilor francezi: timp "
+"de lucru, cheltuieli, adaptare climatică, gestiunea echipei și îndrumare. "
+"Disponibil prin voce, pe tractor, la ora 22."
+
+#: public/templates/public/home.html:211
+msgid "« Je n'ai pas le temps »"
+msgstr "„Nu am timp”"
+
+#: public/templates/public/home.html:212
+msgid "automatise les rapports et la traçabilité"
+msgstr "automatizează rapoartele și trasabilitatea"
+
+#: public/templates/public/home.html:215
+msgid "« Je dois réduire mes charges »"
+msgstr "„Trebuie să-mi reduc cheltuielile”"
+
+#: public/templates/public/home.html:216
+msgid "tableau de bord financier en temps réel"
+msgstr "tablou de bord financiar în timp real"
+
+#: public/templates/public/home.html:219
+msgid "« Le climat change »"
+msgstr "„Clima se schimbă”"
+
+#: public/templates/public/home.html:220
+msgid "alertes météo, suivi parcellaire, aide à la décision"
+msgstr "alerte meteo, monitorizare parcelară, sprijin decizional"
+
+#: public/templates/public/home.html:223
+msgid "« Je gère des saisonniers »"
+msgstr "„Gestionez sezonieri”"
+
+#: public/templates/public/home.html:224
+msgid "module Équipe & Tâches avec rappels automatiques"
+msgstr "modul Echipă & Sarcini cu mementouri automate"
+
+#: public/templates/public/home.html:227
+msgid "« Je ne sais pas à qui demander »"
+msgstr "„Nu știu pe cine să întreb”"
+
+#: public/templates/public/home.html:228
+msgid "IA disponible 24h/24 sur vos questions"
+msgstr "IA disponibilă 24h/24 pentru întrebările dvs."
+
+#: public/templates/public/home.html:240
+msgid "Tout ce qu'il couvre"
+msgstr "Tot ceea ce acoperă"
+
+#: public/templates/public/home.html:243
+msgid "Dix domaines. Un seul outil."
+msgstr "Zece domenii. Un singur instrument."
+
+#: public/templates/public/home.html:250
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation et eau"
+msgstr "Irigare"
+
+#: public/templates/public/home.html:251
+msgid "Programmes, quotas, capteurs IoT"
+msgstr "Programe, cote, senzori IoT"
+
+#: public/templates/public/home.html:255
+msgid "Charges et marges"
+msgstr "Cheltuieli și marje"
+
+#: public/templates/public/home.html:256
+msgid "Suivi économique en temps réel"
+msgstr "Monitorizare economică în timp real"
+
+#: public/templates/public/home.html:261
+msgid "Maintenance, alertes, historique"
+msgstr "Întreținere, alerte, istoric"
+
+#: public/templates/public/home.html:266
+msgid "Traitements, travaux, traçabilité"
+msgstr "Tratamente, lucrări, trasabilitate"
+
+#: public/templates/public/home.html:271
+msgid "Résultats, recommandations"
+msgstr "Rezultate, recomandări"
+
+#: public/templates/public/home.html:275
+msgid "Récoltes"
+msgstr "Recolte"
+
+#: public/templates/public/home.html:276
+msgid "Volumes, qualité, rendements"
+msgstr "Volume, calitate, randamente"
+
+#: public/templates/public/home.html:280
+msgid "Équipe et planning"
+msgstr "Echipă și planificare"
+
+#: public/templates/public/home.html:281
+msgid "Saisonniers, apprentis, associés"
+msgstr "Sezonieri, ucenici, asociați"
+
+#: public/templates/public/home.html:285
+msgid "Conformité réglementaire"
+msgstr "Conformitate cu reglementările"
+
+#: public/templates/public/home.html:286
+msgid "Taxonomie EU, Plan Eau 2030"
+msgstr "Taxonomie UE, Plan Apă 2030"
+
+#: public/templates/public/home.html:291
+msgid "JEI, CIR, aides PAC"
+msgstr "JEI, CIR, ajutoare PAC"
+
+#: public/templates/public/home.html:295
+msgid "Météo et alertes"
+msgstr "Vremea și alerte"
+
+#: public/templates/public/home.html:296
+msgid "Gel, ETP, prévisions 7 jours"
+msgstr "Îngheț, ETP, prognoză 7 zile"
+
+#: public/templates/public/home.html:309
+msgid "Simple et transparent."
+msgstr "Simplu și transparent."
+
+#: public/templates/public/home.html:315
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "par mois · par exploitation"
+msgstr "Exploatația mea"
+
+#: public/templates/public/home.html:317
+msgid "Tous vos utilisateurs inclus — sans engagement"
+msgstr "Toți utilizatorii dvs. incluși — fără angajament"
+
+#: public/templates/public/home.html:322
+msgid "Assistant vocal illimité"
+msgstr "Asistent vocal nelimitat"
+
+#: public/templates/public/home.html:323
+msgid "Tous les modules inclus"
+msgstr "Toate modulele incluse"
+
+#: public/templates/public/home.html:325
+msgid "Support réactif"
+msgstr "Suport reactiv"
+
+#: public/templates/public/home.html:326
+msgid "Mises à jour automatiques"
+msgstr "Actualizări automate"
+
+#: public/templates/public/home.html:328
+msgid "Utilisateurs illimités par exploitation"
+msgstr "Utilizatori nelimitați per exploatație"
+
+#: public/templates/public/home.html:329
+msgid "Accès mobile et tablette"
+msgstr "Acces mobil și tabletă"
+
+#: public/templates/public/home.html:335
+msgid "S'abonner maintenant"
+msgstr "Abonează-te acum"
+
+#: public/templates/public/home.html:337
+msgid "Paiement sécurisé par Stripe · Résiliation en 1 clic"
+msgstr "Plată securizată prin Stripe · Reziliere cu 1 clic"
+
+#: public/templates/public/home.html:347
+msgid "Guide gratuit"
+msgstr "Ghid gratuit"
+
+#: public/templates/public/home.html:349
+#, fuzzy
+#| msgid "Analyses de sol"
+msgid "Lire ses analyses de sol"
+msgstr "Analize de sol"
+
+#: public/templates/public/home.html:352
+msgid ""
+"Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre"
+" exploitation. Téléchargement immédiat."
+msgstr ""
+"Înțelegeți rezultatele analizelor dvs. și luați deciziile corecte pentru "
+"exploatația dvs. Descărcare imediată."
+
+#: public/templates/public/home.html:358
+msgid "pH & impact cultures"
+msgstr "pH & impact culturi"
+
+#: public/templates/public/home.html:362
+msgid "Matière organique"
+msgstr "Materie organică"
+
+#: public/templates/public/home.html:366
+msgid "N, P, K décryptés"
+msgstr "N, P, K descifrate"
+
+#: public/templates/public/home.html:370
+msgid "Recommandations concrètes"
+msgstr "Recomandări concrete"
+
+#: public/templates/public/home.html:378
+msgid "Recevoir le guide"
+msgstr "Primește ghidul"
+
+#: public/templates/public/home.html:381
+msgid "Aucun spam. Votre email ne sera jamais revendu."
+msgstr "Fără spam. Email-ul dvs. nu va fi niciodată revândut."
+
+#: public/templates/public/home.html:390
+msgid "Questions fréquentes"
+msgstr "Întrebări frecvente"
+
+#: public/templates/public/home.html:396
+msgid "Holystyl peut-il vraiment m'aider à travailler moins ?"
+msgstr "Poate Holystyl să mă ajute cu adevărat să lucrez mai puțin?"
+
+#: public/templates/public/home.html:400
+#, python-format
+msgid ""
+"Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi"
+" de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
+"l'administratif — la priorité n°1 de 48 %% des agriculteurs."
+msgstr ""
+"Da. Automatizând trasabilitatea, rapoartele de reglementare și monitorizarea"
+" parcelelor dvs., Holystyl vă face să economisiți orele petrecute seara cu "
+"administrativul — prioritatea nr. 1 a 48 %% dintre agricultori."
+
+#: public/templates/public/home.html:405
+msgid "Est-ce que l'assistant comprend mes questions techniques ?"
+msgstr "Asistentul îmi înțelege întrebările tehnice?"
+
+#: public/templates/public/home.html:409
+msgid ""
+"Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, "
+"fertilisation (N, P, K), météo, réglementation ou analyses de sol — à "
+"l'écrit comme à la voix, 24h/24."
+msgstr ""
+"Da. Asistentul IA este specializat pentru agricultură: irigare, fertilizare "
+"(N, P, K), vreme, reglementări sau analize de sol — atât în scris, cât și "
+"prin voce, 24h/24."
+
+#: public/templates/public/home.html:414
+msgid "Comment démarrer avec Holystyl ?"
+msgstr "Cum încep cu Holystyl?"
+
+#: public/templates/public/home.html:418
+msgid ""
+"Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à "
+"pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
+"équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
+"IoT) et est opérationnel le jour même, depuis votre smartphone ou "
+"ordinateur."
+msgstr ""
+"Creați-vă contul online în 2 minute. Un ghid de configurare pas cu pas vă "
+"însoțește pentru a adăuga parcelele, culturile și echipa dvs. Holystyl se "
+"conectează la sistemul dvs. de irigare (Vyrsa, senzori IoT) și este "
+"operațional în aceeași zi, de pe smartphone sau computer."
+
+#: public/templates/public/home.html:423
+msgid "Holystyl m'aide-t-il à réduire mes charges ?"
+msgstr "Mă ajută Holystyl să-mi reduc cheltuielile?"
+
+#: public/templates/public/home.html:427
+msgid ""
+"Oui. Le tableau de bord financier suit vos charges et vos marges en temps "
+"réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez "
+"aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles."
+msgstr ""
+"Da. Tabloul de bord financiar urmărește cheltuielile și marjele dvs. în timp"
+" real, identifică posturile care apasă și vă ajută să decideți. Gestionați "
+"de asemenea cotele de apă și echipamentele pentru a evita cheltuielile "
+"inutile."
+
+#: public/templates/public/home.html:432
+msgid "L'application fonctionne-t-elle sans internet sur la parcelle ?"
+msgstr "Funcționează aplicația fără internet pe parcelă?"
+
+#: public/templates/public/home.html:436
+msgid ""
+"Oui. Vous consultez et saisissez vos interventions sur le terrain même sans "
+"réseau ; les données se synchronisent automatiquement dès que la connexion "
+"revient."
+msgstr ""
+"Da. Consultați și introduceți intervențiile dvs. pe teren chiar și fără "
+"rețea; datele se sincronizează automat de îndată ce conexiunea revine."
+
+#: public/templates/public/home.html:441
+msgid "Mes données m'appartiennent-elles ?"
+msgstr "Datele mele îmi aparțin?"
+
+#: public/templates/public/home.html:445
+msgid ""
+"Absolument. Vos données vous appartiennent et restent confidentielles : "
+"hébergées en France, jamais revendues, exportables ou supprimables à tout "
+"moment."
+msgstr ""
+"Absolut. Datele dvs. vă aparțin și rămân confidențiale: găzduite în Franța, "
+"niciodată revândute, exportabile sau care pot fi șterse oricând."
+
+#: public/templates/public/home.html:463
+msgid ""
+"Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
+"Holystyl."
+msgstr ""
+"Asistent inteligent pentru exploatații agricole. Conceput cu rețeaua "
+"Holystyl."
+
+#: public/templates/public/home.html:478
+msgid "Accès"
+msgstr "Acces"
+
+#: public/templates/public/home.html:481
+msgid "S'abonner"
+msgstr "Abonează-te"
+
+#: public/templates/public/home.html:488
+msgid "© 2026 Holystyl · Tous droits réservés"
+msgstr "© 2026 Holystyl · Toate drepturile rezervate"
+
+#: public/templates/public/home.html:490
+msgid "Mentions légales"
+msgstr "Mențiuni legale"
+
+#: public/templates/public/home.html:492
+msgid "Confidentialité"
+msgstr "Confidențialitate"
+
+#: public/templates/public/home.html:493
+msgid "Registre transparence UE 238841"
+msgstr "Registru de transparență UE 238841"
+
+#: public/views.py:26
 msgid "Merci ! Votre guide arrive par email."
-msgstr ""
+msgstr "Mulțumim! Ghidul dvs. ajunge prin email."
 
-msgid "Votre accès Holystyl est activé !"
-msgstr ""
+#: sondages/models.py:15
+msgid "question"
+msgstr "întrebare"
 
-msgid "Code invalide ou déjà utilisé."
-msgstr ""
+#: sondages/models.py:17
+msgid "clôturé"
+msgstr "închis"
 
-msgid "Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
-msgstr ""
+#: sondages/models.py:20
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondage"
+msgstr "Sondaj"
 
+#: sondages/models.py:21
+#, fuzzy
+#| msgid "Sondage"
+msgid "sondages"
+msgstr "Sondaj"
+
+#: sondages/models.py:48
+msgid "texte"
+msgstr "text"
+
+#: sondages/models.py:52 sondages/models.py:53
+#: sondages/templates/sondages/liste.html:27
+msgid "choix"
+msgstr "alegere"
+
+#: sondages/models.py:67
+msgid "vote"
+msgstr "vot"
+
+#: sondages/models.py:68
+msgid "votes"
+msgstr "voturi"
+
+#: sondages/templates/sondages/create.html:6
+#: sondages/templates/sondages/liste.html:10 sondages/views.py:45
+#: sondages/views.py:58
+msgid "Nouveau sondage"
+msgstr "Sondaj nou"
+
+#: sondages/templates/sondages/create.html:17
+msgid "Question"
+msgstr "Întrebare"
+
+#: sondages/templates/sondages/create.html:19
+msgid "Ex. Quelle parcelle irriguer en priorité ?"
+msgstr "Ex. Ce parcelă să irigăm prioritar?"
+
+#: sondages/templates/sondages/create.html:24
+#: sondages/templates/sondages/create.html:27
+#: sondages/templates/sondages/create.html:48
+msgid "Choix"
+msgstr "Alegere"
+
+#: sondages/templates/sondages/create.html:32
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter un choix"
+msgstr "Activează un cod"
+
+#: sondages/templates/sondages/detail.html:7
+#: sondages/templates/sondages/liste.html:7 sondages/views.py:30
+#, fuzzy
+#| msgid "Sondage"
+msgid "Sondages"
+msgstr "Sondaj"
+
+#: sondages/templates/sondages/detail.html:14
+#: sondages/templates/sondages/liste.html:21
+msgid "Clôturé"
+msgstr "Închis"
+
+#: sondages/templates/sondages/detail.html:35
+#, python-format
+msgid "%(n)s vote au total"
+msgid_plural "%(n)s votes au total"
+msgstr[0] "%(n)s vot în total"
+msgstr[1] "%(n)s voturi în total"
+msgstr[2] "%(n)s de voturi în total"
+
+#: sondages/templates/sondages/detail.html:46
+msgid "Voter"
+msgstr "Votează"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Rouvrir le sondage"
+msgstr "Redeschide sondajul"
+
+#: sondages/templates/sondages/detail.html:54
+msgid "Clôturer le sondage"
+msgstr "Închide sondajul"
+
+#: sondages/templates/sondages/liste.html:23
+msgid "Voté"
+msgstr "Votat"
+
+#: sondages/templates/sondages/liste.html:27
+#, python-format
+msgid "%(n)s vote"
+msgid_plural "%(n)s votes"
+msgstr[0] "%(n)s vot"
+msgstr[1] "%(n)s voturi"
+msgstr[2] "%(n)s de voturi"
+
+#: sondages/templates/sondages/liste.html:33
+msgid "Aucun sondage pour le moment. Créez-en un !"
+msgstr "Niciun sondaj deocamdată. Creați unul!"
+
+#: sondages/views.py:40
+msgid "La question est obligatoire."
+msgstr "Întrebarea este obligatorie."
+
+#: sondages/views.py:42
+msgid "Proposez au moins deux choix."
+msgstr "Propuneți cel puțin două alegeri."
+
+#: templates/partials/cookie_banner.html:6
+msgid ""
+"Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
+msgstr "Utilizăm cookie-uri esențiale pentru funcționarea Holystyl (RGPD)."
+
+#: templates/partials/cookie_banner.html:8
 msgid "J'ai compris"
-msgstr ""
+msgstr "Am înțeles"
 
+#: templates/partials/header.html:13
 msgid "Heure locale"
 msgstr "Ora locală"
 
-msgid "Langue"
-msgstr ""
-
+#: templates/partials/header.html:33
 msgid "Thème"
-msgstr ""
+msgstr "Temă"
 
+#: templates/partials/header.html:64
 msgid "Déconnexion"
-msgstr ""
+msgstr "Deconectare"
 
+#: templates/partials/install_banner.html:13
 msgid "Installer Holystyl"
-msgstr ""
+msgstr "Instalează Holystyl"
 
+#: templates/partials/install_banner.html:15
 msgid "Partager puis « Sur l’écran d’accueil »."
-msgstr ""
+msgstr "Partajați apoi „Pe ecranul de start”."
 
+#: templates/partials/install_banner.html:16
 msgid "Accédez plus vite depuis votre écran d’accueil."
-msgstr ""
+msgstr "Accesați mai rapid de pe ecranul dvs. de start."
 
-msgid "Télécharger l'app"
-msgstr ""
-
+#: templates/partials/install_banner.html:25
 msgid "Plus tard"
-msgstr ""
+msgstr "Mai târziu"
 
-msgid "Fermer"
-msgstr ""
+#: templates/partials/lang_switcher.html:27
+msgid "Langue"
+msgstr "Limbă"
 
+#: templates/partials/nav_flyout.html:17
 msgid "Bientôt"
 msgstr "În curând"
 
+#: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
-msgstr ""
+msgstr "Să redăm sens meseriei noastre"
+
+#~ msgid "Administration"
+#~ msgstr "Administrare"
