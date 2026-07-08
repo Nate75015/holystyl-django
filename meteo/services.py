@@ -15,41 +15,42 @@ OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 
 _JOURS = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"]
 
-# Codes WMO → (libellé FR, emoji)
+# Codes WMO → (libellé FR, icône Material Icons Round monochrome)
 _WMO = {
-    0: ("Ciel dégagé", "☀️"),
-    1: ("Plutôt dégagé", "🌤️"),
-    2: ("Partiellement nuageux", "⛅"),
-    3: ("Couvert", "☁️"),
-    45: ("Brouillard", "🌫️"),
-    48: ("Brouillard givrant", "🌫️"),
-    51: ("Bruine légère", "🌦️"),
-    53: ("Bruine", "🌦️"),
-    55: ("Bruine dense", "🌧️"),
-    56: ("Bruine verglaçante", "🌧️"),
-    57: ("Bruine verglaçante", "🌧️"),
-    61: ("Pluie faible", "🌦️"),
-    63: ("Pluie", "🌧️"),
-    65: ("Pluie forte", "🌧️"),
-    66: ("Pluie verglaçante", "🌧️"),
-    67: ("Pluie verglaçante", "🌧️"),
-    71: ("Neige faible", "🌨️"),
-    73: ("Neige", "❄️"),
-    75: ("Neige forte", "❄️"),
-    77: ("Grains de neige", "❄️"),
-    80: ("Averses faibles", "🌦️"),
-    81: ("Averses", "🌧️"),
-    82: ("Averses violentes", "⛈️"),
-    85: ("Averses de neige", "🌨️"),
-    86: ("Averses de neige", "🌨️"),
-    95: ("Orage", "⛈️"),
-    96: ("Orage avec grêle", "⛈️"),
-    99: ("Orage avec grêle", "⛈️"),
+    0: ("Ciel dégagé", "wb_sunny"),
+    1: ("Plutôt dégagé", "wb_sunny"),
+    2: ("Partiellement nuageux", "wb_cloudy"),
+    3: ("Couvert", "cloud"),
+    45: ("Brouillard", "blur_on"),
+    48: ("Brouillard givrant", "blur_on"),
+    51: ("Bruine légère", "grain"),
+    53: ("Bruine", "grain"),
+    55: ("Bruine dense", "grain"),
+    56: ("Bruine verglaçante", "grain"),
+    57: ("Bruine verglaçante", "grain"),
+    61: ("Pluie faible", "grain"),
+    63: ("Pluie", "grain"),
+    65: ("Pluie forte", "grain"),
+    66: ("Pluie verglaçante", "grain"),
+    67: ("Pluie verglaçante", "grain"),
+    71: ("Neige faible", "ac_unit"),
+    73: ("Neige", "ac_unit"),
+    75: ("Neige forte", "ac_unit"),
+    77: ("Grains de neige", "ac_unit"),
+    80: ("Averses faibles", "grain"),
+    81: ("Averses", "grain"),
+    82: ("Averses violentes", "flash_on"),
+    85: ("Averses de neige", "ac_unit"),
+    86: ("Averses de neige", "ac_unit"),
+    95: ("Orage", "flash_on"),
+    96: ("Orage avec grêle", "flash_on"),
+    99: ("Orage avec grêle", "flash_on"),
 }
 
 
 def _wmo(code):
-    return _WMO.get(int(code) if code is not None else -1, ("—", "❓"))
+    """(libellé, icône Material) pour un code WMO."""
+    return _WMO.get(int(code) if code is not None else -1, ("—", "help_outline"))
 
 
 def _r(value, default=None):
@@ -96,8 +97,8 @@ def fetch_current(lat, lon):
     with urllib.request.urlopen(req, timeout=10) as resp:
         data = json.loads(resp.read())
     cur = data.get("current", {})
-    label, emoji = _wmo(cur.get("weather_code"))
-    return {"temp": _r(cur.get("temperature_2m")), "label": label, "emoji": emoji}
+    label, icon = _wmo(cur.get("weather_code"))
+    return {"temp": _r(cur.get("temperature_2m")), "label": label, "icon": icon}
 
 
 def fetch_weather(lat, lon):
@@ -118,7 +119,7 @@ def fetch_weather(lat, lon):
         data = json.loads(resp.read())
 
     cur = data.get("current", {})
-    clabel, cemoji = _wmo(cur.get("weather_code"))
+    clabel, cicon = _wmo(cur.get("weather_code"))
     current = {
         "temp": _r(cur.get("temperature_2m")),
         "ressenti": _r(cur.get("apparent_temperature")),
@@ -126,7 +127,7 @@ def fetch_weather(lat, lon):
         "pluie": cur.get("precipitation"),
         "vent": _r(cur.get("wind_speed_10m")),
         "label": clabel,
-        "emoji": cemoji,
+        "icon": cicon,
     }
 
     daily = data.get("daily", {})
@@ -134,12 +135,12 @@ def fetch_weather(lat, lon):
     days = []
     for i, d in enumerate(times):
         dt = date.fromisoformat(d)
-        label, emoji = _wmo(daily.get("weather_code", [None] * len(times))[i])
+        label, icon = _wmo(daily.get("weather_code", [None] * len(times))[i])
         days.append({
             "date": dt,
             "jour": _JOURS[dt.weekday()],
             "label": label,
-            "emoji": emoji,
+            "icon": icon,
             "tmax": _r(daily.get("temperature_2m_max", [None])[i]),
             "tmin": _r(daily.get("temperature_2m_min", [None])[i]),
             "pluie": daily.get("precipitation_sum", [None])[i],

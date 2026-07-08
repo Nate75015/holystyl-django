@@ -37,7 +37,7 @@ def layout(request):
                 {"label": _("Notifications"), "url_name": "notifications:center", "icon": "notifications"},
                 {"label": _("Messagerie"), "url_name": "messagerie:inbox", "icon": "chat"},
                 {"label": _("Mail"), "url_name": "mail:outbox", "icon": "mail"},
-                {"label": _("Sondage"), "url_name": "sondages:liste", "icon": "poll"},
+                {"label": _("Pétition"), "url_name": "petition:liste", "icon": "draw"},
             ],
         },
         {

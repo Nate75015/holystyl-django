@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     "notifications",
     "messagerie",
     "mail",
-    "sondages",
+    "petition",
     "equipe",
     "planning",
     "operations",
