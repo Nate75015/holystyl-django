@@ -44,7 +44,7 @@
           <input type="checkbox" name="enabled" {% if ville.capture_auto %}checked{% endif %} class="h-4 w-4 accent-brand">
           {% trans "Activée" %}
         </label>
-        <select name="frequence" class="rounded-lg text-sm">
+        <select id="capture-frequence" name="frequence" aria-label="{% trans 'Fréquence de capture automatique' %}" class="rounded-lg text-sm">
           {% for value, label in frequences %}
             <option value="{{ value }}" {% if ville.capture_frequence == value %}selected{% endif %}>{{ label }}</option>
           {% endfor %}
