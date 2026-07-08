@@ -90,7 +90,6 @@ def layout(request):
                 {"label": _("Planning"), "url_name": "planning:planning", "icon": "event"},
                 {"label": _("Équipe"), "url_name": "equipe:equipe", "icon": "groups"},
                 {"label": _("Tâches"), "url_name": "equipe:taches", "icon": "checklist"},
-                {"label": _("Mes tâches"), "url_name": "equipe:mes_taches", "icon": "assignment_ind"},
             ],
         },
         {

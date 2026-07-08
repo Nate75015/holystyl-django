@@ -2,6 +2,7 @@
 
 import calendar as _calendar
 import json
+from collections import defaultdict
 from datetime import date, timedelta
 
 from django.contrib import messages
@@ -10,7 +11,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from equipe.models import TeamMember
+from equipe.models import Task, TeamMember
 from exploitations.models import Exploitation
 
 from .models import InterventionReport, PlanningTask
@@ -75,6 +76,27 @@ def planning(request):
             next_date=(first + timedelta(days=31)).replace(day=1),
             is_today_range=(first.year == today.year and first.month == today.month),
         )
+
+    # Tâches d'équipe (app taches) placées dans la grille membre × jour
+    # d'échéance, pour les vues jour et semaine.
+    if vue in ("jour", "semaine"):
+        days = ctx["days"]
+        by_cell = defaultdict(list)
+        if exploitation and team_members:
+            tasks = Task.objects.filter(
+                exploitation=exploitation,
+                assigned_to__in=team_members,
+                due_date__date__range=(days[0], days[-1]),
+            ).select_related("assigned_to")
+            for t in tasks:
+                by_cell[(t.assigned_to_id, timezone.localdate(t.due_date))].append(t)
+        ctx["rows"] = [
+            {
+                "member": m,
+                "cells": [{"date": d, "tasks": by_cell.get((m.id, d), [])} for d in days],
+            }
+            for m in team_members
+        ]
 
     return render(request, "planning/planning.html", ctx)
 

@@ -2,13 +2,14 @@
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from exploitations.models import Exploitation
 
-from .forms import TeamMemberForm
+from .forms import TaskForm, TeamMemberForm
 from .models import Task, TeamMember
 
 
@@ -51,17 +52,51 @@ def membre_edit(request, pk):
 @login_required
 def taches(request):
     exploitation = _exploitation(request)
-    tasks = Task.objects.filter(exploitation=exploitation) if exploitation else Task.objects.none()
-    return render(request, "equipe/taches.html", {"tasks": tasks, "page_title": _("Tâches")})
+    form = TaskForm(exploitation=exploitation)
+    if request.method == "POST":
+        if exploitation is None:
+            messages.error(request, _("Créez d'abord votre exploitation avant d'ajouter une tâche."))
+        else:
+            form = TaskForm(request.POST, exploitation=exploitation)
+            if form.is_valid():
+                task = form.save(commit=False)
+                task.exploitation = exploitation
+                task.created_by = request.user
+                task.save()
+                messages.success(request, _("Tâche « %(t)s » ajoutée.") % {"t": task.title})
+                return redirect("equipe:taches")
+    # « Mes tâches » : membre lié à mon compte (par user, ou à défaut par email).
+    my_member = None
+    if exploitation:
+        q = Q(user=request.user)
+        if request.user.email:
+            q |= Q(email__iexact=request.user.email)
+        my_member = TeamMember.objects.filter(exploitation=exploitation).filter(q).first()
+    tasks = list(
+        Task.objects.filter(exploitation=exploitation).select_related("assigned_to")
+        if exploitation else Task.objects.none()
+    )
+    for t in tasks:
+        t.is_mine = my_member is not None and t.assigned_to_id == my_member.id
+    has_mine = any(t.is_mine for t in tasks)
+    return render(request, "equipe/taches.html", {
+        "tasks": tasks, "form": form, "has_mine": has_mine, "page_title": _("Tâches"),
+    })
 
 
 @login_required
-def mes_taches(request):
-    """Vue technicien : tâches assignées au membre lié à l'utilisateur courant."""
+def taches_edit(request, pk):
+    """Modifie une tâche (soumis depuis la modale de /taches/)."""
     exploitation = _exploitation(request)
-    member = TeamMember.objects.filter(exploitation=exploitation, user=request.user).first()
-    tasks = Task.objects.filter(assigned_to=member) if member else Task.objects.none()
-    return render(request, "equipe/mes_taches.html", {"tasks": tasks, "page_title": _("Mes tâches")})
+    task = get_object_or_404(Task, pk=pk, exploitation=exploitation)
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task, exploitation=exploitation)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Tâche « %(t)s » modifiée.") % {"t": task.title})
+        else:
+            messages.error(request, _("Modification impossible : vérifiez les champs."))
+    return redirect("equipe:taches")
 
 
 def location_share(request, token):

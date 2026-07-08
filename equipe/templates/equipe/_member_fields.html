@@ -15,20 +15,3 @@ Attend la variable `form`.{% endcomment %}
   {% include "accounts/_field.html" with field=form.phone %}
   {% include "accounts/_field.html" with field=form.role %}
 </div>
-
-{% include "accounts/_field.html" with field=form.password %}
-{% include "accounts/_field.html" with field=form.preferred_locale %}
-
-{# Modules autorisés — cases stylées (surbrillance quand cochées) #}
-<div>
-  <p class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200">{% trans "Modules autorisés" %}</p>
-  <div class="grid gap-2 sm:grid-cols-3">
-    {% for cb in form.modules %}
-      <label class="flex cursor-pointer items-center gap-2.5 rounded-xl border-2 border-[#d6d3c8] px-3 py-2.5 text-sm accent-[#28738f] transition hover:bg-[#f4f2ec] has-[:checked]:border-[#28738f] has-[:checked]:bg-[#28738f]/5 dark:border-[#2a3f4d] dark:hover:bg-white/5">
-        {{ cb.tag }}
-        <span>{{ cb.choice_label }}</span>
-      </label>
-    {% endfor %}
-  </div>
-  {% for error in form.modules.errors %}<p class="mt-1 text-xs text-red-500">{{ error }}</p>{% endfor %}
-</div>
