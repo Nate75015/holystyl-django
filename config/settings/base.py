@@ -214,6 +214,13 @@ TWILIO_FROM_NUMBER = env("TWILIO_FROM_NUMBER", "")
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET", "")
 
+# ── Mail — connexion Gmail (OAuth2 / Gmail API) ─────────────────────
+# Identifiants d'un client OAuth « Web » créé dans Google Cloud Console,
+# avec l'API Gmail activée. URI de redirection à déclarer :
+#   {APP_URL}/mail/oauth/callback/
+GOOGLE_OAUTH_CLIENT_ID = env("GOOGLE_OAUTH_CLIENT_ID", "")
+GOOGLE_OAUTH_CLIENT_SECRET = env("GOOGLE_OAUTH_CLIENT_SECRET", "")
+
 # ── Divers ──────────────────────────────────────────────────────────
 APP_NAME = "Holystyl"
 APP_URL = env("APP_URL", "http://localhost:8000")

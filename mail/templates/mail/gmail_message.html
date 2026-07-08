@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block main_padding %}{% endblock %}
+
+{% block content %}
+<div class="flex h-[calc(100dvh-8rem)] overflow-hidden bg-sand-50 dark:bg-[#0b1620] md:h-[calc(100dvh-3.25rem)]">
+
+  {% include "mail/_rail.html" %}
+
+  <div class="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#0f1f2b] md:border-l md:border-black/5 dark:md:border-white/10">
+
+    {# Barre d'actions #}
+    <div class="flex items-center gap-1 border-b border-black/5 px-3 py-2 text-slate-500 dark:border-white/10 dark:text-slate-400">
+      <a href="{% url 'mail:folder' back_folder %}" title="{% trans 'Retour' %}"
+         class="grid h-9 w-9 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10">
+        <span class="material-icons-round text-[20px]">arrow_back</span>
+      </a>
+      <span class="mx-1 hidden h-5 w-px bg-black/10 dark:bg-white/10 sm:block"></span>
+      <a href="{% url 'mail:compose' %}?to={{ msg.from_addr|urlencode }}" title="{% trans 'Répondre' %}"
+         class="grid h-9 w-9 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10">
+        <span class="material-icons-round text-[20px]">reply</span>
+      </a>
+      <a href="{% url 'mail:compose' %}" title="{% trans 'Transférer' %}"
+         class="grid h-9 w-9 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10">
+        <span class="material-icons-round text-[20px]">forward</span>
+      </a>
+    </div>
+
+    {# Conversation #}
+    <div class="flex-1 overflow-y-auto px-4 py-4 sm:px-8">
+      <div class="mx-auto max-w-3xl">
+        <h1 class="mb-4 text-xl font-semibold leading-snug text-slate-800 dark:text-slate-100 sm:text-2xl">{{ msg.subject }}</h1>
+
+        <div class="flex items-start gap-3 border-b border-black/5 pb-4 dark:border-white/10" x-data="{ meta: false }">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand/15 text-sm font-bold uppercase text-brand">{{ msg.from_name|slice:":1"|upper }}</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-baseline gap-x-2">
+              <span class="text-sm font-semibold text-slate-800 dark:text-slate-100">{{ msg.from_name }}</span>
+              <span class="text-xs text-slate-400">&lt;{{ msg.from_addr }}&gt;</span>
+            </div>
+            <button type="button" @click="meta = !meta" class="flex items-center gap-1 text-xs text-slate-500 hover:text-brand">
+              {% trans "À" %} : {{ msg.to|truncatechars:50 }}
+              <span class="material-icons-round text-[16px] transition" :class="meta && 'rotate-180'">expand_more</span>
+            </button>
+            <div x-show="meta" x-cloak x-collapse class="mt-2 space-y-1 rounded-xl bg-black/[.03] p-3 text-xs text-slate-600 dark:bg-white/5 dark:text-slate-300">
+              <p><span class="inline-block w-14 text-slate-400">{% trans "De" %}</span> {{ msg.from_addr }}</p>
+              <p><span class="inline-block w-14 text-slate-400">{% trans "À" %}</span> {{ msg.to }}</p>
+              {% if msg.cc %}<p><span class="inline-block w-14 text-slate-400">{% trans "Cc" %}</span> {{ msg.cc }}</p>{% endif %}
+              <p><span class="inline-block w-14 text-slate-400">{% trans "Date" %}</span> {{ msg.date }}</p>
+            </div>
+          </div>
+          <span class="shrink-0 text-xs text-slate-400">{{ msg.date }}</span>
+        </div>
+
+        {# Corps : HTML en iframe sandbox (aucun script exécuté), sinon texte brut #}
+        <div class="py-6">
+          {% if msg.body_html %}
+            <iframe title="{% trans 'Contenu du message' %}" sandbox="allow-same-origin"
+                    srcdoc="{{ msg.body_html }}"
+                    class="w-full rounded-lg border border-black/5 bg-white dark:border-white/10"
+                    style="min-height:60vh" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+32)+'px'"></iframe>
+          {% else %}
+            <div class="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">{{ msg.body_text }}</div>
+          {% endif %}
+        </div>
+
+        {% if msg.attachments %}
+          <div class="border-t border-black/5 pt-4 dark:border-white/10">
+            <p class="mb-2 text-xs font-medium text-slate-400">{{ msg.attachments|length }} {% trans "pièce(s) jointe(s)" %}</p>
+            <div class="flex flex-wrap gap-2">
+              {% for a in msg.attachments %}
+                <span class="inline-flex items-center gap-2 rounded-lg border border-black/5 bg-black/[.02] px-3 py-2 text-xs text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                  <span class="material-icons-round text-[18px] text-brand">description</span>{{ a.filename }}
+                </span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="mt-6 flex gap-2">
+          <a href="{% url 'mail:compose' %}?to={{ msg.from_addr|urlencode }}"
+             class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-black/5 dark:border-white/15 dark:text-slate-300 dark:hover:bg-white/10">
+            <span class="material-icons-round text-[18px]">reply</span>{% trans "Répondre" %}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

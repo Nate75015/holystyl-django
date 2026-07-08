@@ -1,0 +1,58 @@
+{% load i18n %}
+{% comment %}Navbar vertical Mail (façon Gmail). Attend : account, rail_main, rail_more,
+   active_folder, gmail_configured. Non connecté → import seul (aucun envoi).{% endcomment %}
+<aside class="hidden w-60 shrink-0 flex-col overflow-y-auto px-2 py-3 md:flex xl:w-64" x-data="{ more: false }">
+
+  {% if account %}
+    {# ── Connecté : composer + dossiers/libellés Gmail ── #}
+    <a href="{% url 'mail:compose' %}"
+       class="mb-4 inline-flex items-center gap-3 self-start rounded-2xl bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-md ring-1 ring-black/5 transition hover:shadow-lg dark:bg-[#122230] dark:text-slate-100 dark:ring-white/10">
+      <span class="material-icons-round text-[22px] text-brand">edit</span>{% trans "Nouveau message" %}
+    </a>
+
+    <nav class="space-y-0.5 text-sm">
+      {% for f in rail_main %}
+        <a href="{% url 'mail:folder' f.key %}"
+           class="flex items-center gap-4 rounded-r-full px-4 py-2 transition {% if f.key == active_folder %}bg-brand/15 font-semibold text-brand{% else %}text-slate-600 hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/5{% endif %}">
+          <span class="material-icons-round text-[20px]">{{ f.icon }}</span>
+          <span class="flex-1 truncate">{{ f.label }}</span>
+          {% if f.count %}<span class="text-xs font-semibold tabular-nums">{{ f.count }}</span>{% endif %}
+        </a>
+      {% endfor %}
+
+      <button type="button" @click="more = !more"
+              class="flex w-full items-center gap-4 rounded-r-full px-4 py-2 text-slate-500 transition hover:bg-black/5 dark:hover:bg-white/5">
+        <span class="material-icons-round text-[20px] transition" :class="more && 'rotate-180'">expand_more</span>
+        <span x-text="more ? '{% trans "Moins" %}' : '{% trans "Plus" %}'">{% trans "Plus" %}</span>
+      </button>
+      <div x-show="more" x-collapse>
+        {% for f in rail_more %}
+          <a href="{% url 'mail:folder' f.key %}"
+             class="flex items-center gap-4 rounded-r-full px-4 py-2 transition {% if f.key == active_folder %}bg-brand/15 font-semibold text-brand{% else %}text-slate-600 hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/5{% endif %}">
+            <span class="material-icons-round text-[20px]">{{ f.icon }}</span>
+            <span class="flex-1 truncate">{{ f.label }}</span>
+            {% if f.count %}<span class="text-xs font-semibold tabular-nums">{{ f.count }}</span>{% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    </nav>
+
+    <form method="post" action="{% url 'mail:gmail_disconnect' %}" class="mt-auto px-2 pt-4">
+      {% csrf_token %}
+      <p class="mb-1 truncate px-2 text-[11px] text-slate-400" title="{{ account.email }}">{{ account.email }}</p>
+      <button type="submit" class="flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs text-slate-400 transition hover:text-red-500">
+        <span class="material-icons-round text-[16px]">logout</span>{% trans "Déconnecter" %}
+      </button>
+    </form>
+
+  {% else %}
+    {# ── Non connecté : uniquement l'import (aucun envoi tant que non importé) ── #}
+    <a href="{% if gmail_configured %}{% url 'mail:gmail_connect' %}{% else %}{% url 'mail:outbox' %}{% endif %}"
+       class="inline-flex items-center gap-3 self-start rounded-2xl bg-brand px-5 py-3.5 text-sm font-semibold text-white shadow-md transition hover:opacity-90">
+      <span class="material-icons-round text-[22px]">add_to_drive</span>{% trans "Importer une boîte mail" %}
+    </a>
+    <p class="px-2 py-3 text-[11px] leading-relaxed text-slate-400">
+      {% trans "Connectez votre boîte Gmail pour lire vos messages et envoyer des e-mails depuis votre adresse." %}
+    </p>
+  {% endif %}
+</aside>

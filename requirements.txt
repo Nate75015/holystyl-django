@@ -24,6 +24,10 @@ whitenoise>=6.8,<7
 # IA — Google Gemini (SDK moderne)
 google-genai>=1.0,<2
 
+# Mail — connexion Gmail (OAuth2 + Gmail API)
+google-api-python-client>=2.100,<3
+google-auth-oauthlib>=1.2,<2
+
 # SMS / WhatsApp — Twilio
 twilio>=9.0,<10
 
@@ -40,6 +44,12 @@ satkaar-agenda @ git+https://github.com/satkaar/agenda.git@main
 pytest>=8.3,<9
 pytest-django>=4.9,<5
 pytest-asyncio>=0.24,<1
+
+# ── Dev / Lint (non requis en prod) ─────────────────────────────────
+# Analyse statique consciente de Django (config : .pylintrc).
+# À installer en local : pip install pylint pylint-django
+# pylint>=3,<4
+# pylint-django>=2.5,<3
 
 # ── Optionnel (non requis par le socle actuel) ──────────────────────
 # Stockage   : django-storages  boto3          # fichiers S3 en prod
