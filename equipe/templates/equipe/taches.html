@@ -37,7 +37,10 @@
              class="md-card flex items-center justify-between gap-3">
           <div class="min-w-0">
             <p class="truncate font-medium">{{ t.title }}</p>
-            <p class="truncate text-xs text-slate-400">{{ t.assigned_to.name|default:_("Non assignée") }} · {{ t.get_priority_display }}{% if t.due_date %} · {{ t.due_date|date:"d/m/Y H:i" }}{% endif %}</p>
+            <p class="truncate text-xs text-slate-400">{{ t.assigned_to.name|default:_("Non assignée") }} · {{ t.get_priority_display }}{% if t.due_date %} · {% trans "échéance" %} {{ t.due_date|date:"d/m/Y H:i" }}{% endif %}</p>
+            <p class="mt-0.5 flex items-center gap-1 text-[11px] text-slate-400">
+              <span class="material-icons-round text-[13px]">event</span>{% trans "Créée le" %} {{ t.created_at|date:"d/m/Y à H:i" }}
+            </p>
           </div>
           <div class="flex shrink-0 items-center gap-2">
             <span class="rounded-full bg-brand/10 px-2.5 py-0.5 text-xs font-medium text-brand">{{ t.get_status_display }}</span>
