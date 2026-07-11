@@ -61,29 +61,17 @@ def test_add_member_via_form(client, setup):
             "email": "jean@exemple.fr",
             "phone": "+33 6 12 34 56 78",
             "role": "ouvrier",
-            "password": "abcd",
-            "preferred_locale": "fr",
-            "modules": ["planning", "parcelles", "irrigation", "iot", "ia", "taches"],
         },
     )
     assert resp.status_code == 302
     m = TeamMember.objects.get(email="jean@exemple.fr")
     assert m.exploitation == exploitation and m.managed_by == user
     assert m.name == "Jean Dupont" and m.role == "ouvrier"
-    assert m.allowed_modules == ["planning", "parcelles", "irrigation", "iot", "ia", "taches"]
-    # Mot de passe stocké haché (jamais en clair) et vérifiable.
-    from django.contrib.auth.hashers import check_password
-
-    assert m.password_hash and m.password_hash != "abcd"
-    assert check_password("abcd", m.password_hash)
 
 
 @pytest.mark.django_db
 def test_edit_member(client, setup):
     user, exploitation, member = setup  # member: Aude, ouvrier par défaut
-    member.allowed_modules = ["planning"]
-    member.password_hash = "OLDHASH"
-    member.save()
     client.force_login(user)
     resp = client.post(
         f"/equipe/{member.id}/modifier/",
@@ -93,18 +81,12 @@ def test_edit_member(client, setup):
             "email": "aude@ex.com",
             "phone": "+33611111111",
             "role": "chef",
-            "password": "",  # vide → on garde le mot de passe actuel
-            "preferred_locale": "en",
-            "modules": ["planning", "irrigation"],
         },
     )
     assert resp.status_code == 302
     member.refresh_from_db()
     assert member.name == "Aude Lemaire"
     assert member.role == "chef"
-    assert member.preferred_locale == "en"
-    assert member.allowed_modules == ["planning", "irrigation"]
-    assert member.password_hash == "OLDHASH"  # inchangé car mot de passe laissé vide
 
 
 @pytest.mark.django_db
@@ -115,18 +97,6 @@ def test_edit_member_scoped_to_exploitation(client, setup):
     foreign = TeamMember.objects.create(exploitation=other_exp, name="Pas à moi")
     client.force_login(user)
     assert client.get(f"/equipe/{foreign.id}/modifier/").status_code == 404
-
-
-@pytest.mark.django_db
-def test_add_member_rejects_short_password(client, setup):
-    user, _, _ = setup
-    client.force_login(user)
-    resp = client.post(
-        "/equipe/",
-        {"first_name": "X", "last_name": "Y", "email": "x@ex.com", "role": "ouvrier", "password": "ab", "preferred_locale": "fr"},
-    )
-    assert resp.status_code == 200  # ré-affiché avec erreurs
-    assert not TeamMember.objects.filter(email="x@ex.com").exists()
 
 
 @pytest.mark.django_db

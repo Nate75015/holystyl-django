@@ -37,7 +37,7 @@ def layout(request):
                 {"label": _("Notifications"), "url_name": "notifications:center", "icon": "notifications"},
                 {"label": _("Messagerie"), "url_name": "messagerie:inbox", "icon": "chat"},
                 {"label": _("Mail"), "url_name": "mail:outbox", "icon": "mail"},
-                {"label": _("Sondage"), "url_name": "sondages:liste", "icon": "poll"},
+                {"label": _("Pétition"), "url_name": "petition:liste", "icon": "draw"},
             ],
         },
         {
@@ -90,7 +90,6 @@ def layout(request):
                 {"label": _("Planning"), "url_name": "planning:planning", "icon": "event"},
                 {"label": _("Équipe"), "url_name": "equipe:equipe", "icon": "groups"},
                 {"label": _("Tâches"), "url_name": "equipe:taches", "icon": "checklist"},
-                {"label": _("Mes tâches"), "url_name": "equipe:mes_taches", "icon": "assignment_ind"},
             ],
         },
         {

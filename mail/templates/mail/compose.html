@@ -2,23 +2,35 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto max-w-2xl space-y-4">
-  <h2 class="text-xl font-semibold">{% trans "Nouveau mail" %}</h2>
+<div class="mx-auto max-w-3xl" x-data="{ cc: {% if form.cc %}true{% else %}false{% endif %}, files: 0 }">
 
   {% if errors %}
-    <div class="rounded-xl border border-red-300 bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-400">
+    <div class="mb-3 rounded-xl border border-red-300 bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-400">
       {% for err in errors %}<p>{{ err }}</p>{% endfor %}
     </div>
   {% endif %}
 
-  <form method="post" enctype="multipart/form-data" class="md-card space-y-4">
+  <form method="post" enctype="multipart/form-data"
+        class="overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-black/5 dark:bg-[#122230] dark:ring-white/10">
     {% csrf_token %}
 
-    <div>
-      <label class="mb-1 block text-sm font-medium">{% trans "À" %} <span class="text-slate-400">({% trans "séparez par des virgules" %})</span></label>
+    {# En-tête sombre « Nouveau message » #}
+    <div class="flex items-center justify-between bg-[#28738f] px-4 py-2.5 text-white dark:bg-[#0d1a24]">
+      <span class="text-sm font-semibold">{% trans "Nouveau message" %}</span>
+      <a href="{% url 'mail:outbox' %}" class="grid h-7 w-7 place-items-center rounded-full transition hover:bg-white/15" title="{% trans 'Fermer' %}">
+        <span class="material-icons-round text-[18px]">close</span>
+      </a>
+    </div>
+
+    {# Champ À + bascule Cc #}
+    <div class="flex items-center gap-2 border-b border-black/5 px-4 dark:border-white/10">
+      <label class="text-sm text-slate-400">{% trans "À" %}</label>
       <input name="to" value="{{ form.to }}" list="carnet" autocomplete="off" required
-             placeholder="client@example.com, partenaire@example.com"
-             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+             aria-label="{% trans 'Destinataires' %}"
+             placeholder="{% trans 'destinataires (séparés par des virgules)' %}"
+             class="input-bare flex-1 bg-transparent py-2.5 text-sm">
+      <button type="button" x-show="!cc" @click="cc = true"
+              class="px-1 text-xs font-medium text-slate-400 hover:text-brand">{% trans "Cc" %}</button>
       {% if contacts %}
         <datalist id="carnet">
           {% for name, email in contacts %}<option value="{{ email }}">{{ name }}</option>{% endfor %}
@@ -26,38 +38,45 @@
       {% endif %}
     </div>
 
-    <div>
-      <label class="mb-1 block text-sm font-medium">{% trans "Cc" %} <span class="text-slate-400">({% trans "optionnel" %})</span></label>
+    {# Champ Cc #}
+    <div x-show="cc" x-collapse class="flex items-center gap-2 border-b border-black/5 px-4 dark:border-white/10">
+      <label class="text-sm text-slate-400">{% trans "Cc" %}</label>
       <input name="cc" value="{{ form.cc }}" autocomplete="off"
-             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+             aria-label="{% trans 'Copie (Cc)' %}" placeholder="{% trans 'copie' %}"
+             class="input-bare flex-1 bg-transparent py-2.5 text-sm">
     </div>
 
-    <div>
-      <label class="mb-1 block text-sm font-medium">{% trans "Objet" %}</label>
-      <input name="subject" value="{{ form.subject }}" required
-             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    {# Objet #}
+    <div class="border-b border-black/5 px-4 dark:border-white/10">
+      <input name="subject" value="{{ form.subject }}" required placeholder="{% trans 'Objet' %}"
+             aria-label="{% trans 'Objet' %}"
+             class="input-bare w-full bg-transparent py-2.5 text-sm font-medium">
     </div>
 
-    <div>
-      <label class="mb-1 block text-sm font-medium">{% trans "Message" %}</label>
-      <textarea name="body" rows="8"
-                class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">{{ form.body }}</textarea>
+    {# Corps #}
+    <textarea name="body" rows="12" placeholder="{% trans 'Rédigez votre message…' %}"
+              aria-label="{% trans 'Message' %}"
+              class="input-bare w-full resize-none bg-transparent px-4 py-3 text-sm leading-relaxed">{{ form.body }}</textarea>
+
+    {# Aperçu des pièces jointes #}
+    <div x-show="files > 0" x-cloak class="flex items-center gap-2 border-t border-black/5 px-4 py-2 text-xs text-slate-500 dark:border-white/10 dark:text-slate-400">
+      <span class="material-icons-round text-[16px] text-brand">attach_file</span>
+      <span x-text="files + ' {% trans "fichier(s) joint(s)" %}'"></span>
     </div>
 
-    <div>
-      <label class="inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1.5 text-sm text-slate-600 hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
-        <span class="material-icons-round text-[18px]">attach_file</span>{% trans "Joindre des fichiers" %}
-        <input type="file" name="fichiers" multiple class="hidden" onchange="this.nextElementSibling.textContent = this.files.length ? this.files.length + ' fichier(s)' : ''">
-      </label>
-      <span class="ml-1 text-xs text-slate-400"></span>
-    </div>
-
-    <div class="flex justify-end gap-2">
-      <a href="{% url 'mail:outbox' %}" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</a>
-      <button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
-        <span class="material-icons-round text-[18px]">send</span>{% trans "Envoyer" %}
+    {# Barre d'envoi #}
+    <div class="flex items-center gap-2 border-t border-black/5 px-3 py-2.5 dark:border-white/10">
+      <button type="submit"
+              class="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+        {% trans "Envoyer" %}<span class="material-icons-round text-[18px]">send</span>
       </button>
+      <label class="grid h-9 w-9 cursor-pointer place-items-center rounded-full text-slate-500 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10"
+             title="{% trans 'Joindre des fichiers' %}">
+        <span class="material-icons-round text-[20px]">attach_file</span>
+        <input type="file" name="fichiers" multiple class="hidden" @change="files = $event.target.files.length">
+      </label>
+      <a href="{% url 'mail:outbox' %}" class="ml-auto rounded-full px-4 py-2 text-sm text-slate-500 transition hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</a>
     </div>
   </form>
-</section>
+</div>
 {% endblock %}

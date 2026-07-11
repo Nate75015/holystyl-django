@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class SondagesConfig(AppConfig):
+class PetitionConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "sondages"
-    verbose_name = "Sondages"
+    name = "petition"
+    verbose_name = "Pétitions"

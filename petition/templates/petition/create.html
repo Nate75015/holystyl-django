@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+
+  {# En-tête #}
+  <div class="flex items-center gap-3">
+    <a href="{% url 'petition:liste' %}" class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-slate-500 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+      <span class="material-icons-round text-[22px]">arrow_back</span>
+    </a>
+    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
+      <span class="material-icons-round text-[24px]">draw</span>
+    </span>
+    <div>
+      <h2 class="text-xl font-semibold leading-tight">{% trans "Nouvelle pétition" %}</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Rassemblez des soutiens autour d'une demande." %}</p>
+    </div>
+  </div>
+
+  {% if errors %}
+    <div class="rounded-xl border border-red-300 bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-400">
+      {% for err in errors %}<p>{{ err }}</p>{% endfor %}
+    </div>
+  {% endif %}
+
+  <div id="ia-error" class="hidden items-start gap-2 rounded-xl border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-700 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-300">
+    <span class="material-icons-round text-[18px]">info</span><span id="ia-error-text"></span>
+  </div>
+
+  <form method="post" class="md-card space-y-6 p-6">
+    {% csrf_token %}
+
+    {# Titre #}
+    <div>
+      <div class="mb-1.5 flex items-center justify-between gap-2">
+        <label for="id_title" class="text-sm font-semibold">{% trans "Titre" %}</label>
+        <button type="button" data-ia="title" data-target="id_title"
+                class="ia-btn group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-brand/10 to-brand-400/10 px-3 py-1.5 text-xs font-semibold text-brand ring-1 ring-brand/20 transition hover:from-brand/20 hover:to-brand-400/20 disabled:opacity-50">
+          <span class="material-icons-round text-[16px] transition group-hover:rotate-12">auto_awesome</span>{% trans "Reformuler avec l'IA" %}
+        </button>
+      </div>
+      <input id="id_title" name="title" value="{{ form.title }}" required
+             placeholder="{% trans 'Ex. Pour un accès équitable à l’eau d’irrigation' %}"
+             class="w-full rounded-xl border-2 border-slate-200 bg-transparent px-4 py-2.5 text-base font-medium transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/15 dark:border-white/10">
+    </div>
+
+    {# Description #}
+    <div>
+      <div class="mb-1.5 flex items-center justify-between gap-2">
+        <label for="id_description" class="text-sm font-semibold">{% trans "Description" %} <span class="font-normal text-slate-400">({% trans "optionnel" %})</span></label>
+        <button type="button" data-ia="description" data-target="id_description"
+                class="ia-btn group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-brand/10 to-brand-400/10 px-3 py-1.5 text-xs font-semibold text-brand ring-1 ring-brand/20 transition hover:from-brand/20 hover:to-brand-400/20 disabled:opacity-50">
+          <span class="material-icons-round text-[16px] transition group-hover:rotate-12">auto_awesome</span>{% trans "Reformuler avec l'IA" %}
+        </button>
+      </div>
+      <textarea id="id_description" name="description" rows="7"
+                placeholder="{% trans 'Expliquez la demande, son contexte et pourquoi elle compte…' %}"
+                class="w-full rounded-xl border-2 border-slate-200 bg-transparent px-4 py-3 text-sm leading-relaxed transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/15 dark:border-white/10">{{ form.description }}</textarea>
+      <p class="mt-1 text-right text-xs text-slate-400"><span id="desc-count">0</span> {% trans "caractères" %}</p>
+    </div>
+
+    {# Objectif #}
+    <div>
+      <label for="id_goal" class="mb-1.5 block text-sm font-semibold">{% trans "Objectif de signatures" %} <span class="font-normal text-slate-400">({% trans "optionnel" %})</span></label>
+      <input id="id_goal" name="goal" type="number" min="0" value="{{ form.goal }}" placeholder="100"
+             class="w-full max-w-[220px] rounded-xl border-2 border-slate-200 bg-transparent px-4 py-2.5 text-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/15 dark:border-white/10">
+      <p class="mt-1 text-xs text-slate-400">{% trans "Affiche une barre de progression sur la pétition." %}</p>
+    </div>
+
+    {# Actions #}
+    <div class="flex justify-end gap-2 border-t border-black/5 pt-4 dark:border-white/10">
+      <a href="{% url 'petition:liste' %}" class="rounded-full px-4 py-2.5 text-sm font-medium text-slate-500 transition hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</a>
+      <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">campaign</span>{% trans "Lancer la pétition" %}
+      </button>
+    </div>
+  </form>
+</section>
+
+<script>
+  (function () {
+    const url = "{% url 'petition:reformuler' %}";
+    const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const errBox = document.getElementById('ia-error');
+    const errText = document.getElementById('ia-error-text');
+
+    function showError(msg) {
+      errText.textContent = msg;
+      errBox.classList.remove('hidden');
+      errBox.classList.add('flex');
+    }
+    function hideError() {
+      errBox.classList.add('hidden');
+      errBox.classList.remove('flex');
+    }
+
+    // Compteur de caractères de la description
+    const desc = document.getElementById('id_description');
+    const count = document.getElementById('desc-count');
+    const updateCount = () => { count.textContent = desc.value.length; };
+    desc.addEventListener('input', updateCount);
+    updateCount();
+
+    // Reformulation IA
+    document.querySelectorAll('.ia-btn').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        const field = btn.dataset.ia;
+        const target = document.getElementById(btn.dataset.target);
+        const text = (target.value || '').trim();
+        hideError();
+        if (!text) {
+          showError("{% trans 'Écrivez d’abord un texte à reformuler.' %}");
+          return;
+        }
+        const original = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-icons-round animate-spin text-[16px]">progress_activity</span>{% trans "Reformulation…" %}';
+        target.classList.add('opacity-50');
+        try {
+          const resp = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf },
+            body: JSON.stringify({ field: field, text: text }),
+          });
+          const data = await resp.json();
+          if (resp.ok && data.text) {
+            target.value = data.text;
+            if (field === 'description') updateCount();
+          } else {
+            showError(data.error || "{% trans 'La reformulation a échoué.' %}");
+          }
+        } catch (err) {
+          showError("{% trans 'Erreur réseau lors de l’appel à l’IA.' %}");
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = original;
+          target.classList.remove('opacity-50');
+        }
+      });
+    });
+  })();
+</script>
+{% endblock %}

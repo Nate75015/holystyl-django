@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block main_padding %}{% endblock %}
+
+{% block content %}
+<div class="flex h-[calc(100dvh-8rem)] overflow-hidden bg-sand-50 dark:bg-[#0b1620] md:h-[calc(100dvh-3.25rem)]"
+     x-data="{ q: '' }">
+
+  {% include "mail/_rail.html" %}
+
+  <div class="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#0f1f2b] md:border-l md:border-black/5 dark:md:border-white/10">
+
+    {# Recherche #}
+    <div class="flex items-center gap-2 px-3 py-2.5">
+      <div class="flex min-w-0 flex-1 items-center gap-2 rounded-full bg-black/5 px-4 py-2 focus-within:bg-white focus-within:shadow-md focus-within:ring-1 focus-within:ring-black/5 dark:bg-white/5 dark:focus-within:bg-[#122230]">
+        <span class="material-icons-round text-[20px] text-slate-400">search</span>
+        <input x-model="q" type="search" placeholder="{% trans 'Rechercher dans' %} {{ folder_label|lower }}"
+               class="input-bare w-full bg-transparent text-sm placeholder:text-slate-400" autocomplete="off">
+        <button type="button" x-show="q" @click="q = ''" class="material-icons-round text-[18px] text-slate-400 hover:text-slate-600">close</button>
+      </div>
+      <a href="{% url 'mail:compose' %}" class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand text-white shadow-sm transition hover:opacity-90 md:hidden">
+        <span class="material-icons-round text-[20px]">edit</span>
+      </a>
+    </div>
+
+    {% if tabs %}
+      {# Onglets de catégories (Boîte de réception) façon Gmail #}
+      <div class="flex items-stretch border-b border-black/5 dark:border-white/10">
+        {% for t in tabs %}
+          <a href="{% url 'mail:folder' folder %}?tab={{ t.key }}"
+             class="flex flex-1 items-center gap-2.5 border-b-2 px-3 py-2.5 text-sm transition {% if t.key == active_tab %}border-brand font-semibold text-brand{% else %}border-transparent text-slate-500 hover:bg-black/5 dark:text-slate-400 dark:hover:bg-white/5{% endif %}">
+            <span class="material-icons-round text-[20px]">{{ t.icon }}</span>
+            <span class="truncate">{{ t.label }}</span>
+            {% if t.count %}
+              <span class="ml-auto rounded-full bg-brand/15 px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-brand">{{ t.count }}</span>
+            {% endif %}
+          </a>
+        {% endfor %}
+        <a href="{% url 'mail:folder' folder %}?tab={{ active_tab }}" title="{% trans 'Actualiser' %}"
+           class="grid w-11 shrink-0 place-items-center border-b-2 border-transparent text-slate-400 transition hover:bg-black/5 hover:text-slate-600 dark:hover:bg-white/10">
+          <span class="material-icons-round text-[20px]">refresh</span>
+        </a>
+      </div>
+    {% else %}
+      {# Toolbar dossier simple #}
+      <div class="flex items-center gap-1 border-b border-black/5 px-3 pb-2 text-slate-400 dark:border-white/10">
+        <span class="px-2 text-sm font-semibold text-slate-700 dark:text-slate-200">{{ folder_label }}</span>
+        <a href="{% url 'mail:folder' folder %}" title="{% trans 'Actualiser' %}" class="ml-auto rounded-full p-1.5 transition hover:bg-black/5 hover:text-slate-600 dark:hover:bg-white/10">
+          <span class="material-icons-round text-[20px]">refresh</span>
+        </a>
+      </div>
+    {% endif %}
+
+    {# Liste #}
+    <div class="flex-1 overflow-y-auto">
+      {% if error %}
+        <div class="m-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-300">
+          <p class="font-semibold">{% trans "Impossible de charger ce dossier." %}</p>
+          <p class="mt-1 text-xs opacity-80">{{ error }}</p>
+        </div>
+      {% elif messages_list %}
+        {% for m in messages_list %}
+          <a href="{% url 'mail:gmail_message' m.id %}?from={{ folder }}"
+             data-hay="{{ m.from_name }} · {{ m.subject }} · {{ m.snippet }}"
+             x-show="!q || $el.dataset.hay.toLowerCase().includes(q.toLowerCase())"
+             class="group flex items-center gap-3 border-b border-black/[.04] px-4 py-2.5 transition hover:z-10 hover:bg-white hover:shadow-[0_1px_4px_rgba(26,43,51,.12)] dark:border-white/[.04] dark:hover:bg-[#132636] {% if m.unread %}bg-brand/[.04] dark:bg-white/[.03]{% endif %}">
+            <span class="material-icons-round shrink-0 text-[20px] {% if m.starred %}text-amber-400{% else %}text-slate-300 dark:text-slate-600{% endif %}">{% if m.starred %}star{% else %}star_border{% endif %}</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand/15 text-sm font-bold uppercase text-brand">{{ m.from_name|slice:":1"|upper }}</span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                <p class="truncate text-sm {% if m.unread %}font-bold text-slate-900 dark:text-white{% else %}font-medium text-slate-700 dark:text-slate-200{% endif %}">{{ m.from_name }}</p>
+              </div>
+              <p class="truncate text-sm text-slate-500 dark:text-slate-400">
+                <span class="{% if m.unread %}font-semibold text-slate-700 dark:text-slate-200{% endif %}">{{ m.subject }}</span>
+                {% if m.snippet %}<span class="text-slate-400"> — {{ m.snippet|truncatechars:70 }}</span>{% endif %}
+              </p>
+            </div>
+            <div class="flex shrink-0 items-center gap-2">
+              {% if m.has_attachment %}<span class="material-icons-round text-[18px] text-slate-400">attach_file</span>{% endif %}
+              <span class="w-12 text-right text-xs tabular-nums {% if m.unread %}font-semibold text-slate-700 dark:text-slate-200{% else %}text-slate-500{% endif %}" title="{{ m.date_full }}">{{ m.date_short }}</span>
+            </div>
+          </a>
+        {% endfor %}
+
+        {% if next_token %}
+          <div class="p-4 text-center">
+            <a href="{% url 'mail:folder' folder %}?page={{ next_token }}{% if active_tab %}&tab={{ active_tab }}{% endif %}"
+               class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm text-slate-600 transition hover:bg-black/5 dark:border-white/15 dark:text-slate-300 dark:hover:bg-white/10">
+              {% trans "Charger plus" %}<span class="material-icons-round text-[18px]">expand_more</span>
+            </a>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="flex flex-col items-center justify-center px-4 py-20 text-center">
+          <span class="mb-3 grid h-16 w-16 place-items-center rounded-full bg-brand/10 text-brand">
+            <span class="material-icons-round text-[32px]">inbox</span>
+          </span>
+          <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucun message dans" %} {{ folder_label|lower }}.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

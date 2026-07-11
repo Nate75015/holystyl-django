@@ -1,39 +1,13 @@
 """Formulaire d'ajout d'un membre d'équipe (salarié)."""
 
 from django import forms
-from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 
-from .models import TeamMember
-
-# Langues proposées au salarié (valeur stockée dans preferred_locale).
-LOCALE_CHOICES = [
-    ("fr", "🇫🇷 Français"),
-    ("en", "🇬🇧 English"),
-    ("es", "🇪🇸 Español"),
-    ("pt", "🇵🇹 Português"),
-    ("pl", "🇵🇱 Polski"),
-]
-
-# Modules de l'application auxquels le salarié peut accéder.
-MODULE_CHOICES = [
-    ("planning", _("Planning")),
-    ("parcelles", _("Parcelles")),
-    ("irrigation", _("Irrigation")),
-    ("iot", _("Capteurs & IoT")),
-    ("ia", _("Assistant IA")),
-    ("taches", _("Tâches")),
-    ("cultures", _("Cultures")),
-    ("charges", _("Charges")),
-    ("biodiversite", _("Biodiversité")),
-]
-
-# Modules cochés par défaut à la création.
-DEFAULT_MODULES = ["planning", "parcelles", "irrigation", "iot", "ia", "taches"]
+from .models import Task, TeamMember
 
 
 class TeamMemberForm(forms.ModelForm):
-    """Crée un membre d'équipe : identité, accès (mot de passe), langue, modules."""
+    """Crée un membre d'équipe : identité et rôle."""
 
     first_name = forms.CharField(
         label=_("Prénom"), max_length=120,
@@ -43,24 +17,10 @@ class TeamMemberForm(forms.ModelForm):
         label=_("Nom"), max_length=120,
         widget=forms.TextInput(attrs={"placeholder": "Dupont"}),
     )
-    password = forms.CharField(
-        label=_("Mot de passe"),
-        min_length=4,
-        widget=forms.PasswordInput(attrs={"placeholder": "••••••••", "autocomplete": "new-password"}),
-        help_text=_("Min. 4 caractères — le salarié utilisera son email + ce mot de passe pour se connecter."),
-    )
-    preferred_locale = forms.ChoiceField(label=_("Langue"), choices=LOCALE_CHOICES, initial="fr")
-    modules = forms.MultipleChoiceField(
-        label=_("Modules autorisés"),
-        choices=MODULE_CHOICES,
-        initial=DEFAULT_MODULES,
-        required=False,
-        widget=forms.CheckboxSelectMultiple(attrs={"class": "h-4 w-4 shrink-0 accent-[#28738f]"}),
-    )
 
     class Meta:
         model = TeamMember
-        fields = ["email", "phone", "role", "preferred_locale"]
+        fields = ["email", "phone", "role"]
         widgets = {
             "email": forms.EmailInput(attrs={"placeholder": "jean@exemple.fr"}),
             "phone": forms.TextInput(attrs={"placeholder": "+33 6 12 34 56 78"}),
@@ -78,22 +38,14 @@ class TeamMemberForm(forms.ModelForm):
 
         member = self.instance
         if member and member.pk:
-            # Édition : pré-remplir les champs non mappés et rendre le mot de
-            # passe optionnel (vide = on garde l'actuel).
+            # Édition : pré-remplir les champs non mappés depuis le nom complet.
             first, _sep, last = (member.name or "").partition(" ")
             self.fields["first_name"].initial = first
             self.fields["last_name"].initial = last
-            self.fields["modules"].initial = member.allowed_modules or []
-            self.fields["password"].required = False
-            self.fields["password"].help_text = _("Laissez vide pour conserver le mot de passe actuel.")
 
     def save(self, exploitation=None, managed_by=None, commit=True):
         member = super().save(commit=False)
         member.name = f"{self.cleaned_data['first_name']} {self.cleaned_data['last_name']}".strip()
-        password = self.cleaned_data.get("password")
-        if password:
-            member.password_hash = make_password(password)
-        member.allowed_modules = self.cleaned_data.get("modules", [])
         if exploitation is not None:
             member.exploitation = exploitation
         if managed_by is not None:
@@ -101,3 +53,37 @@ class TeamMemberForm(forms.ModelForm):
         if commit:
             member.save()
         return member
+
+
+class TaskForm(forms.ModelForm):
+    """Crée une tâche (titre, assignation, priorité, échéance)."""
+
+    class Meta:
+        model = Task
+        fields = ["title", "assigned_to", "priority", "status", "due_date", "description"]
+        widgets = {
+            "title": forms.TextInput(attrs={"placeholder": _("Ex. Tailler la parcelle nord")}),
+            "description": forms.Textarea(attrs={"rows": 3, "placeholder": _("Détails (optionnel)")}),
+            "due_date": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
+        }
+        labels = {
+            "title": _("Titre"),
+            "assigned_to": _("Assignée à"),
+            "priority": _("Priorité"),
+            "status": _("Statut"),
+            "due_date": _("Échéance"),
+            "description": _("Description"),
+        }
+
+    def __init__(self, *args, exploitation=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        members = (
+            TeamMember.objects.filter(exploitation=exploitation)
+            if exploitation else TeamMember.objects.none()
+        )
+        self.fields["assigned_to"].queryset = members
+        self.fields["assigned_to"].required = False
+        self.fields["assigned_to"].empty_label = _("Non assignée")
+        self.fields["description"].required = False
+        self.fields["due_date"].required = False
+        self.fields["due_date"].input_formats = ["%Y-%m-%dT%H:%M"]

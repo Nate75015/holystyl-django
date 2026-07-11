@@ -2,22 +2,143 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6">
-  <h2 class="text-xl font-semibold">{% trans "Tâches" %}</h2>
+<section class="space-y-5"
+         x-data="tachesUI({{ form.errors|yesno:'true,false' }}, {{ has_mine|yesno:'true,false' }})">
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
+        <span class="material-icons-round text-[24px]">checklist</span>
+      </span>
+      <div>
+        <h2 class="text-xl font-semibold leading-tight">{% trans "Tâches" %}</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Suivez le travail de l'équipe." %}</p>
+      </div>
+    </div>
+    <button type="button" @click="openAdd()"
+            class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
+      <span class="material-icons-round text-[18px]">add</span><span class="hidden sm:inline">{% trans "Ajouter une tâche" %}</span>
+    </button>
+  </div>
+
+  {# Filtre Toutes / Mes tâches #}
+  <div class="flex rounded-xl border border-[#e7e5dd] p-0.5 text-sm dark:border-white/10 w-fit">
+    <button type="button" @click="filter = 'all'"
+            class="rounded-lg px-4 py-1.5 font-medium transition" :class="filter === 'all' ? 'bg-brand text-white' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'">{% trans "Toutes" %}</button>
+    <button type="button" @click="filter = 'mine'"
+            class="rounded-lg px-4 py-1.5 font-medium transition" :class="filter === 'mine' ? 'bg-brand text-white' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'">{% trans "Mes tâches" %}</button>
+  </div>
+
   {% if tasks %}
     <div class="space-y-2">
       {% for t in tasks %}
-        <div class="md-card flex items-center justify-between">
-          <div>
-            <p class="font-medium">{{ t.title }}</p>
-            <p class="text-xs text-slate-400">{{ t.assigned_to.name|default:_("non assignée") }} · {{ t.get_priority_display }}{% if t.due_date %} · {{ t.due_date }}{% endif %}</p>
+        <div data-mine="{{ t.is_mine|yesno:'1,0' }}"
+             x-show="filter === 'all' || $el.dataset.mine === '1'"
+             class="md-card flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <p class="truncate font-medium">{{ t.title }}</p>
+            <p class="truncate text-xs text-slate-400">{{ t.assigned_to.name|default:_("Non assignée") }} · {{ t.get_priority_display }}{% if t.due_date %} · {% trans "échéance" %} {{ t.due_date|date:"d/m/Y H:i" }}{% endif %}</p>
+            <p class="mt-0.5 flex items-center gap-1 text-[11px] text-slate-400">
+              <span class="material-icons-round text-[13px]">event</span>{% trans "Créée le" %} {{ t.created_at|date:"d/m/Y à H:i" }}
+            </p>
           </div>
-          <span class="rounded-full bg-brand/10 px-2 py-0.5 text-xs text-brand">{{ t.get_status_display }}</span>
+          <div class="flex shrink-0 items-center gap-2">
+            <span class="rounded-full bg-brand/10 px-2.5 py-0.5 text-xs font-medium text-brand">{{ t.get_status_display }}</span>
+            <button type="button" title="{% trans 'Modifier' %}"
+                    data-id="{{ t.pk }}" data-title="{{ t.title }}" data-assigned="{{ t.assigned_to_id|default:'' }}"
+                    data-priority="{{ t.priority }}" data-status="{{ t.status }}"
+                    data-due="{{ t.due_date|date:'Y-m-d\TH:i' }}" data-description="{{ t.description }}"
+                    @click="openEdit($event.currentTarget)"
+                    class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+              <span class="material-icons-round text-[18px]">edit</span>
+            </button>
+          </div>
         </div>
       {% endfor %}
+      <p x-show="filter === 'mine' && !hasMine" x-cloak class="md-card text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune tâche ne vous est assignée." %}</p>
     </div>
   {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune tâche." %}</p></div>
+    <div class="md-card flex flex-col items-center px-4 py-14 text-center">
+      <span class="mb-3 grid h-16 w-16 place-items-center rounded-2xl bg-brand/10 text-brand">
+        <span class="material-icons-round text-[32px]">checklist</span>
+      </span>
+      <p class="font-medium text-slate-600 dark:text-slate-300">{% trans "Aucune tâche pour le moment." %}</p>
+      <button type="button" @click="openAdd()" class="mt-5 inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une tâche" %}
+      </button>
+    </div>
   {% endif %}
+
+  {# Modale : ajouter / modifier une tâche #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
+    <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold" x-text="editing ? '{% trans "Modifier la tâche" %}' : '{% trans "Nouvelle tâche" %}'">{% trans "Nouvelle tâche" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">
+            <span class="material-icons-round text-[20px]">close</span>
+          </button>
+        </div>
+
+        <form id="task-form" method="post" action="{% url 'equipe:taches' %}" class="space-y-4">
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+            <div class="rounded-xl border-2 border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-500/30 dark:bg-red-500/10">{{ form.non_field_errors }}</div>
+          {% endif %}
+          {% include "accounts/_field.html" with field=form.title %}
+          <div class="grid gap-4 sm:grid-cols-2">
+            {% include "accounts/_field.html" with field=form.assigned_to %}
+            {% include "accounts/_field.html" with field=form.priority %}
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {% include "accounts/_field.html" with field=form.status %}
+            {% include "accounts/_field.html" with field=form.due_date %}
+          </div>
+          {% include "accounts/_field.html" with field=form.description %}
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+              <span class="material-icons-round text-[18px]">add_task</span><span x-text="editing ? '{% trans "Enregistrer" %}' : '{% trans "Ajouter" %}'">{% trans "Ajouter" %}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  function tachesUI(hasErrors, hasMine) {
+    return {
+      modal: hasErrors,
+      editing: false,
+      filter: 'all',
+      hasMine: hasMine,
+      addAction: '{% url "equipe:taches" %}',
+      _set(id, v) { const el = document.getElementById(id); if (el) el.value = v || ''; },
+      openAdd() {
+        const f = document.getElementById('task-form');
+        f.reset();
+        f.setAttribute('action', this.addAction);
+        this.editing = false;
+        this.modal = true;
+      },
+      openEdit(btn) {
+        const d = btn.dataset;
+        const f = document.getElementById('task-form');
+        f.setAttribute('action', '/taches/' + d.id + '/modifier/');
+        this._set('id_title', d.title);
+        this._set('id_assigned_to', d.assigned);
+        this._set('id_priority', d.priority);
+        this._set('id_status', d.status);
+        this._set('id_due_date', d.due);
+        this._set('id_description', d.description);
+        this.editing = true;
+        this.modal = true;
+      },
+    };
+  }
+</script>
 {% endblock %}

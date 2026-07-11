@@ -1,0 +1,33 @@
+# Configuration Pylint — projet Django Holystyl.
+# Rend Pylint conscient de Django (managers, settings, modèles) et lui fait
+# résoudre les imports via le venv du projet.
+
+[MASTER]
+# Plugin qui apprend à Pylint la sémantique Django (évite les faux positifs
+# import-error / no-member sur les modèles, managers, settings…).
+load-plugins=pylint_django
+django-settings-module=config.settings
+
+# Ajoute la racine du projet au chemin d'import.
+init-hook='import sys; sys.path.insert(0, ".")'
+
+[MESSAGES CONTROL]
+# Désactive les avertissements bruyants / peu utiles sur ce projet.
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    import-outside-toplevel,
+    broad-exception-caught,
+    invalid-name,
+    duplicate-code
+
+[FORMAT]
+max-line-length=120
+
+[TYPECHECK]
+# googleapiclient.discovery.build() renvoie un `Resource` dont les méthodes
+# (.users(), .messages(), .labels()…) sont générées dynamiquement : Pylint ne
+# peut pas les voir → on désactive no-member pour cette classe.
+ignored-classes=Resource,googleapiclient.discovery.Resource

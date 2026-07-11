@@ -21,7 +21,7 @@ urlpatterns = [
     path("", include("notifications.urls")),
     path("", include("messagerie.urls")),
     path("", include("mail.urls")),
-    path("", include("sondages.urls")),
+    path("", include("petition.urls")),
     path("", include("equipe.urls")),
     path("", include("planning.urls")),
     path("", include("operations.urls")),

@@ -47,9 +47,9 @@ def _with_current(villes):
     for v in villes:
         try:
             cw = fetch_current(v.latitude, v.longitude)
-            v.temp, v.emoji, v.label = cw["temp"], cw["emoji"], cw["label"]
+            v.temp, v.icon, v.label = cw["temp"], cw["icon"], cw["label"]
         except Exception:  # noqa: BLE001 — météo ville indisponible
-            v.temp, v.emoji, v.label = None, "❓", ""
+            v.temp, v.icon, v.label = None, "help_outline", ""
     return villes
 
 
@@ -63,9 +63,9 @@ def meteo_index(request):
     home = {"nom": hloc, "lat": round(hlat, 4), "lon": round(hlon, 4), "slug": slugify(hloc) or "exploitation"}
     try:
         cw = fetch_current(hlat, hlon)
-        home.update(temp=cw["temp"], emoji=cw["emoji"], label=cw["label"])
+        home.update(temp=cw["temp"], icon=cw["icon"], label=cw["label"])
     except Exception:  # noqa: BLE001
-        home.update(temp=None, emoji="❓", label="")
+        home.update(temp=None, icon="help_outline", label="")
 
     return render(request, "meteo/index.html", {
         "villes": villes,

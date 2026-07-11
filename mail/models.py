@@ -38,3 +38,21 @@ class Email(TimeStampedModel):
     @property
     def to_list(self):
         return [a for a in self.to.replace("\n", ",").split(",") if a.strip()]
+
+
+class GmailAccount(TimeStampedModel):
+    """Boîte mail Gmail connectée par un utilisateur (jetons OAuth chiffrés)."""
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="gmail_account"
+    )
+    email = models.EmailField(_("adresse connectée"))
+    credentials = models.TextField(_("jetons chiffrés"))
+    history_id = models.CharField(max_length=32, blank=True)
+
+    class Meta:
+        verbose_name = _("compte Gmail")
+        verbose_name_plural = _("comptes Gmail")
+
+    def __str__(self):
+        return f"Gmail: {self.email}"

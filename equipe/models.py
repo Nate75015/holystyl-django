@@ -24,7 +24,7 @@ class TeamMember(TimeStampedModel):
     email = models.EmailField(blank=True)
     phone = models.CharField(_("téléphone"), max_length=30, blank=True)
     role = models.CharField(max_length=12, choices=Role.choices, default=Role.OUVRIER)
-    color = models.CharField(max_length=7, default="#2dd4bf")
+    color = models.CharField(max_length=7, default="#29738f")
     is_active = models.BooleanField(default=True)
     is_online = models.BooleanField(default=False)
     lat = models.FloatField(null=True, blank=True)
