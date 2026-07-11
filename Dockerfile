@@ -9,11 +9,21 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential libffi-dev libpq-dev \
-        git \
+        git openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip \
+# La dép privée satkaar/agenda est clonée en SSH via une deploy key read-only,
+# fournie par le CI en secret BuildKit (secret d'org AGENDA_DEPLOY_KEY). La clé
+# ne vit que dans ce stage builder (jeté ensuite) — aucune fuite dans l'image.
+RUN --mount=type=secret,id=ssh_key \
+    pip install --no-cache-dir --upgrade pip \
+    && mkdir -p /root/.ssh && chmod 700 /root/.ssh \
+    && ssh-keyscan -t ed25519,rsa github.com >> /root/.ssh/known_hosts 2>/dev/null \
+    && if [ -s /run/secrets/ssh_key ]; then \
+         cp /run/secrets/ssh_key /root/.ssh/id_agenda && chmod 600 /root/.ssh/id_agenda \
+         && printf 'Host github.com\n  IdentityFile /root/.ssh/id_agenda\n  IdentitiesOnly yes\n' >> /root/.ssh/config; \
+       fi \
     && pip wheel --no-cache-dir --wheel-dir /app/wheels -r requirements.txt
 
 
