@@ -7,6 +7,9 @@ metadata:
   namespace: holystyl
 spec:
   accessModes: [ReadWriteOnce]
+  # Explicite (= défaut du cluster mairie-agglo-prod) pour rester cohérent avec
+  # le PVC existant : ce champ est immuable, un apply avec une autre valeur casse.
+  storageClassName: sbs-default
   resources:
     requests:
       storage: 2Gi
