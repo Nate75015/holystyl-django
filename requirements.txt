@@ -38,7 +38,7 @@ weasyprint>=63,<70
 stripe>=11,<16
 
 # Agenda — moteur de calendrier réutilisable (backend du planning équipe)
-satkaar-agenda @ git+https://github.com/satkaar/agenda.git@main
+satkaar-agenda @ git+ssh://git@github.com/satkaar/agenda.git@main
 
 # Tests
 pytest>=8.3,<9

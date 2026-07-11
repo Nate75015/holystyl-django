@@ -46,12 +46,25 @@ jobs:
           username: nologin
           password: ${{ secrets.SCW_SECRET_KEY }}
 
+      - name: Prepare SSH deploy key (dep privée satkaar/agenda)
+        env:
+          AGENDA_DEPLOY_KEY: ${{ secrets.AGENDA_DEPLOY_KEY }}
+        run: |
+          # Écrit la deploy key dans un fichier (gère le multi-lignes) monté en
+          # secret BuildKit par le Dockerfile. Vide si le secret est absent.
+          install -m 600 /dev/null "$RUNNER_TEMP/ssh_key"
+          if [ -n "$AGENDA_DEPLOY_KEY" ]; then
+            printf '%s\n' "$AGENDA_DEPLOY_KEY" > "$RUNNER_TEMP/ssh_key"
+          fi
+
       - name: Build & push image (amd64)
         uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/amd64
           push: true
+          secret-files: |
+            ssh_key=${{ runner.temp }}/ssh_key
           tags: |
             ${{ env.IMAGE }}:preprod-latest
             ${{ env.IMAGE }}:preprod-${{ github.sha }}
