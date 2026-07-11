@@ -23,8 +23,11 @@ concurrency:
 env:
   IMAGE: rg.fr-par.scw.cloud/holystyl/holystyl
   NAMESPACE: holystyl
-  CLUSTER_ID: 884493d6-4fd5-45cb-b193-d9fa70db6754
-  PREPROD_HOST: 195.154.196.50.nip.io
+  # Migré vers le cluster mutualisé mairie-agglo-prod (projet e0506a66) — l'ancien
+  # cluster holystyl-preprod dédié a été supprimé (consolidation des coûts).
+  CLUSTER_ID: 2dabadf0-d6a9-4e51-aac7-d140765c4694
+  CLUSTER_PROJECT_ID: e0506a66-513a-4cb7-90e7-fe4890512eca
+  PREPROD_HOST: 51.15.139.157.nip.io
   SCW_REGION: fr-par
 
 jobs:
@@ -70,7 +73,9 @@ jobs:
           SCW_ACCESS_KEY: ${{ secrets.SCW_ACCESS_KEY }}
           SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
           SCW_DEFAULT_ORGANIZATION_ID: ${{ vars.SCW_DEFAULT_ORGANIZATION_ID }}
-          SCW_DEFAULT_PROJECT_ID: ${{ vars.SCW_DEFAULT_PROJECT_ID }}
+          # Le cluster cible vit dans le projet mairie-agglo (e0506a66), pas celui
+          # du repo holystyl — on cible donc explicitement son projet pour le fetch.
+          SCW_DEFAULT_PROJECT_ID: ${{ env.CLUSTER_PROJECT_ID }}
         run: |
           scw k8s kubeconfig get "$CLUSTER_ID" > "$HOME/kubeconfig"
           echo "KUBECONFIG=$HOME/kubeconfig" >> "$GITHUB_ENV"
@@ -82,7 +87,8 @@ jobs:
           kubectl apply -f infra/k8s/preprod/redis.yaml
           kubectl apply -f infra/k8s/preprod/web.yaml
           kubectl apply -f infra/k8s/preprod/cronjob-meteo.yaml
-          kubectl apply -f infra/k8s/preprod/cluster-issuer.yaml
+          # cluster-issuer NON appliqué : le cluster mutualisé mairie-agglo-prod a
+          # déjà son ClusterIssuer partagé « letsencrypt-prod » (ne pas l'écraser).
           sed "s/__HOST__/${PREPROD_HOST}/g" infra/k8s/preprod/ingress.yaml | kubectl apply -f -
           # Image taguée au SHA → force un nouveau rollout avec l'image fraîche
           kubectl -n "$NAMESPACE" set image deploy/web web="${IMAGE}:preprod-${{ github.sha }}"

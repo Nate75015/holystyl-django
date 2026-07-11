@@ -38,5 +38,5 @@ spec:
                 - >-
                   curl -fsS -X POST
                   -H "X-Cron-Token: $CRON_TOKEN"
-                  -H "Host: 195.154.196.50.nip.io"
+                  -H "Host: 51.15.139.157.nip.io"
                   http://web/meteo/cron/capturer/

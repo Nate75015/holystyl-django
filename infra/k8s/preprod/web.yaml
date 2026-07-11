@@ -35,7 +35,7 @@ spec:
               path: /healthz
               port: 8080
               httpHeaders:
-                - { name: Host, value: 195.154.196.50.nip.io }
+                - { name: Host, value: 51.15.139.157.nip.io }
             initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
@@ -43,7 +43,7 @@ spec:
               path: /healthz
               port: 8080
               httpHeaders:
-                - { name: Host, value: 195.154.196.50.nip.io }
+                - { name: Host, value: 51.15.139.157.nip.io }
             initialDelaySeconds: 40
             periodSeconds: 20
           resources:
