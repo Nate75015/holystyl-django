@@ -124,50 +124,58 @@
 
         <form method="post" action="{% url 'interventions:intervention_create' %}" class="space-y-3">
           {% csrf_token %}
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span class="text-red-500">*</span></label>
+            <select name="parcelle" required
+                    class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+              <option value="">{% trans "Sélectionner une parcelle" %}</option>
+              {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+            </select>
+          </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Type" %} <span class="text-red-500">*</span></label>
+              <label class="mb-1 block text-sm font-medium">{% trans "Type d'intervention" %}</label>
               <select name="intervention_type" required
                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
                 {% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
               </select>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Statut" %}</label>
-              <select name="status"
-                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
-                {% for value, label in statuses %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
-              </select>
-            </div>
-          </div>
-          <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Titre" %}</label>
-            <input name="title" placeholder="ex: Traitement fongicide bloc A"
-                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Date / heure" %} <span class="text-red-500">*</span></label>
+              <label class="mb-1 block text-sm font-medium">{% trans "Date et heure" %} <span class="text-red-500">*</span></label>
               <input name="start_time" type="datetime-local" required
                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
             </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
-              <select name="parcelle"
-                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
-                <option value="">{% trans "—" %}</option>
-                {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
-              </select>
+              <label class="mb-1 block text-sm font-medium">{% trans "Durée (heures)" %}</label>
+              <input name="duration_hours" type="number" step="0.5" min="0" inputmode="decimal" placeholder="{% trans 'ex: 3.5' %}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
+              <input name="surface" type="number" step="0.1" min="0" inputmode="decimal" placeholder="{% trans 'ex: 4.2' %}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
             </div>
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Produit" %}</label>
-            <input name="product" placeholder="ex: Bouillie bordelaise"
+            <label class="mb-1 block text-sm font-medium">{% trans "Coût (€)" %}</label>
+            <input name="cost" type="number" step="0.01" min="0" inputmode="decimal" placeholder="{% trans 'ex: 150' %}"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Produit utilisé" %}</label>
+            <input name="product" placeholder="{% trans 'ex: Bouillie bordelaise' %}"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Dose" %}</label>
+            <input name="dose" placeholder="{% trans 'ex: 2 kg/hL' %}"
                    class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
-            <textarea name="notes" rows="2"
+            <textarea name="notes" rows="2" placeholder="{% trans 'Observations, conditions...' %}"
                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></textarea>
           </div>
           <div class="flex justify-end gap-2 pt-1">

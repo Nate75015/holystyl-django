@@ -50,25 +50,37 @@ def interventions(request):
     })
 
 
+def _decimal(value):
+    """Nombre saisi (« 3.5 » ou « 3,5 ») → float, ou None si vide/invalide."""
+    value = (value or "").strip().replace(",", ".")
+    try:
+        return float(value)
+    except ValueError:
+        return None
+
+
 @login_required
 @require_POST
 def intervention_create(request):
     exploitation = _exploitation(request)
     itype = request.POST.get("intervention_type")
-    if exploitation and itype:
+    # Parcelle obligatoire (marquée « * » dans le formulaire) : sans elle, on ne crée pas.
+    parcelle = Parcelle.objects.filter(pk=request.POST.get("parcelle"), exploitation=exploitation).first()
+    if exploitation and itype and parcelle:
         start = parse_datetime(request.POST.get("start_time") or "") or timezone.now()
         if timezone.is_naive(start):
             start = timezone.make_aware(start)
-        parcelle = Parcelle.objects.filter(pk=request.POST.get("parcelle"), exploitation=exploitation).first()
         Intervention.objects.create(
             exploitation=exploitation,
             parcelle=parcelle,
             user=request.user,
             intervention_type=itype,
-            title=(request.POST.get("title") or "").strip(),
-            status=request.POST.get("status") or Intervention.Status.PLANIFIEE,
             start_time=start,
+            duration_hours=_decimal(request.POST.get("duration_hours")),
+            surface=_decimal(request.POST.get("surface")),
+            cost=_decimal(request.POST.get("cost")),
             product=(request.POST.get("product") or "").strip(),
+            dose=(request.POST.get("dose") or "").strip(),
             notes=(request.POST.get("notes") or "").strip(),
         )
     return redirect("interventions:interventions")
