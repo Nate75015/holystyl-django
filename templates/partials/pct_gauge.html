@@ -1,0 +1,4 @@
+{% comment %}Jauge de pourcentage réutilisable (compte-tours 270°, dégradé teal→aqua).
+Params : pct (0-100), size (px, optionnel), label (texte sous le %, optionnel).
+Usage : {% include "partials/pct_gauge.html" with pct=filled_pct size=80 label="remplis" %}{% endcomment %}
+<div class="pct-gauge" data-pct="{{ pct }}" data-size="{{ size|default:120 }}" data-label="{{ label|default:'' }}"></div>
