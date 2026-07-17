@@ -2,57 +2,367 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6" x-data="{ tab: 'zones' }">
-  <h2 class="text-xl font-semibold">{% trans "Irrigation" %}</h2>
+<section class="space-y-6" x-data="{ tab: 'overview', zoneModal: false, programModal: false, stationModal: false }">
 
-  {% if sessions_chart %}
-    <div class="md-card">
-      <p class="mb-3 text-sm font-medium">{% trans "Volumes irrigués récents" %}</p>
-      {% include "partials/area_chart.html" with chart_id="irrigChart" chart_data=sessions_chart height=160 %}
+  {# ── En-tête ── #}
+  <div class="flex items-center gap-3">
+    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
+      <span class="material-icons-round">water_drop</span>
+    </span>
+    <div>
+      <h2 class="text-2xl font-bold tracking-tight">{% trans "Gestion de l'irrigation" %}</h2>
+      <p class="text-sm text-slate-400">{% trans "Pilotage et programmation de l'irrigation" %}</p>
     </div>
-  {% endif %}
+  </div>
 
-  <div class="flex gap-2 border-b border-slate-200 dark:border-white/10">
-    {% for key, label in tabs %}
-      <button @click="tab='{{ key }}'" class="px-3 py-2 text-sm font-medium"
-              :class="tab==='{{ key }}' ? 'border-b-2 border-brand text-brand' : 'text-slate-400'">{{ label }}</button>
+  {# ── Cartes KPI ── #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    {% for icon, value, unit, label in kpis %}
+      <div class="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-white/5">
+        <span class="material-icons-round text-[22px] text-slate-400">{{ icon }}</span>
+        <p class="mt-1 text-2xl font-bold">{{ value }}{% if unit %}<span class="ml-0.5 text-sm font-medium text-slate-400">{{ unit }}</span>{% endif %}</p>
+        <p class="text-xs text-slate-400">{{ label }}</p>
+      </div>
     {% endfor %}
   </div>
 
-  <div x-show="tab==='zones'" class="space-y-2">
+  {# ── Onglets ── #}
+  <div class="flex gap-1 overflow-x-auto border-b border-slate-200 dark:border-white/10">
+    {% for key, label, icon in tabs %}
+      <button @click="tab='{{ key }}'"
+              class="inline-flex shrink-0 items-center gap-1.5 border-b-2 px-3 py-2.5 text-sm font-medium transition"
+              :class="tab==='{{ key }}' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">
+        <span class="material-icons-round text-[18px]">{{ icon }}</span>{{ label }}
+      </button>
+    {% endfor %}
+  </div>
+
+  {# ── Vue d'ensemble ── #}
+  <div x-show="tab==='overview'" class="space-y-5">
+    {% include "irrigation/_etc_card.html" %}
+
+    <div>
+      <h3 class="mb-2 font-semibold">{% trans "Sessions récentes" %}</h3>
+      {% if sessions %}
+        <div class="space-y-2">
+          {% for s in sessions|slice:":5" %}
+            <div class="md-card flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="material-icons-round text-[18px] text-brand">waves</span>
+                <div>
+                  <p class="font-medium">{{ s.start_time|date:"d/m/Y H:i" }}</p>
+                  <p class="text-xs text-slate-400">{{ s.get_triggered_by_display }}</p>
+                </div>
+              </div>
+              <span class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ s.volume_delivered_m3|default:"—" }} m³</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="md-card flex flex-col items-center justify-center py-12 text-center">
+          <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">waves</span>
+          <p class="text-sm text-slate-400">{% trans "Aucune session en cours" %}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {# ── Zones ── #}
+  <div x-show="tab==='zones'" x-cloak class="space-y-3">
+    <div class="flex justify-end">
+      <button type="button" @click="zoneModal = true"
+              class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une zone" %}
+      </button>
+    </div>
     {% for z in zones %}
       <div class="md-card flex items-center justify-between">
-        <div><p class="font-medium">{{ z.name }}</p><p class="text-xs text-slate-400">{{ z.get_irrigation_type_display }} · {{ z.surface_ha|default:"—" }} ha</p></div>
+        <div class="flex items-center gap-3">
+          <span class="material-icons-round text-[18px] text-brand">layers</span>
+          <div>
+            <p class="font-medium">{{ z.name }}</p>
+            <p class="text-xs text-slate-400">{{ z.get_irrigation_type_display }} · {{ z.surface_ha|default:"—" }} ha{% if z.parcelles.all %} · {{ z.parcelles.all|join:", " }}{% endif %}</p>
+          </div>
+        </div>
         <span class="text-xs text-slate-400">{{ z.flow_rate_m3h|default:"—" }} m³/h</span>
       </div>
     {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune zone." %}</p></div>{% endfor %}
   </div>
 
-  <div x-show="tab==='programs'" x-cloak class="space-y-2">
+  {# ── Programmes ── #}
+  <div x-show="tab==='programs'" x-cloak class="space-y-3">
+    <div class="flex justify-end">
+      <button type="button" @click="programModal = true"
+              class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un programme" %}
+      </button>
+    </div>
     {% for p in programs %}
       <div class="md-card flex items-center justify-between">
-        <div><p class="font-medium">{{ p.name }}</p><p class="text-xs text-slate-400">{{ p.start_hour }}h{{ p.start_minute }} · {{ p.duration_minutes }} min · {{ p.get_frequency_display }}</p></div>
+        <div class="flex items-center gap-3">
+          <span class="material-icons-round text-[18px] text-brand">timer</span>
+          <div>
+            <p class="font-medium">{{ p.name }}</p>
+            <p class="text-xs text-slate-400">{{ p.start_hour }}h{{ p.start_minute }} · {{ p.duration_minutes }} min · {{ p.get_frequency_display }}{% if p.parcelles.all %} · {{ p.parcelles.all|join:", " }}{% endif %}</p>
+          </div>
+        </div>
         <span class="text-xs {% if p.is_active %}text-green-500{% else %}text-slate-400{% endif %}">{% if p.is_active %}{% trans "actif" %}{% else %}{% trans "inactif" %}{% endif %}</span>
       </div>
     {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucun programme." %}</p></div>{% endfor %}
   </div>
 
-  <div x-show="tab==='sessions'" x-cloak class="space-y-2">
-    {% for s in sessions %}
-      <div class="md-card flex items-center justify-between">
-        <div><p class="font-medium">{{ s.start_time }}</p><p class="text-xs text-slate-400">{{ s.get_triggered_by_display }}</p></div>
-        <span class="text-xs text-slate-400">{{ s.volume_delivered_m3|default:"—" }} m³</span>
+  {# ── Sessions ── #}
+  <div x-show="tab==='sessions'" x-cloak class="space-y-4">
+    {% if sessions_chart %}
+      <div class="md-card">
+        <p class="mb-3 text-sm font-medium">{% trans "Volumes irrigués récents" %}</p>
+        {% include "partials/area_chart.html" with chart_id="irrigChart" chart_data=sessions_chart height=160 %}
       </div>
-    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune session." %}</p></div>{% endfor %}
+    {% endif %}
+    <div class="space-y-2">
+      {% for s in sessions %}
+        <div class="md-card flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-icons-round text-[18px] text-brand">waves</span>
+            <div><p class="font-medium">{{ s.start_time|date:"d/m/Y H:i" }}</p><p class="text-xs text-slate-400">{{ s.get_triggered_by_display }}</p></div>
+          </div>
+          <span class="text-xs text-slate-400">{{ s.volume_delivered_m3|default:"—" }} m³</span>
+        </div>
+      {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune session." %}</p></div>{% endfor %}
+    </div>
   </div>
 
-  <div x-show="tab==='stations'" x-cloak class="space-y-2">
+  {# ── Calculateurs ── #}
+  <div x-show="tab==='calculators'" x-cloak class="space-y-5">
+    {% include "irrigation/_etc_card.html" %}
+    {% include "irrigation/_pluvio_card.html" %}
+    {% include "irrigation/_pumping_card.html" %}
+  </div>
+
+  {# ── Stations ── #}
+  <div x-show="tab==='stations'" x-cloak class="space-y-3">
+    <div class="flex justify-end">
+      <button type="button" @click="stationModal = true"
+              class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une station" %}
+      </button>
+    </div>
     {% for st in stations %}
       <div class="md-card flex items-center justify-between">
-        <div><p class="font-medium">{{ st.name }}</p><p class="text-xs text-slate-400">{{ st.power_kw|default:"—" }} kW · {{ st.get_status_display }}</p></div>
+        <div class="flex items-center gap-3">
+          <span class="material-icons-round text-[18px] text-brand">power_settings_new</span>
+          <div><p class="font-medium">{{ st.name }}</p><p class="text-xs text-slate-400">{{ st.power_kw|default:"—" }} kW · {{ st.get_status_display }}</p></div>
+        </div>
         <span class="text-xs text-slate-400">{{ st.max_flow_m3h|default:"—" }} m³/h</span>
       </div>
     {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune station." %}</p></div>{% endfor %}
+  </div>
+
+  {# ── Modal — Ajouter une zone ── #}
+  <div x-show="zoneModal" x-cloak x-transition.opacity @keydown.escape.window="zoneModal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
+    <div @click.self="zoneModal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Ajouter une zone" %}</h3>
+          <button type="button" @click="zoneModal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        {% if parcelles %}
+          <form method="post" action="{% url 'irrigation:zone_create' %}" class="space-y-3">
+            {% csrf_token %}
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Parcelles" %} <span class="text-red-500">*</span></label>
+              <div class="max-h-40 space-y-0.5 overflow-y-auto rounded-lg border border-slate-200 p-2 dark:border-white/10">
+                {% for p in parcelles %}
+                  <label class="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/5">
+                    <input type="checkbox" name="parcelles" value="{{ p.pk }}" class="h-4 w-4 accent-brand">
+                    <span>{{ p.name }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+              <p class="mt-1 text-xs text-slate-400">{% trans "Sélectionnez une ou plusieurs parcelles." %}</p>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span class="text-red-500">*</span></label>
+              <input name="name" required placeholder="{% trans 'Zone Nord' %}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Type d'irrigation" %}</label>
+              <select name="irrigation_type"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                {% for value, label in irrigation_types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Débit (m³/h)" %}</label>
+                <input name="flow_rate_m3h" type="number" step="0.1" min="0" inputmode="decimal"
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
+                <input name="surface_ha" type="number" step="0.1" min="0" inputmode="decimal"
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Pression (bar)" %}</label>
+                <input name="service_pressure_bar" type="number" step="0.1" min="0" inputmode="decimal"
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-1">
+              <button type="button" @click="zoneModal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+              <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+                <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter" %}
+              </button>
+            </div>
+          </form>
+        {% else %}
+          <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Ajoutez d'abord une parcelle (Mes Parcelles) pour y créer une zone d'irrigation." %}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal — Ajouter un programme ── #}
+  <div x-show="programModal" x-cloak x-transition.opacity @keydown.escape.window="programModal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
+    <div @click.self="programModal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Ajouter un programme" %}</h3>
+          <button type="button" @click="programModal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        {% if parcelles %}
+          <form method="post" action="{% url 'irrigation:program_create' %}" class="space-y-3">
+            {% csrf_token %}
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Parcelles" %} <span class="text-red-500">*</span></label>
+              <div class="max-h-40 space-y-0.5 overflow-y-auto rounded-lg border border-slate-200 p-2 dark:border-white/10">
+                {% for p in parcelles %}
+                  <label class="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/5">
+                    <input type="checkbox" name="parcelles" value="{{ p.pk }}" class="h-4 w-4 accent-brand">
+                    <span>{{ p.name }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+              <p class="mt-1 text-xs text-slate-400">{% trans "Sélectionnez une ou plusieurs parcelles." %}</p>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span class="text-red-500">*</span></label>
+              <input name="name" required placeholder="{% trans 'Arrosage matin' %}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Heure" %} <span class="text-red-500">*</span></label>
+                <input name="start_hour" type="number" min="0" max="23" required placeholder="6"
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Minute" %}</label>
+                <input name="start_minute" type="number" min="0" max="59" value="0"
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Durée (min)" %} <span class="text-red-500">*</span></label>
+                <input name="duration_minutes" type="number" min="1" required placeholder="60"
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Fréquence" %}</label>
+                <select name="frequency"
+                        class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                  {% for value, label in frequencies %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+                </select>
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-medium">{% trans "Priorité (1-10)" %}</label>
+                <input name="priority" type="number" min="1" max="10" value="5"
+                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-1">
+              <button type="button" @click="programModal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+              <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+                <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter" %}
+              </button>
+            </div>
+          </form>
+        {% else %}
+          <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Ajoutez d'abord une parcelle (Mes Parcelles) pour y créer un programme." %}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal — Ajouter une station ── #}
+  <div x-show="stationModal" x-cloak x-transition.opacity @keydown.escape.window="stationModal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
+    <div @click.self="stationModal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Ajouter une station" %}</h3>
+          <button type="button" @click="stationModal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        <form method="post" action="{% url 'irrigation:station_create' %}" class="space-y-3">
+          {% csrf_token %}
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span class="text-red-500">*</span></label>
+            <input name="name" required placeholder="{% trans 'Station principale' %}"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Débit max (m³/h)" %}</label>
+              <input name="max_flow_m3h" type="number" step="0.1" min="0" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Pression max (bar)" %}</label>
+              <input name="max_pressure_bar" type="number" step="0.1" min="0" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Puissance (kW)" %}</label>
+              <input name="power_kw" type="number" step="0.1" min="0" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Efficacité" %}</label>
+              <input name="efficiency" type="number" step="0.05" min="0.1" max="1" value="0.75" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Tarif énergie (€/kWh)" %}</label>
+              <input name="energy_tariff_kwh" type="number" step="0.01" min="0" value="0.15" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Tarif eau (€/m³)" %}</label>
+              <input name="water_tariff_m3" type="number" step="0.01" min="0" value="0.5" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+          </div>
+          <label class="flex w-fit items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+            <input type="checkbox" name="has_variable_drive" value="1" class="h-4 w-4 accent-brand">
+            {% trans "Variateur de fréquence (VFD)" %}
+          </label>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="stationModal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+              <span class="material-icons-round text-[18px]">save</span>{% trans "Enregistrer" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %}

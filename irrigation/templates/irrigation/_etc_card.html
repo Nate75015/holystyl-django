@@ -1,0 +1,73 @@
+{% comment %}Calculateur ETc interactif. Param : etc_init {etp, kc, pluie, surface}.
+Recalcul en direct côté client (Alpine).{% endcomment %}
+{% load i18n l10n %}
+<div x-data="etcCalc({{ etc_init.etp|unlocalize }}, {{ etc_init.kc|unlocalize }}, {{ etc_init.pluie|unlocalize }}, {{ etc_init.surface|unlocalize }})"
+     class="rounded-2xl border-2 border-brand/40 bg-white p-5 shadow-sm dark:border-brand/30 dark:bg-white/5">
+  <div class="flex items-center gap-2">
+    <span class="material-icons-round text-[20px] text-brand">bar_chart</span>
+    <h3 class="font-semibold">{% trans "Calculateur ETc" %}</h3>
+  </div>
+  <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+    {% trans "Le besoin en eau est calculé avec ETc = ETP × Kc. Soustrayez la pluie efficace pour obtenir le besoin net." %}
+  </p>
+
+  {# Entrées #}
+  <div class="mt-4 grid gap-3 sm:grid-cols-4">
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "ETP (mm/j)" %}</label>
+      <input type="number" step="0.1" min="0" x-model.number="etp"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "Kc (coefficient culturel)" %}</label>
+      <input type="number" step="0.05" min="0" x-model.number="kc"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "Pluie (mm)" %}</label>
+      <input type="number" step="0.1" min="0" x-model.number="pluie"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "Surface (ha)" %}</label>
+      <input type="number" step="0.1" min="0" x-model.number="surface"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+  </div>
+
+  {# Résultats (recalculés en direct) #}
+  <div class="mt-5 grid items-center gap-5 border-t border-slate-100 pt-4 dark:border-white/10 sm:grid-cols-4">
+    <div class="text-center">
+      <p class="text-2xl font-bold text-brand"><span x-text="etc().toFixed(2)"></span> <span class="text-sm font-medium text-slate-400">{% trans "mm/j" %}</span></p>
+      <p class="text-xs text-slate-400">{% trans "ETc" %}</p>
+    </div>
+    <div class="text-center">
+      <p class="text-2xl font-bold"><span x-text="besoinNet().toFixed(2)"></span> <span class="text-sm font-medium text-slate-400">{% trans "mm" %}</span></p>
+      <p class="text-xs text-slate-400">{% trans "Besoin net" %}</p>
+    </div>
+    <div class="text-center">
+      <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400"><span x-text="volume()"></span> <span class="text-sm font-medium text-slate-400">{% trans "m³" %}</span></p>
+      <p class="text-xs text-slate-400">{% trans "Volume" %}</p>
+    </div>
+    <div class="text-center">
+      <span class="flex h-9 w-full items-center justify-center rounded-full"
+            :class="over() ? 'bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400' : 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400'">
+        <span class="material-icons-round text-[20px]" x-text="over() ? 'visibility' : 'check_circle'"></span>
+      </span>
+      <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400" x-show="over()">{% trans "Surveiller — irrigation à prévoir" %}</p>
+      <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400" x-show="!over()" x-cloak>{% trans "Sol pourvu — pas d'irrigation nécessaire" %}</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function etcCalc(etp, kc, pluie, surface) {
+    return {
+      etp: etp, kc: kc, pluie: pluie, surface: surface,
+      etc() { return (this.etp || 0) * (this.kc || 0); },
+      besoinNet() { return Math.max(0, this.etc() - (this.pluie || 0)); },
+      volume() { return Math.round(this.besoinNet() * (this.surface || 0) * 10); },
+      over() { return this.besoinNet() > 0.5; },
+    };
+  }
+</script>
