@@ -50,6 +50,37 @@
       </svg>`;
   }
 
+  // Jauge de pourcentage générique (compte-tours 270°, dégradé teal→aqua).
+  // Usage : <div class="pct-gauge" data-pct="72" data-size="80" data-label="remplis"></div>
+  let pctSeq = 0;
+  function renderPctGauge(el) {
+    const pct = Math.max(0, Math.min(100, parseFloat(el.dataset.pct || '0')));
+    const size = parseInt(el.dataset.size || '120', 10);
+    const label = el.dataset.label || '';
+    const cx = size / 2, cy = size / 2, r = (size / 2) * 0.82, sw = (size / 2) * 0.12;
+    const START = 135, SWEEP = 270;
+    const fillEnd = START + (pct / 100) * SWEEP;
+    const dark = document.documentElement.classList.contains('dark');
+    const track = dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)';
+    const txt = dark ? '#67dded' : '#28738f';
+    const sub = dark ? '#7c8a8a' : '#5b6b6b';
+    const uid = 'pctgrad-' + (pctSeq++);
+
+    el.innerHTML =
+      `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
+        <defs>
+          <linearGradient id="${uid}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#28738f"/>
+            <stop offset="100%" stop-color="#22d3ee"/>
+          </linearGradient>
+        </defs>
+        <path d="${arc(cx, cy, r, START, START + SWEEP)}" fill="none" stroke="${track}" stroke-width="${sw}" stroke-linecap="round"/>
+        <path d="${arc(cx, cy, r, START, Math.max(START + 0.1, fillEnd))}" fill="none" stroke="url(#${uid})" stroke-width="${sw}" stroke-linecap="round"/>
+        <text x="${cx}" y="${label ? cy + size*0.02 : cy + size*0.09}" text-anchor="middle" font-size="${size*0.26}" font-weight="800" fill="${txt}">${Math.round(pct)}%</text>
+        ${label ? `<text x="${cx}" y="${cy + size*0.22}" text-anchor="middle" font-size="${size*0.1}" fill="${sub}">${label}</text>` : ''}
+      </svg>`;
+  }
+
   function renderChart(canvas) {
     if (typeof Chart === 'undefined') return;
     const dataEl = document.getElementById(canvas.dataset.chart);
@@ -91,6 +122,7 @@
 
   function init() {
     document.querySelectorAll('.dti-gauge').forEach(renderGauge);
+    document.querySelectorAll('.pct-gauge').forEach(renderPctGauge);
     document.querySelectorAll('canvas[data-chart]').forEach(renderChart);
   }
 

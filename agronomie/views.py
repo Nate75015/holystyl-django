@@ -3,7 +3,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.utils.dateparse import parse_datetime
+from django.utils.dateparse import parse_date, parse_datetime
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
@@ -129,7 +129,37 @@ def type_sol_delete(request, pk):
 def saisons(request):
     exploitation = Exploitation.objects.filter(owner=request.user).first()
     qs = Saison.objects.filter(exploitation=exploitation) if exploitation else Saison.objects.none()
-    return render(request, "agronomie/saisons.html", {"saisons": qs, "page_title": _("Saisons")})
+    year = timezone.now().year
+    return render(request, "agronomie/saisons.html", {
+        "saisons": qs,
+        "default_debut": f"{year}-01-01",
+        "default_fin": f"{year}-12-31",
+        "page_title": _("Saisons"),
+    })
+
+
+@login_required
+@require_POST
+def saison_create(request):
+    """Crée une saison depuis le formulaire « Nouvelle saison »."""
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    nom = (request.POST.get("nom") or "").strip()
+    date_debut = parse_date(request.POST.get("date_debut") or "")
+    date_fin = parse_date(request.POST.get("date_fin") or "")
+    if exploitation and nom and date_debut and date_fin and date_fin >= date_debut:
+        active = bool(request.POST.get("active"))
+        # Une seule saison active à la fois : on désactive les autres si celle-ci l'est.
+        if active:
+            Saison.objects.filter(exploitation=exploitation, active=True).update(active=False)
+        Saison.objects.create(
+            exploitation=exploitation,
+            nom=nom,
+            date_debut=date_debut,
+            date_fin=date_fin,
+            active=active,
+            notes=(request.POST.get("notes") or "").strip(),
+        )
+    return redirect("agronomie:saisons")
 
 
 PLAFOND_N = 170  # Directive Nitrates 91/676/CEE — kg N/ha/an en zone vulnérable

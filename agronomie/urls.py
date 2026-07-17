@@ -12,6 +12,7 @@ urlpatterns = [
     path("types-sol/nouveau/", views.type_sol_create, name="type_sol_create"),
     path("types-sol/<int:pk>/supprimer/", views.type_sol_delete, name="type_sol_delete"),
     path("saisons/", views.saisons, name="saisons"),
+    path("saisons/nouvelle/", views.saison_create, name="saison_create"),
     path("fertigation/", views.fertigation, name="fertigation"),
     path("fertigation/apport/", views.fertigation_create, name="fertigation_create"),
 ]

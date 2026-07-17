@@ -31,7 +31,8 @@ class IrrigationZone(TimeStampedModel):
         MAINTENANCE = "maintenance", _("Maintenance")
 
     exploitation = models.ForeignKey("exploitations.Exploitation", related_name="irrigation_zones", **EXPLOITATION_FK)
-    parcelle = models.ForeignKey("parcelles.Parcelle", related_name="irrigation_zones", on_delete=models.CASCADE)
+    # Une zone peut couvrir plusieurs parcelles (ex. un même réseau sur plusieurs îlots).
+    parcelles = models.ManyToManyField("parcelles.Parcelle", related_name="irrigation_zones", blank=True)
     name = models.CharField(max_length=255)
     irrigation_type = models.CharField(max_length=20, choices=IrrigationType.choices, default=IrrigationType.GOUTTE)
     flow_rate_m3h = models.FloatField(null=True, blank=True)
@@ -74,7 +75,8 @@ class IrrigationProgram(TimeStampedModel):
         AI = "ai", _("IA")
 
     exploitation = models.ForeignKey("exploitations.Exploitation", related_name="irrigation_programs", **EXPLOITATION_FK)
-    parcelle = models.ForeignKey("parcelles.Parcelle", related_name="irrigation_programs", on_delete=models.CASCADE)
+    # Un programme peut piloter plusieurs parcelles (même horaire/durée sur plusieurs îlots).
+    parcelles = models.ManyToManyField("parcelles.Parcelle", related_name="irrigation_programs", blank=True)
     zone = models.ForeignKey(IrrigationZone, related_name="programs", on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=255)
     start_hour = models.IntegerField()

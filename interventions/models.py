@@ -52,6 +52,7 @@ class Intervention(TimeStampedModel):
     dose = models.CharField(max_length=100, blank=True)
     unit = models.CharField(max_length=50, blank=True)
     surface = models.FloatField(null=True, blank=True)
+    cost = models.DecimalField(_("coût (€)"), max_digits=10, decimal_places=2, null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
     notes = models.TextField(blank=True)

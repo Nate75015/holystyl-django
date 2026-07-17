@@ -1,0 +1,62 @@
+{% comment %}Calculateur de pluviométrie horaire interactif. Param : pluvio_init.{% endcomment %}
+{% load i18n l10n %}
+<div x-data="pluvioCalc({{ pluvio_init.debit|unlocalize }}, {{ pluvio_init.rangs|unlocalize }}, {{ pluvio_init.emetteurs|unlocalize }}, {{ pluvio_init.objectif|unlocalize }})"
+     class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/5">
+  <div class="flex items-center gap-2">
+    <span class="material-icons-round text-[20px] text-brand">grain</span>
+    <h3 class="font-semibold">{% trans "Pluviométrie horaire" %}</h3>
+  </div>
+  <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+    {% trans "Pluvio (mm/h) = Débit émetteur (L/h) ÷ (Écart rangs × Écart émetteurs)" %}
+  </p>
+
+  <div class="mt-4 grid gap-3 sm:grid-cols-4">
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "Débit émetteur (L/h)" %}</label>
+      <input type="number" step="0.1" min="0" x-model.number="debit"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "Écart rangs (m)" %}</label>
+      <input type="number" step="0.1" min="0" x-model.number="rangs"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "Écart émetteurs (m)" %}</label>
+      <input type="number" step="0.1" min="0" x-model.number="emetteurs"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+    <div>
+      <label class="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">{% trans "Objectif (mm)" %}</label>
+      <input type="number" step="0.1" min="0" x-model.number="objectif"
+             class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+    </div>
+  </div>
+
+  <div class="mt-5 grid items-center gap-5 border-t border-slate-100 pt-4 dark:border-white/10 sm:grid-cols-2">
+    <div class="text-center">
+      <p class="text-2xl font-bold text-brand"><span x-text="pluvio().toFixed(2)"></span> <span class="text-sm font-medium text-slate-400">{% trans "mm/h" %}</span></p>
+      <p class="text-xs text-slate-400">{% trans "Pluviométrie" %}</p>
+    </div>
+    <div class="text-center">
+      <p class="text-2xl font-bold"><span x-text="duree()"></span> <span class="text-sm font-medium text-slate-400">{% trans "min" %}</span></p>
+      <p class="text-xs text-slate-400">{% trans "Durée pour" %} <span x-text="objectif"></span> {% trans "mm" %}</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function pluvioCalc(debit, rangs, emetteurs, objectif) {
+    return {
+      debit: debit, rangs: rangs, emetteurs: emetteurs, objectif: objectif,
+      pluvio() {
+        const surface = (this.rangs || 0) * (this.emetteurs || 0);
+        return surface > 0 ? (this.debit || 0) / surface : 0;
+      },
+      duree() {
+        const p = this.pluvio();
+        return p > 0 ? Math.round((this.objectif || 0) / p * 60) : 0;
+      },
+    };
+  }
+</script>

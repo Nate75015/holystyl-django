@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n l10n %}
 
 {% block content %}
-<section class="space-y-6">
+<section class="space-y-6"
+         x-data="reglesUI({{ form.errors|yesno:'true,false' }}, '{{ form.type.value|default:"" }}')">
   <div class="flex items-center justify-between">
     <h2 class="text-xl font-semibold">{% trans "Notifications" %}</h2>
     <form method="post" action="#" hx-post="/api/notifications/mark-all-read/" hx-swap="none">
       {% csrf_token %}
-      <button class="sidebar-link text-sm">{% trans "Tout marquer comme lu" %}</button>
+      <button type="submit" class="sidebar-link text-sm">{% trans "Tout marquer comme lu" %}</button>
     </form>
   </div>
 
@@ -28,13 +29,55 @@
   {% endif %}
 
   <div>
-    <h3 class="mb-2 font-medium">{% trans "Règles d'alerte" %}</h3>
+    <div class="mb-2 flex items-center justify-between gap-3">
+      <h3 class="font-medium">{% trans "Règles d'alerte" %}</h3>
+      <button type="button" @click="openAdd()"
+              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
+        <span class="material-icons-round text-[18px]">add</span><span class="hidden sm:inline">{% trans "Créer une règle" %}</span>
+      </button>
+    </div>
     {% if rules %}
       <div class="space-y-2">
         {% for r in rules %}
-          <div class="md-card flex items-center justify-between">
-            <div><p class="font-medium">{{ r.name }}</p><p class="text-xs text-slate-400">{{ r.type }} · {{ r.condition_type }}</p></div>
-            <span class="text-xs {% if r.enabled %}text-green-500{% else %}text-slate-400{% endif %}">{% if r.enabled %}{% trans "activée" %}{% else %}{% trans "désactivée" %}{% endif %}</span>
+          <div class="md-card flex items-center justify-between gap-3 {% if not r.enabled %}opacity-60{% endif %}">
+            <div class="min-w-0">
+              <p class="truncate font-medium">{{ r.name }}</p>
+              <p class="truncate text-xs text-slate-400">{{ r.type_label }}{% if r.ville %} · {{ r.ville.nom }}{% endif %}{% if r.metric %} · {{ r.get_metric_display }}{% endif %} · {{ r.condition_label }}{% if r.threshold is not None %} · {{ r.threshold|floatformat }}{{ r.metric_unit }}{% endif %}</p>
+            </div>
+            <div class="flex shrink-0 items-center gap-2">
+              <span class="text-xs font-medium {% if r.enabled %}text-brand{% else %}text-slate-400{% endif %}">{% if r.enabled %}{% trans "activée" %}{% else %}{% trans "désactivée" %}{% endif %}</span>
+              {% comment %}Interrupteur activer / désactiver. Pas de role="switch" : ce bouton
+              soumet un formulaire et recharge la page, là où un switch se met à jour sur place.
+              Un bouton dont le libellé nomme l'action est plus honnête, et l'état est déjà
+              annoncé par le texte « activée / désactivée » juste à côté.{% endcomment %}
+              <form method="post" action="{% url 'notifications:rule_toggle' r.pk %}" class="flex">
+                {% csrf_token %}
+                <button type="submit"
+                        title="{% if r.enabled %}{% blocktrans with name=r.name %}Désactiver la règle « {{ name }} »{% endblocktrans %}{% else %}{% blocktrans with name=r.name %}Activer la règle « {{ name }} »{% endblocktrans %}{% endif %}"
+                        class="relative h-6 w-11 shrink-0 rounded-full transition-colors {% if r.enabled %}bg-brand{% else %}bg-slate-300 dark:bg-white/20{% endif %}">
+                  <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform {% if r.enabled %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
+                </button>
+              </form>
+              <button type="button" title="{% trans 'Modifier' %}"
+                      data-id="{{ r.pk }}" data-name="{{ r.name }}" data-type="{{ r.type }}"
+                      data-ville="{{ r.ville_id|default:'' }}" data-condition="{{ r.condition_type }}"
+                      data-metric="{{ r.metric }}"
+                      {# unlocalize : sans lui le seuil sort en « 30,00 » et <input type=number> le rejette #}
+                      data-threshold="{{ r.threshold|default_if_none:''|unlocalize }}"
+                      @click="openEdit($event.currentTarget)"
+                      class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+                <span class="material-icons-round text-[18px]">edit</span>
+              </button>
+              {# escapejs : le nom est saisi par l'utilisateur et atterrit dans une chaîne JS #}
+              <form method="post" action="{% url 'notifications:rule_delete' r.pk %}" class="flex"
+                    onsubmit="return confirm('{% blocktrans with name=r.name|escapejs %}Supprimer définitivement la règle « {{ name }} » ?{% endblocktrans %}')">
+                {% csrf_token %}
+                <button type="submit" title="{% trans 'Supprimer' %}"
+                        class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10">
+                  <span class="material-icons-round text-[18px]">delete_outline</span>
+                </button>
+              </form>
+            </div>
           </div>
         {% endfor %}
       </div>
@@ -42,5 +85,120 @@
       <div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune règle définie." %}</p></div>
     {% endif %}
   </div>
+
+  {# Modale : créer / modifier une règle d'alerte #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
+    <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold" x-text="editing ? '{% trans "Modifier la règle" %}' : '{% trans "Créer une règle" %}'">{% trans "Créer une règle" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">
+            <span class="material-icons-round text-[20px]">close</span>
+          </button>
+        </div>
+
+        <form id="rule-form" method="post" action="{% url 'notifications:center' %}" class="space-y-4">
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+            <div class="rounded-xl border-2 border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-500/30 dark:bg-red-500/10">{{ form.non_field_errors }}</div>
+          {% endif %}
+          {% include "accounts/_field.html" with field=form.name %}
+          {# Reformulation du nom par l'IA #}
+          <div class="-mt-2">
+            <button type="button" @click="reformulate()" :disabled="aiBusy"
+                    class="inline-flex items-center gap-1.5 rounded-full border border-[#e7e5dd] px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-black/5 hover:text-brand disabled:opacity-50 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10">
+              <span class="material-icons-round text-[16px]" x-text="aiBusy ? 'hourglass_empty' : 'auto_fix_high'">auto_fix_high</span>
+              {% trans "Reformuler avec l'IA" %}
+            </button>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {% include "accounts/_field.html" with field=form.type %}
+            {% include "accounts/_field.html" with field=form.metric %}
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {% include "accounts/_field.html" with field=form.condition_type %}
+            {% include "accounts/_field.html" with field=form.threshold %}
+          </div>
+          {# Lieu : uniquement pour une règle météo, parmi les villes de /meteo/ #}
+          <div x-show="ruleType === 'meteo'" x-cloak x-transition.opacity>
+            {% if form.has_villes %}
+              {% include "accounts/_field.html" with field=form.ville %}
+            {% else %}
+              <div class="rounded-xl border border-[#e7e5dd] bg-black/[0.02] px-4 py-3 text-sm text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400">
+                {% trans "Aucun lieu enregistré." %}
+                <a href="{% url 'meteo:index' %}" class="font-medium text-brand hover:underline">{% trans "Ajoutez une ville depuis la page Météo" %}</a>
+                {% trans "pour créer une règle météo." %}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+              <span class="material-icons-round text-[18px]">notifications_active</span>{% trans "Enregistrer" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  function reglesUI(hasErrors, initialType) {
+    return {
+      modal: hasErrors,
+      editing: false,
+      ruleType: initialType,
+      aiBusy: false,
+      addAction: '{% url "notifications:center" %}',
+      _set(id, v) { const el = document.getElementById(id); if (el) el.value = v || ''; },
+      openAdd() {
+        const f = document.getElementById('rule-form');
+        f.reset();
+        f.setAttribute('action', this.addAction);
+        this.ruleType = '';
+        this.editing = false;
+        this.modal = true;
+      },
+      openEdit(btn) {
+        const d = btn.dataset;
+        const f = document.getElementById('rule-form');
+        f.setAttribute('action', '/notifications/regles/' + d.id + '/modifier/');
+        this._set('id_name', d.name);
+        this._set('id_ville', d.ville);
+        this._set('id_metric', d.metric);
+        this._set('id_condition_type', d.condition);
+        this._set('id_threshold', d.threshold);
+        // `type` est piloté par x-model : passer par la propriété, pas par la valeur du select.
+        this.ruleType = d.type;
+        this.editing = true;
+        this.modal = true;
+      },
+      // ✨ Reformule le nom de la règle via l'IA
+      reformulate() {
+        const input = document.getElementById('id_name');
+        const name = (input.value || '').trim();
+        if (!name || this.aiBusy) return;
+        const fd = new FormData();
+        fd.append('name', name);
+        fd.append('type', this.ruleType);
+        const condition = document.getElementById('id_condition_type');
+        if (condition) fd.append('condition_type', condition.value);
+        this.aiBusy = true;
+        fetch('{% url "notifications:rule_reformulate" %}', {
+          method: 'POST',
+          headers: { 'X-CSRFToken': document.querySelector('#rule-form [name=csrfmiddlewaretoken]').value },
+          credentials: 'same-origin',
+          body: fd,
+        })
+          .then((r) => r.json())
+          .then((d) => { if (d && d.name) { input.value = d.name; input.focus(); } })
+          .catch(() => {})
+          .finally(() => { this.aiBusy = false; });
+      },
+    };
+  }
+</script>
 {% endblock %}

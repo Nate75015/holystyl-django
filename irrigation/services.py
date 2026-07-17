@@ -5,6 +5,40 @@ Reproduction fidèle de `calculateDtiScore` (server/routers.ts).
 
 from dataclasses import dataclass, field
 
+#: Coefficient cultural par défaut (mi-saison, à défaut d'un Kc par culture).
+DEFAULT_KC = 0.85
+
+
+@dataclass
+class EtcResult:
+    etp: float
+    kc: float
+    etc: float            # besoin brut ETc = ETP × Kc (mm/j)
+    pluie: float          # pluie efficace (mm), soustraite directement
+    besoin_net: float     # ETc − pluie (mm)
+    surface_ha: float
+    volume_m3: float      # besoin net × surface × 10 (1 mm sur 1 ha = 10 m³)
+    status: str           # 'ok' | 'surveiller'
+    status_label: str
+
+
+def calculate_etc(etp, surface_ha=0.0, pluie=0.0, kc=DEFAULT_KC):
+    """Besoin en eau d'irrigation : ETc = ETP × Kc, besoin net = ETc − pluie efficace."""
+    etp = etp or 0.0
+    surface_ha = surface_ha or 0.0
+    etc = etp * kc
+    besoin_net = max(0.0, etc - (pluie or 0.0))
+    volume_m3 = besoin_net * surface_ha * 10
+    if besoin_net <= 0.5:
+        status, label = "ok", "Sol pourvu — pas d'irrigation nécessaire"
+    else:
+        status, label = "surveiller", "Surveiller — irrigation à prévoir"
+    return EtcResult(
+        etp=round(etp, 2), kc=kc, etc=round(etc, 2), pluie=round(pluie or 0.0, 2),
+        besoin_net=round(besoin_net, 2), surface_ha=round(surface_ha, 2),
+        volume_m3=round(volume_m3), status=status, status_label=label,
+    )
+
 
 @dataclass
 class DtiResult:

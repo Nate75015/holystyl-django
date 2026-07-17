@@ -22,4 +22,8 @@ app.conf.beat_schedule = {
         "task": "ia.tasks.generate_daily_reports",
         "schedule": crontab(hour=21, minute=0),
     },
+    "evaluate-notification-rules-hourly": {
+        "task": "notifications.tasks.evaluate_rules",
+        "schedule": crontab(minute=0),  # à chaque heure pile
+    },
 }

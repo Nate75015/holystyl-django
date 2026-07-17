@@ -20,24 +20,55 @@ _MIME = {
 }
 
 _PROMPT = (
-    "Tu es un expert agronome. Lis ce rapport d'analyse de sol et extrais les "
-    "valeurs en JSON strict. Mets null si une valeur est absente. "
-    "Schéma : {"
-    '"laboratoire": null, '          # nom du laboratoire
-    '"ph": null, '                   # pH (eau)
-    '"ec": null, '                   # conductivité électrique (mS/cm)
-    '"azote_total": null, '          # azote total
-    '"phosphore_assimilable": null, '  # P assimilable
-    '"potassium_echangeable": null, '  # K échangeable
-    '"matiere_organique": null, '    # matière organique en %
-    '"calcaire_total": null'         # calcaire total
-    "}"
+    "Tu es un expert agronome. Lis ce rapport d'analyse de sol (type AUREA, LCA…) "
+    "et extrais les valeurs en JSON strict, une clé par mesure. Mets null si une "
+    "valeur est absente. Pour les nombres, renvoie un nombre (point décimal), sans "
+    "unité ni symbole. EXCEPTIONS gardées en texte : taux_saturation, somme_16_hap, "
+    "somme_7_pcb (conserve « <0.056 », « >100 »…) ; les dates au format AAAA-MM-JJ. "
+    "Clés attendues : "
+    "laboratoire (nom du labo), numero_laboratoire, reference, technicien, commune, "
+    "profondeur_prelevement, date_prelevement, date_arrivee_labo, date_expedition, "
+    "ph (pH eau), ph_kcl, ec (conductivité mS/cm), calcaire_total (%), "
+    "calcaire_actif (% sec), calcium_cao (mg/kg), matiere_organique (%), "
+    "carbone_organique (%), azote_total (N %), c_n (rapport C/N), coefficient_k2 (%), "
+    "azote_ammoniacal (N-NH4 mg/kg), phosphore_assimilable (P2O5 mg/kg), "
+    "phosphore_olsen (mg/kg), potassium_echangeable (K2O mg/kg), magnesium_mgo (mg/kg), "
+    "sodium_na2o (mg/kg), bore (B mg/kg), cuivre (Cu EDTA mg/kg), fer (Fe EDTA mg/kg), "
+    "manganese (Mn EDTA mg/kg), zinc (Zn EDTA mg/kg), cec (meq/100g), taux_saturation, "
+    "ca_cec (%), k_cec (%), mg_cec (%), na_cec (%), h_cec (%), type_sol, argile (%), "
+    "limons_fins (%), limons_grossiers (%), sables_fins (%), sables_grossiers (%), "
+    "humidite (sur brut %), matiere_seche (sur brut %), refus_2mm (%), "
+    "densite_apparente (g/cm3), reserve_utile (RU mm/cm), "
+    "reserve_facilement_utilisable (RFU mm/cm), capacite_retention_pf25 (% MS), "
+    "capacite_retention_pf42 (% MS), indice_battance, risque_battance (texte), "
+    "cadmium, chrome, cuivre_total, mercure, nickel, plomb, zinc_total, arsenic, "
+    "cobalt, molybdene, selenium, fer_total (% sec), manganese_total, bore_total, "
+    "aluminium_echangeable, aluminium_total (% sec), somme_16_hap, somme_7_pcb."
 )
 
-_FIELDS = (
-    "laboratoire", "ph", "ec", "azote_total", "phosphore_assimilable",
-    "potassium_echangeable", "matiere_organique", "calcaire_total",
+# Champs texte (non convertis en float) et dates (parsées en AAAA-MM-JJ) côté vue.
+TEXT_FIELDS = (
+    "laboratoire", "numero_laboratoire", "reference", "technicien", "commune",
+    "profondeur_prelevement", "type_sol", "risque_battance", "taux_saturation",
+    "somme_16_hap", "somme_7_pcb",
 )
+DATE_FIELDS = ("date_prelevement", "date_arrivee_labo", "date_expedition")
+
+_NUMERIC_FIELDS = (
+    "ph", "ph_kcl", "ec", "calcaire_total", "calcaire_actif", "calcium_cao",
+    "matiere_organique", "carbone_organique", "azote_total", "c_n", "coefficient_k2",
+    "azote_ammoniacal", "phosphore_assimilable", "phosphore_olsen",
+    "potassium_echangeable", "magnesium_mgo", "sodium_na2o", "bore", "cuivre", "fer",
+    "manganese", "zinc", "cec", "ca_cec", "k_cec", "mg_cec", "na_cec", "h_cec",
+    "argile", "limons_fins", "limons_grossiers", "sables_fins", "sables_grossiers",
+    "humidite", "matiere_seche", "refus_2mm", "densite_apparente", "reserve_utile",
+    "reserve_facilement_utilisable", "capacite_retention_pf25", "capacite_retention_pf42",
+    "indice_battance", "cadmium", "chrome", "cuivre_total", "mercure", "nickel",
+    "plomb", "zinc_total", "arsenic", "cobalt", "molybdene", "selenium", "fer_total",
+    "manganese_total", "bore_total", "aluminium_echangeable", "aluminium_total",
+)
+
+_FIELDS = TEXT_FIELDS + DATE_FIELDS + _NUMERIC_FIELDS
 
 
 def extract_soil_analysis(data: bytes, filename: str) -> dict | None:
