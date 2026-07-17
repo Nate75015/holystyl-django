@@ -2,31 +2,260 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold">{% trans "Charges" %}</h2>
-    <a href="{% url 'finances:report_csv' %}?type=charges" class="sidebar-link text-sm">{% trans "Export CSV" %}</a>
-  </div>
-  {% if charges %}
-    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10">
-      <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
-          <tr><th class="px-4 py-3">{% trans "Date" %}</th><th class="px-4 py-3">{% trans "Catégorie" %}</th><th class="px-4 py-3">{% trans "Montant" %}</th><th class="px-4 py-3">{% trans "Fournisseur" %}</th></tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-          {% for c in charges %}
-            <tr>
-              <td class="px-4 py-3">{{ c.date|date:"d/m/Y" }}</td>
-              <td class="px-4 py-3">{{ c.get_categorie_display }}</td>
-              <td class="px-4 py-3 font-medium">{{ c.montant }} €</td>
-              <td class="px-4 py-3 text-slate-400">{{ c.fournisseur|default:"—" }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+<section class="space-y-6" x-data="{ tab: 'charges', modal: false, revenuModal: false }">
+
+  {# ── En-tête ── #}
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
+        <span class="material-icons-round">payments</span>
+      </span>
+      <div>
+        <h2 class="text-2xl font-bold tracking-tight">{% trans "Charges & Coûts" %}</h2>
+        <p class="text-sm text-slate-400">{% trans "Suivi des dépenses et revenus d'exploitation" %}{% if saison_active %} · {{ saison_active.nom }}{% endif %}</p>
+      </div>
     </div>
-  {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune charge enregistrée." %}</p></div>
-  {% endif %}
+    <button type="button" @click="tab === 'revenus' ? revenuModal = true : modal = true"
+            class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+      <span class="material-icons-round text-[18px]">add</span><span x-text="tab === 'revenus' ? '{% trans "Ajouter un revenu" %}' : '{% trans "Ajouter une charge" %}'">{% trans "Ajouter" %}</span>
+    </button>
+  </div>
+
+  {# ── KPIs ── #}
+  <div class="grid grid-cols-3 gap-3">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">arrow_downward</span>{% trans "Charges" %}</div>
+      <p class="mt-1 text-2xl font-bold text-red-500">{{ bilan.total_charges|floatformat:0 }} €</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">arrow_upward</span>{% trans "Revenus" %}</div>
+      <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ bilan.total_revenus|floatformat:0 }} €</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+      <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">account_balance_wallet</span>{% trans "Solde" %}</div>
+      <p class="mt-1 text-2xl font-bold {% if bilan.resultat_net >= 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-red-500{% endif %}">{% if bilan.resultat_net >= 0 %}+{% endif %}{{ bilan.resultat_net|floatformat:0 }} €</p>
+    </div>
+  </div>
+
+  {# ── Onglets ── #}
+  <div class="flex gap-1 border-b border-slate-200 dark:border-white/10">
+    <button @click="tab='charges'" class="border-b-2 px-3 py-2.5 text-sm font-medium transition" :class="tab==='charges' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">{% trans "Charges" %}</button>
+    <button @click="tab='revenus'" class="border-b-2 px-3 py-2.5 text-sm font-medium transition" :class="tab==='revenus' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">{% trans "Revenus" %}</button>
+    <button @click="tab='bilan'" class="border-b-2 px-3 py-2.5 text-sm font-medium transition" :class="tab==='bilan' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">{% trans "Bilan" %}</button>
+  </div>
+
+  {# ── Charges ── #}
+  <div x-show="tab==='charges'">
+    {% if charges %}
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+            <tr><th class="px-4 py-3">{% trans "Date" %}</th><th class="px-4 py-3">{% trans "Catégorie" %}</th><th class="px-4 py-3">{% trans "Description" %}</th><th class="px-4 py-3">{% trans "Fournisseur" %}</th><th class="px-4 py-3 text-right">{% trans "Montant" %}</th></tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+            {% for c in charges %}
+              <tr>
+                <td class="px-4 py-3">{{ c.date|date:"d/m/Y" }}</td>
+                <td class="px-4 py-3">{{ c.get_categorie_display }}</td>
+                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ c.description|default:"—" }}</td>
+                <td class="px-4 py-3 text-slate-400">{{ c.fournisseur|default:"—" }}</td>
+                <td class="px-4 py-3 text-right font-medium text-red-500">{{ c.montant|floatformat:2 }} €</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="md-card flex flex-col items-center justify-center py-12 text-center">
+        <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">receipt_long</span>
+        <p class="text-sm text-slate-400">{% trans "Aucune charge enregistrée" %}</p>
+        <button type="button" @click="modal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une charge" %}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+
+  {# ── Revenus ── #}
+  <div x-show="tab==='revenus'" x-cloak class="space-y-3">
+    {% if revenus %}
+      <div class="flex justify-end">
+        <button type="button" @click="revenuModal = true"
+                class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un revenu" %}
+        </button>
+      </div>
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+            <tr><th class="px-4 py-3">{% trans "Date" %}</th><th class="px-4 py-3">{% trans "Catégorie" %}</th><th class="px-4 py-3">{% trans "Description" %}</th><th class="px-4 py-3">{% trans "Acheteur" %}</th><th class="px-4 py-3 text-right">{% trans "Montant" %}</th></tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+            {% for r in revenus %}
+              <tr>
+                <td class="px-4 py-3">{{ r.date|date:"d/m/Y" }}</td>
+                <td class="px-4 py-3">{{ r.get_categorie_display }}</td>
+                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ r.description|default:"—" }}</td>
+                <td class="px-4 py-3 text-slate-400">{{ r.acheteur|default:"—" }}</td>
+                <td class="px-4 py-3 text-right font-medium text-emerald-600 dark:text-emerald-400">{{ r.montant|floatformat:2 }} €</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="md-card flex flex-col items-center justify-center py-12 text-center">
+        <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">savings</span>
+        <p class="text-sm text-slate-400">{% trans "Aucun revenu enregistré" %}</p>
+        <button type="button" @click="revenuModal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un revenu" %}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+
+  {# ── Bilan ── #}
+  <div x-show="tab==='bilan'" x-cloak class="grid gap-3 sm:grid-cols-2">
+    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Résultat net" %}</p><p class="mt-1 text-2xl font-bold {% if bilan.resultat_net >= 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-red-500{% endif %}">{% if bilan.resultat_net >= 0 %}+{% endif %}{{ bilan.resultat_net|floatformat:0 }} €</p></div>
+    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Marge par ha" %}</p><p class="mt-1 text-2xl font-bold">{% if bilan.marge_par_ha is not None %}{{ bilan.marge_par_ha|floatformat:0 }} €/ha{% else %}—{% endif %}</p></div>
+    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Surface" %}</p><p class="mt-1 text-xl font-semibold">{{ bilan.surface_ha|floatformat:2 }} ha</p></div>
+    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Eau · Énergie" %}</p><p class="mt-1 text-xl font-semibold">{{ bilan.eau_m3|floatformat:0 }} m³ · {{ bilan.energie_kwh|floatformat:0 }} kWh</p></div>
+  </div>
+
+  {# ── Modal — Enregistrer une charge ── #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
+    <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Enregistrer une charge" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        <form method="post" action="{% url 'finances:charge_create' %}" class="space-y-3">
+          {% csrf_token %}
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
+              <select name="categorie"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                {% for value, label in categories %}<option value="{{ value }}"{% if value == 'engrais' %} selected{% endif %}>{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
+              <input name="date" type="date" value="{{ today }}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+            </div>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Montant (€)" %} <span class="text-red-500">*</span></label>
+            <input name="montant" type="number" step="0.01" min="0" required placeholder="0.00" inputmode="decimal"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
+            <input name="description" placeholder="{% trans 'ex: Semences blé tendre — 200 kg' %}"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Fournisseur" %}</label>
+              <input name="fournisseur" placeholder="{% trans 'Nom du fournisseur' %}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+              <select name="parcelle"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                <option value="">{% trans "Toute l'exploitation" %}</option>
+                {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+              <span class="material-icons-round text-[18px]">save</span>{% trans "Enregistrer la charge" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal — Enregistrer un revenu ── #}
+  <div x-show="revenuModal" x-cloak x-transition.opacity @keydown.escape.window="revenuModal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
+    <div @click.self="revenuModal = false" class="flex w-full max-w-lg justify-center">
+      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-lg font-semibold">{% trans "Enregistrer un revenu" %}</h3>
+          <button type="button" @click="revenuModal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        </div>
+
+        <form method="post" action="{% url 'finances:revenu_create' %}" class="space-y-3">
+          {% csrf_token %}
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
+              <select name="categorie"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                {% for value, label in revenu_categories %}<option value="{{ value }}"{% if value == 'vente_cereales' %} selected{% endif %}>{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
+              <input name="date" type="date" value="{{ today }}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+            </div>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Montant (€)" %} <span class="text-red-500">*</span></label>
+            <input name="montant" type="number" step="0.01" min="0" required placeholder="0.00" inputmode="decimal"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
+            <input name="description" placeholder="{% trans 'ex: Vente blé tendre — récolte 2025' %}"
+                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Acheteur / Organisme" %}</label>
+              <input name="acheteur" placeholder="{% trans 'Nom de l’acheteur' %}"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+              <select name="parcelle"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                <option value="">{% trans "Toute l'exploitation" %}</option>
+                {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Quantité (kg)" %}</label>
+              <input name="quantite_kg" type="number" step="0.1" min="0" placeholder="0" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Prix unitaire (€/kg)" %}</label>
+              <input name="prix_unitaire" type="number" step="0.001" min="0" placeholder="0.000" inputmode="decimal"
+                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+          </div>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="revenuModal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+              <span class="material-icons-round text-[18px]">save</span>{% trans "Enregistrer le revenu" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock %}
