@@ -6,6 +6,9 @@ app_name = "environnement"
 
 urlpatterns = [
     path("environnement/biodiversite/", views.biodiversite, name="biodiversite"),
+    path("environnement/biodiversite/nouvelle/", views.biodiversite_create, name="biodiversite_create"),
+    path("environnement/biodiversite/<int:pk>/modifier/", views.biodiversite_edit, name="biodiversite_edit"),
+    path("environnement/biodiversite/<int:pk>/supprimer/", views.biodiversite_delete, name="biodiversite_delete"),
     path("environnement/bilan-eau/", views.bilan_eau, name="bilan_eau"),
     path("environnement/bilan-eau/export/", views.bilan_eau_export, name="bilan_eau_export"),
     path("environnement/bilan-azote/", views.bilan_azote, name="bilan_azote"),

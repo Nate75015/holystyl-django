@@ -65,3 +65,30 @@ class ActiviteTaxonomie(models.Model):
         if self.eligible:
             return "eligible"
         return "non_eligible"
+
+
+class Biodiversite(models.Model):
+    """Fiche de suivi de la biodiversité d'une parcelle (IAE, espèces, couverts)."""
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="fiches_biodiversite"
+    )
+    parcelle = models.ForeignKey(
+        "parcelles.Parcelle", on_delete=models.CASCADE, related_name="fiches_biodiversite"
+    )
+    date = models.DateField(_("date"))
+    score = models.IntegerField(_("score biodiversité (0-100)"), null=True, blank=True)
+    especes_vegetales = models.IntegerField(_("espèces végétales"), null=True, blank=True)
+    especes_animales = models.IntegerField(_("espèces animales"), null=True, blank=True)
+    haies_ml = models.FloatField(_("haies (ml)"), null=True, blank=True)
+    jachere_ha = models.FloatField(_("jachère (ha)"), null=True, blank=True)
+    observations = models.TextField(_("observations"), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("fiche biodiversité")
+        verbose_name_plural = _("fiches biodiversité")
+        ordering = ("-date",)
+
+    def __str__(self):
+        return f"{self.parcelle} — {self.date}"

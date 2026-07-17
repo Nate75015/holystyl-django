@@ -2,12 +2,17 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5" x-data="{ modal: false }">
+<section class="space-y-6" x-data="{ modal: false, del: { open: false, action: '', name: '' } }">
 
   <div class="flex flex-wrap items-start justify-between gap-3">
-    <div>
-      <h2 class="text-xl font-semibold">{% trans "Taxonomie EU" %}</h2>
-      <p class="mt-1 text-sm text-slate-400">{% trans "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)" %}</p>
+    <div class="flex items-center gap-3">
+      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
+        <span class="material-icons-round">fact_check</span>
+      </span>
+      <div>
+        <h2 class="text-2xl font-bold tracking-tight">{% trans "Taxonomie EU" %}</h2>
+        <p class="text-sm text-slate-400">{% trans "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)" %}</p>
+      </div>
     </div>
     <div class="flex items-center gap-2">
       <form method="get" id="campagne-form">
@@ -24,22 +29,35 @@
   </div>
 
   {# KPIs : part alignée #}
-  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Chiffre d'affaires aligné" %}</p>
-      <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ pct_ca }} %</p>
+  <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-white/10 dark:bg-white/5">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"><span class="material-icons-round text-[20px]">payments</span></span>
+        <span class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ pct_ca }}%</span>
+      </div>
+      <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500" style="width: {{ pct_ca }}%"></div></div>
+      <p class="mt-1.5 text-xs text-slate-400">{% trans "Chiffre d'affaires aligné" %}</p>
     </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "CapEx aligné" %}</p>
-      <p class="mt-1 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ pct_capex }} %</p>
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/10 dark:border-white/10 dark:bg-white/5">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400"><span class="material-icons-round text-[20px]">trending_up</span></span>
+        <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ pct_capex }}%</span>
+      </div>
+      <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-sky-400 transition-all duration-500" style="width: {{ pct_capex }}%"></div></div>
+      <p class="mt-1.5 text-xs text-slate-400">{% trans "CapEx aligné" %}</p>
     </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "OpEx aligné" %}</p>
-      <p class="mt-1 text-2xl font-bold text-orange-500 dark:text-orange-400">{{ pct_opex }} %</p>
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-500/10 dark:border-white/10 dark:bg-white/5">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500/10 text-orange-500"><span class="material-icons-round text-[20px]">build</span></span>
+        <span class="text-2xl font-bold text-orange-500 dark:text-orange-400">{{ pct_opex }}%</span>
+      </div>
+      <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-500" style="width: {{ pct_opex }}%"></div></div>
+      <p class="mt-1.5 text-xs text-slate-400">{% trans "OpEx aligné" %}</p>
     </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-900/10 dark:border-white/10 dark:bg-white/5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand/10 text-brand"><span class="material-icons-round text-[20px]">verified</span></span>
+      <p class="mt-3 text-2xl font-bold">{{ nb_alignes }}<span class="text-base font-normal text-slate-400">/{{ nb_fiches }}</span></p>
       <p class="text-xs text-slate-400">{% trans "Fiches alignées" %}</p>
-      <p class="mt-1 text-2xl font-bold">{{ nb_alignes }}<span class="text-base font-normal text-slate-400">/{{ nb_fiches }}</span></p>
     </div>
   </div>
 
@@ -72,10 +90,9 @@
               <td class="px-4 py-3 text-right">{{ f.capex|default_if_none:"—" }}</td>
               <td class="px-4 py-3 text-right">{{ f.opex|default_if_none:"—" }}</td>
               <td class="px-4 py-3 text-right">
-                <form method="post" action="{% url 'environnement:taxonomie_delete' f.pk %}" onsubmit="return confirm('{% trans "Supprimer cette fiche ?" %}')">
-                  {% csrf_token %}
-                  <button type="submit" class="text-slate-400 transition hover:text-red-500"><span class="material-icons-round text-[18px]">delete</span></button>
-                </form>
+                <button type="button" title="{% trans 'Supprimer' %}"
+                        @click="del = { open: true, action: '{% url 'environnement:taxonomie_delete' f.pk %}', name: '{{ f.libelle|escapejs }}' }"
+                        class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10"><span class="material-icons-round text-[18px]">delete_outline</span></button>
               </td>
             </tr>
           {% endfor %}
@@ -179,6 +196,25 @@
           </div>
         </form>
       </div>
+    </div>
+  </div>
+
+  {# Modal : confirmation de suppression #}
+  <div x-show="del.open" x-cloak x-transition.opacity @keydown.escape.window="del.open = false"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div @click.self="del.open = false" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+      <div class="flex items-start gap-3">
+        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400"><span class="material-icons-round">delete_outline</span></span>
+        <div class="min-w-0">
+          <h3 class="text-base font-semibold">{% trans "Supprimer cette fiche ?" %}</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400"><span class="font-medium text-slate-700 dark:text-slate-200" x-text="del.name"></span> — {% trans "cette action est irréversible." %}</p>
+        </div>
+      </div>
+      <form method="post" :action="del.action" class="mt-5 flex justify-end gap-2">
+        {% csrf_token %}
+        <button type="button" @click="del.open = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700"><span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}</button>
+      </form>
     </div>
   </div>
 </section>

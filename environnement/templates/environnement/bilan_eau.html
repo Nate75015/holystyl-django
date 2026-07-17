@@ -2,65 +2,83 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5">
+<section class="space-y-6">
 
+  {# ── En-tête ── #}
   <div class="flex flex-wrap items-start justify-between gap-3">
-    <div>
-      <h2 class="text-xl font-semibold">{% trans "Bilan Eau" %}</h2>
-      <p class="mt-1 text-sm text-slate-400">{% trans "Consommation d'eau d'irrigation · Sessions réelles" %}</p>
+    <div class="flex items-center gap-3">
+      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
+        <span class="material-icons-round">water_drop</span>
+      </span>
+      <div>
+        <h2 class="text-2xl font-bold tracking-tight">{% trans "Bilan Eau" %}</h2>
+        <p class="text-sm text-slate-400">{% trans "Consommation d'eau d'irrigation · sessions réelles" %}</p>
+      </div>
     </div>
     <a href="{% url 'environnement:bilan_eau_export' %}"
-       class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium transition hover:border-brand hover:text-brand dark:border-white/10">
-      <span class="material-icons-round text-[18px]">download</span>{% trans "Export" %}
+       class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:border-brand hover:text-brand dark:border-white/10">
+      <span class="material-icons-round text-[18px]">download</span>{% trans "Export CSV" %}
     </a>
   </div>
 
-  {# KPIs #}
-  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+  {# ── KPIs ── #}
+  <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/10 dark:border-white/10 dark:bg-white/5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400"><span class="material-icons-round text-[20px]">water_drop</span></span>
+      <p class="mt-3 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ total_m3 }}<span class="ml-0.5 text-sm font-medium text-slate-400">m³</span></p>
       <p class="text-xs text-slate-400">{% trans "Irrigation totale" %}</p>
-      <p class="mt-1 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ total_m3 }} m³</p>
-      <p class="text-xs text-slate-400">{% trans "cumul des sessions" %}</p>
     </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Sessions" %}</p>
-      <p class="mt-1 text-2xl font-bold">{{ nb_sessions }}</p>
-      <p class="text-xs text-slate-400">{% trans "sessions enregistrées" %}</p>
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-900/10 dark:border-white/10 dark:bg-white/5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-slate-500/10 text-slate-500 dark:text-slate-300"><span class="material-icons-round text-[20px]">waves</span></span>
+      <p class="mt-3 text-2xl font-bold">{{ nb_sessions }}</p>
+      <p class="text-xs text-slate-400">{% trans "Sessions enregistrées" %}</p>
     </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Quota utilisé" %}</p>
-      <p class="mt-1 text-2xl font-bold {% if pct_quota > 90 %}text-red-500{% else %}text-emerald-600 dark:text-emerald-400{% endif %}">{{ pct_quota }}%</p>
-      <p class="text-xs text-slate-400">{{ quota_display }} m³ {% trans "alloués" %}</p>
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-900/10 dark:border-white/10 dark:bg-white/5">
+      <div class="flex items-center justify-between">
+        <span class="grid h-9 w-9 place-items-center rounded-xl {% if pct_quota > 90 %}bg-red-500/10 text-red-500{% elif pct_quota > 75 %}bg-amber-500/10 text-amber-500{% else %}bg-emerald-500/10 text-emerald-600 dark:text-emerald-400{% endif %}"><span class="material-icons-round text-[20px]">data_usage</span></span>
+        <span class="text-2xl font-bold {% if pct_quota > 90 %}text-red-500{% elif pct_quota > 75 %}text-amber-500{% else %}text-emerald-600 dark:text-emerald-400{% endif %}">{{ pct_quota }}%</span>
+      </div>
+      <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
+        <div class="h-full rounded-full {% if pct_quota > 90 %}bg-red-500{% elif pct_quota > 75 %}bg-amber-500{% else %}bg-gradient-to-r from-emerald-500 to-teal-400{% endif %} transition-all duration-500" style="width: {{ pct_quota|floatformat:0 }}%"></div>
+      </div>
+      <p class="mt-1.5 text-xs text-slate-400">{% trans "Quota" %} · {{ quota_display }} m³</p>
     </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Coût eau" %}</p>
-      <p class="mt-1 text-2xl font-bold text-orange-500 dark:text-orange-400">{{ cout }} €</p>
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-500/10 dark:border-white/10 dark:bg-white/5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500/10 text-orange-500"><span class="material-icons-round text-[20px]">euro</span></span>
+      <p class="mt-3 text-2xl font-bold text-orange-500 dark:text-orange-400">{{ cout }}<span class="ml-0.5 text-sm font-medium text-slate-400">€</span></p>
       <p class="text-xs text-slate-400">{{ prix_m3 }} €/m³ {% trans "estimé" %}</p>
     </div>
   </div>
 
-  {# Consommation mensuelle #}
-  <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-    <h3 class="mb-3 text-sm font-semibold">{% trans "Consommation mensuelle (m³)" %}</h3>
+  {# ── Consommation mensuelle ── #}
+  <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+    <h3 class="mb-4 flex items-center gap-2 text-sm font-semibold">
+      <span class="material-icons-round text-[18px] text-blue-500">bar_chart</span>{% trans "Consommation mensuelle (m³)" %}
+    </h3>
     {% if monthly_chart.labels %}
       {{ monthly_chart|json_script:"be-monthly" }}
       <div class="h-56"><canvas id="chart-monthly"></canvas></div>
     {% else %}
-      <p class="py-10 text-center text-sm text-slate-400">{% trans "Aucune session d'irrigation enregistrée" %}</p>
+      <div class="flex flex-col items-center justify-center py-10 text-center">
+        <span class="material-icons-round mb-2 text-[32px] text-slate-300 dark:text-slate-600">water_drop</span>
+        <p class="text-sm text-slate-400">{% trans "Aucune session d'irrigation enregistrée" %}</p>
+      </div>
     {% endif %}
   </div>
 
-  {# Consommation quotidienne par parcelle (un graphe par parcelle) #}
+  {# ── Consommation quotidienne par parcelle ── #}
   <div>
-    <h3 class="mb-2 text-sm font-semibold">{% trans "Consommation par parcelle (m³/jour)" %}</h3>
+    <h3 class="mb-3 flex items-center gap-2 text-sm font-semibold">
+      <span class="material-icons-round text-[18px] text-sky-500">grid_view</span>{% trans "Consommation par parcelle (m³/jour)" %}
+    </h3>
     {% if parcelle_charts %}
       {{ parcelle_charts|json_script:"be-parcelles" }}
       <div class="grid gap-3 sm:grid-cols-2">
         {% for pc in parcelle_charts %}
-          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-            <div class="mb-2 flex items-baseline justify-between">
-              <p class="font-medium">{{ pc.nom }}</p>
-              <p class="text-sm text-slate-400">{{ pc.total }} m³</p>
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-white/5">
+            <div class="mb-3 flex items-center justify-between gap-2">
+              <p class="flex items-center gap-2 font-medium"><span class="material-icons-round text-[16px] text-sky-500">place</span>{{ pc.nom }}</p>
+              <p class="shrink-0 rounded-full bg-sky-500/10 px-2.5 py-0.5 text-xs font-semibold text-sky-600 dark:text-sky-400">{{ pc.total }} m³</p>
             </div>
             {% if pc.labels %}
               <div class="h-44"><canvas id="chart-parc-{{ forloop.counter0 }}"></canvas></div>
@@ -71,13 +89,9 @@
         {% endfor %}
       </div>
     {% elif has_parcelles %}
-      <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <p class="py-6 text-center text-sm text-slate-400">{% trans "Aucune session d'irrigation enregistrée pour vos parcelles." %}</p>
-      </div>
+      <div class="md-card"><p class="py-6 text-center text-sm text-slate-400">{% trans "Aucune session d'irrigation enregistrée pour vos parcelles." %}</p></div>
     {% else %}
-      <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <p class="py-6 text-center text-sm text-slate-400">{% trans "Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation par parcelle." %}</p>
-      </div>
+      <div class="md-card"><p class="py-6 text-center text-sm text-slate-400">{% trans "Aucune parcelle enregistrée. Créez vos parcelles pour voir la consommation par parcelle." %}</p></div>
     {% endif %}
   </div>
 </section>
@@ -87,32 +101,36 @@
 <script>
   (function () {
     if (typeof Chart === 'undefined') return;
+    var dark = document.documentElement.classList.contains('dark');
     function opts() {
       return {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
+        plugins: { legend: { display: false }, tooltip: { displayColors: false } },
         scales: {
-          x: { ticks: { maxTicksLimit: 8, font: { size: 10 } }, grid: { display: false } },
-          y: { beginAtZero: true, ticks: { maxTicksLimit: 6, font: { size: 10 } } }
+          x: { ticks: { maxTicksLimit: 8, font: { size: 10 }, color: '#94a3b8' }, grid: { display: false } },
+          y: { beginAtZero: true, ticks: { maxTicksLimit: 6, font: { size: 10 }, color: '#94a3b8' },
+               grid: { color: dark ? 'rgba(255,255,255,0.06)' : 'rgba(15,23,42,0.06)' }, border: { display: false } }
         }
       };
     }
-    function mkBar(canvas, labels, data, color) {
+    // Barres à dégradé vertical
+    function mkBar(canvas, labels, data, top, bottom) {
+      var cx = canvas.getContext('2d');
+      var g = cx.createLinearGradient(0, 0, 0, canvas.height || 220);
+      g.addColorStop(0, top); g.addColorStop(1, bottom);
       new Chart(canvas, {
         type: 'bar',
-        data: { labels: labels, datasets: [{ data: data, backgroundColor: color, borderRadius: 6, maxBarThickness: 40 }] },
+        data: { labels: labels, datasets: [{ data: data, backgroundColor: g, borderRadius: 8, maxBarThickness: 42 }] },
         options: opts()
       });
     }
-    // Mensuel
     var mel = document.getElementById('be-monthly'), mc = document.getElementById('chart-monthly');
-    if (mel && mc) { var m = JSON.parse(mel.textContent); mkBar(mc, m.labels, m.data, '#3b82f6'); }
-    // Un graphe par parcelle (m³/jour)
+    if (mel && mc) { var m = JSON.parse(mel.textContent); mkBar(mc, m.labels, m.data, '#3b82f6', 'rgba(59,130,246,0.15)'); }
     var pel = document.getElementById('be-parcelles');
     if (pel) {
       JSON.parse(pel.textContent).forEach(function (pc, i) {
         var c = document.getElementById('chart-parc-' + i);
-        if (c) mkBar(c, pc.labels, pc.data, '#0ea5e9');
+        if (c) mkBar(c, pc.labels, pc.data, '#0ea5e9', 'rgba(14,165,233,0.15)');
       });
     }
   })();

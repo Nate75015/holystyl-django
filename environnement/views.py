@@ -16,7 +16,10 @@ from exploitations.models import Exploitation
 from irrigation.models import IrrigationSession
 from parcelles.models import Parcelle
 
-from .models import ActiviteTaxonomie
+from django.db.models import Avg, Sum
+from django.utils.dateparse import parse_date
+
+from .models import ActiviteTaxonomie, Biodiversite
 
 _DEFAULT_QUOTA_M3 = 45000.0
 _PRIX_EAU_M3 = 0.08
@@ -45,11 +48,76 @@ def _page(request, title, icon, desc):
     })
 
 
+def _int(value):
+    try:
+        return int(float(str(value).replace(",", ".").strip()))
+    except (TypeError, ValueError):
+        return None
+
+
 @login_required
 def biodiversite(request):
-    return _page(request, _("Biodiversité"), "eco", _(
-        "Suivez la biodiversité de vos parcelles : auxiliaires, pollinisateurs, "
-        "couverts végétaux et infrastructures agro-écologiques (IAE)."))
+    exploitation = _exploitation(request)
+    fiches = (
+        Biodiversite.objects.filter(exploitation=exploitation).select_related("parcelle")
+        if exploitation else Biodiversite.objects.none()
+    )
+    agg = fiches.aggregate(score=Avg("score"), haies=Sum("haies_ml"), jachere=Sum("jachere_ha"))
+    return render(request, "environnement/biodiversite.html", {
+        "fiches": fiches,
+        "kpi_score": round(agg["score"]) if agg["score"] is not None else None,
+        "kpi_haies": round(agg["haies"]) if agg["haies"] else 0,
+        "kpi_jachere": round(agg["jachere"], 1) if agg["jachere"] else 0,
+        "parcelles": Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none(),
+        "today": timezone.localdate().isoformat(),
+        "page_title": _("Biodiversité"),
+    })
+
+
+def _save_biodiversite(fiche, request, exploitation):
+    """Applique les champs POST à une fiche (création ou édition). False si parcelle invalide."""
+    parcelle = Parcelle.objects.filter(pk=request.POST.get("parcelle"), exploitation=exploitation).first()
+    if not parcelle:
+        return False
+    score = _int(request.POST.get("score"))
+    fiche.parcelle = parcelle
+    fiche.date = parse_date(request.POST.get("date") or "") or timezone.localdate()
+    fiche.score = max(0, min(100, score)) if score is not None else None
+    fiche.especes_vegetales = _int(request.POST.get("especes_vegetales"))
+    fiche.especes_animales = _int(request.POST.get("especes_animales"))
+    fiche.haies_ml = _to_float(request.POST.get("haies_ml"))
+    fiche.jachere_ha = _to_float(request.POST.get("jachere_ha"))
+    fiche.observations = (request.POST.get("observations") or "").strip()
+    fiche.save()
+    return True
+
+
+@login_required
+@require_POST
+def biodiversite_create(request):
+    """Enregistre une fiche biodiversité depuis la modale « Nouvelle fiche »."""
+    exploitation = _exploitation(request, create=True)
+    _save_biodiversite(Biodiversite(exploitation=exploitation), request, exploitation)
+    return redirect("environnement:biodiversite")
+
+
+@login_required
+@require_POST
+def biodiversite_edit(request, pk):
+    """Met à jour une fiche existante (soumise depuis la modale d'édition)."""
+    exploitation = _exploitation(request)
+    fiche = get_object_or_404(Biodiversite, pk=pk, exploitation=exploitation)
+    _save_biodiversite(fiche, request, exploitation)
+    return redirect("environnement:biodiversite")
+
+
+@login_required
+@require_POST
+def biodiversite_delete(request, pk):
+    """Supprime une fiche biodiversité."""
+    exploitation = _exploitation(request)
+    get_object_or_404(Biodiversite, pk=pk, exploitation=exploitation).delete()
+    return redirect("environnement:biodiversite")
 
 
 def _bilan_eau_data(request):
