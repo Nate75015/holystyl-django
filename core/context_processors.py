@@ -58,7 +58,8 @@ def layout(request):
         {
             "label": _("Protection"), "key": "protection",
             "items": [
-                {"label": _("Bassinage anti-gel"), "url_name": "irrigation:bassinage", "icon": "ac_unit"},
+                {"label": _("Bassinage"), "url_name": "irrigation:bassinage", "icon": "shower"},
+                {"label": _("Anti-gel"), "url_name": "irrigation:antigel", "icon": "ac_unit"},
             ],
         },
         {
