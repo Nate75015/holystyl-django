@@ -2,8 +2,8 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6">
-  {% if needs_onboarding %}
+{% if needs_onboarding %}
+  <section class="mx-auto max-w-3xl">
     <div class="md-card">
       <h2 class="text-lg font-semibold">{% trans "Bienvenue sur Holystyl 👋" %}</h2>
       <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
@@ -11,123 +11,169 @@
       </p>
       <a href="{% url 'exploitations:settings' %}" class="md-btn-primary mt-4">{% trans "Configurer mon exploitation" %}</a>
     </div>
-  {% else %}
-    <div class="flex items-center justify-between">
-      <div>
-        <h2 class="text-xl font-semibold text-glow-teal">{{ exploitation.name }}</h2>
-        <p class="text-sm text-slate-400">{{ exploitation.city }}</p>
-      </div>
-      <a href="{% url 'parcelles:create' %}" class="md-btn-primary">{% trans "+ Parcelle" %}</a>
-    </div>
+  </section>
+{% else %}
+<section class="mx-auto max-w-6xl space-y-6">
 
-    {# Rangée hero : jauge DTI + météo #}
-    <div class="grid gap-4 lg:grid-cols-3">
-      <div class="md-card flex flex-col items-center justify-center">
-        <p class="mb-2 self-start text-xs uppercase tracking-wide text-slate-400">{% trans "Efficience DTI" %}</p>
-        {% if dti %}
-          {% include "partials/dti_gauge.html" with score=dti.score numeric=dti.score_numeric kwh=dti.kwh_per_m3 size=210 %}
-        {% else %}
-          <div class="py-10 text-center">
-            <p class="text-4xl font-bold text-slate-300 dark:text-slate-600">—</p>
-            <p class="mt-2 text-sm text-slate-400">{% trans "Aucun score DTI calculé." %}</p>
-          </div>
-        {% endif %}
-      </div>
-
-      {# Widget météo (Open-Meteo, temps réel, sans clé) #}
-      <div class="md-card lg:col-span-2"
-           x-data="weather({{ exploitation.latitude|default:'null' }}, {{ exploitation.longitude|default:'null' }})">
-        <div class="flex items-center justify-between">
-          <p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Météo & ETP" %}</p>
-          <span class="text-xs text-slate-400" x-text="coords ? '' : '{% trans "Localisation manquante" %}'"></span>
+  {# ── Hero : identité + jauge DTI ── #}
+  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
+    <div class="relative flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
+          <span class="material-icons-round text-[26px]">insights</span>
+        </span>
+        <div class="min-w-0">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
+            <span class="material-icons-round text-[14px]">dashboard</span>{% trans "Tableau de bord" %}
+          </span>
+          <h2 class="mt-1.5 truncate text-xl font-bold tracking-tight sm:text-2xl">{{ exploitation.name }}</h2>
+          <p class="truncate text-sm text-slate-400">{{ exploitation.city|default:"—" }}</p>
         </div>
-        <template x-if="current">
-          <div class="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <div><p class="text-2xl font-semibold" x-text="current.temp + '°'"></p><p class="text-xs text-slate-400">{% trans "Température" %}</p></div>
-            <div><p class="text-2xl font-semibold" x-text="current.humidity + '%'"></p><p class="text-xs text-slate-400">{% trans "Humidité" %}</p></div>
-            <div><p class="text-2xl font-semibold" x-text="current.wind + ' km/h'"></p><p class="text-xs text-slate-400">{% trans "Vent" %}</p></div>
-            <div><p class="text-2xl font-semibold text-brand" x-text="current.etp + ' mm'"></p><p class="text-xs text-slate-400">ETP</p></div>
-          </div>
-        </template>
-        <div class="mt-4 flex gap-2" x-show="forecast.length">
-          <template x-for="d in forecast" :key="d.date">
-            <div class="flex-1 rounded-xl border border-white/5 p-2 text-center text-xs">
-              <p class="text-slate-400" x-text="d.day"></p>
-              <p class="mt-1 font-semibold" x-text="d.tmax + '°'"></p>
-              <p class="text-slate-400" x-text="d.tmin + '°'"></p>
+      </div>
+      <div class="flex shrink-0 items-center gap-4">
+        <div class="text-center">
+          {% if dti %}
+            {% include "partials/dti_gauge.html" with score=dti.score numeric=dti.score_numeric kwh=dti.kwh_per_m3 size=104 %}
+          {% else %}
+            <p class="text-3xl font-bold text-slate-300 dark:text-slate-600">—</p>
+          {% endif %}
+          <p class="mt-1 text-xs text-slate-400">{% trans "Efficience DTI" %}</p>
+        </div>
+        <a href="{% url 'parcelles:create' %}"
+           class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
+          <span class="material-icons-round text-[18px]">add</span>{% trans "Parcelle" %}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
+    {# ── Sommaire latéral collant ── #}
+    <aside class="hidden lg:block">
+      <nav class="sticky top-6 space-y-0.5">
+        <a href="#sec-apercu" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">wb_sunny</span><span class="flex-1 truncate">{% trans "Aperçu" %}</span></a>
+        <a href="#sec-indicateurs" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">dashboard</span><span class="flex-1 truncate">{% trans "Indicateurs" %}</span></a>
+        <a href="#sec-tendances" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">show_chart</span><span class="flex-1 truncate">{% trans "Tendances" %}</span></a>
+        <a href="#sec-alertes" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">notifications</span><span class="min-w-0 flex-1 truncate">{% trans "Alertes" %}</span>
+          {% if alerts %}<span class="shrink-0 rounded-full bg-amber-500/15 px-1.5 text-[11px] font-semibold text-amber-600 dark:text-amber-400">{{ alerts|length }}</span>{% endif %}</a>
+      </nav>
+    </aside>
+
+    {# ── Colonne principale ── #}
+    <div class="min-w-0 space-y-5">
+
+      {# Aperçu : météo + équipe #}
+      <div id="sec-apercu" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">wb_sunny</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Aperçu" %}</h3>
+        </div>
+        <div class="grid gap-3 p-5 sm:grid-cols-3">
+          {# Météo → 2 lieux #}
+          <a href="{% url 'meteo:index' %}" class="group block rounded-xl border border-slate-200/70 p-4 transition hover:border-brand/30 hover:shadow-sm dark:border-white/10 sm:col-span-2">
+            <div class="flex items-center justify-between">
+              <p class="inline-flex items-center gap-1.5 text-xs uppercase tracking-wide text-slate-400"><span class="material-icons-round text-[16px]">wb_sunny</span>{% trans "Météo" %}</p>
+              <span class="material-icons-round text-[18px] text-slate-300 transition group-hover:text-brand dark:text-slate-600">chevron_right</span>
             </div>
-          </template>
+            {% if meteo_villes %}
+              <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                {% for v in meteo_villes %}
+                  <div class="flex items-center justify-between gap-3 rounded-lg bg-black/[0.02] px-3 py-2 dark:bg-white/5">
+                    <div class="flex min-w-0 items-center gap-2">
+                      <span class="material-icons-round text-[22px] text-brand">{{ v.icon|default:"cloud" }}</span>
+                      <div class="min-w-0"><p class="truncate font-medium">{{ v.nom }}</p><p class="truncate text-xs text-slate-400">{{ v.label|default:"—" }}</p></div>
+                    </div>
+                    <p class="shrink-0 text-2xl font-semibold">{% if v.temp is not None %}{{ v.temp }}°{% else %}—{% endif %}</p>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p class="mt-3 text-sm text-slate-400">{% trans "Aucun lieu enregistré — ajoutez une ville depuis la page Météo." %}</p>
+            {% endif %}
+          </a>
+          {# ETP → équipe #}
+          <a href="{% url 'equipe:equipe' %}" class="group flex flex-col justify-between rounded-xl border border-slate-200/70 p-4 transition hover:border-brand/30 hover:shadow-sm dark:border-white/10">
+            <div class="flex items-center justify-between">
+              <p class="inline-flex items-center gap-1.5 text-xs uppercase tracking-wide text-slate-400"><span class="material-icons-round text-[16px]">groups</span>ETP</p>
+              <span class="material-icons-round text-[18px] text-slate-300 transition group-hover:text-brand dark:text-slate-600">chevron_right</span>
+            </div>
+            <p class="py-2 text-3xl font-bold text-brand">{{ etp_count }}</p>
+            <p class="text-xs text-slate-400">{% trans "Membres d'équipe" %}</p>
+          </a>
         </div>
-        <p x-show="!current && coords" class="mt-3 text-sm text-slate-400">{% trans "Chargement météo…" %}</p>
       </div>
-    </div>
 
-    {# KPI cards #}
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Parcelles" %}</p><p class="mt-2 text-2xl font-semibold">{{ kpis.parcelles_total }}</p><p class="text-xs text-slate-400">{{ kpis.parcelles_active }} {% trans "actives" %}</p></div>
-      <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Surface" %}</p><p class="mt-2 text-2xl font-semibold">{{ kpis.surface_total_ha }} <span class="text-base font-normal text-slate-400">ha</span></p></div>
-      <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Quota eau" %}</p><p class="mt-2 text-2xl font-semibold">{% if kpis.water_usage_pct is not None %}{{ kpis.water_usage_pct }}%{% else %}—{% endif %}</p><p class="text-xs text-slate-400">{{ kpis.water_used_m3 }} / {{ kpis.water_quota_m3|default:"—" }} m³</p></div>
-      <div class="md-card"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Alertes actives" %}</p><p class="mt-2 text-2xl font-semibold {% if alerts %}text-amber-500{% endif %}">{{ alerts|length }}</p></div>
-    </div>
-
-    {# Graphiques #}
-    <div class="grid gap-4 lg:grid-cols-2">
-      <div class="md-card">
-        <p class="mb-3 text-sm font-medium">{% trans "Historique DTI" %}</p>
-        {% if dti_chart %}{% include "partials/area_chart.html" with chart_id="dtiChart" chart_data=dti_chart %}
-        {% else %}<p class="py-8 text-center text-sm text-slate-400">{% trans "Pas encore de données." %}</p>{% endif %}
-      </div>
-      <div class="md-card">
-        <p class="mb-3 text-sm font-medium">{% trans "Consommation d'eau" %}</p>
-        {% if water_chart %}{% include "partials/area_chart.html" with chart_id="waterChart" chart_data=water_chart %}
-        {% else %}<p class="py-8 text-center text-sm text-slate-400">{% trans "Pas encore de relevés." %}</p>{% endif %}
-      </div>
-    </div>
-
-    {# Flux d'alertes #}
-    <div class="md-card">
-      <p class="mb-3 text-sm font-medium">{% trans "Alertes" %}</p>
-      {% for a in alerts %}
-        <div class="flex items-center gap-3 border-b border-white/5 py-2 last:border-0">
-          <span class="h-2.5 w-2.5 shrink-0 rounded-full {% if a.severity == 'danger' %}status-warning{% else %}status-online{% endif %}"></span>
-          <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium">{{ a.title }}</p><p class="truncate text-xs text-slate-400">{{ a.message }}</p></div>
+      {# Indicateurs clés #}
+      <div id="sec-indicateurs" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">dashboard</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Indicateurs clés" %}</h3>
         </div>
-      {% empty %}
-        <p class="text-sm text-slate-400">{% trans "Aucune alerte active. 🌿" %}</p>
-      {% endfor %}
+        <div class="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+          <a href="{% url 'parcelles:list' %}" class="group rounded-xl border border-slate-200/70 p-4 transition hover:border-brand/30 hover:shadow-sm dark:border-white/10">
+            <div class="flex items-center justify-between"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Parcelles" %}</p><span class="material-icons-round text-[18px] text-slate-300 transition group-hover:text-brand dark:text-slate-600">chevron_right</span></div>
+            <p class="mt-2 text-2xl font-semibold">{{ kpis.parcelles_total }}</p><p class="text-xs text-slate-400">{{ kpis.parcelles_active }} {% trans "actives" %}</p>
+          </a>
+          <a href="{% url 'parcelles:list' %}" class="group rounded-xl border border-slate-200/70 p-4 transition hover:border-brand/30 hover:shadow-sm dark:border-white/10">
+            <div class="flex items-center justify-between"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Surface" %}</p><span class="material-icons-round text-[18px] text-slate-300 transition group-hover:text-brand dark:text-slate-600">chevron_right</span></div>
+            <p class="mt-2 text-2xl font-semibold">{{ kpis.surface_total_ha }} <span class="text-base font-normal text-slate-400">ha</span></p>
+          </a>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Quota eau" %}</p>
+            <p class="mt-2 text-2xl font-semibold">{% if kpis.water_usage_pct is not None %}{{ kpis.water_usage_pct }}%{% else %}—{% endif %}</p><p class="text-xs text-slate-400">{{ kpis.water_used_m3 }} / {{ kpis.water_quota_m3|default:"—" }} m³</p>
+          </div>
+          <a href="{% url 'notifications:center' %}" class="group rounded-xl border border-slate-200/70 p-4 transition hover:border-brand/30 hover:shadow-sm dark:border-white/10">
+            <div class="flex items-center justify-between"><p class="text-xs uppercase tracking-wide text-slate-400">{% trans "Alertes actives" %}</p><span class="material-icons-round text-[18px] text-slate-300 transition group-hover:text-brand dark:text-slate-600">chevron_right</span></div>
+            <p class="mt-2 text-2xl font-semibold {% if alerts %}text-amber-500{% endif %}">{{ alerts|length }}</p>
+          </a>
+        </div>
+      </div>
+
+      {# Tendances #}
+      <div id="sec-tendances" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">show_chart</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Tendances" %}</h3>
+        </div>
+        <div class="grid gap-4 p-5 lg:grid-cols-2">
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <p class="mb-3 text-sm font-medium">{% trans "Historique DTI" %}</p>
+            {% if dti_chart %}{% include "partials/area_chart.html" with chart_id="dtiChart" chart_data=dti_chart %}
+            {% else %}<p class="py-8 text-center text-sm text-slate-400">{% trans "Pas encore de données." %}</p>{% endif %}
+          </div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <p class="mb-3 text-sm font-medium">{% trans "Consommation d'eau" %}</p>
+            {% if water_chart %}{% include "partials/area_chart.html" with chart_id="waterChart" chart_data=water_chart %}
+            {% else %}<p class="py-8 text-center text-sm text-slate-400">{% trans "Pas encore de relevés." %}</p>{% endif %}
+          </div>
+        </div>
+      </div>
+
+      {# Alertes #}
+      <div id="sec-alertes" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">notifications</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Alertes" %}</h3>
+          <a href="{% url 'notifications:center' %}" class="group inline-flex items-center gap-1 text-xs text-slate-400 transition hover:text-brand">{% trans "Voir tout" %}<span class="material-icons-round text-[16px]">chevron_right</span></a>
+        </div>
+        <div class="p-5">
+          {% for a in alerts %}
+            <div class="flex items-center gap-3 border-b border-slate-100 py-2 last:border-0 dark:border-white/5">
+              <span class="h-2.5 w-2.5 shrink-0 rounded-full {% if a.severity == 'danger' %}status-warning{% else %}status-online{% endif %}"></span>
+              <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium">{{ a.title }}</p><p class="truncate text-xs text-slate-400">{{ a.message }}</p></div>
+            </div>
+          {% empty %}
+            <p class="text-sm text-slate-400">{% trans "Aucune alerte active. 🌿" %}</p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
-  {% endif %}
+  </div>
 </section>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-  function weather(lat, lng) {
-    return {
-      coords: lat !== null && lng !== null, current: null, forecast: [],
-      init() {
-        if (!this.coords) return;
-        var u = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lng +
-          '&current=temperature_2m,relative_humidity_2m,wind_speed_10m' +
-          '&daily=temperature_2m_max,temperature_2m_min,et0_fao_evapotranspiration&forecast_days=5&timezone=auto';
-        fetch(u).then(r => r.json()).then(d => {
-          if (d.current) this.current = {
-            temp: Math.round(d.current.temperature_2m),
-            humidity: Math.round(d.current.relative_humidity_2m),
-            wind: Math.round(d.current.wind_speed_10m),
-            etp: d.daily && d.daily.et0_fao_evapotranspiration ? d.daily.et0_fao_evapotranspiration[0].toFixed(1) : '—',
-          };
-          if (d.daily) {
-            var days = ['dim','lun','mar','mer','jeu','ven','sam'];
-            this.forecast = d.daily.time.map((t, i) => ({
-              date: t, day: days[new Date(t).getDay()],
-              tmax: Math.round(d.daily.temperature_2m_max[i]),
-              tmin: Math.round(d.daily.temperature_2m_min[i]),
-            }));
-          }
-        }).catch(() => {});
-      },
-    };
-  }
-</script>
+{% endif %}
 {% endblock %}

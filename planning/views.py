@@ -3,16 +3,20 @@
 import calendar as _calendar
 import json
 from collections import defaultdict
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 
 from equipe.models import Task, TeamMember
 from exploitations.models import Exploitation
+from parcelles.models import Parcelle
 
 from .models import InterventionReport, PlanningTask
 
@@ -98,7 +102,66 @@ def planning(request):
             for m in team_members
         ]
 
+    ctx["priorities"] = Task.Priority.choices
+    ctx["statuses"] = Task.Status.choices
+    ctx["parcelles"] = Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none()
     return render(request, "planning/planning.html", ctx)
+
+
+def _planning_url(request):
+    """Retour à la grille en conservant vue et date."""
+    vue = request.POST.get("vue") or "semaine"
+    d = request.POST.get("date") or ""
+    return f"{reverse('planning:planning')}?vue={vue}" + (f"&date={d}" if d else "")
+
+
+def _save_task(task, request, exploitation):
+    """Applique les champs POST à une tâche (création ou édition). False si invalide."""
+    title = (request.POST.get("title") or "").strip()
+    member = TeamMember.objects.filter(pk=request.POST.get("assigned_to"), exploitation=exploitation).first()
+    if not (exploitation and title and member):
+        return False
+    d = parse_date(request.POST.get("due_date") or "")
+    priority = request.POST.get("priority")
+    if priority not in Task.Priority.values:
+        priority = Task.Priority.NORMALE
+    status = request.POST.get("status")
+    if status not in Task.Status.values:
+        status = Task.Status.TODO
+    task.title = title[:255]
+    task.assigned_to = member
+    task.due_date = timezone.make_aware(datetime.combine(d, datetime.min.time())) if d else None
+    task.priority = priority
+    task.status = status
+    task.parcelle = Parcelle.objects.filter(pk=request.POST.get("parcelle") or None, exploitation=exploitation).first()
+    task.description = (request.POST.get("description") or "").strip()
+    task.save()
+    return True
+
+
+@login_required
+@require_POST
+def task_create(request):
+    exploitation = _exploitation(request)
+    _save_task(Task(exploitation=exploitation, created_by=request.user), request, exploitation)
+    return redirect(_planning_url(request))
+
+
+@login_required
+@require_POST
+def task_edit(request, pk):
+    exploitation = _exploitation(request)
+    task = get_object_or_404(Task, pk=pk, exploitation=exploitation)
+    _save_task(task, request, exploitation)
+    return redirect(_planning_url(request))
+
+
+@login_required
+@require_POST
+def task_delete(request, pk):
+    exploitation = _exploitation(request)
+    get_object_or_404(Task, pk=pk, exploitation=exploitation).delete()
+    return redirect(_planning_url(request))
 
 
 @login_required

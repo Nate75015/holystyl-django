@@ -2,88 +2,142 @@
 {% load i18n l10n %}
 
 {% block content %}
-<section class="space-y-6"
+<section class="mx-auto max-w-6xl space-y-6"
          x-data="reglesUI({{ form.errors|yesno:'true,false' }}, '{{ form.type.value|default:"" }}')">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold">{% trans "Notifications" %}</h2>
-    <form method="post" action="#" hx-post="/api/notifications/mark-all-read/" hx-swap="none">
-      {% csrf_token %}
-      <button type="submit" class="sidebar-link text-sm">{% trans "Tout marquer comme lu" %}</button>
-    </form>
+
+  {# ── Hero ── #}
+  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
+    <div class="relative flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
+          <span class="material-icons-round text-[26px]">notifications</span>
+        </span>
+        <div class="min-w-0">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
+            <span class="material-icons-round text-[14px]">notifications_active</span>{% trans "Alertes" %}
+          </span>
+          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Notifications" %}</h2>
+          <p class="truncate text-sm text-slate-400">{% trans "Vos alertes et vos règles de déclenchement" %}</p>
+        </div>
+      </div>
+      <form method="post" action="#" hx-post="/api/notifications/mark-all-read/" hx-swap="none" class="shrink-0">
+        {% csrf_token %}
+        <button type="submit" class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-sm font-medium transition hover:border-brand hover:text-brand dark:border-white/10 dark:bg-white/10">
+          <span class="material-icons-round text-[18px]">done_all</span>{% trans "Tout marquer comme lu" %}
+        </button>
+      </form>
+    </div>
   </div>
 
-  {% if notifications %}
-    <div class="space-y-2">
-      {% for n in notifications %}
-        <div class="md-card flex items-start justify-between {% if not n.read %}border-l-4 border-brand{% endif %}">
-          <div>
-            <p class="font-medium">{{ n.title }}</p>
-            <p class="text-sm text-slate-500 dark:text-slate-400">{{ n.message }}</p>
-            <p class="mt-1 text-xs text-slate-400">{{ n.get_priority_display }} · {{ n.created_at }}</p>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucune notification." %}</p></div>
-  {% endif %}
+  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
+    {# ── Sommaire latéral collant ── #}
+    <aside class="hidden lg:block">
+      <nav class="sticky top-6 space-y-0.5">
+        <a href="#sec-notifs" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">inbox</span><span class="min-w-0 flex-1 truncate">{% trans "Notifications" %}</span>
+          {% if notifications %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ notifications|length }}</span>{% endif %}</a>
+        <a href="#sec-regles" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">rule</span><span class="min-w-0 flex-1 truncate">{% trans "Règles d'alerte" %}</span>
+          {% if rules %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ rules|length }}</span>{% endif %}</a>
+      </nav>
+    </aside>
 
-  <div>
-    <div class="mb-2 flex items-center justify-between gap-3">
-      <h3 class="font-medium">{% trans "Règles d'alerte" %}</h3>
-      <button type="button" @click="openAdd()"
-              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
-        <span class="material-icons-round text-[18px]">add</span><span class="hidden sm:inline">{% trans "Créer une règle" %}</span>
-      </button>
-    </div>
-    {% if rules %}
-      <div class="space-y-2">
-        {% for r in rules %}
-          <div class="md-card flex items-center justify-between gap-3 {% if not r.enabled %}opacity-60{% endif %}">
-            <div class="min-w-0">
-              <p class="truncate font-medium">{{ r.name }}</p>
-              <p class="truncate text-xs text-slate-400">{{ r.type_label }}{% if r.ville %} · {{ r.ville.nom }}{% endif %}{% if r.metric %} · {{ r.get_metric_display }}{% endif %} · {{ r.condition_label }}{% if r.threshold is not None %} · {{ r.threshold|floatformat }}{{ r.metric_unit }}{% endif %}</p>
+    {# ── Colonne principale ── #}
+    <div class="min-w-0 space-y-5">
+
+      {# Notifications #}
+      <div id="sec-notifs" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">inbox</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Notifications" %}</h3>
+          {% if notifications %}<span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400">{{ notifications|length }}</span>{% endif %}
+        </div>
+        <div class="p-5">
+          {% if notifications %}
+            <div class="space-y-2">
+              {% for n in notifications %}
+                <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10 {% if not n.read %}border-l-4 border-l-brand{% endif %}">
+                  <p class="font-medium">{{ n.title }}</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">{{ n.message }}</p>
+                  <p class="mt-1 text-xs text-slate-400">{{ n.get_priority_display }} · {{ n.created_at }}</p>
+                </div>
+              {% endfor %}
             </div>
-            <div class="flex shrink-0 items-center gap-2">
-              <span class="text-xs font-medium {% if r.enabled %}text-brand{% else %}text-slate-400{% endif %}">{% if r.enabled %}{% trans "activée" %}{% else %}{% trans "désactivée" %}{% endif %}</span>
-              {% comment %}Interrupteur activer / désactiver. Pas de role="switch" : ce bouton
-              soumet un formulaire et recharge la page, là où un switch se met à jour sur place.
-              Un bouton dont le libellé nomme l'action est plus honnête, et l'état est déjà
-              annoncé par le texte « activée / désactivée » juste à côté.{% endcomment %}
-              <form method="post" action="{% url 'notifications:rule_toggle' r.pk %}" class="flex">
-                {% csrf_token %}
-                <button type="submit"
-                        title="{% if r.enabled %}{% blocktrans with name=r.name %}Désactiver la règle « {{ name }} »{% endblocktrans %}{% else %}{% blocktrans with name=r.name %}Activer la règle « {{ name }} »{% endblocktrans %}{% endif %}"
-                        class="relative h-6 w-11 shrink-0 rounded-full transition-colors {% if r.enabled %}bg-brand{% else %}bg-slate-300 dark:bg-white/20{% endif %}">
-                  <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform {% if r.enabled %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
-                </button>
-              </form>
-              <button type="button" title="{% trans 'Modifier' %}"
-                      data-id="{{ r.pk }}" data-name="{{ r.name }}" data-type="{{ r.type }}"
-                      data-ville="{{ r.ville_id|default:'' }}" data-condition="{{ r.condition_type }}"
-                      data-metric="{{ r.metric }}"
-                      {# unlocalize : sans lui le seuil sort en « 30,00 » et <input type=number> le rejette #}
-                      data-threshold="{{ r.threshold|default_if_none:''|unlocalize }}"
-                      @click="openEdit($event.currentTarget)"
-                      class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
-                <span class="material-icons-round text-[18px]">edit</span>
-              </button>
-              {# escapejs : le nom est saisi par l'utilisateur et atterrit dans une chaîne JS #}
-              <form method="post" action="{% url 'notifications:rule_delete' r.pk %}" class="flex"
-                    onsubmit="return confirm('{% blocktrans with name=r.name|escapejs %}Supprimer définitivement la règle « {{ name }} » ?{% endblocktrans %}')">
-                {% csrf_token %}
-                <button type="submit" title="{% trans 'Supprimer' %}"
-                        class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10">
-                  <span class="material-icons-round text-[18px]">delete_outline</span>
-                </button>
-              </form>
+          {% else %}
+            <div class="flex flex-col items-center justify-center py-10 text-center">
+              <span class="material-icons-round mb-2 text-[32px] text-slate-300 dark:text-slate-600">notifications_off</span>
+              <p class="text-sm text-slate-400">{% trans "Aucune notification." %}</p>
             </div>
-          </div>
-        {% endfor %}
+          {% endif %}
+        </div>
       </div>
-    {% else %}
-      <div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune règle définie." %}</p></div>
-    {% endif %}
+
+      {# Règles d'alerte #}
+      <div id="sec-regles" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">rule</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Règles d'alerte" %}</h3>
+          <button type="button" @click="openAdd()"
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-3 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
+            <span class="material-icons-round text-[18px]">add</span><span class="hidden sm:inline">{% trans "Créer une règle" %}</span>
+          </button>
+        </div>
+        <div class="p-5">
+          {% if rules %}
+            <div class="space-y-2">
+              {% for r in rules %}
+                <div class="flex items-center justify-between gap-3 rounded-xl border border-slate-200/70 p-4 dark:border-white/10 {% if not r.enabled %}opacity-60{% endif %}">
+                  <div class="min-w-0">
+                    <p class="truncate font-medium">{{ r.name }}</p>
+                    <p class="truncate text-xs text-slate-400">{{ r.type_label }}{% if r.ville %} · {{ r.ville.nom }}{% endif %}{% if r.metric %} · {{ r.get_metric_display }}{% endif %} · {{ r.condition_label }}{% if r.threshold is not None %} · {{ r.threshold|floatformat }}{{ r.metric_unit }}{% endif %}</p>
+                  </div>
+                  <div class="flex shrink-0 items-center gap-2">
+                    <span class="text-xs font-medium {% if r.enabled %}text-brand{% else %}text-slate-400{% endif %}">{% if r.enabled %}{% trans "activée" %}{% else %}{% trans "désactivée" %}{% endif %}</span>
+                    {% comment %}Interrupteur activer / désactiver. Pas de role="switch" : ce bouton
+                    soumet un formulaire et recharge la page, là où un switch se met à jour sur place.{% endcomment %}
+                    <form method="post" action="{% url 'notifications:rule_toggle' r.pk %}" class="flex">
+                      {% csrf_token %}
+                      <button type="submit"
+                              title="{% if r.enabled %}{% blocktrans with name=r.name %}Désactiver la règle « {{ name }} »{% endblocktrans %}{% else %}{% blocktrans with name=r.name %}Activer la règle « {{ name }} »{% endblocktrans %}{% endif %}"
+                              class="relative h-6 w-11 shrink-0 rounded-full transition-colors {% if r.enabled %}bg-brand{% else %}bg-slate-300 dark:bg-white/20{% endif %}">
+                        <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform {% if r.enabled %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
+                      </button>
+                    </form>
+                    <button type="button" title="{% trans 'Modifier' %}"
+                            data-id="{{ r.pk }}" data-name="{{ r.name }}" data-type="{{ r.type }}"
+                            data-ville="{{ r.ville_id|default:'' }}" data-condition="{{ r.condition_type }}"
+                            data-metric="{{ r.metric }}"
+                            data-threshold="{{ r.threshold|default_if_none:''|unlocalize }}"
+                            @click="openEdit($event.currentTarget)"
+                            class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+                      <span class="material-icons-round text-[18px]">edit</span>
+                    </button>
+                    {# escapejs : le nom est saisi par l'utilisateur et atterrit dans une chaîne JS #}
+                    <form method="post" action="{% url 'notifications:rule_delete' r.pk %}" class="flex"
+                          onsubmit="return confirm('{% blocktrans with name=r.name|escapejs %}Supprimer définitivement la règle « {{ name }} » ?{% endblocktrans %}')">
+                      {% csrf_token %}
+                      <button type="submit" title="{% trans 'Supprimer' %}"
+                              class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10">
+                        <span class="material-icons-round text-[18px]">delete_outline</span>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="flex flex-col items-center justify-center py-10 text-center">
+              <span class="material-icons-round mb-2 text-[32px] text-slate-300 dark:text-slate-600">rule</span>
+              <p class="text-sm text-slate-400">{% trans "Aucune règle définie." %}</p>
+              <button type="button" @click="openAdd()" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+                <span class="material-icons-round text-[18px]">add</span>{% trans "Créer une règle" %}
+              </button>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
   </div>
 
   {# Modale : créer / modifier une règle d'alerte #}

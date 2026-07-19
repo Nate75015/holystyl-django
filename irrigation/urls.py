@@ -10,4 +10,7 @@ urlpatterns = [
     path("irrigation/programmes/nouveau/", views.program_create, name="program_create"),
     path("irrigation/stations/nouvelle/", views.station_create, name="station_create"),
     path("bassinage/", views.bassinage, name="bassinage"),
+    path("bassinage/declencher/", views.bassinage_create, name="bassinage_create"),
+    path("anti-gel/", views.antigel, name="antigel"),
+    path("anti-gel/reglages/", views.antigel_settings, name="antigel_settings"),
 ]

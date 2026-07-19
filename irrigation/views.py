@@ -3,12 +3,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from django.db.models import Sum
+from django.db.models import Avg, Sum
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
+from meteo.models import VilleMeteo
 from meteo.services import fetch_weather
 from parcelles.models import Parcelle
 
@@ -219,6 +221,145 @@ def station_create(request):
 def bassinage(request):
     exploitation = _exploitation(request)
     events = (
-        BassinageEvent.objects.filter(exploitation=exploitation) if exploitation else BassinageEvent.objects.none()
+        BassinageEvent.objects.filter(exploitation=exploitation).select_related("parcelle")
+        if exploitation else BassinageEvent.objects.none()
     )
-    return render(request, "irrigation/bassinage.html", {"events": events, "page_title": _("Bassinage anti-gel")})
+    agg = events.aggregate(eau=Sum("water_used_m3"), duree=Avg("duration_minutes"))
+    return render(request, "irrigation/bassinage.html", {
+        "events": events,
+        "kpi_total": events.count(),
+        "kpi_eau": round(agg["eau"] or 0, 1),
+        "kpi_duree": round(agg["duree"]) if agg["duree"] else 0,
+        "parcelles": Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none(),
+        "page_title": _("Bassinage"),
+    })
+
+
+@login_required
+@require_POST
+def bassinage_create(request):
+    """Déclenche un bassinage manuel (crée un BassinageEvent actif)."""
+    exploitation = _exploitation(request)
+    parcelle = Parcelle.objects.filter(pk=request.POST.get("parcelle"), exploitation=exploitation).first()
+    if exploitation and parcelle:
+        BassinageEvent.objects.create(
+            exploitation=exploitation,
+            parcelle=parcelle,
+            start_time=timezone.now(),
+            duration_minutes=max(1, _int(request.POST.get("duration_minutes"), 20)),
+            trigger_temperature=_num(request.POST.get("trigger_temperature")),
+            triggered_by=BassinageEvent.TriggeredBy.MANUAL,
+            status=BassinageEvent.Status.ACTIVE,
+        )
+        messages.success(request, _("Bassinage déclenché."))
+    return redirect("irrigation:bassinage")
+
+
+# Seuils de gel critiques par culture/stade (référence agronomique).
+_CULTURES_SEUILS = [
+    (_("Vigne (débourrement)"), "-1.5°C"),
+    (_("Vigne (floraison)"), "-0.5°C"),
+    (_("Tomate (jeune plant)"), "+2°C"),
+    (_("Blé (tallage)"), "-15°C"),
+    (_("Maïs (levée)"), "0°C"),
+    (_("Abricotier (fleurs)"), "-0.5°C"),
+]
+
+
+# Description du niveau de risque (tooltip).
+_RISK_DESC = {
+    "aucun": _("Aucun risque de gel (min ≥ 3°C)"),
+    "faible": _("Risque faible (0 à 3°C)"),
+    "modere": _("Risque modéré (-1 à 0°C)"),
+    "eleve": _("Risque élevé (-3 à -1°C)"),
+    "critique": _("Risque critique (min < -3°C)"),
+    "inconnu": _("Données indisponibles"),
+}
+
+
+# Niveau de risque de gel selon la température minimale prévue (°C).
+def _frost_risk(tmin):
+    if tmin is None:
+        return ("inconnu", _("Inconnu"), "#94a3b8")
+    if tmin >= 3:
+        return ("aucun", _("Aucun"), "#10b981")
+    if tmin >= 0:
+        return ("faible", _("Faible"), "#3b82f6")
+    if tmin >= -1:
+        return ("modere", _("Modéré"), "#f59e0b")
+    if tmin >= -3:
+        return ("eleve", _("Élevé"), "#f97316")
+    return ("critique", _("Critique"), "#ef4444")
+
+
+def _forecast_days(lat, lon):
+    """Prévisions 7 jours pour des coordonnées (cache 30 min), ou [] si indisponible."""
+    if lat is None or lon is None:
+        return []
+    lat, lon = round(lat, 3), round(lon, 3)
+    cache_key = f"antigel_days:{lat}:{lon}"
+    days = cache.get(cache_key)
+    if days is None:
+        try:
+            days = fetch_weather(lat, lon).get("days") or []
+        except Exception:  # noqa: BLE001 — météo indisponible
+            return []
+        cache.set(cache_key, days, 1800)
+    return days
+
+
+@login_required
+def antigel(request):
+    exploitation = _exploitation(request)
+    # Lieu : parmi les villes enregistrées sur /meteo/ (défaut = 1re), sinon l'exploitation.
+    villes = list(VilleMeteo.objects.filter(exploitation=exploitation)) if exploitation else []
+    ville = next((v for v in villes if v.slug == request.GET.get("ville")), villes[0] if villes else None)
+    if ville:
+        lat, lon = ville.latitude, ville.longitude
+    elif exploitation:
+        lat, lon = exploitation.latitude, exploitation.longitude
+    else:
+        lat, lon = None, None
+
+    forecast = []
+    for d in _forecast_days(lat, lon):
+        risk, label, color = _frost_risk(d.get("tmin"))
+        forecast.append({
+            "date": d.get("date"), "tmin": d.get("tmin"), "tmax": d.get("tmax"),
+            "icon": d.get("icon"), "meteo": d.get("label"), "vent": d.get("vent"),
+            "risk": risk, "risk_label": label, "color": color, "risk_desc": _RISK_DESC.get(risk, ""),
+        })
+
+    # Alerte : nuits à risque (Élevé / Critique) dans les 5 prochains jours.
+    window = forecast[:5]
+    at_risk = [f for f in window if f["risk"] in ("eleve", "critique")]
+    mins = [f["tmin"] for f in window if f["tmin"] is not None]
+    alert = {"nb": len(at_risk), "tmin": min(mins) if mins else None} if at_risk else None
+
+    return render(request, "irrigation/antigel.html", {
+        "forecast": forecast,
+        "alert": alert,
+        "cultures": _CULTURES_SEUILS,
+        "villes": villes,
+        "ville": ville,
+        "alertes_gel": exploitation.alertes_gel if exploitation else True,
+        "seuil": exploitation.seuil_alerte_gel_c if exploitation else 2.0,
+        "page_title": _("Anti-gel"),
+    })
+
+
+@login_required
+@require_POST
+def antigel_settings(request):
+    """Active/désactive les alertes gel ou enregistre le seuil d'alerte SMS."""
+    exploitation = _exploitation(request)
+    if exploitation:
+        if "toggle_alertes" in request.POST:
+            exploitation.alertes_gel = not exploitation.alertes_gel
+        if "seuil_alerte_gel_c" in request.POST:
+            seuil = _num(request.POST.get("seuil_alerte_gel_c"))
+            if seuil is not None:
+                exploitation.seuil_alerte_gel_c = seuil
+        exploitation.save(update_fields=["alertes_gel", "seuil_alerte_gel_c"])
+        messages.success(request, _("Réglages anti-gel enregistrés."))
+    return redirect("irrigation:antigel")
