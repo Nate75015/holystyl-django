@@ -32,7 +32,18 @@
 </head>
 <body class="min-h-screen">
 {% if user.is_authenticated %}
-  <div class="flex min-h-screen" x-data="{ nav: '{{ default_section }}' }">
+  <div class="flex min-h-screen" x-data="{
+         nav: '{{ default_section }}',
+         navOpen: localStorage.getItem('navOpen') !== '0',
+         _t: null,
+         _save() { localStorage.setItem('navOpen', this.navOpen ? '1' : '0'); },
+         selectNav(k) {
+           this.nav = k;
+           clearTimeout(this._t);
+           this._t = setTimeout(() => { if (!this.navOpen) { this.navOpen = true; this._save(); } }, 200);
+         },
+         toggleNav() { clearTimeout(this._t); this.navOpen = !this.navOpen; this._save(); }
+       }">
     {% include "partials/sidebar.html" %}
     {% include "partials/nav_flyout.html" %}
     <div class="flex min-w-0 flex-1 flex-col">

@@ -12,11 +12,11 @@
   <nav class="flex-1 space-y-1 overflow-y-auto px-3 pb-4 pt-12">
     {% for section in nav_sections %}
       <button type="button"
-              @click="nav = '{{ section.key }}'"
-              class="sidebar-link flex w-full items-center justify-between"
+              @click="selectNav('{{ section.key }}')" @dblclick="toggleNav()"
+              class="sidebar-link flex w-full select-none items-center justify-between"
               :class="nav === '{{ section.key }}' ? 'sidebar-link-active' : ''">
         <span>{{ section.label }}</span>
-        <span class="opacity-60 transition-transform" :class="nav === '{{ section.key }}' ? 'rotate-90' : ''">›</span>
+        <span class="opacity-60 transition-transform" :class="(navOpen && nav === '{{ section.key }}') ? 'rotate-90' : ''">›</span>
       </button>
     {% endfor %}
   </nav>

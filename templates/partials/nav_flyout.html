@@ -1,9 +1,19 @@
 {% load i18n %}
 {% comment %}Colonne « sous-menu de section » dans le flux : pousse le contenu vers la
 droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% endcomment %}
-<div class="nav-flyout sticky top-0 z-20 h-screen w-56 shrink-0 overflow-y-auto border-r">
+<div class="nav-flyout sticky top-0 z-20 h-screen shrink-0 overflow-y-auto overflow-x-hidden border-r transition-[width] duration-200 ease-in-out"
+     :class="navOpen ? 'w-56' : 'w-11'">
+  {# Flèche de repli / dépli du panneau #}
+  <div class="sticky top-0 z-10 flex p-2 nav-flyout" :class="navOpen ? 'justify-end' : 'justify-center'">
+    <button type="button" @click="toggleNav()"
+            :title="navOpen ? '{% trans "Replier le menu" %}' : '{% trans "Déplier le menu" %}'"
+            class="grid h-7 w-7 place-items-center rounded-lg text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+      <span class="material-icons-round text-[20px]" x-text="navOpen ? 'chevron_left' : 'chevron_right'">chevron_left</span>
+    </button>
+  </div>
+
   {% for section in nav_sections %}
-    <div x-show="nav === '{{ section.key }}'" class="p-4"{% if section.key != default_section %} style="display:none"{% endif %}>
+    <div x-show="navOpen && nav === '{{ section.key }}'" class="px-4 pb-4"{% if section.key != default_section %} style="display:none"{% endif %}>
       <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{{ section.label }}</p>
       {% for sub in section.items %}
         {% if sub.url_name %}
