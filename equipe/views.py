@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
 
@@ -31,7 +32,9 @@ def equipe(request):
                 messages.success(request, _("%(name)s a été ajouté à l'équipe.") % {"name": member.name})
                 return redirect("equipe:equipe")
     members = TeamMember.objects.filter(exploitation=exploitation) if exploitation else TeamMember.objects.none()
-    return render(request, "equipe/equipe.html", {"members": members, "form": form, "page_title": _("Équipe")})
+    return render(request, "equipe/equipe.html", {
+        "members": members, "form": form, "roles": TeamMember.Role.choices, "page_title": _("Équipe"),
+    })
 
 
 @login_required
@@ -47,6 +50,16 @@ def membre_edit(request, pk):
     else:
         form = TeamMemberForm(instance=member)
     return render(request, "equipe/edit.html", {"form": form, "member": member, "page_title": _("Modifier le membre")})
+
+
+@login_required
+@require_POST
+def membre_delete(request, pk):
+    """Supprime un membre d'équipe."""
+    exploitation = _exploitation(request)
+    get_object_or_404(TeamMember, pk=pk, exploitation=exploitation).delete()
+    messages.success(request, _("Membre supprimé."))
+    return redirect("equipe:equipe")
 
 
 @login_required
@@ -80,7 +93,9 @@ def taches(request):
         t.is_mine = my_member is not None and t.assigned_to_id == my_member.id
     has_mine = any(t.is_mine for t in tasks)
     return render(request, "equipe/taches.html", {
-        "tasks": tasks, "form": form, "has_mine": has_mine, "page_title": _("Tâches"),
+        "tasks": tasks, "form": form, "has_mine": has_mine,
+        "priorities": Task.Priority.choices, "statuses": Task.Status.choices,
+        "page_title": _("Tâches"),
     })
 
 
@@ -96,6 +111,16 @@ def taches_edit(request, pk):
             messages.success(request, _("Tâche « %(t)s » modifiée.") % {"t": task.title})
         else:
             messages.error(request, _("Modification impossible : vérifiez les champs."))
+    return redirect("equipe:taches")
+
+
+@login_required
+@require_POST
+def taches_delete(request, pk):
+    """Supprime une tâche."""
+    exploitation = _exploitation(request)
+    get_object_or_404(Task, pk=pk, exploitation=exploitation).delete()
+    messages.success(request, _("Tâche supprimée."))
     return redirect("equipe:taches")
 
 
