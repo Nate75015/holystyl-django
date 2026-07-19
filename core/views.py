@@ -12,9 +12,31 @@ def _reversed(qs):
     return list(reversed(list(qs)))
 
 
+def _meteo_villes(exploitation, limit=2):
+    """Les `limit` premières villes météo enregistrées, avec leur météo courante (cache 30 min)."""
+    from django.core.cache import cache
+
+    from meteo.models import VilleMeteo
+    from meteo.services import fetch_current
+
+    villes = list(VilleMeteo.objects.filter(exploitation=exploitation)[:limit])
+    for v in villes:
+        key = f"dash_current:{round(v.latitude, 3)}:{round(v.longitude, 3)}"
+        cw = cache.get(key)
+        if cw is None:
+            try:
+                cw = fetch_current(v.latitude, v.longitude)
+            except Exception:  # noqa: BLE001 — météo ville indisponible
+                cw = {"temp": None, "icon": "help_outline", "label": ""}
+            cache.set(key, cw, 1800)
+        v.temp, v.icon, v.label = cw.get("temp"), cw.get("icon"), cw.get("label")
+    return villes
+
+
 @login_required
 def dashboard(request):
     """Écran Pulse : jauge DTI, météo, alertes et graphiques de l'exploitation."""
+    from equipe.models import TeamMember
     from iot.models import IotAlert
     from irrigation.models import DtiScore, WaterMeter
 
@@ -25,8 +47,12 @@ def dashboard(request):
     dti_chart = None
     water_chart = None
     alerts = []
+    meteo_villes = []
+    etp_count = 0
 
     if exploitation is not None:
+        meteo_villes = _meteo_villes(exploitation)
+        etp_count = TeamMember.objects.filter(exploitation=exploitation).count()
         dti = DtiScore.objects.filter(exploitation=exploitation).first()
 
         history = _reversed(DtiScore.objects.filter(exploitation=exploitation)[:14])
@@ -61,6 +87,8 @@ def dashboard(request):
             "dti_chart": dti_chart,
             "water_chart": water_chart,
             "alerts": alerts,
+            "meteo_villes": meteo_villes,
+            "etp_count": etp_count,
         },
     )
 
