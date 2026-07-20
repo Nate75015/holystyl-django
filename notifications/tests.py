@@ -256,8 +256,8 @@ def test_rule_reformulate_calls_ai_with_context(client, user, monkeypatch):
         captured["messages"] = messages
         return "  Sol trop sec  "
 
-    monkeypatch.setattr("notifications.views.gemini.is_configured", lambda: True)
-    monkeypatch.setattr("notifications.views.gemini.generate_text", fake_generate_text)
+    monkeypatch.setattr("notifications.views.llm.is_configured", lambda: True)
+    monkeypatch.setattr("notifications.views.llm.generate_text", fake_generate_text)
     client.force_login(user)
     resp = client.post("/notifications/regles/reformuler/", {
         "name": "sol trop sec", "type": "irrigation", "condition_type": "seuil_sous",
@@ -269,7 +269,7 @@ def test_rule_reformulate_calls_ai_with_context(client, user, monkeypatch):
 
 @pytest.mark.django_db
 def test_rule_reformulate_falls_back_when_ai_unavailable(client, user, monkeypatch):
-    monkeypatch.setattr("notifications.views.gemini.is_configured", lambda: False)
+    monkeypatch.setattr("notifications.views.llm.is_configured", lambda: False)
     client.force_login(user)
     resp = client.post("/notifications/regles/reformuler/", {"name": "sol trop sec"})
     assert resp.json() == {"name": "sol trop sec"}
@@ -280,8 +280,8 @@ def test_rule_reformulate_falls_back_when_ai_raises(client, user, monkeypatch):
     def boom(messages, **kwargs):
         raise RuntimeError("Gemini indisponible")
 
-    monkeypatch.setattr("notifications.views.gemini.is_configured", lambda: True)
-    monkeypatch.setattr("notifications.views.gemini.generate_text", boom)
+    monkeypatch.setattr("notifications.views.llm.is_configured", lambda: True)
+    monkeypatch.setattr("notifications.views.llm.generate_text", boom)
     client.force_login(user)
     resp = client.post("/notifications/regles/reformuler/", {"name": "sol trop sec"})
     assert resp.json() == {"name": "sol trop sec"}

@@ -7,7 +7,7 @@ le rapport reste en statut `pending_ocr` sans valeurs inventées.
 
 from __future__ import annotations
 
-from ia import gemini
+from ia import llm
 
 _TYPE_LABEL = {"soil": "sol", "water": "eau", "leaf": "foliaire", "plant": "plante"}
 
@@ -24,10 +24,10 @@ _PROMPT = (
 
 def extract_from_text(raw_text: str, analysis_type: str = "soil") -> dict | None:
     """Renvoie les valeurs extraites, ou None si l'IA n'est pas configurée."""
-    if not gemini.is_configured() or not raw_text.strip():
+    if not llm.is_configured() or not raw_text.strip():
         return None
     label = _TYPE_LABEL.get(analysis_type, analysis_type)
-    return gemini.generate_json([
+    return llm.generate_json([
         {"role": "system", "content": _PROMPT.format(label=label)},
         {"role": "user", "content": raw_text[:8000]},
     ])

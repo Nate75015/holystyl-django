@@ -72,10 +72,10 @@ def test_ai_intent_creates_charge_and_revenu(setup, monkeypatch):
     from ia import services
 
     user, exploitation = setup
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
 
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda m, **k: {"response": "Charge notée", "intent": "creer_charge", "needs_more_info": False,
                         "data": {"categorie": "engrais", "montant": 150, "fournisseur": "Yara"}},
     )
@@ -84,7 +84,7 @@ def test_ai_intent_creates_charge_and_revenu(setup, monkeypatch):
     assert Charge.objects.filter(exploitation=exploitation, montant=150).exists()
 
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda m, **k: {"response": "Vente notée", "intent": "creer_revenu", "needs_more_info": False,
                         "data": {"categorie": "vente_fruits", "montant": 2000, "acheteur": "Coop"}},
     )

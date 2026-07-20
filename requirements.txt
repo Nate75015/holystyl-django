@@ -24,6 +24,13 @@ whitenoise>=6.8,<7
 # IA — Google Gemini (SDK moderne)
 google-genai>=1.0,<2
 
+# IA — Mistral (fournisseur commutable via AI_PROVIDER=mistral)
+mistralai>=1.0,<2
+
+# Stockage objet S3 — Scaleway (activé via USE_S3=1)
+django-storages>=1.14,<2
+boto3>=1.34,<2
+
 # Mail — connexion Gmail (OAuth2 + Gmail API)
 google-api-python-client>=2.100,<3
 google-auth-oauthlib>=1.2,<2

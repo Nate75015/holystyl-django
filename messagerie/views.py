@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 
 from equipe.models import TeamMember
 from exploitations.models import Exploitation
-from ia import gemini
+from ia import llm
 
 from .models import Conversation, ConversationMember, Message, PieceJointe, validate_piece_jointe
 
@@ -104,10 +104,10 @@ def start(request, user_id):
 def reformulate(request):
     """Reformule un message via l'IA (repli : renvoie le texte original)."""
     text = (request.POST.get("text") or "").strip()
-    if not text or not gemini.is_configured():
+    if not text or not llm.is_configured():
         return JsonResponse({"text": text})
     try:
-        out = gemini.generate_text(
+        out = llm.generate_text(
             [
                 {"role": "system", "content": (
                     "Tu reformules des messages de messagerie professionnelle agricole pour les rendre "

@@ -48,9 +48,9 @@ def test_ai_intent_creates_intervention(setup, monkeypatch):
 
     user, exploitation = setup
     parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord", culture="abricotier")
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda messages, **kw: {
             "response": "Intervention créée", "intent": "creer_intervention", "needs_more_info": False,
             "data": {"interventionType": "taille", "parcelleName": "Nord", "title": "Taille abricotiers"},

@@ -106,6 +106,14 @@ def layout(request):
             "label": _("Mon compte"), "key": "compte",
             "items": [
                 {"label": _("Mon exploitation"), "url_name": "exploitations:settings", "icon": "home_work"},
+                {"label": _("Identités"), "url_name": "exploitations:section_identite", "icon": "badge"},
+                {"label": _("Juridique"), "url_name": "exploitations:section_juridique", "icon": "gavel"},
+                {"label": _("Contact"), "url_name": "exploitations:section_contact", "icon": "call"},
+                {"label": _("Localisation"), "url_name": "exploitations:section_localisation", "icon": "place"},
+                {"label": _("Caractéristiques agricoles"), "url_name": "exploitations:section_caracteristiques", "icon": "agriculture"},
+                {"label": _("Eau"), "url_name": "exploitations:section_eau", "icon": "water_drop"},
+                {"label": _("Certificats et labels"), "url_name": "exploitations:section_certifications", "icon": "verified"},
+                {"label": _("Sociétés liées"), "url_name": "exploitations:societes", "icon": "domain"},
             ],
         },
     ]

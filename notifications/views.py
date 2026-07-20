@@ -8,7 +8,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
-from ia import gemini
+from ia import llm
 
 from .forms import NotificationRuleForm
 from .models import Notification, NotificationRule
@@ -99,7 +99,7 @@ def rule_delete(request, pk):
 def rule_reformulate(request):
     """Reformule le nom d'une règle via l'IA (repli : renvoie le texte original)."""
     name = (request.POST.get("name") or "").strip()
-    if not name or not gemini.is_configured():
+    if not name or not llm.is_configured():
         return JsonResponse({"name": name})
     # Le type et la condition affinent le nom proposé, sans être obligatoires.
     # str() : les libellés sont des proxies de traduction paresseux, non concaténables.
@@ -110,7 +110,7 @@ def rule_reformulate(request):
         ] if label
     )
     try:
-        out = gemini.generate_text(
+        out = llm.generate_text(
             [
                 {"role": "system", "content": _REFORMULATE_PROMPT},
                 {"role": "user", "content": f"Règle ({context}) : {name[:500]}" if context else name[:500]},

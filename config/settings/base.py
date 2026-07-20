@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "environnement",
     "finances",
     "contrat",
+    "storage",
     "public",
     "administration",
 ]
@@ -165,6 +166,13 @@ STORAGES = {
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# ── Stockage objet S3 — Scaleway (app `storage`, activé via USE_S3) ──
+# Toute la config du client vit dans l'app `storage` ; ici on ne fait que
+# router le stockage par défaut vers le backend Scaleway quand USE_S3=1.
+# Sans USE_S3, le projet reste sur le disque local (dev).
+if env_bool("USE_S3", False):
+    STORAGES["default"] = {"BACKEND": "storage.backends.ScalewayMediaStorage"}
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ── Django REST Framework ───────────────────────────────────────────
@@ -199,9 +207,13 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = env("SMTP_FROM", "noreply@holystyl.com")
 ADMIN_EMAIL = env("ADMIN_EMAIL", "")
 
-# ── IA — Google Gemini ──────────────────────────────────────────────
+# ── IA — fournisseur commutable (gemini | mistral) ──────────────────
+# Bascule via AI_PROVIDER ; chaque fournisseur reste inerte sans sa clé.
+AI_PROVIDER = env("AI_PROVIDER", "gemini")
 GEMINI_API_KEY = env("GEMINI_API_KEY", "")
 GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
+MISTRAL_API_KEY = env("MISTRAL_API_KEY", "")
+MISTRAL_MODEL = env("MISTRAL_MODEL", "mistral-small-latest")
 
 # ── Cron : token de l'endpoint de capture météo planifiée ───────────
 CRON_TOKEN = env("CRON_TOKEN", "")

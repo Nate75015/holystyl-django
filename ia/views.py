@@ -12,7 +12,7 @@ from django.views.decorators.http import require_GET
 
 from exploitations.models import Exploitation
 
-from . import gemini, services
+from . import llm, services
 from .models import AiConversation
 
 
@@ -64,7 +64,7 @@ def assistant(request):
             "history": history,
             "current_thread": current_thread,
             "conversations": conversations,
-            "ai_ready": gemini.is_configured(),
+            "ai_ready": llm.is_configured(),
             "page_title": _("Eric"),
         },
     )
@@ -93,7 +93,7 @@ def stream(request):
             exploitation=exploitation, user=request.user, role="user", content=message, thread=thread
         )
 
-        if not gemini.is_configured():
+        if not llm.is_configured():
             payload = json.dumps({"text": services.ASSISTANT_NOT_CONFIGURED})
             yield f"data: {payload}\n\n"
             yield "event: done\ndata: {}\n\n"
@@ -110,7 +110,7 @@ def stream(request):
         ]
         full = []
         try:
-            for chunk in gemini.stream_text(messages):
+            for chunk in llm.stream_text(messages):
                 full.append(chunk)
                 yield f"data: {json.dumps({'text': chunk})}\n\n"
         except Exception:  # noqa: BLE001 — erreur/indispo IA (ex: 503) → message propre
