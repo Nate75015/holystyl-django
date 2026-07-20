@@ -30,26 +30,38 @@
 
   {# ── Section : liste des tâches ── #}
   <div class="rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-    <div class="flex flex-wrap items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+    <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
       <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">checklist</span></span>
-      <h3 class="text-sm font-semibold">{% trans "Tâches" %}</h3>
-      {# Filtres #}
-      <div class="ml-auto flex flex-wrap items-center gap-2">
-        <div class="flex rounded-xl border border-slate-200 p-0.5 text-sm dark:border-white/10">
-          <button type="button" @click="filter = 'all'"
-                  class="rounded-lg px-3 py-1 font-medium transition" :class="filter === 'all' ? 'bg-brand text-white' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'">{% trans "Toutes" %}</button>
-          <button type="button" @click="filter = 'mine'"
-                  class="rounded-lg px-3 py-1 font-medium transition" :class="filter === 'mine' ? 'bg-brand text-white' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'">{% trans "Mes tâches" %}</button>
-        </div>
-        <select x-model="prioFilter" class="rounded-lg border border-slate-200 bg-transparent px-2.5 py-1.5 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+      <h3 class="flex-1 text-sm font-semibold">{% trans "Tâches" %}</h3>
+    </div>
+
+    {# ── Barre de filtres (une seule ligne) ── #}
+    <div class="flex items-center gap-2 overflow-x-auto border-b border-slate-100 px-5 py-3 dark:border-white/5">
+      {# Toutes / Mes tâches #}
+      <div class="flex shrink-0 rounded-full border border-slate-200 p-0.5 text-sm dark:border-white/10">
+        <button type="button" @click="filter = 'all'"
+                class="rounded-full px-3.5 py-1.5 font-medium transition" :class="filter === 'all' ? 'bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'">{% trans "Toutes" %}</button>
+        <button type="button" @click="filter = 'mine'"
+                class="rounded-full px-3.5 py-1.5 font-medium transition" :class="filter === 'mine' ? 'bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'">{% trans "Mes tâches" %}</button>
+      </div>
+
+      {# Priorité #}
+      <label class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 pl-3 pr-2 transition focus-within:border-brand hover:border-slate-300 dark:border-white/10">
+        <span class="material-icons-round text-[16px] text-slate-400">flag</span>
+        <select x-model="prioFilter" class="input-bare cursor-pointer py-1.5 pr-1 text-sm font-medium">
           <option value="all">{% trans "Toutes priorités" %}</option>
           {% for value, label in priorities %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
         </select>
-        <select x-model="statusFilter" class="rounded-lg border border-slate-200 bg-transparent px-2.5 py-1.5 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+      </label>
+
+      {# Statut #}
+      <label class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 pl-3 pr-2 transition focus-within:border-brand hover:border-slate-300 dark:border-white/10">
+        <span class="material-icons-round text-[16px] text-slate-400">donut_large</span>
+        <select x-model="statusFilter" class="input-bare cursor-pointer py-1.5 pr-1 text-sm font-medium">
           <option value="all">{% trans "Tous statuts" %}</option>
           {% for value, label in statuses %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
         </select>
-      </div>
+      </label>
     </div>
 
     <div class="p-5">

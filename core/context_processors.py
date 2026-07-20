@@ -94,6 +94,15 @@ def layout(request):
             ],
         },
         {
+            "label": _("Contrat"), "key": "contrat",
+            "items": [
+                {"label": _("Contrats"), "url_name": "contrat:contrats", "icon": "description"},
+                {"label": _("Baux"), "url_name": "contrat:baux", "icon": "agriculture"},
+                {"label": _("Acte notarié"), "url_name": "contrat:actes", "icon": "history_edu"},
+                {"label": _("Assurance"), "url_name": "contrat:assurances", "icon": "shield"},
+            ],
+        },
+        {
             "label": _("Mon compte"), "key": "compte",
             "items": [
                 {"label": _("Mon exploitation"), "url_name": "exploitations:settings", "icon": "home_work"},
@@ -103,6 +112,9 @@ def layout(request):
 
     # Sections triées par ordre alphabétique (selon le libellé dans la langue active)
     nav_sections.sort(key=lambda section: _sort_key(section["label"]))
+    # Items de chaque sous-section triés par ordre alphabétique
+    for section in nav_sections:
+        section["items"].sort(key=lambda item: _sort_key(item["label"]))
 
     # Section + item contenant la page courante (le panneau volant reste ouvert dessus)
     current = getattr(getattr(request, "resolver_match", None), "view_name", None)

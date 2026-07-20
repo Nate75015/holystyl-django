@@ -2,124 +2,178 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6" x-data="{ tab: 'charges', modal: false, revenuModal: false }">
+<section class="mx-auto max-w-6xl space-y-6" x-data="{ modal: false, revenuModal: false }">
 
-  {# ── En-tête ── #}
-  <div class="flex flex-wrap items-start justify-between gap-3">
-    <div class="flex items-center gap-3">
-      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
-        <span class="material-icons-round">payments</span>
-      </span>
-      <div>
-        <h2 class="text-2xl font-bold tracking-tight">{% trans "Charges & Coûts" %}</h2>
-        <p class="text-sm text-slate-400">{% trans "Suivi des dépenses et revenus d'exploitation" %}{% if saison_active %} · {{ saison_active.nom }}{% endif %}</p>
+  {# ── Hero ── #}
+  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
+    <div class="relative flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
+          <span class="material-icons-round text-[26px]">payments</span>
+        </span>
+        <div class="min-w-0">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
+            <span class="material-icons-round text-[14px]">account_balance_wallet</span>{% trans "Finances" %}
+          </span>
+          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Charges & Coûts" %}</h2>
+          <p class="truncate text-sm text-slate-400">{% trans "Suivi des dépenses et revenus d'exploitation" %}{% if saison_active %} · {{ saison_active.nom }}{% endif %}</p>
+        </div>
       </div>
-    </div>
-    <button type="button" @click="tab === 'revenus' ? revenuModal = true : modal = true"
-            class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-      <span class="material-icons-round text-[18px]">add</span><span x-text="tab === 'revenus' ? '{% trans "Ajouter un revenu" %}' : '{% trans "Ajouter une charge" %}'">{% trans "Ajouter" %}</span>
-    </button>
-  </div>
-
-  {# ── KPIs ── #}
-  <div class="grid grid-cols-3 gap-3">
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">arrow_downward</span>{% trans "Charges" %}</div>
-      <p class="mt-1 text-2xl font-bold text-red-500">{{ bilan.total_charges|floatformat:0 }} €</p>
-    </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">arrow_upward</span>{% trans "Revenus" %}</div>
-      <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ bilan.total_revenus|floatformat:0 }} €</p>
-    </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">account_balance_wallet</span>{% trans "Solde" %}</div>
-      <p class="mt-1 text-2xl font-bold {% if bilan.resultat_net >= 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-red-500{% endif %}">{% if bilan.resultat_net >= 0 %}+{% endif %}{{ bilan.resultat_net|floatformat:0 }} €</p>
-    </div>
-  </div>
-
-  {# ── Onglets ── #}
-  <div class="flex gap-1 border-b border-slate-200 dark:border-white/10">
-    <button @click="tab='charges'" class="border-b-2 px-3 py-2.5 text-sm font-medium transition" :class="tab==='charges' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">{% trans "Charges" %}</button>
-    <button @click="tab='revenus'" class="border-b-2 px-3 py-2.5 text-sm font-medium transition" :class="tab==='revenus' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">{% trans "Revenus" %}</button>
-    <button @click="tab='bilan'" class="border-b-2 px-3 py-2.5 text-sm font-medium transition" :class="tab==='bilan' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">{% trans "Bilan" %}</button>
-  </div>
-
-  {# ── Charges ── #}
-  <div x-show="tab==='charges'">
-    {% if charges %}
-      <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
-        <table class="w-full text-sm">
-          <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
-            <tr><th class="px-4 py-3">{% trans "Date" %}</th><th class="px-4 py-3">{% trans "Catégorie" %}</th><th class="px-4 py-3">{% trans "Description" %}</th><th class="px-4 py-3">{% trans "Fournisseur" %}</th><th class="px-4 py-3 text-right">{% trans "Montant" %}</th></tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-            {% for c in charges %}
-              <tr>
-                <td class="px-4 py-3">{{ c.date|date:"d/m/Y" }}</td>
-                <td class="px-4 py-3">{{ c.get_categorie_display }}</td>
-                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ c.description|default:"—" }}</td>
-                <td class="px-4 py-3 text-slate-400">{{ c.fournisseur|default:"—" }}</td>
-                <td class="px-4 py-3 text-right font-medium text-red-500">{{ c.montant|floatformat:2 }} €</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% else %}
-      <div class="md-card flex flex-col items-center justify-center py-12 text-center">
-        <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">receipt_long</span>
-        <p class="text-sm text-slate-400">{% trans "Aucune charge enregistrée" %}</p>
-        <button type="button" @click="modal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une charge" %}
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" @click="modal = true"
+                class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-brand px-4 py-2 text-sm font-medium text-brand transition hover:bg-brand/10">
+          <span class="material-icons-round text-[18px]">arrow_downward</span>{% trans "Charge" %}
         </button>
-      </div>
-    {% endif %}
-  </div>
-
-  {# ── Revenus ── #}
-  <div x-show="tab==='revenus'" x-cloak class="space-y-3">
-    {% if revenus %}
-      <div class="flex justify-end">
         <button type="button" @click="revenuModal = true"
-                class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un revenu" %}
+                class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
+          <span class="material-icons-round text-[18px]">arrow_upward</span>{% trans "Revenu" %}
         </button>
       </div>
-      <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
-        <table class="w-full text-sm">
-          <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
-            <tr><th class="px-4 py-3">{% trans "Date" %}</th><th class="px-4 py-3">{% trans "Catégorie" %}</th><th class="px-4 py-3">{% trans "Description" %}</th><th class="px-4 py-3">{% trans "Acheteur" %}</th><th class="px-4 py-3 text-right">{% trans "Montant" %}</th></tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-            {% for r in revenus %}
-              <tr>
-                <td class="px-4 py-3">{{ r.date|date:"d/m/Y" }}</td>
-                <td class="px-4 py-3">{{ r.get_categorie_display }}</td>
-                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ r.description|default:"—" }}</td>
-                <td class="px-4 py-3 text-slate-400">{{ r.acheteur|default:"—" }}</td>
-                <td class="px-4 py-3 text-right font-medium text-emerald-600 dark:text-emerald-400">{{ r.montant|floatformat:2 }} €</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% else %}
-      <div class="md-card flex flex-col items-center justify-center py-12 text-center">
-        <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">savings</span>
-        <p class="text-sm text-slate-400">{% trans "Aucun revenu enregistré" %}</p>
-        <button type="button" @click="revenuModal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un revenu" %}
-        </button>
-      </div>
-    {% endif %}
+    </div>
   </div>
 
-  {# ── Bilan ── #}
-  <div x-show="tab==='bilan'" x-cloak class="grid gap-3 sm:grid-cols-2">
-    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Résultat net" %}</p><p class="mt-1 text-2xl font-bold {% if bilan.resultat_net >= 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-red-500{% endif %}">{% if bilan.resultat_net >= 0 %}+{% endif %}{{ bilan.resultat_net|floatformat:0 }} €</p></div>
-    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Marge par ha" %}</p><p class="mt-1 text-2xl font-bold">{% if bilan.marge_par_ha is not None %}{{ bilan.marge_par_ha|floatformat:0 }} €/ha{% else %}—{% endif %}</p></div>
-    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Surface" %}</p><p class="mt-1 text-xl font-semibold">{{ bilan.surface_ha|floatformat:2 }} ha</p></div>
-    <div class="md-card"><p class="text-xs text-slate-400">{% trans "Eau · Énergie" %}</p><p class="mt-1 text-xl font-semibold">{{ bilan.eau_m3|floatformat:0 }} m³ · {{ bilan.energie_kwh|floatformat:0 }} kWh</p></div>
+  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
+    {# ── Sommaire latéral collant ── #}
+    <aside class="hidden lg:block">
+      <nav class="sticky top-6 space-y-0.5">
+        <a href="#sec-kpi" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">insights</span><span class="flex-1 truncate">{% trans "Indicateurs" %}</span></a>
+        <a href="#sec-charges" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">arrow_downward</span><span class="min-w-0 flex-1 truncate">{% trans "Charges" %}</span>
+          {% if charges %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ charges|length }}</span>{% endif %}</a>
+        <a href="#sec-revenus" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">arrow_upward</span><span class="min-w-0 flex-1 truncate">{% trans "Revenus" %}</span>
+          {% if revenus %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ revenus|length }}</span>{% endif %}</a>
+        <a href="#sec-bilan" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">account_balance</span><span class="flex-1 truncate">{% trans "Bilan" %}</span></a>
+      </nav>
+    </aside>
+
+    {# ── Colonne principale ── #}
+    <div class="min-w-0 space-y-5">
+
+      {# ── Indicateurs ── #}
+      <div id="sec-kpi" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">insights</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Indicateurs" %}</h3>
+        </div>
+        <div class="grid grid-cols-3 gap-3 p-5">
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">arrow_downward</span>{% trans "Charges" %}</div>
+            <p class="mt-1 text-2xl font-bold text-red-500">{{ bilan.total_charges|floatformat:0 }} €</p>
+          </div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">arrow_upward</span>{% trans "Revenus" %}</div>
+            <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ bilan.total_revenus|floatformat:0 }} €</p>
+          </div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="material-icons-round text-[16px]">account_balance_wallet</span>{% trans "Solde" %}</div>
+            <p class="mt-1 text-2xl font-bold {% if bilan.resultat_net >= 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-red-500{% endif %}">{% if bilan.resultat_net >= 0 %}+{% endif %}{{ bilan.resultat_net|floatformat:0 }} €</p>
+          </div>
+        </div>
+      </div>
+
+      {# ── Charges ── #}
+      <div id="sec-charges" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-red-500 to-rose-500 text-white shadow-sm"><span class="material-icons-round text-[18px]">arrow_downward</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Charges" %}</h3>
+          <button type="button" @click="modal = true"
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90">
+            <span class="material-icons-round text-[16px]">add</span>{% trans "Ajouter" %}
+          </button>
+        </div>
+        <div class="p-5">
+          {% if charges %}
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="text-left text-xs uppercase tracking-wide text-slate-400">
+                  <tr class="border-b border-slate-100 dark:border-white/5"><th class="px-3 py-2.5">{% trans "Date" %}</th><th class="px-3 py-2.5">{% trans "Catégorie" %}</th><th class="px-3 py-2.5">{% trans "Description" %}</th><th class="px-3 py-2.5">{% trans "Fournisseur" %}</th><th class="px-3 py-2.5 text-right">{% trans "Montant" %}</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+                  {% for c in charges %}
+                    <tr>
+                      <td class="px-3 py-2.5">{{ c.date|date:"d/m/Y" }}</td>
+                      <td class="px-3 py-2.5">{{ c.get_categorie_display }}</td>
+                      <td class="px-3 py-2.5 text-slate-500 dark:text-slate-400">{{ c.description|default:"—" }}</td>
+                      <td class="px-3 py-2.5 text-slate-400">{{ c.fournisseur|default:"—" }}</td>
+                      <td class="px-3 py-2.5 text-right font-medium text-red-500">{{ c.montant|floatformat:2 }} €</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="flex flex-col items-center justify-center py-12 text-center">
+              <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">receipt_long</span>
+              <p class="text-sm text-slate-400">{% trans "Aucune charge enregistrée" %}</p>
+              <button type="button" @click="modal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+                <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une charge" %}
+              </button>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# ── Revenus ── #}
+      <div id="sec-revenus" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-sm"><span class="material-icons-round text-[18px]">arrow_upward</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Revenus" %}</h3>
+          <button type="button" @click="revenuModal = true"
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90">
+            <span class="material-icons-round text-[16px]">add</span>{% trans "Ajouter" %}
+          </button>
+        </div>
+        <div class="p-5">
+          {% if revenus %}
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="text-left text-xs uppercase tracking-wide text-slate-400">
+                  <tr class="border-b border-slate-100 dark:border-white/5"><th class="px-3 py-2.5">{% trans "Date" %}</th><th class="px-3 py-2.5">{% trans "Catégorie" %}</th><th class="px-3 py-2.5">{% trans "Description" %}</th><th class="px-3 py-2.5">{% trans "Acheteur" %}</th><th class="px-3 py-2.5 text-right">{% trans "Montant" %}</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+                  {% for r in revenus %}
+                    <tr>
+                      <td class="px-3 py-2.5">{{ r.date|date:"d/m/Y" }}</td>
+                      <td class="px-3 py-2.5">{{ r.get_categorie_display }}</td>
+                      <td class="px-3 py-2.5 text-slate-500 dark:text-slate-400">{{ r.description|default:"—" }}</td>
+                      <td class="px-3 py-2.5 text-slate-400">{{ r.acheteur|default:"—" }}</td>
+                      <td class="px-3 py-2.5 text-right font-medium text-emerald-600 dark:text-emerald-400">{{ r.montant|floatformat:2 }} €</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="flex flex-col items-center justify-center py-12 text-center">
+              <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">savings</span>
+              <p class="text-sm text-slate-400">{% trans "Aucun revenu enregistré" %}</p>
+              <button type="button" @click="revenuModal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+                <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un revenu" %}
+              </button>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# ── Bilan ── #}
+      <div id="sec-bilan" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">account_balance</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Bilan" %}</h3>
+        </div>
+        <div class="grid gap-3 p-5 sm:grid-cols-2">
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Résultat net" %}</p><p class="mt-1 text-2xl font-bold {% if bilan.resultat_net >= 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-red-500{% endif %}">{% if bilan.resultat_net >= 0 %}+{% endif %}{{ bilan.resultat_net|floatformat:0 }} €</p></div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Marge par ha" %}</p><p class="mt-1 text-2xl font-bold">{% if bilan.marge_par_ha is not None %}{{ bilan.marge_par_ha|floatformat:0 }} €/ha{% else %}—{% endif %}</p></div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Surface" %}</p><p class="mt-1 text-xl font-semibold">{{ bilan.surface_ha|floatformat:2 }} ha</p></div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Eau · Énergie" %}</p><p class="mt-1 text-xl font-semibold">{{ bilan.eau_m3|floatformat:0 }} m³ · {{ bilan.energie_kwh|floatformat:0 }} kWh</p></div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   {# ── Modal — Enregistrer une charge ── #}

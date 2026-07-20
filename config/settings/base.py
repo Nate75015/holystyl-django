@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "pac",
     "environnement",
     "finances",
+    "contrat",
     "public",
     "administration",
 ]

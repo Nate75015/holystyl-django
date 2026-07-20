@@ -1,0 +1,167 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class Contrat(models.Model):
+    """Un contrat de l'exploitation (bail, prestation, vente, assurance…)."""
+
+    class TypeContrat(models.TextChoices):
+        BAIL = "bail", _("Bail rural / fermage")
+        PRESTATION = "prestation", _("Prestation de service")
+        VENTE = "vente", _("Contrat de vente")
+        APPRO = "appro", _("Approvisionnement")
+        ASSURANCE = "assurance", _("Assurance")
+        SALARIE = "salarie", _("Contrat de travail")
+        AUTRE = "autre", _("Autre")
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        ACTIF = "actif", _("Actif")
+        EXPIRE = "expire", _("Expiré")
+        RESILIE = "resilie", _("Résilié")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="contrats"
+    )
+    intitule = models.CharField(_("intitulé"), max_length=255)
+    type_contrat = models.CharField(
+        _("type"), max_length=20, choices=TypeContrat.choices, default=TypeContrat.AUTRE
+    )
+    contractant = models.CharField(_("contractant"), max_length=255, blank=True)
+    date_debut = models.DateField(_("date de début"), null=True, blank=True)
+    date_fin = models.DateField(_("date de fin"), null=True, blank=True)
+    montant = models.FloatField(_("montant (€)"), null=True, blank=True)
+    statut = models.CharField(
+        _("statut"), max_length=12, choices=Statut.choices, default=Statut.BROUILLON
+    )
+    notes = models.TextField(_("notes"), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("contrat")
+        verbose_name_plural = _("contrats")
+        ordering = ("-date_debut", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "statut"])]
+
+    def __str__(self):
+        return self.intitule
+
+
+class Bail(models.Model):
+    """Un bail rural (fermage) : location de terres agricoles."""
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        ACTIF = "actif", _("Actif")
+        EXPIRE = "expire", _("Expiré")
+        RESILIE = "resilie", _("Résilié")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="baux"
+    )
+    designation = models.CharField(_("désignation"), max_length=255)
+    bailleur = models.CharField(_("bailleur"), max_length=255, blank=True)
+    preneur = models.CharField(_("preneur"), max_length=255, blank=True)
+    surface_ha = models.FloatField(_("surface (ha)"), null=True, blank=True)
+    loyer_annuel = models.FloatField(_("fermage annuel (€)"), null=True, blank=True)
+    date_debut = models.DateField(_("date de début"), null=True, blank=True)
+    date_fin = models.DateField(_("date de fin"), null=True, blank=True)
+    statut = models.CharField(
+        _("statut"), max_length=12, choices=Statut.choices, default=Statut.BROUILLON
+    )
+    notes = models.TextField(_("notes"), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("bail")
+        verbose_name_plural = _("baux")
+        ordering = ("-date_debut", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "statut"])]
+
+    def __str__(self):
+        return self.designation
+
+
+class ActeNotarie(models.Model):
+    """Un acte notarié (vente, achat, servitude, succession…)."""
+
+    class TypeActe(models.TextChoices):
+        VENTE = "vente", _("Vente")
+        ACHAT = "achat", _("Achat")
+        DONATION = "donation", _("Donation")
+        SUCCESSION = "succession", _("Succession")
+        SERVITUDE = "servitude", _("Servitude")
+        HYPOTHEQUE = "hypotheque", _("Hypothèque")
+        AUTRE = "autre", _("Autre")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="actes_notaries"
+    )
+    objet = models.CharField(_("objet"), max_length=255)
+    type_acte = models.CharField(
+        _("type d'acte"), max_length=20, choices=TypeActe.choices, default=TypeActe.AUTRE
+    )
+    notaire = models.CharField(_("notaire / étude"), max_length=255, blank=True)
+    parties = models.CharField(_("parties"), max_length=255, blank=True)
+    reference = models.CharField(_("référence de l'acte"), max_length=100, blank=True)
+    date_signature = models.DateField(_("date de signature"), null=True, blank=True)
+    montant = models.FloatField(_("montant (€)"), null=True, blank=True)
+    notes = models.TextField(_("notes"), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("acte notarié")
+        verbose_name_plural = _("actes notariés")
+        ordering = ("-date_signature", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "type_acte"])]
+
+    def __str__(self):
+        return self.objet
+
+
+class Assurance(models.Model):
+    """Un contrat d'assurance de l'exploitation (multirisque, récolte, RC…)."""
+
+    class TypeAssurance(models.TextChoices):
+        MULTIRISQUE = "multirisque", _("Multirisque agricole")
+        RECOLTE = "recolte", _("Récolte / climatique")
+        RC = "rc", _("Responsabilité civile")
+        MATERIEL = "materiel", _("Matériel")
+        BATIMENTS = "batiments", _("Bâtiments")
+        GRELE = "grele", _("Grêle")
+        BETAIL = "betail", _("Mortalité du bétail")
+        AUTRE = "autre", _("Autre")
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        ACTIVE = "active", _("Active")
+        EXPIREE = "expiree", _("Expirée")
+        RESILIEE = "resiliee", _("Résiliée")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="assurances"
+    )
+    intitule = models.CharField(_("intitulé"), max_length=255)
+    type_assurance = models.CharField(
+        _("type"), max_length=20, choices=TypeAssurance.choices, default=TypeAssurance.MULTIRISQUE
+    )
+    assureur = models.CharField(_("assureur"), max_length=255, blank=True)
+    numero_police = models.CharField(_("n° de police"), max_length=100, blank=True)
+    prime_annuelle = models.FloatField(_("prime annuelle (€)"), null=True, blank=True)
+    capital_assure = models.FloatField(_("capital assuré (€)"), null=True, blank=True)
+    date_debut = models.DateField(_("date de début"), null=True, blank=True)
+    date_fin = models.DateField(_("échéance"), null=True, blank=True)
+    statut = models.CharField(
+        _("statut"), max_length=12, choices=Statut.choices, default=Statut.BROUILLON
+    )
+    notes = models.TextField(_("notes"), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("assurance")
+        verbose_name_plural = _("assurances")
+        ordering = ("-date_debut", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "statut"])]
+
+    def __str__(self):
+        return self.intitule
