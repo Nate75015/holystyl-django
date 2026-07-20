@@ -29,7 +29,7 @@ def test_lead_capture(client):
 
 @pytest.mark.django_db
 def test_alex_not_configured(client, monkeypatch):
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: False)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: False)
     resp = client.post("/alex/", data=json.dumps({"messages": [{"role": "user", "content": "Bonjour"}]}),
                        content_type="application/json")
     assert resp.status_code == 200
@@ -38,8 +38,8 @@ def test_alex_not_configured(client, monkeypatch):
 
 @pytest.mark.django_db
 def test_alex_configured_mocked(client, monkeypatch):
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
-    monkeypatch.setattr(services.gemini, "generate_text", lambda msgs, **k: "Ravi de vous aider !")
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "generate_text", lambda msgs, **k: "Ravi de vous aider !")
     resp = client.post("/alex/", data=json.dumps({"messages": [{"role": "user", "content": "C'est quoi le DTI ?"}]}),
                        content_type="application/json")
     assert resp.json()["response"] == "Ravi de vous aider !"

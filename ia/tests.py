@@ -22,7 +22,7 @@ def user_exploitation(db):
 @pytest.mark.django_db
 def test_chat_not_configured_returns_message(user_exploitation, monkeypatch):
     user, exploitation = user_exploitation
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: False)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: False)
     answer = services.chat(exploitation, user, "Bonjour")
     assert "configuré" in answer.lower()  # message « non configuré »
     # user + assistant persistés
@@ -32,9 +32,9 @@ def test_chat_not_configured_returns_message(user_exploitation, monkeypatch):
 @pytest.mark.django_db
 def test_execute_intent_creates_parcelle(user_exploitation, monkeypatch):
     user, exploitation = user_exploitation
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda messages, **kw: {
             "response": "Parcelle créée ✅", "intent": "creer_parcelle",
             "needs_more_info": False, "data": {"name": "Le Clos", "areaHa": 1.8, "culture": "Vigne"},
@@ -51,9 +51,9 @@ def test_execute_intent_creates_parcelle(user_exploitation, monkeypatch):
 def test_execute_intent_creates_irrigation_session(user_exploitation, monkeypatch):
     user, exploitation = user_exploitation
     parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord", culture="abricotier")
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda messages, **kw: {
             "response": "Session enregistrée", "intent": "creer_session_irrigation",
             "needs_more_info": False, "data": {"parcelleName": "Nord", "volumeDeliveredM3": 12.5},
@@ -69,9 +69,9 @@ def test_execute_intent_creates_irrigation_session(user_exploitation, monkeypatc
 @pytest.mark.django_db
 def test_execute_intent_unmigrated_module_is_graceful(user_exploitation, monkeypatch):
     user, exploitation = user_exploitation
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda messages, **kw: {"response": "", "intent": "creer_entretien", "needs_more_info": False, "data": {}},
     )
     result = services.execute_intent(exploitation, user, "Note un entretien sur le tracteur")
@@ -82,7 +82,7 @@ def test_execute_intent_unmigrated_module_is_graceful(user_exploitation, monkeyp
 @pytest.mark.django_db
 def test_stream_endpoint_not_configured(client, user_exploitation, monkeypatch):
     user, _ = user_exploitation
-    monkeypatch.setattr("ia.views.gemini.is_configured", lambda: False)
+    monkeypatch.setattr("ia.views.llm.is_configured", lambda: False)
     client.force_login(user)
     resp = client.get("/assistant/stream/", {"message": "Salut"})
     assert resp.status_code == 200

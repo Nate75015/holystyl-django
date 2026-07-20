@@ -3,7 +3,7 @@
 from django.core.mail import send_mail
 from django.utils import timezone
 
-from ia import gemini
+from ia import llm
 
 from .models import LeadCapture
 
@@ -23,10 +23,10 @@ ALEX_NOT_CONFIGURED = (
 
 
 def alex_chat(messages: list[dict]) -> str:
-    if not gemini.is_configured():
+    if not llm.is_configured():
         return ALEX_NOT_CONFIGURED
     convo = [{"role": "system", "content": ALEX_SYSTEM}] + messages
-    return gemini.generate_text(convo)
+    return llm.generate_text(convo)
 
 
 def capture_lead(email: str, source: str = "guide_analyses") -> LeadCapture:

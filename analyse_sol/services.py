@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import os
 
-from ia import gemini
+from ia import llm
 
 _MIME = {
     ".pdf": "application/pdf",
@@ -73,13 +73,13 @@ _FIELDS = TEXT_FIELDS + DATE_FIELDS + _NUMERIC_FIELDS
 
 def extract_soil_analysis(data: bytes, filename: str) -> dict | None:
     """Renvoie les valeurs extraites du document, ou None si non exploitable/IA absente."""
-    if not gemini.is_configured() or not data:
+    if not llm.is_configured() or not data:
         return None
     mime = _MIME.get(os.path.splitext(filename)[1].lower())
     if not mime:
         return None  # type non géré par l'OCR multimodal (csv, xls…)
     try:
-        raw = gemini.extract_json_from_document(data, mime, _PROMPT)
+        raw = llm.extract_json_from_document(data, mime, _PROMPT)
     except Exception:  # noqa: BLE001 — toute erreur IA → repli silencieux
         return None
     return {k: raw.get(k) for k in _FIELDS} if raw else None

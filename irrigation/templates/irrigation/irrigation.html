@@ -2,160 +2,188 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6" x-data="{ tab: 'overview', zoneModal: false, programModal: false, stationModal: false }">
+<section class="mx-auto max-w-6xl space-y-6" x-data="{ zoneModal: false, programModal: false, stationModal: false }">
 
-  {# ── En-tête ── #}
-  <div class="flex items-center gap-3">
-    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
-      <span class="material-icons-round">water_drop</span>
-    </span>
-    <div>
-      <h2 class="text-2xl font-bold tracking-tight">{% trans "Gestion de l'irrigation" %}</h2>
-      <p class="text-sm text-slate-400">{% trans "Pilotage et programmation de l'irrigation" %}</p>
+  {# ── Hero ── #}
+  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
+    <div class="relative flex items-center gap-3">
+      <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
+        <span class="material-icons-round text-[26px]">water_drop</span>
+      </span>
+      <div class="min-w-0">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
+          <span class="material-icons-round text-[14px]">waves</span>{% trans "Irrigation" %}
+        </span>
+        <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Gestion de l'irrigation" %}</h2>
+        <p class="truncate text-sm text-slate-400">{% trans "Pilotage et programmation de l'irrigation" %}</p>
+      </div>
     </div>
   </div>
 
-  {# ── Cartes KPI ── #}
-  <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-    {% for icon, value, unit, label in kpis %}
-      <div class="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-white/5">
-        <span class="material-icons-round text-[22px] text-slate-400">{{ icon }}</span>
-        <p class="mt-1 text-2xl font-bold">{{ value }}{% if unit %}<span class="ml-0.5 text-sm font-medium text-slate-400">{{ unit }}</span>{% endif %}</p>
-        <p class="text-xs text-slate-400">{{ label }}</p>
-      </div>
-    {% endfor %}
-  </div>
+  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
+    {# ── Sommaire latéral collant ── #}
+    <aside class="hidden lg:block">
+      <nav class="sticky top-6 space-y-0.5">
+        <a href="#sec-kpi" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">insights</span><span class="flex-1 truncate">{% trans "Indicateurs" %}</span></a>
+        <a href="#sec-calc" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">calculate</span><span class="flex-1 truncate">{% trans "Calculateurs" %}</span></a>
+        <a href="#sec-zones" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">layers</span><span class="min-w-0 flex-1 truncate">{% trans "Zones" %}</span>
+          {% if zones %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ zones|length }}</span>{% endif %}</a>
+        <a href="#sec-programs" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">timer</span><span class="min-w-0 flex-1 truncate">{% trans "Programmes" %}</span>
+          {% if programs %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ programs|length }}</span>{% endif %}</a>
+        <a href="#sec-stations" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">power_settings_new</span><span class="min-w-0 flex-1 truncate">{% trans "Stations" %}</span>
+          {% if stations %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ stations|length }}</span>{% endif %}</a>
+        <a href="#sec-sessions" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">waves</span><span class="min-w-0 flex-1 truncate">{% trans "Sessions" %}</span></a>
+      </nav>
+    </aside>
 
-  {# ── Onglets ── #}
-  <div class="flex gap-1 overflow-x-auto border-b border-slate-200 dark:border-white/10">
-    {% for key, label, icon in tabs %}
-      <button @click="tab='{{ key }}'"
-              class="inline-flex shrink-0 items-center gap-1.5 border-b-2 px-3 py-2.5 text-sm font-medium transition"
-              :class="tab==='{{ key }}' ? 'border-brand text-brand' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">
-        <span class="material-icons-round text-[18px]">{{ icon }}</span>{{ label }}
-      </button>
-    {% endfor %}
-  </div>
+    {# ── Colonne principale ── #}
+    <div class="min-w-0 space-y-5">
 
-  {# ── Vue d'ensemble ── #}
-  <div x-show="tab==='overview'" class="space-y-5">
-    {% include "irrigation/_etc_card.html" %}
-
-    <div>
-      <h3 class="mb-2 font-semibold">{% trans "Sessions récentes" %}</h3>
-      {% if sessions %}
-        <div class="space-y-2">
-          {% for s in sessions|slice:":5" %}
-            <div class="md-card flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <span class="material-icons-round text-[18px] text-brand">waves</span>
-                <div>
-                  <p class="font-medium">{{ s.start_time|date:"d/m/Y H:i" }}</p>
-                  <p class="text-xs text-slate-400">{{ s.get_triggered_by_display }}</p>
-                </div>
-              </div>
-              <span class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ s.volume_delivered_m3|default:"—" }} m³</span>
+      {# ── Indicateurs (KPI) ── #}
+      <div id="sec-kpi" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">insights</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Indicateurs" %}</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3 p-5 sm:grid-cols-3 lg:grid-cols-5">
+          {% for icon, value, unit, label in kpis %}
+            <div class="rounded-xl border border-slate-200/70 p-4 text-center dark:border-white/10">
+              <span class="material-icons-round text-[22px] text-slate-400">{{ icon }}</span>
+              <p class="mt-1 text-2xl font-bold">{{ value }}{% if unit %}<span class="ml-0.5 text-sm font-medium text-slate-400">{{ unit }}</span>{% endif %}</p>
+              <p class="text-xs text-slate-400">{{ label }}</p>
             </div>
           {% endfor %}
         </div>
-      {% else %}
-        <div class="md-card flex flex-col items-center justify-center py-12 text-center">
-          <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">waves</span>
-          <p class="text-sm text-slate-400">{% trans "Aucune session en cours" %}</p>
-        </div>
-      {% endif %}
-    </div>
-  </div>
+      </div>
 
-  {# ── Zones ── #}
-  <div x-show="tab==='zones'" x-cloak class="space-y-3">
-    <div class="flex justify-end">
-      <button type="button" @click="zoneModal = true"
-              class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une zone" %}
-      </button>
-    </div>
-    {% for z in zones %}
-      <div class="md-card flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <span class="material-icons-round text-[18px] text-brand">layers</span>
-          <div>
-            <p class="font-medium">{{ z.name }}</p>
-            <p class="text-xs text-slate-400">{{ z.get_irrigation_type_display }} · {{ z.surface_ha|default:"—" }} ha{% if z.parcelles.all %} · {{ z.parcelles.all|join:", " }}{% endif %}</p>
+      {# ── Calculateurs ── #}
+      <div id="sec-calc" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">calculate</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Calculateurs" %}</h3>
+        </div>
+        <div class="space-y-5 p-5">
+          {% include "irrigation/_etc_card.html" %}
+          {% include "irrigation/_pluvio_card.html" %}
+          {% include "irrigation/_pumping_card.html" %}
+        </div>
+      </div>
+
+      {# ── Zones ── #}
+      <div id="sec-zones" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">layers</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Zones" %}</h3>
+          <button type="button" @click="zoneModal = true"
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90">
+            <span class="material-icons-round text-[16px]">add</span>{% trans "Ajouter" %}
+          </button>
+        </div>
+        <div class="space-y-2 p-5">
+          {% for z in zones %}
+            <div class="flex items-center justify-between rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+              <div class="flex items-center gap-3">
+                <span class="material-icons-round text-[18px] text-[#28738f] dark:text-[#67dded]">layers</span>
+                <div>
+                  <p class="font-medium">{{ z.name }}</p>
+                  <p class="text-xs text-slate-400">{{ z.get_irrigation_type_display }} · {{ z.surface_ha|default:"—" }} ha{% if z.parcelles.all %} · {{ z.parcelles.all|join:", " }}{% endif %}</p>
+                </div>
+              </div>
+              <span class="text-xs text-slate-400">{{ z.flow_rate_m3h|default:"—" }} m³/h</span>
+            </div>
+          {% empty %}<p class="text-sm text-slate-400">{% trans "Aucune zone." %}</p>{% endfor %}
+        </div>
+      </div>
+
+      {# ── Programmes ── #}
+      <div id="sec-programs" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">timer</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Programmes" %}</h3>
+          <button type="button" @click="programModal = true"
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90">
+            <span class="material-icons-round text-[16px]">add</span>{% trans "Ajouter" %}
+          </button>
+        </div>
+        <div class="space-y-2 p-5">
+          {% for p in programs %}
+            <div class="flex items-center justify-between rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+              <div class="flex items-center gap-3">
+                <span class="material-icons-round text-[18px] text-[#28738f] dark:text-[#67dded]">timer</span>
+                <div>
+                  <p class="font-medium">{{ p.name }}</p>
+                  <p class="text-xs text-slate-400">{{ p.start_hour }}h{{ p.start_minute }} · {{ p.duration_minutes }} min · {{ p.get_frequency_display }}{% if p.parcelles.all %} · {{ p.parcelles.all|join:", " }}{% endif %}</p>
+                </div>
+              </div>
+              <span class="text-xs {% if p.is_active %}text-green-500{% else %}text-slate-400{% endif %}">{% if p.is_active %}{% trans "actif" %}{% else %}{% trans "inactif" %}{% endif %}</span>
+            </div>
+          {% empty %}<p class="text-sm text-slate-400">{% trans "Aucun programme." %}</p>{% endfor %}
+        </div>
+      </div>
+
+      {# ── Stations ── #}
+      <div id="sec-stations" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">power_settings_new</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Stations" %}</h3>
+          <button type="button" @click="stationModal = true"
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90">
+            <span class="material-icons-round text-[16px]">add</span>{% trans "Ajouter" %}
+          </button>
+        </div>
+        <div class="space-y-2 p-5">
+          {% for st in stations %}
+            <div class="flex items-center justify-between rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+              <div class="flex items-center gap-3">
+                <span class="material-icons-round text-[18px] text-[#28738f] dark:text-[#67dded]">power_settings_new</span>
+                <div><p class="font-medium">{{ st.name }}</p><p class="text-xs text-slate-400">{{ st.power_kw|default:"—" }} kW · {{ st.get_status_display }}</p></div>
+              </div>
+              <span class="text-xs text-slate-400">{{ st.max_flow_m3h|default:"—" }} m³/h</span>
+            </div>
+          {% empty %}<p class="text-sm text-slate-400">{% trans "Aucune station." %}</p>{% endfor %}
+        </div>
+      </div>
+
+      {# ── Sessions ── #}
+      <div id="sec-sessions" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">waves</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Sessions d'irrigation" %}</h3>
+        </div>
+        <div class="space-y-4 p-5">
+          {% if sessions_chart %}
+            <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+              <p class="mb-3 text-sm font-medium">{% trans "Volumes irrigués récents" %}</p>
+              {% include "partials/area_chart.html" with chart_id="irrigChart" chart_data=sessions_chart height=160 %}
+            </div>
+          {% endif %}
+          <div class="space-y-2">
+            {% for s in sessions %}
+              <div class="flex items-center justify-between rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+                <div class="flex items-center gap-3">
+                  <span class="material-icons-round text-[18px] text-[#28738f] dark:text-[#67dded]">waves</span>
+                  <div><p class="font-medium">{{ s.start_time|date:"d/m/Y H:i" }}</p><p class="text-xs text-slate-400">{{ s.get_triggered_by_display }}</p></div>
+                </div>
+                <span class="text-xs text-slate-400">{{ s.volume_delivered_m3|default:"—" }} m³</span>
+              </div>
+            {% empty %}
+              <div class="flex flex-col items-center justify-center py-12 text-center">
+                <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">waves</span>
+                <p class="text-sm text-slate-400">{% trans "Aucune session." %}</p>
+              </div>
+            {% endfor %}
           </div>
         </div>
-        <span class="text-xs text-slate-400">{{ z.flow_rate_m3h|default:"—" }} m³/h</span>
       </div>
-    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune zone." %}</p></div>{% endfor %}
-  </div>
 
-  {# ── Programmes ── #}
-  <div x-show="tab==='programs'" x-cloak class="space-y-3">
-    <div class="flex justify-end">
-      <button type="button" @click="programModal = true"
-              class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un programme" %}
-      </button>
     </div>
-    {% for p in programs %}
-      <div class="md-card flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <span class="material-icons-round text-[18px] text-brand">timer</span>
-          <div>
-            <p class="font-medium">{{ p.name }}</p>
-            <p class="text-xs text-slate-400">{{ p.start_hour }}h{{ p.start_minute }} · {{ p.duration_minutes }} min · {{ p.get_frequency_display }}{% if p.parcelles.all %} · {{ p.parcelles.all|join:", " }}{% endif %}</p>
-          </div>
-        </div>
-        <span class="text-xs {% if p.is_active %}text-green-500{% else %}text-slate-400{% endif %}">{% if p.is_active %}{% trans "actif" %}{% else %}{% trans "inactif" %}{% endif %}</span>
-      </div>
-    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucun programme." %}</p></div>{% endfor %}
-  </div>
-
-  {# ── Sessions ── #}
-  <div x-show="tab==='sessions'" x-cloak class="space-y-4">
-    {% if sessions_chart %}
-      <div class="md-card">
-        <p class="mb-3 text-sm font-medium">{% trans "Volumes irrigués récents" %}</p>
-        {% include "partials/area_chart.html" with chart_id="irrigChart" chart_data=sessions_chart height=160 %}
-      </div>
-    {% endif %}
-    <div class="space-y-2">
-      {% for s in sessions %}
-        <div class="md-card flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <span class="material-icons-round text-[18px] text-brand">waves</span>
-            <div><p class="font-medium">{{ s.start_time|date:"d/m/Y H:i" }}</p><p class="text-xs text-slate-400">{{ s.get_triggered_by_display }}</p></div>
-          </div>
-          <span class="text-xs text-slate-400">{{ s.volume_delivered_m3|default:"—" }} m³</span>
-        </div>
-      {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune session." %}</p></div>{% endfor %}
-    </div>
-  </div>
-
-  {# ── Calculateurs ── #}
-  <div x-show="tab==='calculators'" x-cloak class="space-y-5">
-    {% include "irrigation/_etc_card.html" %}
-    {% include "irrigation/_pluvio_card.html" %}
-    {% include "irrigation/_pumping_card.html" %}
-  </div>
-
-  {# ── Stations ── #}
-  <div x-show="tab==='stations'" x-cloak class="space-y-3">
-    <div class="flex justify-end">
-      <button type="button" @click="stationModal = true"
-              class="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une station" %}
-      </button>
-    </div>
-    {% for st in stations %}
-      <div class="md-card flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <span class="material-icons-round text-[18px] text-brand">power_settings_new</span>
-          <div><p class="font-medium">{{ st.name }}</p><p class="text-xs text-slate-400">{{ st.power_kw|default:"—" }} kW · {{ st.get_status_display }}</p></div>
-        </div>
-        <span class="text-xs text-slate-400">{{ st.max_flow_m3h|default:"—" }} m³/h</span>
-      </div>
-    {% empty %}<div class="md-card"><p class="text-sm text-slate-400">{% trans "Aucune station." %}</p></div>{% endfor %}
   </div>
 
   {# ── Modal — Ajouter une zone ── #}
@@ -163,8 +191,9 @@
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
     <div @click.self="zoneModal = false" class="flex w-full max-w-lg justify-center">
       <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
-        <div class="mb-4 flex items-center justify-between">
-          <h3 class="text-lg font-semibold">{% trans "Ajouter une zone" %}</h3>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[20px]">layers</span></span>
+          <h3 class="flex-1 text-lg font-semibold">{% trans "Ajouter une zone" %}</h3>
           <button type="button" @click="zoneModal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
         </div>
 
@@ -214,7 +243,7 @@
             </div>
             <div class="flex justify-end gap-2 pt-1">
               <button type="button" @click="zoneModal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-              <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+              <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90">
                 <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter" %}
               </button>
             </div>
@@ -231,8 +260,9 @@
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
     <div @click.self="programModal = false" class="flex w-full max-w-lg justify-center">
       <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
-        <div class="mb-4 flex items-center justify-between">
-          <h3 class="text-lg font-semibold">{% trans "Ajouter un programme" %}</h3>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[20px]">timer</span></span>
+          <h3 class="flex-1 text-lg font-semibold">{% trans "Ajouter un programme" %}</h3>
           <button type="button" @click="programModal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
         </div>
 
@@ -289,7 +319,7 @@
             </div>
             <div class="flex justify-end gap-2 pt-1">
               <button type="button" @click="programModal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-              <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+              <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90">
                 <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter" %}
               </button>
             </div>
@@ -306,8 +336,9 @@
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 sm:items-center">
     <div @click.self="stationModal = false" class="flex w-full max-w-lg justify-center">
       <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
-        <div class="mb-4 flex items-center justify-between">
-          <h3 class="text-lg font-semibold">{% trans "Ajouter une station" %}</h3>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[20px]">power_settings_new</span></span>
+          <h3 class="flex-1 text-lg font-semibold">{% trans "Ajouter une station" %}</h3>
           <button type="button" @click="stationModal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
         </div>
 
@@ -356,7 +387,7 @@
           </label>
           <div class="flex justify-end gap-2 pt-1">
             <button type="button" @click="stationModal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90">
               <span class="material-icons-round text-[18px]">save</span>{% trans "Enregistrer" %}
             </button>
           </div>

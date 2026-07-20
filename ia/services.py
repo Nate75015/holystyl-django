@@ -20,12 +20,12 @@ from irrigation.models import IrrigationSession
 from irrigation.services import calculate_dti_score
 from parcelles.models import Parcelle
 
-from . import gemini
+from . import llm
 from .models import AiConversation, DailyReport
 
 ASSISTANT_NOT_CONFIGURED = (
-    "L'assistant IA n'est pas encore configuré (clé Gemini manquante). "
-    "Renseignez GEMINI_API_KEY pour l'activer."
+    "L'assistant IA n'est pas encore configuré (clé API manquante). "
+    "Renseignez la clé du fournisseur actif (GEMINI_API_KEY ou MISTRAL_API_KEY) pour l'activer."
 )
 
 INTENT_ENUM = [
@@ -86,7 +86,7 @@ def _resolve_parcelle(exploitation, data) -> Parcelle | None:
 def chat(exploitation, user, message: str, history: list[dict] | None = None) -> str:
     """Réponse conversationnelle (persistée dans l'historique)."""
     AiConversation.objects.create(exploitation=exploitation, user=user, role="user", content=message)
-    if not gemini.is_configured():
+    if not llm.is_configured():
         AiConversation.objects.create(
             exploitation=exploitation, user=user, role="assistant", content=ASSISTANT_NOT_CONFIGURED
         )
@@ -96,20 +96,20 @@ def chat(exploitation, user, message: str, history: list[dict] | None = None) ->
     messages = [{"role": "system", "content": f"Tu es l'assistant Holystyl. Parcelles : {ctx['parcelles']}."}]
     messages += history or []
     messages.append({"role": "user", "content": message})
-    answer = gemini.generate_text(messages)
+    answer = llm.generate_text(messages)
     AiConversation.objects.create(exploitation=exploitation, user=user, role="assistant", content=answer)
     return answer
 
 
 def execute_intent(exploitation, user, message: str, history: list[dict] | None = None) -> dict:
     """Extrait l'intention et crée l'entité correspondante quand c'est possible."""
-    if not gemini.is_configured():
+    if not llm.is_configured():
         return {"response": ASSISTANT_NOT_CONFIGURED, "intent": "question", "created": False}
 
     messages = [{"role": "system", "content": _intent_system_prompt(build_context(exploitation))}]
     messages += history or []
     messages.append({"role": "user", "content": message})
-    parsed = gemini.generate_json(messages)
+    parsed = llm.generate_json(messages)
 
     intent = parsed.get("intent", "question")
     data = parsed.get("data") or {}
@@ -232,8 +232,8 @@ def generate_daily_report(exploitation, report_date: date | None = None) -> Dail
     dti = calculate_dti_score(kwh or 0.24)
 
     summary = ""
-    if gemini.is_configured():
-        summary = gemini.generate_text([
+    if llm.is_configured():
+        summary = llm.generate_text([
             {"role": "system", "content": "Tu es un expert en irrigation agricole. Rédige un résumé quotidien concis."},
             {"role": "user", "content": f"Score DTI {dti.score} ({kwh} kWh/m³). Rédige un point du jour."},
         ])

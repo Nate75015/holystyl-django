@@ -23,7 +23,7 @@ def setup(db):
 @pytest.mark.django_db
 def test_apply_extraction_not_configured_returns_false(setup, monkeypatch):
     user, exploitation = setup
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: False)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: False)
     report = AnalysisResult.objects.create(
         exploitation=exploitation, analysis_type="soil", sample_date=timezone.now(), ocr_raw_text="pH 6.8"
     )
@@ -35,9 +35,9 @@ def test_apply_extraction_not_configured_returns_false(setup, monkeypatch):
 @pytest.mark.django_db
 def test_apply_extraction_fills_values(setup, monkeypatch):
     user, exploitation = setup
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda messages, **kw: {
             "ph": 6.8, "organicMatterPct": 2.1, "nitrogenMgKg": 1200,
             "phosphorusMgKg": 45, "potassiumMgKg": 210, "electricalConductivity": 0.3,
@@ -56,8 +56,8 @@ def test_apply_extraction_fills_values(setup, monkeypatch):
 @pytest.mark.django_db
 def test_extract_endpoint(client, setup, monkeypatch):
     user, exploitation = setup
-    monkeypatch.setattr("analyses.services.gemini.is_configured", lambda: True)
-    monkeypatch.setattr("analyses.services.gemini.generate_json", lambda m, **k: {"ph": 7.0, "recommendations": "OK"})
+    monkeypatch.setattr("analyses.services.llm.is_configured", lambda: True)
+    monkeypatch.setattr("analyses.services.llm.generate_json", lambda m, **k: {"ph": 7.0, "recommendations": "OK"})
     report = AnalysisResult.objects.create(exploitation=exploitation, analysis_type="soil", sample_date=timezone.now())
     client.force_login(user)
     resp = client.post(f"/api/analyses/lab/{report.id}/extract/", {"ocrRawText": "pH 7.0"}, content_type="application/json")

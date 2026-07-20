@@ -39,9 +39,9 @@ def test_ai_intent_creates_entretien(setup, monkeypatch):
 
     user, exploitation = setup
     machine = Machine.objects.create(exploitation=exploitation, name="Tracteur", type="tractor")
-    monkeypatch.setattr(services.gemini, "is_configured", lambda: True)
+    monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
-        services.gemini, "generate_json",
+        services.llm, "generate_json",
         lambda m, **k: {"response": "Entretien noté", "intent": "creer_entretien", "needs_more_info": False,
                         "data": {"machineName": "Tracteur", "type": "vidange", "cout": 120}},
     )

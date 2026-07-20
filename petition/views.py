@@ -10,7 +10,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
-from ia import gemini
+from ia import llm
 
 from .models import Petition, Signature
 
@@ -100,7 +100,7 @@ def reformuler(request):
 
     if not text:
         return JsonResponse({"error": _("Rien à reformuler : le champ est vide.")}, status=400)
-    if not gemini.is_configured():
+    if not llm.is_configured():
         return JsonResponse({"error": _("Assistant IA non configuré (clé Gemini manquante).")}, status=503)
 
     if field == "title":
@@ -120,7 +120,7 @@ def reformuler(request):
         "Tu écris dans un français clair et professionnel."
     )
     try:
-        out = gemini.generate_text(
+        out = llm.generate_text(
             [
                 {"role": "system", "content": system},
                 {"role": "user", "content": f"{instruction}\n\n---\n{text}"},

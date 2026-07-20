@@ -2,111 +2,147 @@
 {% load i18n l10n %}
 
 {% block content %}
-<section class="space-y-6" x-data="biodivPage()">
+<section class="mx-auto max-w-6xl space-y-6" x-data="biodivPage()">
 
-  {# ── En-tête ── #}
-  <div class="flex flex-wrap items-start justify-between gap-3">
-    <div class="flex items-center gap-3">
-      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
-        <span class="material-icons-round">eco</span>
-      </span>
-      <div>
-        <h2 class="text-2xl font-bold tracking-tight">{% trans "Biodiversité" %}</h2>
-        <p class="text-sm text-slate-400">{% trans "Espèces, haies, jachères et infrastructures agro-écologiques par parcelle" %}</p>
+  {# ── Hero ── #}
+  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
+    <div class="relative flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
+          <span class="material-icons-round text-[26px]">eco</span>
+        </span>
+        <div class="min-w-0">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
+            <span class="material-icons-round text-[14px]">park</span>{% trans "Environnement" %}
+          </span>
+          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Biodiversité" %}</h2>
+          <p class="truncate text-sm text-slate-400">{% trans "Espèces, haies, jachères et infrastructures agro-écologiques par parcelle" %}</p>
+        </div>
       </div>
-    </div>
-    <button type="button" @click="openAdd()"
-            class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-      <span class="material-icons-round text-[18px]">add</span>{% trans "Nouvelle fiche" %}
-    </button>
-  </div>
-
-  {# ── KPIs ── #}
-  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Fiches" %}</p>
-      <p class="mt-1 text-2xl font-bold">{{ fiches|length }}</p>
-    </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Score moyen" %}</p>
-      <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ kpi_score|default:"—" }}{% if kpi_score is not None %}<span class="text-sm font-medium text-slate-400">/100</span>{% endif %}</p>
-    </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Haies" %}</p>
-      <p class="mt-1 text-2xl font-bold">{{ kpi_haies }}<span class="text-sm font-medium text-slate-400"> ml</span></p>
-    </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <p class="text-xs text-slate-400">{% trans "Jachère" %}</p>
-      <p class="mt-1 text-2xl font-bold">{{ kpi_jachere }}<span class="text-sm font-medium text-slate-400"> ha</span></p>
-    </div>
-  </div>
-
-  {# ── Liste ── #}
-  {% if fiches %}
-    <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-white/10">
-      <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
-          <tr>
-            <th class="px-4 py-3">{% trans "Date" %}</th>
-            <th class="px-4 py-3">{% trans "Parcelle" %}</th>
-            <th class="px-4 py-3">{% trans "Score" %}</th>
-            <th class="px-4 py-3 text-right">{% trans "Végétales" %}</th>
-            <th class="px-4 py-3 text-right">{% trans "Animales" %}</th>
-            <th class="px-4 py-3 text-right">{% trans "Haies (ml)" %}</th>
-            <th class="px-4 py-3 text-right">{% trans "Jachère (ha)" %}</th>
-            <th class="px-4 py-3 text-right">{% trans "Actions" %}</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-          {% for f in fiches %}
-            <tr>
-              <td class="px-4 py-3">{{ f.date|date:"d/m/Y" }}</td>
-              <td class="px-4 py-3 font-medium">{{ f.parcelle.name }}</td>
-              <td class="px-4 py-3">
-                {% if f.score is not None %}
-                  <span class="inline-flex items-center gap-2">
-                    <span class="h-2 w-16 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><span class="block h-full rounded-full" style="width: {{ f.score }}%; background: hsl({% widthratio f.score 100 120 %}, 65%, 45%);"></span></span>
-                    <span class="font-medium tabular-nums" style="color: hsl({% widthratio f.score 100 120 %}, 65%, 45%);">{{ f.score }}</span>
-                  </span>
-                {% else %}<span class="text-slate-400">—</span>{% endif %}
-              </td>
-              <td class="px-4 py-3 text-right">{{ f.especes_vegetales|default_if_none:"—" }}</td>
-              <td class="px-4 py-3 text-right">{{ f.especes_animales|default_if_none:"—" }}</td>
-              <td class="px-4 py-3 text-right">{{ f.haies_ml|default_if_none:"—" }}</td>
-              <td class="px-4 py-3 text-right">{{ f.jachere_ha|default_if_none:"—" }}</td>
-              <td class="px-4 py-3">
-                <div class="flex items-center justify-end gap-1">
-                  <button type="button" title="{% trans 'Voir' %}"
-                          @click="openView({ parcelle: '{{ f.parcelle.name|escapejs }}', date: '{{ f.date|date:"d/m/Y" }}', score: '{{ f.score|default_if_none:0 }}', veg: '{{ f.especes_vegetales|default_if_none:"—" }}', anim: '{{ f.especes_animales|default_if_none:"—" }}', haies: '{{ f.haies_ml|default_if_none:"—"|unlocalize }}', jachere: '{{ f.jachere_ha|default_if_none:"—"|unlocalize }}', obs: '{{ f.observations|escapejs }}' })"
-                          class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
-                    <span class="material-icons-round text-[18px]">visibility</span>
-                  </button>
-                  <button type="button" title="{% trans 'Modifier' %}"
-                          @click="openEdit({ action: '{% url 'environnement:biodiversite_edit' f.pk %}', parcelle: '{{ f.parcelle_id }}', date: '{{ f.date|date:"Y-m-d" }}', score: '{{ f.score|default_if_none:0 }}', veg: '{{ f.especes_vegetales|default_if_none:"" }}', anim: '{{ f.especes_animales|default_if_none:"" }}', haies: '{{ f.haies_ml|default_if_none:""|unlocalize }}', jachere: '{{ f.jachere_ha|default_if_none:""|unlocalize }}', obs: '{{ f.observations|escapejs }}' })"
-                          class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
-                    <span class="material-icons-round text-[18px]">edit</span>
-                  </button>
-                  <button type="button" title="{% trans 'Supprimer' %}"
-                          @click="del = { open: true, action: '{% url 'environnement:biodiversite_delete' f.pk %}', name: '{{ f.parcelle.name|escapejs }} — {{ f.date|date:"d/m/Y" }}' }"
-                          class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10">
-                    <span class="material-icons-round text-[18px]">delete_outline</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  {% else %}
-    <div class="md-card flex flex-col items-center justify-center py-12 text-center">
-      <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">eco</span>
-      <p class="text-sm text-slate-400">{% trans "Aucune fiche biodiversité." %}</p>
-      <button type="button" @click="openAdd()" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+      <button type="button" @click="openAdd()"
+              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
         <span class="material-icons-round text-[18px]">add</span>{% trans "Nouvelle fiche" %}
       </button>
     </div>
-  {% endif %}
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
+    {# ── Sommaire latéral collant ── #}
+    <aside class="hidden lg:block">
+      <nav class="sticky top-6 space-y-0.5">
+        <a href="#sec-kpi" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">insights</span><span class="flex-1 truncate">{% trans "Indicateurs" %}</span></a>
+        <a href="#sec-fiches" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">eco</span><span class="min-w-0 flex-1 truncate">{% trans "Fiches" %}</span>
+          {% if fiches %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ fiches|length }}</span>{% endif %}</a>
+      </nav>
+    </aside>
+
+    {# ── Colonne principale ── #}
+    <div class="min-w-0 space-y-5">
+
+      {# ── Indicateurs (KPI) ── #}
+      <div id="sec-kpi" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">insights</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Indicateurs" %}</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3 p-5 sm:grid-cols-4">
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <p class="text-xs text-slate-400">{% trans "Fiches" %}</p>
+            <p class="mt-1 text-2xl font-bold">{{ fiches|length }}</p>
+          </div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <p class="text-xs text-slate-400">{% trans "Score moyen" %}</p>
+            <p class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ kpi_score|default:"—" }}{% if kpi_score is not None %}<span class="text-sm font-medium text-slate-400">/100</span>{% endif %}</p>
+          </div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <p class="text-xs text-slate-400">{% trans "Haies" %}</p>
+            <p class="mt-1 text-2xl font-bold">{{ kpi_haies }}<span class="text-sm font-medium text-slate-400"> ml</span></p>
+          </div>
+          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
+            <p class="text-xs text-slate-400">{% trans "Jachère" %}</p>
+            <p class="mt-1 text-2xl font-bold">{{ kpi_jachere }}<span class="text-sm font-medium text-slate-400"> ha</span></p>
+          </div>
+        </div>
+      </div>
+
+      {# ── Fiches biodiversité ── #}
+      <div id="sec-fiches" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">eco</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Fiches biodiversité" %}</h3>
+        </div>
+        {% if fiches %}
+          <div class="overflow-x-auto p-5">
+            <table class="w-full text-sm">
+              <thead class="text-left text-xs uppercase tracking-wide text-slate-400">
+                <tr class="border-b border-slate-100 dark:border-white/5">
+                  <th class="px-3 py-2.5">{% trans "Date" %}</th>
+                  <th class="px-3 py-2.5">{% trans "Parcelle" %}</th>
+                  <th class="px-3 py-2.5">{% trans "Score" %}</th>
+                  <th class="px-3 py-2.5 text-right">{% trans "Végétales" %}</th>
+                  <th class="px-3 py-2.5 text-right">{% trans "Animales" %}</th>
+                  <th class="px-3 py-2.5 text-right">{% trans "Haies (ml)" %}</th>
+                  <th class="px-3 py-2.5 text-right">{% trans "Jachère (ha)" %}</th>
+                  <th class="px-3 py-2.5 text-right">{% trans "Actions" %}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+                {% for f in fiches %}
+                  <tr>
+                    <td class="px-3 py-2.5">{{ f.date|date:"d/m/Y" }}</td>
+                    <td class="px-3 py-2.5 font-medium">{{ f.parcelle.name }}</td>
+                    <td class="px-3 py-2.5">
+                      {% if f.score is not None %}
+                        <span class="inline-flex items-center gap-2">
+                          <span class="h-2 w-16 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><span class="block h-full rounded-full" style="width: {{ f.score }}%; background: hsl({% widthratio f.score 100 120 %}, 65%, 45%);"></span></span>
+                          <span class="font-medium tabular-nums" style="color: hsl({% widthratio f.score 100 120 %}, 65%, 45%);">{{ f.score }}</span>
+                        </span>
+                      {% else %}<span class="text-slate-400">—</span>{% endif %}
+                    </td>
+                    <td class="px-3 py-2.5 text-right">{{ f.especes_vegetales|default_if_none:"—" }}</td>
+                    <td class="px-3 py-2.5 text-right">{{ f.especes_animales|default_if_none:"—" }}</td>
+                    <td class="px-3 py-2.5 text-right">{{ f.haies_ml|default_if_none:"—" }}</td>
+                    <td class="px-3 py-2.5 text-right">{{ f.jachere_ha|default_if_none:"—" }}</td>
+                    <td class="px-3 py-2.5">
+                      <div class="flex items-center justify-end gap-1">
+                        <button type="button" title="{% trans 'Voir' %}"
+                                @click="openView({ parcelle: '{{ f.parcelle.name|escapejs }}', date: '{{ f.date|date:"d/m/Y" }}', score: '{{ f.score|default_if_none:0 }}', veg: '{{ f.especes_vegetales|default_if_none:"—" }}', anim: '{{ f.especes_animales|default_if_none:"—" }}', haies: '{{ f.haies_ml|default_if_none:"—"|unlocalize }}', jachere: '{{ f.jachere_ha|default_if_none:"—"|unlocalize }}', obs: '{{ f.observations|escapejs }}' })"
+                                class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+                          <span class="material-icons-round text-[18px]">visibility</span>
+                        </button>
+                        <button type="button" title="{% trans 'Modifier' %}"
+                                @click="openEdit({ action: '{% url 'environnement:biodiversite_edit' f.pk %}', parcelle: '{{ f.parcelle_id }}', date: '{{ f.date|date:"Y-m-d" }}', score: '{{ f.score|default_if_none:0 }}', veg: '{{ f.especes_vegetales|default_if_none:"" }}', anim: '{{ f.especes_animales|default_if_none:"" }}', haies: '{{ f.haies_ml|default_if_none:""|unlocalize }}', jachere: '{{ f.jachere_ha|default_if_none:""|unlocalize }}', obs: '{{ f.observations|escapejs }}' })"
+                                class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+                          <span class="material-icons-round text-[18px]">edit</span>
+                        </button>
+                        <button type="button" title="{% trans 'Supprimer' %}"
+                                @click="del = { open: true, action: '{% url 'environnement:biodiversite_delete' f.pk %}', name: '{{ f.parcelle.name|escapejs }} — {{ f.date|date:"d/m/Y" }}' }"
+                                class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10">
+                          <span class="material-icons-round text-[18px]">delete_outline</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="flex flex-col items-center justify-center py-12 text-center">
+            <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">eco</span>
+            <p class="text-sm text-slate-400">{% trans "Aucune fiche biodiversité." %}</p>
+            <button type="button" @click="openAdd()" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+              <span class="material-icons-round text-[18px]">add</span>{% trans "Nouvelle fiche" %}
+            </button>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
 
   {# ── Modal — Créer / modifier une fiche ── #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
