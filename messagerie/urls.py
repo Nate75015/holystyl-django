@@ -12,4 +12,6 @@ urlpatterns = [
     path("messagerie/<int:pk>/", views.detail, name="detail"),
     path("messagerie/<int:pk>/fil/", views.thread, name="thread"),
     path("messagerie/<int:pk>/envoyer/", views.send, name="send"),
+    path("messagerie/<int:pk>/supprimer/", views.conversation_delete, name="conversation_delete"),
+    path("messagerie/message/<int:pk>/supprimer/", views.message_delete, name="message_delete"),
 ]

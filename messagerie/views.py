@@ -1,5 +1,6 @@
 """Vues web messagerie : boîte de réception, fil de discussion, nouvelle conversation."""
 
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
@@ -35,16 +36,32 @@ def _candidate_users(request):
 
 
 def _farmers(request):
-    """Agriculteurs inscrits (comptes actifs, hors staff et soi-même)."""
-    return (
-        User.objects.filter(is_active=True, is_staff=False)
-        .exclude(pk=request.user.pk)
-        .order_by("full_name", "email")
-    )
+    """Personnes contactables : uniquement le réseau (connexions acceptées)."""
+    from reseaux.models import Connexion
+
+    ids = Connexion.connected_user_ids(request.user)
+    return User.objects.filter(id__in=ids).order_by("full_name", "email")
 
 
 def _mark_read(conversation, user):
     ConversationMember.objects.filter(conversation=conversation, user=user).update(last_read_at=timezone.now())
+
+
+def _time_label(dt):
+    """Horodatage façon WhatsApp : heure (aujourd'hui), jour (semaine), date (au-delà)."""
+    if dt is None:
+        return ""
+    now = timezone.localtime()
+    local = timezone.localtime(dt)
+    delta = now.date() - local.date()
+    if delta.days == 0:
+        return local.strftime("%H:%M")
+    if delta.days == 1:
+        return _("Hier")
+    if delta.days < 7:
+        jours = [_("lun."), _("mar."), _("mer."), _("jeu."), _("ven."), _("sam."), _("dim.")]
+        return jours[local.weekday()]
+    return local.strftime("%d/%m/%Y")
 
 
 def _conversations(request):
@@ -59,7 +76,9 @@ def _conversations(request):
         last = c.last_message()
         c.preview = (last.body or (_("📎 Pièce jointe") if last.pieces_jointes.exists() else "")) if last else ""
         c.unread = c.unread_count(request.user)
-    conversations.sort(key=lambda c: c.updated_at, reverse=True)
+        c.last_at = last.created_at if last else c.updated_at
+        c.time_label = _time_label(c.last_at)
+    conversations.sort(key=lambda c: c.last_at, reverse=True)
     return conversations
 
 
@@ -79,10 +98,16 @@ def inbox(request):
 
 @login_required
 def start(request, user_id):
-    """Ouvre (ou crée) une conversation 1:1 avec un agriculteur, puis affiche le fil."""
+    """Ouvre (ou crée) une conversation 1:1 avec une personne de son réseau."""
+    from reseaux.models import Connexion
+
     other = get_object_or_404(User, pk=user_id, is_active=True)
     if other.pk == request.user.pk:
         return redirect("messagerie:inbox")
+    # On ne peut échanger qu'avec les personnes connectées (réseau accepté).
+    if not Connexion.are_connected(request.user, other):
+        messages.warning(request, _("Connectez-vous à cette personne (Réseau) avant de lui écrire."))
+        return redirect("reseaux:reseaux")
     conversation = (
         Conversation.objects.filter(is_group=False, memberships__user=request.user)
         .filter(memberships__user=other)
@@ -205,3 +230,26 @@ def new(request):
                 Conversation.objects.filter(pk=conversation.pk).update(updated_at=timezone.now())
             return redirect("messagerie:detail", pk=conversation.pk)
     return render(request, "messagerie/new.html", {"candidates": candidates, "page_title": _("Nouvelle conversation")})
+
+
+@login_required
+@require_POST
+def conversation_delete(request, pk):
+    """Supprime la conversation pour l'utilisateur (retire son adhésion).
+    Si plus personne n'y participe, la conversation et ses messages sont supprimés."""
+    conversation = get_object_or_404(Conversation, pk=pk, memberships__user=request.user)
+    ConversationMember.objects.filter(conversation=conversation, user=request.user).delete()
+    if not conversation.memberships.exists():
+        conversation.delete()
+    messages.success(request, _("Conversation supprimée."))
+    return redirect("messagerie:inbox")
+
+
+@login_required
+@require_POST
+def message_delete(request, pk):
+    """Supprime un message (seul son auteur peut le faire)."""
+    message = get_object_or_404(Message, pk=pk, sender=request.user)
+    conversation = message.conversation
+    message.delete()
+    return render(request, "messagerie/_messages.html", {"conversation": conversation})

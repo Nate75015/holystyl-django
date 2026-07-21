@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-6xl space-y-6">
+
+  {# ── Hero ── #}
+  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
+    <div class="relative flex items-center gap-3">
+      <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
+        <span class="material-icons-round text-[26px]">hub</span>
+      </span>
+      <div class="min-w-0">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
+          <span class="material-icons-round text-[14px]">forum</span>{% trans "Communication" %}
+        </span>
+        <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Réseau" %}</h2>
+        <p class="truncate text-sm text-slate-400">{% trans "Connectez-vous pour échanger via la messagerie" %}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
+    {# ── Sommaire ── #}
+    <aside class="hidden lg:block">
+      <nav class="sticky top-6 space-y-0.5">
+        <a href="#sec-reseau" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">group</span><span class="min-w-0 flex-1 truncate">{% trans "Mon réseau" %}</span>
+          {% if kpi_reseau %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ kpi_reseau }}</span>{% endif %}</a>
+        <a href="#sec-recues" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">move_to_inbox</span><span class="min-w-0 flex-1 truncate">{% trans "Demandes reçues" %}</span>
+          {% if kpi_recues %}<span class="shrink-0 rounded-full bg-red-500 px-1.5 text-[11px] font-semibold text-white">{{ kpi_recues }}</span>{% endif %}</a>
+        <a href="#sec-envoyees" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">outbox</span><span class="min-w-0 flex-1 truncate">{% trans "Demandes envoyées" %}</span>
+          {% if kpi_envoyees %}<span class="shrink-0 rounded-full bg-slate-200 px-1.5 text-[11px] font-semibold text-slate-500 dark:bg-white/10">{{ kpi_envoyees }}</span>{% endif %}</a>
+        <a href="#sec-decouvrir" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
+          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">person_add</span><span class="min-w-0 flex-1 truncate">{% trans "Découvrir" %}</span></a>
+      </nav>
+    </aside>
+
+    <div class="min-w-0 space-y-5">
+
+      {# ── Demandes reçues (en tête si présentes) ── #}
+      <div id="sec-recues" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">move_to_inbox</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Demandes de connexion reçues" %}</h3>
+          {% if kpi_recues %}<span class="shrink-0 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-600 dark:bg-red-500/15 dark:text-red-400">{{ kpi_recues }}</span>{% endif %}
+        </div>
+        <div class="p-5">
+          {% if recues %}
+            <div class="space-y-2">
+              {% for p in recues %}
+                <div class="flex flex-wrap items-center gap-3 rounded-xl border border-slate-200/70 p-3 dark:border-white/10">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#28738f]/10 font-bold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ p.initiale }}</span>
+                  <div class="min-w-0 flex-1">
+                    <p class="truncate font-medium">{{ p.nom }}</p>
+                    <p class="truncate text-xs text-slate-400">{% if p.message %}« {{ p.message }} »{% else %}{{ p.email }}{% endif %}</p>
+                  </div>
+                  <div class="flex shrink-0 gap-2">
+                    <form method="post" action="{% url 'reseaux:accepter' p.cid %}">{% csrf_token %}
+                      <button type="submit" class="inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-3.5 py-1.5 text-xs font-semibold text-white transition hover:opacity-90"><span class="material-icons-round text-[16px]">check</span>{% trans "Accepter" %}</button>
+                    </form>
+                    <form method="post" action="{% url 'reseaux:refuser' p.cid %}">{% csrf_token %}
+                      <button type="submit" class="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3.5 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10">{% trans "Refuser" %}</button>
+                    </form>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="py-4 text-center text-sm text-slate-400">{% trans "Aucune demande en attente." %}</p>
+          {% endif %}
+        </div>
+      </div>
+
+      {# ── Mon réseau ── #}
+      <div id="sec-reseau" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">group</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Mon réseau" %}</h3>
+          {% if kpi_reseau %}<span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400">{{ kpi_reseau }}</span>{% endif %}
+        </div>
+        <div class="p-5">
+          {% if reseau %}
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {% for p in reseau %}
+                <div class="flex items-center gap-3 rounded-xl border border-slate-200/70 p-3 dark:border-white/10">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#28738f]/10 font-bold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ p.initiale }}</span>
+                  <div class="min-w-0 flex-1"><p class="truncate font-medium">{{ p.nom }}</p><p class="truncate text-xs text-slate-400">{{ p.email }}</p></div>
+                  <a href="{% url 'messagerie:start' p.id %}" class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#28738f]/10 text-[#28738f] transition hover:bg-[#28738f]/20 dark:bg-white/10 dark:text-[#67dded]" title="{% trans 'Envoyer un message' %}"><span class="material-icons-round text-[18px]">chat</span></a>
+                  <form method="post" action="{% url 'reseaux:retirer' p.cid %}" onsubmit="return confirm('{% trans "Retirer cette connexion ?" %}')" class="shrink-0 leading-none">{% csrf_token %}
+                    <button type="submit" class="grid h-9 w-9 place-items-center rounded-full text-slate-300 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10" title="{% trans 'Retirer' %}"><span class="material-icons-round text-[18px]">person_remove</span></button>
+                  </form>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="flex flex-col items-center justify-center py-10 text-center">
+              <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">group</span>
+              <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Votre réseau est vide." %}</p>
+              <p class="mt-1 text-xs text-slate-400">{% trans "Envoyez une demande depuis « Découvrir » ci-dessous." %}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# ── Demandes envoyées ── #}
+      {% if envoyees %}
+        <div id="sec-envoyees" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+          <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">outbox</span></span>
+            <h3 class="flex-1 text-sm font-semibold">{% trans "Demandes envoyées" %}</h3>
+            <span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400">{{ kpi_envoyees }}</span>
+          </div>
+          <div class="space-y-2 p-5">
+            {% for p in envoyees %}
+              <div class="flex items-center gap-3 rounded-xl border border-slate-200/70 p-3 dark:border-white/10">
+                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-100 font-bold text-slate-400 dark:bg-white/10">{{ p.initiale }}</span>
+                <div class="min-w-0 flex-1"><p class="truncate font-medium">{{ p.nom }}</p><p class="truncate text-xs text-slate-400">{% trans "En attente d'acceptation" %}</p></div>
+                <form method="post" action="{% url 'reseaux:retirer' p.cid %}" class="shrink-0 leading-none">{% csrf_token %}
+                  <button type="submit" class="rounded-full border border-slate-200 px-3.5 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10">{% trans "Annuler" %}</button>
+                </form>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {# ── Découvrir ── #}
+      {{ suggestions|json_script:"suggestions-data" }}
+      <div id="sec-decouvrir" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5"
+           x-data="{
+             q: '', lieu: '', cultures: '', caMin: '', surfaceMin: '',
+             showFilters: false,
+             people: JSON.parse(document.getElementById('suggestions-data').textContent),
+             get filtered() {
+               const q = this.q.trim().toLowerCase();
+               const lieu = this.lieu.trim().toLowerCase();
+               const cult = this.cultures.trim().toLowerCase();
+               const caMin = parseFloat(this.caMin);
+               const surfMin = parseFloat(this.surfaceMin);
+               return this.people.filter(p => {
+                 if (q && !((p.nom + ' ' + p.email).toLowerCase().includes(q))) return false;
+                 if (lieu && !((p.lieu || '').toLowerCase().includes(lieu))) return false;
+                 if (cult && !((p.cultures || '').toLowerCase().includes(cult))) return false;
+                 if (!isNaN(caMin) && (p.ca == null || p.ca < caMin)) return false;
+                 if (!isNaN(surfMin) && (p.surface == null || p.surface < surfMin)) return false;
+                 return true;
+               });
+             }
+           }">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">person_add</span></span>
+          <h3 class="flex-1 text-sm font-semibold">{% trans "Découvrir des personnes" %}</h3>
+          <span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400"><span x-text="filtered.length"></span> / <span x-text="people.length"></span></span>
+        </div>
+        <div class="space-y-3 p-5">
+          {# Recherche nom / prénom / email #}
+          <div class="flex items-center gap-2">
+            <div class="flex flex-1 items-center gap-2 rounded-full bg-black/5 px-4 py-1.5 dark:bg-white/10">
+              <span class="material-icons-round shrink-0 text-[18px] leading-none text-slate-400">search</span>
+              <input type="text" x-model="q" autocomplete="off" placeholder="{% trans 'Rechercher un nom, un prénom, un email…' %}"
+                     class="input-bare w-full text-sm focus:outline-none focus:ring-0 dark:[color-scheme:dark]">
+              <button type="button" x-show="q" @click="q = ''" class="shrink-0 text-slate-400 hover:text-slate-600"><span class="material-icons-round text-[18px]">close</span></button>
+            </div>
+            <button type="button" @click="showFilters = !showFilters"
+                    class="inline-flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-sm font-medium transition"
+                    :class="showFilters || lieu || cultures || caMin || surfaceMin ? 'border-brand bg-brand/10 text-brand' : 'border-slate-200 text-slate-500 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10'">
+              <span class="material-icons-round text-[18px]">tune</span>{% trans "Filtres" %}
+            </button>
+          </div>
+
+          {# Filtres avancés : lieu, cultures, CA #}
+          <div x-show="showFilters" x-cloak x-transition class="grid grid-cols-1 gap-3 rounded-xl border border-slate-200/70 p-3 dark:border-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <label class="mb-1 flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400"><span class="material-icons-round text-[14px]">place</span>{% trans "Lieu" %}</label>
+              <input type="text" x-model="lieu" placeholder="{% trans 'ex: Avignon' %}" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-1.5 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400"><span class="material-icons-round text-[14px]">grass</span>{% trans "Cultures" %}</label>
+              <input type="text" x-model="cultures" placeholder="{% trans 'ex: blé, vigne…' %}" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-1.5 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400"><span class="material-icons-round text-[14px]">crop_landscape</span>{% trans "Surface min. (ha)" %}</label>
+              <input type="number" min="0" step="1" x-model="surfaceMin" placeholder="{% trans 'ex: 20' %}" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-1.5 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div>
+              <label class="mb-1 flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400"><span class="material-icons-round text-[14px]">payments</span>{% trans "CA minimum (€)" %}</label>
+              <input type="number" min="0" step="1000" x-model="caMin" placeholder="{% trans 'ex: 50000' %}" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-1.5 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            </div>
+            <div class="flex justify-end sm:col-span-2 lg:col-span-4">
+              <button type="button" @click="lieu=''; cultures=''; caMin=''; surfaceMin=''" class="text-xs text-slate-400 hover:text-brand">{% trans "Réinitialiser les filtres" %}</button>
+            </div>
+          </div>
+
+          {# Résultats #}
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <template x-for="p in filtered" :key="p.id">
+              <div class="flex items-center gap-3 rounded-xl border border-slate-200/70 p-3 dark:border-white/10">
+                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#28738f]/10 font-bold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]" x-text="p.initiale"></span>
+                <div class="min-w-0 flex-1">
+                  <p class="truncate font-medium" x-text="p.nom"></p>
+                  <p class="truncate text-xs text-slate-400" x-text="p.email"></p>
+                  <p class="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-slate-400">
+                    <template x-if="p.lieu"><span class="inline-flex items-center gap-0.5"><span class="material-icons-round text-[12px]">place</span><span x-text="p.lieu"></span></span></template>
+                    <template x-if="p.surface != null"><span class="inline-flex items-center gap-0.5"><span class="material-icons-round text-[12px]">crop_landscape</span><span x-text="p.surface + ' ha'"></span></span></template>
+                    <template x-if="p.cultures"><span class="inline-flex items-center gap-0.5"><span class="material-icons-round text-[12px]">grass</span><span class="truncate" x-text="p.cultures"></span></span></template>
+                    <template x-if="p.ca != null"><span class="inline-flex items-center gap-0.5"><span class="material-icons-round text-[12px]">payments</span><span x-text="Math.round(p.ca).toLocaleString('fr-FR') + ' €'"></span></span></template>
+                  </p>
+                </div>
+                <form method="post" :action="'/reseaux/demander/' + p.id + '/'" class="shrink-0 leading-none">{% csrf_token %}
+                  <button type="submit" class="inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-3.5 py-1.5 text-xs font-semibold text-white transition hover:opacity-90"><span class="material-icons-round text-[16px]">person_add</span>{% trans "Adhérer" %}</button>
+                </form>
+              </div>
+            </template>
+          </div>
+          <p x-show="filtered.length === 0" class="py-4 text-center text-sm text-slate-400">{% trans "Aucune personne ne correspond à votre recherche." %}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
