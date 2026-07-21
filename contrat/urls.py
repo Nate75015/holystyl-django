@@ -17,4 +17,7 @@ urlpatterns = [
     path("assurances/", views.assurances, name="assurances"),
     path("assurances/nouvelle/", views.assurance_create, name="assurance_create"),
     path("assurances/<int:pk>/supprimer/", views.assurance_delete, name="assurance_delete"),
+    path("msa/", views.msa, name="msa"),
+    path("msa/nouvelle/", views.msa_create, name="msa_create"),
+    path("msa/<int:pk>/supprimer/", views.msa_delete, name="msa_delete"),
 ]

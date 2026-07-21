@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ActeNotarie, Assurance, Bail, Contrat
+from .models import ActeNotarie, Assurance, Bail, Contrat, Msa
 
 
 @admin.register(Contrat)
@@ -29,3 +29,10 @@ class AssuranceAdmin(admin.ModelAdmin):
     list_display = ("intitule", "type_assurance", "assureur", "numero_police", "prime_annuelle", "date_fin", "statut", "exploitation")
     list_filter = ("type_assurance", "statut")
     search_fields = ("intitule", "assureur", "numero_police")
+
+
+@admin.register(Msa)
+class MsaAdmin(admin.ModelAdmin):
+    list_display = ("intitule", "type_cotisation", "numero_adherent", "montant", "date_echeance", "statut", "exploitation")
+    list_filter = ("type_cotisation", "statut")
+    search_fields = ("intitule", "numero_adherent", "caisse")

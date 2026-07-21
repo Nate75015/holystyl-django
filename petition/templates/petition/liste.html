@@ -2,69 +2,86 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto max-w-2xl space-y-5">
+<section class="mx-auto max-w-6xl space-y-6">
 
-  {# En-tête #}
-  <div class="flex items-center justify-between gap-3">
-    <div class="flex items-center gap-3">
-      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand">
-        <span class="material-icons-round text-[24px]">draw</span>
-      </span>
-      <div>
-        <h2 class="text-xl font-semibold leading-tight">{% trans "Pétitions" %}</h2>
-        <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Soutenez les demandes de votre collectif." %}</p>
+  {# ── Hero ── #}
+  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
+    <div class="relative flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
+          <span class="material-icons-round text-[26px]">draw</span>
+        </span>
+        <div class="min-w-0">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
+            <span class="material-icons-round text-[14px]">forum</span>{% trans "Communication" %}
+          </span>
+          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Pétitions" %}</h2>
+          <p class="truncate text-sm text-slate-400">{% trans "Soutenez les demandes de votre collectif." %}</p>
+        </div>
       </div>
-    </div>
-    <a href="{% url 'petition:create' %}"
-       class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
-      <span class="material-icons-round text-[18px]">add</span><span class="hidden sm:inline">{% trans "Nouvelle pétition" %}</span>
-    </a>
-  </div>
-
-  {% if petitions %}
-    <div class="space-y-3">
-      {% for p in petitions %}
-        <a href="{% url 'petition:detail' p.pk %}" class="md-card block p-5 transition hover:-translate-y-0.5 hover:shadow-md">
-          <div class="flex items-start justify-between gap-3">
-            <p class="font-semibold leading-snug">{{ p.title }}</p>
-            {% if p.closed %}
-              <span class="shrink-0 rounded-full bg-slate-200 px-2.5 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-white/10 dark:text-slate-300">{% trans "Clôturée" %}</span>
-            {% elif p.a_signe %}
-              <span class="inline-flex shrink-0 items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-semibold text-green-700 dark:bg-green-500/15 dark:text-green-400">
-                <span class="material-icons-round text-[12px]">check</span>{% trans "Signée" %}
-              </span>
-            {% endif %}
-          </div>
-          {% if p.description %}<p class="mt-1 line-clamp-2 text-sm text-slate-500 dark:text-slate-400">{{ p.description }}</p>{% endif %}
-
-          <div class="mt-3 flex items-center gap-3">
-            <div class="flex items-center gap-1.5 text-sm font-semibold text-brand">
-              <span class="material-icons-round text-[18px]">draw</span>
-              {{ p.nb_signatures }}<span class="font-normal text-slate-400">{% if p.goal %} / {{ p.goal }}{% endif %} {% trans "sig." %}</span>
-            </div>
-            {% with pct=p.progress_pct %}
-              {% if pct is not None %}
-                <div class="h-2 flex-1 overflow-hidden rounded-full bg-black/5 dark:bg-white/10">
-                  <div class="h-full rounded-full bg-brand transition-all" style="width: {{ pct }}%"></div>
-                </div>
-                <span class="text-xs font-medium tabular-nums text-slate-400">{{ pct }}%</span>
-              {% endif %}
-            {% endwith %}
-          </div>
-        </a>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="md-card flex flex-col items-center px-4 py-14 text-center">
-      <span class="mb-3 grid h-16 w-16 place-items-center rounded-2xl bg-brand/10 text-brand">
-        <span class="material-icons-round text-[32px]">draw</span>
-      </span>
-      <p class="font-medium text-slate-600 dark:text-slate-300">{% trans "Aucune pétition pour le moment." %}</p>
-      <p class="mt-1 max-w-xs text-sm text-slate-500 dark:text-slate-400">{% trans "Lancez la première pour fédérer des soutiens autour d'une cause." %}</p>
-      <a href="{% url 'petition:create' %}" class="mt-5 inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90">
-        <span class="material-icons-round text-[18px]">add</span>{% trans "Lancer une pétition" %}
+      <a href="{% url 'petition:create' %}"
+         class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Nouvelle pétition" %}
       </a>
     </div>
-  {% endif %}
+  </div>
+
+  {# ── Section : liste des pétitions ── #}
+  <div class="rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+    <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">draw</span></span>
+      <h3 class="flex-1 text-sm font-semibold">{% trans "Pétitions" %}</h3>
+      {% if petitions %}<span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400">{{ petitions|length }}</span>{% endif %}
+    </div>
+    <div class="p-5">
+      {% if petitions %}
+        <div class="space-y-2">
+          {% for p in petitions %}
+            <a href="{% url 'petition:detail' p.pk %}" class="block rounded-xl border border-slate-200/70 p-4 transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10">
+              <div class="flex items-start justify-between gap-3">
+                <p class="font-semibold leading-snug">{{ p.title }}</p>
+                {% if p.closed %}
+                  <span class="shrink-0 rounded-full bg-slate-200 px-2.5 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-white/10 dark:text-slate-300">{% trans "Clôturée" %}</span>
+                {% elif p.a_signe %}
+                  <span class="inline-flex shrink-0 items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-semibold text-green-700 dark:bg-green-500/15 dark:text-green-400">
+                    <span class="material-icons-round text-[12px]">check</span>{% trans "Signée" %}
+                  </span>
+                {% endif %}
+              </div>
+              {% if p.creator %}<p class="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-xs text-slate-400"><span class="material-icons-round text-[13px]">person</span><span class="font-medium text-slate-500 dark:text-slate-300">{{ p.creator.complet }}</span><span>· {{ p.creator.email }}</span></p>{% endif %}
+              {% if p.description %}<p class="mt-1 line-clamp-2 text-sm text-slate-500 dark:text-slate-400">{{ p.description }}</p>{% endif %}
+
+              <div class="mt-3 flex items-center gap-3">
+                <div class="flex items-center gap-1.5 text-sm font-semibold text-brand">
+                  <span class="material-icons-round text-[18px]">draw</span>
+                  {{ p.nb_signatures }}<span class="font-normal text-slate-400">{% if p.goal %} / {{ p.goal }}{% endif %} {% trans "sig." %}</span>
+                </div>
+                {% with pct=p.progress_pct %}
+                  {% if pct is not None %}
+                    <div class="h-2 flex-1 overflow-hidden rounded-full bg-black/5 dark:bg-white/10">
+                      <div class="h-full rounded-full bg-brand transition-all" style="width: {{ pct }}%"></div>
+                    </div>
+                    <span class="text-xs font-medium tabular-nums text-slate-400">{{ pct }}%</span>
+                  {% endif %}
+                {% endwith %}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="flex flex-col items-center px-4 py-12 text-center">
+          <span class="mb-3 grid h-16 w-16 place-items-center rounded-2xl bg-brand/10 text-brand">
+            <span class="material-icons-round text-[32px]">draw</span>
+          </span>
+          <p class="font-medium text-slate-600 dark:text-slate-300">{% trans "Aucune pétition pour le moment." %}</p>
+          <p class="mt-1 max-w-xs text-sm text-slate-500 dark:text-slate-400">{% trans "Lancez la première pour fédérer des soutiens autour d'une cause." %}</p>
+          <a href="{% url 'petition:create' %}" class="mt-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90">
+            <span class="material-icons-round text-[18px]">add</span>{% trans "Lancer une pétition" %}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 </section>
 {% endblock %}

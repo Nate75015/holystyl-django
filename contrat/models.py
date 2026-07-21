@@ -165,3 +165,48 @@ class Assurance(models.Model):
 
     def __str__(self):
         return self.intitule
+
+
+class Msa(models.Model):
+    """Une cotisation / déclaration MSA (Mutualité Sociale Agricole)."""
+
+    class TypeCotisation(models.TextChoices):
+        AMEXA = "amexa", _("AMEXA — maladie exploitant")
+        RETRAITE = "retraite", _("Retraite (AVI/AVA/RCO)")
+        ATEXA = "atexa", _("ATEXA — accidents du travail")
+        ALLOCATIONS = "allocations", _("Allocations familiales")
+        CSG_CRDS = "csg_crds", _("CSG / CRDS")
+        FORMATION = "formation", _("Formation (VIVEA)")
+        SALARIES = "salaries", _("Cotisations salariés")
+        AUTRE = "autre", _("Autre")
+
+    class Statut(models.TextChoices):
+        A_PAYER = "a_payer", _("À payer")
+        PAYEE = "payee", _("Payée")
+        EN_RETARD = "en_retard", _("En retard")
+        EXONEREE = "exoneree", _("Exonérée")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="cotisations_msa"
+    )
+    intitule = models.CharField(_("intitulé"), max_length=255)
+    type_cotisation = models.CharField(
+        _("type de cotisation"), max_length=15, choices=TypeCotisation.choices, default=TypeCotisation.AMEXA
+    )
+    numero_adherent = models.CharField(_("n° d'adhérent MSA"), max_length=50, blank=True)
+    caisse = models.CharField(_("caisse MSA"), max_length=255, blank=True)
+    montant = models.FloatField(_("montant (€)"), null=True, blank=True)
+    periode = models.CharField(_("période / année"), max_length=50, blank=True)
+    date_echeance = models.DateField(_("échéance"), null=True, blank=True)
+    statut = models.CharField(_("statut"), max_length=12, choices=Statut.choices, default=Statut.A_PAYER)
+    notes = models.TextField(_("notes"), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("cotisation MSA")
+        verbose_name_plural = _("cotisations MSA")
+        ordering = ("-date_echeance", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "statut"])]
+
+    def __str__(self):
+        return self.intitule
