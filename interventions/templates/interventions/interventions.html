@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n l10n %}
 
 {% block content %}
 {{ interventions_json|json_script:"interventions-data" }}
@@ -69,43 +69,18 @@
           <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">bar_chart</span></span>
           <h3 class="flex-1 text-sm font-semibold">{% trans "Par type d'opération" %}</h3>
         </div>
-        <div class="grid grid-cols-2 gap-3 p-5 sm:grid-cols-4">
-          <button type="button" @click="filter = filter === 'irrigation' ? 'all' : 'irrigation'"
-                  class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
-                  :class="filter === 'irrigation' ? 'ring-2 ring-blue-400' : ''">
-            <div class="flex items-center justify-between">
-              <span class="grid h-9 w-9 place-items-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400"><span class="material-icons-round text-[20px]">water_drop</span></span>
-              <span class="text-2xl font-bold">{{ counts.irrigation }}</span>
-            </div>
-            <p class="mt-2 text-sm font-medium">{% trans "Irrigation" %}</p>
-          </button>
-          <button type="button" @click="filter = filter === 'traitement' ? 'all' : 'traitement'"
-                  class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
-                  :class="filter === 'traitement' ? 'ring-2 ring-purple-400' : ''">
-            <div class="flex items-center justify-between">
-              <span class="grid h-9 w-9 place-items-center rounded-full bg-purple-100 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400"><span class="material-icons-round text-[20px]">science</span></span>
-              <span class="text-2xl font-bold">{{ counts.traitement }}</span>
-            </div>
-            <p class="mt-2 text-sm font-medium">{% trans "Traitement" %}</p>
-          </button>
-          <button type="button" @click="filter = filter === 'fertilisation' ? 'all' : 'fertilisation'"
-                  class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
-                  :class="filter === 'fertilisation' ? 'ring-2 ring-emerald-400' : ''">
-            <div class="flex items-center justify-between">
-              <span class="grid h-9 w-9 place-items-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400"><span class="material-icons-round text-[20px]">eco</span></span>
-              <span class="text-2xl font-bold">{{ counts.fertilisation }}</span>
-            </div>
-            <p class="mt-2 text-sm font-medium">{% trans "Fertilisation" %}</p>
-          </button>
-          <button type="button" @click="filter = filter === 'recolte' ? 'all' : 'recolte'"
-                  class="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
-                  :class="filter === 'recolte' ? 'ring-2 ring-amber-400' : ''">
-            <div class="flex items-center justify-between">
-              <span class="grid h-9 w-9 place-items-center rounded-full bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400"><span class="material-icons-round text-[20px]">agriculture</span></span>
-              <span class="text-2xl font-bold">{{ counts.recolte }}</span>
-            </div>
-            <p class="mt-2 text-sm font-medium">{% trans "Récolte" %}</p>
-          </button>
+        <div class="flex gap-3 overflow-x-auto p-5 [scrollbar-width:thin]">
+          {% for t in type_stats %}
+            <button type="button" @click="filter = filter === '{{ t.key }}' ? 'all' : '{{ t.key }}'"
+                    class="w-40 shrink-0 rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:shadow dark:border-white/10 dark:bg-white/5"
+                    :class="filter === '{{ t.key }}' ? 'ring-2 {{ t.ring }}' : ''">
+              <div class="flex items-center justify-between">
+                <span class="grid h-9 w-9 place-items-center rounded-full {{ t.chip }}"><span class="material-icons-round text-[20px]">{{ t.icon }}</span></span>
+                <span class="text-2xl font-bold">{{ t.count }}</span>
+              </div>
+              <p class="mt-2 truncate text-sm font-medium">{{ t.label }}</p>
+            </button>
+          {% endfor %}
         </div>
       </div>
 
@@ -128,7 +103,7 @@
                 <span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold" :class="badge(r.type)" x-text="r.typeLabel"></span>
                 <div class="min-w-0 flex-1">
                   <p class="truncate font-medium" x-text="r.title"></p>
-                  <p class="truncate text-xs text-slate-400"><span x-text="r.date"></span><template x-if="r.parcelle"> · <span x-text="r.parcelle"></span></template></p>
+                  <p class="truncate text-xs text-slate-400"><span x-text="r.date"></span><template x-if="r.parcelle"> · <span x-text="r.parcelle"></span></template><template x-if="r.assignee"> · <span class="material-icons-round align-middle text-[13px]">person</span> <span x-text="r.assignee"></span></template></p>
                 </div>
                 <span class="shrink-0 text-xs text-slate-400" x-text="r.status"></span>
               </div>
@@ -157,7 +132,7 @@
 
   {# Modal — Enregistrer une intervention #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
+       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
     <div @click.self="modal = false" class="flex max-h-full w-full max-w-lg items-start justify-center">
       <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
         <div class="mb-4 flex items-center gap-3">
@@ -168,13 +143,25 @@
 
         <form method="post" action="{% url 'interventions:intervention_create' %}" class="space-y-3">
           {% csrf_token %}
-          <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span class="text-red-500">*</span></label>
-            <select name="parcelle" required
-                    class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
-              <option value="">{% trans "Sélectionner une parcelle" %}</option>
-              {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
-            </select>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span class="text-red-500">*</span></label>
+              <select name="parcelle" required
+                      @change="$refs.surface.value = ($event.target.selectedOptions[0]?.dataset.area) || ''"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                <option value="">{% trans "Sélectionner une parcelle" %}</option>
+                {% for p in parcelles %}<option value="{{ p.pk }}" data-area="{{ p.area|default_if_none:''|unlocalize }}">{{ p.name }}{% if p.area %} · {{ p.area }} ha{% endif %}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium">{% trans "Assigné à" %}</label>
+              <select name="assigned_to"
+                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                <option value="">{% trans "Personne" %}</option>
+                {% for m in members %}<option value="{{ m.pk }}">{{ m.name }}</option>{% endfor %}
+              </select>
+              <p class="mt-1 text-xs text-slate-400">{% trans "Crée une tâche liée dans « Tâches »." %}</p>
+            </div>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
@@ -198,7 +185,7 @@
             </div>
             <div>
               <label class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
-              <input name="surface" type="number" step="0.1" min="0" inputmode="decimal" placeholder="{% trans 'ex: 4.2' %}"
+              <input name="surface" x-ref="surface" type="number" step="0.1" min="0" inputmode="decimal" placeholder="{% trans 'ex: 4.2' %}"
                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
             </div>
           </div>

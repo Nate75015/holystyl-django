@@ -1,4 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+// Palette des pastilles par type d'opération (classes fournies côté vue, donc
+// non détectées par le scanner → on les liste dans la safelist).
+const _typePalette = [
+  'blue', 'purple', 'emerald', 'amber', 'green', 'orange', 'rose', 'slate',
+  'lime', 'teal', 'cyan', 'fuchsia', 'gray', 'sky', 'stone',
+];
+const _typeSafelist = _typePalette.flatMap((c) => [
+  `bg-${c}-100`, `text-${c}-600`, `dark:bg-${c}-500/15`, `dark:text-${c}-400`, `ring-${c}-400`,
+]);
+
 module.exports = {
   darkMode: 'class',
   content: [
@@ -6,6 +16,7 @@ module.exports = {
     './**/templates/**/*.html',
     './static/js/**/*.js',
   ],
+  safelist: _typeSafelist,
   theme: {
     extend: {
       colors: {

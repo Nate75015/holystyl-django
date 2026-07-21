@@ -96,7 +96,7 @@
 
   {# Modal — confirmation de suppression #}
   <div x-show="del" x-cloak x-transition.opacity @keydown.escape.window="del = false"
-       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
     <div @click.self="del = false" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
       <div class="flex items-start gap-3">
         <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400">

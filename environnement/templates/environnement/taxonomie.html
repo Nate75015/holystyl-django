@@ -152,7 +152,7 @@
 
   {# Modal : nouvelle fiche #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4">
+       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
     <div @click.self="modal = false" class="flex max-h-full w-full max-w-2xl items-start justify-center">
       <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
         <div class="mb-4 flex items-center justify-between">
@@ -237,7 +237,7 @@
 
   {# Modal : confirmation de suppression #}
   <div x-show="del.open" x-cloak x-transition.opacity @keydown.escape.window="del.open = false"
-       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
     <div @click.self="del.open = false" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
       <div class="flex items-start gap-3">
         <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400"><span class="material-icons-round">delete_outline</span></span>
