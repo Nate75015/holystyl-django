@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import Parcelle
 
@@ -6,11 +7,24 @@ from .models import Parcelle
 class ParcelleForm(forms.ModelForm):
     """Formulaire de création/édition de parcelle (wizard multi-étapes côté UI)."""
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # « Culture » = liste déroulante alimentée par la base de cultures (/cultures/).
+        from agronomie.models import CultureKc
+
+        noms = list(CultureKc.objects.values_list("nom", flat=True).distinct())
+        current = (getattr(self.instance, "culture", "") or "").strip()
+        if current and current not in noms:  # ne pas perdre une valeur historique hors base
+            noms.insert(0, current)
+        choices = [("", _("— Choisir une culture —"))] + [(n, n) for n in noms]
+        self.fields["culture"].widget = forms.Select(choices=choices)
+        self.fields["culture"].required = False
+
     class Meta:
         model = Parcelle
         fields = [
             # Étape 1 — identité & géométrie
-            "name", "area", "latitude", "longitude", "boundaries",
+            "name", "area", "surface_utile", "latitude", "longitude", "boundaries",
             # Étape 2 — culture
             "culture", "variety", "kc_value", "tree_age_years",
             "planting_date", "plant_density_per_ha",

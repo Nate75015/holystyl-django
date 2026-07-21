@@ -161,6 +161,25 @@ def parcelle_detail(request, pk):
     )
 
 
+def _bounds_center(geom):
+    """Centre (lat, lng) de la bounding-box d'une géométrie GeoJSON, ou None."""
+    if not isinstance(geom, dict):
+        return None
+    lats, lngs = [], []
+    stack = [geom.get("coordinates")]
+    while stack:
+        item = stack.pop()
+        if isinstance(item, (list, tuple)):
+            if len(item) >= 2 and all(isinstance(x, (int, float)) for x in item[:2]):
+                lngs.append(item[0])
+                lats.append(item[1])
+            else:
+                stack.extend(item)
+    if not lats:
+        return None
+    return round((min(lats) + max(lats)) / 2, 6), round((min(lngs) + max(lngs)) / 2, 6)
+
+
 @login_required
 def parcelle_edit(request, pk):
     exploitation = _exploitation_or_redirect(request)
@@ -172,6 +191,12 @@ def parcelle_edit(request, pk):
             messages.success(request, _("Parcelle mise à jour."))
             return redirect("parcelles:detail", pk=parcelle.pk)
     else:
+        # Récupère lat/lng depuis le polygone cadastre si elles manquent.
+        if parcelle.latitude is None and parcelle.longitude is None and parcelle.boundaries:
+            center = _bounds_center(parcelle.boundaries)
+            if center:
+                parcelle.latitude, parcelle.longitude = center
+                parcelle.save(update_fields=["latitude", "longitude"])
         form = ParcelleForm(instance=parcelle)
     return render(
         request,

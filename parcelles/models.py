@@ -30,6 +30,10 @@ class Parcelle(TimeStampedModel):
     )
     name = models.CharField(_("nom"), max_length=255)
     area = models.FloatField(_("surface (ha)"), null=True, blank=True)
+    surface_utile = models.BooleanField(
+        _("surface agricole utile (SAU)"), default=True,
+        help_text=_("Cette surface compte-t-elle dans la SAU de l'exploitation ?"),
+    )
 
     # Géométrie
     latitude = models.FloatField(null=True, blank=True)

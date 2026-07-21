@@ -1,5 +1,6 @@
 """Variables injectées dans tous les templates (navigation, branding)."""
 
+import os
 import unicodedata
 
 from django.conf import settings
@@ -11,6 +12,20 @@ def _sort_key(label):
     text = unicodedata.normalize("NFKD", str(label))
     text = "".join(c for c in text if not unicodedata.combining(c))
     return text.casefold()
+
+
+def _css_version():
+    """En dev, mtime de app.css → cache-buster pour éviter le hard-refresh.
+    En prod (DEBUG=False), on renvoie "" : le manifest hashé gère déjà le cache."""
+    if not settings.DEBUG:
+        return ""
+    for base in settings.STATICFILES_DIRS or []:
+        path = os.path.join(base, "css", "app.css")
+        try:
+            return str(int(os.path.getmtime(path)))
+        except OSError:
+            continue
+    return ""
 
 
 def layout(request):
@@ -98,7 +113,7 @@ def layout(request):
             "items": [
                 {"label": _("Contrats"), "url_name": "contrat:contrats", "icon": "description"},
                 {"label": _("Baux"), "url_name": "contrat:baux", "icon": "agriculture"},
-                {"label": _("Acte notarié"), "url_name": "contrat:actes", "icon": "history_edu"},
+                {"label": _("Patrimoine"), "url_name": "contrat:actes", "icon": "history_edu"},
                 {"label": _("Assurance"), "url_name": "contrat:assurances", "icon": "shield"},
             ],
         },
@@ -108,7 +123,7 @@ def layout(request):
                 {"label": _("Mon exploitation"), "url_name": "exploitations:settings", "icon": "home_work"},
                 {"label": _("Identités"), "url_name": "exploitations:section_identite", "icon": "badge"},
                 {"label": _("Juridique"), "url_name": "exploitations:section_juridique", "icon": "gavel"},
-                {"label": _("Contact"), "url_name": "exploitations:section_contact", "icon": "call"},
+                {"label": _("Contact"), "url_name": "exploitations:contact", "icon": "call"},
                 {"label": _("Localisation"), "url_name": "exploitations:section_localisation", "icon": "place"},
                 {"label": _("Caractéristiques agricoles"), "url_name": "exploitations:section_caracteristiques", "icon": "agriculture"},
                 {"label": _("Eau"), "url_name": "exploitations:section_eau", "icon": "water_drop"},
@@ -164,4 +179,5 @@ def layout(request):
         "active_url_name": active_url_name,
         "default_section": default_section,
         "unread_notifications": unread_notifications,
+        "css_version": _css_version(),
     }

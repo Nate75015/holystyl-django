@@ -9,8 +9,19 @@ from django.utils.translation import gettext_lazy as _
 from core.models import TimeStampedModel
 
 
+def expand_months(start, end):
+    """Liste des mois (1–12) couverts par une période, gère le passage d'année."""
+    if not start or not end:
+        return []
+    if start <= end:
+        return list(range(start, end + 1))
+    return list(range(start, 13)) + list(range(1, end + 1))
+
+
 class CultureKc(TimeStampedModel):
-    """Coefficients culturaux (FAO-56) par culture et stade."""
+    """Culture (espèce) : coefficients culturaux FAO-56 + calendrier général.
+    Les fiches détaillées (photo, description, caractéristiques…) sont portées
+    par ses variétés (modèle `Variete`)."""
 
     class Categorie(models.TextChoices):
         CEREALES = "cereales", _("Céréales")
@@ -32,6 +43,12 @@ class CultureKc(TimeStampedModel):
     duration_dev = models.IntegerField(default=40)
     duration_mid = models.IntegerField(default=50)
     duration_end = models.IntegerField(default=30)
+    # Calendrier : périodes de semis et de récolte (mois 1–12, bornes incluses ;
+    # si début > fin, la période chevauche l'hiver, ex. 10→3).
+    semis_debut = models.PositiveSmallIntegerField(_("semis — mois de début"), null=True, blank=True)
+    semis_fin = models.PositiveSmallIntegerField(_("semis — mois de fin"), null=True, blank=True)
+    recolte_debut = models.PositiveSmallIntegerField(_("récolte — mois de début"), null=True, blank=True)
+    recolte_fin = models.PositiveSmallIntegerField(_("récolte — mois de fin"), null=True, blank=True)
     source = models.CharField(max_length=100, default="FAO-56")
     notes = models.TextField(blank=True)
 
@@ -42,6 +59,90 @@ class CultureKc(TimeStampedModel):
 
     def __str__(self):
         return self.nom
+
+    # Rétrocompat : appel statique conservé.
+    expand_months = staticmethod(expand_months)
+
+    @property
+    def semis_mois(self):
+        return expand_months(self.semis_debut, self.semis_fin)
+
+    @property
+    def recolte_mois(self):
+        return expand_months(self.recolte_debut, self.recolte_fin)
+
+
+class Variete(TimeStampedModel):
+    """Fiche variété détaillée rattachée à une culture (type catalogue de semences)."""
+
+    class Exposition(models.TextChoices):
+        PLEIN_SOLEIL = "plein_soleil", _("Plein soleil")
+        MI_OMBRE = "mi_ombre", _("Mi-ombre")
+        OMBRE = "ombre", _("Ombre")
+
+    class Arrosage(models.TextChoices):
+        FAIBLE = "faible", _("Faible")
+        MOYEN = "moyen", _("Moyen")
+        ELEVE = "eleve", _("Élevé")
+
+    culture = models.ForeignKey(CultureKc, on_delete=models.CASCADE, related_name="varietes")
+    nom = models.CharField(_("variété"), max_length=255)
+    nom_scientifique = models.CharField(_("nom scientifique"), max_length=255, blank=True)
+    photo = models.ImageField(_("photo"), upload_to="cultures/", null=True, blank=True)
+    description = models.TextField(_("description"), blank=True)
+    note = models.FloatField(_("note (/5)"), null=True, blank=True)
+    nb_avis = models.PositiveIntegerField(_("nombre d'avis"), default=0)
+
+    # Calendrier propre à la variété (facultatif ; sinon celui de la culture)
+    semis_debut = models.PositiveSmallIntegerField(null=True, blank=True)
+    semis_fin = models.PositiveSmallIntegerField(null=True, blank=True)
+    recolte_debut = models.PositiveSmallIntegerField(null=True, blank=True)
+    recolte_fin = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    # Conditions de culture
+    exposition = models.CharField(_("exposition"), max_length=15, choices=Exposition.choices, blank=True)
+    arrosage = models.CharField(_("arrosage"), max_length=15, choices=Arrosage.choices, blank=True)
+    nature_sol = models.CharField(_("nature du sol"), max_length=255, blank=True)
+    sol_detail = models.CharField(_("sol (détail)"), max_length=255, blank=True)
+    mode_culture = models.CharField(_("mode de culture"), max_length=255, blank=True)
+
+    # Conseils
+    conseil_semis = models.TextField(_("conseil de semis"), blank=True)
+    conseil_culture = models.TextField(_("conseil de culture"), blank=True)
+
+    # Caractéristiques
+    poids = models.CharField(_("poids"), max_length=100, blank=True)
+    contenance_sachet = models.CharField(_("contenance du sachet"), max_length=100, blank=True)
+    forme = models.CharField(_("forme"), max_length=100, blank=True)
+    texture_fruit = models.CharField(_("texture"), max_length=100, blank=True)
+    type_croissance = models.CharField(_("type de croissance"), max_length=100, blank=True)
+    couleur = models.CharField(_("couleur"), max_length=100, blank=True)
+    feuillage = models.CharField(_("feuillage"), max_length=100, blank=True)
+    type_semis = models.CharField(_("semis"), max_length=100, blank=True)
+
+    # Origine
+    origine = models.CharField(_("origine"), max_length=255, blank=True)
+    origine_texte = models.TextField(_("origine (historique)"), blank=True)
+    source = models.CharField(max_length=100, blank=True)
+
+    class Meta:
+        verbose_name = _("variété")
+        verbose_name_plural = _("variétés")
+        ordering = ("nom",)
+        indexes = [models.Index(fields=["culture"])]
+
+    def __str__(self):
+        return self.nom
+
+    @property
+    def semis_mois(self):
+        return expand_months(self.semis_debut or self.culture.semis_debut,
+                             self.semis_fin or self.culture.semis_fin)
+
+    @property
+    def recolte_mois(self):
+        return expand_months(self.recolte_debut or self.culture.recolte_debut,
+                             self.recolte_fin or self.culture.recolte_fin)
 
 
 class TypeSol(TimeStampedModel):

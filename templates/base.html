@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}{% if css_version %}?v={{ css_version }}{% endif %}">
 
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
   <script src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js" defer></script>
@@ -32,7 +32,9 @@
 </head>
 <body class="min-h-screen">
 {% if user.is_authenticated %}
-  <div class="flex min-h-screen" x-data="{
+  <div class="flex min-h-screen"
+       :style="'--nav-offset:' + (navOpen ? '464px' : '284px')"
+       x-data="{
          nav: '{{ default_section }}',
          navOpen: localStorage.getItem('navOpen') !== '0',
          _t: null,
