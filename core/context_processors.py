@@ -117,6 +117,7 @@ def layout(request):
                 {"label": _("Baux"), "url_name": "contrat:baux", "icon": "agriculture"},
                 {"label": _("Patrimoine"), "url_name": "contrat:actes", "icon": "history_edu"},
                 {"label": _("Assurance"), "url_name": "contrat:assurances", "icon": "shield"},
+                {"label": _("Mutualité Sociale Agricole"), "url_name": "contrat:msa", "icon": "health_and_safety"},
             ],
         },
         {

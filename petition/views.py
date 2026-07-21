@@ -19,6 +19,21 @@ def _user_exploitations(user):
     return Exploitation.objects.filter(Q(owner=user) | Q(team_members__user=user)).distinct()
 
 
+def _creator_info(user):
+    """Nom + prénom (depuis la section Identité de l'exploitation) + email du créateur."""
+    if user is None:
+        return None
+    exp = Exploitation.objects.filter(owner=user).first()
+    nom = (exp.name if exp and exp.name else "").strip()
+    prenom = (exp.prenom if exp and exp.prenom else "").strip()
+    complet = " ".join(filter(None, [prenom, nom])) or user.display_name
+    base = complet or user.email
+    return {
+        "nom": nom, "prenom": prenom, "email": user.email,
+        "complet": complet, "initiale": base[:1].upper(),
+    }
+
+
 def _visible_petitions(user):
     expl_ids = list(_user_exploitations(user).values_list("id", flat=True))
     # Pétitions de ses exploitations + celles qu'il a créées (sans exploitation)
@@ -27,10 +42,11 @@ def _visible_petitions(user):
 
 @login_required
 def liste(request):
-    petitions = list(_visible_petitions(request.user).prefetch_related("signatures"))
+    petitions = list(_visible_petitions(request.user).prefetch_related("signatures").select_related("created_by"))
     for p in petitions:
         p.nb_signatures = p.signature_count()
         p.a_signe = p.user_signed(request.user)
+        p.creator = _creator_info(p.created_by)
     return render(request, "petition/liste.html", {"petitions": petitions, "page_title": _("Pétitions")})
 
 
@@ -69,6 +85,7 @@ def detail(request, pk):
     petition = get_object_or_404(_visible_petitions(request.user), pk=pk)
     return render(request, "petition/detail.html", {
         "petition": petition,
+        "creator": _creator_info(petition.created_by),
         "a_signe": petition.user_signed(request.user),
         "signatures": petition.signatures.select_related("user")[:50],
         "page_title": petition.title,
@@ -140,3 +157,42 @@ def cloturer(request, pk):
     petition.closed = not petition.closed
     petition.save(update_fields=["closed", "updated_at"])
     return redirect("petition:detail", pk=petition.pk)
+
+
+@login_required
+def edit(request, pk):
+    """Modifie une pétition (créateur uniquement)."""
+    petition = get_object_or_404(Petition, pk=pk, created_by=request.user)
+    if request.method == "POST":
+        title = (request.POST.get("title") or "").strip()
+        description = (request.POST.get("description") or "").strip()
+        goal_raw = (request.POST.get("goal") or "").strip()
+        errors = []
+        if not title:
+            errors.append(_("Le titre est obligatoire."))
+        if errors:
+            return render(request, "petition/edit.html", {
+                "errors": errors, "petition": petition, "page_title": _("Modifier la pétition"),
+                "form": {"title": title, "description": description, "goal": goal_raw},
+            })
+        petition.title = title
+        petition.description = description
+        petition.goal = int(goal_raw) if goal_raw.isdigit() else 0
+        petition.save(update_fields=["title", "description", "goal", "updated_at"])
+        return redirect("petition:detail", pk=petition.pk)
+
+    return render(request, "petition/edit.html", {
+        "petition": petition,
+        "form": {"title": petition.title, "description": petition.description,
+                 "goal": petition.goal or ""},
+        "page_title": _("Modifier la pétition"),
+    })
+
+
+@login_required
+@require_POST
+def delete(request, pk):
+    """Supprime une pétition (créateur uniquement)."""
+    petition = get_object_or_404(Petition, pk=pk, created_by=request.user)
+    petition.delete()
+    return redirect("petition:liste")

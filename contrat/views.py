@@ -10,7 +10,7 @@ from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
 
-from .models import ActeNotarie, Assurance, Bail, Contrat
+from .models import ActeNotarie, Assurance, Bail, Contrat, Msa
 
 
 def _to_float(value, default=None):
@@ -226,3 +226,54 @@ def assurance_delete(request, pk):
     assurance = get_object_or_404(Assurance, pk=pk, exploitation=exploitation)
     assurance.delete()
     return redirect("contrat:assurances")
+
+
+# ── MSA (Mutualité Sociale Agricole) ────────────────────────────────
+
+@login_required
+def msa(request):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    base = Msa.objects.filter(exploitation=exploitation) if exploitation else Msa.objects.none()
+
+    total = base.aggregate(s=Sum("montant"))["s"] or 0
+    du = base.filter(statut__in=[Msa.Statut.A_PAYER, Msa.Statut.EN_RETARD]).aggregate(s=Sum("montant"))["s"] or 0
+
+    return render(request, "contrat/msa.html", {
+        "cotisations": base,
+        "kpi_count": base.count(),
+        "kpi_a_payer": base.filter(statut__in=[Msa.Statut.A_PAYER, Msa.Statut.EN_RETARD]).count(),
+        "kpi_total": round(total),
+        "kpi_du": round(du),
+        "types": Msa.TypeCotisation.choices,
+        "statuts": Msa.Statut.choices,
+        "page_title": _("MSA"),
+    })
+
+
+@login_required
+@require_POST
+def msa_create(request):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    intitule = (request.POST.get("intitule") or "").strip()
+    if exploitation and intitule:
+        Msa.objects.create(
+            exploitation=exploitation,
+            intitule=intitule,
+            type_cotisation=request.POST.get("type_cotisation") or Msa.TypeCotisation.AMEXA,
+            numero_adherent=(request.POST.get("numero_adherent") or "").strip(),
+            caisse=(request.POST.get("caisse") or "").strip(),
+            montant=_to_float(request.POST.get("montant")),
+            periode=(request.POST.get("periode") or "").strip(),
+            date_echeance=_to_date(request.POST.get("date_echeance")),
+            statut=request.POST.get("statut") or Msa.Statut.A_PAYER,
+            notes=(request.POST.get("notes") or "").strip(),
+        )
+    return redirect("contrat:msa")
+
+
+@login_required
+@require_POST
+def msa_delete(request, pk):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    get_object_or_404(Msa, pk=pk, exploitation=exploitation).delete()
+    return redirect("contrat:msa")
