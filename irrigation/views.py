@@ -14,8 +14,10 @@ from meteo.models import VilleMeteo
 from meteo.services import fetch_weather
 from parcelles.models import Parcelle
 
-from .models import BassinageEvent, IrrigationProgram, IrrigationSession, IrrigationZone, PumpingStation
-from .services import DEFAULT_KC
+from .models import (
+    BassinageEvent, DtiScore, IrrigationProgram, IrrigationSession, IrrigationZone, PumpingStation,
+)
+from .services import DEFAULT_KC, calculate_dti_score
 
 #: Tarif énergie moyen (€/kWh) pour estimer le coût quand la station n'en fournit pas.
 _DEFAULT_ENERGY_TARIFF = 0.15
@@ -125,6 +127,72 @@ def _int(value, default=None):
         return int(float(str(value).replace(",", ".").strip()))
     except (TypeError, ValueError):
         return default
+
+
+# ── DTI — Diagnostic Technique d'Irrigation ─────────────────────────
+
+_DTI_COLORS = {"A": "#16a34a", "B": "#65a30d", "C": "#f59e0b", "D": "#ef4444"}
+_DTI_LABELS = {
+    "A": _("Excellent"), "B": _("Bon"), "C": _("À optimiser"), "D": _("Critique"),
+}
+
+
+@login_required
+def dti(request):
+    """Diagnostic technique d'irrigation : dernier score, historique, calculateur."""
+    exploitation = _exploitation(request)
+    scores = (
+        DtiScore.objects.filter(exploitation=exploitation).select_related("parcelle")
+        if exploitation else DtiScore.objects.none()
+    )
+    latest = scores.first()
+    parcelles = Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none()
+    history = [
+        {
+            "date": s.calculated_at.strftime("%d/%m/%Y %H:%M"),
+            "score": s.score,
+            "numeric": round(s.score_numeric),
+            "kwh": s.kwh_per_m3,
+            "uniformity": s.uniformity_coeff,
+            "parcelle": s.parcelle.name if s.parcelle else "",
+            "color": _DTI_COLORS.get(s.score, "#94a3b8"),
+        }
+        for s in scores[:20]
+    ]
+    return render(request, "irrigation/dti.html", {
+        "latest": latest,
+        "latest_label": _DTI_LABELS.get(latest.score, "") if latest else "",
+        "latest_color": _DTI_COLORS.get(latest.score, "#94a3b8") if latest else "#94a3b8",
+        "history": history,
+        "count": scores.count(),
+        "parcelles": parcelles,
+        "page_title": _("DTI — Diagnostic technique d'irrigation"),
+    })
+
+
+@login_required
+@require_POST
+def dti_calculate(request):
+    """Calcule et persiste un score DTI depuis le formulaire."""
+    exploitation = _exploitation(request)
+    kwh = _num(request.POST.get("kwh_per_m3"))
+    if exploitation and kwh is not None:
+        uniformity = _num(request.POST.get("uniformity"))
+        uniformity = 90.0 if uniformity is None else uniformity
+        result = calculate_dti_score(kwh, uniformity)
+        DtiScore.objects.create(
+            exploitation=exploitation,
+            parcelle=Parcelle.objects.filter(pk=request.POST.get("parcelle") or None, exploitation=exploitation).first(),
+            score=result.score,
+            score_numeric=result.numeric,
+            kwh_per_m3=kwh,
+            flow_rate_m3h=_num(request.POST.get("flow_rate_m3h")),
+            pressure_bar=_num(request.POST.get("pressure_bar")),
+            uniformity_coeff=uniformity,
+            recommendations=result.recommendations,
+        )
+        messages.success(request, _("Diagnostic DTI enregistré."))
+    return redirect("irrigation:dti")
 
 
 @login_required

@@ -141,7 +141,7 @@ def actes_notaries(request):
         "kpi_count": base.count(),
         "kpi_total": round(total),
         "types": ActeNotarie.TypeActe.choices,
-        "page_title": _("Actes notariés"),
+        "page_title": _("Patrimoine"),
     })
 
 

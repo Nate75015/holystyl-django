@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "environnement",
     "finances",
     "contrat",
+    "reseaux",
     "storage",
     "public",
     "administration",

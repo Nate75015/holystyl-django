@@ -5,7 +5,8 @@
 
 {% block content %}
 <section class="flex h-[calc(100vh-3.25rem)] overflow-hidden border-t border-slate-200 dark:border-white/10"
-         x-data="{ modal: false, tab: 'direct' }">
+         x-data="{ modal: false, tab: 'direct', confirmOpen: false, confirmMsg: '', _issue: null }"
+         @mc-confirm.window="confirmMsg = $event.detail.msg; _issue = $event.detail.issue; confirmOpen = true">
 
   {% include "messagerie/_sidebar.html" with sidebar_mobile=False %}
 
@@ -71,14 +72,50 @@
   </div>
 
   {% include "messagerie/_new_modal.html" %}
+
+  {# Confirmation custom (remplace le popup natif du navigateur) #}
+  <div x-show="confirmOpen" x-cloak x-transition.opacity @keydown.escape.window="confirmOpen = false"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="confirmOpen = false" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+      <div class="flex items-start gap-3">
+        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400"><span class="material-icons-round">delete_outline</span></span>
+        <div class="min-w-0">
+          <h3 class="text-base font-semibold" x-text="confirmMsg"></h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Cette action est irréversible." %}</p>
+        </div>
+      </div>
+      <div class="mt-5 flex justify-end gap-2">
+        <button type="button" @click="confirmOpen = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+        <button type="button" @click="confirmOpen = false; _issue && _issue()"
+                class="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700">
+          <span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
   (function () {
+    // Jeton CSRF sur toutes les requêtes htmx (les boutons hors <form> en ont besoin).
+    document.body.addEventListener('htmx:configRequest', function (e) {
+      e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    });
+
     function scrollThread() { var t = document.getElementById('thread'); if (t) t.scrollTop = t.scrollHeight; }
     document.body.addEventListener('htmx:afterSwap', function (e) { if (e.target && e.target.id === 'thread') scrollThread(); });
     window.addEventListener('load', scrollThread);
     setTimeout(scrollThread, 100);
+
+    // Confirmation custom : intercepte les requêtes htmx portant data-confirm
+    // et affiche notre modale au lieu du popup natif.
+    document.body.addEventListener('htmx:confirm', function (e) {
+      var msg = e.detail.elt.getAttribute('data-confirm');
+      if (!msg) return;               // pas de data-confirm → comportement normal
+      e.preventDefault();             // suspend la requête
+      var proceed = function () { e.detail.issueRequest(true); };
+      window.dispatchEvent(new CustomEvent('mc-confirm', { detail: { msg: msg, issue: proceed } }));
+    });
   })();
 
   function renderPreview() {

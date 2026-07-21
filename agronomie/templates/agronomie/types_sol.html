@@ -149,7 +149,7 @@
 
   {# Modal — Confirmation de suppression #}
   <div x-show="del" x-cloak x-transition.opacity @keydown.escape.window="del = null"
-       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
     <div @click.self="del = null" class="w-full max-w-sm">
       <div class="rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
         <div class="flex items-start gap-3">
@@ -176,7 +176,7 @@
 
   {# Modal — Nouveau type de sol #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
+       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
     <div @click.self="modal = false" class="flex max-h-full w-full max-w-lg items-start justify-center">
       <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
         <div class="mb-4 flex items-center justify-between">

@@ -10,22 +10,32 @@
 
   <div class="flex-1 overflow-y-auto">
     {% for c in conversations %}
-      <a href="{% url 'messagerie:detail' c.pk %}"
-         class="flex items-center gap-3 px-4 py-3 transition hover:bg-black/5 dark:hover:bg-white/5 {% if c.pk == current_pk %}bg-black/5 dark:bg-white/10{% endif %}">
-        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-bold text-white {% if c.is_group %}bg-emerald-700{% else %}bg-slate-800{% endif %}">
-          {% if c.is_group %}<span class="material-icons-round text-[20px]">groups</span>{% else %}{{ c.title|slice:":2"|upper }}{% endif %}
-        </span>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-baseline justify-between gap-2">
-            <p class="truncate text-sm {% if c.unread %}font-bold{% else %}font-semibold{% endif %}">{{ c.title }}</p>
-            <span class="shrink-0 text-[11px] text-slate-400">{{ c.updated_at|date:"d/m" }}</span>
+      <div class="group relative flex items-center gap-3 px-4 py-3 transition hover:bg-black/5 dark:hover:bg-white/5 {% if c.pk == current_pk %}bg-black/5 dark:bg-white/10{% endif %}">
+        <a href="{% url 'messagerie:detail' c.pk %}" class="flex min-w-0 flex-1 items-center gap-3">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-bold text-white {% if c.is_group %}bg-emerald-700{% else %}bg-slate-800{% endif %}">
+            {% if c.is_group %}<span class="material-icons-round text-[20px]">groups</span>{% else %}{{ c.title|slice:":2"|upper }}{% endif %}
+          </span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-baseline justify-between gap-2">
+              <p class="truncate text-sm {% if c.unread %}font-bold{% else %}font-semibold{% endif %}">{{ c.title }}</p>
+              <span class="shrink-0 text-[11px] {% if c.unread %}font-semibold text-brand{% else %}text-slate-400{% endif %}">{{ c.time_label }}</span>
+            </div>
+            <p class="truncate text-xs text-slate-400">{{ c.preview|default:_("Aucun message") }}</p>
           </div>
-          <p class="truncate text-xs text-slate-400">{{ c.preview|default:_("Aucun message") }}</p>
-        </div>
-        {% if c.unread %}
-          <span class="grid min-h-[20px] min-w-[20px] shrink-0 place-items-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">{{ c.unread }}</span>
-        {% endif %}
-      </a>
+          {% if c.unread %}
+            <span class="grid min-h-[20px] min-w-[20px] shrink-0 place-items-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">{{ c.unread }}</span>
+          {% endif %}
+        </a>
+        <form method="post" action="{% url 'messagerie:conversation_delete' c.pk %}"
+              onsubmit="return confirm('{% trans "Supprimer cette conversation ?" %}')"
+              class="absolute right-2 top-1/2 -translate-y-1/2 leading-none opacity-0 transition group-hover:opacity-100">
+          {% csrf_token %}
+          <button type="submit" title="{% trans 'Supprimer la conversation' %}"
+                  class="grid h-8 w-8 place-items-center rounded-full bg-white/80 text-slate-400 shadow-sm backdrop-blur transition hover:text-red-500 dark:bg-[#122230]/80 dark:hover:text-red-400">
+            <span class="material-icons-round text-[18px]">delete_outline</span>
+          </button>
+        </form>
+      </div>
     {% empty %}
       <div class="px-4 py-8 text-center">
         <p class="text-sm text-slate-400">{% trans "Aucune conversation pour le moment." %}</p>

@@ -24,6 +24,13 @@
         {% include "parcelles/_field.html" with field=form.area %}
         {% include "parcelles/_field.html" with field=form.official_area_ha %}
       </div>
+      <label class="flex items-start gap-3 rounded-xl border border-slate-200 p-3 dark:border-white/10" for="{{ form.surface_utile.id_for_label }}">
+        <input type="checkbox" name="{{ form.surface_utile.name }}" id="{{ form.surface_utile.id_for_label }}" class="mt-0.5 h-4 w-4 accent-brand"{% if form.surface_utile.value %} checked{% endif %}>
+        <span>
+          <span class="block text-sm font-medium">{{ form.surface_utile.label }}</span>
+          <span class="block text-xs text-slate-400">{{ form.surface_utile.help_text }}</span>
+        </span>
+      </label>
       <div class="grid grid-cols-2 gap-4">
         {% include "parcelles/_field.html" with field=form.latitude %}
         {% include "parcelles/_field.html" with field=form.longitude %}
@@ -109,15 +116,47 @@
     if (!el || typeof L === 'undefined') return;
     var latEl = document.getElementById('id_latitude');
     var lngEl = document.getElementById('id_longitude');
-    var start = [parseFloat(latEl.value) || 43.6, parseFloat(lngEl.value) || 3.9];
-    var map = L.map(el).setView(start, 9);
+    var boundEl = document.getElementById('id_boundaries');
+
+    var map = L.map(el);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-    var marker = (latEl.value && lngEl.value) ? L.marker(start).addTo(map) : null;
+
+    var marker = null, positioned = false;
+
+    // 1) Polygone cadastre → on le dessine, on centre la carte dessus et on
+    //    récupère lat/lng (centre du polygone) si elles sont vides.
+    var boundaries = null;
+    try { boundaries = boundEl && boundEl.value ? JSON.parse(boundEl.value) : null; } catch (e) {}
+    if (boundaries && boundaries.coordinates) {
+      var poly = L.geoJSON(boundaries, { style: { color: '#28738f', weight: 2, fillOpacity: 0.15 } }).addTo(map);
+      var b = poly.getBounds();
+      if (b.isValid()) {
+        map.fitBounds(b, { padding: [20, 20] });
+        var c = b.getCenter();
+        if (!latEl.value) latEl.value = c.lat.toFixed(6);
+        if (!lngEl.value) lngEl.value = c.lng.toFixed(6);
+        positioned = true;
+      }
+    }
+
+    // 2) Sinon, lat/lng renseignés → on centre dessus avec un marqueur.
+    if (!positioned && latEl.value && lngEl.value) {
+      var ll = [parseFloat(latEl.value), parseFloat(lngEl.value)];
+      map.setView(ll, 15);
+      marker = L.marker(ll).addTo(map);
+      positioned = true;
+    }
+
+    // 3) Sinon, vue par défaut.
+    if (!positioned) map.setView([43.6, 3.9], 9);
+
+    // Clic sur la carte = (re)positionne le marqueur et met à jour lat/lng.
     map.on('click', function (e) {
       latEl.value = e.latlng.lat.toFixed(6);
       lngEl.value = e.latlng.lng.toFixed(6);
       if (marker) { marker.setLatLng(e.latlng); } else { marker = L.marker(e.latlng).addTo(map); }
     });
+
     setTimeout(function () { map.invalidateSize(); }, 200);
   });
 </script>

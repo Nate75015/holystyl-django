@@ -5,7 +5,15 @@
   </div>
 {% endif %}
 {% for message in conversation.messages.all %}
-  <div class="flex {% if message.sender_id == request.user.id %}justify-end{% endif %}">
+  <div class="group flex items-end gap-1.5 {% if message.sender_id == request.user.id %}flex-row-reverse{% endif %}">
+    {% if message.sender_id == request.user.id %}
+      <button type="button" title="{% trans 'Supprimer le message' %}"
+              hx-post="{% url 'messagerie:message_delete' message.pk %}" hx-target="#thread" hx-swap="innerHTML"
+              data-confirm="{% trans 'Supprimer ce message ?' %}"
+              class="mb-1 grid h-7 w-7 shrink-0 place-items-center rounded-full text-slate-300 opacity-0 transition hover:bg-black/5 hover:text-red-500 group-hover:opacity-100 dark:hover:bg-white/10">
+        <span class="material-icons-round text-[16px]">delete_outline</span>
+      </button>
+    {% endif %}
     <div class="max-w-[75%] rounded-2xl px-3.5 py-2 text-sm {% if message.sender_id == request.user.id %}bg-brand text-white{% else %}bg-black/5 dark:bg-white/10{% endif %}">
       {% if conversation.is_group and message.sender_id != request.user.id %}
         <p class="mb-0.5 text-[11px] font-semibold opacity-70">{{ message.sender.display_name }}</p>
