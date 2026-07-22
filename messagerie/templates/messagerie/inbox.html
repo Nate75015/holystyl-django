@@ -4,20 +4,19 @@
 {% block main_padding %}{% endblock %}
 
 {% block content %}
-<section class="flex h-[calc(100vh-3.25rem)] overflow-hidden border-t border-slate-200 dark:border-white/10"
+<section class="flex h-[calc(100vh-3.25rem)] overflow-hidden border-t" style="border-color: var(--border)"
          x-data="{ modal: false, tab: 'direct' }">
 
   {% include "messagerie/_sidebar.html" with sidebar_mobile=True %}
 
   {# Panneau principal : état vide #}
   <div class="hidden flex-1 flex-col items-center justify-center px-4 text-center sm:flex">
-    <div class="grid h-16 w-16 place-items-center rounded-full bg-black/5 dark:bg-white/10">
-      <span class="material-icons-round text-[28px] text-slate-400">chat_bubble_outline</span>
+    <div class="grid h-16 w-16 place-items-center rounded-full" style="background: var(--surface-alt)">
+      <span class="material-icons-round text-[28px]" style="color: var(--text-muted)">chat_bubble_outline</span>
     </div>
-    <p class="mt-4 font-semibold">{% trans "Sélectionnez une conversation" %}</p>
-    <p class="mt-1 text-sm text-slate-400">{% trans "ou démarrez-en une nouvelle" %}</p>
-    <button type="button" @click="modal = true"
-            class="mt-5 inline-flex items-center gap-1.5 rounded-full bg-slate-800 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-900">
+    <p class="mt-4 font-medium">{% trans "Sélectionnez une conversation" %}</p>
+    <p class="mt-1 text-sm" style="color: var(--text-muted)">{% trans "ou démarrez-en une nouvelle" %}</p>
+    <button type="button" @click="modal = true" class="hs-btn-primary mt-5">
       {% trans "Nouveau message" %}
     </button>
   </div>

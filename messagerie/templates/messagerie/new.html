@@ -3,19 +3,22 @@
 
 {% block content %}
 <section class="mx-auto max-w-xl space-y-4">
-  <h2 class="text-xl font-semibold">{% trans "Nouvelle conversation" %}</h2>
+  <div>
+    <p class="hs-crumb">{% trans "Communication" %} · {% trans "Chat" %}</p>
+    <h1 class="text-[20px]">{% trans "Nouvelle conversation" %}</h1>
+  </div>
 
   {% if candidates %}
-    <form method="post" class="md-card space-y-5">
+    <form method="post" class="hs-card space-y-5 p-5">
       {% csrf_token %}
       <div>
         <label class="mb-2 block text-sm font-medium">{% trans "Participants" %}</label>
         <div class="space-y-1">
           {% for u in candidates %}
             <label class="flex items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-black/5 dark:hover:bg-white/5">
-              <input type="checkbox" name="participants" value="{{ u.id }}" class="h-4 w-4 accent-brand">
-              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand/20 text-xs font-bold text-brand">{{ u.display_name|slice:":1"|upper }}</span>
-              <span class="min-w-0 text-sm"><span class="font-medium">{{ u.display_name }}</span> <span class="text-slate-400">{{ u.email }}</span></span>
+              <input type="checkbox" name="participants" value="{{ u.id }}" class="h-4 w-4" style="accent-color: var(--action)">
+              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-medium" style="background: var(--surface-alt); color: var(--text-secondary)">{{ u.display_name|slice:":1"|upper }}</span>
+              <span class="min-w-0 text-sm"><span class="font-medium">{{ u.display_name }}</span> <span style="color: var(--text-muted)">{{ u.email }}</span></span>
             </label>
           {% endfor %}
         </div>
@@ -23,21 +26,20 @@
 
       <div>
         <label class="mb-1 block text-sm font-medium">
-          {% trans "Nom du groupe" %} <span class="font-normal text-slate-400">({% trans "optionnel" %})</span>
+          {% trans "Nom du groupe" %} <span class="font-normal" style="color: var(--text-muted)">({% trans "optionnel" %})</span>
         </label>
-        <input name="name" placeholder="{% trans 'Ex. Équipe récolte' %}"
-               class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-        <p class="mt-1 text-xs text-slate-400">{% trans "Renseignez un nom ou cochez plusieurs participants pour créer un groupe." %}</p>
+        <input name="name" placeholder="{% trans 'Ex. Équipe récolte' %}">
+        <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Renseignez un nom ou cochez plusieurs participants pour créer un groupe." %}</p>
       </div>
 
       <div class="flex justify-end gap-2">
-        <a href="{% url 'messagerie:inbox' %}" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</a>
-        <button type="submit" class="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">{% trans "Créer" %}</button>
+        <a href="{% url 'messagerie:inbox' %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+        <button type="submit" class="hs-btn-primary">{% trans "Créer" %}</button>
       </div>
     </form>
   {% else %}
-    <div class="md-card">
-      <p class="text-sm text-slate-500 dark:text-slate-400">
+    <div class="hs-card p-5">
+      <p class="text-sm" style="color: var(--text-secondary)">
         {% trans "Aucun autre utilisateur dans votre exploitation à contacter pour l'instant. Ajoutez des membres d'équipe et liez-leur un compte." %}
       </p>
     </div>

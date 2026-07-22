@@ -43,7 +43,6 @@ def layout(request):
             "label": _("Accueil"), "key": "accueil",
             "items": [
                 {"label": _("Tableau de bord"), "url_name": "core:dashboard", "icon": "dashboard"},
-                {"label": _("Assistant IA"), "url_name": "ia:assistant", "icon": "support_agent"},
             ],
         },
         {
@@ -135,6 +134,15 @@ def layout(request):
             ],
         },
     ]
+
+    # Icône de section (présentation ; navigation de la sidebar)
+    section_icons = {
+        "accueil": "home", "communication": "forum", "cultures": "eco",
+        "protection": "shield", "economie": "payments", "environnement": "park",
+        "rh": "groups", "contrat": "gavel", "compte": "person",
+    }
+    for section in nav_sections:
+        section["icon"] = section_icons.get(section["key"], "folder")
 
     # Sections triées par ordre alphabétique (selon le libellé dans la langue active)
     nav_sections.sort(key=lambda section: _sort_key(section["label"]))

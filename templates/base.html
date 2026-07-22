@@ -32,35 +32,25 @@
 </head>
 <body class="min-h-screen">
 {% if user.is_authenticated %}
-  <div class="flex min-h-screen"
-       :style="'--nav-offset:' + (navOpen ? '464px' : '284px')"
-       x-data="{
-         nav: '{{ default_section }}',
-         navOpen: localStorage.getItem('navOpen') !== '0',
-         _t: null,
-         _save() { localStorage.setItem('navOpen', this.navOpen ? '1' : '0'); },
-         selectNav(k) {
-           this.nav = k;
-           clearTimeout(this._t);
-           this._t = setTimeout(() => { if (!this.navOpen) { this.navOpen = true; this._save(); } }, 200);
-         },
-         toggleNav() { clearTimeout(this._t); this.navOpen = !this.navOpen; this._save(); }
-       }">
-    {% include "partials/sidebar.html" %}
-    {% include "partials/nav_flyout.html" %}
-    <div class="flex min-w-0 flex-1 flex-col">
-      {% include "partials/header.html" %}
-      {% include "partials/install_banner.html" %}
-      <main class="flex-1 {% block main_padding %}px-4 pb-24 pt-6 lg:px-8 lg:pb-8{% endblock %}">
-        {% if messages %}
-          <div class="mb-4 space-y-2">
-            {% for message in messages %}
-              <div class="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm dark:border-white/10 dark:bg-white/5">{{ message }}</div>
-            {% endfor %}
-          </div>
-        {% endif %}
-        {% block content %}{% endblock %}
-      </main>
+  <div class="flex min-h-screen flex-col"
+       style="--nav-offset: 232px"
+       x-data="{ nav: '{{ default_section }}' }">
+    {% include "partials/header.html" %}
+    <div class="flex min-h-0 flex-1">
+      {% include "partials/sidebar.html" %}
+      <div class="flex min-w-0 flex-1 flex-col">
+        {% include "partials/install_banner.html" %}
+        <main class="flex-1 {% block main_padding %}px-4 pb-24 pt-5 lg:px-7 lg:pb-8{% endblock %}">
+          {% if messages %}
+            <div class="mb-4 space-y-2">
+              {% for message in messages %}
+                <div class="rounded-lg px-4 py-2 text-sm" style="border:0.5px solid var(--border); background: var(--surface)">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% block content %}{% endblock %}
+        </main>
+      </div>
     </div>
   </div>
   {% include "partials/bottom_nav.html" %}

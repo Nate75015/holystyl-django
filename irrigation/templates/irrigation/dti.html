@@ -2,182 +2,140 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto max-w-6xl space-y-6">
+<section class="space-y-5">
 
-  {# ── Hero ── #}
-  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
-    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
-    <div class="relative flex items-center gap-3">
-      <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
-        <span class="material-icons-round text-[26px]">electric_bolt</span>
-      </span>
-      <div class="min-w-0">
-        <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
-          <span class="material-icons-round text-[14px]">water_drop</span>{% trans "Irrigation" %}
-        </span>
-        <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "DTI — Diagnostic technique d'irrigation" %}</h2>
-        <p class="truncate text-sm text-slate-400">{% trans "Efficience énergétique du pompage (kWh/m³) et uniformité" %}</p>
+  <p class="hs-crumb">{% trans "Cultures & terrain · DTI" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Diagnostic technique d'irrigation" %}</h1>
+  </div>
+
+  {# ── Score actuel ── #}
+  <div id="sec-score" class="hs-card scroll-mt-6 overflow-hidden">
+    <div class="border-b px-5 py-3.5" style="border-color: var(--border)">
+      <h2 class="text-[15px] font-medium">{% trans "Score DTI actuel" %}</h2>
+    </div>
+    {% if latest %}
+      <div class="grid gap-5 p-5 sm:grid-cols-[auto_1fr] sm:items-center">
+        {# Jauge circulaire lettre + note #}
+        <div class="mx-auto flex flex-col items-center">
+          <div class="relative grid h-32 w-32 place-items-center rounded-full"
+               style="background: conic-gradient({{ latest_color }} {{ latest.score_numeric }}%, rgba(148,163,184,0.18) 0);">
+            <div class="grid h-24 w-24 place-items-center rounded-full" style="background: var(--surface)">
+              <span class="text-4xl font-medium leading-none" style="color: {{ latest_color }}">{{ latest.score }}</span>
+              <span class="text-xs font-medium" style="color: var(--text-muted)">{{ latest.score_numeric|floatformat:0 }}/100</span>
+            </div>
+          </div>
+          <span class="mt-2 rounded-full px-3 py-0.5 text-xs font-medium" style="color: {{ latest_color }}; background: {{ latest_color }}1a">{{ latest_label }}</span>
+        </div>
+        {# Indicateurs #}
+        <div class="grid grid-cols-2 gap-[10px]">
+          <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Énergie" %}</p><p class="text-[22px]">{{ latest.kwh_per_m3|default_if_none:"—" }}<span class="text-sm font-medium" style="color: var(--text-muted)"> kWh/m³</span></p></div>
+          <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Uniformité" %}</p><p class="text-[22px]">{{ latest.uniformity_coeff|default_if_none:"—" }}<span class="text-sm font-medium" style="color: var(--text-muted)"> %</span></p></div>
+          <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Parcelle" %}</p><p class="mt-1 truncate text-[15px] font-medium">{{ latest.parcelle.name|default:"—" }}</p></div>
+          <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Calculé le" %}</p><p class="mt-1 text-[15px] font-medium">{{ latest.calculated_at|date:"d/m/Y H:i" }}</p></div>
+        </div>
       </div>
+      {# Recommandations #}
+      {% if latest.recommendations %}
+        <div class="border-t p-5" style="border-color: var(--border)">
+          <p class="mb-2 text-[11px] font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Recommandations" %}</p>
+          <ul class="space-y-1.5">
+            {% for r in latest.recommendations %}
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-secondary)"><span class="material-icons-round mt-0.5 text-[15px]" style="color: var(--action)">chevron_right</span>{{ r }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="py-12 text-center">
+        <p class="text-[15px] font-medium">{% trans "Aucun diagnostic pour l'instant." %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Lancez un premier calcul ci-dessous." %}</p>
+      </div>
+    {% endif %}
+  </div>
+
+  {# ── Calculateur ── #}
+  <div id="sec-calc" class="hs-card scroll-mt-6 overflow-hidden">
+    <div class="border-b px-5 py-3.5" style="border-color: var(--border)">
+      <h2 class="text-[15px] font-medium">{% trans "Nouveau diagnostic" %}</h2>
+    </div>
+    <form method="post" action="{% url 'irrigation:dti_calculate' %}" class="p-5">
+      {% csrf_token %}
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label class="mb-1 block text-sm font-medium">{% trans "Énergie (kWh/m³)" %} <span style="color: var(--danger)">*</span></label>
+          <input name="kwh_per_m3" type="number" step="0.001" min="0" required placeholder="ex: 0.28"
+                 class="w-full text-sm">
+          <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Objectif : ≤ 0,30 kWh/m³ (A/B)." %}</p>
+        </div>
+        <div>
+          <label class="mb-1 block text-sm font-medium">{% trans "Uniformité (%)" %}</label>
+          <input name="uniformity" type="number" step="1" min="0" max="100" value="90" placeholder="90"
+                 class="w-full text-sm">
+        </div>
+        <div>
+          <label class="mb-1 block text-sm font-medium">{% trans "Débit (m³/h)" %}</label>
+          <input name="flow_rate_m3h" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
+                 class="w-full text-sm">
+        </div>
+        <div>
+          <label class="mb-1 block text-sm font-medium">{% trans "Pression (bar)" %}</label>
+          <input name="pressure_bar" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
+                 class="w-full text-sm">
+        </div>
+        <div class="sm:col-span-2">
+          <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+          <select name="parcelle" class="w-full text-sm">
+            <option value="">{% trans "Toute l'exploitation" %}</option>
+            {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="mt-4 flex justify-end">
+        <button type="submit" class="hs-btn-primary">{% trans "Calculer le score" %}</button>
+      </div>
+    </form>
+  </div>
+
+  {# ── Historique ── #}
+  <div id="sec-history" class="scroll-mt-6">
+    <h2 class="text-[15px] font-medium mb-2">{% trans "Historique des diagnostics" %}{% if count %} <span style="color: var(--text-muted)">({{ count }})</span>{% endif %}</h2>
+    <div class="hs-card overflow-hidden">
+      <table class="hs-table">
+        <thead>
+          <tr>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Score" %}</th>
+            <th class="num">{% trans "kWh/m³" %}</th>
+            <th class="num">{% trans "Uniformité" %}</th>
+            <th>{% trans "Parcelle" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for h in history %}
+            <tr>
+              <td>{{ h.date }}</td>
+              <td>
+                <span class="inline-flex items-center gap-1.5">
+                  <span class="grid h-6 w-6 place-items-center rounded-full text-xs font-medium text-white" style="background: {{ h.color }}">{{ h.score }}</span>
+                  <span style="color: var(--text-muted)">{{ h.numeric }}/100</span>
+                </span>
+              </td>
+              <td class="num">{{ h.kwh|default_if_none:"—" }}</td>
+              <td class="num">{{ h.uniformity|default_if_none:"—" }}{% if h.uniformity %} %{% endif %}</td>
+              <td style="color: var(--text-secondary)">{{ h.parcelle|default:"—" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if not history %}
+        <div class="py-10 text-center">
+          <p class="text-[15px] font-medium">{% trans "Aucun diagnostic enregistré." %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Lancez un premier calcul ci-dessus." %}</p>
+        </div>
+      {% endif %}
     </div>
   </div>
 
-  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
-    {# ── Sommaire latéral collant ── #}
-    <aside class="hidden lg:block">
-      <nav class="sticky top-6 space-y-0.5">
-        <a href="#sec-score" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">speed</span><span class="flex-1 truncate">{% trans "Score actuel" %}</span></a>
-        <a href="#sec-calc" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">calculate</span><span class="flex-1 truncate">{% trans "Calculer" %}</span></a>
-        <a href="#sec-history" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">history</span><span class="min-w-0 flex-1 truncate">{% trans "Historique" %}</span>
-          {% if count %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ count }}</span>{% endif %}</a>
-      </nav>
-    </aside>
-
-    {# ── Colonne principale ── #}
-    <div class="min-w-0 space-y-5">
-
-      {# ── Score actuel ── #}
-      <div id="sec-score" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">speed</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Score DTI actuel" %}</h3>
-        </div>
-        {% if latest %}
-          <div class="grid gap-5 p-5 sm:grid-cols-[auto_1fr] sm:items-center">
-            {# Jauge circulaire lettre + note #}
-            <div class="mx-auto flex flex-col items-center">
-              <div class="relative grid h-32 w-32 place-items-center rounded-full"
-                   style="background: conic-gradient({{ latest_color }} {{ latest.score_numeric }}%, rgba(148,163,184,0.18) 0);">
-                <div class="grid h-24 w-24 place-items-center rounded-full bg-white dark:bg-[#122230]">
-                  <span class="text-4xl font-extrabold leading-none" style="color: {{ latest_color }}">{{ latest.score }}</span>
-                  <span class="text-xs font-medium text-slate-400">{{ latest.score_numeric|floatformat:0 }}/100</span>
-                </div>
-              </div>
-              <span class="mt-2 rounded-full px-3 py-0.5 text-xs font-semibold" style="color: {{ latest_color }}; background: {{ latest_color }}1a">{{ latest_label }}</span>
-            </div>
-            {# Indicateurs #}
-            <div class="grid grid-cols-2 gap-3">
-              <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Énergie" %}</p><p class="mt-1 text-xl font-bold text-blue-600 dark:text-blue-400">{{ latest.kwh_per_m3|default_if_none:"—" }}<span class="text-sm font-medium text-slate-400"> kWh/m³</span></p></div>
-              <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Uniformité" %}</p><p class="mt-1 text-xl font-bold">{{ latest.uniformity_coeff|default_if_none:"—" }}<span class="text-sm font-medium text-slate-400"> %</span></p></div>
-              <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Parcelle" %}</p><p class="mt-1 truncate text-sm font-semibold">{{ latest.parcelle.name|default:"—" }}</p></div>
-              <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10"><p class="text-xs text-slate-400">{% trans "Calculé le" %}</p><p class="mt-1 text-sm font-semibold">{{ latest.calculated_at|date:"d/m/Y H:i" }}</p></div>
-            </div>
-          </div>
-          {# Recommandations #}
-          {% if latest.recommendations %}
-            <div class="border-t border-slate-100 p-5 dark:border-white/5">
-              <p class="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-400"><span class="material-icons-round text-[15px] text-amber-500">tips_and_updates</span>{% trans "Recommandations" %}</p>
-              <ul class="space-y-1.5">
-                {% for r in latest.recommendations %}
-                  <li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300"><span class="material-icons-round mt-0.5 text-[15px] text-[#28738f]">chevron_right</span>{{ r }}</li>
-                {% endfor %}
-              </ul>
-            </div>
-          {% endif %}
-        {% else %}
-          <div class="flex flex-col items-center justify-center py-12 text-center">
-            <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">speed</span>
-            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Aucun diagnostic pour l'instant." %}</p>
-            <p class="mt-1 text-xs text-slate-400">{% trans "Lancez un premier calcul ci-dessous." %}</p>
-          </div>
-        {% endif %}
-      </div>
-
-      {# ── Calculateur ── #}
-      <div id="sec-calc" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">calculate</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Nouveau diagnostic" %}</h3>
-        </div>
-        <form method="post" action="{% url 'irrigation:dti_calculate' %}" class="p-5">
-          {% csrf_token %}
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Énergie (kWh/m³)" %} <span class="text-red-500">*</span></label>
-              <input name="kwh_per_m3" type="number" step="0.001" min="0" required placeholder="ex: 0.28"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-              <p class="mt-1 text-xs text-slate-400">{% trans "Objectif : ≤ 0,30 kWh/m³ (A/B)." %}</p>
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Uniformité (%)" %}</label>
-              <input name="uniformity" type="number" step="1" min="0" max="100" value="90" placeholder="90"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Débit (m³/h)" %}</label>
-              <input name="flow_rate_m3h" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Pression (bar)" %}</label>
-              <input name="pressure_bar" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-            </div>
-            <div class="sm:col-span-2">
-              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
-              <select name="parcelle"
-                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
-                <option value="">{% trans "Toute l'exploitation" %}</option>
-                {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
-              </select>
-            </div>
-          </div>
-          <div class="mt-4 flex justify-end">
-            <button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90">
-              <span class="material-icons-round text-[18px]">bolt</span>{% trans "Calculer le score" %}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {# ── Historique ── #}
-      <div id="sec-history" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">history</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Historique des diagnostics" %}</h3>
-          {% if count %}<span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400">{{ count }}</span>{% endif %}
-        </div>
-        {% if history %}
-          <div class="overflow-x-auto p-5">
-            <table class="w-full text-sm">
-              <thead class="text-left text-xs uppercase tracking-wide text-slate-400">
-                <tr class="border-b border-slate-100 dark:border-white/5">
-                  <th class="px-3 py-2.5">{% trans "Date" %}</th>
-                  <th class="px-3 py-2.5">{% trans "Score" %}</th>
-                  <th class="px-3 py-2.5 text-right">{% trans "kWh/m³" %}</th>
-                  <th class="px-3 py-2.5 text-right">{% trans "Uniformité" %}</th>
-                  <th class="px-3 py-2.5">{% trans "Parcelle" %}</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-                {% for h in history %}
-                  <tr>
-                    <td class="px-3 py-2.5">{{ h.date }}</td>
-                    <td class="px-3 py-2.5">
-                      <span class="inline-flex items-center gap-1.5">
-                        <span class="grid h-6 w-6 place-items-center rounded-full text-xs font-bold text-white" style="background: {{ h.color }}">{{ h.score }}</span>
-                        <span class="text-slate-400">{{ h.numeric }}/100</span>
-                      </span>
-                    </td>
-                    <td class="px-3 py-2.5 text-right font-medium">{{ h.kwh|default_if_none:"—" }}</td>
-                    <td class="px-3 py-2.5 text-right">{{ h.uniformity|default_if_none:"—" }}{% if h.uniformity %} %{% endif %}</td>
-                    <td class="px-3 py-2.5 text-slate-500 dark:text-slate-400">{{ h.parcelle|default:"—" }}</td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        {% else %}
-          <div class="flex flex-col items-center justify-center py-10 text-center">
-            <span class="material-icons-round mb-2 text-[36px] text-slate-300 dark:text-slate-600">history</span>
-            <p class="text-sm text-slate-400">{% trans "Aucun diagnostic enregistré." %}</p>
-          </div>
-        {% endif %}
-      </div>
-
-    </div>
-  </div>
 </section>
 {% endblock %}

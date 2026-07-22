@@ -1,10 +1,10 @@
 {% comment %}Rendu d'un champ de formulaire (label + widget + aide + erreurs).
 Usage : {% include "accounts/_field.html" with field=form.first_name %}{% endcomment %}
 <div>
-  <label class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-200" for="{{ field.id_for_label }}">
-    {{ field.label }}{% if field.field.required %} <span class="text-[#c2410c]">*</span>{% endif %}
+  <label class="mb-1.5 block text-sm font-medium" style="color: var(--text)" for="{{ field.id_for_label }}">
+    {{ field.label }}{% if field.field.required %} <span style="color: var(--danger)">*</span>{% endif %}
   </label>
   {{ field }}
-  {% if field.help_text %}<p class="mt-1 text-xs text-slate-400">{{ field.help_text|safe }}</p>{% endif %}
-  {% for error in field.errors %}<p class="mt-1 text-xs text-red-500">{{ error }}</p>{% endfor %}
+  {% if field.help_text %}<p class="mt-1 text-xs" style="color: var(--text-muted)">{{ field.help_text|safe }}</p>{% endif %}
+  {% for error in field.errors %}<p class="mt-1 text-xs" style="color: var(--danger)">{{ error }}</p>{% endfor %}
 </div>

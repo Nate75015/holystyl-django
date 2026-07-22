@@ -1,0 +1,61 @@
+{% load i18n %}
+<div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
+    <div class="hs-popover w-full p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[16px] font-medium">{% trans "Nouveau bail" %}</h2>
+        <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+      </div>
+      <form method="post" action="{% url 'contrat:bail_create' %}" class="space-y-3">
+        {% csrf_token %}
+        <div>
+          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Désignation" %} <span style="color: var(--danger)">*</span></label>
+          <input name="designation" required placeholder="{% trans 'ex: bail parcelles nord' %}">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Bailleur" %}</label>
+            <input name="bailleur" placeholder="{% trans 'propriétaire' %}">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Preneur" %}</label>
+            <input name="preneur" placeholder="{% trans 'exploitant' %}">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Surface (ha)" %}</label>
+            <input name="surface_ha" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Fermage annuel (€)" %}</label>
+            <input name="loyer_annuel" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de début" %}</label>
+            <input name="date_debut" type="date">
+          </div>
+          <div>
+            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de fin" %}</label>
+            <input name="date_fin" type="date">
+          </div>
+        </div>
+        <div>
+          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+          <select name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+        </div>
+        <div>
+          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea name="notes" rows="2" placeholder="{% trans 'clauses, révision du fermage…' %}"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

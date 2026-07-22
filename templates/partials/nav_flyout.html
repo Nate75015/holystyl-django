@@ -7,19 +7,19 @@ droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% 
   <div class="sticky top-0 z-10 flex p-2 nav-flyout" :class="navOpen ? 'justify-end' : 'justify-center'">
     <button type="button" @click="toggleNav()"
             :title="navOpen ? '{% trans "Replier le menu" %}' : '{% trans "Déplier le menu" %}'"
-            class="grid h-7 w-7 place-items-center rounded-lg text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10">
+            class="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
       <span class="material-icons-round text-[20px]" x-text="navOpen ? 'chevron_left' : 'chevron_right'">chevron_left</span>
     </button>
   </div>
 
   {% for section in nav_sections %}
     <div x-show="navOpen && nav === '{{ section.key }}'" class="px-4 pb-4"{% if section.key != default_section %} style="display:none"{% endif %}>
-      <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{{ section.label }}</p>
+      <p class="mb-2 text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{{ section.label }}</p>
       {% for sub in section.items %}
         {% if sub.url_name %}
           <a href="{% url sub.url_name %}{% if sub.anchor %}#{{ sub.anchor }}{% endif %}"
              class="sidebar-link flex items-center gap-3.5 text-sm {% if sub.url_name == active_url_name and not sub.anchor %}sidebar-link-active{% endif %}">
-            <span class="material-icons-round text-[20px] text-slate-400">{{ sub.icon|default:'chevron_right' }}</span>
+            <span class="material-icons-round text-[20px]" style="color: var(--text-muted)">{{ sub.icon|default:'chevron_right' }}</span>
             <span>{{ sub.label }}</span>
           </a>
         {% else %}

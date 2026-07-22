@@ -4,17 +4,17 @@
 
 {% block auth_content %}
 <div class="w-full max-w-md text-center">
-  <div class="md-card">
+  <div class="hs-card p-5">
     {% if member %}
-      <h1 class="text-lg font-semibold">{% trans "Partager ma position" %}</h1>
-      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+      <h1 class="text-[20px]">{% trans "Partager ma position" %}</h1>
+      <p class="mt-1 text-sm" style="color: var(--text-secondary)">
         {% blocktrans with name=member.name %}Bonjour {{ name }}, partagez votre position avec votre équipe.{% endblocktrans %}
       </p>
-      <button id="share" class="md-btn-primary mt-4">{% trans "Partager ma position" %}</button>
-      <p id="status" class="mt-3 text-xs text-slate-400"></p>
+      <button id="share" class="hs-btn-primary mt-4">{% trans "Partager ma position" %}</button>
+      <p id="status" class="mt-3 text-xs" style="color: var(--text-muted)"></p>
     {% else %}
-      <h1 class="text-lg font-semibold">{% trans "Lien expiré" %}</h1>
-      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Ce lien de partage n'est plus valide." %}</p>
+      <h1 class="text-[20px]">{% trans "Lien expiré" %}</h1>
+      <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Ce lien de partage n'est plus valide." %}</p>
     {% endif %}
   </div>
 </div>

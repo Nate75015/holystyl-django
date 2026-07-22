@@ -1,24 +1,39 @@
 {% load i18n %}
-<aside class="glass-panel nav-left sticky top-0 z-30 hidden h-screen w-60 shrink-0 flex-col border-r lg:flex">
-  <div class="border-b border-white/20 px-5 py-8">
-    <div class="flex items-center gap-2">
-      {% include "partials/brand_mark.html" with size=34 icon=20 %}
-      <span class="text-xl font-bold tracking-tight text-white">{{ APP_NAME }}</span>
-    </div>
-    <p class="mt-2 text-xs italic text-white/70">{% trans "Remettons du sens dans notre métier" %}</p>
-  </div>
-
-  {# Rail : sections cliquables (pilotent le panneau volant via `nav`) #}
-  <nav class="flex-1 space-y-1 overflow-y-auto px-3 pb-4 pt-12">
+<aside class="hidden w-[232px] shrink-0 flex-col lg:flex" style="background: var(--surface-alt); border-right: 0.5px solid var(--border); padding: 14px 12px">
+  <nav class="flex-1 space-y-0.5 overflow-y-auto">
     {% for section in nav_sections %}
-      <button type="button"
-              @click="selectNav('{{ section.key }}')" @dblclick="toggleNav()"
-              class="sidebar-link flex w-full select-none items-center justify-between"
-              :class="nav === '{{ section.key }}' ? 'sidebar-link-active' : ''">
-        <span>{{ section.label }}</span>
-        <span class="opacity-60 transition-transform" :class="(navOpen && nav === '{{ section.key }}') ? 'rotate-90' : ''">›</span>
-      </button>
+      <div>
+        {# Entrée de section (dépliable) #}
+        <button type="button"
+                @click="nav = (nav === '{{ section.key }}' ? '' : '{{ section.key }}')"
+                class="hs-side-link select-none"
+                :class="nav === '{{ section.key }}' ? 'hs-side-link-active' : ''">
+          <span class="material-icons-round text-[16px]" :style="nav === '{{ section.key }}' ? '' : 'color: var(--text-muted)'">{{ section.icon }}</span>
+          <span class="flex-1 truncate text-left">{{ section.label }}</span>
+          <span class="material-icons-round text-[14px]" style="color: var(--text-muted)" x-text="nav === '{{ section.key }}' ? 'expand_more' : 'chevron_right'">chevron_right</span>
+        </button>
+
+        {# Sous-entrées #}
+        <div x-show="nav === '{{ section.key }}'" x-collapse
+             class="mt-0.5" style="margin-left: 15px; border-left: 0.5px solid var(--border); padding-left: 10px"
+             {% if section.key != default_section %}x-cloak{% endif %}>
+          {% for sub in section.items %}
+            <a href="{% url sub.url_name %}{% if sub.anchor %}#{{ sub.anchor }}{% endif %}"
+               class="hs-subitem {% if sub.url_name == active_url_name and not sub.anchor %}hs-subitem-active{% endif %}">
+              <span class="min-w-0 flex-1 truncate">{{ sub.label }}</span>
+              {% if sub.count %}<span class="shrink-0 text-[12px]" style="color: var(--text-muted)">{{ sub.count }}</span>{% endif %}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
     {% endfor %}
   </nav>
 
+  {# Séparateur + Assistant IA épinglé en bas #}
+  <div class="mt-2 pt-2" style="border-top: 0.5px solid var(--border)">
+    <a href="{% url 'ia:assistant' %}" class="hs-side-link {% if request.resolver_match.view_name == 'ia:assistant' %}hs-side-link-active{% endif %}">
+      <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">support_agent</span>
+      <span class="flex-1 truncate text-left">{% trans "Assistant IA" %}</span>
+    </a>
+  </div>
 </aside>

@@ -2,47 +2,32 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto max-w-7xl space-y-6"
+<section class="space-y-5"
          x-data="planningTasks('{% url 'planning:task_create' %}', '{% url 'planning:task_edit' 0 %}', '{% url 'planning:task_delete' 0 %}')">
 
-  {# ── Hero : titre + sélecteur de vue ── #}
-  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
-    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
-    <div class="relative flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
-          <span class="material-icons-round text-[26px]">event</span>
-        </span>
-        <div class="min-w-0">
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
-            <span class="material-icons-round text-[14px]">groups</span>{% trans "Équipe" %}
-          </span>
-          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Planning" %}</h2>
-          <p class="truncate text-sm text-slate-400">{% trans "Organisation de l'équipe · jour, semaine, mois" %}</p>
-        </div>
-      </div>
-
-      {# Sélecteur Jour / Semaine / Mois #}
-      <div class="flex shrink-0 rounded-xl border border-slate-200 bg-white/70 p-0.5 text-sm dark:border-white/10 dark:bg-white/10">
-        <a href="?vue=jour&date={{ anchor|date:'Y-m-d' }}"
-           class="rounded-lg px-3 py-1.5 font-medium transition {% if vue == 'jour' %}bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm{% else %}text-slate-500 hover:bg-black/5 dark:hover:bg-white/10{% endif %}">{% trans "Jour" %}</a>
-        <a href="?vue=semaine&date={{ anchor|date:'Y-m-d' }}"
-           class="rounded-lg px-3 py-1.5 font-medium transition {% if vue == 'semaine' %}bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm{% else %}text-slate-500 hover:bg-black/5 dark:hover:bg-white/10{% endif %}">{% trans "Semaine" %}</a>
-        <a href="?vue=mois&date={{ anchor|date:'Y-m-d' }}"
-           class="rounded-lg px-3 py-1.5 font-medium transition {% if vue == 'mois' %}bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm{% else %}text-slate-500 hover:bg-black/5 dark:hover:bg-white/10{% endif %}">{% trans "Mois" %}</a>
-      </div>
+  {# ── Fil d'Ariane + titre + sélecteur de vue ── #}
+  <p class="hs-crumb">{% trans "RH · Planning" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Planning" %}</h1>
+    <div class="flex items-center gap-2">
+      <a href="?vue=jour&date={{ anchor|date:'Y-m-d' }}"
+         class="{% if vue == 'jour' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Jour" %}</a>
+      <a href="?vue=semaine&date={{ anchor|date:'Y-m-d' }}"
+         class="{% if vue == 'semaine' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Semaine" %}</a>
+      <a href="?vue=mois&date={{ anchor|date:'Y-m-d' }}"
+         class="{% if vue == 'mois' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Mois" %}</a>
     </div>
   </div>
 
   {# ── Carte calendrier ── #}
-  <div class="overflow-hidden rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
+  <div class="hs-card overflow-hidden">
     {# En-tête : navigation de période #}
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-3 dark:border-white/5">
+    <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3" style="border-bottom: 0.5px solid var(--border)">
       <div class="flex items-center gap-2">
         <a href="?vue={{ vue }}&date={{ prev_date|date:'Y-m-d' }}" class="md-icon-btn" title="{% trans 'Précédent' %}">
           <span class="material-icons-round text-[20px]">chevron_left</span>
         </a>
-        <span class="min-w-[11rem] text-center text-sm font-semibold">
+        <span class="min-w-[11rem] text-center text-sm font-medium">
           {% if vue == 'jour' %}{{ label|date:'l j F Y'|capfirst }}
           {% elif vue == 'semaine' %}{{ week_start|date:'j' }} – {{ week_end|date:'j F Y' }}
           {% else %}{{ month|date:'F Y'|capfirst }}{% endif %}
@@ -52,8 +37,7 @@
         </a>
       </div>
       {% if not is_today_range %}
-        <a href="?vue={{ vue }}"
-           class="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-medium transition hover:border-brand hover:text-brand dark:border-white/10">
+        <a href="?vue={{ vue }}" class="hs-btn-outline">
           {% trans "Aujourd'hui" %}
         </a>
       {% endif %}
@@ -63,16 +47,16 @@
     <div class="overflow-x-auto">
       {% if vue == 'mois' %}
         {# ── Vue Mois : calendrier classique ── #}
-        <div class="grid grid-cols-7 border-b border-[#e7e5dd] dark:border-white/10">
+        <div class="grid grid-cols-7" style="border-bottom: 0.5px solid var(--border)">
           {% for d in month_weeks.0 %}
-            <div class="py-2.5 text-center text-xs font-bold uppercase tracking-wide text-slate-400 {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %}">{{ d|date:'D' }}</div>
+            <div class="py-2.5 text-center text-xs font-medium uppercase tracking-wide {% if not forloop.last %}border-r{% endif %}" style="color: var(--text-muted); border-color: var(--border)">{{ d|date:'D' }}</div>
           {% endfor %}
         </div>
         {% for week in month_weeks %}
-          <div class="grid grid-cols-7 border-b border-[#e7e5dd] last:border-b-0 dark:border-white/10">
+          <div class="grid grid-cols-7 last:border-b-0" style="border-bottom: 0.5px solid var(--border)">
             {% for d in week %}
-              <div class="min-h-[5.5rem] p-2 {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %} {% if d.month != current_month %}bg-black/[0.02] dark:bg-white/[0.02]{% endif %}">
-                <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-bold {% if d == today %}bg-[#29738f] text-white{% elif d.month != current_month %}text-slate-300 dark:text-slate-600{% else %}text-slate-700 dark:text-slate-200{% endif %}">{{ d|date:'j' }}</span>
+              <div class="min-h-[5.5rem] p-2 {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if d.month != current_month %}background: var(--surface-alt);{% endif %}">
+                <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-medium {% if d == today %}text-white{% elif d.month != current_month %}text-slate-300 dark:text-slate-600{% endif %}" style="{% if d == today %}background: var(--action);{% elif d.month == current_month %}color: var(--text);{% endif %}">{{ d|date:'j' }}</span>
               </div>
             {% endfor %}
           </div>
@@ -80,32 +64,30 @@
 
       {% else %}
         {# ── Vue Jour / Semaine : grille équipe × jours ── #}
-        <div class="grid border-b border-[#e7e5dd] dark:border-white/10"
-             style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr));">
-          <div class="flex items-center gap-1.5 border-r border-[#e7e5dd] px-4 py-3 text-sm font-bold tracking-wide text-[#29738f] dark:border-white/10">
-            <span class="material-icons-round text-[18px]">groups</span>{% trans "ÉQUIPE" %}
+        <div class="grid" style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr)); border-bottom: 0.5px solid var(--border);">
+          <div class="flex items-center gap-1.5 border-r px-4 py-3 text-sm font-medium tracking-wide" style="border-color: var(--border); color: var(--text-secondary)">
+            {% trans "Équipe" %}
           </div>
           {% for d in days %}
-            <div class="flex flex-col items-center justify-center gap-0.5 py-3 text-center {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %} {% if d == today %}bg-[#29738f]/10{% endif %}">
-              <span class="text-xs font-bold uppercase tracking-wide {% if d == today %}text-[#29738f]{% else %}text-slate-400{% endif %}">{{ d|date:'D' }}</span>
-              <span class="text-2xl font-extrabold leading-none {% if d == today %}text-[#29738f]{% else %}text-slate-800 dark:text-white{% endif %}">{{ d|date:'j' }}</span>
-              {% if d == today %}<span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#29738f]"></span>{% endif %}
+            <div class="flex flex-col items-center justify-center gap-0.5 py-3 text-center {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if d == today %}background: color-mix(in srgb, var(--action) 10%, transparent);{% endif %}">
+              <span class="text-xs font-medium uppercase tracking-wide" style="color: {% if d == today %}var(--action){% else %}var(--text-muted){% endif %}">{{ d|date:'D' }}</span>
+              <span class="text-2xl font-medium leading-none" style="color: {% if d == today %}var(--action){% else %}var(--text){% endif %}">{{ d|date:'j' }}</span>
+              {% if d == today %}<span class="mt-1 h-1.5 w-1.5 rounded-full" style="background: var(--action)"></span>{% endif %}
             </div>
           {% endfor %}
         </div>
 
         {% if team_members %}
           {% for row in rows %}
-            <div class="grid border-b border-[#e7e5dd] last:border-b-0 dark:border-white/10"
-                 style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr));">
-              <div class="flex items-center gap-2 border-r border-[#e7e5dd] px-3 py-4 dark:border-white/10">
-                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-bold text-white" style="background: {{ row.member.color }}">{{ row.member.name|slice:":1"|upper }}</span>
+            <div class="grid last:border-b-0" style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr)); border-bottom: 0.5px solid var(--border);">
+              <div class="flex items-center gap-2 border-r px-3 py-4" style="border-color: var(--border)">
+                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-medium text-white" style="background: {{ row.member.color }}">{{ row.member.name|slice:":1"|upper }}</span>
                 <span class="min-w-0 truncate text-sm font-medium">{{ row.member.name }}</span>
               </div>
               {% for cell in row.cells %}
                 <div @click="openAdd({{ row.member.id }}, '{{ cell.date|date:"Y-m-d" }}')"
                      title="{% trans 'Ajouter une tâche' %}"
-                     class="group min-h-[4.5rem] cursor-pointer space-y-1 p-1.5 transition hover:bg-[#29738f]/[0.04] {% if not forloop.last %}border-r border-[#e7e5dd] dark:border-white/10{% endif %} {% if cell.date == today %}bg-[#29738f]/[0.06]{% endif %}">
+                     class="group min-h-[4.5rem] cursor-pointer space-y-1 p-1.5 transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}">
                   {% for t in cell.tasks %}
                     <div @click.stop="openEdit({ id: {{ t.id }}, title: '{{ t.title|escapejs }}', member: {{ row.member.id }}, date: '{{ cell.date|date:"Y-m-d" }}', priority: '{{ t.priority }}', status: '{{ t.status }}', description: '{{ t.description|escapejs }}', parcelle: '{{ t.parcelle_id|default:"" }}' })"
                          title="{{ t.title }} · {{ t.get_priority_display }} · {{ t.get_status_display }}"
@@ -113,7 +95,8 @@
                                 {% if t.status == 'done' or t.status == 'validated' %}line-through opacity-60 {% endif %}
                                 {% if t.priority == 'haute' %}border-red-500 bg-red-500/10 text-red-700 dark:text-red-300
                                 {% elif t.priority == 'basse' %}border-slate-400 bg-slate-400/10 text-slate-600 dark:text-slate-300
-                                {% else %}border-[#29738f] bg-[#29738f]/10 text-[#29738f] dark:text-[#67dded]{% endif %}">
+                                {% else %}text-[color:var(--action)]{% endif %}"
+                         style="{% if t.priority != 'haute' and t.priority != 'basse' %}border-color: var(--action); background: color-mix(in srgb, var(--action) 10%, transparent);{% endif %}">
                       {{ t.title }}
                     </div>
                   {% endfor %}
@@ -123,12 +106,9 @@
           {% endfor %}
         {% else %}
           <div class="flex flex-col items-center justify-center px-4 py-16 text-center">
-            <span class="material-icons-round text-[44px] text-slate-300 dark:text-slate-600">groups</span>
-            <p class="mt-3 text-base font-semibold text-slate-600 dark:text-slate-200">{% trans "Aucun membre d'équipe" %}</p>
-            <p class="mt-1 max-w-sm text-sm text-slate-400">{% trans "Ajoutez des salariés dans la section Équipe pour commencer à planifier." %}</p>
-            <a href="{% url 'equipe:equipe' %}" class="mt-6 md-btn-primary px-5" style="background:#29738f;">
-              <span class="material-icons-round text-[18px]">person_add</span>{% trans "Ajouter un membre" %}
-            </a>
+            <p class="text-[15px] font-medium">{% trans "Ajoutez un membre d'équipe" %}</p>
+            <p class="mt-1 max-w-sm text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez des salariés dans la section Équipe pour commencer à planifier." %}</p>
+            <a href="{% url 'equipe:equipe' %}" class="hs-btn-primary mt-6">{% trans "Ajouter un membre" %}</a>
           </div>
         {% endif %}
       {% endif %}
@@ -139,15 +119,10 @@
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
     <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
-      <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+      <div class="hs-popover w-full max-w-lg p-5">
         <div class="mb-4 flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm">
-              <span class="material-icons-round text-[18px]" x-text="editing ? 'edit' : 'add_task'">add_task</span>
-            </span>
-            <h3 class="text-lg font-semibold" x-text="editing ? '{% trans "Modifier la tâche" %}' : '{% trans "Nouvelle tâche" %}'">{% trans "Nouvelle tâche" %}</h3>
-          </div>
-          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">
+          <h3 class="text-[15px] font-medium" x-text="editing ? '{% trans "Modifier la tâche" %}' : '{% trans "Nouvelle tâche" %}'">{% trans "Nouvelle tâche" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
             <span class="material-icons-round text-[20px]">close</span>
           </button>
         </div>
@@ -158,22 +133,22 @@
             <input type="hidden" name="vue" value="{{ vue }}">
             <input type="hidden" name="date" value="{{ anchor|date:'Y-m-d' }}">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Titre" %} <span class="text-red-500">*</span></label>
+              <label class="mb-1 block text-sm font-medium">{% trans "Titre" %} <span style="color: var(--danger)">*</span></label>
               <input name="title" required x-model="form.title" placeholder="{% trans 'ex: Traitement parcelle Nord' %}"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+                     class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent">
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Assigné à" %} <span class="text-red-500">*</span></label>
+                <label class="mb-1 block text-sm font-medium">{% trans "Assigné à" %} <span style="color: var(--danger)">*</span></label>
                 <select name="assigned_to" required x-model="form.assigned_to"
-                        class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                        class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
                   {% for m in team_members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
                 </select>
               </div>
               <div>
                 <label class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
                 <input name="due_date" type="date" x-model="form.due_date"
-                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                       class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
               </div>
             </div>
 
@@ -184,8 +159,8 @@
                 {% for value, label in priorities %}
                   <button type="button" @click="form.priority = '{{ value }}'"
                           class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition"
-                          :class="form.priority === '{{ value }}' ? '{% if value == 'haute' %}border-red-500 bg-red-500/10 text-red-600 dark:text-red-300{% elif value == 'basse' %}border-slate-400 bg-slate-400/10 text-slate-600 dark:text-slate-300{% else %}border-brand bg-brand/10 text-brand{% endif %}' : 'border-slate-200 text-slate-500 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10'">
-                    <span class="h-2 w-2 rounded-full {% if value == 'haute' %}bg-red-500{% elif value == 'basse' %}bg-slate-400{% else %}bg-brand{% endif %}"></span>{{ label }}
+                          :class="form.priority === '{{ value }}' ? '{% if value == 'haute' %}border-red-500 bg-red-500/10 text-red-600 dark:text-red-300{% elif value == 'basse' %}border-slate-400 bg-slate-400/10 text-slate-600 dark:text-slate-300{% else %}border-[color:var(--action)] text-[color:var(--action)]{% endif %}' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'" style="border-color: var(--border)">
+                    <span class="h-2 w-2 rounded-full {% if value == 'haute' %}bg-red-500{% elif value == 'basse' %}bg-slate-400{% endif %}" style="{% if value != 'haute' and value != 'basse' %}background: var(--action){% endif %}"></span>{{ label }}
                   </button>
                 {% endfor %}
               </div>
@@ -199,7 +174,7 @@
                 {% for value, label in statuses %}
                   <button type="button" @click="form.status = '{{ value }}'"
                           class="rounded-full border px-3 py-1.5 text-sm font-medium transition"
-                          :class="form.status === '{{ value }}' ? 'border-brand bg-brand/10 text-brand' : 'border-slate-200 text-slate-500 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10'">{{ label }}</button>
+                          :class="form.status === '{{ value }}' ? 'border-[color:var(--action)] text-[color:var(--action)]' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'" style="border-color: var(--border)">{{ label }}</button>
                 {% endfor %}
               </div>
               <input type="hidden" name="status" :value="form.status">
@@ -207,7 +182,7 @@
             <div>
               <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
               <select name="parcelle" x-model="form.parcelle"
-                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                      class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
                 <option value="">{% trans "—" %}</option>
                 {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
               </select>
@@ -215,24 +190,22 @@
             <div>
               <label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
               <textarea name="description" rows="2" x-model="form.description"
-                        class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></textarea>
+                        class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></textarea>
             </div>
             <div class="flex items-center justify-between gap-2 pt-1">
               <button type="button" x-show="editing" x-cloak
                       @click="del = { open: true, action: delAction, name: form.title }; modal = false"
-                      class="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-red-500 transition hover:bg-red-500/10">
+                      class="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition hover:bg-red-500/10" style="color: var(--danger)">
                 <span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}
               </button>
               <div class="ml-auto flex gap-2">
-                <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-                <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90">
-                  <span class="material-icons-round text-[18px]">check</span>{% trans "Enregistrer" %}
-                </button>
+                <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+                <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
               </div>
             </div>
           </form>
         {% else %}
-          <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Ajoutez d'abord un membre d'équipe pour créer une tâche." %}</p>
+          <p class="text-sm" style="color: var(--text-secondary)">{% trans "Ajoutez d'abord un membre d'équipe pour créer une tâche." %}</p>
         {% endif %}
       </div>
     </div>
@@ -240,21 +213,16 @@
 
   {# ── Modal : confirmation de suppression ── #}
   <div x-show="del.open" x-cloak x-transition.opacity @keydown.escape.window="del.open = false"
-       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
-    <div @click.self="del.open = false" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
-      <div class="flex items-start gap-3">
-        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400"><span class="material-icons-round">delete_outline</span></span>
-        <div class="min-w-0">
-          <h3 class="text-base font-semibold">{% trans "Supprimer cette tâche ?" %}</h3>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400"><span class="font-medium text-slate-700 dark:text-slate-200" x-text="del.name"></span> — {% trans "cette action est irréversible." %}</p>
-        </div>
-      </div>
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="del.open = false" class="hs-popover w-full max-w-sm p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer cette tâche ?" %}</h3>
+      <p class="mt-1 text-sm" style="color: var(--text-secondary)"><span class="font-medium" style="color: var(--text)" x-text="del.name"></span> — {% trans "cette action est irréversible." %}</p>
       <form method="post" :action="del.action" class="mt-5 flex justify-end gap-2">
         {% csrf_token %}
         <input type="hidden" name="vue" value="{{ vue }}">
         <input type="hidden" name="date" value="{{ anchor|date:'Y-m-d' }}">
-        <button type="button" @click="del.open = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-        <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700"><span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}</button>
+        <button type="button" @click="del.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-white transition hover:opacity-90" style="background: var(--danger)"><span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}</button>
       </form>
     </div>
   </div>

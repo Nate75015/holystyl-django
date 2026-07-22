@@ -3,7 +3,7 @@
 
 {% block content %}
 {{ cultures_json|json_script:"cultures-data" }}
-<section class="mx-auto max-w-6xl space-y-6"
+<section class="space-y-5"
   x-data="{
     q: '', cat: 'all', mode: 'liste', info: false,
     del: null, delV: null, view: null, vview: null,
@@ -40,107 +40,100 @@
     get vAction() { return this.vMode === 'edit' ? '/varietes/' + this.vf.id + '/modifier/' : '{% url "agronomie:variete_create" %}'; }
   }">
 
-  {# ── Hero ── #}
-  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
-    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
-    <div class="relative flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25"><span class="material-icons-round text-[26px]">grass</span></span>
-        <div class="min-w-0">
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]"><span class="material-icons-round text-[14px]">eco</span>{% trans "Agronomie" %}</span>
-          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Cultures & variétés" %}</h2>
-          <p class="truncate text-sm text-slate-400">{% trans "Espèces (calendrier & Kc) et leurs variétés détaillées" %}</p>
-        </div>
-      </div>
-      <div class="flex shrink-0 items-center gap-2">
-        <button type="button" @click="info = true" class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-black/5 dark:border-white/10 dark:bg-white/10 dark:text-slate-300"><span class="material-icons-round text-[18px]">info</span>{% trans "Méthode" %}</button>
-        <button type="button" @click="openCAdd()" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl"><span class="material-icons-round text-[18px]">add</span>{% trans "Culture" %}</button>
-      </div>
+  {# ── En-tête ── #}
+  <p class="hs-crumb">{% trans "Cultures & terrain" %} · {% trans "Cultures" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Cultures & variétés" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="info = true" class="hs-btn-outline">{% trans "Méthode" %}</button>
+      <button type="button" @click="openCAdd()" class="hs-btn-primary">{% trans "Culture" %}</button>
     </div>
   </div>
 
   {# Méthode #}
-  <div x-show="info" x-cloak x-transition class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#122230]">
+  <div x-show="info" x-cloak x-transition class="hs-card p-5">
     <div class="mb-2 flex items-start justify-between gap-3">
-      <h3 class="flex items-center gap-2 text-base font-semibold"><span class="material-icons-round text-[20px] text-brand">info</span>{% trans "Cultures & variétés" %}</h3>
-      <button type="button" @click="info = false" class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+      <h2 class="text-[15px] font-medium">{% trans "Cultures & variétés" %}</h2>
+      <button type="button" @click="info = false" class="grid h-8 w-8 shrink-0 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
     </div>
-    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{% blocktrans %}Une culture (espèce) porte le calendrier de semis/récolte et les coefficients Kc (ETc = ETP × Kc). Ses variétés portent la fiche détaillée (photo, description, conditions, conseils, caractéristiques, origine). La lecture « par saison » regroupe les espèces selon leur période de semis.{% endblocktrans %}</p>
+    <p class="text-[13px] leading-relaxed" style="color: var(--text-secondary)">{% blocktrans %}Une culture (espèce) porte le calendrier de semis/récolte et les coefficients Kc (ETc = ETP × Kc). Ses variétés portent la fiche détaillée (photo, description, conditions, conseils, caractéristiques, origine). La lecture « par saison » regroupe les espèces selon leur période de semis.{% endblocktrans %}</p>
   </div>
 
   {# ── Base ── #}
-  <div class="rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-    <div class="flex flex-wrap items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">grass</span></span>
-      <h3 class="flex-1 text-sm font-semibold">{% trans "Base de cultures" %}</h3>
-      <div class="flex shrink-0 rounded-full border border-slate-200 p-0.5 text-sm dark:border-white/10">
-        <button type="button" @click="mode = 'liste'" class="inline-flex items-center gap-1 rounded-full px-3 py-1 font-medium transition" :class="mode === 'liste' ? 'bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'"><span class="material-icons-round text-[16px]">list</span>{% trans "Liste" %}</button>
-        <button type="button" @click="mode = 'saison'" class="inline-flex items-center gap-1 rounded-full px-3 py-1 font-medium transition" :class="mode === 'saison' ? 'bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'"><span class="material-icons-round text-[16px]">calendar_month</span>{% trans "Par saison" %}</button>
-        <button type="button" @click="mode = 'calendrier'" class="inline-flex items-center gap-1 rounded-full px-3 py-1 font-medium transition" :class="mode === 'calendrier' ? 'bg-gradient-to-br from-[#28738f] to-[#0e7490] text-white shadow-sm' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'"><span class="material-icons-round text-[16px]">grid_on</span>{% trans "Calendrier" %}</button>
+  <div class="hs-card overflow-hidden">
+    <div class="flex flex-wrap items-center gap-3 px-5 py-3.5" style="border-bottom: 0.5px solid var(--border)">
+      <h2 class="flex-1 text-[15px] font-medium">{% trans "Base de cultures" %}</h2>
+      <div class="flex shrink-0 gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+        <button type="button" @click="mode = 'liste'" class="hs-tab" :class="mode === 'liste' && 'hs-tab-active'">{% trans "Liste" %}</button>
+        <button type="button" @click="mode = 'saison'" class="hs-tab" :class="mode === 'saison' && 'hs-tab-active'">{% trans "Par saison" %}</button>
+        <button type="button" @click="mode = 'calendrier'" class="hs-tab" :class="mode === 'calendrier' && 'hs-tab-active'">{% trans "Calendrier" %}</button>
       </div>
-      <span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400"><span x-text="filtered.length"></span> / <span x-text="rows.length"></span></span>
+      <span class="shrink-0 text-[12px]" style="color: var(--text-muted)"><span x-text="filtered.length"></span> / <span x-text="rows.length"></span></span>
     </div>
 
     <div class="space-y-4 p-5">
-      <div class="flex items-center gap-2 rounded-full bg-black/5 px-4 py-1.5 dark:bg-white/10">
-        <span class="material-icons-round shrink-0 text-[18px] leading-none text-slate-400">search</span>
+      <div class="flex items-center gap-2 rounded-lg px-4 py-1.5" style="border: 0.5px solid var(--border)">
+        <span class="material-icons-round shrink-0 text-[18px] leading-none" style="color: var(--text-muted)">search</span>
         <input type="text" x-model="q" autocomplete="off" placeholder="{% trans 'Rechercher une culture…' %}" class="input-bare w-full text-sm focus:outline-none focus:ring-0 dark:[color-scheme:dark]">
       </div>
       <div class="flex flex-wrap gap-2">
         <template x-for="ff in filters" :key="ff.v">
-          <button type="button" @click="cat = ff.v" x-text="ff.l" class="whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-medium transition" :class="cat === ff.v ? 'border-brand bg-brand text-white' : 'border-slate-200 text-slate-600 hover:bg-black/5 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10'"></button>
+          <button type="button" @click="cat = ff.v" x-text="ff.l" class="whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] transition" :class="cat === ff.v ? '' : ''" :style="cat === ff.v ? 'background: var(--action); color: #fff; border: 0.5px solid var(--action)' : 'border: 0.5px solid var(--border); color: var(--text-secondary)'"></button>
         </template>
       </div>
 
       {# Liste des espèces #}
-      <div x-show="mode === 'liste'" class="overflow-x-auto rounded-xl border border-slate-200/70 dark:border-white/10">
-        <table class="w-full text-sm">
-          <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+      <div x-show="mode === 'liste'" class="hs-card overflow-hidden">
+        <table class="hs-table">
+          <thead>
             <tr>
-              <th class="px-4 py-3">{% trans "Culture" %}</th>
-              <th class="px-4 py-3">{% trans "Catégorie" %}</th>
-              <th class="px-4 py-3">{% trans "Semis" %}</th>
-              <th class="px-4 py-3">{% trans "Récolte" %}</th>
-              <th class="px-4 py-3">{% trans "Variétés" %}</th>
-              <th class="px-4 py-3 text-right"></th>
+              <th>{% trans "Culture" %}</th>
+              <th>{% trans "Catégorie" %}</th>
+              <th>{% trans "Semis" %}</th>
+              <th>{% trans "Récolte" %}</th>
+              <th>{% trans "Variétés" %}</th>
+              <th class="num"></th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+          <tbody>
             <template x-for="(r, i) in filtered" :key="i">
-              <tr class="cursor-pointer transition hover:bg-black/[0.02] dark:hover:bg-white/[0.03]" @click="view = r">
-                <td class="px-4 py-3"><p class="font-medium" x-text="r.nom"></p><p class="text-xs italic text-slate-400" x-text="r.sci || ''"></p></td>
-                <td class="px-4 py-3"><span class="rounded-full bg-black/5 px-2 py-0.5 text-xs font-medium dark:bg-white/10" x-text="r.catLabel"></span></td>
-                <td class="px-4 py-3"><span x-text="r.semis || '—'" :class="r.semis ? 'font-medium text-emerald-600 dark:text-emerald-400' : 'text-slate-300'"></span></td>
-                <td class="px-4 py-3"><span x-text="r.recolte || '—'" :class="r.recolte ? 'font-medium text-amber-600 dark:text-amber-400' : 'text-slate-300'"></span></td>
-                <td class="px-4 py-3"><span class="inline-flex items-center gap-1 rounded-full bg-[#28738f]/10 px-2 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]"><span class="material-icons-round text-[14px]">spa</span><span x-text="r.nbVar"></span></span></td>
-                <td class="px-4 py-3" @click.stop>
+              <tr class="cursor-pointer" @click="view = r">
+                <td><p class="font-medium" x-text="r.nom"></p><p class="text-[12px] italic" style="color: var(--text-muted)" x-text="r.sci || ''"></p></td>
+                <td><span class="hs-badge hs-badge-neutral" x-text="r.catLabel"></span></td>
+                <td><span x-text="r.semis || '—'" :style="r.semis ? 'color: var(--success)' : 'color: var(--text-muted)'"></span></td>
+                <td><span x-text="r.recolte || '—'" :style="r.recolte ? 'color: var(--warning)' : 'color: var(--text-muted)'"></span></td>
+                <td><span class="hs-badge hs-badge-neutral"><span class="material-icons-round text-[14px]">spa</span><span x-text="r.nbVar"></span></span></td>
+                <td class="num" @click.stop>
                   <div class="flex items-center justify-end gap-1">
-                    <button type="button" @click="view = r" title="{% trans 'Voir' %}" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10"><span class="material-icons-round text-[18px]">visibility</span></button>
-                    <button type="button" @click="openCEdit(r)" title="{% trans 'Modifier' %}" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-brand dark:hover:bg-white/10"><span class="material-icons-round text-[18px]">edit</span></button>
-                    <button type="button" @click="del = r" title="{% trans 'Supprimer' %}" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10"><span class="material-icons-round text-[18px]">delete</span></button>
+                    <button type="button" @click="view = r" title="{% trans 'Voir' %}" class="grid h-8 w-8 place-items-center rounded-full transition" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">visibility</span></button>
+                    <button type="button" @click="openCEdit(r)" title="{% trans 'Modifier' %}" class="grid h-8 w-8 place-items-center rounded-full transition" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">edit</span></button>
+                    <button type="button" @click="del = r" title="{% trans 'Supprimer' %}" class="grid h-8 w-8 place-items-center rounded-full transition" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">delete</span></button>
                   </div>
                 </td>
               </tr>
             </template>
           </tbody>
         </table>
-        <div x-show="filtered.length === 0" class="px-4 py-10 text-center text-sm text-slate-400">{% trans "Aucune culture ne correspond." %}</div>
+        <div x-show="filtered.length === 0" class="px-4 py-10 text-center">
+          <p class="text-[15px] font-medium">{% trans "Ajoutez votre première culture." %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune culture ne correspond à votre recherche." %}</p>
+        </div>
       </div>
 
       {# Par saison #}
       <div x-show="mode === 'saison'" x-cloak class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <template x-for="s in seasons" :key="s.k">
-          <div class="rounded-2xl border border-slate-200/70 dark:border-white/10">
-            <div class="flex items-center gap-2.5 border-b border-slate-100 px-4 py-3 dark:border-white/5">
-              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gradient-to-br text-white shadow-sm" :class="s.cls"><span class="material-icons-round text-[17px]" x-text="s.icon"></span></span>
-              <h4 class="flex-1 text-sm font-semibold" x-text="s.l"></h4>
-              <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400" x-text="inSeason(s.k).length"></span>
+          <div class="hs-card overflow-hidden">
+            <div class="flex items-center gap-2.5 px-4 py-3" style="border-bottom: 0.5px solid var(--border)">
+              <span class="material-icons-round text-[17px]" style="color: var(--text-secondary)" x-text="s.icon"></span>
+              <h3 class="flex-1 text-[14px] font-medium" x-text="s.l"></h3>
+              <span class="text-[12px]" style="color: var(--text-muted)" x-text="inSeason(s.k).length"></span>
             </div>
             <div class="flex flex-wrap gap-1.5 p-4">
               <template x-for="r in inSeason(s.k)" :key="r.id">
-                <button type="button" @click="view = r" class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium transition hover:border-brand hover:text-brand dark:border-white/10 dark:bg-white/5"><span x-text="r.nom"></span><span class="text-slate-400" x-show="r.nbVar" x-text="'· ' + r.nbVar"></span></button>
+                <button type="button" @click="view = r" class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-medium transition" style="border: 0.5px solid var(--border)"><span x-text="r.nom"></span><span style="color: var(--text-muted)" x-show="r.nbVar" x-text="'· ' + r.nbVar"></span></button>
               </template>
-              <p x-show="inSeason(s.k).length === 0" class="text-xs text-slate-400">{% trans "Aucune culture à semer sur cette saison." %}</p>
+              <p x-show="inSeason(s.k).length === 0" class="text-[12px]" style="color: var(--text-muted)">{% trans "Aucune culture à semer sur cette saison." %}</p>
             </div>
           </div>
         </template>
@@ -148,33 +141,35 @@
 
       {# Calendrier 12 mois #}
       <div x-show="mode === 'calendrier'" x-cloak class="space-y-3">
-        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
-          <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-4 rounded bg-emerald-400"></span>{% trans "Semis" %}</span>
-          <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-4 rounded bg-amber-400"></span>{% trans "Récolte" %}</span>
+        <div class="flex items-center gap-4 text-[12px]" style="color: var(--text-secondary)">
+          <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-4 rounded" style="background: var(--success)"></span>{% trans "Semis" %}</span>
+          <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-4 rounded" style="background: var(--warning)"></span>{% trans "Récolte" %}</span>
         </div>
-        <div class="overflow-x-auto rounded-xl border border-slate-200/70 dark:border-white/10">
-          <table class="w-full min-w-[680px] text-sm">
-            <thead class="bg-slate-50 text-xs text-slate-400 dark:bg-white/5">
+        <div class="hs-card overflow-x-auto">
+          <table class="hs-table min-w-[680px]">
+            <thead>
               <tr>
-                <th class="px-3 py-2 text-left font-medium">{% trans "Culture" %}</th>
-                <template x-for="(ml, i) in monthLabels" :key="i"><th class="px-0 py-2 text-center font-medium" x-text="ml"></th></template>
+                <th>{% trans "Culture" %}</th>
+                <template x-for="(ml, i) in monthLabels" :key="i"><th class="text-center" x-text="ml"></th></template>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+            <tbody>
               <template x-for="r in filtered" :key="r.id">
-                <tr class="cursor-pointer transition hover:bg-black/[0.02] dark:hover:bg-white/[0.03]" @click="view = r">
-                  <td class="whitespace-nowrap px-3 py-1.5 font-medium" x-text="r.nom"></td>
+                <tr class="cursor-pointer" @click="view = r">
+                  <td class="whitespace-nowrap font-medium" x-text="r.nom"></td>
                   <template x-for="m in months" :key="m">
                     <td class="px-0.5 py-1.5">
-                      <div class="mx-auto h-2 w-5 rounded" :class="(r.semisMonths || []).includes(m) ? 'bg-emerald-400' : 'bg-slate-100 dark:bg-white/5'"></div>
-                      <div class="mx-auto mt-0.5 h-2 w-5 rounded" :class="(r.recolteMonths || []).includes(m) ? 'bg-amber-400' : 'bg-slate-100 dark:bg-white/5'"></div>
+                      <div class="mx-auto h-2 w-5 rounded" :style="(r.semisMonths || []).includes(m) ? 'background: var(--success)' : 'background: var(--surface-alt)'"></div>
+                      <div class="mx-auto mt-0.5 h-2 w-5 rounded" :style="(r.recolteMonths || []).includes(m) ? 'background: var(--warning)' : 'background: var(--surface-alt)'"></div>
                     </td>
                   </template>
                 </tr>
               </template>
             </tbody>
           </table>
-          <div x-show="filtered.length === 0" class="px-4 py-10 text-center text-sm text-slate-400">{% trans "Aucune culture." %}</div>
+          <div x-show="filtered.length === 0" class="px-4 py-10 text-center">
+            <p class="text-[15px] font-medium">{% trans "Aucune culture." %}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -183,44 +178,43 @@
   {# ── Modal : fiche culture (espèce) + ses variétés ── #}
   <div x-show="view" x-cloak x-transition.opacity @keydown.escape.window="view = null" class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
     <div @click.self="view = null" class="my-4 flex w-full max-w-3xl justify-center">
-      <div class="max-h-[88vh] w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230] sm:p-6">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
         <template x-if="view"><div>
           <div class="mb-3 flex items-start gap-3">
-            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[22px]">grass</span></span>
-            <div class="min-w-0 flex-1"><h3 class="text-lg font-semibold leading-tight" x-text="view.nom"></h3><p class="text-xs italic text-slate-400" x-text="view.sci || '—'"></p></div>
-            <button type="button" @click="view = null" class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+            <div class="min-w-0 flex-1"><h3 class="text-[17px] font-medium leading-tight" x-text="view.nom"></h3><p class="text-[12px] italic" style="color: var(--text-muted)" x-text="view.sci || '—'"></p></div>
+            <button type="button" @click="view = null" class="grid h-8 w-8 shrink-0 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
           </div>
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-black/5 px-2.5 py-0.5 text-xs font-semibold dark:bg-white/10" x-text="view.catLabel"></span>
+          <span class="hs-badge hs-badge-neutral" x-text="view.catLabel"></span>
 
           <div class="mt-3 grid grid-cols-2 gap-2">
-            <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 dark:border-emerald-500/20 dark:bg-emerald-500/5"><p class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300"><span class="material-icons-round text-[15px]">grass</span>{% trans "Semis" %}</p><p class="mt-1 text-sm font-medium" x-text="view.semis || '—'"></p></div>
-            <div class="rounded-xl border border-amber-200 bg-amber-50/50 p-3 dark:border-amber-500/20 dark:bg-amber-500/5"><p class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300"><span class="material-icons-round text-[15px]">agriculture</span>{% trans "Récolte" %}</p><p class="mt-1 text-sm font-medium" x-text="view.recolte || '—'"></p></div>
+            <div class="hs-tile"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">grass</span>{% trans "Semis" %}</p><p class="mt-1 text-[15px] font-medium" x-text="view.semis || '—'"></p></div>
+            <div class="hs-tile"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">agriculture</span>{% trans "Récolte" %}</p><p class="mt-1 text-[15px] font-medium" x-text="view.recolte || '—'"></p></div>
           </div>
           <div class="mt-3 grid grid-cols-3 gap-2">
-            <div class="rounded-xl border border-slate-200/70 px-3 py-2 text-center dark:border-white/10"><p class="text-[11px] text-slate-400">Kc init</p><p class="font-semibold text-blue-600 dark:text-blue-400" x-text="view.ki.toFixed(2)"></p></div>
-            <div class="rounded-xl border border-slate-200/70 px-3 py-2 text-center dark:border-white/10"><p class="text-[11px] text-slate-400">Kc mid</p><p class="font-semibold text-emerald-600 dark:text-emerald-400" x-text="view.km.toFixed(2)"></p></div>
-            <div class="rounded-xl border border-slate-200/70 px-3 py-2 text-center dark:border-white/10"><p class="text-[11px] text-slate-400">Kc fin</p><p class="font-semibold text-orange-500 dark:text-orange-400" x-text="view.ke.toFixed(2)"></p></div>
+            <div class="hs-tile text-center"><p class="text-[12px]" style="color: var(--text-secondary)">Kc init</p><p class="text-[15px] font-medium" x-text="view.ki.toFixed(2)"></p></div>
+            <div class="hs-tile text-center"><p class="text-[12px]" style="color: var(--text-secondary)">Kc mid</p><p class="text-[15px] font-medium" x-text="view.km.toFixed(2)"></p></div>
+            <div class="hs-tile text-center"><p class="text-[12px]" style="color: var(--text-secondary)">Kc fin</p><p class="text-[15px] font-medium" x-text="view.ke.toFixed(2)"></p></div>
           </div>
 
           {# Variétés #}
           <div class="mt-4 flex items-center justify-between">
-            <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Variétés" %} (<span x-text="view.varietes.length"></span>)</p>
-            <button type="button" @click="openVAdd(view.id)" class="inline-flex items-center gap-1 rounded-full bg-[#28738f]/10 px-3 py-1 text-xs font-semibold text-[#28738f] transition hover:bg-[#28738f]/20 dark:bg-white/10 dark:text-[#67dded]"><span class="material-icons-round text-[15px]">add</span>{% trans "Variété" %}</button>
+            <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Variétés" %} (<span x-text="view.varietes.length"></span>)</p>
+            <button type="button" @click="openVAdd(view.id)" class="hs-btn-outline">{% trans "Variété" %}</button>
           </div>
           <div class="mt-2 space-y-2">
             <template x-for="v in view.varietes" :key="v.id">
-              <div class="flex items-center gap-3 rounded-xl border border-slate-200/70 p-2.5 dark:border-white/10">
+              <div class="flex items-center gap-3 rounded-xl p-2.5" style="border: 0.5px solid var(--border)">
                 <template x-if="v.photo"><img :src="v.photo" class="h-11 w-11 shrink-0 rounded-lg object-cover"></template>
-                <template x-if="!v.photo"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-black/5 text-slate-400 dark:bg-white/10"><span class="material-icons-round text-[20px]">spa</span></span></template>
-                <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium" x-text="v.nom"></p><p class="truncate text-xs text-slate-400"><span x-show="v.couleur" x-text="v.couleur"></span><span x-show="v.typeCroissance" x-text="(v.couleur ? ' · ' : '') + v.typeCroissance"></span></p></div>
+                <template x-if="!v.photo"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg" style="background: var(--surface-alt); color: var(--text-muted)"><span class="material-icons-round text-[20px]">spa</span></span></template>
+                <div class="min-w-0 flex-1"><p class="truncate text-[14px] font-medium" x-text="v.nom"></p><p class="truncate text-[12px]" style="color: var(--text-muted)"><span x-show="v.couleur" x-text="v.couleur"></span><span x-show="v.typeCroissance" x-text="(v.couleur ? ' · ' : '') + v.typeCroissance"></span></p></div>
                 <div class="flex shrink-0 items-center gap-0.5">
-                  <button type="button" @click="vview = v" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 hover:text-brand dark:hover:bg-white/10" title="{% trans 'Voir' %}"><span class="material-icons-round text-[17px]">visibility</span></button>
-                  <button type="button" @click="openVEdit(v)" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 hover:text-brand dark:hover:bg-white/10" title="{% trans 'Modifier' %}"><span class="material-icons-round text-[17px]">edit</span></button>
-                  <button type="button" @click="delV = v" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10" title="{% trans 'Supprimer' %}"><span class="material-icons-round text-[17px]">delete</span></button>
+                  <button type="button" @click="vview = v" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)" title="{% trans 'Voir' %}"><span class="material-icons-round text-[17px]">visibility</span></button>
+                  <button type="button" @click="openVEdit(v)" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)" title="{% trans 'Modifier' %}"><span class="material-icons-round text-[17px]">edit</span></button>
+                  <button type="button" @click="delV = v" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)" title="{% trans 'Supprimer' %}"><span class="material-icons-round text-[17px]">delete</span></button>
                 </div>
               </div>
             </template>
-            <p x-show="view.varietes.length === 0" class="rounded-xl border border-dashed border-slate-200 px-3 py-4 text-center text-xs text-slate-400 dark:border-white/10">{% trans "Aucune variété. Ajoutez-en une avec « + Variété »." %}</p>
+            <p x-show="view.varietes.length === 0" class="rounded-xl px-3 py-4 text-center text-[12px]" style="border: 0.5px dashed var(--border); color: var(--text-muted)">{% trans "Aucune variété. Ajoutez-en une avec « + Variété »." %}</p>
           </div>
         </div></template>
       </div>
@@ -230,50 +224,49 @@
   {# ── Modal : fiche variété (lecture) ── #}
   <div x-show="vview" x-cloak x-transition.opacity @keydown.escape.window="vview = null" class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
     <div @click.self="vview = null" class="my-4 flex w-full max-w-lg justify-center">
-      <div class="max-h-[88vh] w-full overflow-y-auto rounded-2xl bg-white shadow-xl dark:bg-[#122230]">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-0">
         <template x-if="vview"><div>
-          <template x-if="vview.photo"><div class="relative"><img :src="vview.photo" class="h-52 w-full rounded-t-2xl object-cover"><button type="button" @click="vview = null" class="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-black/40 text-white backdrop-blur hover:bg-black/60">✕</button></div></template>
+          <template x-if="vview.photo"><div class="relative"><img :src="vview.photo" class="h-52 w-full rounded-t-[12px] object-cover"><button type="button" @click="vview = null" class="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-black/40 text-white backdrop-blur hover:bg-black/60">✕</button></div></template>
           <div class="p-5">
             <div class="flex items-start gap-3">
-              <template x-if="!vview.photo"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[22px]">spa</span></span></template>
-              <div class="min-w-0 flex-1"><h3 class="text-lg font-semibold leading-tight" x-text="vview.nom"></h3><p class="text-xs italic text-slate-400" x-text="vview.sci || '—'"></p></div>
-              <template x-if="!vview.photo"><button type="button" @click="vview = null" class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button></template>
+              <div class="min-w-0 flex-1"><h3 class="text-[17px] font-medium leading-tight" x-text="vview.nom"></h3><p class="text-[12px] italic" style="color: var(--text-muted)" x-text="vview.sci || '—'"></p></div>
+              <template x-if="!vview.photo"><button type="button" @click="vview = null" class="grid h-8 w-8 shrink-0 place-items-center rounded-full" style="color: var(--text-muted)">✕</button></template>
             </div>
-            <div class="mt-2 flex flex-wrap items-center gap-2"><template x-if="vview.note"><span class="inline-flex items-center gap-1 text-xs font-medium text-amber-500"><span class="material-icons-round text-[15px]">star</span><span x-text="vview.note.toFixed(1)"></span><span class="text-slate-400" x-text="'(' + vview.nbAvis + ' {% trans "avis" %})'"></span></span></template></div>
-            <template x-if="vview.description"><p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300" x-text="vview.description"></p></template>
+            <div class="mt-2 flex flex-wrap items-center gap-2"><template x-if="vview.note"><span class="inline-flex items-center gap-1 text-[12px] font-medium" style="color: var(--warning)"><span class="material-icons-round text-[15px]">star</span><span x-text="vview.note.toFixed(1)"></span><span style="color: var(--text-muted)" x-text="'(' + vview.nbAvis + ' {% trans "avis" %})'"></span></span></template></div>
+            <template x-if="vview.description"><p class="mt-3 text-[14px] leading-relaxed" style="color: var(--text-secondary)" x-text="vview.description"></p></template>
             <div class="mt-4 grid grid-cols-2 gap-2">
-              <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 dark:border-emerald-500/20 dark:bg-emerald-500/5"><p class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300"><span class="material-icons-round text-[15px]">grass</span>{% trans "Semis" %}</p><p class="mt-1 text-sm font-medium" x-text="vview.semis || '—'"></p></div>
-              <div class="rounded-xl border border-amber-200 bg-amber-50/50 p-3 dark:border-amber-500/20 dark:bg-amber-500/5"><p class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300"><span class="material-icons-round text-[15px]">agriculture</span>{% trans "Récolte" %}</p><p class="mt-1 text-sm font-medium" x-text="vview.recolte || '—'"></p></div>
+              <div class="hs-tile"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">grass</span>{% trans "Semis" %}</p><p class="mt-1 text-[15px] font-medium" x-text="vview.semis || '—'"></p></div>
+              <div class="hs-tile"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">agriculture</span>{% trans "Récolte" %}</p><p class="mt-1 text-[15px] font-medium" x-text="vview.recolte || '—'"></p></div>
             </div>
             <template x-if="vview.expositionLabel || vview.arrosageLabel || vview.natureSol || vview.solDetail || vview.modeCulture">
-              <div class="mt-4"><p class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Conditions de culture" %}</p>
-                <dl class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-                  <template x-if="vview.expositionLabel"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Exposition" %}</dt><dd class="font-medium" x-text="vview.expositionLabel"></dd></div></template>
-                  <template x-if="vview.arrosageLabel"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Arrosage" %}</dt><dd class="font-medium" x-text="vview.arrosageLabel"></dd></div></template>
-                  <template x-if="vview.natureSol"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Sol" %}</dt><dd class="font-medium" x-text="vview.natureSol"></dd></div></template>
-                  <template x-if="vview.solDetail"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Détail" %}</dt><dd class="font-medium" x-text="vview.solDetail"></dd></div></template>
-                  <template x-if="vview.modeCulture"><div class="col-span-2 flex justify-between gap-2"><dt class="text-slate-400">{% trans "Culture" %}</dt><dd class="font-medium" x-text="vview.modeCulture"></dd></div></template>
+              <div class="mt-4"><p class="mb-2 text-[12px]" style="color: var(--text-secondary)">{% trans "Conditions de culture" %}</p>
+                <dl class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[14px]">
+                  <template x-if="vview.expositionLabel"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Exposition" %}</dt><dd class="font-medium" x-text="vview.expositionLabel"></dd></div></template>
+                  <template x-if="vview.arrosageLabel"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Arrosage" %}</dt><dd class="font-medium" x-text="vview.arrosageLabel"></dd></div></template>
+                  <template x-if="vview.natureSol"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Sol" %}</dt><dd class="font-medium" x-text="vview.natureSol"></dd></div></template>
+                  <template x-if="vview.solDetail"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Détail" %}</dt><dd class="font-medium" x-text="vview.solDetail"></dd></div></template>
+                  <template x-if="vview.modeCulture"><div class="col-span-2 flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Culture" %}</dt><dd class="font-medium" x-text="vview.modeCulture"></dd></div></template>
                 </dl></div>
             </template>
-            <template x-if="vview.conseilSemis"><div class="mt-3 rounded-xl border border-slate-200/70 px-3 py-2.5 dark:border-white/10"><p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Conseil de semis" %}</p><p class="mt-0.5 text-sm text-slate-600 dark:text-slate-300" x-text="vview.conseilSemis"></p></div></template>
-            <template x-if="vview.conseilCulture"><div class="mt-2 rounded-xl border border-slate-200/70 px-3 py-2.5 dark:border-white/10"><p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Conseil de culture" %}</p><p class="mt-0.5 text-sm text-slate-600 dark:text-slate-300" x-text="vview.conseilCulture"></p></div></template>
+            <template x-if="vview.conseilSemis"><div class="mt-3 rounded-xl px-3 py-2.5" style="border: 0.5px solid var(--border)"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Conseil de semis" %}</p><p class="mt-0.5 text-[14px]" style="color: var(--text-secondary)" x-text="vview.conseilSemis"></p></div></template>
+            <template x-if="vview.conseilCulture"><div class="mt-2 rounded-xl px-3 py-2.5" style="border: 0.5px solid var(--border)"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Conseil de culture" %}</p><p class="mt-0.5 text-[14px]" style="color: var(--text-secondary)" x-text="vview.conseilCulture"></p></div></template>
             <template x-if="vview.poids || vview.contenance || vview.forme || vview.textureFruit || vview.typeCroissance || vview.couleur || vview.feuillage || vview.typeSemis">
-              <div class="mt-4"><p class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Caractéristiques" %}</p>
-                <dl class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-                  <template x-if="vview.poids"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Poids" %}</dt><dd class="font-medium" x-text="vview.poids"></dd></div></template>
-                  <template x-if="vview.contenance"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Sachet" %}</dt><dd class="font-medium" x-text="vview.contenance"></dd></div></template>
-                  <template x-if="vview.forme"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Forme" %}</dt><dd class="font-medium" x-text="vview.forme"></dd></div></template>
-                  <template x-if="vview.textureFruit"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Texture" %}</dt><dd class="font-medium" x-text="vview.textureFruit"></dd></div></template>
-                  <template x-if="vview.typeCroissance"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Croissance" %}</dt><dd class="font-medium" x-text="vview.typeCroissance"></dd></div></template>
-                  <template x-if="vview.couleur"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Couleur" %}</dt><dd class="font-medium" x-text="vview.couleur"></dd></div></template>
-                  <template x-if="vview.feuillage"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Feuillage" %}</dt><dd class="font-medium" x-text="vview.feuillage"></dd></div></template>
-                  <template x-if="vview.typeSemis"><div class="flex justify-between gap-2"><dt class="text-slate-400">{% trans "Semis" %}</dt><dd class="font-medium" x-text="vview.typeSemis"></dd></div></template>
+              <div class="mt-4"><p class="mb-2 text-[12px]" style="color: var(--text-secondary)">{% trans "Caractéristiques" %}</p>
+                <dl class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[14px]">
+                  <template x-if="vview.poids"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Poids" %}</dt><dd class="font-medium" x-text="vview.poids"></dd></div></template>
+                  <template x-if="vview.contenance"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Sachet" %}</dt><dd class="font-medium" x-text="vview.contenance"></dd></div></template>
+                  <template x-if="vview.forme"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Forme" %}</dt><dd class="font-medium" x-text="vview.forme"></dd></div></template>
+                  <template x-if="vview.textureFruit"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Texture" %}</dt><dd class="font-medium" x-text="vview.textureFruit"></dd></div></template>
+                  <template x-if="vview.typeCroissance"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Croissance" %}</dt><dd class="font-medium" x-text="vview.typeCroissance"></dd></div></template>
+                  <template x-if="vview.couleur"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Couleur" %}</dt><dd class="font-medium" x-text="vview.couleur"></dd></div></template>
+                  <template x-if="vview.feuillage"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Feuillage" %}</dt><dd class="font-medium" x-text="vview.feuillage"></dd></div></template>
+                  <template x-if="vview.typeSemis"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Semis" %}</dt><dd class="font-medium" x-text="vview.typeSemis"></dd></div></template>
                 </dl></div>
             </template>
-            <template x-if="vview.origine || vview.origineTexte"><div class="mt-3 rounded-xl border border-slate-200/70 px-3 py-2.5 dark:border-white/10"><p class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400"><span class="material-icons-round text-[14px]">public</span>{% trans "Origine" %}<span class="font-normal normal-case text-slate-500" x-text="vview.origine ? ' · ' + vview.origine : ''"></span></p><p class="mt-0.5 text-sm text-slate-600 dark:text-slate-300" x-text="vview.origineTexte"></p></div></template>
+            <template x-if="vview.origine || vview.origineTexte"><div class="mt-3 rounded-xl px-3 py-2.5" style="border: 0.5px solid var(--border)"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[14px]">public</span>{% trans "Origine" %}<span class="font-normal normal-case" style="color: var(--text-muted)" x-text="vview.origine ? ' · ' + vview.origine : ''"></span></p><p class="mt-0.5 text-[14px]" style="color: var(--text-secondary)" x-text="vview.origineTexte"></p></div></template>
             <div class="mt-5 flex justify-end gap-2">
-              <button type="button" @click="vview = null" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Fermer" %}</button>
-              <button type="button" @click="openVEdit(vview); vview = null" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90"><span class="material-icons-round text-[18px]">edit</span>{% trans "Modifier" %}</button>
+              <button type="button" @click="vview = null" class="hs-btn-outline">{% trans "Fermer" %}</button>
+              <button type="button" @click="openVEdit(vview); vview = null" class="hs-btn-primary">{% trans "Modifier" %}</button>
             </div>
           </div>
         </div></template>
@@ -283,22 +276,22 @@
 
   {# ── Modal : suppressions ── #}
   <div x-show="del" x-cloak x-transition.opacity @keydown.escape.window="del = null" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
-    <div @click.self="del = null" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
-      <h3 class="font-semibold">{% trans "Supprimer la culture ?" %}</h3>
-      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">« <span class="font-medium text-slate-700 dark:text-slate-200" x-text="del ? del.nom : ''"></span> » {% trans "et toutes ses variétés seront supprimées." %}</p>
+    <div @click.self="del = null" class="hs-popover w-full max-w-lg p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer la culture ?" %}</h3>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">« <span class="font-medium" style="color: var(--text)" x-text="del ? del.nom : ''"></span> » {% trans "et toutes ses variétés seront supprimées." %}</p>
       <form method="post" :action="del ? '/cultures/' + del.id + '/supprimer/' : ''" class="mt-5 flex justify-end gap-2">{% csrf_token %}
-        <button type="button" @click="del = null" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-        <button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-red-500 px-5 py-2 text-sm font-medium text-white hover:bg-red-600"><span class="material-icons-round text-[18px]">delete</span>{% trans "Supprimer" %}</button>
+        <button type="button" @click="del = null" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg px-5 py-2 text-sm font-medium text-white" style="background: var(--danger)"><span class="material-icons-round text-[18px]">delete</span>{% trans "Supprimer" %}</button>
       </form>
     </div>
   </div>
   <div x-show="delV" x-cloak x-transition.opacity @keydown.escape.window="delV = null" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
-    <div @click.self="delV = null" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
-      <h3 class="font-semibold">{% trans "Supprimer la variété ?" %}</h3>
-      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">« <span class="font-medium text-slate-700 dark:text-slate-200" x-text="delV ? delV.nom : ''"></span> » {% trans "sera supprimée définitivement." %}</p>
+    <div @click.self="delV = null" class="hs-popover w-full max-w-lg p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer la variété ?" %}</h3>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">« <span class="font-medium" style="color: var(--text)" x-text="delV ? delV.nom : ''"></span> » {% trans "sera supprimée définitivement." %}</p>
       <form method="post" :action="delV ? '/varietes/' + delV.id + '/supprimer/' : ''" class="mt-5 flex justify-end gap-2">{% csrf_token %}
-        <button type="button" @click="delV = null" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-        <button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-red-500 px-5 py-2 text-sm font-medium text-white hover:bg-red-600"><span class="material-icons-round text-[18px]">delete</span>{% trans "Supprimer" %}</button>
+        <button type="button" @click="delV = null" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg px-5 py-2 text-sm font-medium text-white" style="background: var(--danger)"><span class="material-icons-round text-[18px]">delete</span>{% trans "Supprimer" %}</button>
       </form>
     </div>
   </div>
@@ -306,29 +299,28 @@
   {# ── Modal : formulaire culture (espèce) ── #}
   <div x-show="cShow" x-cloak x-transition.opacity @keydown.escape.window="cShow = false" class="fixed inset-0 z-[55] flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
     <div @click.self="cShow = false" class="my-4 flex w-full max-w-3xl justify-center">
-      <div class="max-h-[88vh] w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230] sm:p-6">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
         <div class="mb-4 flex items-center gap-3">
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[20px]">grass</span></span>
-          <h3 class="flex-1 text-lg font-semibold" x-text="cMode === 'edit' ? '{% trans "Modifier la culture" %}' : '{% trans "Nouvelle culture" %}'"></h3>
-          <button type="button" @click="cShow = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+          <h3 class="flex-1 text-[17px] font-medium" x-text="cMode === 'edit' ? '{% trans "Modifier la culture" %}' : '{% trans "Nouvelle culture" %}'"></h3>
+          <button type="button" @click="cShow = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
         </div>
         <form method="post" :action="cAction" class="space-y-3">{% csrf_token %}
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span class="text-red-500">*</span></label><input name="nom" x-model="cf.nom" required placeholder="ex: Tomate" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div>
-            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom scientifique" %}</label><input name="nom_scientifique" x-model="cf.sci" placeholder="ex: Solanum lycopersicum" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div>
+            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label><input name="nom" x-model="cf.nom" required placeholder="ex: Tomate" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom scientifique" %}</label><input name="nom_scientifique" x-model="cf.sci" placeholder="ex: Solanum lycopersicum" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
           </div>
-          <div><label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label><select name="categorie" x-model="cf.cat" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">{% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select></div>
+          <div><label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label><select name="categorie" x-model="cf.cat" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">{% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select></div>
           <div class="grid grid-cols-2 gap-3">
-            <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 dark:border-emerald-500/20 dark:bg-emerald-500/5"><p class="mb-1.5 flex items-center gap-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300"><span class="material-icons-round text-[15px]">grass</span>{% trans "Semis" %}</p><div class="grid grid-cols-2 gap-2"><select name="semis_debut" x-model.number="cf.sd" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">{% trans "Début" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="semis_fin" x-model.number="cf.sf" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">{% trans "Fin" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
-            <div class="rounded-xl border border-amber-200 bg-amber-50/50 p-3 dark:border-amber-500/20 dark:bg-amber-500/5"><p class="mb-1.5 flex items-center gap-1 text-xs font-semibold text-amber-700 dark:text-amber-300"><span class="material-icons-round text-[15px]">agriculture</span>{% trans "Récolte" %}</p><div class="grid grid-cols-2 gap-2"><select name="recolte_debut" x-model.number="cf.rd" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">{% trans "Début" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="recolte_fin" x-model.number="cf.rf" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">{% trans "Fin" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
+            <div class="hs-tile"><p class="mb-1.5 flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">grass</span>{% trans "Semis" %}</p><div class="grid grid-cols-2 gap-2"><select name="semis_debut" x-model.number="cf.sd" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">{% trans "Début" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="semis_fin" x-model.number="cf.sf" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">{% trans "Fin" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
+            <div class="hs-tile"><p class="mb-1.5 flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">agriculture</span>{% trans "Récolte" %}</p><div class="grid grid-cols-2 gap-2"><select name="recolte_debut" x-model.number="cf.rd" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">{% trans "Début" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="recolte_fin" x-model.number="cf.rf" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">{% trans "Fin" %}</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
           </div>
           <div class="grid grid-cols-3 gap-3">
-            <div><label class="mb-1 block text-xs font-medium text-blue-600 dark:text-blue-400">Kc init</label><input name="kc_initial" x-model="cf.ki" type="number" step="0.01" min="0" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div>
-            <div><label class="mb-1 block text-xs font-medium text-emerald-600 dark:text-emerald-400">Kc mid</label><input name="kc_mid" x-model="cf.km" type="number" step="0.01" min="0" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div>
-            <div><label class="mb-1 block text-xs font-medium text-orange-500 dark:text-orange-400">Kc fin</label><input name="kc_end" x-model="cf.ke" type="number" step="0.01" min="0" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div>
+            <div><label class="mb-1 block text-xs font-medium" style="color: var(--text-secondary)">Kc init</label><input name="kc_initial" x-model="cf.ki" type="number" step="0.01" min="0" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+            <div><label class="mb-1 block text-xs font-medium" style="color: var(--text-secondary)">Kc mid</label><input name="kc_mid" x-model="cf.km" type="number" step="0.01" min="0" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+            <div><label class="mb-1 block text-xs font-medium" style="color: var(--text-secondary)">Kc fin</label><input name="kc_end" x-model="cf.ke" type="number" step="0.01" min="0" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
           </div>
-          <div><label class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label><textarea name="notes" x-model="cf.notes" rows="2" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></textarea></div>
-          <div class="flex justify-end gap-2 pt-1"><button type="button" @click="cShow = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button><button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white hover:opacity-90"><span class="material-icons-round text-[18px]">save</span>{% trans "Enregistrer" %}</button></div>
+          <div><label class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label><textarea name="notes" x-model="cf.notes" rows="2" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></textarea></div>
+          <div class="flex justify-end gap-2 pt-1"><button type="button" @click="cShow = false" class="hs-btn-outline">{% trans "Annuler" %}</button><button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button></div>
         </form>
       </div>
     </div>
@@ -337,52 +329,51 @@
   {# ── Modal : formulaire variété ── #}
   <div x-show="vShow" x-cloak x-transition.opacity @keydown.escape.window="vShow = false" class="fixed inset-0 z-[55] flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
     <div @click.self="vShow = false" class="my-4 flex w-full max-w-3xl justify-center">
-      <div class="max-h-[88vh] w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230] sm:p-6">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
         <div class="mb-4 flex items-center gap-3">
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[20px]">spa</span></span>
-          <h3 class="flex-1 text-lg font-semibold" x-text="vMode === 'edit' ? '{% trans "Modifier la variété" %}' : '{% trans "Nouvelle variété" %}'"></h3>
-          <button type="button" @click="vShow = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+          <h3 class="flex-1 text-[17px] font-medium" x-text="vMode === 'edit' ? '{% trans "Modifier la variété" %}' : '{% trans "Nouvelle variété" %}'"></h3>
+          <button type="button" @click="vShow = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
         </div>
         <form method="post" :action="vAction" enctype="multipart/form-data" class="space-y-3">{% csrf_token %}
           <input type="hidden" name="culture" :value="vf.cultureId">
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom de la variété" %} <span class="text-red-500">*</span></label><input name="nom" x-model="vf.nom" required placeholder="ex: Aunt Ruby's German Green" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div>
-            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom scientifique" %}</label><input name="nom_scientifique" x-model="vf.sci" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div>
+            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom de la variété" %} <span style="color: var(--danger)">*</span></label><input name="nom" x-model="vf.nom" required placeholder="ex: Aunt Ruby's German Green" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+            <div><label class="mb-1 block text-sm font-medium">{% trans "Nom scientifique" %}</label><input name="nom_scientifique" x-model="vf.sci" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="mb-1 block text-sm font-medium">{% trans "Photo" %}</label><input name="photo" type="file" accept="image/*" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm file:mr-2 file:rounded-md file:border-0 file:bg-brand/10 file:px-2 file:py-1 file:text-brand dark:border-white/10"><template x-if="vMode === 'edit'"><p class="mt-1 text-xs text-slate-400">{% trans "Vide = conserver l'actuelle." %}</p></template></div>
-            <div class="grid grid-cols-2 gap-2"><div><label class="mb-1 block text-sm font-medium">{% trans "Note /5" %}</label><input name="note" x-model="vf.note" type="number" step="0.1" min="0" max="5" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div><div><label class="mb-1 block text-sm font-medium">{% trans "Avis" %}</label><input name="nb_avis" x-model="vf.nbAvis" type="number" min="0" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></div></div>
+            <div><label class="mb-1 block text-sm font-medium">{% trans "Photo" %}</label><input name="photo" type="file" accept="image/*" class="w-full rounded-lg px-3 py-2 text-sm file:mr-2 file:rounded-md file:border-0 file:px-2 file:py-1" style="border: 0.5px solid var(--border); background: transparent"><template x-if="vMode === 'edit'"><p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Vide = conserver l'actuelle." %}</p></template></div>
+            <div class="grid grid-cols-2 gap-2"><div><label class="mb-1 block text-sm font-medium">{% trans "Note /5" %}</label><input name="note" x-model="vf.note" type="number" step="0.1" min="0" max="5" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div><div><label class="mb-1 block text-sm font-medium">{% trans "Avis" %}</label><input name="nb_avis" x-model="vf.nbAvis" type="number" min="0" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div></div>
           </div>
-          <div><label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label><textarea name="description" x-model="vf.description" rows="2" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></textarea></div>
-          <p class="pt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Calendrier (sinon celui de l'espèce)" %}</p>
+          <div><label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label><textarea name="description" x-model="vf.description" rows="2" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></textarea></div>
+          <p class="pt-1 text-[12px]" style="color: var(--text-secondary)">{% trans "Calendrier (sinon celui de l'espèce)" %}</p>
           <div class="grid grid-cols-2 gap-3">
-            <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 dark:border-emerald-500/20 dark:bg-emerald-500/5"><p class="mb-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300">{% trans "Semis" %}</p><div class="grid grid-cols-2 gap-2"><select name="semis_debut" x-model.number="vf.sd" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="semis_fin" x-model.number="vf.sf" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
-            <div class="rounded-xl border border-amber-200 bg-amber-50/50 p-3 dark:border-amber-500/20 dark:bg-amber-500/5"><p class="mb-1.5 text-xs font-semibold text-amber-700 dark:text-amber-300">{% trans "Récolte" %}</p><div class="grid grid-cols-2 gap-2"><select name="recolte_debut" x-model.number="vf.rd" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="recolte_fin" x-model.number="vf.rf" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm dark:border-white/10 dark:bg-transparent dark:[color-scheme:dark]"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
+            <div class="hs-tile"><p class="mb-1.5 text-[12px]" style="color: var(--text-secondary)">{% trans "Semis" %}</p><div class="grid grid-cols-2 gap-2"><select name="semis_debut" x-model.number="vf.sd" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="semis_fin" x-model.number="vf.sf" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
+            <div class="hs-tile"><p class="mb-1.5 text-[12px]" style="color: var(--text-secondary)">{% trans "Récolte" %}</p><div class="grid grid-cols-2 gap-2"><select name="recolte_debut" x-model.number="vf.rd" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select><select name="recolte_fin" x-model.number="vf.rf" class="w-full rounded-lg px-2 py-1.5 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">—</option>{% for n, m in mois_choices %}<option value="{{ n }}">{{ m }}</option>{% endfor %}</select></div></div>
           </div>
-          <p class="pt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Conditions de culture" %}</p>
+          <p class="pt-1 text-[12px]" style="color: var(--text-secondary)">{% trans "Conditions de culture" %}</p>
           <div class="grid grid-cols-2 gap-3">
-            <select name="exposition" x-model="vf.exposition" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10 dark:[color-scheme:dark]"><option value="">{% trans "Exposition" %}</option>{% for value, label in expositions %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
-            <select name="arrosage" x-model="vf.arrosage" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10 dark:[color-scheme:dark]"><option value="">{% trans "Arrosage" %}</option>{% for value, label in arrosages %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
-            <input name="nature_sol" x-model="vf.natureSol" placeholder="{% trans 'Nature du sol' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="sol_detail" x-model="vf.solDetail" placeholder="{% trans 'Sol (détail)' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="mode_culture" x-model="vf.modeCulture" placeholder="{% trans 'Mode de culture' %}" class="col-span-2 rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
+            <select name="exposition" x-model="vf.exposition" class="rounded-lg px-3 py-2 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">{% trans "Exposition" %}</option>{% for value, label in expositions %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+            <select name="arrosage" x-model="vf.arrosage" class="rounded-lg px-3 py-2 text-sm dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent"><option value="">{% trans "Arrosage" %}</option>{% for value, label in arrosages %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+            <input name="nature_sol" x-model="vf.natureSol" placeholder="{% trans 'Nature du sol' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="sol_detail" x-model="vf.solDetail" placeholder="{% trans 'Sol (détail)' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="mode_culture" x-model="vf.modeCulture" placeholder="{% trans 'Mode de culture' %}" class="col-span-2 rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
           </div>
-          <div><label class="mb-1 block text-sm font-medium">{% trans "Conseil de semis" %}</label><textarea name="conseil_semis" x-model="vf.conseilSemis" rows="2" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10"></textarea></div>
-          <div><label class="mb-1 block text-sm font-medium">{% trans "Conseil de culture" %}</label><textarea name="conseil_culture" x-model="vf.conseilCulture" rows="2" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10"></textarea></div>
-          <p class="pt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">{% trans "Caractéristiques" %}</p>
+          <div><label class="mb-1 block text-sm font-medium">{% trans "Conseil de semis" %}</label><textarea name="conseil_semis" x-model="vf.conseilSemis" rows="2" class="w-full rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent"></textarea></div>
+          <div><label class="mb-1 block text-sm font-medium">{% trans "Conseil de culture" %}</label><textarea name="conseil_culture" x-model="vf.conseilCulture" rows="2" class="w-full rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent"></textarea></div>
+          <p class="pt-1 text-[12px]" style="color: var(--text-secondary)">{% trans "Caractéristiques" %}</p>
           <div class="grid grid-cols-2 gap-3">
-            <input name="poids" x-model="vf.poids" placeholder="{% trans 'Poids' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="contenance_sachet" x-model="vf.contenance" placeholder="{% trans 'Sachet' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="forme" x-model="vf.forme" placeholder="{% trans 'Forme' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="texture_fruit" x-model="vf.textureFruit" placeholder="{% trans 'Texture' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="type_croissance" x-model="vf.typeCroissance" placeholder="{% trans 'Croissance' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="couleur" x-model="vf.couleur" placeholder="{% trans 'Couleur' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="feuillage" x-model="vf.feuillage" placeholder="{% trans 'Feuillage' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-            <input name="type_semis" x-model="vf.typeSemis" placeholder="{% trans 'Semis (en godet…)' %}" class="rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
+            <input name="poids" x-model="vf.poids" placeholder="{% trans 'Poids' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="contenance_sachet" x-model="vf.contenance" placeholder="{% trans 'Sachet' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="forme" x-model="vf.forme" placeholder="{% trans 'Forme' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="texture_fruit" x-model="vf.textureFruit" placeholder="{% trans 'Texture' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="type_croissance" x-model="vf.typeCroissance" placeholder="{% trans 'Croissance' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="couleur" x-model="vf.couleur" placeholder="{% trans 'Couleur' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="feuillage" x-model="vf.feuillage" placeholder="{% trans 'Feuillage' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="type_semis" x-model="vf.typeSemis" placeholder="{% trans 'Semis (en godet…)' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
           </div>
-          <input name="origine" x-model="vf.origine" placeholder="{% trans 'Origine (ex: Allemagne)' %}" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10">
-          <textarea name="origine_texte" x-model="vf.origineTexte" rows="2" placeholder="{% trans 'Origine historique…' %}" class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm dark:border-white/10"></textarea>
-          <div class="flex justify-end gap-2 pt-1"><button type="button" @click="vShow = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button><button type="submit" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white hover:opacity-90"><span class="material-icons-round text-[18px]">save</span>{% trans "Enregistrer" %}</button></div>
+          <input name="origine" x-model="vf.origine" placeholder="{% trans 'Origine (ex: Allemagne)' %}" class="w-full rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+          <textarea name="origine_texte" x-model="vf.origineTexte" rows="2" placeholder="{% trans 'Origine historique…' %}" class="w-full rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent"></textarea>
+          <div class="flex justify-end gap-2 pt-1"><button type="button" @click="vShow = false" class="hs-btn-outline">{% trans "Annuler" %}</button><button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button></div>
         </form>
       </div>
     </div>

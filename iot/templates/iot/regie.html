@@ -2,10 +2,11 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6" x-data="scada()">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold">{% trans "Régie SCADA" %}</h2>
-    <span class="flex items-center gap-2 text-sm">
+<section class="space-y-5" x-data="scada()">
+  <p class="hs-crumb">{% trans "Cultures & terrain · Régie SCADA" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Régie SCADA" %}</h1>
+    <span class="flex items-center gap-2 text-[13px]">
       <span class="h-2.5 w-2.5 rounded-full" :class="connected ? 'bg-green-500' : 'bg-slate-400'"></span>
       <span x-text="connected ? '{% trans "Temps réel actif" %}' : '{% trans "Hors ligne" %}'"></span>
     </span>
@@ -14,18 +15,18 @@
   {% if alerts %}
     <div class="space-y-2">
       {% for a in alerts %}
-        <div class="md-card border-l-4 {% if a.severity == 'danger' %}border-red-500{% elif a.severity == 'warning' %}border-amber-500{% else %}border-sky-500{% endif %}">
+        <div class="hs-card border-l-4 {% if a.severity == 'danger' %}border-red-500{% elif a.severity == 'warning' %}border-amber-500{% else %}border-sky-500{% endif %}">
           <p class="font-medium">{{ a.title }}</p>
-          <p class="text-sm text-slate-500 dark:text-slate-400">{{ a.message }}</p>
+          <p class="text-[13px] mt-1" style="color: var(--text-secondary)">{{ a.message }}</p>
         </div>
       {% endfor %}
     </div>
   {% endif %}
 
   {% if devices %}
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-[10px] sm:grid-cols-2 lg:grid-cols-3">
       {% for d in devices %}
-        <div class="md-card" data-device-id="{{ d.id }}"
+        <div class="hs-card" data-device-id="{{ d.id }}"
              :class="(status[{{ d.id }}] || '{{ d.status }}') === 'online' ? 'glow-teal' : ''">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -33,33 +34,36 @@
                     :class="(status[{{ d.id }}] || '{{ d.status }}') === 'online' ? 'status-online' : 'status-offline'"></span>
               <p class="font-medium">{{ d.name }}</p>
             </div>
-            <span class="text-[11px] uppercase tracking-wide text-slate-400"
+            <span class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)"
                   x-text="status[{{ d.id }}] || '{{ d.status }}'"></span>
           </div>
-          <p class="text-xs text-slate-400">{{ d.get_device_type_display }} · {{ d.get_brand_display }}</p>
-          <div class="mt-4 grid grid-cols-2 gap-3">
-            <div class="rounded-xl bg-brand/5 p-3">
-              <p class="text-[11px] uppercase text-slate-400">{% trans "Débit" %}</p>
-              <p class="text-lg font-semibold text-brand"><span x-text="readings[{{ d.id }}]?.flow ?? '—'"></span> <span class="text-xs font-normal text-slate-400">m³/h</span></p>
+          <p class="text-[12px]" style="color: var(--text-secondary)">{{ d.get_device_type_display }} · {{ d.get_brand_display }}</p>
+          <div class="mt-4 grid grid-cols-2 gap-[10px]">
+            <div class="hs-tile">
+              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Débit" %}</p>
+              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.flow ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">m³/h</span></p>
             </div>
-            <div class="rounded-xl bg-brand/5 p-3">
-              <p class="text-[11px] uppercase text-slate-400">{% trans "Pression" %}</p>
-              <p class="text-lg font-semibold"><span x-text="readings[{{ d.id }}]?.pressure ?? '—'"></span> <span class="text-xs font-normal text-slate-400">bar</span></p>
+            <div class="hs-tile">
+              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Pression" %}</p>
+              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.pressure ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">bar</span></p>
             </div>
-            <div class="rounded-xl bg-brand/5 p-3">
-              <p class="text-[11px] uppercase text-slate-400">{% trans "Puissance" %}</p>
-              <p class="text-lg font-semibold"><span x-text="readings[{{ d.id }}]?.power ?? '—'"></span> <span class="text-xs font-normal text-slate-400">kW</span></p>
+            <div class="hs-tile">
+              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Puissance" %}</p>
+              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.power ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">kW</span></p>
             </div>
-            <div class="rounded-xl bg-brand/5 p-3">
-              <p class="text-[11px] uppercase text-slate-400">{% trans "Humidité" %}</p>
-              <p class="text-lg font-semibold text-green-500"><span x-text="readings[{{ d.id }}]?.soil ?? '—'"></span> <span class="text-xs font-normal text-slate-400">%</span></p>
+            <div class="hs-tile">
+              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Humidité" %}</p>
+              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.soil ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">%</span></p>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
   {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucun device IoT. Ajoutez-en via l'admin ou Capteurs." %}</p></div>
+    <div class="hs-card">
+      <p class="text-[15px] font-medium">{% trans "Aucun device IoT connecté" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez-en via l'admin ou la page Capteurs." %}</p>
+    </div>
   {% endif %}
 </section>
 {% endblock %}
