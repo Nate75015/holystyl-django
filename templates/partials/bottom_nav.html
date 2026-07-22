@@ -2,11 +2,11 @@
 <nav class="glass-panel fixed inset-x-0 bottom-0 z-30 flex items-center justify-around border-t px-2 py-2 lg:hidden">
   {% for item in nav_primary %}
     {% if item.url_name %}
-      <a href="{% url item.url_name %}" class="flex min-h-[44px] min-w-[44px] flex-col items-center justify-center rounded-lg px-2 text-[11px] {% if request.resolver_match.view_name == item.url_name %}text-brand{% else %}text-slate-500{% endif %}">
+      <a href="{% url item.url_name %}" class="flex min-h-[44px] min-w-[44px] flex-col items-center justify-center rounded-lg px-2 text-[11px]" style="color: {% if request.resolver_match.view_name == item.url_name %}var(--action){% else %}var(--text-secondary){% endif %}">
         {{ item.label }}
       </a>
     {% else %}
-      <span class="flex min-h-[44px] min-w-[44px] flex-col items-center justify-center px-2 text-[11px] text-slate-300 dark:text-slate-600">{{ item.label }}</span>
+      <span class="flex min-h-[44px] min-w-[44px] flex-col items-center justify-center px-2 text-[11px]" style="color: var(--text-muted)">{{ item.label }}</span>
     {% endif %}
   {% endfor %}
 </nav>

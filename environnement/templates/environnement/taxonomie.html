@@ -2,192 +2,134 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto max-w-6xl space-y-6" x-data="{ modal: false, del: { open: false, action: '', name: '' } }">
+<section class="space-y-5" x-data="{ modal: false, del: { open: false, action: '', name: '' } }">
 
-  {# ── Hero ── #}
-  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
-    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
-    <div class="relative flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
-          <span class="material-icons-round text-[26px]">fact_check</span>
-        </span>
-        <div class="min-w-0">
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
-            <span class="material-icons-round text-[14px]">park</span>{% trans "Environnement" %}
-          </span>
-          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Taxonomie EU" %}</h2>
-          <p class="truncate text-sm text-slate-400">{% trans "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)" %}</p>
-        </div>
+  <p class="hs-crumb">{% trans "Environnement" %} · {% trans "Taxonomie" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Taxonomie EU" %}</h1>
+    <div class="flex items-center gap-2">
+      <form method="get" id="campagne-form">
+        <select name="campagne" onchange="document.getElementById('campagne-form').submit()">
+          {% for a in annees %}<option value="{{ a }}" {% if a == campagne %}selected{% endif %}>{% trans "Campagne" %} {{ a }}</option>{% endfor %}
+        </select>
+      </form>
+      <button type="button" @click="modal = true" class="hs-btn-primary">{% trans "Ajouter une fiche" %}</button>
+    </div>
+  </div>
+
+  <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Règlement (UE) 2020/852 · alignement des activités (CA / CapEx / OpEx)" %}</p>
+
+  {# ── Indicateurs : part alignée ── #}
+  <div id="sec-kpi" class="scroll-mt-6">
+    <div class="grid grid-cols-2 gap-[10px] lg:grid-cols-4">
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Chiffre d'affaires aligné" %}</p>
+        <p class="text-[22px]">{{ pct_ca }}%</p>
+        <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full" style="background: var(--surface-alt)"><div class="h-full rounded-full" style="width: {{ pct_ca }}%; background: var(--success)"></div></div>
       </div>
-      <div class="flex items-center gap-2">
-        <form method="get" id="campagne-form">
-          <select name="campagne" onchange="document.getElementById('campagne-form').submit()"
-                  class="rounded-full text-sm">
-            {% for a in annees %}<option value="{{ a }}" {% if a == campagne %}selected{% endif %}>{% trans "Campagne" %} {{ a }}</option>{% endfor %}
-          </select>
-        </form>
-        <button type="button" @click="modal = true"
-                class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
-          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une fiche" %}
-        </button>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "CapEx aligné" %}</p>
+        <p class="text-[22px]">{{ pct_capex }}%</p>
+        <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full" style="background: var(--surface-alt)"><div class="h-full rounded-full" style="width: {{ pct_capex }}%; background: var(--action)"></div></div>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "OpEx aligné" %}</p>
+        <p class="text-[22px]">{{ pct_opex }}%</p>
+        <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full" style="background: var(--surface-alt)"><div class="h-full rounded-full" style="width: {{ pct_opex }}%; background: var(--action)"></div></div>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Fiches alignées" %}</p>
+        <p class="text-[22px]">{{ nb_alignes }}<span class="text-[15px]" style="color: var(--text-muted)">/{{ nb_fiches }}</span></p>
       </div>
     </div>
   </div>
 
-  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
-    {# ── Sommaire latéral collant ── #}
-    <aside class="hidden lg:block">
-      <nav class="sticky top-6 space-y-0.5">
-        <a href="#sec-kpi" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">insights</span><span class="flex-1 truncate">{% trans "Indicateurs" %}</span></a>
-        <a href="#sec-fiches" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">fact_check</span><span class="min-w-0 flex-1 truncate">{% trans "Activités" %}</span>
-          {% if fiches %}<span class="shrink-0 rounded-full bg-[#28738f]/10 px-1.5 text-[11px] font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">{{ nb_fiches }}</span>{% endif %}</a>
-      </nav>
-    </aside>
-
-    {# ── Colonne principale ── #}
-    <div class="min-w-0 space-y-5">
-
-      {# ── Indicateurs : part alignée ── #}
-      <div id="sec-kpi" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">insights</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Part alignée" %}</h3>
+  {# ── Activités ── #}
+  <div id="sec-fiches" class="scroll-mt-6 space-y-3">
+    <h2 class="text-[15px] font-medium">{% trans "Activités — Campagne" %} {{ campagne }}</h2>
+    <div class="hs-card overflow-hidden">
+      <table class="hs-table">
+        <thead>
+          <tr>
+            <th>{% trans "Activité" %}</th>
+            <th>{% trans "Objectif" %}</th>
+            <th>{% trans "Statut" %}</th>
+            <th class="num">CA (€)</th>
+            <th class="num">CapEx (€)</th>
+            <th class="num">OpEx (€)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in fiches %}
+            <tr>
+              <td class="font-medium">{{ f.libelle }}{% if f.code_nace %} <span class="text-[12px]" style="color: var(--text-muted)">· {{ f.code_nace }}</span>{% endif %}</td>
+              <td style="color: var(--text-secondary)">{{ f.get_objectif_display }}</td>
+              <td>
+                {% if f.statut == 'aligne' %}<span class="hs-badge hs-badge-patrimoine">{% trans "Aligné" %}</span>
+                {% elif f.statut == 'eligible' %}<span class="hs-badge hs-badge-assurance">{% trans "Éligible" %}</span>
+                {% else %}<span class="hs-badge hs-badge-neutral">{% trans "Non éligible" %}</span>{% endif %}
+              </td>
+              <td class="num">{{ f.chiffre_affaires|default_if_none:"—" }}</td>
+              <td class="num">{{ f.capex|default_if_none:"—" }}</td>
+              <td class="num">{{ f.opex|default_if_none:"—" }}</td>
+              <td class="num">
+                <button type="button" title="{% trans 'Supprimer' %}"
+                        @click="del = { open: true, action: '{% url 'environnement:taxonomie_delete' f.pk %}', name: '{{ f.libelle|escapejs }}' }"
+                        class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">delete_outline</span></button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if not fiches %}
+        <div class="px-5 py-10 text-center">
+          <p class="text-[15px] font-medium">{% trans "Aucune fiche pour cette campagne." %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez une activité pour évaluer son alignement à la Taxonomie." %}</p>
+          <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Ajouter une fiche" %}</button>
         </div>
-        <div class="grid grid-cols-2 gap-3 p-5 lg:grid-cols-4">
-          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
-            <div class="flex items-center justify-between">
-              <span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"><span class="material-icons-round text-[20px]">payments</span></span>
-              <span class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ pct_ca }}%</span>
-            </div>
-            <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500" style="width: {{ pct_ca }}%"></div></div>
-            <p class="mt-1.5 text-xs text-slate-400">{% trans "Chiffre d'affaires aligné" %}</p>
-          </div>
-          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
-            <div class="flex items-center justify-between">
-              <span class="grid h-9 w-9 place-items-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400"><span class="material-icons-round text-[20px]">trending_up</span></span>
-              <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ pct_capex }}%</span>
-            </div>
-            <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-sky-400 transition-all duration-500" style="width: {{ pct_capex }}%"></div></div>
-            <p class="mt-1.5 text-xs text-slate-400">{% trans "CapEx aligné" %}</p>
-          </div>
-          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
-            <div class="flex items-center justify-between">
-              <span class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500/10 text-orange-500"><span class="material-icons-round text-[20px]">build</span></span>
-              <span class="text-2xl font-bold text-orange-500 dark:text-orange-400">{{ pct_opex }}%</span>
-            </div>
-            <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-500" style="width: {{ pct_opex }}%"></div></div>
-            <p class="mt-1.5 text-xs text-slate-400">{% trans "OpEx aligné" %}</p>
-          </div>
-          <div class="rounded-xl border border-slate-200/70 p-4 dark:border-white/10">
-            <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand/10 text-brand"><span class="material-icons-round text-[20px]">verified</span></span>
-            <p class="mt-3 text-2xl font-bold">{{ nb_alignes }}<span class="text-base font-normal text-slate-400">/{{ nb_fiches }}</span></p>
-            <p class="text-xs text-slate-400">{% trans "Fiches alignées" %}</p>
-          </div>
-        </div>
-      </div>
-
-      {# ── Activités ── #}
-      <div id="sec-fiches" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">fact_check</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Activités — Campagne" %} {{ campagne }}</h3>
-        </div>
-        {% if fiches %}
-          <div class="overflow-x-auto p-5">
-            <table class="w-full text-sm">
-              <thead class="text-left text-xs uppercase tracking-wide text-slate-400">
-                <tr class="border-b border-slate-100 dark:border-white/5">
-                  <th class="px-3 py-2.5">{% trans "Activité" %}</th>
-                  <th class="px-3 py-2.5">{% trans "Objectif" %}</th>
-                  <th class="px-3 py-2.5">{% trans "Statut" %}</th>
-                  <th class="px-3 py-2.5 text-right">CA (€)</th>
-                  <th class="px-3 py-2.5 text-right">CapEx (€)</th>
-                  <th class="px-3 py-2.5 text-right">OpEx (€)</th>
-                  <th class="px-3 py-2.5"></th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-                {% for f in fiches %}
-                  <tr>
-                    <td class="px-3 py-2.5 font-medium">{{ f.libelle }}{% if f.code_nace %} <span class="text-xs text-slate-400">· {{ f.code_nace }}</span>{% endif %}</td>
-                    <td class="px-3 py-2.5 text-slate-500 dark:text-slate-400">{{ f.get_objectif_display }}</td>
-                    <td class="px-3 py-2.5">
-                      {% if f.statut == 'aligne' %}<span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400">{% trans "Aligné" %}</span>
-                      {% elif f.statut == 'eligible' %}<span class="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-400">{% trans "Éligible" %}</span>
-                      {% else %}<span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-white/10 dark:text-slate-300">{% trans "Non éligible" %}</span>{% endif %}
-                    </td>
-                    <td class="px-3 py-2.5 text-right">{{ f.chiffre_affaires|default_if_none:"—" }}</td>
-                    <td class="px-3 py-2.5 text-right">{{ f.capex|default_if_none:"—" }}</td>
-                    <td class="px-3 py-2.5 text-right">{{ f.opex|default_if_none:"—" }}</td>
-                    <td class="px-3 py-2.5 text-right">
-                      <button type="button" title="{% trans 'Supprimer' %}"
-                              @click="del = { open: true, action: '{% url 'environnement:taxonomie_delete' f.pk %}', name: '{{ f.libelle|escapejs }}' }"
-                              class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-black/5 hover:text-red-500 dark:hover:bg-white/10"><span class="material-icons-round text-[18px]">delete_outline</span></button>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        {% else %}
-          <div class="flex flex-col items-center justify-center py-12 text-center">
-            <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">fact_check</span>
-            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Aucune fiche pour cette campagne." %}</p>
-            <button type="button" @click="modal = true" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
-              <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une fiche" %}
-            </button>
-          </div>
-        {% endif %}
-        <div class="mx-5 mb-5 flex items-start gap-2 rounded-xl bg-brand/5 px-3 py-2.5 text-xs text-slate-500 dark:bg-white/5 dark:text-slate-400">
-          <span class="material-icons-round text-[16px] text-brand">info</span>
-          <span>{% trans "Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs montrent la part alignée du CA, des CapEx et des OpEx." %}</span>
-        </div>
-      </div>
-
+      {% endif %}
     </div>
+    <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Une activité est ALIGNÉE si : éligible + contribution substantielle à 1 objectif + DNSH (ne nuit pas aux 5 autres) + garanties minimales. Les KPIs montrent la part alignée du CA, des CapEx et des OpEx." %}</p>
   </div>
 
   {# Modal : nouvelle fiche #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
     <div @click.self="modal = false" class="flex max-h-full w-full max-w-2xl items-start justify-center">
-      <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+      <div class="hs-popover w-full max-w-2xl overflow-y-auto p-5">
         <div class="mb-4 flex items-center justify-between">
-          <h3 class="text-lg font-semibold">{% trans "Nouvelle fiche d'activité" %}</h3>
-          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+          <h3 class="text-[15px] font-medium">{% trans "Nouvelle fiche d'activité" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
         </div>
         <form method="post" action="{% url 'environnement:taxonomie_create' %}" class="space-y-4">
           {% csrf_token %}
 
           <div class="grid grid-cols-2 gap-3">
             <div class="col-span-2 sm:col-span-1">
-              <label class="mb-1 block text-sm font-medium">{% trans "Activité" %} <span class="text-red-500">*</span></label>
-              <input name="libelle" required placeholder="{% trans 'ex: Production de noix' %}"
-                     class="w-full rounded-lg text-sm">
+              <label class="mb-1 block text-[13px] font-medium">{% trans "Activité" %} <span style="color: var(--danger)">*</span></label>
+              <input name="libelle" required placeholder="{% trans 'ex: Production de noix' %}" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Code NACE" %}</label>
-              <input name="code_nace" placeholder="ex: A1.25" class="w-full rounded-lg text-sm">
+              <label class="mb-1 block text-[13px] font-medium">{% trans "Code NACE" %}</label>
+              <input name="code_nace" placeholder="ex: A1.25" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Campagne" %}</label>
-              <input name="campagne" type="number" value="{{ campagne }}" min="2020" max="2100" class="w-full rounded-lg text-sm">
+              <label class="mb-1 block text-[13px] font-medium">{% trans "Campagne" %}</label>
+              <input name="campagne" type="number" value="{{ campagne }}" min="2020" max="2100" class="w-full">
             </div>
             <div class="col-span-2">
-              <label class="mb-1 block text-sm font-medium">{% trans "Objectif de contribution" %}</label>
-              <select name="objectif" class="w-full rounded-lg text-sm">
+              <label class="mb-1 block text-[13px] font-medium">{% trans "Objectif de contribution" %}</label>
+              <select name="objectif" class="w-full">
                 {% for value, label in objectifs %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
               </select>
             </div>
           </div>
 
           {# Conditions d'alignement #}
-          <div class="rounded-xl border border-slate-200 p-3 dark:border-white/10">
-            <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "Conditions" %}</p>
-            <div class="space-y-2 text-sm">
+          <div class="rounded-xl p-3" style="border: 0.5px solid var(--border)">
+            <p class="mb-2 text-[12px] font-medium" style="color: var(--text-secondary)">{% trans "Conditions" %}</p>
+            <div class="space-y-2 text-[13px]">
               <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="eligible" class="h-4 w-4 accent-brand">{% trans "Activité éligible (figure dans la Taxonomie)" %}</label>
               <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="contribution" class="h-4 w-4 accent-brand">{% trans "Contribution substantielle vérifiée" %}</label>
               <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="garanties" class="h-4 w-4 accent-brand">{% trans "Garanties minimales respectées" %}</label>
@@ -195,10 +137,10 @@
           </div>
 
           {# DNSH par objectif #}
-          <div class="rounded-xl border border-slate-200 p-3 dark:border-white/10">
-            <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{% trans "DNSH — ne nuit pas significativement à :" %}</p>
-            <p class="mb-2 text-xs text-slate-400">{% trans "À cocher pour les objectifs autres que celui de contribution." %}</p>
-            <div class="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+          <div class="rounded-xl p-3" style="border: 0.5px solid var(--border)">
+            <p class="mb-1 text-[12px] font-medium" style="color: var(--text-secondary)">{% trans "DNSH — ne nuit pas significativement à :" %}</p>
+            <p class="mb-2 text-[12px]" style="color: var(--text-muted)">{% trans "À cocher pour les objectifs autres que celui de contribution." %}</p>
+            <div class="grid grid-cols-1 gap-2 text-[13px] sm:grid-cols-2">
               {% for value, label in objectifs %}
                 <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="dnsh_{{ value }}" class="h-4 w-4 accent-brand">{{ label }}</label>
               {% endfor %}
@@ -208,27 +150,27 @@
           {# Données financières #}
           <div class="grid grid-cols-3 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "CA (€)" %}</label>
-              <input name="chiffre_affaires" type="number" step="0.01" class="w-full rounded-lg text-sm">
+              <label class="mb-1 block text-[13px] font-medium">{% trans "CA (€)" %}</label>
+              <input name="chiffre_affaires" type="number" step="0.01" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">CapEx (€)</label>
-              <input name="capex" type="number" step="0.01" class="w-full rounded-lg text-sm">
+              <label class="mb-1 block text-[13px] font-medium">CapEx (€)</label>
+              <input name="capex" type="number" step="0.01" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">OpEx (€)</label>
-              <input name="opex" type="number" step="0.01" class="w-full rounded-lg text-sm">
+              <label class="mb-1 block text-[13px] font-medium">OpEx (€)</label>
+              <input name="opex" type="number" step="0.01" class="w-full">
             </div>
           </div>
 
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Justification" %}</label>
-            <textarea name="justification" rows="2" class="w-full rounded-lg text-sm"></textarea>
+            <label class="mb-1 block text-[13px] font-medium">{% trans "Justification" %}</label>
+            <textarea name="justification" rows="2" class="w-full"></textarea>
           </div>
 
           <div class="flex justify-end gap-2 pt-1">
-            <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-            <button type="submit" class="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white transition hover:opacity-90">{% trans "Ajouter" %}</button>
+            <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+            <button type="submit" class="hs-btn-primary">{% trans "Ajouter" %}</button>
           </div>
         </form>
       </div>
@@ -237,19 +179,14 @@
 
   {# Modal : confirmation de suppression #}
   <div x-show="del.open" x-cloak x-transition.opacity @keydown.escape.window="del.open = false"
-       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
-    <div @click.self="del.open = false" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
-      <div class="flex items-start gap-3">
-        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400"><span class="material-icons-round">delete_outline</span></span>
-        <div class="min-w-0">
-          <h3 class="text-base font-semibold">{% trans "Supprimer cette fiche ?" %}</h3>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400"><span class="font-medium text-slate-700 dark:text-slate-200" x-text="del.name"></span> — {% trans "cette action est irréversible." %}</p>
-        </div>
-      </div>
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="del.open = false" class="hs-popover w-full max-w-sm p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer cette fiche ?" %}</h3>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)"><span class="font-medium" style="color: var(--text)" x-text="del.name"></span> — {% trans "cette action est irréversible." %}</p>
       <form method="post" :action="del.action" class="mt-5 flex justify-end gap-2">
         {% csrf_token %}
-        <button type="button" @click="del.open = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-        <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700"><span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}</button>
+        <button type="button" @click="del.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="hs-btn-primary">{% trans "Supprimer" %}</button>
       </form>
     </div>
   </div>

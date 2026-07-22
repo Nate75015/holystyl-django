@@ -1,8 +1,8 @@
 {% load i18n %}
 <div x-data="{ ok: localStorage.getItem('holystyl-rgpd') === '1' }" x-show="!ok" x-cloak
-     class="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl rounded-xl border border-slate-200 bg-white/95 p-4 shadow-lg backdrop-blur dark:border-white/10 dark:bg-[#0b0f14]/95">
+     class="hs-popover fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl p-4 backdrop-blur">
   <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-    <p class="text-sm text-slate-600 dark:text-slate-300">
+    <p class="text-sm" style="color: var(--text-secondary)">
       {% trans "Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)." %}
     </p>
     <button @click="ok = true; localStorage.setItem('holystyl-rgpd','1')" class="md-btn-primary shrink-0">{% trans "J'ai compris" %}</button>

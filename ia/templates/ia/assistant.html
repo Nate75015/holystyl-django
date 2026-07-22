@@ -12,23 +12,23 @@
   <aside class="relative hidden w-14 shrink-0 md:block"
          x-data="{ open: false }"
          @mouseenter="open = true" @mouseleave="open = false">
-    <div class="absolute inset-y-0 left-0 z-20 flex flex-col overflow-hidden border-r border-slate-200 bg-[#fafaf7] transition-all duration-200 ease-out dark:border-white/10 dark:bg-[#0b1620]"
-         :class="open ? 'w-64 shadow-xl' : 'w-14'">
+    <div class="absolute inset-y-0 left-0 z-20 flex flex-col overflow-hidden transition-all duration-200 ease-out" style="border-right: 0.5px solid var(--border); background: var(--surface-alt)"
+         :class="open ? 'w-64 hs-popover' : 'w-14'">
 
       {# Actions (icônes alignées à gauche, collées au nav blanc) #}
       <div class="flex flex-col gap-0.5 py-2">
         {# Nouvelle conversation #}
         <a href="?new" title="{% trans 'Nouvelle conversation' %}"
-           class="flex items-center gap-3 rounded-xl py-2 pl-1.5 pr-2 transition hover:bg-black/5 dark:hover:bg-white/10">
-          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-white">
+           class="flex items-center gap-3 rounded-lg py-2 pl-1.5 pr-2 transition hover:bg-black/5 dark:hover:bg-white/10">
+          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-white" style="background: var(--action)">
             <span class="material-icons-round text-[18px]">add</span>
           </span>
           <span x-show="open" x-cloak class="whitespace-nowrap text-sm font-medium">{% trans "Nouvelle conversation" %}</span>
         </a>
         {# En-tête historique #}
-        <div class="flex items-center gap-3 rounded-xl py-2 pl-1.5 pr-2 text-slate-400">
+        <div class="flex items-center gap-3 rounded-lg py-2 pl-1.5 pr-2" style="color: var(--text-muted)">
           <span class="grid h-7 w-7 shrink-0 place-items-center"><span class="material-icons-round text-[20px]">forum</span></span>
-          <span x-show="open" x-cloak class="whitespace-nowrap text-xs font-semibold uppercase tracking-wide">{% trans "Conversations" %}</span>
+          <span x-show="open" x-cloak class="whitespace-nowrap text-xs font-medium uppercase tracking-wide">{% trans "Conversations" %}</span>
         </div>
       </div>
 
@@ -39,10 +39,10 @@
           <a href="?thread={{ c.thread }}"
              class="block rounded-lg px-2.5 py-2 transition hover:bg-black/5 dark:hover:bg-white/10 {% if c.thread == current_thread %}bg-black/5 dark:bg-white/10{% endif %}">
             <p class="truncate text-sm font-medium">{{ c.title }}</p>
-            <p class="text-[11px] text-slate-400">{{ c.last|date:"d/m H:i" }}</p>
+            <p class="text-[11px]" style="color: var(--text-muted)">{{ c.last|date:"d/m H:i" }}</p>
           </a>
         {% empty %}
-          <p class="px-2.5 py-2 text-xs text-slate-400">{% trans "Aucune conversation." %}</p>
+          <p class="px-2.5 py-2 text-xs" style="color: var(--text-muted)">{% trans "Aucune conversation." %}</p>
         {% endfor %}
       </div>
     </div>
@@ -52,14 +52,13 @@
   <div class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-24 pt-6 lg:px-8 lg:pb-6">
 
   <div class="mb-3 flex items-center justify-end md:hidden">
-    <a href="?new"
-       class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-sm transition hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10">
+    <a href="?new" class="hs-btn-outline">
       <span class="material-icons-round text-[16px]">add</span>{% trans "Nouvelle conversation" %}
     </a>
   </div>
 
   {% if not ai_ready %}
-    <div class="mb-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-400">
+    <div class="mb-3 rounded-[10px] px-3 py-2 text-xs" style="border: 0.5px solid var(--warning); color: var(--warning)">
       {% trans "IA non configurée — ajoutez GEMINI_API_KEY pour des réponses réelles." %}
     </div>
   {% endif %}
@@ -69,16 +68,16 @@
 
     {# Accueil (aucun message ni historique) #}
     <div x-show="messages.length === 0 && !hasHistory" class="flex h-full flex-col items-center justify-center px-4 text-center">
-      <div class="grid h-16 w-16 place-items-center rounded-2xl bg-brand text-2xl font-bold text-white">E</div>
-      <h2 class="mt-4 text-2xl font-bold">{% trans "Bonjour, je suis Eric." %}</h2>
-      <p class="mt-2 max-w-md text-sm text-slate-500 dark:text-slate-400">
+      <div class="grid h-16 w-16 place-items-center rounded-xl text-2xl font-medium text-white" style="background: var(--action)">E</div>
+      <h2 class="mt-4 text-[20px]">{% trans "Bonjour, je suis Eric." %}</h2>
+      <p class="mt-2 max-w-md text-sm" style="color: var(--text-secondary)">
         {% trans "Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les cultures, la fertilisation ou vos analyses." %}
       </p>
       <div class="mt-6 grid w-full max-w-2xl gap-3 sm:grid-cols-2">
         <template x-for="s in suggestions" :key="s.text">
           <button type="button" @click="suggest(s.text)"
-                  class="rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:border-brand hover:shadow-sm dark:border-white/10 dark:bg-white/5">
-            <p class="text-[11px] font-semibold uppercase tracking-wide text-brand" x-text="s.cat"></p>
+                  class="hs-card p-4 text-left transition hover:bg-black/5 dark:hover:bg-white/10">
+            <p class="text-[11px] font-medium uppercase tracking-wide" style="color: var(--action)" x-text="s.cat"></p>
             <p class="mt-1 text-sm" x-text="s.text"></p>
           </button>
         </template>
@@ -89,15 +88,16 @@
     <div x-show="messages.length > 0 || hasHistory" class="space-y-3 py-2">
       {% for m in history %}
         <div class="flex {% if m.role == 'user' %}justify-end{% endif %} items-end gap-2">
-          {% if m.role != 'user' %}<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-white">E</span>{% endif %}
-          <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm {% if m.role == 'user' %}bg-brand text-white{% else %}bg-black/5 dark:bg-white/10{% endif %}">{{ m.content }}</div>
+          {% if m.role != 'user' %}<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-medium text-white" style="background: var(--action)">E</span>{% endif %}
+          <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm {% if m.role == 'user' %}text-white{% else %}bg-black/5 dark:bg-white/10{% endif %}"{% if m.role == 'user' %} style="background: var(--action)"{% endif %}>{{ m.content }}</div>
         </div>
       {% endfor %}
       <template x-for="(m, i) in messages" :key="i">
         <div class="flex items-end gap-2" :class="m.role === 'user' ? 'justify-end' : ''">
-          <template x-if="m.role !== 'user'"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-white">E</span></template>
+          <template x-if="m.role !== 'user'"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-medium text-white" style="background: var(--action)">E</span></template>
           <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm"
-               :class="m.role === 'user' ? 'bg-brand text-white' : 'bg-black/5 dark:bg-white/10'"
+               :class="m.role === 'user' ? 'text-white' : 'bg-black/5 dark:bg-white/10'"
+               :style="m.role === 'user' ? 'background: var(--action)' : ''"
                x-text="m.content || '…'"></div>
         </div>
       </template>
@@ -107,26 +107,25 @@
   {# Barre de saisie #}
   <div class="mt-3">
     <form @submit.prevent="send()"
-          class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition focus-within:border-brand dark:border-white/10 dark:bg-white/5">
+          class="hs-card p-3 transition focus-within:border-[var(--action)]">
       <textarea x-model="input" rows="1"
                 @keydown.enter.exact.prevent="send()"
                 placeholder="{% trans 'Décrivez votre besoin…' %}"
                 class="input-bare w-full resize-none text-sm focus:outline-none focus:ring-0"></textarea>
       <div class="mt-2 flex items-center justify-between gap-2">
-        <span class="text-xs text-slate-400">{% trans "Entrée pour envoyer · Maj+Entrée pour saut de ligne" %}</span>
+        <span class="text-xs" style="color: var(--text-muted)">{% trans "Entrée pour envoyer · Maj+Entrée pour saut de ligne" %}</span>
         <div class="flex items-center gap-2">
-          <button type="button" @click="dictate()" :class="recording ? 'text-red-500' : 'text-slate-400'"
+          <button type="button" @click="dictate()" :style="recording ? 'color: var(--danger)' : 'color: var(--text-muted)'"
                   title="{% trans 'Dictée vocale' %}" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10">
             <span class="material-icons-round text-[18px]">mic</span>
           </button>
-          <button type="submit" :disabled="busy"
-                  class="inline-flex items-center gap-1 rounded-full bg-brand px-4 py-1.5 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50">
+          <button type="submit" :disabled="busy" class="hs-btn-primary disabled:opacity-50">
             {% trans "Envoyer" %} <span class="material-icons-round text-[16px]">arrow_forward</span>
           </button>
         </div>
       </div>
     </form>
-    <p class="mt-2 text-center text-xs text-slate-400">{% trans "Eric peut commettre des erreurs. Vérifiez les informations importantes." %}</p>
+    <p class="mt-2 text-center text-xs" style="color: var(--text-muted)">{% trans "Eric peut commettre des erreurs. Vérifiez les informations importantes." %}</p>
   </div>
   </div>
 </section>

@@ -3,11 +3,11 @@
 {% block title %}Holystyl — {% trans "Irrigation de précision pour agriculteurs" %}{% endblock %}
 
 {% block auth_header %}
-<header class="sticky top-0 z-30 w-full bg-[#28738f] text-white shadow-sm">
+<header class="sticky top-0 z-30 w-full text-white" style="background: var(--action)">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
     <a href="{% url 'public:home' %}" class="flex items-center gap-2">
       {% include "partials/brand_mark.html" with size=30 icon=17 %}
-      <span class="text-lg font-bold tracking-tight">Holystyl</span>
+      <span class="text-lg font-medium tracking-tight">Holystyl</span>
     </a>
     <nav class="hidden items-center gap-8 text-sm font-medium text-white/80 md:flex">
       <a href="#domaines" class="transition hover:text-white">{% trans "Domaines" %}</a>
@@ -17,11 +17,11 @@
     <div class="flex items-center gap-2">
       {% include "partials/lang_switcher.html" %}
       <a href="{% url 'accounts:login' %}"
-         class="rounded-full bg-[#fafaf5] px-5 py-1.5 text-sm font-semibold text-[#28738f] transition hover:opacity-90">
+         class="rounded-full border border-white/40 px-5 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10">
         {% trans "Connexion" %}
       </a>
       <a href="{% url 'accounts:register' %}"
-         class="rounded-full bg-[#ffd426] px-5 py-1.5 text-sm font-bold text-slate-900 shadow-sm transition hover:opacity-90">
+         class="rounded-full px-5 py-1.5 text-sm font-medium transition hover:opacity-90" style="background: var(--surface); color: var(--action)">
         {% trans "S'inscrire" %}
       </a>
     </div>
@@ -32,107 +32,100 @@
 {% block auth_main_class %}{% endblock %}
 
 {% block auth_hero %}
-<section class="relative overflow-hidden border-b border-black/5 bg-gradient-to-b from-[#fafaf5] to-white dark:border-white/10 dark:from-[#0b1620] dark:to-[#0b1620]">
-  {# Halos décoratifs discrets (charte eau) #}
-  <div aria-hidden="true" class="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[#22d3ee]/10 blur-3xl"></div>
-  <div aria-hidden="true" class="pointer-events-none absolute -bottom-32 right-0 h-80 w-80 rounded-full bg-[#28738f]/10 blur-3xl"></div>
-
+<section class="border-b" style="border-color: var(--border); background: var(--surface)">
   <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-24">
 
     {# Texte (gauche, aligné à gauche) #}
     <div class="text-left">
-      <span class="inline-flex items-center gap-1.5 rounded-full border border-[#28738f]/15 bg-[#28738f]/5 px-3 py-1 text-xs font-semibold text-[#28738f] dark:border-white/10 dark:bg-white/5 dark:text-[#67dded]">
-        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>{% trans "Assistant agricole français" %}
+      <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium" style="background: var(--surface-alt); color: var(--text-secondary)">
+        <span class="h-1.5 w-1.5 rounded-full" style="background: var(--success)"></span>{% trans "Assistant agricole français" %}
       </span>
-      <h1 class="mt-5 text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-[3.4rem]">
+      <h1 class="mt-5 text-[32px] font-medium leading-[1.1] tracking-tight sm:text-[40px] lg:text-[48px]">
         {% trans "Votre exploitation, sans la garder en tête." %}
       </h1>
-      <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+      <p class="mt-5 max-w-xl text-lg leading-relaxed" style="color: var(--text-secondary)">
         {% trans "L'assistant qui retient, calcule et prouve à votre place." %}
       </p>
-      <p class="mt-3 text-base font-semibold text-[#28738f] dark:text-[#67dded]">
+      <p class="mt-3 text-base font-medium" style="color: var(--action)">
         {% trans "59,90 € HT/mois par exploitation, utilisateurs illimités." %}
       </p>
 
       <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a href="{% url 'accounts:register' %}"
-           class="rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
+        <a href="{% url 'accounts:register' %}" class="hs-btn-primary">
           {% trans "Commencer maintenant" %}
         </a>
-        <a href="#domaines"
-           class="rounded-full border border-[#28738f]/40 px-6 py-2.5 text-sm font-semibold text-[#28738f] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#28738f] hover:bg-[#28738f]/10 dark:text-[#67dded]">
+        <a href="#domaines" class="hs-btn-outline">
           {% trans "Voir ce qu'il fait" %}
         </a>
         <a href="#telecharger"
-           class="inline-flex items-center gap-1.5 rounded-full px-6 py-2.5 text-sm font-semibold text-slate-600 transition hover:text-[#28738f] dark:text-slate-300">
+           class="inline-flex items-center gap-1.5 px-2 py-2 text-sm font-medium transition hover:opacity-80" style="color: var(--text-secondary)">
           <span class="material-icons-round text-[18px]">download</span>{% trans "Télécharger l'app" %}
         </a>
       </div>
 
-      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
-        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Sans engagement" %}</span>
-        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Données hébergées en France" %}</span>
-        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Prise en main guidée incluse" %}</span>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm" style="color: var(--text-muted)">
+        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Sans engagement" %}</span>
+        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Données hébergées en France" %}</span>
+        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Prise en main guidée incluse" %}</span>
       </div>
     </div>
 
     {# Image (droite) — exploitation agricole au coucher du soleil #}
     <div class="relative">
-      <div aria-hidden="true" class="absolute -inset-3 -z-10 rounded-[2rem] bg-gradient-to-br from-[#22d3ee]/20 to-[#28738f]/20 blur-2xl"></div>
       <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80"
            alt="{% trans 'Exploitation agricole au coucher du soleil' %}"
            loading="lazy"
-           class="h-64 w-full rounded-[1.75rem] object-cover shadow-2xl shadow-[#28738f]/20 ring-1 ring-black/5 sm:h-80 lg:h-[30rem]">
+           class="h-64 w-full rounded-2xl object-cover sm:h-80 lg:h-[30rem]" style="border: 0.5px solid var(--border)">
     </div>
   </div>
 </section>
 
 {# Section : la charge qui s'empile #}
-<section id="domaines" class="bg-[#fafaf5] dark:bg-[#0b1620]">
+<section id="domaines" style="background: var(--page)">
   <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
         {% trans "Le métier n'a pas changé." %}
       </h2>
-      <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">
+      <p class="mt-2 text-lg" style="color: var(--text-secondary)">
         {% trans "Sa charge administrative et mentale, si." %}
       </p>
     </div>
 
     <div class="mt-10 grid gap-6 md:grid-cols-3">
       {# Réglementation #}
-      <div class="group rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">gavel</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "La réglementation qui s'empile" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Plan Eau 2030" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Taxonomie EU" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "E-facturation obligatoire" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Traçabilité renforcée" %}</li>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">gavel</span></span>
+        <h3 class="mt-4 font-medium">{% trans "La réglementation qui s'empile" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Plan Eau 2030" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Taxonomie EU" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "E-facturation obligatoire" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Traçabilité renforcée" %}</li>
         </ul>
       </div>
 
       {# Économie #}
-      <div class="group rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">payments</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "L'économie qui pèse autrement" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Marges sous pression" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Charges en hausse" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Financement complexe" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Dossiers de subvention" %}</li>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">payments</span></span>
+        <h3 class="mt-4 font-medium">{% trans "L'économie qui pèse autrement" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Marges sous pression" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Charges en hausse" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Financement complexe" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Dossiers de subvention" %}</li>
         </ul>
       </div>
 
       {# Main-d'œuvre #}
-      <div class="group rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">groups</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "La main-d'œuvre à gérer" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Saisonniers et apprentis" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Associés et salariés" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Transmission incertaine" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28738f]"></span>{% trans "Formation continue" %}</li>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">groups</span></span>
+        <h3 class="mt-4 font-medium">{% trans "La main-d'œuvre à gérer" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Saisonniers et apprentis" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Associés et salariés" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Transmission incertaine" %}</li>
+          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Formation continue" %}</li>
         </ul>
       </div>
     </div>
@@ -140,60 +133,60 @@
 </section>
 
 {# Section : chiffres / preuve sociale #}
-<section class="border-t border-black/5 bg-white dark:border-white/10 dark:bg-[#0b1620]">
+<section class="border-t" style="border-color: var(--border); background: var(--surface)">
   <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
         {% trans "Ce que disent les agriculteurs français" %}
       </h2>
-      <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">
+      <p class="mt-2 text-lg" style="color: var(--text-secondary)">
         {% trans "Des chiffres qui parlent d'eux-mêmes." %}
       </p>
     </div>
 
     <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <p class="bg-gradient-to-br from-[#28738f] to-[#22d3ee] bg-clip-text text-4xl font-bold text-transparent">48 %</p>
+      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
+        <p class="text-[32px] font-medium" style="color: var(--action)">48 %</p>
         <p class="mt-2 font-medium">{% trans "des agriculteurs veulent travailler moins" %}</p>
-        <p class="mt-3 text-xs text-slate-400">{% trans "PRISM 2023 — priorité n°1 à 3 ans" %}</p>
+        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "PRISM 2023 — priorité n°1 à 3 ans" %}</p>
       </div>
-      <div class="rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <p class="bg-gradient-to-br from-[#28738f] to-[#22d3ee] bg-clip-text text-4xl font-bold text-transparent">70 %</p>
+      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
+        <p class="text-[32px] font-medium" style="color: var(--action)">70 %</p>
         <p class="mt-2 font-medium">{% trans "choisissent de réduire leurs charges" %}</p>
-        <p class="mt-3 text-xs text-slate-400">{% trans "PRISM 2023 — vs maximiser la productivité" %}</p>
+        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "PRISM 2023 — vs maximiser la productivité" %}</p>
       </div>
-      <div class="rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <p class="bg-gradient-to-br from-[#28738f] to-[#22d3ee] bg-clip-text text-4xl font-bold text-transparent">76 %</p>
+      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
+        <p class="text-[32px] font-medium" style="color: var(--action)">76 %</p>
         <p class="mt-2 font-medium">{% trans "subissent le changement climatique" %}</p>
-        <p class="mt-3 text-xs text-slate-400">{% trans "VoxAgri 2025 — effet négatif sur l'exploitation" %}</p>
+        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "VoxAgri 2025 — effet négatif sur l'exploitation" %}</p>
       </div>
-      <div class="rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <p class="bg-gradient-to-br from-[#28738f] to-[#22d3ee] bg-clip-text text-4xl font-bold text-transparent">51 %</p>
+      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
+        <p class="text-[32px] font-medium" style="color: var(--action)">51 %</p>
         <p class="mt-2 font-medium">{% trans "veulent plus d'accompagnement" %}</p>
-        <p class="mt-3 text-xs text-slate-400">{% trans "PRISM 2023 — ou de meilleure qualité" %}</p>
+        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "PRISM 2023 — ou de meilleure qualité" %}</p>
       </div>
     </div>
   </div>
 </section>
 
-{# Section : la charge invisible — fond jaune (style Notes Mac) #}
-<section class="border-t border-black/5 bg-[#ffd426]">
+{# Section : la charge invisible #}
+<section class="border-t" style="border-color: var(--border); background: var(--surface-alt)">
   <div class="mx-auto max-w-3xl px-4 py-16 text-center lg:py-20">
-    <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+    <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
       {% trans "La charge invisible" %}
     </h2>
-    <p class="mt-6 text-lg leading-relaxed text-slate-800">
+    <p class="mt-6 text-lg leading-relaxed" style="color: var(--text-secondary)">
       {% trans "Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le prouver à un contrôleur, le retrouver pour un dossier, le transmettre à l'apprenti — c'est un autre travail." %}
     </p>
-    <p class="mt-4 text-lg leading-relaxed text-slate-800">
+    <p class="mt-4 text-lg leading-relaxed" style="color: var(--text-secondary)">
       {% trans "Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est ce qui se colle par-dessus." %}
-      <span class="font-semibold text-[#28738f]">{% trans "48 % des agriculteurs citent « maîtriser le temps de travail » comme priorité n°1." %}</span>
+      <span class="font-medium" style="color: var(--action)">{% trans "48 % des agriculteurs citent « maîtriser le temps de travail » comme priorité n°1." %}</span>
     </p>
   </div>
 </section>
 
-{# Section : 5 problèmes, 1 réponse — fond vert foncé, contenu décalé à droite #}
-<section class="bg-[#003825] text-white">
+{# Section : 5 problèmes, 1 réponse — contenu décalé à droite #}
+<section class="border-t" style="border-color: var(--border); background: var(--surface)">
   <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-24">
 
     {# Image (gauche) — agriculteur submergé par l'administratif #}
@@ -201,39 +194,39 @@
       <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
            alt="{% trans 'Agriculteur submergé par la paperasse administrative' %}"
            loading="lazy"
-           class="h-72 w-full rounded-3xl object-cover shadow-2xl ring-1 ring-white/10 sm:h-96 lg:h-full lg:max-h-[34rem]">
+           class="h-72 w-full rounded-2xl object-cover sm:h-96 lg:h-full lg:max-h-[34rem]" style="border: 0.5px solid var(--border)">
     </div>
 
     {# Contenu (droite) #}
     <div>
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{% trans "5 problèmes. 1 réponse." %}</h2>
-      <p class="mt-4 text-xl font-medium text-white/90">
+      <h2 class="text-3xl font-medium tracking-tight sm:text-4xl">{% trans "5 problèmes. 1 réponse." %}</h2>
+      <p class="mt-4 text-xl font-medium" style="color: var(--text)">
         {% trans "Votre exploitation mérite un assistant qui ne dort jamais." %}
       </p>
-      <p class="mt-4 leading-relaxed text-white/70">
+      <p class="mt-4 leading-relaxed" style="color: var(--text-secondary)">
         {% trans "Holystyl répond aux 5 grandes préoccupations des agriculteurs français : temps de travail, charges, adaptation climatique, gestion d'équipe et accompagnement. Disponible à la voix, sur le tracteur, à 22h." %}
       </p>
 
       <ul class="mt-8 space-y-3">
-        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
-          <span class="font-semibold">{% trans "« Je n'ai pas le temps »" %}</span>
-          <span class="text-white/70"> → {% trans "automatise les rapports et la traçabilité" %}</span>
+        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
+          <span class="font-medium">{% trans "« Je n'ai pas le temps »" %}</span>
+          <span style="color: var(--text-secondary)"> → {% trans "automatise les rapports et la traçabilité" %}</span>
         </li>
-        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
-          <span class="font-semibold">{% trans "« Je dois réduire mes charges »" %}</span>
-          <span class="text-white/70"> → {% trans "tableau de bord financier en temps réel" %}</span>
+        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
+          <span class="font-medium">{% trans "« Je dois réduire mes charges »" %}</span>
+          <span style="color: var(--text-secondary)"> → {% trans "tableau de bord financier en temps réel" %}</span>
         </li>
-        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
-          <span class="font-semibold">{% trans "« Le climat change »" %}</span>
-          <span class="text-white/70"> → {% trans "alertes météo, suivi parcellaire, aide à la décision" %}</span>
+        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
+          <span class="font-medium">{% trans "« Le climat change »" %}</span>
+          <span style="color: var(--text-secondary)"> → {% trans "alertes météo, suivi parcellaire, aide à la décision" %}</span>
         </li>
-        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
-          <span class="font-semibold">{% trans "« Je gère des saisonniers »" %}</span>
-          <span class="text-white/70"> → {% trans "module Équipe & Tâches avec rappels automatiques" %}</span>
+        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
+          <span class="font-medium">{% trans "« Je gère des saisonniers »" %}</span>
+          <span style="color: var(--text-secondary)"> → {% trans "module Équipe & Tâches avec rappels automatiques" %}</span>
         </li>
-        <li class="rounded-xl border-l-4 border-[#ffd426] bg-white/5 px-4 py-3">
-          <span class="font-semibold">{% trans "« Je ne sais pas à qui demander »" %}</span>
-          <span class="text-white/70"> → {% trans "IA disponible 24h/24 sur vos questions" %}</span>
+        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
+          <span class="font-medium">{% trans "« Je ne sais pas à qui demander »" %}</span>
+          <span style="color: var(--text-secondary)"> → {% trans "IA disponible 24h/24 sur vos questions" %}</span>
         </li>
       </ul>
     </div>
@@ -241,139 +234,138 @@
 </section>
 
 {# Section : tout ce qu'il couvre — 10 domaines #}
-<section class="border-t border-black/5 bg-white dark:border-white/10 dark:bg-[#0b1620]">
+<section class="border-t" style="border-color: var(--border); background: var(--page)">
   <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
         {% trans "Tout ce qu'il couvre" %}
       </h2>
-      <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">
+      <p class="mt-2 text-lg" style="color: var(--text-secondary)">
         {% trans "Dix domaines. Un seul outil." %}
       </p>
     </div>
 
     <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">water_drop</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Irrigation et eau" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Programmes, quotas, capteurs IoT" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">water_drop</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Irrigation et eau" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Programmes, quotas, capteurs IoT" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">payments</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Charges et marges" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Suivi économique en temps réel" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">payments</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Charges et marges" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Suivi économique en temps réel" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">agriculture</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Parc matériel" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Maintenance, alertes, historique" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">agriculture</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Parc matériel" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Maintenance, alertes, historique" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">construction</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Interventions" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Traitements, travaux, traçabilité" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">construction</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Interventions" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Traitements, travaux, traçabilité" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">science</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Analyses de sol" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Résultats, recommandations" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">science</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Analyses de sol" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Résultats, recommandations" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">grass</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Récoltes" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Volumes, qualité, rendements" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">grass</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Récoltes" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Volumes, qualité, rendements" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">groups</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Équipe et planning" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Saisonniers, apprentis, associés" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">groups</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Équipe et planning" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Saisonniers, apprentis, associés" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">gavel</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Conformité réglementaire" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Taxonomie EU, Plan Eau 2030" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">gavel</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Conformité réglementaire" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Taxonomie EU, Plan Eau 2030" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">request_quote</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Dossiers de subvention" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "JEI, CIR, aides PAC" %}</p>
+      <div class="hs-card p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">request_quote</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Dossiers de subvention" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "JEI, CIR, aides PAC" %}</p>
       </div>
-      <div class="group rounded-2xl border border-slate-200/80 bg-[#fafaf5] p-6 shadow-sm shadow-slate-900/5 transition-all duration-200 hover:-translate-y-1 hover:border-[#28738f]/20 hover:shadow-xl hover:shadow-[#28738f]/10 dark:border-white/10 dark:bg-white/5 lg:col-start-2">
-        <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#28738f]/10 text-[#28738f] transition-transform duration-200 group-hover:scale-110"><span class="material-icons-round text-[22px]">thunderstorm</span></span>
-        <h3 class="mt-4 font-semibold">{% trans "Météo et alertes" %}</h3>
-        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Gel, ETP, prévisions 7 jours" %}</p>
+      <div class="hs-card p-6 lg:col-start-2">
+        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">thunderstorm</span></span>
+        <h3 class="mt-4 font-medium">{% trans "Météo et alertes" %}</h3>
+        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Gel, ETP, prévisions 7 jours" %}</p>
       </div>
     </div>
   </div>
 </section>
 
 {# Section : Tarif #}
-<section id="tarif" class="bg-[#c7edd8]">
+<section id="tarif" class="border-t" style="border-color: var(--border); background: var(--surface)">
   <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
         {% trans "Tarif" %}
       </h2>
-      <p class="mt-2 text-lg text-slate-600">{% trans "Simple et transparent." %}</p>
+      <p class="mt-2 text-lg" style="color: var(--text-secondary)">{% trans "Simple et transparent." %}</p>
     </div>
 
-    <div class="mx-auto mt-10 max-w-2xl rounded-3xl border-2 border-[#28738f]/20 bg-white p-8 shadow-xl shadow-[#28738f]/10 transition-shadow duration-300 hover:shadow-2xl hover:shadow-[#28738f]/15 dark:border-white/10 dark:bg-white/5 sm:p-10">
+    <div class="hs-card mx-auto mt-10 max-w-2xl p-8 sm:p-10">
       <div class="text-center">
-        <p class="bg-gradient-to-br from-[#28738f] to-[#22d3ee] bg-clip-text text-5xl font-bold tracking-tight text-transparent">59,90€</p>
-        <p class="mt-1 text-slate-500 dark:text-slate-400">{% trans "par mois · par exploitation" %}</p>
-        <p class="mt-4 inline-block rounded-full bg-[#28738f]/10 px-4 py-1.5 text-sm font-medium text-[#28738f]">
+        <p class="text-5xl font-medium tracking-tight" style="color: var(--action)">59,90€</p>
+        <p class="mt-1" style="color: var(--text-secondary)">{% trans "par mois · par exploitation" %}</p>
+        <p class="mt-4 inline-block rounded-full px-4 py-1.5 text-sm font-medium" style="background: var(--surface-alt); color: var(--text-secondary)">
           {% trans "Tous vos utilisateurs inclus — sans engagement" %}
         </p>
       </div>
 
-      <ul class="mx-auto mt-8 grid max-w-xl gap-x-8 gap-y-3 text-sm text-slate-600 dark:text-slate-300 sm:grid-cols-2">
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Assistant vocal illimité" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Tous les modules inclus" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Prise en main guidée incluse" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Support réactif" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Mises à jour automatiques" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Données hébergées en France" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Utilisateurs illimités par exploitation" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px] text-emerald-500">check_circle</span>{% trans "Accès mobile et tablette" %}</li>
+      <ul class="mx-auto mt-8 grid max-w-xl gap-x-8 gap-y-3 text-sm sm:grid-cols-2" style="color: var(--text-secondary)">
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Assistant vocal illimité" %}</li>
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Tous les modules inclus" %}</li>
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Prise en main guidée incluse" %}</li>
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Support réactif" %}</li>
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Mises à jour automatiques" %}</li>
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Données hébergées en France" %}</li>
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Utilisateurs illimités par exploitation" %}</li>
+        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Accès mobile et tablette" %}</li>
       </ul>
 
       <div class="mt-8 text-center">
-        <a href="{% url 'accounts:register' %}"
-           class="inline-flex items-center justify-center rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
+        <a href="{% url 'accounts:register' %}" class="hs-btn-primary">
           {% trans "S'abonner maintenant" %}
         </a>
-        <p class="mt-3 text-xs text-slate-400">{% trans "Paiement sécurisé par Stripe · Résiliation en 1 clic" %}</p>
+        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "Paiement sécurisé par Stripe · Résiliation en 1 clic" %}</p>
       </div>
     </div>
   </div>
 </section>
 
 {# Section : lead magnet — guide gratuit #}
-<section class="border-t border-black/5 bg-[#fafaf5] dark:border-white/10 dark:bg-[#0b1620]">
+<section class="border-t" style="border-color: var(--border); background: var(--page)">
   <div class="mx-auto max-w-3xl px-4 py-16 lg:py-20">
-    <div class="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xl dark:border-white/10 dark:bg-white/5 sm:p-10">
-      <span class="inline-flex items-center gap-1.5 rounded-full bg-[#ffd426] px-3 py-1 text-xs font-bold text-slate-900">★ {% trans "Guide gratuit" %}</span>
-      <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+    <div class="hs-card p-8 text-center sm:p-10">
+      <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium" style="background: var(--surface-alt); color: var(--text-secondary)">★ {% trans "Guide gratuit" %}</span>
+      <h2 class="mt-4 text-2xl font-medium tracking-tight sm:text-3xl">
         {% trans "Lire ses analyses de sol" %}
       </h2>
-      <p class="mx-auto mt-3 max-w-xl text-slate-600 dark:text-slate-300">
+      <p class="mx-auto mt-3 max-w-xl" style="color: var(--text-secondary)">
         {% trans "Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre exploitation. Téléchargement immédiat." %}
       </p>
 
       <div class="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div class="rounded-xl bg-[#fafaf5] px-3 py-3 dark:bg-white/5">
+        <div class="hs-tile">
           <span class="text-2xl">🧪</span>
           <p class="mt-1 text-sm font-medium">{% trans "pH & impact cultures" %}</p>
         </div>
-        <div class="rounded-xl bg-[#fafaf5] px-3 py-3 dark:bg-white/5">
+        <div class="hs-tile">
           <span class="text-2xl">🌿</span>
           <p class="mt-1 text-sm font-medium">{% trans "Matière organique" %}</p>
         </div>
-        <div class="rounded-xl bg-[#fafaf5] px-3 py-3 dark:bg-white/5">
+        <div class="hs-tile">
           <span class="text-2xl">⚗️</span>
           <p class="mt-1 text-sm font-medium">{% trans "N, P, K décryptés" %}</p>
         </div>
-        <div class="rounded-xl bg-[#fafaf5] px-3 py-3 dark:bg-white/5">
+        <div class="hs-tile">
           <span class="text-2xl">💡</span>
           <p class="mt-1 text-sm font-medium">{% trans "Recommandations concrètes" %}</p>
         </div>
@@ -382,75 +374,75 @@
       <form method="post" action="{% url 'public:lead_capture' %}" class="mx-auto mt-8 flex max-w-md gap-2">
         {% csrf_token %}
         <input type="email" name="email" required placeholder="votre@email.fr" class="flex-1">
-        <button class="shrink-0 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white shadow-md shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#28738f]/30">
+        <button class="hs-btn-primary shrink-0">
           {% trans "Recevoir le guide" %}
         </button>
       </form>
-      <p class="mt-3 text-xs text-slate-400">{% trans "Aucun spam. Votre email ne sera jamais revendu." %}</p>
+      <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "Aucun spam. Votre email ne sera jamais revendu." %}</p>
     </div>
   </div>
 </section>
 
 {# Section : FAQ #}
-<section id="faq" class="border-t border-black/5 bg-white dark:border-white/10 dark:bg-[#0b1620]">
+<section id="faq" class="border-t" style="border-color: var(--border); background: var(--surface)">
   <div class="mx-auto max-w-3xl px-4 py-16 lg:py-20">
-    <h2 class="text-center text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+    <h2 class="text-center text-2xl font-medium tracking-tight sm:text-3xl">
       {% trans "Questions fréquentes" %}
     </h2>
 
     <div class="mt-10 space-y-3" x-data="{ open: 3 }">
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white/40 transition-colors duration-200 hover:border-[#28738f]/30 dark:border-white/10 dark:bg-white/5">
+      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
         <button type="button" @click="open = open === 1 ? null : 1" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
           <span>{% trans "Holystyl peut-il vraiment m'aider à travailler moins ?" %}</span>
-          <span class="material-icons-round shrink-0 text-slate-400 transition-transform" :class="open === 1 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 1 ? 'rotate-180' : ''">expand_more</span>
         </button>
         <div x-show="open === 1" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{% trans "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur l'administratif — la priorité n°1 de 48 % des agriculteurs." %}</p>
+          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur l'administratif — la priorité n°1 de 48 % des agriculteurs." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white/40 transition-colors duration-200 hover:border-[#28738f]/30 dark:border-white/10 dark:bg-white/5">
+      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
         <button type="button" @click="open = open === 2 ? null : 2" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
           <span>{% trans "Est-ce que l'assistant comprend mes questions techniques ?" %}</span>
-          <span class="material-icons-round shrink-0 text-slate-400 transition-transform" :class="open === 2 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 2 ? 'rotate-180' : ''">expand_more</span>
         </button>
         <div x-show="open === 2" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{% trans "Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, fertilisation (N, P, K), météo, réglementation ou analyses de sol — à l'écrit comme à la voix, 24h/24." %}</p>
+          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, fertilisation (N, P, K), météo, réglementation ou analyses de sol — à l'écrit comme à la voix, 24h/24." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white/40 transition-colors duration-200 hover:border-[#28738f]/30 dark:border-white/10 dark:bg-white/5">
+      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
         <button type="button" @click="open = open === 3 ? null : 3" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
           <span>{% trans "Comment démarrer avec Holystyl ?" %}</span>
-          <span class="material-icons-round shrink-0 text-slate-400 transition-transform" :class="open === 3 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 3 ? 'rotate-180' : ''">expand_more</span>
         </button>
         <div x-show="open === 3" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{% trans "Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à pas vous accompagne pour ajouter vos parcelles, vos cultures et votre équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur." %}</p>
+          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à pas vous accompagne pour ajouter vos parcelles, vos cultures et votre équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white/40 transition-colors duration-200 hover:border-[#28738f]/30 dark:border-white/10 dark:bg-white/5">
+      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
         <button type="button" @click="open = open === 4 ? null : 4" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
           <span>{% trans "Holystyl m'aide-t-il à réduire mes charges ?" %}</span>
-          <span class="material-icons-round shrink-0 text-slate-400 transition-transform" :class="open === 4 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 4 ? 'rotate-180' : ''">expand_more</span>
         </button>
         <div x-show="open === 4" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{% trans "Oui. Le tableau de bord financier suit vos charges et vos marges en temps réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles." %}</p>
+          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. Le tableau de bord financier suit vos charges et vos marges en temps réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white/40 transition-colors duration-200 hover:border-[#28738f]/30 dark:border-white/10 dark:bg-white/5">
+      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
         <button type="button" @click="open = open === 5 ? null : 5" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
           <span>{% trans "L'application fonctionne-t-elle sans internet sur la parcelle ?" %}</span>
-          <span class="material-icons-round shrink-0 text-slate-400 transition-transform" :class="open === 5 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 5 ? 'rotate-180' : ''">expand_more</span>
         </button>
         <div x-show="open === 5" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{% trans "Oui. Vous consultez et saisissez vos interventions sur le terrain même sans réseau ; les données se synchronisent automatiquement dès que la connexion revient." %}</p>
+          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. Vous consultez et saisissez vos interventions sur le terrain même sans réseau ; les données se synchronisent automatiquement dès que la connexion revient." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white/40 transition-colors duration-200 hover:border-[#28738f]/30 dark:border-white/10 dark:bg-white/5">
+      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
         <button type="button" @click="open = open === 6 ? null : 6" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
           <span>{% trans "Mes données m'appartiennent-elles ?" %}</span>
-          <span class="material-icons-round shrink-0 text-slate-400 transition-transform" :class="open === 6 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 6 ? 'rotate-180' : ''">expand_more</span>
         </button>
         <div x-show="open === 6" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{% trans "Absolument. Vos données vous appartiennent et restent confidentielles : hébergées en France, jamais revendues, exportables ou supprimables à tout moment." %}</p>
+          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Absolument. Vos données vous appartiennent et restent confidentielles : hébergées en France, jamais revendues, exportables ou supprimables à tout moment." %}</p>
         </div>
       </div>
     </div>
@@ -459,49 +451,48 @@
 {% endblock %}
 
 {% block auth_footer %}
-<footer class="bg-[#003825] text-white">
+<footer class="border-t" style="border-color: var(--border); background: var(--surface-alt)">
   <div class="mx-auto max-w-6xl px-4 py-12 lg:px-8">
     <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
       <div class="max-w-sm lg:col-span-2">
         <div class="flex items-center gap-2">
           {% include "partials/brand_mark.html" with size=30 icon=17 %}
-          <span class="text-lg font-bold tracking-tight">Holystyl</span>
+          <span class="text-lg font-medium tracking-tight">Holystyl</span>
         </div>
-        <p class="mt-3 text-sm leading-relaxed text-white/60">
+        <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-secondary)">
           {% trans "Assistant intelligent pour exploitations agricoles. Conçu avec le réseau Holystyl." %}
         </p>
-        <a href="mailto:contact@holystyl.com" class="mt-4 inline-block text-sm text-white/80 transition hover:text-white">contact@holystyl.com</a>
+        <a href="mailto:contact@holystyl.com" class="mt-4 inline-block text-sm transition hover:opacity-80" style="color: var(--action)">contact@holystyl.com</a>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/50">{% trans "Produit" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm text-white/70">
-          <li><a href="#domaines" class="transition hover:text-white">{% trans "Domaines" %}</a></li>
-          <li><a href="#tarif" class="transition hover:text-white">{% trans "Tarif" %}</a></li>
-          <li><a href="#faq" class="transition hover:text-white">FAQ</a></li>
+        <h3 class="text-sm font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Produit" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
+          <li><a href="#domaines" class="transition hover:opacity-80">{% trans "Domaines" %}</a></li>
+          <li><a href="#tarif" class="transition hover:opacity-80">{% trans "Tarif" %}</a></li>
+          <li><a href="#faq" class="transition hover:opacity-80">FAQ</a></li>
         </ul>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/50">{% trans "Accès" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm text-white/70">
-          <li><a href="{% url 'accounts:login' %}" class="transition hover:text-white">{% trans "Connexion" %}</a></li>
-          <li><a href="{% url 'accounts:register' %}" class="transition hover:text-white">{% trans "S'abonner" %}</a></li>
-          <li><a href="mailto:contact@holystyl.com" class="transition hover:text-white">{% trans "Contact" %}</a></li>
+        <h3 class="text-sm font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Accès" %}</h3>
+        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
+          <li><a href="{% url 'accounts:login' %}" class="transition hover:opacity-80">{% trans "Connexion" %}</a></li>
+          <li><a href="{% url 'accounts:register' %}" class="transition hover:opacity-80">{% trans "S'abonner" %}</a></li>
+          <li><a href="mailto:contact@holystyl.com" class="transition hover:opacity-80">{% trans "Contact" %}</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-10 flex flex-col gap-4 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between" style="border-color: var(--border); color: var(--text-muted)">
       <p>{% trans "© 2026 Holystyl · Tous droits réservés" %}</p>
       <div class="flex flex-wrap items-center gap-x-8 gap-y-2">
-        <a href="#" class="transition hover:text-white">{% trans "Mentions légales" %}</a>
-        <a href="#" class="transition hover:text-white">RGPD</a>
-        <a href="#" class="transition hover:text-white">{% trans "Confidentialité" %}</a>
+        <a href="#" class="transition hover:opacity-80">{% trans "Mentions légales" %}</a>
+        <a href="#" class="transition hover:opacity-80">RGPD</a>
+        <a href="#" class="transition hover:opacity-80">{% trans "Confidentialité" %}</a>
         <span>{% trans "Registre transparence UE 238841" %}</span>
       </div>
     </div>
   </div>
 </footer>
 {% endblock %}
-

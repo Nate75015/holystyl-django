@@ -3,7 +3,7 @@
 
 {% block content %}
 {{ engrais_json|json_script:"engrais-data" }}
-<section class="mx-auto max-w-6xl space-y-6"
+<section class="space-y-5"
   x-data="{
     tab: 'catalogue',
     modal: false,
@@ -14,268 +14,202 @@
     app(pct) { return pct ? (this.dose * pct / 100).toFixed(1) : '0.0'; }
   }">
 
-  {# ── Hero ── #}
-  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
-    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
-    <div class="relative flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
-          <span class="material-icons-round text-[26px]">grass</span>
-        </span>
-        <div class="min-w-0">
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
-            <span class="material-icons-round text-[14px]">eco</span>{% trans "Agronomie" %}
-          </span>
-          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Fertigation" %}</h2>
-          <p class="truncate text-sm text-slate-400">{% trans "Gestion N/P/K · Directive Nitrates · Calcul doses" %}</p>
-        </div>
-      </div>
-      <button type="button" @click="modal = true"
-              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#28738f]/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#28738f]/30">
-        <span class="material-icons-round text-[18px]">add</span>{% trans "Enregistrer apport" %}
-      </button>
+  <p class="hs-crumb">{% trans "Cultures & terrain" %} · {% trans "Fertigation" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Fertigation" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="modal = true" class="hs-btn-primary">{% trans "Enregistrer apport" %}</button>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-6 lg:grid-cols-[220px_1fr]">
+  {# ── Quota azote (Directive Nitrates) ── #}
+  <div id="quota" class="hs-card p-5">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+      <h2 class="text-[15px] font-medium">{% trans "Directive Nitrates 91/676/CEE" %}</h2>
+      <span class="text-[13px]" style="color: var(--text-secondary)">{{ total_n }} / {{ plafond_n }} kg N/ha/an</span>
+    </div>
+    <div class="h-2.5 overflow-hidden rounded-full" style="background: var(--surface-alt)">
+      <div class="h-full rounded-full" style="width: {{ pct_n }}%; background: var(--success)"></div>
+    </div>
+    <div class="mt-2 flex items-center justify-between text-[12px]">
+      <span class="font-medium" style="color: var(--success)">{{ pct_n|floatformat:0 }}% {% trans "du plafond" %}</span>
+      <span style="color: var(--text-muted)">0 → {{ plafond_n }} kg</span>
+    </div>
+    <p class="mt-3 text-[12px]" style="color: var(--text-secondary)">
+      {% trans "Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement vos apports cumulés." %}
+    </p>
+  </div>
 
-    {# ── Sommaire (sticky) ── #}
-    <aside class="hidden lg:block">
-      <nav class="sticky top-6 space-y-1 text-sm">
-        <a href="#quota" class="flex items-center gap-2 rounded-lg px-3 py-2 text-slate-500 transition hover:bg-slate-100 hover:text-[#28738f] dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px]">speed</span>{% trans "Quota azote" %}
-        </a>
-        <a href="#outils" class="flex items-center gap-2 rounded-lg px-3 py-2 text-slate-500 transition hover:bg-slate-100 hover:text-[#28738f] dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px]">science</span>{% trans "Catalogue & calcul" %}
-        </a>
-        <a href="#historique" class="flex items-center gap-2 rounded-lg px-3 py-2 text-slate-500 transition hover:bg-slate-100 hover:text-[#28738f] dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px]">history</span>{% trans "Historique" %}
-        </a>
-      </nav>
-    </aside>
+  {# ── Catalogue & calcul ── #}
+  <div id="outils">
+    {# Onglets #}
+    <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+      <button type="button" @click="tab = 'catalogue'" class="hs-tab" :class="tab === 'catalogue' && 'hs-tab-active'">{% trans "Catalogue engrais" %}</button>
+      <button type="button" @click="tab = 'calcul'" class="hs-tab" :class="tab === 'calcul' && 'hs-tab-active'">{% trans "Calcul doses" %}</button>
+    </div>
 
-    {# ── Colonne principale ── #}
-    <div class="min-w-0 space-y-6">
+    {# Onglet — Catalogue engrais #}
+    <div x-show="tab === 'catalogue'" class="hs-card overflow-hidden mt-4">
+      <table class="hs-table">
+        <thead>
+          <tr>
+            <th>{% trans "Engrais" %}</th>
+            <th>{% trans "Type" %}</th>
+            <th class="num">N%</th>
+            <th class="num">P%</th>
+            <th class="num">K%</th>
+            <th>{% trans "Solubilité" %}</th>
+            <th>{% trans "pH effet" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in engrais %}
+            <tr>
+              <td class="font-medium">{{ e.nom }}</td>
+              <td><span class="hs-badge hs-badge-neutral">{{ e.type_engrais }}</span></td>
+              <td class="num">{{ e.n_pct|default_if_none:"—" }}</td>
+              <td class="num">{{ e.p_pct|default_if_none:"—" }}</td>
+              <td class="num">{{ e.k_pct|default_if_none:"—" }}</td>
+              <td style="color: var(--text-secondary)">{{ e.solubilite }}</td>
+              <td style="color: var(--text-secondary)">{{ e.ph_effet }}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="7" class="text-center" style="color: var(--text-muted)">{% trans "Aucun engrais dans le catalogue." %}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
-      {# ── Section : Quota azote (Directive Nitrates) ── #}
-      <div id="quota" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-sm"><span class="material-icons-round text-[18px]">speed</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Directive Nitrates 91/676/CEE" %}</h3>
-          <span class="shrink-0 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">{{ total_n }} / {{ plafond_n }} kg N/ha/an</span>
+    {# Onglet — Calcul doses #}
+    <div x-show="tab === 'calcul'" x-cloak class="hs-card p-5 space-y-4 mt-4">
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div>
+          <label class="mb-1 block text-[13px] font-medium">{% trans "Engrais" %}</label>
+          <select x-model.number="ei" class="w-full">
+            <template x-for="(e, i) in engrais" :key="i"><option :value="i" x-text="e.nom"></option></template>
+          </select>
         </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium">{% trans "Dose produit (kg/ha)" %}</label>
+          <input type="number" x-model.number="dose" min="0" step="1" class="w-full">
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-[10px]">
+        <div class="hs-tile">
+          <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Azote (N)" %}</p>
+          <p class="text-[22px]"><span x-text="app(sel.n)"></span> <span class="text-[13px]" style="color: var(--text-muted)">kg/ha</span></p>
+        </div>
+        <div class="hs-tile">
+          <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Phosphore (P)" %}</p>
+          <p class="text-[22px]"><span x-text="app(sel.p)"></span> <span class="text-[13px]" style="color: var(--text-muted)">kg/ha</span></p>
+        </div>
+        <div class="hs-tile">
+          <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Potassium (K)" %}</p>
+          <p class="text-[22px]"><span x-text="app(sel.k)"></span> <span class="text-[13px]" style="color: var(--text-muted)">kg/ha</span></p>
+        </div>
+      </div>
+      <p class="text-[12px]" style="color: var(--text-muted)">
+        {% trans "Éléments apportés = dose produit × titre (%) ÷ 100." %}
+      </p>
+    </div>
+  </div>
+
+  {# ── Historique des apports ── #}
+  <div id="historique">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+      <h2 class="text-[15px] font-medium">{% trans "Historique des apports" %}</h2>
+      <span class="text-[13px]" style="color: var(--text-muted)">{{ fertigations|length }}</span>
+    </div>
+    <div class="hs-card overflow-hidden">
+      <table class="hs-table">
+        <thead>
+          <tr>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Parcelle" %}</th>
+            <th>{% trans "Produit" %}</th>
+            <th class="num">N</th>
+            <th class="num">P</th>
+            <th class="num">K</th>
+            <th class="num">{% trans "Volume" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in fertigations %}
+            <tr>
+              <td class="num">{{ f.date|date:"d/m/Y H:i" }}</td>
+              <td style="color: var(--text-secondary)">{{ f.parcelle.name|default:"—" }}</td>
+              <td class="font-medium">{{ f.produit|default:"—" }}</td>
+              <td class="num">{{ f.azote_n }}</td>
+              <td class="num">{{ f.phosphore_p }}</td>
+              <td class="num">{{ f.potassium_k }}</td>
+              <td class="num">{{ f.volume_l }} L</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if not fertigations %}
         <div class="p-5">
-          <div class="h-2.5 overflow-hidden rounded-full bg-emerald-100 dark:bg-emerald-500/20">
-            <div class="h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600" style="width: {{ pct_n }}%"></div>
-          </div>
-          <div class="mt-2 flex items-center justify-between text-xs">
-            <span class="font-medium text-emerald-700 dark:text-emerald-300">{{ pct_n|floatformat:0 }}% {% trans "du plafond" %}</span>
-            <span class="text-slate-400">0 → {{ plafond_n }} kg</span>
-          </div>
-          <p class="mt-3 flex items-start gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-            <span class="material-icons-round text-[15px] text-emerald-500">info</span>
-            {% trans "Plafond 170 kg N/ha/an en zone vulnérable. Le système suit automatiquement vos apports cumulés." %}
-          </p>
+          <p class="text-[15px] font-medium">{% trans "Enregistrez votre premier apport." %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation." %}</p>
         </div>
-      </div>
-
-      {# ── Section : Catalogue & calcul ── #}
-      <div id="outils" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">science</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Engrais & doses" %}</h3>
-        </div>
-        <div class="px-5 pt-4">
-          {# Onglets #}
-          <div class="flex gap-1 border-b border-slate-200 dark:border-white/10">
-            <button type="button" @click="tab = 'catalogue'"
-                    class="-mb-px border-b-2 px-4 py-2 text-sm font-medium transition"
-                    :class="tab === 'catalogue' ? 'border-[#28738f] text-[#28738f] dark:border-[#67dded] dark:text-[#67dded]' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'">{% trans "Catalogue engrais" %}</button>
-            <button type="button" @click="tab = 'calcul'"
-                    class="-mb-px border-b-2 px-4 py-2 text-sm font-medium transition"
-                    :class="tab === 'calcul' ? 'border-[#28738f] text-[#28738f] dark:border-[#67dded] dark:text-[#67dded]' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'">{% trans "Calcul doses" %}</button>
-          </div>
-        </div>
-
-        {# Onglet — Catalogue engrais #}
-        <div x-show="tab === 'catalogue'" class="overflow-x-auto p-5">
-          <table class="w-full text-sm">
-            <thead class="text-left text-xs uppercase tracking-wide text-slate-400">
-              <tr class="border-b border-slate-100 dark:border-white/5">
-                <th class="px-3 py-2.5">{% trans "Engrais" %}</th>
-                <th class="px-3 py-2.5">{% trans "Type" %}</th>
-                <th class="px-3 py-2.5">N%</th>
-                <th class="px-3 py-2.5">P%</th>
-                <th class="px-3 py-2.5">K%</th>
-                <th class="px-3 py-2.5">{% trans "Solubilité" %}</th>
-                <th class="px-3 py-2.5">{% trans "pH effet" %}</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-              {% for e in engrais %}
-                <tr>
-                  <td class="px-3 py-2.5 font-medium">{{ e.nom }}</td>
-                  <td class="px-3 py-2.5"><span class="rounded-full bg-black/5 px-2 py-0.5 text-xs font-semibold dark:bg-white/10">{{ e.type_engrais }}</span></td>
-                  <td class="px-3 py-2.5 font-medium text-blue-600 dark:text-blue-400">{{ e.n_pct|default_if_none:"—" }}</td>
-                  <td class="px-3 py-2.5 font-medium text-orange-500 dark:text-orange-400">{{ e.p_pct|default_if_none:"—" }}</td>
-                  <td class="px-3 py-2.5 font-medium text-emerald-600 dark:text-emerald-400">{{ e.k_pct|default_if_none:"—" }}</td>
-                  <td class="px-3 py-2.5 text-slate-500 dark:text-slate-400">{{ e.solubilite }}</td>
-                  <td class="px-3 py-2.5 text-slate-500 dark:text-slate-400">{{ e.ph_effet }}</td>
-                </tr>
-              {% empty %}
-                <tr><td colspan="7" class="px-3 py-6 text-center text-sm text-slate-400">{% trans "Aucun engrais dans le catalogue." %}</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-
-        {# Onglet — Calcul doses #}
-        <div x-show="tab === 'calcul'" x-cloak class="space-y-4 p-5">
-          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Engrais" %}</label>
-              <select x-model.number="ei"
-                      class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
-                <template x-for="(e, i) in engrais" :key="i"><option :value="i" x-text="e.nom"></option></template>
-              </select>
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Dose produit (kg/ha)" %}</label>
-              <input type="number" x-model.number="dose" min="0" step="1"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
-            </div>
-          </div>
-          <div class="grid grid-cols-3 gap-2">
-            <div class="rounded-xl bg-blue-50 px-3 py-2.5 text-center dark:bg-blue-500/10">
-              <p class="text-xs text-slate-400">{% trans "Azote (N)" %}</p>
-              <p class="font-semibold text-blue-600 dark:text-blue-400"><span x-text="app(sel.n)"></span> kg/ha</p>
-            </div>
-            <div class="rounded-xl bg-orange-50 px-3 py-2.5 text-center dark:bg-orange-500/10">
-              <p class="text-xs text-slate-400">{% trans "Phosphore (P)" %}</p>
-              <p class="font-semibold text-orange-500 dark:text-orange-400"><span x-text="app(sel.p)"></span> kg/ha</p>
-            </div>
-            <div class="rounded-xl bg-emerald-50 px-3 py-2.5 text-center dark:bg-emerald-500/10">
-              <p class="text-xs text-slate-400">{% trans "Potassium (K)" %}</p>
-              <p class="font-semibold text-emerald-600 dark:text-emerald-400"><span x-text="app(sel.k)"></span> kg/ha</p>
-            </div>
-          </div>
-          <p class="flex items-center gap-1.5 text-xs text-slate-400">
-            <span class="material-icons-round text-[15px]">functions</span>
-            {% trans "Éléments apportés = dose produit × titre (%) ÷ 100." %}
-          </p>
-        </div>
-      </div>
-
-      {# ── Section : Historique ── #}
-      <div id="historique" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">history</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Historique des apports" %}</h3>
-          <span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-white/10 dark:text-slate-400">{{ fertigations|length }}</span>
-        </div>
-        {% if fertigations %}
-          <div class="overflow-x-auto p-5">
-            <table class="w-full text-sm">
-              <thead class="text-left text-xs uppercase tracking-wide text-slate-400">
-                <tr class="border-b border-slate-100 dark:border-white/5">
-                  <th class="px-3 py-2.5">{% trans "Date" %}</th>
-                  <th class="px-3 py-2.5">{% trans "Parcelle" %}</th>
-                  <th class="px-3 py-2.5">{% trans "Produit" %}</th>
-                  <th class="px-3 py-2.5">N</th>
-                  <th class="px-3 py-2.5">P</th>
-                  <th class="px-3 py-2.5">K</th>
-                  <th class="px-3 py-2.5">{% trans "Volume" %}</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-                {% for f in fertigations %}
-                  <tr>
-                    <td class="px-3 py-2.5">{{ f.date|date:"d/m/Y H:i" }}</td>
-                    <td class="px-3 py-2.5 text-slate-500 dark:text-slate-400">{{ f.parcelle.name|default:"—" }}</td>
-                    <td class="px-3 py-2.5 font-medium">{{ f.produit|default:"—" }}</td>
-                    <td class="px-3 py-2.5 font-medium text-blue-600 dark:text-blue-400">{{ f.azote_n }}</td>
-                    <td class="px-3 py-2.5 font-medium text-orange-500 dark:text-orange-400">{{ f.phosphore_p }}</td>
-                    <td class="px-3 py-2.5 font-medium text-emerald-600 dark:text-emerald-400">{{ f.potassium_k }}</td>
-                    <td class="px-3 py-2.5 text-slate-400">{{ f.volume_l }} L</td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        {% else %}
-          <div class="flex flex-col items-center justify-center py-12 text-center">
-            <span class="material-icons-round mb-2 text-[40px] text-slate-300 dark:text-slate-600">opacity</span>
-            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{% trans "Aucun apport enregistré." %}</p>
-            <p class="mt-1 text-xs text-slate-400">{% trans "Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation." %}</p>
-          </div>
-        {% endif %}
-      </div>
-
+      {% endif %}
     </div>
   </div>
 
   {# Modal — Enregistrer un apport #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
     <div @click.self="modal = false" class="flex max-h-full w-full max-w-lg items-start justify-center">
-      <div class="w-full overflow-y-auto rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+      <div class="hs-popover w-full max-w-lg p-5 overflow-y-auto">
         <div class="mb-4 flex items-center gap-3">
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[20px]">grass</span></span>
-          <h3 class="flex-1 text-lg font-semibold">{% trans "Enregistrer un apport" %}</h3>
-          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+          <h3 class="flex-1 text-[15px] font-medium">{% trans "Enregistrer un apport" %}</h3>
+          <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">✕</button>
         </div>
         {% if parcelles %}
           <form method="post" action="{% url 'agronomie:fertigation_create' %}" class="space-y-3">
             {% csrf_token %}
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Date" %} <span class="text-red-500">*</span></label>
-                <input name="date" type="datetime-local" required
-                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                <label class="mb-1 block text-[13px] font-medium">{% trans "Date" %} <span style="color: var(--danger)">*</span></label>
+                <input name="date" type="datetime-local" required class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span class="text-red-500">*</span></label>
-                <select name="parcelle" required
-                        class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+                <label class="mb-1 block text-[13px] font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
+                <select name="parcelle" required class="w-full">
                   {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
                 </select>
               </div>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Produit" %}</label>
-              <input name="produit" list="engrais-list" placeholder="ex: NPK 15-15-15"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              <label class="mb-1 block text-[13px] font-medium">{% trans "Produit" %}</label>
+              <input name="produit" list="engrais-list" placeholder="ex: NPK 15-15-15" class="w-full">
               <datalist id="engrais-list">{% for e in engrais %}<option value="{{ e.nom }}">{% endfor %}</datalist>
             </div>
             <div class="grid grid-cols-3 gap-3">
               <div>
-                <label class="mb-1 block text-xs font-medium text-blue-600 dark:text-blue-400">N (kg/ha)</label>
-                <input name="azote_n" type="number" step="0.1" min="0" value="0"
-                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+                <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">N (kg/ha)</label>
+                <input name="azote_n" type="number" step="0.1" min="0" value="0" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-xs font-medium text-orange-500 dark:text-orange-400">P (kg/ha)</label>
-                <input name="phosphore_p" type="number" step="0.1" min="0" value="0"
-                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+                <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">P (kg/ha)</label>
+                <input name="phosphore_p" type="number" step="0.1" min="0" value="0" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-xs font-medium text-emerald-600 dark:text-emerald-400">K (kg/ha)</label>
-                <input name="potassium_k" type="number" step="0.1" min="0" value="0"
-                       class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+                <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">K (kg/ha)</label>
+                <input name="potassium_k" type="number" step="0.1" min="0" value="0" class="w-full">
               </div>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Volume (L)" %}</label>
-              <input name="volume_l" type="number" step="1" min="0" value="0"
-                     class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+              <label class="mb-1 block text-[13px] font-medium">{% trans "Volume (L)" %}</label>
+              <input name="volume_l" type="number" step="1" min="0" value="0" class="w-full">
             </div>
             <div class="flex justify-end gap-2 pt-1">
-              <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-              <button type="submit" class="rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90">{% trans "Enregistrer" %}</button>
+              <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+              <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
             </div>
           </form>
         {% else %}
-          <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un apport." %}</p>
+          <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez d'abord une parcelle à votre exploitation pour enregistrer un apport." %}</p>
         {% endif %}
       </div>
     </div>

@@ -4,33 +4,34 @@
 {% block main_padding %}{% endblock %}
 
 {% block content %}
-<div class="flex h-[calc(100dvh-8rem)] overflow-hidden bg-sand-50 dark:bg-[#0b1620] md:h-[calc(100dvh-3.25rem)]">
+<div class="flex h-[calc(100dvh-8rem)] overflow-hidden md:h-[calc(100dvh-3.25rem)]" style="background: var(--page)">
 
   {% include "mail/_rail.html" %}
 
-  <div class="flex flex-1 items-center justify-center overflow-y-auto bg-white px-4 py-8 dark:bg-[#0f1f2b] md:border-l md:border-black/5 dark:md:border-white/10">
+  <div class="flex flex-1 items-center justify-center overflow-y-auto px-4 py-8 md:border-l" style="background: var(--surface); border-color: var(--border)">
     <div class="w-full max-w-md text-center">
-      <span class="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-brand/10 text-brand">
+      <span class="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl" style="background: var(--surface-alt); color: var(--text-muted)">
         <span class="material-icons-round text-[34px]">mark_email_read</span>
       </span>
-      <h2 class="text-xl font-semibold">{% trans "Connectez votre boîte mail" %}</h2>
-      <p class="mx-auto mt-2 max-w-sm text-sm text-slate-500 dark:text-slate-400">
+      <h2 class="text-[20px]">{% trans "Connectez votre boîte mail" %}</h2>
+      <p class="mx-auto mt-2 max-w-sm text-sm" style="color: var(--text-secondary)">
         {% trans "Importez votre boîte Gmail dans Holystyl : réception, messages suivis, envoyés, brouillons, catégories, et l'envoi depuis votre propre adresse." %}
       </p>
 
       {% if configured %}
         <a href="{% url 'mail:gmail_connect' %}"
-           class="mt-6 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-md ring-1 ring-black/10 transition hover:shadow-lg dark:bg-[#122230] dark:text-slate-100 dark:ring-white/15">
+           class="mt-6 inline-flex items-center gap-3 rounded-[10px] px-6 py-3 text-sm font-medium transition hover:[background:var(--surface-alt)]"
+           style="border: 0.5px solid var(--border-strong); background: var(--surface); color: var(--text)">
           <span class="material-icons-round text-[20px] text-red-500">mail</span>{% trans "Se connecter avec Google" %}
         </a>
-        <p class="mt-3 text-xs text-slate-400">{% trans "Accès en lecture/écriture de libellés — Holystyl ne supprime jamais vos e-mails." %}</p>
+        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "Accès en lecture/écriture de libellés — Holystyl ne supprime jamais vos e-mails." %}</p>
       {% else %}
-        <div class="mt-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-left text-sm text-amber-800 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-300">
-          <p class="font-semibold">{% trans "Connexion Gmail non configurée" %}</p>
+        <div class="mt-6 rounded-[10px] px-4 py-3 text-left text-sm" style="border: 0.5px solid var(--border); background: var(--surface-alt); color: var(--warning)">
+          <p class="font-medium">{% trans "Connexion Gmail non configurée" %}</p>
           <p class="mt-1 text-xs leading-relaxed opacity-90">
             {% trans "L'administrateur doit renseigner les identifiants OAuth Google (GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET) et activer l'API Gmail dans Google Cloud, avec l'URI de redirection :" %}
           </p>
-          <code class="mt-2 block break-all rounded bg-black/5 px-2 py-1 text-[11px] dark:bg-white/10">{{ request.scheme }}://{{ request.get_host }}/mail/oauth/callback/</code>
+          <code class="mt-2 block break-all rounded px-2 py-1 text-[11px]" style="background: var(--surface)">{{ request.scheme }}://{{ request.get_host }}/mail/oauth/callback/</code>
         </div>
       {% endif %}
     </div>

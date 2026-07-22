@@ -4,7 +4,7 @@
 {% block main_padding %}{% endblock %}
 
 {% block content %}
-<section class="flex h-[calc(100vh-3.25rem)] overflow-hidden border-t border-slate-200 dark:border-white/10"
+<section class="flex h-[calc(100vh-3.25rem)] overflow-hidden border-t" style="border-color: var(--border)"
          x-data="{ modal: false, tab: 'direct', confirmOpen: false, confirmMsg: '', _issue: null }"
          @mc-confirm.window="confirmMsg = $event.detail.msg; _issue = $event.detail.issue; confirmOpen = true">
 
@@ -14,17 +14,17 @@
   <div class="flex min-w-0 flex-1 flex-col">
 
     {# En-tête de la conversation #}
-    <div class="flex items-center gap-3 border-b border-slate-200 px-4 py-3 dark:border-white/10">
+    <div class="flex items-center gap-3 border-b px-4 py-3" style="border-color: var(--border)">
       <a href="{% url 'messagerie:inbox' %}"
          class="grid h-9 w-9 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 sm:hidden">
         <span class="material-icons-round text-[20px]">arrow_back</span>
       </a>
-      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-bold text-white {% if conversation.is_group %}bg-emerald-700{% else %}bg-slate-800{% endif %}">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-medium" style="{% if conversation.is_group %}background: var(--msa-bg); color: var(--msa-fg){% else %}background: var(--surface-alt); color: var(--text-secondary){% endif %}">
         {% if conversation.is_group %}<span class="material-icons-round text-[20px]">groups</span>{% else %}{{ conversation.title|slice:":2"|upper }}{% endif %}
       </span>
       <div class="min-w-0">
-        <p class="truncate font-semibold leading-tight">{{ conversation.title }}</p>
-        <p class="truncate text-xs text-slate-400">
+        <p class="truncate font-medium leading-tight">{{ conversation.title }}</p>
+        <p class="truncate text-xs" style="color: var(--text-muted)">
           {% if conversation.is_group %}{{ conversation.participants.count }} {% trans "participants" %}{% else %}{% trans "Conversation privée" %}{% endif %}
         </p>
       </div>
@@ -42,12 +42,12 @@
           hx-post="{% url 'messagerie:send' conversation.pk %}" hx-target="#thread" hx-swap="innerHTML"
           hx-encoding="multipart/form-data"
           hx-on::after-request="this.reset(); clearPreview()"
-          class="border-t border-slate-200 p-3 dark:border-white/10">
+          class="border-t p-3" style="border-color: var(--border)">
       {% csrf_token %}
       <div id="files-preview" class="mb-2 hidden flex-wrap gap-1.5"></div>
       <div class="flex items-center gap-2">
         <label title="{% trans 'Joindre un fichier' %}"
-               class="grid h-10 w-10 shrink-0 cursor-pointer place-items-center rounded-full text-slate-500 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
+               class="grid h-10 w-10 shrink-0 cursor-pointer place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
           <span class="material-icons-round text-[20px]">attach_file</span>
           <input id="files-input" type="file" name="fichiers" multiple class="hidden"
                  accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt,.csv,.png,.jpg,.jpeg,.gif,.webp"
@@ -55,16 +55,16 @@
         </label>
         <input id="msg-input" name="body" autocomplete="off"
                placeholder="{% trans 'Écrire un message…' %}"
-               class="flex-1 rounded-full border border-slate-200 bg-transparent px-4 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+               class="flex-1 rounded-full px-4 py-2 text-sm focus:outline-none" style="background: var(--surface-alt); border: 0.5px solid var(--border); color: var(--text)">
         <button type="button" id="mic-btn" onclick="dictateMsg()" title="{% trans 'Dicter le message' %}"
-                class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-slate-500 transition hover:bg-black/5 dark:text-slate-300 dark:hover:bg-white/10">
+                class="grid h-10 w-10 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
           <span class="material-icons-round text-[20px]">mic</span>
         </button>
         <button type="button" id="reformulate-btn" onclick="reformulateMsg()" title="{% trans 'Reformuler avec l’IA' %}"
-                class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-slate-500 transition hover:bg-black/5 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-white/10">
+                class="grid h-10 w-10 shrink-0 place-items-center rounded-full transition hover:bg-black/5 disabled:opacity-50 dark:hover:bg-white/10" style="color: var(--text-secondary)">
           <span class="material-icons-round text-[20px]">auto_fix_high</span>
         </button>
-        <button type="submit" class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-800 text-white transition hover:bg-slate-900">
+        <button type="submit" class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-white transition" style="background: var(--action)" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action)'">
           <span class="material-icons-round text-[20px]">send</span>
         </button>
       </div>
@@ -76,18 +76,18 @@
   {# Confirmation custom (remplace le popup natif du navigateur) #}
   <div x-show="confirmOpen" x-cloak x-transition.opacity @keydown.escape.window="confirmOpen = false"
        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
-    <div @click.self="confirmOpen = false" class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+    <div @click.self="confirmOpen = false" class="hs-popover w-full max-w-sm p-5">
       <div class="flex items-start gap-3">
-        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400"><span class="material-icons-round">delete_outline</span></span>
+        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full" style="background: var(--surface-alt); color: var(--danger)"><span class="material-icons-round">delete_outline</span></span>
         <div class="min-w-0">
-          <h3 class="text-base font-semibold" x-text="confirmMsg"></h3>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{% trans "Cette action est irréversible." %}</p>
+          <h3 class="text-base font-medium" x-text="confirmMsg"></h3>
+          <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Cette action est irréversible." %}</p>
         </div>
       </div>
       <div class="mt-5 flex justify-end gap-2">
-        <button type="button" @click="confirmOpen = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
+        <button type="button" @click="confirmOpen = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
         <button type="button" @click="confirmOpen = false; _issue && _issue()"
-                class="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700">
+                class="inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 text-sm font-medium text-white transition" style="height: 30px; background: var(--danger)">
           <span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}
         </button>
       </div>
@@ -126,7 +126,9 @@
     box.classList.remove('hidden'); box.classList.add('flex');
     Array.from(input.files).forEach(function (f) {
       var chip = document.createElement('span');
-      chip.className = 'inline-flex items-center gap-1 rounded-full bg-black/5 px-2.5 py-1 text-xs text-slate-600 dark:bg-white/10 dark:text-slate-300';
+      chip.className = 'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs';
+      chip.style.background = 'var(--surface-alt)';
+      chip.style.color = 'var(--text-secondary)';
       chip.innerHTML = '<span class="material-icons-round text-[14px] opacity-70">attach_file</span>' + f.name;
       box.appendChild(chip);
     });

@@ -2,29 +2,17 @@
 {% load i18n l10n %}
 
 {% block content %}
-<section class="mx-auto max-w-6xl space-y-6">
+<section class="space-y-5">
 
-  {# ── Hero ── #}
-  <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-[#28738f]/10 via-white to-[#22d3ee]/10 p-5 shadow-sm dark:border-white/10 dark:from-[#28738f]/20 dark:via-[#0b1620] dark:to-[#22d3ee]/10 sm:p-6">
-    <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#22d3ee]/15 blur-3xl"></div>
-    <div class="relative flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-lg shadow-[#28738f]/25">
-          <span class="material-icons-round text-[26px]">ac_unit</span>
-        </span>
-        <div class="min-w-0">
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#28738f]/10 px-2.5 py-0.5 text-xs font-semibold text-[#28738f] dark:bg-white/10 dark:text-[#67dded]">
-            <span class="material-icons-round text-[14px]">shield</span>{% trans "Protection" %}
-          </span>
-          <h2 class="mt-1.5 text-xl font-bold tracking-tight sm:text-2xl">{% trans "Anti-gel" %}</h2>
-          <p class="truncate text-sm text-slate-400">{% trans "Surveillance températures · alertes gel · protection cultures" %}</p>
-        </div>
-      </div>
+  {# ── Fil d'Ariane + titre ── #}
+  <p class="hs-crumb">{% trans "Protection" %} · {% trans "Anti-gel" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Anti-gel" %}</h1>
+    <div class="flex items-center gap-2">
       <form method="post" action="{% url 'irrigation:antigel_settings' %}">
         {% csrf_token %}
         <input type="hidden" name="toggle_alertes" value="1">
-        <button type="submit"
-                class="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition {% if alertes_gel %}bg-emerald-500/10 text-emerald-600 dark:text-emerald-400{% else %}bg-slate-500/10 text-slate-500{% endif %}">
+        <button type="submit" class="hs-btn-outline">
           <span class="h-2 w-2 rounded-full {% if alertes_gel %}bg-emerald-500{% else %}bg-slate-400{% endif %}"></span>
           {% trans "Alertes" %} {% if alertes_gel %}ON{% else %}OFF{% endif %}
         </button>
@@ -34,9 +22,9 @@
 
   {# ── Alerte gel ── #}
   {% if alert %}
-    <div class="rounded-2xl border-2 border-red-200 bg-red-50 p-5 dark:border-red-500/30 dark:bg-red-500/10">
-      <h3 class="flex items-center gap-2 font-semibold text-red-700 dark:text-red-400"><span class="material-icons-round text-[20px]">warning</span>{% trans "Risque de gel détecté dans les 5 prochains jours" %}</h3>
-      <p class="mt-1.5 text-sm text-red-700/90 dark:text-red-300">
+    <div class="hs-card p-5" style="border-color: var(--danger)">
+      <h2 class="text-[15px] font-medium" style="color: var(--danger)">{% trans "Risque de gel détecté dans les 5 prochains jours" %}</h2>
+      <p class="mt-1.5 text-[13px]" style="color: var(--text-secondary)">
         {% blocktrans count nb=alert.nb %}{{ nb }} nuit à risque.{% plural %}{{ nb }} nuits à risque.{% endblocktrans %}
         {% if alert.tmin is not None %}{% blocktrans with t=alert.tmin %}Températures minimales prévues : {{ t }}°C.{% endblocktrans %}{% endif %}
         {% trans "Vérifiez vos systèmes de protection (aspersion, bougies, éoliennes)." %}
@@ -44,137 +32,95 @@
     </div>
   {% endif %}
 
-  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
-    {# ── Sommaire latéral collant ── #}
-    <aside class="hidden lg:block">
-      <nav class="sticky top-6 space-y-0.5">
-        <a href="#sec-forecast" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">calendar_month</span><span class="flex-1 truncate">{% trans "Prévisions" %}</span></a>
-        <a href="#sec-seuil" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">notifications_active</span><span class="flex-1 truncate">{% trans "Seuil d'alerte" %}</span></a>
-        <a href="#sec-cultures" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">eco</span><span class="flex-1 truncate">{% trans "Seuils cultures" %}</span></a>
-        <a href="#sec-protection" class="group flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-500 transition hover:bg-black/5 hover:text-brand dark:text-slate-400 dark:hover:bg-white/5">
-          <span class="material-icons-round text-[18px] text-slate-400 transition group-hover:text-brand">shield</span><span class="flex-1 truncate">{% trans "Protection" %}</span></a>
-      </nav>
-    </aside>
-
-    {# ── Colonne principale ── #}
-    <div class="min-w-0 space-y-5">
-
-      {# ── Prévisions 7 jours ── #}
-      <div id="sec-forecast" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex flex-wrap items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">calendar_month</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Prévisions 7 jours — Températures minimales" %}</h3>
-          {% if villes %}
-            <form method="get" class="shrink-0">
-              <label class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 pl-3 pr-1 text-sm dark:border-white/10">
-                <span class="material-icons-round text-[16px] text-slate-400">place</span>
-                <select name="ville" onchange="this.form.submit()"
-                        class="input-bare cursor-pointer py-1.5 pr-1 text-sm font-medium">
-                  {% for v in villes %}<option value="{{ v.slug }}" {% if ville and v.slug == ville.slug %}selected{% endif %}>{{ v.nom }}</option>{% endfor %}
-                </select>
-              </label>
-            </form>
-          {% endif %}
-        </div>
-        <div class="p-5">
-          {% if forecast %}
-            <div class="divide-y divide-slate-100 dark:divide-white/5">
-              {% for d in forecast %}
-                <div class="flex items-center justify-between gap-3 py-2.5">
-                  {% language 'fr' %}
-                  <p class="w-32 shrink-0 cursor-help whitespace-nowrap text-sm font-medium capitalize"
-                     title="{{ d.date|date:'l j F Y'|capfirst }} · {% blocktrans with w=d.date|date:'W' %}semaine {{ w }}{% endblocktrans %}">{{ d.date|date:"D j F" }}</p>
-                  {% endlanguage %}
-                  <div class="flex flex-1 items-center justify-center gap-2">
-                    {% if d.icon %}<span class="material-icons-round text-[20px] text-slate-400" title="{{ d.meteo }}{% if d.vent %} · {% blocktrans with v=d.vent %}vent {{ v }} km/h{% endblocktrans %}{% endif %}">{{ d.icon }}</span>{% endif %}
-                    <span class="cursor-help text-lg font-bold tabular-nums" title="{% trans 'Température minimale (nuit)' %}" style="color: {{ d.color }}">{% if d.tmin is not None and d.tmin >= 0 %}+{% endif %}{{ d.tmin|default_if_none:"—" }}°C</span>
-                    <span class="cursor-help text-xs text-slate-400" title="{% trans 'Température maximale (jour)' %}">/ {{ d.tmax|default_if_none:"—" }}°C</span>
-                  </div>
-                  <span class="shrink-0 cursor-help rounded-full px-2.5 py-1 text-xs font-semibold" style="color: {{ d.color }}; background: {{ d.color }}1a" title="{{ d.risk_desc }}">{{ d.risk_label }}</span>
-                </div>
-              {% endfor %}
+  {# ── Prévisions 7 jours ── #}
+  <div id="sec-forecast" class="hs-card p-5">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+      <h2 class="text-[15px] font-medium">{% trans "Prévisions 7 jours — Températures minimales" %}</h2>
+      {% if villes %}
+        <form method="get" class="shrink-0">
+          <select name="ville" onchange="this.form.submit()" class="text-[13px]">
+            {% for v in villes %}<option value="{{ v.slug }}" {% if ville and v.slug == ville.slug %}selected{% endif %}>{{ v.nom }}</option>{% endfor %}
+          </select>
+        </form>
+      {% endif %}
+    </div>
+    {% if forecast %}
+      <div class="divide-y" style="--tw-divide-opacity:1">
+        {% for d in forecast %}
+          <div class="flex items-center justify-between gap-3 py-2.5" style="border-top: 0.5px solid var(--border);{% if forloop.first %}border-top: none;{% endif %}">
+            {% language 'fr' %}
+            <p class="w-32 shrink-0 cursor-help whitespace-nowrap text-[13px] font-medium capitalize"
+               title="{{ d.date|date:'l j F Y'|capfirst }} · {% blocktrans with w=d.date|date:'W' %}semaine {{ w }}{% endblocktrans %}">{{ d.date|date:"D j F" }}</p>
+            {% endlanguage %}
+            <div class="flex flex-1 items-center justify-center gap-2">
+              {% if d.icon %}<span class="material-icons-round text-[20px]" style="color: var(--text-muted)" title="{{ d.meteo }}{% if d.vent %} · {% blocktrans with v=d.vent %}vent {{ v }} km/h{% endblocktrans %}{% endif %}">{{ d.icon }}</span>{% endif %}
+              <span class="cursor-help text-lg font-medium tabular-nums" title="{% trans 'Température minimale (nuit)' %}" style="color: {{ d.color }}">{% if d.tmin is not None and d.tmin >= 0 %}+{% endif %}{{ d.tmin|default_if_none:"—" }}°C</span>
+              <span class="cursor-help text-xs" style="color: var(--text-muted)" title="{% trans 'Température maximale (jour)' %}">/ {{ d.tmax|default_if_none:"—" }}°C</span>
             </div>
-          {% else %}
-            <div class="flex flex-col items-center justify-center py-8 text-center">
-              <span class="material-icons-round mb-2 text-[32px] text-slate-300 dark:text-slate-600">location_off</span>
-              <p class="text-sm text-slate-400">{% trans "Aucun lieu renseigné." %}
-                <a href="{% url 'meteo:index' %}" class="font-medium text-brand hover:underline">{% trans "Ajoutez une ville depuis la page Météo" %}</a>
-                {% trans "pour afficher les prévisions." %}</p>
-            </div>
-          {% endif %}
+            <span class="shrink-0 cursor-help rounded-full px-2.5 py-1 text-xs font-medium" style="color: {{ d.color }}; background: {{ d.color }}1a" title="{{ d.risk_desc }}">{{ d.risk_label }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="py-8 text-center">
+        <p class="text-[15px] font-medium">{% trans "Aucun lieu renseigné." %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+          <a href="{% url 'meteo:index' %}" class="font-medium hover:underline" style="color: var(--action)">{% trans "Ajoutez une ville depuis la page Météo" %}</a>
+          {% trans "pour afficher les prévisions." %}
+        </p>
+      </div>
+    {% endif %}
+  </div>
+
+  {# ── Seuil d'alerte notifications (thermomètre) ── #}
+  <div id="sec-seuil" class="hs-card p-5" x-data="frostThermo({{ seuil|unlocalize }})">
+    <h2 class="text-[15px] font-medium mb-2">{% trans "Seuil d'alerte notifications" %}</h2>
+    <form method="post" action="{% url 'irrigation:antigel_settings' %}">
+      {% csrf_token %}
+      <div class="flex items-center gap-4">
+        <svg viewBox="0 0 44 120" class="h-20 w-auto shrink-0">
+          <rect x="17" y="6" width="10" height="88" rx="5" fill="rgba(148,163,184,0.2)"/>
+          <circle cx="22" cy="100" r="13" fill="rgba(148,163,184,0.2)"/>
+          <rect x="19" :y="mercuryY()" width="6" :height="mercuryH()" rx="3" :fill="color()"/>
+          <circle cx="22" cy="100" r="10" :fill="color()"/>
+        </svg>
+        <div class="flex-1">
+          <p class="text-2xl font-medium tabular-nums" :style="`color:${color()}`"><span x-text="val > 0 ? '+' + val : val"></span>°C</p>
+          <input name="seuil_alerte_gel_c" type="range" min="-10" max="10" step="0.5" x-model.number="val"
+                 :style="`--track:${track()}; --thumb:${color()}`" class="score-slider mt-2">
         </div>
       </div>
-
-      {# ── Seuil d'alerte notifications (thermomètre) ── #}
-      <div id="sec-seuil" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5"
-           x-data="frostThermo({{ seuil|unlocalize }})">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">notifications_active</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Seuil d'alerte notifications" %}</h3>
-        </div>
-        <div class="p-5">
-          <form method="post" action="{% url 'irrigation:antigel_settings' %}">
-            {% csrf_token %}
-            <div class="flex items-center gap-4">
-              <svg viewBox="0 0 44 120" class="h-20 w-auto shrink-0">
-                <rect x="17" y="6" width="10" height="88" rx="5" fill="rgba(148,163,184,0.2)"/>
-                <circle cx="22" cy="100" r="13" fill="rgba(148,163,184,0.2)"/>
-                <rect x="19" :y="mercuryY()" width="6" :height="mercuryH()" rx="3" :fill="color()"/>
-                <circle cx="22" cy="100" r="10" :fill="color()"/>
-              </svg>
-              <div class="flex-1">
-                <p class="text-2xl font-bold tabular-nums" :style="`color:${color()}`"><span x-text="val > 0 ? '+' + val : val"></span>°C</p>
-                <input name="seuil_alerte_gel_c" type="range" min="-10" max="10" step="0.5" x-model.number="val"
-                       :style="`--track:${track()}; --thumb:${color()}`" class="score-slider mt-2">
-              </div>
-            </div>
-            <div class="mt-3 flex items-center justify-between gap-3">
-              <p class="text-xs text-slate-400">{% trans "Notification envoyée si T° min prévue ≤" %} <span class="font-medium text-slate-500 dark:text-slate-300" x-text="(val > 0 ? '+' + val : val) + '°C'"></span>.</p>
-              <button type="submit" class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-[#28738f] to-[#0e7490] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
-                <span class="material-icons-round text-[18px]">save</span>{% trans "Enregistrer" %}
-              </button>
-            </div>
-          </form>
-        </div>
+      <div class="mt-3 flex items-center justify-between gap-3">
+        <p class="text-xs" style="color: var(--text-secondary)">{% trans "Notification envoyée si T° min prévue ≤" %} <span class="font-medium" style="color: var(--text)" x-text="(val > 0 ? '+' + val : val) + '°C'"></span>.</p>
+        <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
       </div>
+    </form>
+  </div>
 
-      {# ── Seuils critiques par culture ── #}
-      <div id="sec-cultures" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">eco</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Seuils critiques par culture" %}</h3>
+  {# ── Seuils critiques par culture ── #}
+  <div id="sec-cultures" class="hs-card p-5">
+    <h2 class="text-[15px] font-medium mb-2">{% trans "Seuils critiques par culture" %}</h2>
+    <dl class="space-y-1 text-[13px]">
+      {% for nom, seuil in cultures %}
+        <div class="flex items-center justify-between rounded-lg px-2 py-1.5">
+          <dt style="color: var(--text-secondary)">{{ nom }}</dt>
+          <dd class="font-medium tabular-nums">{{ seuil }}</dd>
         </div>
-        <div class="p-5">
-          <dl class="space-y-2 text-sm">
-            {% for nom, seuil in cultures %}
-              <div class="flex items-center justify-between rounded-lg px-2 py-1.5 hover:bg-black/[0.02] dark:hover:bg-white/5">
-                <dt class="text-slate-600 dark:text-slate-300">{{ nom }}</dt>
-                <dd class="font-semibold tabular-nums">{{ seuil }}</dd>
-              </div>
-            {% endfor %}
-          </dl>
-        </div>
-      </div>
+      {% endfor %}
+    </dl>
+  </div>
 
-      {# ── Méthodes de protection ── #}
-      <div id="sec-protection" class="scroll-mt-6 rounded-2xl border border-slate-200/70 bg-white shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
-        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-3.5 dark:border-white/5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#28738f] to-[#22d3ee] text-white shadow-sm"><span class="material-icons-round text-[18px]">shield</span></span>
-          <h3 class="flex-1 text-sm font-semibold">{% trans "Méthodes de protection" %}</h3>
-        </div>
-        <div class="grid grid-cols-1 gap-2 p-5 text-sm sm:grid-cols-2">
-          <div class="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 dark:border-white/10"><span class="material-icons-round text-[18px] text-blue-500">shower</span>{% trans "Aspersion anti-gel" %}</div>
-          <div class="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 dark:border-white/10"><span class="material-icons-round text-[18px] text-orange-500">local_fire_department</span>{% trans "Bougies paraffine" %}</div>
-          <div class="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 dark:border-white/10"><span class="material-icons-round text-[18px] text-slate-500">mode_fan</span>{% trans "Éolienne de brassage" %}</div>
-          <div class="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 dark:border-white/10"><span class="material-icons-round text-[18px] text-emerald-500">layers</span>{% trans "Géotextile / voile" %}</div>
-        </div>
-      </div>
-
+  {# ── Méthodes de protection ── #}
+  <div id="sec-protection" class="hs-card p-5">
+    <h2 class="text-[15px] font-medium mb-2">{% trans "Méthodes de protection" %}</h2>
+    <div class="grid grid-cols-1 gap-2 text-[13px] sm:grid-cols-2">
+      <div class="flex items-center gap-2 rounded-lg px-3 py-2" style="border: 0.5px solid var(--border)">{% trans "Aspersion anti-gel" %}</div>
+      <div class="flex items-center gap-2 rounded-lg px-3 py-2" style="border: 0.5px solid var(--border)">{% trans "Bougies paraffine" %}</div>
+      <div class="flex items-center gap-2 rounded-lg px-3 py-2" style="border: 0.5px solid var(--border)">{% trans "Éolienne de brassage" %}</div>
+      <div class="flex items-center gap-2 rounded-lg px-3 py-2" style="border: 0.5px solid var(--border)">{% trans "Géotextile / voile" %}</div>
     </div>
   </div>
+
 </section>
 
 <script>

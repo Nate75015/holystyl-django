@@ -3,33 +3,32 @@
 <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
      class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
   <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
-    <div class="w-full rounded-2xl bg-white p-5 shadow-xl dark:bg-[#122230]">
+    <div class="hs-popover w-full p-5">
       <div class="mb-4 flex items-center justify-between">
-        <h3 class="text-lg font-semibold">{% trans "Nouveau message" %}</h3>
-        <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full text-slate-400 hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+        <h3 class="text-[15px] font-medium">{% trans "Nouveau message" %}</h3>
+        <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">✕</button>
       </div>
 
       <form method="post" action="{% url 'messagerie:new' %}" class="space-y-3">
         {% csrf_token %}
         <input type="hidden" name="mode" :value="tab">
 
-        <div class="grid grid-cols-2 gap-1 rounded-xl bg-black/5 p-1 dark:bg-white/5">
+        <div class="grid grid-cols-2 gap-1 rounded-[10px] p-1" style="background: var(--surface-alt)">
           <button type="button" @click="tab = 'direct'"
                   class="flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition"
-                  :class="tab === 'direct' ? 'bg-white text-slate-800 shadow-sm dark:bg-white/10 dark:text-white' : 'text-slate-500'">
+                  :style="tab === 'direct' ? 'background: var(--surface); color: var(--text)' : 'color: var(--text-secondary)'">
             <span class="material-icons-round text-[16px]">chat_bubble_outline</span>{% trans "Direct" %}
           </button>
           <button type="button" @click="tab = 'groupe'"
                   class="flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition"
-                  :class="tab === 'groupe' ? 'bg-white text-slate-800 shadow-sm dark:bg-white/10 dark:text-white' : 'text-slate-500'">
+                  :style="tab === 'groupe' ? 'background: var(--surface); color: var(--text)' : 'color: var(--text-secondary)'">
             <span class="material-icons-round text-[16px]">groups</span>{% trans "Groupe" %}
           </button>
         </div>
 
         <div x-show="tab === 'direct'">
-          <label class="mb-1 block text-sm font-medium">{% trans "À" %} <span class="text-red-500">*</span></label>
-          <select name="participant" :required="tab === 'direct'"
-                  class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+          <label class="mb-1 block text-sm font-medium">{% trans "À" %} <span style="color: var(--danger)">*</span></label>
+          <select name="participant" :required="tab === 'direct'" class="dark:[color-scheme:dark]">
             <option value="">{% trans "— Choisir un agriculteur —" %}</option>
             {% for f in farmers %}<option value="{{ f.pk }}">{{ f.full_name|default:f.email }}</option>{% endfor %}
           </select>
@@ -38,28 +37,25 @@
         <div x-show="tab === 'groupe'" x-cloak class="space-y-3">
           <div>
             <label class="mb-1 block text-sm font-medium">{% trans "Nom du groupe" %}</label>
-            <input name="name" placeholder="{% trans 'ex: Équipe irrigation' %}"
-                   class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10">
+            <input name="name" placeholder="{% trans 'ex: Équipe irrigation' %}">
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Membres" %} <span class="text-red-500">*</span></label>
-            <select name="participants" multiple size="4"
-                    class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10 dark:[color-scheme:dark]">
+            <label class="mb-1 block text-sm font-medium">{% trans "Membres" %} <span style="color: var(--danger)">*</span></label>
+            <select name="participants" multiple size="4" class="dark:[color-scheme:dark]">
               {% for f in farmers %}<option value="{{ f.pk }}">{{ f.full_name|default:f.email }}</option>{% endfor %}
             </select>
-            <p class="mt-1 text-xs text-slate-400">{% trans "Ctrl/Cmd + clic pour en sélectionner plusieurs." %}</p>
+            <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Ctrl/Cmd + clic pour en sélectionner plusieurs." %}</p>
           </div>
         </div>
 
         <div>
-          <label class="mb-1 block text-sm font-medium">{% trans "Message" %} <span class="text-red-500">*</span></label>
-          <textarea name="message" rows="3" required placeholder="{% trans 'Écrivez votre message…' %}"
-                    class="w-full rounded-lg border border-slate-200 bg-transparent px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-white/10"></textarea>
+          <label class="mb-1 block text-sm font-medium">{% trans "Message" %} <span style="color: var(--danger)">*</span></label>
+          <textarea name="message" rows="3" required placeholder="{% trans 'Écrivez votre message…' %}"></textarea>
         </div>
 
         <div class="flex justify-end gap-2 pt-1">
-          <button type="button" @click="modal = false" class="rounded-full px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/5">{% trans "Annuler" %}</button>
-          <button type="submit" class="rounded-full bg-slate-800 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-900">{% trans "Envoyer" %}</button>
+          <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Envoyer" %}</button>
         </div>
       </form>
     </div>

@@ -2,45 +2,50 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-6">
-  <h2 class="text-xl font-semibold">{% trans "Capteurs & IoT" %}</h2>
+<section class="space-y-5">
+  <p class="hs-crumb">{% trans "Cultures & terrain" %} · {% trans "Capteurs" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Capteurs" %}</h1>
+  </div>
 
   {% if telemetry_chart %}
-    <div class="md-card">
-      <p class="mb-3 text-sm font-medium">{% trans "Télémétrie récente" %}</p>
+    <div class="hs-card p-4">
+      <h2 class="text-[15px] font-medium mb-2">{% trans "Télémétrie récente" %}</h2>
       {% include "partials/area_chart.html" with chart_id="teleChart" chart_data=telemetry_chart height=160 %}
     </div>
   {% endif %}
 
-  {% if devices %}
-    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10">
-      <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-400 dark:bg-white/5">
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Nom" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Marque" %}</th>
+          <th>{% trans "Firmware" %}</th>
+          <th>{% trans "Statut" %}</th>
+          <th class="num">{% trans "Vu" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in devices %}
           <tr>
-            <th class="px-4 py-3">{% trans "Nom" %}</th>
-            <th class="px-4 py-3">{% trans "Type" %}</th>
-            <th class="px-4 py-3">{% trans "Marque" %}</th>
-            <th class="px-4 py-3">{% trans "Firmware" %}</th>
-            <th class="px-4 py-3">{% trans "Statut" %}</th>
-            <th class="px-4 py-3">{% trans "Vu" %}</th>
+            <td class="font-medium">{{ d.name }}</td>
+            <td>{{ d.get_device_type_display }}</td>
+            <td>{{ d.get_brand_display }}</td>
+            <td style="color: var(--text-muted)">{{ d.firmware_version|default:"—" }}</td>
+            <td>{{ d.get_status_display }}</td>
+            <td class="num" style="color: var(--text-muted)">{{ d.last_seen|default:"—" }}</td>
           </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-          {% for d in devices %}
-            <tr>
-              <td class="px-4 py-3 font-medium">{{ d.name }}</td>
-              <td class="px-4 py-3">{{ d.get_device_type_display }}</td>
-              <td class="px-4 py-3">{{ d.get_brand_display }}</td>
-              <td class="px-4 py-3 text-slate-400">{{ d.firmware_version|default:"—" }}</td>
-              <td class="px-4 py-3">{{ d.get_status_display }}</td>
-              <td class="px-4 py-3 text-slate-400">{{ d.last_seen|default:"—" }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  {% else %}
-    <div class="md-card"><p class="text-sm text-slate-500 dark:text-slate-400">{% trans "Aucun capteur enregistré." %}</p></div>
-  {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not devices %}
+      <div class="p-6 text-center">
+        <p class="text-[15px] font-medium">{% trans "Enregistrez votre premier capteur" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucun capteur n'est encore connecté à votre exploitation." %}</p>
+      </div>
+    {% endif %}
+  </div>
 </section>
 {% endblock %}

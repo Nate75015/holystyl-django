@@ -2,33 +2,36 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto max-w-3xl space-y-6" x-data="{ step: 1, total: 5 }">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold">{{ page_title }}</h2>
-    <span class="text-sm text-slate-400">{% trans "Étape" %} <span x-text="step"></span>/<span x-text="total"></span></span>
+<section class="mx-auto max-w-3xl space-y-5" x-data="{ step: 1, total: 5 }">
+  <div>
+    <p class="hs-crumb">{% trans "Cadastre" %} · {% trans "Parcelles" %}</p>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <h1 class="text-[20px]">{{ page_title }}</h1>
+      <span class="text-[13px]" style="color: var(--text-muted)">{% trans "Étape" %} <span x-text="step"></span>/<span x-text="total"></span></span>
+    </div>
   </div>
 
-  <div class="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
-    <div class="h-full bg-brand transition-all" :style="`width: ${step/total*100}%`"></div>
+  <div class="h-1.5 w-full overflow-hidden rounded-full" style="background: var(--surface-alt)">
+    <div class="h-full transition-all" style="background: var(--action)" :style="`width: ${step/total*100}%`"></div>
   </div>
 
-  <form method="post" class="md-card space-y-5">
+  <form method="post" class="hs-card p-5 space-y-5">
     {% csrf_token %}
-    {% if form.non_field_errors %}<p class="text-xs text-red-500">{{ form.non_field_errors }}</p>{% endif %}
+    {% if form.non_field_errors %}<p class="text-[11px]" style="color: var(--danger)">{{ form.non_field_errors }}</p>{% endif %}
 
     {# Étape 1 — Identité & géométrie #}
     <div x-show="step === 1" class="space-y-4">
-      <h3 class="font-medium">{% trans "Identité & localisation" %}</h3>
+      <h2 class="text-[15px] font-medium">{% trans "Identité & localisation" %}</h2>
       {% include "parcelles/_field.html" with field=form.name %}
       <div class="grid grid-cols-2 gap-4">
         {% include "parcelles/_field.html" with field=form.area %}
         {% include "parcelles/_field.html" with field=form.official_area_ha %}
       </div>
-      <label class="flex items-start gap-3 rounded-xl border border-slate-200 p-3 dark:border-white/10" for="{{ form.surface_utile.id_for_label }}">
-        <input type="checkbox" name="{{ form.surface_utile.name }}" id="{{ form.surface_utile.id_for_label }}" class="mt-0.5 h-4 w-4 accent-brand"{% if form.surface_utile.value %} checked{% endif %}>
+      <label class="flex items-start gap-3 rounded-[10px] p-3" style="border: 0.5px solid var(--border)" for="{{ form.surface_utile.id_for_label }}">
+        <input type="checkbox" name="{{ form.surface_utile.name }}" id="{{ form.surface_utile.id_for_label }}" class="mt-0.5 h-4 w-4" style="accent-color: var(--action)"{% if form.surface_utile.value %} checked{% endif %}>
         <span>
           <span class="block text-sm font-medium">{{ form.surface_utile.label }}</span>
-          <span class="block text-xs text-slate-400">{{ form.surface_utile.help_text }}</span>
+          <span class="block text-[11px]" style="color: var(--text-muted)">{{ form.surface_utile.help_text }}</span>
         </span>
       </label>
       <div class="grid grid-cols-2 gap-4">
@@ -36,13 +39,13 @@
         {% include "parcelles/_field.html" with field=form.longitude %}
       </div>
       {{ form.boundaries }}
-      <div id="map" class="h-64 w-full rounded-xl border border-slate-200 dark:border-white/10"></div>
-      <p class="text-xs text-slate-400">{% trans "Cliquez sur la carte pour positionner la parcelle." %}</p>
+      <div id="map" class="h-64 w-full rounded-[10px]" style="border: 0.5px solid var(--border)"></div>
+      <p class="text-[11px]" style="color: var(--text-muted)">{% trans "Cliquez sur la carte pour positionner la parcelle." %}</p>
     </div>
 
     {# Étape 2 — Culture #}
     <div x-show="step === 2" x-cloak class="space-y-4">
-      <h3 class="font-medium">{% trans "Culture" %}</h3>
+      <h2 class="text-[15px] font-medium">{% trans "Culture" %}</h2>
       <div class="grid grid-cols-2 gap-4">
         {% include "parcelles/_field.html" with field=form.culture %}
         {% include "parcelles/_field.html" with field=form.variety %}
@@ -59,7 +62,7 @@
 
     {# Étape 3 — Sol #}
     <div x-show="step === 3" x-cloak class="space-y-4">
-      <h3 class="font-medium">{% trans "Sol" %}</h3>
+      <h2 class="text-[15px] font-medium">{% trans "Sol" %}</h2>
       {% include "parcelles/_field.html" with field=form.soil_type %}
       <div class="grid grid-cols-3 gap-4">
         {% include "parcelles/_field.html" with field=form.root_depth_cm %}
@@ -70,7 +73,7 @@
 
     {# Étape 4 — Irrigation #}
     <div x-show="step === 4" x-cloak class="space-y-4">
-      <h3 class="font-medium">{% trans "Irrigation" %}</h3>
+      <h2 class="text-[15px] font-medium">{% trans "Irrigation" %}</h2>
       {% include "parcelles/_field.html" with field=form.irrigation_type %}
       <div class="grid grid-cols-2 gap-4">
         {% include "parcelles/_field.html" with field=form.theoretical_flow_m3h %}
@@ -88,7 +91,7 @@
 
     {# Étape 5 — Administratif #}
     <div x-show="step === 5" x-cloak class="space-y-4">
-      <h3 class="font-medium">{% trans "Cadastre & statut" %}</h3>
+      <h2 class="text-[15px] font-medium">{% trans "Cadastre & statut" %}</h2>
       <div class="grid grid-cols-2 gap-4">
         {% include "parcelles/_field.html" with field=form.cadastral_ref %}
         {% include "parcelles/_field.html" with field=form.commune %}
@@ -97,11 +100,11 @@
     </div>
 
     {# Navigation wizard #}
-    <div class="flex items-center justify-between border-t border-slate-100 pt-4 dark:border-white/5">
-      <button type="button" class="sidebar-link" x-show="step > 1" @click="step--">← {% trans "Précédent" %}</button>
+    <div class="flex items-center justify-between pt-4" style="border-top: 0.5px solid var(--border)">
+      <button type="button" class="hs-btn-outline" x-show="step > 1" @click="step--">← {% trans "Précédent" %}</button>
       <span></span>
-      <button type="button" class="md-btn-primary" x-show="step < total" @click="step++">{% trans "Suivant" %} →</button>
-      <button type="submit" class="md-btn-primary" x-show="step === total" x-cloak>{% trans "Enregistrer" %}</button>
+      <button type="button" class="hs-btn-primary" x-show="step < total" @click="step++">{% trans "Suivant" %} →</button>
+      <button type="submit" class="hs-btn-primary" x-show="step === total" x-cloak>{% trans "Enregistrer" %}</button>
     </div>
   </form>
 </section>
