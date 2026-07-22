@@ -242,16 +242,16 @@
     let total = 0;
     if (!ids.length) {
       document.getElementById('sel-list').innerHTML =
-        '<p class="px-1 py-2 text-xs text-slate-400">' +
+        '<p class="px-1 py-2 text-xs" style="color: var(--text-muted)">' +
         'Cliquez sur les parcelles de la carte pour les ajouter.</p>';
     } else {
       document.getElementById('sel-list').innerHTML = ids.map(id => {
         const s = selection[id];
         total += s.area || 0;
         const ha = s.area != null ? s.area.toFixed(2) : '?';
-        return `<div class="flex items-center justify-between gap-2 rounded-lg bg-black/5 px-2.5 py-1.5 text-sm dark:bg-white/5">
-                  <span class="truncate"><b>${s.ref}</b> · ${s.com} <span class="text-slate-400">${ha} ha</span></span>
-                  <button type="button" onclick="removeSel('${id}')" class="shrink-0 text-slate-400 hover:text-red-500"><span class="material-icons-round text-[16px]">close</span></button>
+        return `<div class="flex items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-sm" style="background: var(--surface-alt)">
+                  <span class="truncate"><b>${s.ref}</b> · ${s.com} <span style="color: var(--text-muted)">${ha} ha</span></span>
+                  <button type="button" onclick="removeSel('${id}')" class="shrink-0" style="color: var(--text-muted)"><span class="material-icons-round text-[16px]">close</span></button>
                 </div>`;
       }).join('');
     }

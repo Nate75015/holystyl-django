@@ -101,8 +101,8 @@
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
-                :class="view.prio === 'haute' ? 'bg-red-500/10 text-red-600 dark:text-red-300' : (view.prio === 'basse' ? 'bg-slate-400/10 text-slate-600 dark:text-slate-300' : 'bg-brand/10 text-brand')">
-            <span class="h-2 w-2 rounded-full" :class="view.prio === 'haute' ? 'bg-red-500' : (view.prio === 'basse' ? 'bg-slate-400' : 'bg-brand')"></span><span x-text="view.priolabel"></span>
+                :style="view.prio === 'haute' ? 'background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger)' : (view.prio === 'basse' ? 'background: var(--surface-alt); color: var(--text-secondary)' : 'background: var(--action-subtle); color: var(--action-text)')">
+            <span class="h-2 w-2 rounded-full" :style="view.prio === 'haute' ? 'background: var(--danger)' : (view.prio === 'basse' ? 'background: var(--text-muted)' : 'background: var(--action)')"></span><span x-text="view.priolabel"></span>
           </span>
           <span class="hs-badge hs-badge-neutral" x-text="view.statuslabel"></span>
         </div>
@@ -133,7 +133,7 @@
       <form method="post" :action="del.action" class="mt-5 flex justify-end gap-2">
         {% csrf_token %}
         <button type="button" @click="del.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
-        <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-red-700">{% trans "Supprimer" %}</button>
+        <button type="submit" class="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-white transition" style="background: var(--danger)">{% trans "Supprimer" %}</button>
       </form>
     </div>
   </div>
@@ -153,7 +153,7 @@
         <form id="task-form" method="post" action="{% url 'equipe:taches' %}" class="space-y-4">
           {% csrf_token %}
           {% if form.non_field_errors %}
-            <div class="rounded-xl border-2 border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-500/30 dark:bg-red-500/10">{{ form.non_field_errors }}</div>
+            <div class="rounded-xl px-4 py-3 text-sm" style="border: 0.5px solid var(--danger); color: var(--danger)">{{ form.non_field_errors }}</div>
           {% endif %}
           {% include "accounts/_field.html" with field=form.title %}
           <div class="grid gap-4 sm:grid-cols-2">
@@ -167,9 +167,9 @@
             <div class="flex flex-wrap gap-2">
               {% for value, label in priorities %}
                 <button type="button" @click="prio = '{{ value }}'"
-                        class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition"
-                        :class="prio === '{{ value }}' ? '{% if value == 'haute' %}border-red-500 bg-red-500/10 text-red-600 dark:text-red-300{% elif value == 'basse' %}border-slate-400 bg-slate-400/10 text-slate-600 dark:text-slate-300{% else %}border-brand bg-brand/10 text-brand{% endif %}' : 'border-slate-200 text-slate-500 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10'">
-                  <span class="h-2 w-2 rounded-full {% if value == 'haute' %}bg-red-500{% elif value == 'basse' %}bg-slate-400{% else %}bg-brand{% endif %}"></span>{{ label }}
+                        class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition hover:bg-black/5 dark:hover:bg-white/10"
+                        :style="prio === '{{ value }}' ? '{% if value == 'haute' %}border-color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, transparent); color: var(--danger){% elif value == 'basse' %}border-color: var(--border-strong); background: var(--surface-alt); color: var(--text-secondary){% else %}border-color: var(--action); background: var(--action-subtle); color: var(--action-text){% endif %}' : 'border-color: var(--border); color: var(--text-secondary)'">
+                  <span class="h-2 w-2 rounded-full" style="background: {% if value == 'haute' %}var(--danger){% elif value == 'basse' %}var(--text-muted){% else %}var(--action){% endif %}"></span>{{ label }}
                 </button>
               {% endfor %}
             </div>
@@ -182,8 +182,8 @@
             <div class="flex flex-wrap gap-2">
               {% for value, label in statuses %}
                 <button type="button" @click="stat = '{{ value }}'"
-                        class="rounded-full border px-3 py-1.5 text-sm font-medium transition"
-                        :class="stat === '{{ value }}' ? 'border-brand bg-brand/10 text-brand' : 'border-slate-200 text-slate-500 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10'">{{ label }}</button>
+                        class="rounded-full border px-3 py-1.5 text-sm font-medium transition hover:bg-black/5 dark:hover:bg-white/10"
+                        :style="stat === '{{ value }}' ? 'border-color: var(--action); background: var(--action-subtle); color: var(--action-text)' : 'border-color: var(--border); color: var(--text-secondary)'">{{ label }}</button>
               {% endfor %}
             </div>
             <input type="hidden" name="status" :value="stat">
