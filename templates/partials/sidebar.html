@@ -4,7 +4,7 @@
        style="background: var(--surface-alt); border-right: 0.5px solid var(--border); padding: 12px 10px">
   {# Marque #}
   <a href="{% url 'core:dashboard' %}" class="flex items-center gap-2" style="padding: 2px 6px 12px">
-    <span class="grid h-[22px] w-[22px] shrink-0 place-items-center rounded-[6px] text-[12px] font-medium text-white" style="background: var(--action)">{{ APP_NAME|slice:":1"|upper }}</span>
+    {% include "partials/brand_mark.html" with size=24 %}
     <span class="text-[14px] font-medium" style="color: var(--text)">{{ APP_NAME }}</span>
   </a>
   <div style="border-top: 0.5px solid var(--border); margin: 0 6px 8px"></div>
@@ -12,6 +12,16 @@
   <nav class="flex-1 space-y-0.5 overflow-y-auto">
     {% for section in nav_sections %}
       <div>
+        {% if section.items|length == 1 %}
+          {# Section à item unique : lien direct (label + icône de section) #}
+          {% with only=section.items.0 %}
+          <a href="{% url only.url_name %}{% if only.anchor %}#{{ only.anchor }}{% endif %}"
+             class="hs-side-link {% if only.url_name == active_url_name %}hs-side-link-active{% endif %}">
+            <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">{{ only.icon|default:section.icon }}</span>
+            <span class="flex-1 truncate text-left">{{ only.label }}</span>
+          </a>
+          {% endwith %}
+        {% else %}
         {# Entrée de section (dépliable) #}
         <button type="button"
                 @click="nav = (nav === '{{ section.key }}' ? '' : '{{ section.key }}')"
@@ -34,6 +44,7 @@
             </a>
           {% endfor %}
         </div>
+        {% endif %}
       </div>
     {% endfor %}
   </nav>
