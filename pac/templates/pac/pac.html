@@ -10,7 +10,7 @@
     <div class="flex items-center gap-2">
       {# Sélecteur de campagne #}
       <form method="get" id="campagne-form">
-        <select name="campagne" onchange="document.getElementById('campagne-form').submit()">
+        <select name="campagne" aria-label="{% trans 'Campagne' %}" onchange="document.getElementById('campagne-form').submit()">
           {% for a in annees %}<option value="{{ a }}" {% if a == campagne %}selected{% endif %}>{% trans "Campagne" %} {{ a }}</option>{% endfor %}
         </select>
       </form>
@@ -97,32 +97,32 @@
           {% csrf_token %}
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Campagne" %}</label>
-              <input name="campagne" type="number" value="{{ campagne }}" min="2000" max="2100" class="w-full">
+              <label for="pac-campagne" class="mb-1 block text-[13px] font-medium">{% trans "Campagne" %}</label>
+              <input id="pac-campagne" name="campagne" type="number" value="{{ campagne }}" min="2000" max="2100" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Catégorie" %}</label>
-              <select name="categorie" class="w-full">
+              <label for="pac-categorie" class="mb-1 block text-[13px] font-medium">{% trans "Catégorie" %}</label>
+              <select id="pac-categorie" name="categorie" class="w-full">
                 {% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
               </select>
             </div>
           </div>
           <div>
-            <label class="mb-1 block text-[13px] font-medium">{% trans "Libellé" %}</label>
-            <input name="libelle" placeholder="{% trans 'ex: Éco-régime niveau 2' %}" class="w-full">
+            <label for="pac-libelle" class="mb-1 block text-[13px] font-medium">{% trans "Libellé" %}</label>
+            <input id="pac-libelle" name="libelle" placeholder="{% trans 'ex: Éco-régime niveau 2' %}" class="w-full">
           </div>
           <div class="grid grid-cols-3 gap-3">
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Montant (€)" %}</label>
-              <input name="montant" type="number" step="0.01" class="w-full">
+              <label for="pac-montant" class="mb-1 block text-[13px] font-medium">{% trans "Montant (€)" %}</label>
+              <input id="pac-montant" name="montant" type="number" step="0.01" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Surface (ha)" %}</label>
-              <input name="surface_ha" type="number" step="0.01" class="w-full">
+              <label for="pac-surface_ha" class="mb-1 block text-[13px] font-medium">{% trans "Surface (ha)" %}</label>
+              <input id="pac-surface_ha" name="surface_ha" type="number" step="0.01" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Statut" %}</label>
-              <select name="statut" class="w-full">
+              <label for="pac-statut" class="mb-1 block text-[13px] font-medium">{% trans "Statut" %}</label>
+              <select id="pac-statut" name="statut" class="w-full">
                 {% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
               </select>
             </div>

@@ -18,8 +18,8 @@
     </div>
 
     <div>
-      <label class="mb-1 block text-sm font-medium">{% trans "Travaux réalisés" %}</label>
-      <textarea name="description_travaux" rows="3">{{ report.description_travaux }}</textarea>
+      <label for="bon-description-travaux" class="mb-1 block text-sm font-medium">{% trans "Travaux réalisés" %}</label>
+      <textarea id="bon-description-travaux" name="description_travaux" rows="3">{{ report.description_travaux }}</textarea>
     </div>
 
     <div>
@@ -35,15 +35,15 @@
     </div>
 
     <div>
-      <label class="mb-1 block text-sm font-medium">{% trans "Observations" %}</label>
-      <textarea name="observations" rows="2">{{ report.observations }}</textarea>
+      <label for="bon-observations" class="mb-1 block text-sm font-medium">{% trans "Observations" %}</label>
+      <textarea id="bon-observations" name="observations" rows="2">{{ report.observations }}</textarea>
     </div>
 
     <div>
       <label class="mb-1 block text-sm font-medium">{% trans "Signature du technicien" %}</label>
       <canvas x-ref="canvas" class="w-full rounded-lg border border-slate-300 dark:border-white/10" height="160"></canvas>
       <button type="button" @click="clearSig()" class="sidebar-link mt-1 text-xs">{% trans "Effacer" %}</button>
-      <input type="text" name="signature_client_nom" placeholder="{% trans 'Nom du signataire' %}" class="mt-2" value="{{ report.signature_client_nom }}">
+      <input type="text" name="signature_client_nom" aria-label="{% trans 'Nom du signataire' %}" placeholder="{% trans 'Nom du signataire' %}" class="mt-2" value="{{ report.signature_client_nom }}">
     </div>
 
     <div class="flex gap-3 border-t border-slate-100 pt-4 dark:border-white/5">

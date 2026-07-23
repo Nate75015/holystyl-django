@@ -165,27 +165,27 @@
               <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Sélectionnez une ou plusieurs parcelles." %}</p>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label>
-              <input name="name" required placeholder="{% trans 'Zone Nord' %}" class="w-full">
+              <label for="zone-name" class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label>
+              <input id="zone-name" name="name" required placeholder="{% trans 'Zone Nord' %}" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Type d'irrigation" %}</label>
-              <select name="irrigation_type" class="w-full">
+              <label for="zone-irrigation-type" class="mb-1 block text-sm font-medium">{% trans "Type d'irrigation" %}</label>
+              <select id="zone-irrigation-type" name="irrigation_type" class="w-full">
                 {% for value, label in irrigation_types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
               </select>
             </div>
             <div class="grid grid-cols-3 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Débit (m³/h)" %}</label>
-                <input name="flow_rate_m3h" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
+                <label for="zone-flow-rate" class="mb-1 block text-sm font-medium">{% trans "Débit (m³/h)" %}</label>
+                <input id="zone-flow-rate" name="flow_rate_m3h" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
-                <input name="surface_ha" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
+                <label for="zone-surface" class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
+                <input id="zone-surface" name="surface_ha" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Pression (bar)" %}</label>
-                <input name="service_pressure_bar" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
+                <label for="zone-pressure" class="mb-1 block text-sm font-medium">{% trans "Pression (bar)" %}</label>
+                <input id="zone-pressure" name="service_pressure_bar" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
               </div>
             </div>
             <div class="flex justify-end gap-2 pt-1">
@@ -226,33 +226,33 @@
               <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Sélectionnez une ou plusieurs parcelles." %}</p>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label>
-              <input name="name" required placeholder="{% trans 'Arrosage matin' %}" class="w-full">
+              <label for="program-name" class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label>
+              <input id="program-name" name="name" required placeholder="{% trans 'Arrosage matin' %}" class="w-full">
             </div>
             <div class="grid grid-cols-3 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Heure" %} <span style="color: var(--danger)">*</span></label>
-                <input name="start_hour" type="number" min="0" max="23" required placeholder="6" class="w-full">
+                <label for="program-start-hour" class="mb-1 block text-sm font-medium">{% trans "Heure" %} <span style="color: var(--danger)">*</span></label>
+                <input id="program-start-hour" name="start_hour" type="number" min="0" max="23" required placeholder="6" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Minute" %}</label>
-                <input name="start_minute" type="number" min="0" max="59" value="0" class="w-full">
+                <label for="program-start-minute" class="mb-1 block text-sm font-medium">{% trans "Minute" %}</label>
+                <input id="program-start-minute" name="start_minute" type="number" min="0" max="59" value="0" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Durée (min)" %} <span style="color: var(--danger)">*</span></label>
-                <input name="duration_minutes" type="number" min="1" required placeholder="60" class="w-full">
+                <label for="program-duration" class="mb-1 block text-sm font-medium">{% trans "Durée (min)" %} <span style="color: var(--danger)">*</span></label>
+                <input id="program-duration" name="duration_minutes" type="number" min="1" required placeholder="60" class="w-full">
               </div>
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Fréquence" %}</label>
-                <select name="frequency" class="w-full">
+                <label for="program-frequency" class="mb-1 block text-sm font-medium">{% trans "Fréquence" %}</label>
+                <select id="program-frequency" name="frequency" class="w-full">
                   {% for value, label in frequencies %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
                 </select>
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Priorité (1-10)" %}</label>
-                <input name="priority" type="number" min="1" max="10" value="5" class="w-full">
+                <label for="program-priority" class="mb-1 block text-sm font-medium">{% trans "Priorité (1-10)" %}</label>
+                <input id="program-priority" name="priority" type="number" min="1" max="10" value="5" class="w-full">
               </div>
             </div>
             <div class="flex justify-end gap-2 pt-1">
@@ -280,33 +280,33 @@
         <form method="post" action="{% url 'irrigation:station_create' %}" class="space-y-3">
           {% csrf_token %}
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label>
-            <input name="name" required placeholder="{% trans 'Station principale' %}" class="w-full">
+            <label for="station-name" class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label>
+            <input id="station-name" name="name" required placeholder="{% trans 'Station principale' %}" class="w-full">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Débit max (m³/h)" %}</label>
-              <input name="max_flow_m3h" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
+              <label for="station-max-flow" class="mb-1 block text-sm font-medium">{% trans "Débit max (m³/h)" %}</label>
+              <input id="station-max-flow" name="max_flow_m3h" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Pression max (bar)" %}</label>
-              <input name="max_pressure_bar" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
+              <label for="station-max-pressure" class="mb-1 block text-sm font-medium">{% trans "Pression max (bar)" %}</label>
+              <input id="station-max-pressure" name="max_pressure_bar" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Puissance (kW)" %}</label>
-              <input name="power_kw" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
+              <label for="station-power" class="mb-1 block text-sm font-medium">{% trans "Puissance (kW)" %}</label>
+              <input id="station-power" name="power_kw" type="number" step="0.1" min="0" inputmode="decimal" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Efficacité" %}</label>
-              <input name="efficiency" type="number" step="0.05" min="0.1" max="1" value="0.75" inputmode="decimal" class="w-full">
+              <label for="station-efficiency" class="mb-1 block text-sm font-medium">{% trans "Efficacité" %}</label>
+              <input id="station-efficiency" name="efficiency" type="number" step="0.05" min="0.1" max="1" value="0.75" inputmode="decimal" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Tarif énergie (€/kWh)" %}</label>
-              <input name="energy_tariff_kwh" type="number" step="0.01" min="0" value="0.15" inputmode="decimal" class="w-full">
+              <label for="station-energy-tariff" class="mb-1 block text-sm font-medium">{% trans "Tarif énergie (€/kWh)" %}</label>
+              <input id="station-energy-tariff" name="energy_tariff_kwh" type="number" step="0.01" min="0" value="0.15" inputmode="decimal" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Tarif eau (€/m³)" %}</label>
-              <input name="water_tariff_m3" type="number" step="0.01" min="0" value="0.5" inputmode="decimal" class="w-full">
+              <label for="station-water-tariff" class="mb-1 block text-sm font-medium">{% trans "Tarif eau (€/m³)" %}</label>
+              <input id="station-water-tariff" name="water_tariff_m3" type="number" step="0.01" min="0" value="0.5" inputmode="decimal" class="w-full">
             </div>
           </div>
           <label class="flex w-fit items-center gap-2 text-sm" style="color: var(--text-secondary)">

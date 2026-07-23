@@ -9,7 +9,7 @@
     <h1 class="text-[20px]">{% trans "Taxonomie EU" %}</h1>
     <div class="flex items-center gap-2">
       <form method="get" id="campagne-form">
-        <select name="campagne" onchange="document.getElementById('campagne-form').submit()">
+        <select name="campagne" aria-label="{% trans 'Campagne' %}" onchange="document.getElementById('campagne-form').submit()">
           {% for a in annees %}<option value="{{ a }}" {% if a == campagne %}selected{% endif %}>{% trans "Campagne" %} {{ a }}</option>{% endfor %}
         </select>
       </form>
@@ -107,20 +107,20 @@
 
           <div class="grid grid-cols-2 gap-3">
             <div class="col-span-2 sm:col-span-1">
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Activité" %} <span style="color: var(--danger)">*</span></label>
-              <input name="libelle" required placeholder="{% trans 'ex: Production de noix' %}" class="w-full">
+              <label for="taxo-libelle" class="mb-1 block text-[13px] font-medium">{% trans "Activité" %} <span style="color: var(--danger)">*</span></label>
+              <input id="taxo-libelle" name="libelle" required placeholder="{% trans 'ex: Production de noix' %}" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Code NACE" %}</label>
-              <input name="code_nace" placeholder="ex: A1.25" class="w-full">
+              <label for="taxo-code_nace" class="mb-1 block text-[13px] font-medium">{% trans "Code NACE" %}</label>
+              <input id="taxo-code_nace" name="code_nace" placeholder="ex: A1.25" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Campagne" %}</label>
-              <input name="campagne" type="number" value="{{ campagne }}" min="2020" max="2100" class="w-full">
+              <label for="taxo-campagne" class="mb-1 block text-[13px] font-medium">{% trans "Campagne" %}</label>
+              <input id="taxo-campagne" name="campagne" type="number" value="{{ campagne }}" min="2020" max="2100" class="w-full">
             </div>
             <div class="col-span-2">
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Objectif de contribution" %}</label>
-              <select name="objectif" class="w-full">
+              <label for="taxo-objectif" class="mb-1 block text-[13px] font-medium">{% trans "Objectif de contribution" %}</label>
+              <select id="taxo-objectif" name="objectif" class="w-full">
                 {% for value, label in objectifs %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
               </select>
             </div>
@@ -150,22 +150,22 @@
           {# Données financières #}
           <div class="grid grid-cols-3 gap-3">
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "CA (€)" %}</label>
-              <input name="chiffre_affaires" type="number" step="0.01" class="w-full">
+              <label for="taxo-ca" class="mb-1 block text-[13px] font-medium">{% trans "CA (€)" %}</label>
+              <input id="taxo-ca" name="chiffre_affaires" type="number" step="0.01" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">CapEx (€)</label>
-              <input name="capex" type="number" step="0.01" class="w-full">
+              <label for="taxo-capex" class="mb-1 block text-[13px] font-medium">CapEx (€)</label>
+              <input id="taxo-capex" name="capex" type="number" step="0.01" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">OpEx (€)</label>
-              <input name="opex" type="number" step="0.01" class="w-full">
+              <label for="taxo-opex" class="mb-1 block text-[13px] font-medium">OpEx (€)</label>
+              <input id="taxo-opex" name="opex" type="number" step="0.01" class="w-full">
             </div>
           </div>
 
           <div>
-            <label class="mb-1 block text-[13px] font-medium">{% trans "Justification" %}</label>
-            <textarea name="justification" rows="2" class="w-full"></textarea>
+            <label for="taxo-justification" class="mb-1 block text-[13px] font-medium">{% trans "Justification" %}</label>
+            <textarea id="taxo-justification" name="justification" rows="2" class="w-full"></textarea>
           </div>
 
           <div class="flex justify-end gap-2 pt-1">

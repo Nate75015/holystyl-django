@@ -38,7 +38,7 @@
       <h2 class="text-[15px] font-medium">{% trans "Prévisions 7 jours — Températures minimales" %}</h2>
       {% if villes %}
         <form method="get" class="shrink-0">
-          <select name="ville" onchange="this.form.submit()" class="text-[13px]">
+          <select name="ville" onchange="this.form.submit()" aria-label="{% trans 'Ville' %}" class="text-[13px]">
             {% for v in villes %}<option value="{{ v.slug }}" {% if ville and v.slug == ville.slug %}selected{% endif %}>{{ v.nom }}</option>{% endfor %}
           </select>
         </form>

@@ -10,46 +10,46 @@
       <form method="post" action="{% url 'contrat:msa_create' %}" class="space-y-3">
         {% csrf_token %}
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Intitulé" %} <span style="color: var(--danger)">*</span></label>
-          <input name="intitule" required placeholder="{% trans 'ex: cotisations 2026 — 1er appel' %}">
+          <label for="msa-intitule" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Intitulé" %} <span style="color: var(--danger)">*</span></label>
+          <input id="msa-intitule" name="intitule" required placeholder="{% trans 'ex: cotisations 2026 — 1er appel' %}">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type de cotisation" %}</label>
-            <select name="type_cotisation">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+            <label for="msa-type" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type de cotisation" %}</label>
+            <select id="msa-type" name="type_cotisation">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
-            <select name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+            <label for="msa-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+            <select id="msa-statut" name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "N° d'adhérent MSA" %}</label>
-            <input name="numero_adherent" placeholder="{% trans 'n° d’adhérent' %}">
+            <label for="msa-numero-adherent" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "N° d'adhérent MSA" %}</label>
+            <input id="msa-numero-adherent" name="numero_adherent" placeholder="{% trans 'n° d’adhérent' %}">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Caisse MSA" %}</label>
-            <input name="caisse" placeholder="{% trans 'ex: msa provence azur' %}">
+            <label for="msa-caisse" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Caisse MSA" %}</label>
+            <input id="msa-caisse" name="caisse" placeholder="{% trans 'ex: msa provence azur' %}">
           </div>
         </div>
         <div class="grid grid-cols-3 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Montant (€)" %}</label>
-            <input name="montant" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+            <label for="msa-montant" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Montant (€)" %}</label>
+            <input id="msa-montant" name="montant" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Période" %}</label>
-            <input name="periode" placeholder="{% trans 'ex: 2026 / t1' %}">
+            <label for="msa-periode" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Période" %}</label>
+            <input id="msa-periode" name="periode" placeholder="{% trans 'ex: 2026 / t1' %}">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Échéance" %}</label>
-            <input name="date_echeance" type="date">
+            <label for="msa-date-echeance" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Échéance" %}</label>
+            <input id="msa-date-echeance" name="date_echeance" type="date">
           </div>
         </div>
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
-          <textarea name="notes" rows="2" placeholder="{% trans 'précisions, exonérations, échéancier…' %}"></textarea>
+          <label for="msa-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea id="msa-notes" name="notes" rows="2" placeholder="{% trans 'précisions, exonérations, échéancier…' %}"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-1">
           <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

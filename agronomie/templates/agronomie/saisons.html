@@ -47,22 +47,22 @@
         <form method="post" action="{% url 'agronomie:saison_create' %}" class="space-y-3">
           {% csrf_token %}
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Nom de la saison" %} <span style="color: var(--danger)">*</span></label>
-            <input name="nom" required placeholder="{% trans 'ex: Saison 2026' %}" class="w-full">
+            <label for="saison-nom" class="mb-1 block text-sm font-medium">{% trans "Nom de la saison" %} <span style="color: var(--danger)">*</span></label>
+            <input id="saison-nom" name="nom" required placeholder="{% trans 'ex: Saison 2026' %}" class="w-full">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Date de début" %}</label>
-              <input name="date_debut" type="date" required value="{{ default_debut }}" class="w-full">
+              <label for="saison-date-debut" class="mb-1 block text-sm font-medium">{% trans "Date de début" %}</label>
+              <input id="saison-date-debut" name="date_debut" type="date" required value="{{ default_debut }}" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Date de fin" %}</label>
-              <input name="date_fin" type="date" required value="{{ default_fin }}" class="w-full">
+              <label for="saison-date-fin" class="mb-1 block text-sm font-medium">{% trans "Date de fin" %}</label>
+              <input id="saison-date-fin" name="date_fin" type="date" required value="{{ default_fin }}" class="w-full">
             </div>
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
-            <textarea name="notes" rows="2" class="w-full"></textarea>
+            <label for="saison-notes" class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
+            <textarea id="saison-notes" name="notes" rows="2" class="w-full"></textarea>
           </div>
           <label class="flex w-fit items-center gap-2 text-sm" style="color: var(--text-secondary)">
             <input type="checkbox" name="active" value="1" class="h-4 w-4 accent-brand">

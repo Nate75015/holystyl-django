@@ -91,8 +91,8 @@
           {% csrf_token %}
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
-              <select name="parcelle" required
+              <label for="intervention-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
+              <select id="intervention-parcelle" name="parcelle" required
                       @change="$refs.surface.value = ($event.target.selectedOptions[0]?.dataset.area) || ''"
                       class="w-full">
                 <option value="">{% trans "Sélectionner une parcelle" %}</option>
@@ -100,8 +100,8 @@
               </select>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Assigné à" %}</label>
-              <select name="assigned_to" class="w-full">
+              <label for="intervention-assigned" class="mb-1 block text-sm font-medium">{% trans "Assigné à" %}</label>
+              <select id="intervention-assigned" name="assigned_to" class="w-full">
                 <option value="">{% trans "Personne" %}</option>
                 {% for m in members %}<option value="{{ m.pk }}">{{ m.name }}</option>{% endfor %}
               </select>
@@ -110,41 +110,41 @@
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Type d'intervention" %}</label>
-              <select name="intervention_type" required class="w-full">
+              <label for="intervention-type" class="mb-1 block text-sm font-medium">{% trans "Type d'intervention" %}</label>
+              <select id="intervention-type" name="intervention_type" required class="w-full">
                 {% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
               </select>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Date et heure" %} <span style="color: var(--danger)">*</span></label>
-              <input name="start_time" type="datetime-local" required class="w-full">
+              <label for="intervention-start" class="mb-1 block text-sm font-medium">{% trans "Date et heure" %} <span style="color: var(--danger)">*</span></label>
+              <input id="intervention-start" name="start_time" type="datetime-local" required class="w-full">
             </div>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Durée (heures)" %}</label>
-              <input name="duration_hours" type="number" step="0.5" min="0" inputmode="decimal" placeholder="{% trans 'ex: 3.5' %}" class="w-full">
+              <label for="intervention-duration" class="mb-1 block text-sm font-medium">{% trans "Durée (heures)" %}</label>
+              <input id="intervention-duration" name="duration_hours" type="number" step="0.5" min="0" inputmode="decimal" placeholder="{% trans 'ex: 3.5' %}" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
-              <input name="surface" x-ref="surface" type="number" step="0.1" min="0" inputmode="decimal" placeholder="{% trans 'ex: 4.2' %}" class="w-full">
+              <label for="intervention-surface" class="mb-1 block text-sm font-medium">{% trans "Surface (ha)" %}</label>
+              <input id="intervention-surface" name="surface" x-ref="surface" type="number" step="0.1" min="0" inputmode="decimal" placeholder="{% trans 'ex: 4.2' %}" class="w-full">
             </div>
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Coût (€)" %}</label>
-            <input name="cost" type="number" step="0.01" min="0" inputmode="decimal" placeholder="{% trans 'ex: 150' %}" class="w-full">
+            <label for="intervention-cost" class="mb-1 block text-sm font-medium">{% trans "Coût (€)" %}</label>
+            <input id="intervention-cost" name="cost" type="number" step="0.01" min="0" inputmode="decimal" placeholder="{% trans 'ex: 150' %}" class="w-full">
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Produit utilisé" %}</label>
-            <input name="product" placeholder="{% trans 'ex: Bouillie bordelaise' %}" class="w-full">
+            <label for="intervention-product" class="mb-1 block text-sm font-medium">{% trans "Produit utilisé" %}</label>
+            <input id="intervention-product" name="product" placeholder="{% trans 'ex: Bouillie bordelaise' %}" class="w-full">
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Dose" %}</label>
-            <input name="dose" placeholder="{% trans 'ex: 2 kg/hL' %}" class="w-full">
+            <label for="intervention-dose" class="mb-1 block text-sm font-medium">{% trans "Dose" %}</label>
+            <input id="intervention-dose" name="dose" placeholder="{% trans 'ex: 2 kg/hL' %}" class="w-full">
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
-            <textarea name="notes" rows="2" placeholder="{% trans 'Observations, conditions...' %}" class="w-full"></textarea>
+            <label for="intervention-notes" class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
+            <textarea id="intervention-notes" name="notes" rows="2" placeholder="{% trans 'Observations, conditions...' %}" class="w-full"></textarea>
           </div>
           <div class="flex justify-end gap-2 pt-1">
             <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

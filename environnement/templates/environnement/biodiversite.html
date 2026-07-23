@@ -114,15 +114,15 @@
             {% csrf_token %}
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
-                <select name="parcelle" required x-model="form.parcelle" class="w-full">
+                <label for="biodiv-parcelle" class="mb-1 block text-[13px] font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
+                <select id="biodiv-parcelle" name="parcelle" required x-model="form.parcelle" class="w-full">
                   <option value="">{% trans "Sélectionner" %}</option>
                   {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
                 </select>
               </div>
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Date" %}</label>
-                <input name="date" type="date" x-model="form.date" class="w-full">
+                <label for="biodiv-date" class="mb-1 block text-[13px] font-medium">{% trans "Date" %}</label>
+                <input id="biodiv-date" name="date" type="date" x-model="form.date" class="w-full">
               </div>
             </div>
 
@@ -142,25 +142,25 @@
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Espèces végétales" %}</label>
-                <input name="especes_vegetales" type="number" min="0" placeholder="0" inputmode="numeric" x-model="form.veg" class="w-full">
+                <label for="biodiv-especes_vegetales" class="mb-1 block text-[13px] font-medium">{% trans "Espèces végétales" %}</label>
+                <input id="biodiv-especes_vegetales" name="especes_vegetales" type="number" min="0" placeholder="0" inputmode="numeric" x-model="form.veg" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Espèces animales" %}</label>
-                <input name="especes_animales" type="number" min="0" placeholder="0" inputmode="numeric" x-model="form.anim" class="w-full">
+                <label for="biodiv-especes_animales" class="mb-1 block text-[13px] font-medium">{% trans "Espèces animales" %}</label>
+                <input id="biodiv-especes_animales" name="especes_animales" type="number" min="0" placeholder="0" inputmode="numeric" x-model="form.anim" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Haies (ml)" %}</label>
-                <input name="haies_ml" type="number" step="0.1" min="0" placeholder="0" inputmode="decimal" x-model="form.haies" class="w-full">
+                <label for="biodiv-haies_ml" class="mb-1 block text-[13px] font-medium">{% trans "Haies (ml)" %}</label>
+                <input id="biodiv-haies_ml" name="haies_ml" type="number" step="0.1" min="0" placeholder="0" inputmode="decimal" x-model="form.haies" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Jachère (ha)" %}</label>
-                <input name="jachere_ha" type="number" step="0.1" min="0" placeholder="0" inputmode="decimal" x-model="form.jachere" class="w-full">
+                <label for="biodiv-jachere_ha" class="mb-1 block text-[13px] font-medium">{% trans "Jachère (ha)" %}</label>
+                <input id="biodiv-jachere_ha" name="jachere_ha" type="number" step="0.1" min="0" placeholder="0" inputmode="decimal" x-model="form.jachere" class="w-full">
               </div>
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Observations" %}</label>
-              <textarea name="observations" rows="2" x-model="form.obs" placeholder="{% trans 'Espèces notables, conditions d’observation...' %}" class="w-full"></textarea>
+              <label for="biodiv-observations" class="mb-1 block text-[13px] font-medium">{% trans "Observations" %}</label>
+              <textarea id="biodiv-observations" name="observations" rows="2" x-model="form.obs" placeholder="{% trans 'Espèces notables, conditions d’observation...' %}" class="w-full"></textarea>
             </div>
             <div class="flex justify-end gap-2 pt-1">
               <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

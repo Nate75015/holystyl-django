@@ -25,10 +25,10 @@
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium">
+        <label class="mb-1 block text-sm font-medium" for="group-name">
           {% trans "Nom du groupe" %} <span class="font-normal" style="color: var(--text-muted)">({% trans "optionnel" %})</span>
         </label>
-        <input name="name" placeholder="{% trans 'Ex. Équipe récolte' %}">
+        <input id="group-name" name="name" placeholder="{% trans 'Ex. Équipe récolte' %}">
         <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Renseignez un nom ou cochez plusieurs participants pour créer un groupe." %}</p>
       </div>
 

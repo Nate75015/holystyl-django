@@ -63,29 +63,29 @@
       {% csrf_token %}
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label class="mb-1 block text-sm font-medium">{% trans "Énergie (kWh/m³)" %} <span style="color: var(--danger)">*</span></label>
-          <input name="kwh_per_m3" type="number" step="0.001" min="0" required placeholder="ex: 0.28"
+          <label for="dti-kwh" class="mb-1 block text-sm font-medium">{% trans "Énergie (kWh/m³)" %} <span style="color: var(--danger)">*</span></label>
+          <input id="dti-kwh" name="kwh_per_m3" type="number" step="0.001" min="0" required placeholder="ex: 0.28"
                  class="w-full text-sm">
           <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Objectif : ≤ 0,30 kWh/m³ (A/B)." %}</p>
         </div>
         <div>
-          <label class="mb-1 block text-sm font-medium">{% trans "Uniformité (%)" %}</label>
-          <input name="uniformity" type="number" step="1" min="0" max="100" value="90" placeholder="90"
+          <label for="dti-uniformity" class="mb-1 block text-sm font-medium">{% trans "Uniformité (%)" %}</label>
+          <input id="dti-uniformity" name="uniformity" type="number" step="1" min="0" max="100" value="90" placeholder="90"
                  class="w-full text-sm">
         </div>
         <div>
-          <label class="mb-1 block text-sm font-medium">{% trans "Débit (m³/h)" %}</label>
-          <input name="flow_rate_m3h" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
+          <label for="dti-flow-rate" class="mb-1 block text-sm font-medium">{% trans "Débit (m³/h)" %}</label>
+          <input id="dti-flow-rate" name="flow_rate_m3h" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
                  class="w-full text-sm">
         </div>
         <div>
-          <label class="mb-1 block text-sm font-medium">{% trans "Pression (bar)" %}</label>
-          <input name="pressure_bar" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
+          <label for="dti-pressure" class="mb-1 block text-sm font-medium">{% trans "Pression (bar)" %}</label>
+          <input id="dti-pressure" name="pressure_bar" type="number" step="0.1" min="0" placeholder="{% trans 'optionnel' %}"
                  class="w-full text-sm">
         </div>
         <div class="sm:col-span-2">
-          <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
-          <select name="parcelle" class="w-full text-sm">
+          <label for="dti-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+          <select id="dti-parcelle" name="parcelle" class="w-full text-sm">
             <option value="">{% trans "Toute l'exploitation" %}</option>
             {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
           </select>

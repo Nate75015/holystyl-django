@@ -10,40 +10,40 @@
       <form method="post" action="{% url 'contrat:acte_create' %}" class="space-y-3">
         {% csrf_token %}
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Objet" %} <span style="color: var(--danger)">*</span></label>
-          <input name="objet" required placeholder="{% trans 'ex: achat parcelle ab 42' %}">
+          <label for="acte-objet" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Objet" %} <span style="color: var(--danger)">*</span></label>
+          <input id="acte-objet" name="objet" required placeholder="{% trans 'ex: achat parcelle ab 42' %}">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type d'acte" %}</label>
-            <select name="type_acte">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+            <label for="acte-type" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type d'acte" %}</label>
+            <select id="acte-type" name="type_acte">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de signature" %}</label>
-            <input name="date_signature" type="date">
+            <label for="acte-date-signature" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de signature" %}</label>
+            <input id="acte-date-signature" name="date_signature" type="date">
           </div>
         </div>
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notaire / étude" %}</label>
-          <input name="notaire" placeholder="{% trans 'maître…' %}">
+          <label for="acte-notaire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notaire / étude" %}</label>
+          <input id="acte-notaire" name="notaire" placeholder="{% trans 'maître…' %}">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Parties" %}</label>
-            <input name="parties" placeholder="{% trans 'vendeur / acheteur' %}">
+            <label for="acte-parties" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Parties" %}</label>
+            <input id="acte-parties" name="parties" placeholder="{% trans 'vendeur / acheteur' %}">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Référence de l'acte" %}</label>
-            <input name="reference" placeholder="{% trans 'n° / répertoire' %}">
+            <label for="acte-reference" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Référence de l'acte" %}</label>
+            <input id="acte-reference" name="reference" placeholder="{% trans 'n° / répertoire' %}">
           </div>
         </div>
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Montant (€)" %}</label>
-          <input name="montant" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+          <label for="acte-montant" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Montant (€)" %}</label>
+          <input id="acte-montant" name="montant" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
         </div>
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
-          <textarea name="notes" rows="2" placeholder="{% trans 'conditions suspensives, servitudes…' %}"></textarea>
+          <label for="acte-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea id="acte-notes" name="notes" rows="2" placeholder="{% trans 'conditions suspensives, servitudes…' %}"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-1">
           <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

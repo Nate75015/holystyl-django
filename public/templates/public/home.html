@@ -373,7 +373,7 @@
 
       <form method="post" action="{% url 'public:lead_capture' %}" class="mx-auto mt-8 flex max-w-md gap-2">
         {% csrf_token %}
-        <input type="email" name="email" required placeholder="votre@email.fr" class="flex-1">
+        <input type="email" name="email" required aria-label="{% trans 'Adresse email' %}" placeholder="votre@email.fr" class="flex-1">
         <button class="hs-btn-primary shrink-0">
           {% trans "Recevoir le guide" %}
         </button>
