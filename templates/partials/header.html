@@ -1,36 +1,47 @@
 {% load i18n %}
-<header class="hs-header sticky top-0 z-30 flex h-[46px] items-center justify-between px-4 lg:px-6">
-  {# Gauche : marque #}
-  <a href="{% url 'core:dashboard' %}" class="flex items-center gap-2">
-    <span class="grid h-[22px] w-[22px] place-items-center rounded-[6px] text-[12px] font-medium text-white" style="background: rgba(255,255,255,0.16)">{{ APP_NAME|slice:":1"|upper }}</span>
-    <span class="text-[14px] font-medium text-white">{{ APP_NAME }}</span>
-  </a>
+{# Ligne de contrôles — fond de page, sans bandeau. Bordure basse au défilement. #}
+<header class="flex h-[46px] shrink-0 items-center px-5 transition-colors duration-150"
+        style="background: var(--page)"
+        :style="'border-bottom: 0.5px solid ' + (scrolled ? 'var(--border)' : 'transparent')">
 
-  {# Droite : horloge · langue · notifications · thème · avatar #}
-  <div class="flex items-center gap-3">
-    {# Horloge #}
+  {# Bouton menu — écrans étroits uniquement #}
+  <button @click="drawer = true" title="{% trans 'Menu' %}"
+          class="mr-2 grid h-[28px] w-[28px] place-items-center rounded-[6px] transition-colors hover:bg-[color:var(--surface-alt)] min-[900px]:hidden"
+          style="color: var(--text-secondary)">
+    <span class="material-icons-round text-[20px]">menu</span>
+  </button>
+
+  {# Contrôles groupés à droite #}
+  <div class="ml-auto flex items-center gap-1">
+
+    {# Horloge — non cliquable #}
     <div x-data="{ time: '' }"
          x-init="time = new Date().toLocaleTimeString('fr-FR', { hour12: false });
                  setInterval(() => time = new Date().toLocaleTimeString('fr-FR', { hour12: false }), 1000)"
          title="{% trans 'Heure locale' %}"
-         class="hidden h-[28px] items-center gap-1.5 rounded-[6px] px-2.5 text-white sm:flex" style="background: rgba(255,255,255,0.12)">
-      <span class="material-icons-round text-[15px]" style="color: rgba(255,255,255,0.75)">schedule</span>
-      <span class="text-[13px] tabular-nums" x-text="time"></span>
+         class="flex h-[28px] items-center gap-1.5 rounded-[6px] px-[9px]"
+         style="background: var(--surface); border: 0.5px solid var(--border)">
+      <span class="material-icons-round text-[15px]" style="color: var(--text-secondary)">schedule</span>
+      <span class="text-[13px] tabular-nums" style="color: var(--text)" x-text="time"></span>
     </div>
 
-    {% include "partials/lang_switcher.html" %}
+    {# Langue — écrans larges (bascule dans le menu avatar sous 900px) #}
+    <div class="hidden min-[900px]:block">{% include "partials/lang_switcher.html" %}</div>
 
     {# Notifications #}
     <a href="{% url 'notifications:center' %}" title="{% trans 'Notifications' %}"
-       class="relative grid h-[28px] w-[28px] place-items-center text-white">
+       class="relative grid h-[28px] w-[28px] place-items-center rounded-[6px] transition-colors hover:bg-[color:var(--surface-alt)]"
+       style="color: var(--text-secondary)">
       <span class="material-icons-round text-[17px]">notifications_none</span>
       {% if unread_notifications %}
-        <span class="absolute right-1 top-1 h-[7px] w-[7px] rounded-full" style="background: var(--notif-dot); border: 1.5px solid var(--action)"></span>
+        <span class="absolute right-1 top-1 h-[7px] w-[7px] rounded-full" style="background: var(--notif-dot); border: 1.5px solid var(--page)"></span>
       {% endif %}
     </a>
 
-    {# Thème #}
-    <button @click="toggle()" title="{% trans 'Thème' %}" class="grid h-[28px] w-[28px] place-items-center text-white">
+    {# Thème — écrans larges (bascule dans le menu avatar sous 900px) #}
+    <button @click="toggle()" title="{% trans 'Thème' %}"
+            class="hidden h-[28px] w-[28px] place-items-center rounded-[6px] transition-colors hover:bg-[color:var(--surface-alt)] min-[900px]:grid"
+            style="color: var(--text-secondary)">
       <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
            fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
@@ -44,7 +55,9 @@
 
     {# Avatar → menu utilisateur #}
     <div class="relative" x-data="{ menu: false }" @click.outside="menu = false">
-      <button @click="menu = !menu" class="grid h-[28px] w-[28px] place-items-center rounded-full text-[12px] font-medium text-white" style="background: rgba(255,255,255,0.18)">
+      <button @click="menu = !menu"
+              class="ml-1 grid h-[28px] w-[28px] place-items-center rounded-full text-[12px] font-medium text-white transition-colors hover:bg-[color:var(--action-hover)]"
+              style="background: var(--action)">
         {{ user.display_name|slice:":1"|upper }}
       </button>
       <div x-show="menu" x-cloak x-transition.opacity
@@ -53,15 +66,55 @@
           <p class="text-sm font-medium" style="color: var(--text)">{{ user.display_name }}</p>
           <p class="truncate text-xs" style="color: var(--text-muted)">{{ user.email }}</p>
         </div>
-        <a href="{% url 'exploitations:settings' %}" class="hs-side-link">
-          <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">home_work</span>{% trans "Mon exploitation" %}
-        </a>
-        <form method="post" action="{% url 'accounts:logout' %}">
-          {% csrf_token %}
-          <button type="submit" class="hs-side-link w-full text-left" style="color: var(--danger)">
-            <span class="material-icons-round text-[16px]">logout</span>{% trans "Déconnexion" %}
+
+        {# Thème + Langue — repliés ici sous 900px #}
+        <div class="min-[900px]:hidden" style="border-top: 0.5px solid var(--border); margin-top: 4px; padding-top: 4px">
+          <button type="button" @click="toggle()" class="hs-side-link w-full text-left">
+            <span class="material-icons-round text-[16px]" style="color: var(--text-muted)" x-text="dark ? 'light_mode' : 'dark_mode'">dark_mode</span>
+            <span x-text="dark ? '{% trans "Mode clair" %}' : '{% trans "Mode sombre" %}'"></span>
           </button>
-        </form>
+          <div x-data="{
+                 cur: '{{ LANGUAGE_CODE|default:'fr' }}',
+                 langs: [
+                   { c: 'fr', flag: 'fr', n: 'Français' }, { c: 'de', flag: 'de', n: 'Deutsch' },
+                   { c: 'it', flag: 'it', n: 'Italiano' }, { c: 'es', flag: 'es', n: 'Español' },
+                   { c: 'nl', flag: 'nl', n: 'Nederlands' }, { c: 'pl', flag: 'pl', n: 'Polski' },
+                   { c: 'ro', flag: 'ro', n: 'Română' }, { c: 'en', flag: 'gb', n: 'English' },
+                   { c: 'da', flag: 'dk', n: 'Dansk' }, { c: 'ga', flag: 'ie', n: 'Gaeilge' },
+                   { c: 'hu', flag: 'hu', n: 'Magyar' }, { c: 'el', flag: 'gr', n: 'Ελληνικά' },
+                 ],
+                 open: false,
+                 set(code) { document.cookie = 'django_language=' + code + ';path=/;max-age=31536000'; location.reload(); }
+               }">
+            <button type="button" @click="open = !open" class="hs-side-link w-full text-left">
+              <span class="fi shrink-0" style="width:16px;height:11px;border-radius:2px;border:0.5px solid var(--border)" :class="'fi-' + (langs.find(l => l.c === cur) || langs[0]).flag"></span>
+              <span class="flex-1">{% trans "Langue" %}</span>
+              <span class="material-icons-round text-[16px]" style="color: var(--text-muted)" x-text="open ? 'expand_more' : 'chevron_right'">chevron_right</span>
+            </button>
+            <div x-show="open" x-cloak class="mt-0.5 max-h-52 overflow-y-auto" style="margin-left: 15px; border-left: 0.5px solid var(--border); padding-left: 6px">
+              <template x-for="l in langs" :key="l.c">
+                <button type="button" @click="set(l.c)"
+                        class="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-[13px] hover:bg-[color:var(--surface-alt)]"
+                        :class="l.c === cur ? 'font-medium' : ''" :style="l.c === cur ? 'color: var(--action)' : 'color: var(--text-secondary)'">
+                  <span class="fi shrink-0" style="width:16px;height:11px;border-radius:2px;border:0.5px solid var(--border)" :class="'fi-' + l.flag"></span>
+                  <span x-text="l.n"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top: 0.5px solid var(--border); margin-top: 4px; padding-top: 4px">
+          <a href="{% url 'exploitations:settings' %}" class="hs-side-link">
+            <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">home_work</span>{% trans "Mon exploitation" %}
+          </a>
+          <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="hs-side-link w-full text-left" style="color: var(--danger)">
+              <span class="material-icons-round text-[16px]">logout</span>{% trans "Déconnexion" %}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
