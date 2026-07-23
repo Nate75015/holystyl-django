@@ -6,19 +6,7 @@
 
   {# ── Fil d'Ariane + titre ── #}
   <p class="hs-crumb">{% trans "Protection" %} · {% trans "Anti-gel" %}</p>
-  <div class="flex flex-wrap items-center justify-between gap-3">
-    <h1 class="text-[20px]">{% trans "Anti-gel" %}</h1>
-    <div class="flex items-center gap-2">
-      <form method="post" action="{% url 'irrigation:antigel_settings' %}">
-        {% csrf_token %}
-        <input type="hidden" name="toggle_alertes" value="1">
-        <button type="submit" class="hs-btn-outline">
-          <span class="h-2 w-2 rounded-full {% if alertes_gel %}bg-emerald-500{% else %}bg-slate-400{% endif %}"></span>
-          {% trans "Alertes" %} {% if alertes_gel %}ON{% else %}OFF{% endif %}
-        </button>
-      </form>
-    </div>
-  </div>
+  <h1 class="text-[20px]">{% trans "Anti-gel" %}</h1>
 
   {# ── Alerte gel ── #}
   {% if alert %}
@@ -72,29 +60,60 @@
     {% endif %}
   </div>
 
-  {# ── Seuil d'alerte notifications (thermomètre) ── #}
+  {# ── Ajouter une alerte anti-gel (thermomètre + ville) ── #}
   <div id="sec-seuil" class="hs-card p-5" x-data="frostThermo({{ seuil|unlocalize }})">
-    <h2 class="text-[15px] font-medium mb-2">{% trans "Seuil d'alerte notifications" %}</h2>
-    <form method="post" action="{% url 'irrigation:antigel_settings' %}">
-      {% csrf_token %}
-      <div class="flex items-center gap-4">
-        <svg viewBox="0 0 44 120" class="h-20 w-auto shrink-0">
-          <rect x="17" y="6" width="10" height="88" rx="5" fill="rgba(148,163,184,0.2)"/>
-          <circle cx="22" cy="100" r="13" fill="rgba(148,163,184,0.2)"/>
-          <rect x="19" :y="mercuryY()" width="6" :height="mercuryH()" rx="3" :fill="color()"/>
-          <circle cx="22" cy="100" r="10" :fill="color()"/>
-        </svg>
-        <div class="flex-1">
-          <p class="text-2xl font-medium tabular-nums" :style="`color:${color()}`"><span x-text="val > 0 ? '+' + val : val"></span>°C</p>
-          <input name="seuil_alerte_gel_c" type="range" min="-10" max="10" step="0.5" x-model.number="val"
-                 :style="`--track:${track()}; --thumb:${color()}`" class="score-slider mt-2">
+    <h2 class="text-[15px] font-medium mb-2">{% trans "Ajouter une alerte anti-gel" %}</h2>
+    {% if villes %}
+      <form method="post" action="{% url 'irrigation:antigel_settings' %}">
+        {% csrf_token %}
+        <div class="flex items-center gap-4">
+          <svg viewBox="0 0 44 120" class="h-20 w-auto shrink-0">
+            <rect x="17" y="6" width="10" height="88" rx="5" fill="rgba(148,163,184,0.2)"/>
+            <circle cx="22" cy="100" r="13" fill="rgba(148,163,184,0.2)"/>
+            <rect x="19" :y="mercuryY()" width="6" :height="mercuryH()" rx="3" :fill="color()"/>
+            <circle cx="22" cy="100" r="10" :fill="color()"/>
+          </svg>
+          <div class="flex-1">
+            <p class="text-2xl font-medium tabular-nums" :style="`color:${color()}`"><span x-text="val > 0 ? '+' + val : val"></span>°C</p>
+            <input name="seuil_alerte_gel_c" type="range" min="-10" max="10" step="0.5" x-model.number="val"
+                   :style="`--track:${track()}; --thumb:${color()}`" class="score-slider mt-2" aria-label="{% trans 'Seuil de température' %}">
+          </div>
         </div>
+        <div class="mt-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <label for="antigel-ville" class="mb-1 block text-xs font-medium" style="color: var(--text-secondary)">{% trans "Ville" %}</label>
+            <select id="antigel-ville" name="ville" class="text-[13px]">
+              {% for v in villes %}<option value="{{ v.slug }}" {% if ville and v.slug == ville.slug %}selected{% endif %}>{{ v.nom }}</option>{% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="hs-btn-primary">
+            <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter" %}
+          </button>
+        </div>
+        <p class="mt-2 text-xs" style="color: var(--text-secondary)">{% trans "Notification envoyée si la T° min prévue passe ≤" %} <span class="font-medium" style="color: var(--text)" x-text="(val > 0 ? '+' + val : val) + '°C'"></span> {% trans "sur la ville choisie." %}</p>
+      </form>
+    {% else %}
+      <p class="text-[13px]" style="color: var(--text-secondary)">
+        <a href="{% url 'meteo:index' %}" class="font-medium hover:underline" style="color: var(--action)">{% trans "Ajoutez une ville depuis la page Météo" %}</a>
+        {% trans "pour créer une alerte anti-gel." %}
+      </p>
+    {% endif %}
+
+    {# Alertes anti-gel existantes (gérées dans Notifications) #}
+    {% if gel_rules %}
+      <div class="mt-4 space-y-1.5" style="border-top: 0.5px solid var(--border); padding-top: 12px">
+        <div class="mb-1 flex items-center justify-between gap-3">
+          <p class="text-xs font-medium" style="color: var(--text-secondary)">{% trans "Alertes anti-gel" %}</p>
+          <a href="{% url 'notifications:center' %}#sec-regles" class="text-xs font-medium hover:underline" style="color: var(--action)">{% trans "Gérer dans Notifications" %}</a>
+        </div>
+        {% for r in gel_rules %}
+          <div class="flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-[13px] {% if not r.enabled %}opacity-60{% endif %}" style="border: 0.5px solid var(--border)">
+            <span class="min-w-0 truncate">{% if r.ville %}{{ r.ville.nom }}{% endif %} <span style="color: var(--text-muted)">· ≤ {{ r.threshold|floatformat }}°C</span></span>
+            <span class="shrink-0 text-[12px] font-medium" style="color: {% if r.enabled %}var(--action){% else %}var(--text-muted){% endif %}">{% if r.enabled %}{% trans "activée" %}{% else %}{% trans "désactivée" %}{% endif %}</span>
+          </div>
+        {% endfor %}
       </div>
-      <div class="mt-3 flex items-center justify-between gap-3">
-        <p class="text-xs" style="color: var(--text-secondary)">{% trans "Notification envoyée si T° min prévue ≤" %} <span class="font-medium" style="color: var(--text)" x-text="(val > 0 ? '+' + val : val) + '°C'"></span>.</p>
-        <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
-      </div>
-    </form>
+    {% endif %}
   </div>
 
   {# ── Seuils critiques par culture ── #}

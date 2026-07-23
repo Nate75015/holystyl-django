@@ -12,6 +12,7 @@ from django.views.decorators.http import require_POST
 from exploitations.models import Exploitation
 from meteo.models import VilleMeteo
 from meteo.services import fetch_weather
+from notifications.models import NotificationRule
 from parcelles.models import Parcelle
 
 from .models import (
@@ -410,24 +411,49 @@ def antigel(request):
         "cultures": _CULTURES_SEUILS,
         "villes": villes,
         "ville": ville,
-        "alertes_gel": exploitation.alertes_gel if exploitation else True,
+        "gel_rules": _gel_rules(request.user),
         "seuil": exploitation.seuil_alerte_gel_c if exploitation else 2.0,
         "page_title": _("Anti-gel"),
     })
 
 
+def _gel_rules(user):
+    """Alertes anti-gel = règles de notification « météo · température · seuil non atteint »."""
+    return (
+        NotificationRule.objects.filter(
+            user=user,
+            type=NotificationRule.Type.METEO,
+            metric=NotificationRule.Metric.TEMPERATURE,
+            condition_type=NotificationRule.ConditionType.SEUIL_SOUS,
+        )
+        .select_related("ville")
+        .order_by("ville__nom", "threshold")
+    )
+
+
 @login_required
 @require_POST
 def antigel_settings(request):
-    """Active/désactive les alertes gel ou enregistre le seuil d'alerte SMS."""
+    """Ajoute une alerte anti-gel : une règle de notification « T° min ≤ seuil » pour une ville."""
     exploitation = _exploitation(request)
-    if exploitation:
-        if "toggle_alertes" in request.POST:
-            exploitation.alertes_gel = not exploitation.alertes_gel
-        if "seuil_alerte_gel_c" in request.POST:
-            seuil = _num(request.POST.get("seuil_alerte_gel_c"))
-            if seuil is not None:
-                exploitation.seuil_alerte_gel_c = seuil
-        exploitation.save(update_fields=["alertes_gel", "seuil_alerte_gel_c"])
-        messages.success(request, _("Réglages anti-gel enregistrés."))
+    ville = (
+        VilleMeteo.objects.filter(exploitation=exploitation, slug=request.POST.get("ville")).first()
+        if exploitation else None
+    )
+    seuil = _num(request.POST.get("seuil_alerte_gel_c"))
+    if ville and seuil is not None:
+        signe = f"+{seuil:g}" if seuil > 0 else f"{seuil:g}"
+        NotificationRule.objects.create(
+            user=request.user,
+            name=_("Gel — %(v)s ≤ %(s)s°C") % {"v": ville.nom, "s": signe},
+            type=NotificationRule.Type.METEO,
+            metric=NotificationRule.Metric.TEMPERATURE,
+            condition_type=NotificationRule.ConditionType.SEUIL_SOUS,
+            threshold=seuil,
+            ville=ville,
+            enabled=True,
+        )
+        messages.success(request, _("Alerte anti-gel ajoutée pour %(v)s.") % {"v": ville.nom})
+    else:
+        messages.error(request, _("Choisissez une ville et un seuil pour ajouter l'alerte."))
     return redirect("irrigation:antigel")
