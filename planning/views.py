@@ -72,8 +72,39 @@ def planning(request):
         )
     else:  # mois
         first = base.replace(day=1)
+        weeks = _calendar.Calendar(firstweekday=0).monthdatescalendar(first.year, first.month)
+        # Couleur distincte par membre : sa couleur perso si définie, sinon une
+        # couleur de palette stable (indexée sur l'ordre de l'équipe).
+        palette = ["#335E8A", "#3B6D11", "#BA7517", "#3C3489", "#A32D2D", "#0E7490", "#7C3AED", "#B45309"]
+        default_color = (TeamMember._meta.get_field("color").default or "").lower()
+        team_list = list(team_members)
+        member_color = {}
+        for i, m in enumerate(team_list):
+            custom = (m.color or "").strip()
+            member_color[m.id] = custom if custom and custom.lower() != default_color else palette[i % len(palette)]
+        by_date = defaultdict(list)
+        if exploitation and team_list:
+            month_tasks = (
+                Task.objects.filter(
+                    exploitation=exploitation,
+                    assigned_to__in=team_list,
+                    due_date__date__range=(weeks[0][0], weeks[-1][-1]),
+                )
+                .select_related("assigned_to")
+                .order_by("due_date", "priority")
+            )
+            for t in month_tasks:
+                t.chip_color = member_color.get(t.assigned_to_id, palette[0])
+                by_date[timezone.localdate(t.due_date)].append(t)
         ctx.update(
-            month_weeks=_calendar.Calendar(firstweekday=0).monthdatescalendar(first.year, first.month),
+            month_weeks=[
+                [
+                    {"date": d, "in_month": d.month == first.month, "tasks": by_date.get(d, [])}
+                    for d in week
+                ]
+                for week in weeks
+            ],
+            month_legend=[{"name": m.name, "color": member_color[m.id]} for m in team_list],
             month=first,
             current_month=first.month,
             prev_date=(first - timedelta(days=1)).replace(day=1),
