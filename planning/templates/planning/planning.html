@@ -47,16 +47,42 @@
     <div class="overflow-x-auto">
       {% if vue == 'mois' %}
         {# ── Vue Mois : calendrier classique ── #}
+        {% if month_legend %}
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-5 py-2.5" style="border-bottom: 0.5px solid var(--border)">
+            {% for m in month_legend %}
+              <span class="inline-flex items-center gap-1.5 text-xs" style="color: var(--text-secondary)">
+                <span class="h-2.5 w-2.5 shrink-0 rounded-full" style="background: {{ m.color }}"></span>{{ m.name }}
+              </span>
+            {% endfor %}
+          </div>
+        {% endif %}
         <div class="grid grid-cols-7" style="border-bottom: 0.5px solid var(--border)">
           {% for d in month_weeks.0 %}
-            <div class="py-2.5 text-center text-xs font-medium uppercase tracking-wide {% if not forloop.last %}border-r{% endif %}" style="color: var(--text-muted); border-color: var(--border)">{{ d|date:'D' }}</div>
+            <div class="py-2.5 text-center text-xs font-medium uppercase tracking-wide {% if not forloop.last %}border-r{% endif %}" style="color: var(--text-muted); border-color: var(--border)">{{ d.date|date:'D' }}</div>
           {% endfor %}
         </div>
         {% for week in month_weeks %}
           <div class="grid grid-cols-7 last:border-b-0" style="border-bottom: 0.5px solid var(--border)">
             {% for d in week %}
-              <div class="min-h-[5.5rem] p-2 {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if d.month != current_month %}background: var(--surface-alt);{% endif %}">
-                <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-medium {% if d == today %}text-white{% elif d.month != current_month %}text-slate-300 dark:text-slate-600{% endif %}" style="{% if d == today %}background: var(--action);{% elif d.month == current_month %}color: var(--text);{% endif %}">{{ d|date:'j' }}</span>
+              <div @click="openAdd('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"
+                   title="{% trans 'Ajouter une tâche' %}"
+                   class="group relative min-h-[5.5rem] cursor-pointer p-2 transition hover:bg-[color:var(--surface-alt)] {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if not d.in_month %}background: var(--surface-alt);{% endif %}">
+                <div class="flex items-center justify-between">
+                  <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-medium {% if d.date == today %}text-white{% elif not d.in_month %}text-slate-300 dark:text-slate-600{% endif %}" style="{% if d.date == today %}background: var(--action);{% elif d.in_month %}color: var(--text);{% endif %}">{{ d.date|date:'j' }}</span>
+                  <span class="material-icons-round pointer-events-none text-[16px] opacity-0 transition group-hover:opacity-100" style="color: var(--text-muted)">add</span>
+                </div>
+                {% if d.tasks %}
+                  <div class="mt-1 space-y-1">
+                    {% for t in d.tasks %}
+                      <div @click.stop="openEdit({ id: {{ t.id }}, title: '{{ t.title|escapejs }}', member: {{ t.assigned_to_id }}, date: '{{ d.date|date:"Y-m-d" }}', priority: '{{ t.priority }}', status: '{{ t.status }}', description: '{{ t.description|escapejs }}', parcelle: '{{ t.parcelle_id|default:"" }}' })"
+                           title="{{ t.title }} · {{ t.assigned_to.name }} · {{ t.get_priority_display }} · {{ t.get_status_display }}"
+                           class="cursor-pointer truncate rounded-md border-l-[3px] px-1.5 py-0.5 text-[11px] leading-tight transition hover:brightness-95 {% if t.status == 'done' or t.status == 'validated' %}line-through opacity-60{% endif %}"
+                           style="border-color: {{ t.chip_color }}; background: color-mix(in srgb, {{ t.chip_color }} 14%, transparent); color: var(--text);">
+                        {{ t.title }}
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
               </div>
             {% endfor %}
           </div>

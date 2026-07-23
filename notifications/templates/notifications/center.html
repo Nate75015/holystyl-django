@@ -72,14 +72,11 @@
                 <span class="material-icons-round text-[18px]">edit</span>
               </button>
               {# escapejs : le nom est saisi par l'utilisateur et atterrit dans une chaîne JS #}
-              <form method="post" action="{% url 'notifications:rule_delete' r.pk %}" class="flex"
-                    onsubmit="return confirm('{% blocktrans with name=r.name|escapejs %}Supprimer définitivement la règle « {{ name }} » ?{% endblocktrans %}')">
-                {% csrf_token %}
-                <button type="submit" title="{% trans 'Supprimer' %}"
-                        class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
-                  <span class="material-icons-round text-[18px]">delete_outline</span>
-                </button>
-              </form>
+              <button type="button" title="{% trans 'Supprimer' %}"
+                      @click="del = { open: true, action: '{% url 'notifications:rule_delete' r.pk %}', name: '{{ r.name|escapejs }}' }"
+                      class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
+                <span class="material-icons-round text-[18px]">delete_outline</span>
+              </button>
             </div>
           </div>
         {% endfor %}
@@ -151,6 +148,22 @@
       </div>
     </div>
   </div>
+
+  {# Modale : confirmation de suppression #}
+  <div x-show="del.open" x-cloak x-transition.opacity @keydown.escape.window="del.open = false"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="del.open = false" class="hs-popover w-full max-w-sm p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer cette règle ?" %}</h3>
+      <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Supprimer définitivement la règle" %} « <span class="font-medium" style="color: var(--text)" x-text="del.name"></span> » ? {% trans "Cette action est irréversible." %}</p>
+      <form method="post" :action="del.action" class="mt-5 flex justify-end gap-2">
+        {% csrf_token %}
+        <button type="button" @click="del.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-white transition hover:opacity-90" style="background: var(--danger)">
+          <span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}
+        </button>
+      </form>
+    </div>
+  </div>
 </section>
 
 <script>
@@ -160,6 +173,7 @@
       editing: false,
       ruleType: initialType,
       aiBusy: false,
+      del: { open: false, action: '', name: '' },
       addAction: '{% url "notifications:center" %}',
       _set(id, v) { const el = document.getElementById(id); if (el) el.value = v || ''; },
       openAdd() {
