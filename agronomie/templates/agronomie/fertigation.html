@@ -84,14 +84,14 @@
     <div x-show="tab === 'calcul'" x-cloak class="hs-card p-5 space-y-4 mt-4">
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
-          <label class="mb-1 block text-[13px] font-medium">{% trans "Engrais" %}</label>
-          <select x-model.number="ei" class="w-full">
+          <label for="fertigation-calc-engrais" class="mb-1 block text-[13px] font-medium">{% trans "Engrais" %}</label>
+          <select id="fertigation-calc-engrais" x-model.number="ei" class="w-full">
             <template x-for="(e, i) in engrais" :key="i"><option :value="i" x-text="e.nom"></option></template>
           </select>
         </div>
         <div>
-          <label class="mb-1 block text-[13px] font-medium">{% trans "Dose produit (kg/ha)" %}</label>
-          <input type="number" x-model.number="dose" min="0" step="1" class="w-full">
+          <label for="fertigation-calc-dose" class="mb-1 block text-[13px] font-medium">{% trans "Dose produit (kg/ha)" %}</label>
+          <input id="fertigation-calc-dose" type="number" x-model.number="dose" min="0" step="1" class="w-full">
         </div>
       </div>
       <div class="grid grid-cols-3 gap-[10px]">
@@ -170,38 +170,38 @@
             {% csrf_token %}
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Date" %} <span style="color: var(--danger)">*</span></label>
-                <input name="date" type="datetime-local" required class="w-full">
+                <label for="fertigation-date" class="mb-1 block text-[13px] font-medium">{% trans "Date" %} <span style="color: var(--danger)">*</span></label>
+                <input id="fertigation-date" name="date" type="datetime-local" required class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-[13px] font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
-                <select name="parcelle" required class="w-full">
+                <label for="fertigation-parcelle" class="mb-1 block text-[13px] font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
+                <select id="fertigation-parcelle" name="parcelle" required class="w-full">
                   {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
                 </select>
               </div>
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Produit" %}</label>
-              <input name="produit" list="engrais-list" placeholder="ex: NPK 15-15-15" class="w-full">
+              <label for="fertigation-produit" class="mb-1 block text-[13px] font-medium">{% trans "Produit" %}</label>
+              <input id="fertigation-produit" name="produit" list="engrais-list" placeholder="ex: NPK 15-15-15" class="w-full">
               <datalist id="engrais-list">{% for e in engrais %}<option value="{{ e.nom }}">{% endfor %}</datalist>
             </div>
             <div class="grid grid-cols-3 gap-3">
               <div>
-                <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">N (kg/ha)</label>
-                <input name="azote_n" type="number" step="0.1" min="0" value="0" class="w-full">
+                <label for="fertigation-azote-n" class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">N (kg/ha)</label>
+                <input id="fertigation-azote-n" name="azote_n" type="number" step="0.1" min="0" value="0" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">P (kg/ha)</label>
-                <input name="phosphore_p" type="number" step="0.1" min="0" value="0" class="w-full">
+                <label for="fertigation-phosphore-p" class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">P (kg/ha)</label>
+                <input id="fertigation-phosphore-p" name="phosphore_p" type="number" step="0.1" min="0" value="0" class="w-full">
               </div>
               <div>
-                <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">K (kg/ha)</label>
-                <input name="potassium_k" type="number" step="0.1" min="0" value="0" class="w-full">
+                <label for="fertigation-potassium-k" class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)">K (kg/ha)</label>
+                <input id="fertigation-potassium-k" name="potassium_k" type="number" step="0.1" min="0" value="0" class="w-full">
               </div>
             </div>
             <div>
-              <label class="mb-1 block text-[13px] font-medium">{% trans "Volume (L)" %}</label>
-              <input name="volume_l" type="number" step="1" min="0" value="0" class="w-full">
+              <label for="fertigation-volume" class="mb-1 block text-[13px] font-medium">{% trans "Volume (L)" %}</label>
+              <input id="fertigation-volume" name="volume_l" type="number" step="1" min="0" value="0" class="w-full">
             </div>
             <div class="flex justify-end gap-2 pt-1">
               <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

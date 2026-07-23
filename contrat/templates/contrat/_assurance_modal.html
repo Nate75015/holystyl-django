@@ -10,52 +10,52 @@
       <form method="post" action="{% url 'contrat:assurance_create' %}" class="space-y-3">
         {% csrf_token %}
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Intitulé" %} <span style="color: var(--danger)">*</span></label>
-          <input name="intitule" required placeholder="{% trans 'ex: multirisque exploitation' %}">
+          <label for="assurance-intitule" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Intitulé" %} <span style="color: var(--danger)">*</span></label>
+          <input id="assurance-intitule" name="intitule" required placeholder="{% trans 'ex: multirisque exploitation' %}">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type" %}</label>
-            <select name="type_assurance">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+            <label for="assurance-type" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type" %}</label>
+            <select id="assurance-type" name="type_assurance">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
-            <select name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Assureur" %}</label>
-            <input name="assureur" placeholder="{% trans 'compagnie' %}">
-          </div>
-          <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "N° de police" %}</label>
-            <input name="numero_police" placeholder="{% trans 'n° du contrat' %}">
+            <label for="assurance-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+            <select id="assurance-statut" name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Prime annuelle (€)" %}</label>
-            <input name="prime_annuelle" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+            <label for="assurance-assureur" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Assureur" %}</label>
+            <input id="assurance-assureur" name="assureur" placeholder="{% trans 'compagnie' %}">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Capital assuré (€)" %}</label>
-            <input name="capital_assure" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+            <label for="assurance-numero-police" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "N° de police" %}</label>
+            <input id="assurance-numero-police" name="numero_police" placeholder="{% trans 'n° du contrat' %}">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de début" %}</label>
-            <input name="date_debut" type="date">
+            <label for="assurance-prime" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Prime annuelle (€)" %}</label>
+            <input id="assurance-prime" name="prime_annuelle" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Échéance" %}</label>
-            <input name="date_fin" type="date">
+            <label for="assurance-capital" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Capital assuré (€)" %}</label>
+            <input id="assurance-capital" name="capital_assure" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="assurance-date-debut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de début" %}</label>
+            <input id="assurance-date-debut" name="date_debut" type="date">
+          </div>
+          <div>
+            <label for="assurance-date-fin" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Échéance" %}</label>
+            <input id="assurance-date-fin" name="date_fin" type="date">
           </div>
         </div>
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
-          <textarea name="notes" rows="2" placeholder="{% trans 'garanties, franchises, exclusions…' %}"></textarea>
+          <label for="assurance-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea id="assurance-notes" name="notes" rows="2" placeholder="{% trans 'garanties, franchises, exclusions…' %}"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-1">
           <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

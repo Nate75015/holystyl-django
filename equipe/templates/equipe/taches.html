@@ -23,7 +23,7 @@
 
     {# Priorité #}
     <label class="inline-flex shrink-0 items-center gap-1.5">
-      <select x-model="prioFilter" class="cursor-pointer text-[13px]">
+      <select x-model="prioFilter" aria-label="{% trans 'Filtrer par priorité' %}" class="cursor-pointer text-[13px]">
         <option value="all">{% trans "Toutes priorités" %}</option>
         {% for value, label in priorities %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
       </select>
@@ -31,7 +31,7 @@
 
     {# Statut #}
     <label class="inline-flex shrink-0 items-center gap-1.5">
-      <select x-model="statusFilter" class="cursor-pointer text-[13px]">
+      <select x-model="statusFilter" aria-label="{% trans 'Filtrer par statut' %}" class="cursor-pointer text-[13px]">
         <option value="all">{% trans "Tous statuts" %}</option>
         {% for value, label in statuses %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
       </select>

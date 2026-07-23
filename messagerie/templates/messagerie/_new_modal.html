@@ -27,8 +27,8 @@
         </div>
 
         <div x-show="tab === 'direct'">
-          <label class="mb-1 block text-sm font-medium">{% trans "À" %} <span style="color: var(--danger)">*</span></label>
-          <select name="participant" :required="tab === 'direct'" class="dark:[color-scheme:dark]">
+          <label for="msg-participant" class="mb-1 block text-sm font-medium">{% trans "À" %} <span style="color: var(--danger)">*</span></label>
+          <select id="msg-participant" name="participant" :required="tab === 'direct'" class="dark:[color-scheme:dark]">
             <option value="">{% trans "— Choisir un agriculteur —" %}</option>
             {% for f in farmers %}<option value="{{ f.pk }}">{{ f.full_name|default:f.email }}</option>{% endfor %}
           </select>
@@ -36,12 +36,12 @@
 
         <div x-show="tab === 'groupe'" x-cloak class="space-y-3">
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Nom du groupe" %}</label>
-            <input name="name" placeholder="{% trans 'ex: Équipe irrigation' %}">
+            <label for="msg-name" class="mb-1 block text-sm font-medium">{% trans "Nom du groupe" %}</label>
+            <input id="msg-name" name="name" placeholder="{% trans 'ex: Équipe irrigation' %}">
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Membres" %} <span style="color: var(--danger)">*</span></label>
-            <select name="participants" multiple size="4" class="dark:[color-scheme:dark]">
+            <label for="msg-participants" class="mb-1 block text-sm font-medium">{% trans "Membres" %} <span style="color: var(--danger)">*</span></label>
+            <select id="msg-participants" name="participants" multiple size="4" class="dark:[color-scheme:dark]">
               {% for f in farmers %}<option value="{{ f.pk }}">{{ f.full_name|default:f.email }}</option>{% endfor %}
             </select>
             <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Ctrl/Cmd + clic pour en sélectionner plusieurs." %}</p>
@@ -49,8 +49,8 @@
         </div>
 
         <div>
-          <label class="mb-1 block text-sm font-medium">{% trans "Message" %} <span style="color: var(--danger)">*</span></label>
-          <textarea name="message" rows="3" required placeholder="{% trans 'Écrivez votre message…' %}"></textarea>
+          <label for="msg-message" class="mb-1 block text-sm font-medium">{% trans "Message" %} <span style="color: var(--danger)">*</span></label>
+          <textarea id="msg-message" name="message" rows="3" required placeholder="{% trans 'Écrivez votre message…' %}"></textarea>
         </div>
 
         <div class="flex justify-end gap-2 pt-1">

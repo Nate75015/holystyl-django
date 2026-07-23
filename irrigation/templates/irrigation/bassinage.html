@@ -23,8 +23,8 @@
       <form method="post" action="{% url 'irrigation:bassinage_create' %}" class="space-y-4" x-data="bassinageForm()">
         {% csrf_token %}
         <div>
-          <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
-          <select name="parcelle" required class="w-full">
+          <label for="bassinage-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
+          <select id="bassinage-parcelle" name="parcelle" required class="w-full">
             <option value="">{% trans "Sélectionner une parcelle" %}</option>
             {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
           </select>

@@ -148,32 +148,32 @@
           {% csrf_token %}
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
-              <select name="categorie" class="w-full">
+              <label for="charge-categorie" class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
+              <select id="charge-categorie" name="categorie" class="w-full">
                 {% for value, label in categories %}<option value="{{ value }}"{% if value == 'engrais' %} selected{% endif %}>{{ label }}</option>{% endfor %}
               </select>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
-              <input name="date" type="date" value="{{ today }}" class="w-full">
+              <label for="charge-date" class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
+              <input id="charge-date" name="date" type="date" value="{{ today }}" class="w-full">
             </div>
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Montant (€)" %} <span style="color: var(--danger)">*</span></label>
-            <input name="montant" type="number" step="0.01" min="0" required placeholder="0.00" inputmode="decimal" class="w-full">
+            <label for="charge-montant" class="mb-1 block text-sm font-medium">{% trans "Montant (€)" %} <span style="color: var(--danger)">*</span></label>
+            <input id="charge-montant" name="montant" type="number" step="0.01" min="0" required placeholder="0.00" inputmode="decimal" class="w-full">
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
-            <input name="description" placeholder="{% trans 'ex: Semences blé tendre — 200 kg' %}" class="w-full">
+            <label for="charge-description" class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
+            <input id="charge-description" name="description" placeholder="{% trans 'ex: Semences blé tendre — 200 kg' %}" class="w-full">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Fournisseur" %}</label>
-              <input name="fournisseur" placeholder="{% trans 'Nom du fournisseur' %}" class="w-full">
+              <label for="charge-fournisseur" class="mb-1 block text-sm font-medium">{% trans "Fournisseur" %}</label>
+              <input id="charge-fournisseur" name="fournisseur" placeholder="{% trans 'Nom du fournisseur' %}" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
-              <select name="parcelle" class="w-full">
+              <label for="charge-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+              <select id="charge-parcelle" name="parcelle" class="w-full">
                 <option value="">{% trans "Toute l'exploitation" %}</option>
                 {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
               </select>
@@ -202,32 +202,32 @@
           {% csrf_token %}
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
-              <select name="categorie" class="w-full">
+              <label for="revenu-categorie" class="mb-1 block text-sm font-medium">{% trans "Catégorie" %}</label>
+              <select id="revenu-categorie" name="categorie" class="w-full">
                 {% for value, label in revenu_categories %}<option value="{{ value }}"{% if value == 'vente_cereales' %} selected{% endif %}>{{ label }}</option>{% endfor %}
               </select>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
-              <input name="date" type="date" value="{{ today }}" class="w-full">
+              <label for="revenu-date" class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
+              <input id="revenu-date" name="date" type="date" value="{{ today }}" class="w-full">
             </div>
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Montant (€)" %} <span style="color: var(--danger)">*</span></label>
-            <input name="montant" type="number" step="0.01" min="0" required placeholder="0.00" inputmode="decimal" class="w-full">
+            <label for="revenu-montant" class="mb-1 block text-sm font-medium">{% trans "Montant (€)" %} <span style="color: var(--danger)">*</span></label>
+            <input id="revenu-montant" name="montant" type="number" step="0.01" min="0" required placeholder="0.00" inputmode="decimal" class="w-full">
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
-            <input name="description" placeholder="{% trans 'ex: Vente blé tendre — récolte 2025' %}" class="w-full">
+            <label for="revenu-description" class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
+            <input id="revenu-description" name="description" placeholder="{% trans 'ex: Vente blé tendre — récolte 2025' %}" class="w-full">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Acheteur / Organisme" %}</label>
-              <input name="acheteur" placeholder="{% trans 'Nom de l’acheteur' %}" class="w-full">
+              <label for="revenu-acheteur" class="mb-1 block text-sm font-medium">{% trans "Acheteur / Organisme" %}</label>
+              <input id="revenu-acheteur" name="acheteur" placeholder="{% trans 'Nom de l’acheteur' %}" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
-              <select name="parcelle" class="w-full">
+              <label for="revenu-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+              <select id="revenu-parcelle" name="parcelle" class="w-full">
                 <option value="">{% trans "Toute l'exploitation" %}</option>
                 {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
               </select>
@@ -235,12 +235,12 @@
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Quantité (kg)" %}</label>
-              <input name="quantite_kg" type="number" step="0.1" min="0" placeholder="0" inputmode="decimal" class="w-full">
+              <label for="revenu-quantite" class="mb-1 block text-sm font-medium">{% trans "Quantité (kg)" %}</label>
+              <input id="revenu-quantite" name="quantite_kg" type="number" step="0.1" min="0" placeholder="0" inputmode="decimal" class="w-full">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Prix unitaire (€/kg)" %}</label>
-              <input name="prix_unitaire" type="number" step="0.001" min="0" placeholder="0.000" inputmode="decimal" class="w-full">
+              <label for="revenu-prix" class="mb-1 block text-sm font-medium">{% trans "Prix unitaire (€/kg)" %}</label>
+              <input id="revenu-prix" name="prix_unitaire" type="number" step="0.001" min="0" placeholder="0.000" inputmode="decimal" class="w-full">
             </div>
           </div>
           <div class="flex justify-end gap-2 pt-1">

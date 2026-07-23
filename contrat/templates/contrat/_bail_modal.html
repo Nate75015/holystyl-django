@@ -10,46 +10,46 @@
       <form method="post" action="{% url 'contrat:bail_create' %}" class="space-y-3">
         {% csrf_token %}
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Désignation" %} <span style="color: var(--danger)">*</span></label>
-          <input name="designation" required placeholder="{% trans 'ex: bail parcelles nord' %}">
+          <label for="bail-designation" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Désignation" %} <span style="color: var(--danger)">*</span></label>
+          <input id="bail-designation" name="designation" required placeholder="{% trans 'ex: bail parcelles nord' %}">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Bailleur" %}</label>
-            <input name="bailleur" placeholder="{% trans 'propriétaire' %}">
+            <label for="bail-bailleur" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Bailleur" %}</label>
+            <input id="bail-bailleur" name="bailleur" placeholder="{% trans 'propriétaire' %}">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Preneur" %}</label>
-            <input name="preneur" placeholder="{% trans 'exploitant' %}">
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Surface (ha)" %}</label>
-            <input name="surface_ha" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0">
-          </div>
-          <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Fermage annuel (€)" %}</label>
-            <input name="loyer_annuel" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+            <label for="bail-preneur" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Preneur" %}</label>
+            <input id="bail-preneur" name="preneur" placeholder="{% trans 'exploitant' %}">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de début" %}</label>
-            <input name="date_debut" type="date">
+            <label for="bail-surface" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Surface (ha)" %}</label>
+            <input id="bail-surface" name="surface_ha" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0">
           </div>
           <div>
-            <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de fin" %}</label>
-            <input name="date_fin" type="date">
+            <label for="bail-loyer" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Fermage annuel (€)" %}</label>
+            <input id="bail-loyer" name="loyer_annuel" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="bail-date-debut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de début" %}</label>
+            <input id="bail-date-debut" name="date_debut" type="date">
+          </div>
+          <div>
+            <label for="bail-date-fin" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de fin" %}</label>
+            <input id="bail-date-fin" name="date_fin" type="date">
           </div>
         </div>
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
-          <select name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          <label for="bail-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+          <select id="bail-statut" name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
         </div>
         <div>
-          <label class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
-          <textarea name="notes" rows="2" placeholder="{% trans 'clauses, révision du fermage…' %}"></textarea>
+          <label for="bail-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea id="bail-notes" name="notes" rows="2" placeholder="{% trans 'clauses, révision du fermage…' %}"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-1">
           <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

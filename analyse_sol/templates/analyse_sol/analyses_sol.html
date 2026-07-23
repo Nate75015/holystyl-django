@@ -134,14 +134,14 @@
             {% csrf_token %}
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
-                <select name="parcelle" required>
+                <label for="analyse-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
+                <select id="analyse-parcelle" name="parcelle" required>
                   {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
                 </select>
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Date" %} <span style="color: var(--danger)">*</span></label>
-                <input name="date" type="date" required>
+                <label for="analyse-date" class="mb-1 block text-sm font-medium">{% trans "Date" %} <span style="color: var(--danger)">*</span></label>
+                <input id="analyse-date" name="date" type="date" required>
               </div>
             </div>
 
@@ -204,14 +204,14 @@
             {% csrf_token %}
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
-                <select name="parcelle" required>
+                <label for="demande-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
+                <select id="demande-parcelle" name="parcelle" required>
                   {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
                 </select>
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Type d'analyse" %}</label>
-                <select name="type_analyse">
+                <label for="demande-type_analyse" class="mb-1 block text-sm font-medium">{% trans "Type d'analyse" %}</label>
+                <select id="demande-type_analyse" name="type_analyse">
                   {% for value, label in types_demande %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
                 </select>
               </div>
@@ -241,8 +241,8 @@
             </div>
 
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Message (facultatif)" %}</label>
-              <textarea name="message" rows="2" placeholder="{% trans 'Précisions, demande particulière…' %}"></textarea>
+              <label for="demande-message" class="mb-1 block text-sm font-medium">{% trans "Message (facultatif)" %}</label>
+              <textarea id="demande-message" name="message" rows="2" placeholder="{% trans 'Précisions, demande particulière…' %}"></textarea>
             </div>
 
             <div class="flex justify-end gap-2 pt-1">

@@ -133,21 +133,21 @@
             <input type="hidden" name="vue" value="{{ vue }}">
             <input type="hidden" name="date" value="{{ anchor|date:'Y-m-d' }}">
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Titre" %} <span style="color: var(--danger)">*</span></label>
-              <input name="title" required x-model="form.title" placeholder="{% trans 'ex: Traitement parcelle Nord' %}"
+              <label for="task-title" class="mb-1 block text-sm font-medium">{% trans "Titre" %} <span style="color: var(--danger)">*</span></label>
+              <input id="task-title" name="title" required x-model="form.title" placeholder="{% trans 'ex: Traitement parcelle Nord' %}"
                      class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent">
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Assigné à" %} <span style="color: var(--danger)">*</span></label>
-                <select name="assigned_to" required x-model="form.assigned_to"
+                <label for="task-assigned" class="mb-1 block text-sm font-medium">{% trans "Assigné à" %} <span style="color: var(--danger)">*</span></label>
+                <select id="task-assigned" name="assigned_to" required x-model="form.assigned_to"
                         class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
                   {% for m in team_members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
                 </select>
               </div>
               <div>
-                <label class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
-                <input name="due_date" type="date" x-model="form.due_date"
+                <label for="task-date" class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
+                <input id="task-date" name="due_date" type="date" x-model="form.due_date"
                        class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
               </div>
             </div>
@@ -180,16 +180,16 @@
               <input type="hidden" name="status" :value="form.status">
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
-              <select name="parcelle" x-model="form.parcelle"
+              <label for="task-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+              <select id="task-parcelle" name="parcelle" x-model="form.parcelle"
                       class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
                 <option value="">{% trans "—" %}</option>
                 {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
               </select>
             </div>
             <div>
-              <label class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
-              <textarea name="description" rows="2" x-model="form.description"
+              <label for="task-description" class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
+              <textarea id="task-description" name="description" rows="2" x-model="form.description"
                         class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></textarea>
             </div>
             <div class="flex items-center justify-between gap-2 pt-1">
