@@ -3,7 +3,7 @@
 
 {% block content %}
 {{ parcelles_geojson|json_script:"parcelles-geojson" }}
-<section class="mx-auto max-w-6xl space-y-5"
+<section class="space-y-5"
   x-data="{ tab: (new URLSearchParams(location.search).get('tab') || 'carte') }"
   x-init="$watch('tab', v => { if (v === 'carte' && window._map) setTimeout(() => window._map.invalidateSize(), 60) })">
 
