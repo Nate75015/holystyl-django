@@ -20,12 +20,19 @@ class ParcelleForm(forms.ModelForm):
         self.fields["culture"].widget = forms.Select(choices=choices)
         self.fields["culture"].required = False
 
+        # Type d'agriculture : option vide = « hérité de l'exploitation ».
+        self.fields["type_agriculture"].required = False
+        self.fields["type_agriculture"].widget.choices = (
+            [("", _("Hérité de l'exploitation"))] + list(Parcelle.type_agriculture.field.choices)
+        )
+
     class Meta:
         model = Parcelle
         fields = [
             # Étape 1 — identité & géométrie
             "name", "area", "surface_utile", "latitude", "longitude", "boundaries",
             # Étape 2 — culture
+            "type_agriculture",
             "culture", "variety", "kc_value", "tree_age_years",
             "planting_date", "plant_density_per_ha",
             # Étape 3 — sol

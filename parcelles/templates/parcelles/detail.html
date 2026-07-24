@@ -19,6 +19,8 @@
     <div class="hs-card p-5 space-y-2">
       <h2 class="text-[15px] font-medium">{% trans "Culture & sol" %}</h2>
       <dl class="grid grid-cols-2 gap-1 text-[13px]">
+        <dt style="color: var(--text-muted)">{% trans "Type d'agriculture" %}</dt>
+        <dd>{{ parcelle.get_type_agriculture_effectif_display|default:"—" }}{% if not parcelle.type_agriculture %} <span style="color: var(--text-muted)">({% trans "hérité" %})</span>{% endif %}</dd>
         <dt style="color: var(--text-muted)">{% trans "Variété" %}</dt><dd>{{ parcelle.variety|default:"—" }}</dd>
         <dt style="color: var(--text-muted)">Kc</dt><dd>{{ parcelle.kc_value }}</dd>
         <dt style="color: var(--text-muted)">{% trans "Type de sol" %}</dt><dd>{{ parcelle.soil_type|default:"—" }}</dd>

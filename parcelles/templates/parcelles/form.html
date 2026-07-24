@@ -46,6 +46,7 @@
     {# Étape 2 — Culture #}
     <div x-show="step === 2" x-cloak class="space-y-4">
       <h2 class="text-[15px] font-medium">{% trans "Culture" %}</h2>
+      {% include "parcelles/_field.html" with field=form.type_agriculture %}
       <div class="grid grid-cols-2 gap-4">
         {% include "parcelles/_field.html" with field=form.culture %}
         {% include "parcelles/_field.html" with field=form.variety %}

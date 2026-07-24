@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.models import TimeStampedModel
+from exploitations.models import Exploitation
 
 
 class Parcelle(TimeStampedModel):
@@ -33,6 +34,13 @@ class Parcelle(TimeStampedModel):
     surface_utile = models.BooleanField(
         _("surface agricole utile (SAU)"), default=True,
         help_text=_("Cette surface compte-t-elle dans la SAU de l'exploitation ?"),
+    )
+    # Type d'agriculture au niveau parcelle (familles/sous-familles partagées
+    # avec l'exploitation). Vide = « hérité de l'exploitation ».
+    type_agriculture = models.CharField(
+        _("type d'agriculture"), max_length=30, blank=True,
+        choices=Exploitation.TYPE_AGRICULTURE_CHOICES,
+        help_text=_("Laisser vide pour hériter du type d'agriculture de l'exploitation."),
     )
 
     # Géométrie
@@ -83,7 +91,21 @@ class Parcelle(TimeStampedModel):
         indexes = [models.Index(fields=["exploitation", "status"])]
 
     def __str__(self):
-        return self.name
+        return str(self.name)
+
+    @property
+    def type_agriculture_effectif(self):
+        """Type d'agriculture de la parcelle, ou celui de l'exploitation si hérité."""
+        return self.type_agriculture or self.exploitation.type_agriculture
+
+    def get_type_agriculture_effectif_display(self):
+        """Libellé lisible du type effectif (hérité inclus)."""
+        value = self.type_agriculture_effectif
+        for _group, options in Exploitation.TYPE_AGRICULTURE_CHOICES:
+            for opt_value, label in options:
+                if opt_value == value:
+                    return label
+        return ""
 
 
 class CropStage(TimeStampedModel):
