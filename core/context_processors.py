@@ -138,7 +138,7 @@ def layout(request):
     # Icône de section (présentation ; navigation de la sidebar)
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
-        "protection": "shield", "economie": "payments", "environnement": "park",
+        "protection": "lock", "economie": "payments", "environnement": "park",
         "rh": "groups", "contrat": "gavel", "compte": "person",
     }
     for section in nav_sections:

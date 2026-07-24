@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.db.models import Avg, Sum
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
@@ -294,14 +294,110 @@ def bassinage(request):
         if exploitation else BassinageEvent.objects.none()
     )
     agg = events.aggregate(eau=Sum("water_used_m3"), duree=Avg("duration_minutes"))
+    villes = list(VilleMeteo.objects.filter(exploitation=exploitation)) if exploitation else []
     return render(request, "irrigation/bassinage.html", {
         "events": events,
         "kpi_total": events.count(),
         "kpi_eau": round(agg["eau"] or 0, 1),
         "kpi_duree": round(agg["duree"]) if agg["duree"] else 0,
         "parcelles": Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none(),
+        "villes": villes,
+        "ville": villes[0] if villes else None,
+        "bassinage_rules": _bassinage_rules(request.user),
+        "statuses": BassinageEvent.Status.choices,
         "page_title": _("Bassinage"),
     })
+
+
+@login_required
+@require_POST
+def bassinage_edit(request, pk):
+    """Modifie un enregistrement de bassinage."""
+    exploitation = _exploitation(request)
+    event = get_object_or_404(BassinageEvent, pk=pk, exploitation=exploitation)
+    parcelle = Parcelle.objects.filter(pk=request.POST.get("parcelle"), exploitation=exploitation).first()
+    if parcelle:
+        event.parcelle = parcelle
+    event.trigger_temperature = _num(request.POST.get("trigger_temperature"))
+    dur = _int(request.POST.get("duration_minutes"), 0)
+    if dur:
+        event.duration_minutes = max(1, dur)
+    event.water_used_m3 = _num(request.POST.get("water_used_m3"))
+    status = request.POST.get("status")
+    if status in BassinageEvent.Status.values:
+        event.status = status
+    event.notes = (request.POST.get("notes") or "").strip()
+    event.save()
+    messages.success(request, _("Bassinage mis à jour."))
+    return redirect("irrigation:bassinage")
+
+
+@login_required
+@require_POST
+def bassinage_toggle(request, pk):
+    """Bascule le statut d'un bassinage : Actif ↔ Inactif (terminé)."""
+    exploitation = _exploitation(request)
+    event = get_object_or_404(BassinageEvent, pk=pk, exploitation=exploitation)
+    if event.status == BassinageEvent.Status.ACTIVE:
+        event.status = BassinageEvent.Status.COMPLETED
+        if not event.end_time:
+            event.end_time = timezone.now()
+    else:
+        event.status = BassinageEvent.Status.ACTIVE
+        event.end_time = None
+    event.save(update_fields=["status", "end_time"])
+    return redirect("irrigation:bassinage")
+
+
+@login_required
+@require_POST
+def bassinage_delete(request, pk):
+    """Supprime un enregistrement de bassinage."""
+    exploitation = _exploitation(request)
+    get_object_or_404(BassinageEvent, pk=pk, exploitation=exploitation).delete()
+    messages.success(request, _("Bassinage supprimé."))
+    return redirect("irrigation:bassinage")
+
+
+def _bassinage_rules(user):
+    """Alertes bassinage = règles de notification « météo · température · seuil dépassé »."""
+    return (
+        NotificationRule.objects.filter(
+            user=user,
+            type=NotificationRule.Type.METEO,
+            metric=NotificationRule.Metric.TEMPERATURE,
+            condition_type=NotificationRule.ConditionType.SEUIL_DEPASSE,
+        )
+        .select_related("ville")
+        .order_by("ville__nom", "-threshold")
+    )
+
+
+@login_required
+@require_POST
+def bassinage_settings(request):
+    """Ajoute une alerte bassinage : une règle de notification « T° ≥ seuil » pour une ville."""
+    exploitation = _exploitation(request)
+    ville = (
+        VilleMeteo.objects.filter(exploitation=exploitation, slug=request.POST.get("ville")).first()
+        if exploitation else None
+    )
+    seuil = _num(request.POST.get("seuil_bassinage_c"))
+    if ville and seuil is not None:
+        NotificationRule.objects.create(
+            user=request.user,
+            name=_("Bassinage — %(v)s ≥ %(s)s°C") % {"v": ville.nom, "s": f"{seuil:g}"},
+            type=NotificationRule.Type.METEO,
+            metric=NotificationRule.Metric.TEMPERATURE,
+            condition_type=NotificationRule.ConditionType.SEUIL_DEPASSE,
+            threshold=seuil,
+            ville=ville,
+            enabled=True,
+        )
+        messages.success(request, _("Alerte bassinage ajoutée pour %(v)s.") % {"v": ville.nom})
+    else:
+        messages.error(request, _("Choisissez une ville et un seuil pour ajouter l'alerte."))
+    return redirect("irrigation:bassinage")
 
 
 @login_required

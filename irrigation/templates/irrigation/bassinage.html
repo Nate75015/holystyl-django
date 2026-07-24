@@ -1,12 +1,43 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n l10n %}
 
 {% block content %}
-<section class="space-y-5">
+<section class="space-y-5"
+         x-data="{
+           info: false,
+           edit: { open: false, action: '', parcelle: '', temperature: '', duration: '', water: '', status: '', notes: '' },
+           del: { open: false, action: '', label: '' },
+           openEdit(b) {
+             const d = b.dataset;
+             this.edit = { open: true, action: d.action, parcelle: d.parcelle, temperature: d.temperature,
+                           duration: d.duration, water: d.water, status: d.status, notes: d.notes };
+           },
+         }">
 
   <p class="hs-crumb">{% trans "Protection" %} · {% trans "Bassinage" %}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
     <h1 class="text-[20px]">{% trans "Bassinage" %}</h1>
+    <button type="button" @click="info = !info" class="hs-btn-outline"
+            :class="info && 'hs-tab-active'">
+      <span class="material-icons-round text-[18px]">help_outline</span>{% trans "Qu'est-ce que le bassinage ?" %}
+    </button>
+  </div>
+
+  {# À propos — repliable, au-dessus des indicateurs #}
+  <div x-show="info" x-cloak x-transition class="hs-card p-5 space-y-3">
+    <div class="flex items-start justify-between gap-3">
+      <h2 class="text-[15px] font-medium">{% trans "Qu'est-ce que le bassinage ?" %}</h2>
+      <button type="button" @click="info = false" class="grid h-8 w-8 shrink-0 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
+    </div>
+    <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">
+      {% trans "Arrosage court (15–20 min) déclenché quand la température dépasse le seuil critique (35°C). Objectif : rafraîchir les cultures par évaporation foliaire." %}
+    </p>
+    <div class="flex items-start gap-2 rounded-xl px-3 py-2.5 text-xs" style="background: var(--surface-alt); color: var(--warning)">
+      <span>{% trans "L'irrigation en cours sera automatiquement interrompue pendant le bassinage, puis reprendra automatiquement." %}</span>
+    </div>
+    <div class="flex items-start gap-2 rounded-xl px-3 py-2.5 text-xs leading-relaxed" style="background: var(--surface-alt); color: var(--text-secondary)">
+      <span>{% trans "En protection contre le gel, le bassinage crée une couche de glace protectrice autour des bourgeons. La chaleur latente de solidification (334 J/g) maintient la température à 0°C tant que l'aspersion est active." %}</span>
+    </div>
   </div>
 
   {# Indicateurs #}
@@ -17,11 +48,56 @@
   </div>
 
   {# Déclencher #}
-  <div class="hs-card p-5">
+  <div class="hs-card p-5" x-data="bassinageForm()">
     <h2 class="text-[15px] font-medium mb-2">{% trans "Déclencher un bassinage" %}</h2>
+
+    {# Température (seuil) + Durée — partagés par le déclenchement et l'alerte #}
+    <div class="grid grid-cols-2 gap-4">
+      {# Thermomètre — température #}
+      <div class="rounded-xl p-4" style="border: 0.5px solid var(--border)">
+        <div class="mb-2 flex items-center justify-between">
+          <label class="text-sm font-medium">{% trans "Température" %}</label>
+          <span class="text-lg font-medium tabular-nums" :style="`color:${tColor()}`"><span x-text="temp"></span>°C</span>
+        </div>
+        <div class="flex items-center justify-center">
+          <svg viewBox="0 0 44 120" class="h-20 w-auto">
+            <rect x="17" y="6" width="10" height="88" rx="5" fill="rgba(148,163,184,0.2)"/>
+            <circle cx="22" cy="100" r="13" fill="rgba(148,163,184,0.2)"/>
+            <rect x="19" :y="mercuryY()" width="6" :height="mercuryH()" rx="3" :fill="tColor()"/>
+            <circle cx="22" cy="100" r="10" :fill="tColor()"/>
+          </svg>
+        </div>
+        <input type="range" min="0" max="50" step="0.5" x-model.number="temp"
+               :style="`--track:${tTrack()}; --thumb:${tColor()}`" class="score-slider mt-3" aria-label="{% trans 'Température' %}">
+      </div>
+
+      {# Chronomètre — durée #}
+      <div class="rounded-xl p-4" style="border: 0.5px solid var(--border)">
+        <div class="mb-2 flex items-center justify-between">
+          <label class="text-sm font-medium">{% trans "Durée" %}</label>
+          <span class="text-lg font-medium tabular-nums" style="color: var(--action)"><span x-text="dur"></span> min</span>
+        </div>
+        <div class="flex items-center justify-center">
+          <svg viewBox="0 0 100 112" class="h-20 w-auto">
+            <rect x="44" y="2" width="12" height="7" rx="2.5" fill="#94a3b8"/>
+            <rect x="70" y="6" width="9" height="5" rx="2.5" transform="rotate(40 74 8)" fill="#94a3b8"/>
+            <circle cx="50" cy="60" r="40" fill="none" stroke="rgba(148,163,184,0.2)" stroke-width="7"/>
+            <path :d="arcPath()" fill="none" stroke="#3b82f6" stroke-width="7" stroke-linecap="round"/>
+            <text x="50" y="60" text-anchor="middle" dominant-baseline="central" font-size="26" font-weight="800" fill="#3b82f6" x-text="dur"></text>
+            <text x="50" y="78" text-anchor="middle" font-size="10" fill="#94a3b8">min</text>
+          </svg>
+        </div>
+        <input type="range" min="1" max="60" step="1" x-model.number="dur"
+               :style="`--track:${dTrack()}; --thumb:#3b82f6`" class="score-slider mt-3" aria-label="{% trans 'Durée' %}">
+      </div>
+    </div>
+
+    {# Déclencher maintenant — sur une parcelle #}
     {% if parcelles %}
-      <form method="post" action="{% url 'irrigation:bassinage_create' %}" class="space-y-4" x-data="bassinageForm()">
+      <form method="post" action="{% url 'irrigation:bassinage_create' %}" class="mt-4 space-y-3">
         {% csrf_token %}
+        <input type="hidden" name="trigger_temperature" :value="temp">
+        <input type="hidden" name="duration_minutes" :value="dur">
         <div>
           <label for="bassinage-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %} <span style="color: var(--danger)">*</span></label>
           <select id="bassinage-parcelle" name="parcelle" required class="w-full">
@@ -29,47 +105,6 @@
             {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
           </select>
         </div>
-
-        <div class="grid grid-cols-2 gap-4">
-          {# Thermomètre — température #}
-          <div class="rounded-xl p-4" style="border: 0.5px solid var(--border)">
-            <div class="mb-2 flex items-center justify-between">
-              <label class="text-sm font-medium">{% trans "Température" %}</label>
-              <span class="text-lg font-medium tabular-nums" :style="`color:${tColor()}`"><span x-text="temp"></span>°C</span>
-            </div>
-            <div class="flex items-center justify-center">
-              <svg viewBox="0 0 44 120" class="h-20 w-auto">
-                <rect x="17" y="6" width="10" height="88" rx="5" fill="rgba(148,163,184,0.2)"/>
-                <circle cx="22" cy="100" r="13" fill="rgba(148,163,184,0.2)"/>
-                <rect x="19" :y="mercuryY()" width="6" :height="mercuryH()" rx="3" :fill="tColor()"/>
-                <circle cx="22" cy="100" r="10" :fill="tColor()"/>
-              </svg>
-            </div>
-            <input name="trigger_temperature" type="range" min="0" max="50" step="0.5" x-model.number="temp"
-                   :style="`--track:${tTrack()}; --thumb:${tColor()}`" class="score-slider mt-3">
-          </div>
-
-          {# Chronomètre — durée #}
-          <div class="rounded-xl p-4" style="border: 0.5px solid var(--border)">
-            <div class="mb-2 flex items-center justify-between">
-              <label class="text-sm font-medium">{% trans "Durée" %}</label>
-              <span class="text-lg font-medium tabular-nums" style="color: var(--action)"><span x-text="dur"></span> min</span>
-            </div>
-            <div class="flex items-center justify-center">
-              <svg viewBox="0 0 100 112" class="h-20 w-auto">
-                <rect x="44" y="2" width="12" height="7" rx="2.5" fill="#94a3b8"/>
-                <rect x="70" y="6" width="9" height="5" rx="2.5" transform="rotate(40 74 8)" fill="#94a3b8"/>
-                <circle cx="50" cy="60" r="40" fill="none" stroke="rgba(148,163,184,0.2)" stroke-width="7"/>
-                <path :d="arcPath()" fill="none" stroke="#3b82f6" stroke-width="7" stroke-linecap="round"/>
-                <text x="50" y="60" text-anchor="middle" dominant-baseline="central" font-size="26" font-weight="800" fill="#3b82f6" x-text="dur"></text>
-                <text x="50" y="78" text-anchor="middle" font-size="10" fill="#94a3b8">min</text>
-              </svg>
-            </div>
-            <input name="duration_minutes" type="range" min="1" max="60" step="1" x-model.number="dur"
-                   :style="`--track:${dTrack()}; --thumb:#3b82f6`" class="score-slider mt-3">
-          </div>
-        </div>
-
         <div class="flex items-start gap-2 rounded-xl px-3 py-2.5 text-xs" style="background: var(--surface-alt); color: var(--warning)">
           <span>{% trans "Le déclenchement du bassinage interrompra automatiquement toute irrigation en cours sur cette parcelle." %}</span>
         </div>
@@ -78,19 +113,44 @@
         </div>
       </form>
     {% else %}
-      <p class="text-[15px] font-medium">{% trans "Ajoutez une parcelle" %}</p>
+      <p class="mt-4 text-[15px] font-medium">{% trans "Ajoutez une parcelle" %}</p>
       <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez d'abord une parcelle (Mes Parcelles) pour déclencher un bassinage." %}</p>
     {% endif %}
 
-    {# Seuils automatiques #}
-    <div class="mt-5 rounded-xl p-4" style="border: 0.5px solid var(--border); background: var(--surface-alt)">
-      <p class="mb-3 text-[12px]" style="color: var(--text-secondary)">{% trans "Seuils automatiques" %}</p>
-      <dl class="grid gap-2 text-sm sm:grid-cols-3">
-        <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "Seuil température" %}</dt><dd class="font-medium">35°C</dd></div>
-        <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "Durée recommandée" %}</dt><dd class="font-medium">15–20 min</dd></div>
-        <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "Reprise auto irrigation" %}</dt><dd class="font-medium" style="color: var(--success)">{% trans "Oui" %}</dd></div>
-      </dl>
-    </div>
+    {# Alerte de notification — au même seuil de température, pour une ville #}
+    {% if villes %}
+      <div class="mt-4" style="border-top: 0.5px solid var(--border); padding-top: 16px">
+        <form method="post" action="{% url 'irrigation:bassinage_settings' %}" class="flex flex-wrap items-end justify-between gap-3">
+          {% csrf_token %}
+          <input type="hidden" name="seuil_bassinage_c" :value="temp">
+          <div>
+            <label for="bassinage-ville" class="mb-1 block text-xs font-medium" style="color: var(--text-secondary)">{% trans "Alerte notification · Ville" %}</label>
+            <select id="bassinage-ville" name="ville" class="text-[13px]">
+              {% for v in villes %}<option value="{{ v.slug }}">{{ v.nom }}</option>{% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="hs-btn-outline">
+            <span class="material-icons-round text-[18px]">notifications_active</span>{% trans "Ajouter une alerte" %}
+          </button>
+        </form>
+        <p class="mt-2 text-xs" style="color: var(--text-secondary)">{% trans "Notification envoyée si la température prévue passe ≥" %} <span class="font-medium" style="color: var(--text)" x-text="temp + '°C'"></span> {% trans "sur la ville choisie." %}</p>
+
+        {% if bassinage_rules %}
+          <div class="mt-3 space-y-1.5">
+            <div class="mb-1 flex items-center justify-between gap-3">
+              <p class="text-xs font-medium" style="color: var(--text-secondary)">{% trans "Alertes bassinage" %}</p>
+              <a href="{% url 'notifications:center' %}#sec-regles" class="text-xs font-medium hover:underline" style="color: var(--action)">{% trans "Gérer dans Notifications" %}</a>
+            </div>
+            {% for r in bassinage_rules %}
+              <div class="flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-[13px] {% if not r.enabled %}opacity-60{% endif %}" style="border: 0.5px solid var(--border)">
+                <span class="min-w-0 truncate">{% if r.ville %}{{ r.ville.nom }}{% endif %} <span style="color: var(--text-muted)">· ≥ {{ r.threshold|floatformat }}°C</span></span>
+                <span class="shrink-0 text-[12px] font-medium" style="color: {% if r.enabled %}var(--action){% else %}var(--text-muted){% endif %}">{% if r.enabled %}{% trans "activée" %}{% else %}{% trans "désactivée" %}{% endif %}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 
   {# Historique #}
@@ -99,7 +159,7 @@
     {% if events %}
       <div class="hs-card overflow-hidden">
         <table class="hs-table">
-          <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Parcelle" %}</th><th>{% trans "Déclenchement" %}</th><th class="num">{% trans "Température" %}</th><th class="num">{% trans "Durée" %}</th><th class="num">{% trans "Eau" %}</th><th>{% trans "Statut" %}</th></tr></thead>
+          <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Parcelle" %}</th><th>{% trans "Déclenchement" %}</th><th class="num">{% trans "Température" %}</th><th class="num">{% trans "Durée" %}</th><th class="num">{% trans "Eau" %}</th><th>{% trans "Statut" %}</th><th class="num"></th></tr></thead>
           <tbody>
             {% for e in events %}
               <tr>
@@ -110,13 +170,36 @@
                 <td class="num">{% if e.duration_minutes %}{{ e.duration_minutes }} min{% endif %}</td>
                 <td class="num">{% if e.water_used_m3 %}{{ e.water_used_m3 }} m³{% endif %}</td>
                 <td>
-                  {% if e.status == 'active' %}
-                    <span class="hs-badge hs-badge-msa">{{ e.get_status_display }}</span>
-                  {% elif e.status == 'completed' %}
-                    <span class="hs-badge hs-badge-patrimoine">{{ e.get_status_display }}</span>
-                  {% else %}
-                    <span class="hs-badge hs-badge-neutral">{{ e.get_status_display }}</span>
-                  {% endif %}
+                  <div class="flex items-center gap-2">
+                    <span class="w-12 text-[12px] font-medium" style="color: {% if e.status == 'active' %}var(--action){% else %}var(--text-muted){% endif %}">{% if e.status == 'active' %}{% trans "Actif" %}{% else %}{% trans "Inactif" %}{% endif %}</span>
+                    <form method="post" action="{% url 'irrigation:bassinage_toggle' e.pk %}" class="flex">
+                      {% csrf_token %}
+                      <button type="submit" title="{% if e.status == 'active' %}{% trans 'Passer à Inactif' %}{% else %}{% trans 'Passer à Actif' %}{% endif %}"
+                              class="relative h-6 w-11 shrink-0 rounded-full transition-colors"
+                              style="background: {% if e.status == 'active' %}var(--action){% else %}var(--border){% endif %}">
+                        <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform {% if e.status == 'active' %}translate-x-5{% else %}translate-x-0{% endif %}"></span>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+                <td class="num whitespace-nowrap text-right">
+                  <button type="button" title="{% trans 'Modifier' %}"
+                          data-action="{% url 'irrigation:bassinage_edit' e.pk %}"
+                          data-parcelle="{{ e.parcelle_id|default:'' }}"
+                          data-temperature="{{ e.trigger_temperature|default_if_none:''|unlocalize }}"
+                          data-duration="{{ e.duration_minutes|default_if_none:'' }}"
+                          data-water="{{ e.water_used_m3|default_if_none:''|unlocalize }}"
+                          data-status="{{ e.status }}"
+                          data-notes="{{ e.notes|default:'' }}"
+                          @click="openEdit($event.currentTarget)"
+                          class="inline-grid h-8 w-8 place-items-center rounded-full align-middle transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
+                    <span class="material-icons-round text-[18px]">edit</span>
+                  </button>
+                  <button type="button" title="{% trans 'Supprimer' %}"
+                          @click="del = { open: true, action: '{% url 'irrigation:bassinage_delete' e.pk %}', label: '{% if e.parcelle %}{{ e.parcelle.name|escapejs }} · {% endif %}{{ e.start_time|date:"d/m/Y H:i" }}' }"
+                          class="inline-grid h-8 w-8 place-items-center rounded-full align-middle transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
+                    <span class="material-icons-round text-[18px]">delete_outline</span>
+                  </button>
                 </td>
               </tr>
             {% endfor %}
@@ -136,17 +219,72 @@
     {% endif %}
   </div>
 
-  {# À propos #}
-  <div class="hs-card p-5 space-y-3">
-    <h2 class="text-[15px] font-medium">{% trans "Qu'est-ce que le bassinage ?" %}</h2>
-    <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">
-      {% trans "Arrosage court (15–20 min) déclenché quand la température dépasse le seuil critique (35°C). Objectif : rafraîchir les cultures par évaporation foliaire." %}
-    </p>
-    <div class="flex items-start gap-2 rounded-xl px-3 py-2.5 text-xs" style="background: var(--surface-alt); color: var(--warning)">
-      <span>{% trans "L'irrigation en cours sera automatiquement interrompue pendant le bassinage, puis reprendra automatiquement." %}</span>
+  {# Modale : modifier un bassinage #}
+  <div x-show="edit.open" x-cloak x-transition.opacity @keydown.escape.window="edit.open = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="edit.open = false" class="hs-popover w-full max-w-lg p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-[15px] font-medium">{% trans "Modifier le bassinage" %}</h3>
+        <button type="button" @click="edit.open = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
+          <span class="material-icons-round text-[20px]">close</span>
+        </button>
+      </div>
+      <form method="post" :action="edit.action" class="space-y-3">
+        {% csrf_token %}
+        <div>
+          <label for="edit-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
+          <select id="edit-parcelle" name="parcelle" x-model="edit.parcelle" class="w-full">
+            <option value="">{% trans "—" %}</option>
+            {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="edit-temp" class="mb-1 block text-sm font-medium">{% trans "Température (°C)" %}</label>
+            <input id="edit-temp" name="trigger_temperature" type="number" step="0.5" x-model="edit.temperature" class="w-full">
+          </div>
+          <div>
+            <label for="edit-dur" class="mb-1 block text-sm font-medium">{% trans "Durée (min)" %}</label>
+            <input id="edit-dur" name="duration_minutes" type="number" min="1" x-model="edit.duration" class="w-full">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="edit-water" class="mb-1 block text-sm font-medium">{% trans "Eau (m³)" %}</label>
+            <input id="edit-water" name="water_used_m3" type="number" step="0.1" x-model="edit.water" class="w-full">
+          </div>
+          <div>
+            <label for="edit-status" class="mb-1 block text-sm font-medium">{% trans "Statut" %}</label>
+            <select id="edit-status" name="status" x-model="edit.status" class="w-full">
+              {% for value, label in statuses %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="edit-notes" class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label>
+          <textarea id="edit-notes" name="notes" rows="2" x-model="edit.notes" class="w-full"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="edit.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
     </div>
-    <div class="flex items-start gap-2 rounded-xl px-3 py-2.5 text-xs leading-relaxed" style="background: var(--surface-alt); color: var(--text-secondary)">
-      <span>{% trans "En protection contre le gel, le bassinage crée une couche de glace protectrice autour des bourgeons. La chaleur latente de solidification (334 J/g) maintient la température à 0°C tant que l'aspersion est active." %}</span>
+  </div>
+
+  {# Modale : confirmation de suppression #}
+  <div x-show="del.open" x-cloak x-transition.opacity @keydown.escape.window="del.open = false"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="del.open = false" class="hs-popover w-full max-w-sm p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer ce bassinage ?" %}</h3>
+      <p class="mt-1 text-sm" style="color: var(--text-secondary)"><span class="font-medium" style="color: var(--text)" x-text="del.label"></span> — {% trans "cette action est irréversible." %}</p>
+      <form method="post" :action="del.action" class="mt-5 flex justify-end gap-2">
+        {% csrf_token %}
+        <button type="button" @click="del.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-white transition hover:opacity-90" style="background: var(--danger)">
+          <span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}
+        </button>
+      </form>
     </div>
   </div>
 </section>
