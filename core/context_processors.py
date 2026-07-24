@@ -107,6 +107,8 @@ def layout(request):
                 {"label": _("Planning"), "url_name": "planning:planning", "icon": "event"},
                 {"label": _("Équipe"), "url_name": "equipe:equipe", "icon": "groups"},
                 {"label": _("Tâches"), "url_name": "equipe:taches", "icon": "checklist"},
+                {"label": _("Contrats de travail"), "url_name": "equipe:contrats", "icon": "assignment_ind"},
+                {"label": _("Paie"), "url_name": "equipe:paie", "icon": "payments"},
             ],
         },
         {
