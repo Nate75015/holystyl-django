@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{{ especes_json|json_script:"especes-data" }}
+{{ familles|json_script:"familles-data" }}
+<section class="space-y-5"
+  x-data="{
+    q: '', fam: 'all', mode: 'liste', info: false,
+    del: null, delR: null, view: null, rview: null,
+    eShow: false, eMode: 'create', ef: {},
+    rShow: false, rMode: 'create', rf: {},
+    rows: JSON.parse(document.getElementById('especes-data').textContent),
+    familles: JSON.parse(document.getElementById('familles-data').textContent).map(([v, l]) => ({ v, l })),
+    get filters() { return [{ v: 'all', l: '{% trans "Toutes" %}' }, ...this.familles]; },
+    get filtered() {
+      const q = this.q.trim().toLowerCase();
+      return this.rows.filter(r => (this.fam === 'all' || r.fam === this.fam) &&
+        (!q || (r.nom + ' ' + r.sci + ' ' + r.famLabel).toLowerCase().includes(q)));
+    },
+    byFam(v) { return this.filtered.filter(r => r.fam === v); },
+    emptyE() { return { id: null, nom: '', sci: '', fam: 'bovins', prod: 'mixte', gestation: '', notes: '' }; },
+    openEAdd() { this.ef = this.emptyE(); this.eMode = 'create'; this.eShow = true; },
+    openEEdit(r) { this.ef = { id: r.id, nom: r.nom, sci: r.sci || '', fam: r.fam, prod: r.prod, gestation: r.gestation || '', notes: r.notes || '' }; this.eMode = 'edit'; this.eShow = true; },
+    get eAction() { return this.eMode === 'edit' ? '/especes/' + this.ef.id + '/modifier/' : '{% url "elevage:espece_create" %}'; },
+    emptyR(especeId) { return { id: null, especeId: especeId, nom: '', sci: '', note: '', nbAvis: 0, description: '', robe: '', poidsAdulte: '', taille: '', aptitude: '', prolificite: '', rusticite: '', alimentation: '', particularites: '', conseilElevage: '', origine: '', origineTexte: '' }; },
+    openRAdd(especeId) { this.rf = this.emptyR(especeId); this.rMode = 'create'; this.rShow = true; },
+    openREdit(v) { this.rf = { id: v.id, especeId: v.especeId, nom: v.nom, sci: v.sci || '', note: v.note || '', nbAvis: v.nbAvis || 0, description: v.description || '', robe: v.robe || '', poidsAdulte: v.poidsAdulte || '', taille: v.taille || '', aptitude: v.aptitude || '', prolificite: v.prolificite || '', rusticite: v.rusticite || '', alimentation: v.alimentation || '', particularites: v.particularites || '', conseilElevage: v.conseilElevage || '', origine: v.origine || '', origineTexte: v.origineTexte || '' }; this.rMode = 'edit'; this.rShow = true; },
+    get rAction() { return this.rMode === 'edit' ? '/races/' + this.rf.id + '/modifier/' : '{% url "elevage:race_create" %}'; }
+  }">
+
+  {# ── En-tête ── #}
+  <p class="hs-crumb">{% trans "Cultures & Terrain" %} · {% trans "Élevage" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Espèces & races" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="info = true" class="hs-btn-outline">{% trans "Méthode" %}</button>
+      <button type="button" @click="openEAdd()" class="hs-btn-primary">{% trans "Espèce" %}</button>
+    </div>
+  </div>
+
+  {# Méthode #}
+  <div x-show="info" x-cloak x-transition class="hs-card p-5">
+    <div class="mb-2 flex items-start justify-between gap-3">
+      <h2 class="text-[15px] font-medium">{% trans "Espèces & races" %}</h2>
+      <button type="button" @click="info = false" class="grid h-8 w-8 shrink-0 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
+    </div>
+    <p class="text-[13px] leading-relaxed" style="color: var(--text-secondary)">{% blocktrans %}Une espèce (ex. « Vache ») appartient à une grande famille (Bovins) et porte des races (ex. « Limousine ») avec leur fiche détaillée : photo, description, aptitude, robe, rusticité, alimentation et origine. La lecture « par famille » regroupe les espèces.{% endblocktrans %}</p>
+  </div>
+
+  {# ── Base ── #}
+  <div class="hs-card overflow-hidden">
+    <div class="flex flex-wrap items-center gap-3 px-5 py-3.5" style="border-bottom: 0.5px solid var(--border)">
+      <h2 class="flex-1 text-[15px] font-medium">{% trans "Base d'espèces" %}</h2>
+      <div class="flex shrink-0 gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+        <button type="button" @click="mode = 'liste'" class="hs-tab" :class="mode === 'liste' && 'hs-tab-active'">{% trans "Liste" %}</button>
+        <button type="button" @click="mode = 'famille'" class="hs-tab" :class="mode === 'famille' && 'hs-tab-active'">{% trans "Par famille" %}</button>
+      </div>
+      <span class="shrink-0 text-[12px]" style="color: var(--text-muted)"><span x-text="filtered.length"></span> / <span x-text="rows.length"></span></span>
+    </div>
+
+    <div class="space-y-4 p-5">
+      <div class="flex items-center gap-2 rounded-lg px-4 py-1.5" style="border: 0.5px solid var(--border)">
+        <span class="material-icons-round shrink-0 text-[18px] leading-none" style="color: var(--text-muted)">search</span>
+        <input type="text" x-model="q" autocomplete="off" aria-label="{% trans 'Rechercher une espèce' %}" placeholder="{% trans 'Rechercher une espèce…' %}" class="input-bare w-full text-sm focus:outline-none focus:ring-0 dark:[color-scheme:dark]">
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <template x-for="ff in filters" :key="ff.v">
+          <button type="button" @click="fam = ff.v" x-text="ff.l" class="whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] transition" :style="fam === ff.v ? 'background: var(--action); color: #fff; border: 0.5px solid var(--action)' : 'border: 0.5px solid var(--border); color: var(--text-secondary)'"></button>
+        </template>
+      </div>
+
+      {# Liste des espèces #}
+      <div x-show="mode === 'liste'" class="hs-card overflow-hidden">
+        <table class="hs-table">
+          <thead>
+            <tr>
+              <th>{% trans "Espèce" %}</th>
+              <th>{% trans "Famille" %}</th>
+              <th>{% trans "Production" %}</th>
+              <th>{% trans "Races" %}</th>
+              <th class="num"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="(r, i) in filtered" :key="i">
+              <tr class="cursor-pointer" @click="view = r">
+                <td><p class="font-medium" x-text="r.nom"></p><p class="text-[12px] italic" style="color: var(--text-muted)" x-text="r.sci || ''"></p></td>
+                <td><span class="hs-badge hs-badge-neutral" x-text="r.famLabel"></span></td>
+                <td><span x-text="r.prodLabel"></span></td>
+                <td><span class="hs-badge hs-badge-neutral"><span class="material-icons-round text-[14px]">pets</span><span x-text="r.nbRaces"></span></span></td>
+                <td class="num" @click.stop>
+                  <div class="flex items-center justify-end gap-1">
+                    <button type="button" @click="view = r" title="{% trans 'Voir' %}" class="grid h-8 w-8 place-items-center rounded-full transition" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">visibility</span></button>
+                    <button type="button" @click="openEEdit(r)" title="{% trans 'Modifier' %}" class="grid h-8 w-8 place-items-center rounded-full transition" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">edit</span></button>
+                    <button type="button" @click="del = r" title="{% trans 'Supprimer' %}" class="grid h-8 w-8 place-items-center rounded-full transition" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">delete</span></button>
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+        <div x-show="filtered.length === 0" class="px-4 py-10 text-center">
+          <p class="text-[15px] font-medium">{% trans "Ajoutez votre première espèce." %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune espèce ne correspond à votre recherche." %}</p>
+        </div>
+      </div>
+
+      {# Par famille #}
+      <div x-show="mode === 'famille'" x-cloak class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <template x-for="f in familles" :key="f.v">
+          <div class="hs-card overflow-hidden" x-show="byFam(f.v).length">
+            <div class="flex items-center gap-2.5 px-4 py-3" style="border-bottom: 0.5px solid var(--border)">
+              <span class="material-icons-round text-[17px]" style="color: var(--text-secondary)">pets</span>
+              <h3 class="flex-1 text-[14px] font-medium" x-text="f.l"></h3>
+              <span class="text-[12px]" style="color: var(--text-muted)" x-text="byFam(f.v).length"></span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 p-4">
+              <template x-for="r in byFam(f.v)" :key="r.id">
+                <button type="button" @click="view = r" class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-medium transition" style="border: 0.5px solid var(--border)"><span x-text="r.nom"></span><span style="color: var(--text-muted)" x-show="r.nbRaces" x-text="'· ' + r.nbRaces"></span></button>
+              </template>
+            </div>
+          </div>
+        </template>
+        <p x-show="filtered.length === 0" class="col-span-full px-4 py-10 text-center text-[13px]" style="color: var(--text-muted)">{% trans "Aucune espèce." %}</p>
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal : fiche espèce + ses races ── #}
+  <div x-show="view" x-cloak x-transition.opacity @keydown.escape.window="view = null" class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="view = null" class="my-4 flex w-full max-w-3xl justify-center">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
+        <template x-if="view"><div>
+          <div class="mb-3 flex items-start gap-3">
+            <div class="min-w-0 flex-1"><h3 class="text-[17px] font-medium leading-tight" x-text="view.nom"></h3><p class="text-[12px] italic" style="color: var(--text-muted)" x-text="view.sci || '—'"></p></div>
+            <button type="button" @click="view = null" class="grid h-8 w-8 shrink-0 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
+          </div>
+          <span class="hs-badge hs-badge-neutral" x-text="view.famLabel"></span>
+
+          <div class="mt-3 grid grid-cols-2 gap-2">
+            <div class="hs-tile"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">agriculture</span>{% trans "Production" %}</p><p class="mt-1 text-[15px] font-medium" x-text="view.prodLabel"></p></div>
+            <div class="hs-tile"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[15px]">event</span>{% trans "Gestation" %}</p><p class="mt-1 text-[15px] font-medium" x-text="view.gestation ? view.gestation + ' j' : '—'"></p></div>
+          </div>
+          <template x-if="view.notes"><p class="mt-3 text-[14px] leading-relaxed" style="color: var(--text-secondary)" x-text="view.notes"></p></template>
+
+          {# Races #}
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Races" %} (<span x-text="view.races.length"></span>)</p>
+            <button type="button" @click="openRAdd(view.id)" class="hs-btn-outline">{% trans "Race" %}</button>
+          </div>
+          <div class="mt-2 space-y-2">
+            <template x-for="v in view.races" :key="v.id">
+              <div class="flex items-center gap-3 rounded-xl p-2.5" style="border: 0.5px solid var(--border)">
+                <template x-if="v.photo"><img :src="v.photo" class="h-11 w-11 shrink-0 rounded-lg object-cover"></template>
+                <template x-if="!v.photo"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg" style="background: var(--surface-alt); color: var(--text-muted)"><span class="material-icons-round text-[20px]">pets</span></span></template>
+                <div class="min-w-0 flex-1"><p class="truncate text-[14px] font-medium" x-text="v.nom"></p><p class="truncate text-[12px]" style="color: var(--text-muted)"><span x-show="v.aptitude" x-text="v.aptitude"></span><span x-show="v.robe" x-text="(v.aptitude ? ' · ' : '') + v.robe"></span></p></div>
+                <div class="flex shrink-0 items-center gap-0.5">
+                  <button type="button" @click="rview = v" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)" title="{% trans 'Voir' %}"><span class="material-icons-round text-[17px]">visibility</span></button>
+                  <button type="button" @click="openREdit(v)" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)" title="{% trans 'Modifier' %}"><span class="material-icons-round text-[17px]">edit</span></button>
+                  <button type="button" @click="delR = v" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)" title="{% trans 'Supprimer' %}"><span class="material-icons-round text-[17px]">delete</span></button>
+                </div>
+              </div>
+            </template>
+            <p x-show="view.races.length === 0" class="rounded-xl px-3 py-4 text-center text-[12px]" style="border: 0.5px dashed var(--border); color: var(--text-muted)">{% trans "Aucune race. Ajoutez-en une avec « + Race »." %}</p>
+          </div>
+        </div></template>
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal : fiche race (lecture) ── #}
+  <div x-show="rview" x-cloak x-transition.opacity @keydown.escape.window="rview = null" class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="rview = null" class="my-4 flex w-full max-w-lg justify-center">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-0">
+        <template x-if="rview"><div>
+          <template x-if="rview.photo"><div class="relative"><img :src="rview.photo" class="h-52 w-full rounded-t-[12px] object-cover"><button type="button" @click="rview = null" class="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-black/40 text-white backdrop-blur hover:bg-black/60">✕</button></div></template>
+          <div class="p-5">
+            <div class="flex items-start gap-3">
+              <div class="min-w-0 flex-1"><h3 class="text-[17px] font-medium leading-tight" x-text="rview.nom"></h3><p class="text-[12px] italic" style="color: var(--text-muted)" x-text="rview.sci || '—'"></p></div>
+              <template x-if="!rview.photo"><button type="button" @click="rview = null" class="grid h-8 w-8 shrink-0 place-items-center rounded-full" style="color: var(--text-muted)">✕</button></template>
+            </div>
+            <div class="mt-2 flex flex-wrap items-center gap-2"><template x-if="rview.note"><span class="inline-flex items-center gap-1 text-[12px] font-medium" style="color: var(--warning)"><span class="material-icons-round text-[15px]">star</span><span x-text="rview.note.toFixed(1)"></span><span style="color: var(--text-muted)" x-text="'(' + rview.nbAvis + ' {% trans "avis" %})'"></span></span></template></div>
+            <template x-if="rview.description"><p class="mt-3 text-[14px] leading-relaxed" style="color: var(--text-secondary)" x-text="rview.description"></p></template>
+            <template x-if="rview.robe || rview.poidsAdulte || rview.taille || rview.aptitude || rview.prolificite || rview.rusticite || rview.alimentation || rview.particularites">
+              <div class="mt-4"><p class="mb-2 text-[12px]" style="color: var(--text-secondary)">{% trans "Caractéristiques" %}</p>
+                <dl class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[14px]">
+                  <template x-if="rview.aptitude"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Aptitude" %}</dt><dd class="font-medium" x-text="rview.aptitude"></dd></div></template>
+                  <template x-if="rview.robe"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Robe" %}</dt><dd class="font-medium" x-text="rview.robe"></dd></div></template>
+                  <template x-if="rview.poidsAdulte"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Poids" %}</dt><dd class="font-medium" x-text="rview.poidsAdulte"></dd></div></template>
+                  <template x-if="rview.taille"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Taille" %}</dt><dd class="font-medium" x-text="rview.taille"></dd></div></template>
+                  <template x-if="rview.prolificite"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Prolificité" %}</dt><dd class="font-medium" x-text="rview.prolificite"></dd></div></template>
+                  <template x-if="rview.rusticite"><div class="flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Rusticité" %}</dt><dd class="font-medium" x-text="rview.rusticite"></dd></div></template>
+                  <template x-if="rview.alimentation"><div class="col-span-2 flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Alimentation" %}</dt><dd class="font-medium" x-text="rview.alimentation"></dd></div></template>
+                  <template x-if="rview.particularites"><div class="col-span-2 flex justify-between gap-2"><dt style="color: var(--text-muted)">{% trans "Particularités" %}</dt><dd class="font-medium" x-text="rview.particularites"></dd></div></template>
+                </dl></div>
+            </template>
+            <template x-if="rview.conseilElevage"><div class="mt-3 rounded-xl px-3 py-2.5" style="border: 0.5px solid var(--border)"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Conseil d'élevage" %}</p><p class="mt-0.5 text-[14px]" style="color: var(--text-secondary)" x-text="rview.conseilElevage"></p></div></template>
+            <template x-if="rview.origine || rview.origineTexte"><div class="mt-3 rounded-xl px-3 py-2.5" style="border: 0.5px solid var(--border)"><p class="flex items-center gap-1 text-[12px]" style="color: var(--text-secondary)"><span class="material-icons-round text-[14px]">public</span>{% trans "Origine" %}<span class="font-normal normal-case" style="color: var(--text-muted)" x-text="rview.origine ? ' · ' + rview.origine : ''"></span></p><p class="mt-0.5 text-[14px]" style="color: var(--text-secondary)" x-text="rview.origineTexte"></p></div></template>
+            <div class="mt-5 flex justify-end gap-2">
+              <button type="button" @click="rview = null" class="hs-btn-outline">{% trans "Fermer" %}</button>
+              <button type="button" @click="openREdit(rview); rview = null" class="hs-btn-primary">{% trans "Modifier" %}</button>
+            </div>
+          </div>
+        </div></template>
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal : suppressions ── #}
+  <div x-show="del" x-cloak x-transition.opacity @keydown.escape.window="del = null" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="del = null" class="hs-popover w-full max-w-lg p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer l'espèce ?" %}</h3>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">« <span class="font-medium" style="color: var(--text)" x-text="del ? del.nom : ''"></span> » {% trans "et toutes ses races seront supprimées." %}</p>
+      <form method="post" :action="del ? '/especes/' + del.id + '/supprimer/' : ''" class="mt-5 flex justify-end gap-2">{% csrf_token %}
+        <button type="button" @click="del = null" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg px-5 py-2 text-sm font-medium text-white" style="background: var(--danger)"><span class="material-icons-round text-[18px]">delete</span>{% trans "Supprimer" %}</button>
+      </form>
+    </div>
+  </div>
+  <div x-show="delR" x-cloak x-transition.opacity @keydown.escape.window="delR = null" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="delR = null" class="hs-popover w-full max-w-lg p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Supprimer la race ?" %}</h3>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">« <span class="font-medium" style="color: var(--text)" x-text="delR ? delR.nom : ''"></span> » {% trans "sera supprimée définitivement." %}</p>
+      <form method="post" :action="delR ? '/races/' + delR.id + '/supprimer/' : ''" class="mt-5 flex justify-end gap-2">{% csrf_token %}
+        <button type="button" @click="delR = null" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg px-5 py-2 text-sm font-medium text-white" style="background: var(--danger)"><span class="material-icons-round text-[18px]">delete</span>{% trans "Supprimer" %}</button>
+      </form>
+    </div>
+  </div>
+
+  {# ── Modal : formulaire espèce ── #}
+  <div x-show="eShow" x-cloak x-transition.opacity @keydown.escape.window="eShow = false" class="fixed inset-0 z-[55] flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="eShow = false" class="my-4 flex w-full max-w-3xl justify-center">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
+        <div class="mb-4 flex items-center gap-3">
+          <h3 class="flex-1 text-[17px] font-medium" x-text="eMode === 'edit' ? '{% trans "Modifier une espèce" %}' : '{% trans "Nouvelle espèce" %}'"></h3>
+          <button type="button" @click="eShow = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
+        </div>
+        <form method="post" :action="eAction" class="space-y-3">{% csrf_token %}
+          <div class="grid grid-cols-2 gap-3">
+            <div><label for="espece-nom" class="mb-1 block text-sm font-medium">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label><input id="espece-nom" name="nom" x-model="ef.nom" required placeholder="{% trans 'ex : Vache' %}" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+            <div><label for="espece-sci" class="mb-1 block text-sm font-medium">{% trans "Nom scientifique" %}</label><input id="espece-sci" name="nom_scientifique" x-model="ef.sci" placeholder="{% trans 'ex : Bos taurus' %}" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label for="espece-famille" class="mb-1 block text-sm font-medium">{% trans "Famille" %}</label><select id="espece-famille" name="famille" x-model="ef.fam" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">{% for value, label in familles %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select></div>
+            <div><label for="espece-prod" class="mb-1 block text-sm font-medium">{% trans "Production" %}</label><select id="espece-prod" name="production" x-model="ef.prod" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">{% for value, label in productions %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select></div>
+          </div>
+          <div><label for="espece-gestation" class="mb-1 block text-sm font-medium">{% trans "Durée de gestation (jours)" %}</label><input id="espece-gestation" name="duree_gestation_jours" x-model="ef.gestation" type="number" min="0" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+          <div><label for="espece-notes" class="mb-1 block text-sm font-medium">{% trans "Notes" %}</label><textarea id="espece-notes" name="notes" x-model="ef.notes" rows="2" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></textarea></div>
+          <div class="flex justify-end gap-2 pt-1"><button type="button" @click="eShow = false" class="hs-btn-outline">{% trans "Annuler" %}</button><button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal : formulaire race ── #}
+  <div x-show="rShow" x-cloak x-transition.opacity @keydown.escape.window="rShow = false" class="fixed inset-0 z-[55] flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="rShow = false" class="my-4 flex w-full max-w-3xl justify-center">
+      <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
+        <div class="mb-4 flex items-center gap-3">
+          <h3 class="flex-1 text-[17px] font-medium" x-text="rMode === 'edit' ? '{% trans "Modifier la race" %}' : '{% trans "Nouvelle race" %}'"></h3>
+          <button type="button" @click="rShow = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
+        </div>
+        <form method="post" :action="rAction" enctype="multipart/form-data" class="space-y-3">{% csrf_token %}
+          <input type="hidden" name="espece" :value="rf.especeId">
+          <div class="grid grid-cols-2 gap-3">
+            <div><label for="race-nom" class="mb-1 block text-sm font-medium">{% trans "Nom de la race" %} <span style="color: var(--danger)">*</span></label><input id="race-nom" name="nom" x-model="rf.nom" required placeholder="{% trans 'ex : Limousine' %}" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+            <div><label for="race-sci" class="mb-1 block text-sm font-medium">{% trans "Nom scientifique" %}</label><input id="race-sci" name="nom_scientifique" x-model="rf.sci" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="mb-1 block text-sm font-medium">{% trans "Photo" %}</label><input name="photo" type="file" accept="image/*" class="w-full rounded-lg px-3 py-2 text-sm file:mr-2 file:rounded-md file:border-0 file:px-2 file:py-1" style="border: 0.5px solid var(--border); background: transparent"><template x-if="rMode === 'edit'"><p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Vide = conserver l'actuelle." %}</p></template></div>
+            <div class="grid grid-cols-2 gap-2"><div><label for="race-note" class="mb-1 block text-sm font-medium">{% trans "Note /5" %}</label><input id="race-note" name="note" x-model="rf.note" type="number" step="0.1" min="0" max="5" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div><div><label for="race-avis" class="mb-1 block text-sm font-medium">{% trans "Avis" %}</label><input id="race-avis" name="nb_avis" x-model="rf.nbAvis" type="number" min="0" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></div></div>
+          </div>
+          <div><label for="race-description" class="mb-1 block text-sm font-medium">{% trans "Description" %}</label><textarea id="race-description" name="description" x-model="rf.description" rows="2" class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></textarea></div>
+          <p class="pt-1 text-[12px]" style="color: var(--text-secondary)">{% trans "Caractéristiques" %}</p>
+          <div class="grid grid-cols-2 gap-3">
+            <input name="aptitude" x-model="rf.aptitude" aria-label="{% trans 'Aptitude' %}" placeholder="{% trans 'Aptitude (viande, lait…)' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="robe" x-model="rf.robe" aria-label="{% trans 'Robe / plumage' %}" placeholder="{% trans 'Robe / plumage' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="poids_adulte" x-model="rf.poidsAdulte" aria-label="{% trans 'Poids adulte' %}" placeholder="{% trans 'Poids adulte' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="taille" x-model="rf.taille" aria-label="{% trans 'Taille' %}" placeholder="{% trans 'Taille' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="prolificite" x-model="rf.prolificite" aria-label="{% trans 'Prolificité' %}" placeholder="{% trans 'Prolificité' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="rusticite" x-model="rf.rusticite" aria-label="{% trans 'Rusticité' %}" placeholder="{% trans 'Rusticité' %}" class="rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="alimentation" x-model="rf.alimentation" aria-label="{% trans 'Alimentation' %}" placeholder="{% trans 'Alimentation' %}" class="col-span-2 rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+            <input name="particularites" x-model="rf.particularites" aria-label="{% trans 'Particularités' %}" placeholder="{% trans 'Particularités' %}" class="col-span-2 rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+          </div>
+          <div><label for="race-conseil" class="mb-1 block text-sm font-medium">{% trans "Conseil d'élevage" %}</label><textarea id="race-conseil" name="conseil_elevage" x-model="rf.conseilElevage" rows="2" class="w-full rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent"></textarea></div>
+          <input name="origine" x-model="rf.origine" aria-label="{% trans 'Origine (ex : Limousin)' %}" placeholder="{% trans 'Origine (ex : Limousin)' %}" class="w-full rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent">
+          <textarea name="origine_texte" x-model="rf.origineTexte" aria-label="{% trans 'Origine historique' %}" rows="2" placeholder="{% trans 'Origine historique…' %}" class="w-full rounded-lg px-3 py-2 text-sm" style="border: 0.5px solid var(--border); background: transparent"></textarea>
+          <div class="flex justify-end gap-2 pt-1"><button type="button" @click="rShow = false" class="hs-btn-outline">{% trans "Annuler" %}</button><button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -65,6 +65,7 @@ def layout(request):
                 {"label": _("Fertigation"), "url_name": "agronomie:fertigation", "icon": "opacity"},
                 {"label": _("Interventions"), "url_name": "interventions:interventions", "icon": "build"},
                 {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
+                {"label": _("Élevage"), "url_name": "elevage:elevage", "icon": "pets"},
                 {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
                 {"label": _("DTI — Diagnostic technique d'irrigation"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
                 {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
@@ -81,7 +82,6 @@ def layout(request):
         {
             "label": _("Économie"), "key": "economie",
             "items": [
-                {"label": _("Saisons"), "url_name": "agronomie:saisons", "icon": "calendar_month"},
                 {"label": _("Charges"), "url_name": "finances:charges", "icon": "payments"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
                 {"label": _("Facturation"), "url_name": "finances:facturation", "icon": "receipt_long"},
