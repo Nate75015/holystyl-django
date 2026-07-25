@@ -1,0 +1,47 @@
+{% load i18n %}
+<div>
+  <label for="{{ p }}-nom" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Nom de l’installation" %} <span style="color: var(--danger)">*</span></label>
+  <input id="{{ p }}-nom" name="nom" required value="{{ b.nom|default:'' }}" placeholder="{% trans 'ex: Étang du moulin' %}">
+</div>
+<div class="grid grid-cols-3 gap-3">
+  <div>
+    <label for="{{ p }}-type" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type" %}</label>
+    <select id="{{ p }}-type" name="type_bassin">{% for value, label in types %}<option value="{{ value }}"{% if b.type_bassin == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  </div>
+  <div>
+    <label for="{{ p }}-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+    <select id="{{ p }}-statut" name="statut">{% for value, label in statuts %}<option value="{{ value }}"{% if b.statut == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  </div>
+  <div>
+    <label for="{{ p }}-source" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Source d’eau" %}</label>
+    <select id="{{ p }}-source" name="source_eau">
+      <option value="">—</option>
+      {% for value, label in sources %}<option value="{{ value }}"{% if b.source_eau == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select>
+  </div>
+</div>
+<div class="grid grid-cols-3 gap-3">
+  <div>
+    <label for="{{ p }}-surface" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Surface (m²)" %}</label>
+    <input id="{{ p }}-surface" name="surface_m2" type="number" step="0.01" min="0" inputmode="decimal" value="{{ b.surface_m2|default_if_none:'' }}">
+  </div>
+  <div>
+    <label for="{{ p }}-volume" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Volume (m³)" %}</label>
+    <input id="{{ p }}-volume" name="volume_m3" type="number" step="0.01" min="0" inputmode="decimal" value="{{ b.volume_m3|default_if_none:'' }}">
+  </div>
+  <div>
+    <label for="{{ p }}-profondeur" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Profondeur (m)" %}</label>
+    <input id="{{ p }}-profondeur" name="profondeur_m" type="number" step="0.01" min="0" inputmode="decimal" value="{{ b.profondeur_m|default_if_none:'' }}">
+  </div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+  <div>
+    <label for="{{ p }}-temp" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Température cible (°C)" %}</label>
+    <input id="{{ p }}-temp" name="temperature_cible_c" type="number" step="0.1" inputmode="decimal" value="{{ b.temperature_cible_c|default_if_none:'' }}" placeholder="14">
+  </div>
+</div>
+<div>
+  <label for="{{ p }}-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+  <textarea id="{{ p }}-notes" name="notes" rows="3" placeholder="{% trans 'oxygénation, alimentation, entretien…' %}">{{ b.notes|default:'' }}</textarea>
+  {% include "partials/_ai_text_tools.html" with target=p|add:"-notes" contexte=_("Notes sur une installation aquacole") %}
+</div>

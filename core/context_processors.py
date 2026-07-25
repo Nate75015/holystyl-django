@@ -56,9 +56,10 @@ def layout(request):
             ],
         },
         {
-            "label": _("Cultures & Terrain"), "key": "cultures",
+            "label": _("Cultures & Élevage"), "key": "cultures",
             "items": [
                 {"label": _("Mes Parcelles"), "url_name": "parcelles:list", "icon": "map"},
+                {"label": _("Campagnes"), "url_name": "parcelles:campagnes", "icon": "event_repeat"},
                 {"label": _("Météo"), "url_name": "meteo:index", "icon": "wb_sunny"},
                 {"label": _("Cultures"), "url_name": "agronomie:cultures", "icon": "grass"},
                 {"label": _("Types de sol"), "url_name": "agronomie:types_sol", "icon": "terrain"},
@@ -67,7 +68,7 @@ def layout(request):
                 {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
                 {"label": _("Élevage"), "url_name": "elevage:elevage", "icon": "pets"},
                 {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
-                {"label": _("DTI — Diagnostic technique d'irrigation"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
+                {"label": _("DTI"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
                 {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
                 {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "sensors"},
             ],
@@ -122,6 +123,13 @@ def layout(request):
             ],
         },
         {
+            "label": _("Aquaculture"), "key": "aquaculture",
+            "items": [
+                {"label": _("Bassins"), "url_name": "aquaculture:bassins", "icon": "set_meal"},
+                {"label": _("Espèces aquacoles"), "url_name": "aquaculture:especes", "icon": "phishing"},
+            ],
+        },
+        {
             "label": _("Clients"), "key": "clients",
             "items": [
                 {"label": _("Clients"), "url_name": "client:clients", "icon": "handshake"},
@@ -147,7 +155,8 @@ def layout(request):
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
         "protection": "lock", "economie": "payments", "environnement": "park",
-        "rh": "groups", "contrat": "gavel", "clients": "handshake", "compte": "person",
+        "rh": "groups", "contrat": "gavel", "clients": "handshake",
+        "aquaculture": "waves", "compte": "person",
     }
     for section in nav_sections:
         section["icon"] = section_icons.get(section["key"], "folder")

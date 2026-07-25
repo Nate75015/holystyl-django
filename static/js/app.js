@@ -60,6 +60,31 @@ function hsRewrite(btn, targetId, url, contexte) {
     });
 }
 
+// ── Campagne agricole : décalage d'une campagne (« 2025/2026 » ↔ « 2026/2027 ») ──
+
+function hsCampagneShift(champId, pas) {
+  var champ = document.getElementById(champId);
+  if (!champ) return;
+
+  var valeur = (champ.value || '').trim();
+  var plage = valeur.match(/^(\d{4})\s*\/\s*(\d{4})$/);
+  var annee = valeur.match(/^(\d{4})$/);
+
+  if (plage) {
+    champ.value = (parseInt(plage[1], 10) + pas) + '/' + (parseInt(plage[2], 10) + pas);
+  } else if (annee) {
+    champ.value = String(parseInt(annee[1], 10) + pas);
+  } else if (!valeur) {
+    // Champ vide : on part de la campagne en cours (septembre à septembre).
+    var today = new Date();
+    var debut = (today.getMonth() + 1 >= 9 ? today.getFullYear() : today.getFullYear() - 1) + pas;
+    champ.value = debut + '/' + (debut + 1);
+  } else {
+    return;  // libellé libre : on n'y touche pas
+  }
+  champ.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 // ── Recherche d'adresse (Google Places côté serveur, repli Base Adresse Nationale) ──
 // Le champ de recherche remplit les champs « <prefixe>-numero/type-voie/voie/cp/ville/pays ».
 

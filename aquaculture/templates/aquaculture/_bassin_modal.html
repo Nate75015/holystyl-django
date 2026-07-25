@@ -1,0 +1,20 @@
+{% load i18n %}
+<div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+    <div class="hs-popover w-full p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[16px] font-medium">{% if bassin %}{% trans "Modifier l’installation" %}{% else %}{% trans "Nouvelle installation" %}{% endif %}</h2>
+        <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+      </div>
+      <form method="post" action="{% if bassin %}{% url 'aquaculture:edit' bassin.pk %}{% else %}{% url 'aquaculture:create' %}{% endif %}" class="space-y-3">
+        {% csrf_token %}
+        {% include "aquaculture/_bassin_fields.html" with b=bassin p="bassin" %}
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

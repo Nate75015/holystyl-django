@@ -151,6 +151,10 @@ class ParcelleCampagne(TimeStampedModel):
     )
 
     # Culture
+    type_culture = models.CharField(
+        _("type de culture"), max_length=20, blank=True,
+        help_text=_("Déduit de la culture choisie si laissé vide."),
+    )
     culture = models.CharField(_("culture"), max_length=100, blank=True)
     variety = models.CharField(_("variété"), max_length=100, blank=True)
     kc_value = models.FloatField(_("coefficient Kc"), default=1.0)
@@ -182,17 +186,40 @@ class ParcelleCampagne(TimeStampedModel):
     def __str__(self):
         return f"{self.parcelle.name} — {self.libelle}"
 
+    # Le référentiel des types de culture vit dans `agronomie.CultureKc` : on le
+    # lit à la volée plutôt que de figer ses catégories dans une migration.
+    @staticmethod
+    def types_culture():
+        from agronomie.models import CultureKc
+
+        return CultureKc.Categorie.choices
+
+    @staticmethod
+    def type_culture_de(culture):
+        """Catégorie de la culture d'après le référentiel (vide si inconnue)."""
+        from agronomie.models import CultureKc
+
+        if not (culture or "").strip():
+            return ""
+        fiche = CultureKc.objects.filter(nom__iexact=culture.strip()).first()
+        return fiche.categorie if fiche else ""
+
+    @property
+    def type_culture_label(self):
+        return dict(self.types_culture()).get(self.type_culture, self.type_culture)
+
     @staticmethod
     def libelle_courant(today=None):
         """Libellé de la campagne en cours pour une date donnée (défaut : aujourd'hui).
 
-        Convention agronomique : la campagne bascule au 1ᵉʳ août. Une date de
-        juillet 2026 relève donc de la campagne « 2025/2026 ».
+        Convention de l'exploitation : la campagne va de septembre à septembre.
+        Une date d'août 2026 relève donc encore de la campagne « 2025/2026 »,
+        et septembre 2026 ouvre la campagne « 2026/2027 ».
         """
         from django.utils import timezone
 
         today = today or timezone.localdate()
-        start_year = today.year if today.month >= 8 else today.year - 1
+        start_year = today.year if today.month >= 9 else today.year - 1
         return f"{start_year}/{start_year + 1}"
 
 

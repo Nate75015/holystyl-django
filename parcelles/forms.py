@@ -4,16 +4,33 @@ from django.utils.translation import gettext_lazy as _
 from .models import Parcelle, ParcelleCampagne
 
 
+def _type_agriculture_optionnel(form):
+    """Type d'agriculture : option vide = « hérité de l'exploitation »."""
+    form.fields["type_agriculture"].required = False
+    form.fields["type_agriculture"].widget.choices = (
+        [("", _("Hérité de l'exploitation"))] + list(Parcelle.type_agriculture.field.choices)
+    )
+
+
+class ParcelleTypeAgricultureForm(forms.ModelForm):
+    """Type d'agriculture seul — même champ que la fiche parcelle, éditable
+    depuis l'écran campagne pour que les deux pages restent d'accord."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _type_agriculture_optionnel(self)
+
+    class Meta:
+        model = Parcelle
+        fields = ["type_agriculture"]
+
+
 class ParcelleForm(forms.ModelForm):
     """Formulaire de la parcelle (permanent : identité, géométrie, sol, cadastre)."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Type d'agriculture : option vide = « hérité de l'exploitation ».
-        self.fields["type_agriculture"].required = False
-        self.fields["type_agriculture"].widget.choices = (
-            [("", _("Hérité de l'exploitation"))] + list(Parcelle.type_agriculture.field.choices)
-        )
+        _type_agriculture_optionnel(self)
 
     class Meta:
         model = Parcelle
@@ -52,6 +69,19 @@ class ParcelleCampagneForm(forms.ModelForm):
         self.fields["culture"].widget = forms.Select(choices=choices)
         self.fields["culture"].required = False
 
+        # « Type de culture » = catégorie du référentiel (céréales, vigne, fruits…).
+        self.fields["type_culture"].widget = forms.Select(
+            choices=[("", _("— Déduit de la culture —"))] + list(ParcelleCampagne.types_culture())
+        )
+        self.fields["type_culture"].required = False
+
+    def clean_type_culture(self):
+        """Type laissé vide → repli sur la catégorie du référentiel de cultures."""
+        type_culture = (self.cleaned_data.get("type_culture") or "").strip()
+        if type_culture:
+            return type_culture
+        return ParcelleCampagne.type_culture_de(self.data.get("culture"))
+
     def clean_libelle(self):
         # `parcelle` n'étant pas un champ du formulaire, la contrainte d'unicité
         # (parcelle, libelle) n'est pas vérifiée automatiquement : on la valide ici.
@@ -72,7 +102,7 @@ class ParcelleCampagneForm(forms.ModelForm):
         fields = [
             "libelle",
             # Culture
-            "culture", "variety", "kc_value", "tree_age_years",
+            "type_culture", "culture", "variety", "kc_value", "tree_age_years",
             "planting_date", "plant_density_per_ha",
             # Irrigation
             "irrigation_type", "theoretical_flow_m3h", "nozzle_count",

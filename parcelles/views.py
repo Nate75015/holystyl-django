@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -16,7 +17,7 @@ from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
 
-from .forms import ParcelleCampagneForm, ParcelleForm
+from .forms import ParcelleCampagneForm, ParcelleForm, ParcelleTypeAgricultureForm
 from .models import Parcelle, ParcelleCampagne
 
 
@@ -206,20 +207,100 @@ def parcelle_detail(request, pk):
 
 
 @login_required
+def campagne_list(request):
+    """Toutes les campagnes de l'exploitation, filtrables par libellé."""
+    exploitation = _exploitation_or_redirect(request)
+    base = (
+        ParcelleCampagne.objects.filter(parcelle__exploitation=exploitation).select_related("parcelle")
+        if exploitation else ParcelleCampagne.objects.none()
+    )
+
+    libelles = list(base.order_by("-libelle").values_list("libelle", flat=True).distinct())
+    courante = ParcelleCampagne.libelle_courant()
+    # Campagne affichée : ?campagne=… (vide = toutes), sinon celle en cours.
+    if "campagne" in request.GET:
+        selection = request.GET["campagne"].strip()
+    else:
+        selection = courante if courante in libelles else ""
+    campagnes = base.filter(libelle=selection) if selection else base
+
+    surface = sum(c.parcelle.area or 0 for c in campagnes)
+    cultures = {c.culture for c in campagnes if c.culture}
+
+    return render(request, "parcelles/campagnes.html", {
+        "campagnes": campagnes.order_by("-libelle", "parcelle__name"),
+        "libelles": libelles,
+        "selection": selection,
+        "courante": courante,
+        "kpi_count": campagnes.count(),
+        "kpi_parcelles": campagnes.values("parcelle").distinct().count(),
+        "kpi_surface": round(surface, 2),
+        "kpi_cultures": len(cultures),
+        "parcelles": Parcelle.objects.filter(exploitation=exploitation) if exploitation else [],
+        "page_title": _("Campagnes"),
+    })
+
+
+@login_required
+def campagne_new(request):
+    """Nouvelle campagne depuis la page Campagnes : la parcelle est à choisir."""
+    exploitation = _exploitation_or_redirect(request)
+    parcelles = Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none()
+    if not parcelles.exists():
+        # Une campagne se rattache à une parcelle : sans parcelle, rien à saisir.
+        messages.info(request, _("Créez d'abord une parcelle pour lui ajouter une campagne."))
+        return redirect("parcelles:list")
+
+    parcelle_choisie, erreur_parcelle = None, ""
+    if request.method == "POST":
+        parcelle = parcelles.filter(pk=request.POST.get("parcelle") or 0).first()
+        parcelle_choisie = parcelle.pk if parcelle else None
+        form = ParcelleCampagneForm(request.POST)
+        parcelle_form = ParcelleTypeAgricultureForm(request.POST, instance=parcelle)
+        if parcelle is None:
+            erreur_parcelle = _("Choisissez la parcelle concernée.")
+            form.is_valid()  # peuple form.errors pour l'affichage
+        else:
+            form.instance.parcelle = parcelle
+            if form.is_valid() and parcelle_form.is_valid():
+                campagne = form.save()
+                parcelle_form.save()  # le type d'agriculture appartient à la parcelle
+                messages.success(request, _("Campagne ajoutée."))
+                return redirect(f"{reverse('parcelles:campagnes')}?campagne={campagne.libelle}")
+    else:
+        form = ParcelleCampagneForm()
+        parcelle_form = ParcelleTypeAgricultureForm()
+
+    return render(request, "parcelles/campagne_form.html", {
+        "form": form,
+        "parcelle_form": parcelle_form,
+        "parcelles": parcelles,
+        "parcelle_choisie": parcelle_choisie,
+        "erreur_parcelle": erreur_parcelle,
+        "retour_url": reverse("parcelles:campagnes"),
+        "page_title": _("Nouvelle campagne"),
+    })
+
+
+@login_required
 def campagne_create(request, parcelle_pk):
     exploitation = _exploitation_or_redirect(request)
     parcelle = get_object_or_404(Parcelle, pk=parcelle_pk, exploitation=exploitation)
+    parcelle_form = ParcelleTypeAgricultureForm(request.POST or None, instance=parcelle)
     if request.method == "POST":
         form = ParcelleCampagneForm(request.POST)
         form.instance.parcelle = parcelle
-        if form.is_valid():
+        if form.is_valid() and parcelle_form.is_valid():
             campagne = form.save()
+            parcelle_form.save()
             messages.success(request, _("Campagne ajoutée."))
             return redirect(f"{parcelle.get_absolute_url()}?campagne={campagne.pk}")
     else:
         form = ParcelleCampagneForm()
     return render(request, "parcelles/campagne_form.html", {
-        "form": form, "parcelle": parcelle, "page_title": _("Nouvelle campagne"),
+        "form": form, "parcelle_form": parcelle_form,
+        "parcelle": parcelle, "retour_url": parcelle.get_absolute_url(),
+        "page_title": _("Nouvelle campagne"),
     })
 
 
@@ -228,16 +309,20 @@ def campagne_edit(request, pk):
     exploitation = _exploitation_or_redirect(request)
     campagne = get_object_or_404(ParcelleCampagne, pk=pk, parcelle__exploitation=exploitation)
     parcelle = campagne.parcelle
+    parcelle_form = ParcelleTypeAgricultureForm(request.POST or None, instance=parcelle)
     if request.method == "POST":
         form = ParcelleCampagneForm(request.POST, instance=campagne)
-        if form.is_valid():
+        if form.is_valid() and parcelle_form.is_valid():
             form.save()
+            parcelle_form.save()
             messages.success(request, _("Campagne mise à jour."))
             return redirect(f"{parcelle.get_absolute_url()}?campagne={campagne.pk}")
     else:
         form = ParcelleCampagneForm(instance=campagne)
     return render(request, "parcelles/campagne_form.html", {
-        "form": form, "parcelle": parcelle, "campagne": campagne,
+        "form": form, "parcelle_form": parcelle_form,
+        "parcelle": parcelle, "campagne": campagne,
+        "retour_url": parcelle.get_absolute_url(),
         "page_title": _("Modifier la campagne %(l)s") % {"l": campagne.libelle},
     })
 
@@ -247,12 +332,18 @@ def campagne_delete(request, pk):
     exploitation = _exploitation_or_redirect(request)
     campagne = get_object_or_404(ParcelleCampagne, pk=pk, parcelle__exploitation=exploitation)
     parcelle = campagne.parcelle
+
+    # Retour à l'écran d'origine : la liste des campagnes ou la fiche parcelle.
+    depuis_campagnes = "campagnes" in (request.POST.get("next"), request.GET.get("next"))
+    retour_url = reverse("parcelles:campagnes") if depuis_campagnes else parcelle.get_absolute_url()
+
     if request.method == "POST":
         campagne.delete()
         messages.success(request, _("Campagne supprimée."))
-        return redirect("parcelles:detail", pk=parcelle.pk)
+        return redirect(retour_url)
     return render(request, "parcelles/campagne_confirm_delete.html", {
         "campagne": campagne, "parcelle": parcelle,
+        "retour_url": retour_url, "depuis_campagnes": depuis_campagnes,
     })
 
 

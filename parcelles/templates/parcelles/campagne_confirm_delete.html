@@ -10,8 +10,9 @@
     </p>
     <form method="post" class="flex items-center gap-3">
       {% csrf_token %}
+      {% if depuis_campagnes %}<input type="hidden" name="next" value="campagnes">{% endif %}
       <button type="submit" class="hs-btn-primary" style="background: var(--danger)">{% trans "Supprimer" %}</button>
-      <a href="{% url 'parcelles:detail' parcelle.pk %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+      <a href="{{ retour_url }}" class="hs-btn-outline">{% trans "Annuler" %}</a>
     </form>
   </div>
 </section>
