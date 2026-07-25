@@ -47,7 +47,7 @@ def test_ai_intent_creates_intervention(setup, monkeypatch):
     from ia import services
 
     user, exploitation = setup
-    parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord", culture="abricotier")
+    parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord")
     monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
         services.llm, "generate_json",

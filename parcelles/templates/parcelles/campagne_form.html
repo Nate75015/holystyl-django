@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<form method="post" class="space-y-5">
+  {% csrf_token %}
+
+  {# ── En-tête ── #}
+  <div>
+    <p class="hs-crumb">
+      <a href="{% url 'parcelles:list' %}" style="color: inherit">{% trans "Cadastre" %} · {% trans "Parcelles" %}</a>
+      · <a href="{% url 'parcelles:detail' parcelle.pk %}" style="color: inherit">{{ parcelle.name }}</a>
+    </p>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <h1 class="text-[20px]">{{ page_title }}</h1>
+      <div class="flex items-center gap-2">
+        <a href="{% url 'parcelles:detail' parcelle.pk %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+        <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+      </div>
+    </div>
+  </div>
+
+  {% if form.non_field_errors %}
+    <div class="hs-card p-3 text-[13px]" style="border-color: var(--danger); color: var(--danger)">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  {# ── Campagne ── #}
+  <div class="hs-card p-5 space-y-4">
+    <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">event_repeat</span>{% trans "Campagne" %}</h2>
+    <div class="sm:max-w-xs">
+      {% include "parcelles/_field.html" with field=form.libelle %}
+    </div>
+  </div>
+
+  {# ── Grille des sections ── #}
+  <div class="grid gap-4 md:grid-cols-2">
+
+    {# Culture #}
+    <div class="hs-card p-5 space-y-4">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">grass</span>{% trans "Culture" %}</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=form.culture %}
+        {% include "parcelles/_field.html" with field=form.variety %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=form.kc_value %}
+        {% include "parcelles/_field.html" with field=form.tree_age_years %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=form.planting_date %}
+        {% include "parcelles/_field.html" with field=form.plant_density_per_ha %}
+      </div>
+    </div>
+
+    {# Irrigation #}
+    <div class="hs-card p-5 space-y-4">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">water_drop</span>{% trans "Irrigation" %}</h2>
+      {% include "parcelles/_field.html" with field=form.irrigation_type %}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=form.theoretical_flow_m3h %}
+        {% include "parcelles/_field.html" with field=form.service_pressure_bar %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=form.nozzle_count %}
+        {% include "parcelles/_field.html" with field=form.nozzle_flow_lh %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=form.row_spacing_m %}
+        {% include "parcelles/_field.html" with field=form.emitter_spacing_m %}
+      </div>
+    </div>
+  </div>
+
+  {# ── Barre d'actions ── #}
+  <div class="flex items-center justify-end gap-2 pt-1">
+    <a href="{% url 'parcelles:detail' parcelle.pk %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+    <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+  </div>
+</form>
+{% endblock %}

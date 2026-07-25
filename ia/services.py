@@ -124,10 +124,18 @@ def execute_intent(exploitation, user, message: str, history: list[dict] | None 
             exploitation=exploitation,
             name=data.get("name") or "Nouvelle parcelle",
             area=data.get("areaHa"),
-            culture=data.get("culture", ""),
-            variety=data.get("variety", ""),
             commune=data.get("commune", ""),
         )
+        # Culture / variété relèvent d'une campagne : on crée la campagne courante.
+        if data.get("culture") or data.get("variety"):
+            from parcelles.models import ParcelleCampagne
+
+            ParcelleCampagne.objects.create(
+                parcelle=parcelle,
+                libelle=ParcelleCampagne.libelle_courant(),
+                culture=data.get("culture", ""),
+                variety=data.get("variety", ""),
+            )
         result.update(created=True, entity={"type": "parcelle", "id": parcelle.id, "name": parcelle.name})
 
     elif intent == "creer_session_irrigation":

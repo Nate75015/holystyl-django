@@ -44,13 +44,14 @@ def test_execute_intent_creates_parcelle(user_exploitation, monkeypatch):
     assert result["created"] is True
     assert result["entity"]["type"] == "parcelle"
     p = Parcelle.objects.get(name="Le Clos")
-    assert p.area == 1.8 and p.culture == "Vigne"
+    assert p.area == 1.8
+    assert p.campagne_courante is not None and p.campagne_courante.culture == "Vigne"
 
 
 @pytest.mark.django_db
 def test_execute_intent_creates_irrigation_session(user_exploitation, monkeypatch):
     user, exploitation = user_exploitation
-    parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord", culture="abricotier")
+    parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord")
     monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
         services.llm, "generate_json",

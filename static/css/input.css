@@ -189,6 +189,22 @@
   .hs-badge-msa        { background: var(--msa-bg);        color: var(--msa-fg); }
   .hs-badge-neutral    { background: var(--surface-alt);   color: var(--text-secondary); }
 
+  /* ── Pastille de statut ── */
+  .hs-pill {
+    @apply inline-flex items-center;
+    padding: 2px 9px; border-radius: 99px; font-size: 12px; font-weight: 500;
+  }
+
+  /* ── Liste de définitions (clé / valeur) ── */
+  .hs-dl {
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+    gap: 6px 12px;
+    font-size: 13px;
+  }
+  .hs-dl dt { color: var(--text-muted); }
+  .hs-dl dd { text-align: right; }
+
   /* ── Table ── */
   .hs-table { width: 100%; font-size: 13px; border-collapse: collapse; }
   .hs-table thead th {
