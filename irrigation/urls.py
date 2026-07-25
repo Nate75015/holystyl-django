@@ -13,6 +13,10 @@ urlpatterns = [
     path("irrigation/stations/nouvelle/", views.station_create, name="station_create"),
     path("bassinage/", views.bassinage, name="bassinage"),
     path("bassinage/declencher/", views.bassinage_create, name="bassinage_create"),
+    path("bassinage/alerte/", views.bassinage_settings, name="bassinage_settings"),
+    path("bassinage/<int:pk>/modifier/", views.bassinage_edit, name="bassinage_edit"),
+    path("bassinage/<int:pk>/statut/", views.bassinage_toggle, name="bassinage_toggle"),
+    path("bassinage/<int:pk>/supprimer/", views.bassinage_delete, name="bassinage_delete"),
     path("anti-gel/", views.antigel, name="antigel"),
     path("anti-gel/reglages/", views.antigel_settings, name="antigel_settings"),
 ]

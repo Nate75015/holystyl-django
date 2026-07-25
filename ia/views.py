@@ -5,10 +5,10 @@ import uuid
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
-from django.http import StreamingHttpResponse
+from django.http import JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 
 from exploitations.models import Exploitation
 
@@ -127,3 +127,40 @@ def stream(request):
     response["Cache-Control"] = "no-cache"
     response["X-Accel-Buffering"] = "no"
     return response
+
+
+@login_required
+@require_POST
+def reformuler(request):
+    """Reformule un texte libre saisi dans un formulaire (notes, commentaires…)."""
+    text = (request.POST.get("text") or "").strip()
+    contexte = (request.POST.get("contexte") or "").strip()[:120]
+
+    if not text:
+        return JsonResponse({"error": _("Rien à reformuler : le champ est vide.")}, status=400)
+    if not llm.is_configured():
+        return JsonResponse({"error": _("Assistant IA non configuré.")}, status=503)
+
+    consigne = _(
+        "Reformule ce texte en français : plus clair, mieux écrit et professionnel. "
+        "Conserve le sens, les chiffres et les noms propres, ainsi qu'une longueur "
+        "similaire. Réponds uniquement par le texte reformulé, sans guillemets ni préambule."
+    )
+    if contexte:
+        consigne = f"{consigne}\n({_('Champ concerné')} : {contexte})"
+
+    try:
+        out = llm.generate_text(
+            [
+                {"role": "system", "content": _(
+                    "Tu aides des agriculteurs à rédiger les notes de leur logiciel "
+                    "d'exploitation. Tu écris dans un français clair et professionnel."
+                )},
+                {"role": "user", "content": f"{consigne}\n\n---\n{text[:4000]}"},
+            ],
+            temperature=0.6,
+        )
+    except Exception as exc:  # noqa: BLE001 — indispo IA → message d'erreur explicite
+        return JsonResponse({"error": str(exc)}, status=500)
+
+    return JsonResponse({"text": (out or "").strip().strip('"')})

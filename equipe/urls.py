@@ -11,5 +11,7 @@ urlpatterns = [
     path("taches/", views.taches, name="taches"),
     path("taches/<int:pk>/modifier/", views.taches_edit, name="taches_edit"),
     path("taches/<int:pk>/supprimer/", views.taches_delete, name="taches_delete"),
+    path("contrats-travail/", views.contrats, name="contrats"),
+    path("paie/", views.paie, name="paie"),
     path("localisation/<str:token>/", views.location_share, name="location_share"),
 ]

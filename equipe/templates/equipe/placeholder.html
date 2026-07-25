@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+  <p class="hs-crumb">{% trans "RH" %} · {{ title }}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{{ title }}</h1>
+  </div>
+
+  {# ── Carte « à venir » ── #}
+  <div class="hs-card p-10 text-center sm:p-14">
+    <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[12px]" style="border: 0.5px solid var(--border); color: var(--text-secondary)">
+      <span class="h-1.5 w-1.5 animate-pulse rounded-full" style="background: var(--success)"></span>{% trans "Bientôt disponible" %}
+    </span>
+    <p class="mt-4 text-[15px] font-medium">{% trans "Module en préparation" %}</p>
+    <p class="mx-auto mt-1 max-w-md text-[13px] leading-relaxed" style="color: var(--text-secondary)">
+      {% blocktrans %}La section « {{ title }} » arrive prochainement.{% endblocktrans %}
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% load i18n %}
+{% comment %}
+  Outils d'un champ texte : dictée vocale + reformulation IA.
+  À inclure sous un <input>/<textarea> en passant `target` (son id) et
+  `contexte` (une phrase qui oriente la reformulation).
+{% endcomment %}
+<div class="mt-1.5 flex flex-wrap items-center gap-2">
+  <button type="button" class="hs-chip-btn" title="{% trans 'Dicter à l’oral' %}"
+          data-unsupported="{% trans 'Reconnaissance vocale non supportée par ce navigateur.' %}"
+          onclick="hsDictate(this, '{{ target }}')">
+    <span class="material-icons-round text-[16px]">mic</span>{% trans "Dicter" %}
+  </button>
+  <button type="button" class="hs-chip-btn" title="{% trans 'Reformuler avec l’IA' %}"
+          onclick="hsRewrite(this, '{{ target }}', '{% url 'ia:reformuler' %}', '{{ contexte|escapejs }}')">
+    <span class="material-icons-round text-[16px]">auto_fix_high</span>{% trans "Reformuler avec l’IA" %}
+  </button>
+</div>

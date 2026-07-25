@@ -3,7 +3,7 @@
 
 {% block content %}
 {{ parcelles_geojson|json_script:"parcelles-geojson" }}
-<section class="mx-auto max-w-6xl space-y-5"
+<section class="space-y-5"
   x-data="{ tab: (new URLSearchParams(location.search).get('tab') || 'carte') }"
   x-init="$watch('tab', v => { if (v === 'carte' && window._map) setTimeout(() => window._map.invalidateSize(), 60) })">
 
@@ -116,8 +116,53 @@
       </div>
 
       {# Onglet Analyses #}
-      <div x-show="tab === 'analyses'" x-cloak class="py-10 text-center text-[13px]" style="color: var(--text-secondary)">
-        {% trans "Analyses des parcelles — bientôt." %}
+      <div x-show="tab === 'analyses'" x-cloak class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Analyses de sol par parcelle" %}</p>
+          <a href="{% url 'analyse_sol:analyses_sol' %}" class="inline-flex items-center gap-1 text-[13px]" style="color: var(--action)">
+            <span class="material-icons-round text-[16px]">science</span>{% trans "Toutes les analyses de sol" %} →
+          </a>
+        </div>
+        {% if parcelles %}
+          <div class="overflow-x-auto rounded-[10px]" style="border: 0.5px solid var(--border)">
+            <table class="hs-table">
+              <thead>
+                <tr>
+                  <th>{% trans "Parcelle" %}</th>
+                  <th class="num">{% trans "Analyses" %}</th>
+                  <th>{% trans "Dernière" %}</th>
+                  <th class="num">pH</th>
+                  <th class="num">{% trans "MO %" %}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in parcelles %}
+                  {% with last=p.analyses_sol.all|first count=p.analyses_sol.all|length %}
+                  <tr>
+                    <td class="font-medium"><a href="{% url 'parcelles:detail' p.pk %}" style="color: var(--action)">{{ p.name }}</a></td>
+                    <td class="num">{{ count }}</td>
+                    {% if last %}
+                      <td style="color: var(--text-secondary)"><a href="{% url 'analyse_sol:detail' last.pk %}" class="hover:underline">{{ last.date|date:"d/m/Y" }}</a></td>
+                      <td class="num font-medium">{{ last.ph|default_if_none:"—" }}</td>
+                      <td class="num font-medium">{{ last.matiere_organique|default_if_none:"—" }}</td>
+                      <td class="num text-right"><a href="{% url 'analyse_sol:detail' last.pk %}" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">chevron_right</span></a></td>
+                    {% else %}
+                      <td colspan="3" style="color: var(--text-muted)">{% trans "Aucune analyse" %}</td>
+                      <td class="num text-right"><a href="{% url 'analyse_sol:analyses_sol' %}" class="text-[12px]" style="color: var(--action)">{% trans "Importer" %} →</a></td>
+                    {% endif %}
+                  </tr>
+                  {% endwith %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="flex flex-col items-center justify-center py-10 text-center">
+            <span class="material-icons-round mb-2 text-[36px]" style="color: var(--text-muted)">science</span>
+            <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune parcelle à analyser pour le moment." %}</p>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>

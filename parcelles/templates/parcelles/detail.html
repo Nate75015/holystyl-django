@@ -2,40 +2,278 @@
 {% load i18n %}
 
 {% block content %}
+{% if geojson %}{{ geojson|json_script:"parcelle-geojson" }}{% endif %}
+{% if map_center %}{{ map_center|json_script:"parcelle-center" }}{% endif %}
+
 <section class="space-y-5">
-  <p class="hs-crumb">{% trans "Cadastre" %} · {% trans "Parcelles" %}</p>
-  <div class="flex flex-wrap items-center justify-between gap-3">
-    <div>
-      <h1 class="text-[20px]">{{ parcelle.name }}</h1>
-      <p class="text-[13px]" style="color: var(--text-secondary)">{{ parcelle.culture|default:"—" }} · {{ parcelle.area|default:"—" }} ha</p>
+
+  {# ── En-tête ── #}
+  <div>
+    <p class="hs-crumb">
+      <a href="{% url 'parcelles:list' %}" style="color: inherit">{% trans "Cadastre" %} · {% trans "Parcelles" %}</a>
+      · {{ parcelle.name }}
+    </p>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <h1 class="text-[20px]">{{ parcelle.name }}</h1>
+        {% if parcelle.status == 'active' %}
+          <span class="hs-pill" style="background: var(--success-subtle, rgba(22,163,74,.12)); color: var(--success)">{{ parcelle.get_status_display }}</span>
+        {% elif parcelle.status == 'jachere' %}
+          <span class="hs-pill" style="background: var(--warning-subtle, rgba(245,158,11,.12)); color: var(--warning)">{{ parcelle.get_status_display }}</span>
+        {% else %}
+          <span class="hs-pill" style="background: var(--surface-alt); color: var(--text-muted)">{{ parcelle.get_status_display }}</span>
+        {% endif %}
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="{% url 'parcelles:edit' parcelle.pk %}" class="hs-btn-primary">{% trans "Modifier" %}</a>
+        <a href="{% url 'parcelles:delete' parcelle.pk %}" class="hs-btn-outline" style="color: var(--danger)">{% trans "Supprimer" %}</a>
+      </div>
     </div>
-    <div class="flex items-center gap-2">
-      <a href="{% url 'parcelles:edit' parcelle.pk %}" class="hs-btn-primary">{% trans "Modifier" %}</a>
-      <a href="{% url 'parcelles:delete' parcelle.pk %}" class="hs-btn-outline" style="color: var(--danger)">{% trans "Supprimer" %}</a>
+    <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+      {{ parcelle.get_type_agriculture_effectif_display|default:"—" }}
+      {% if not parcelle.type_agriculture %}<span style="color: var(--text-muted)">({% trans "hérité" %})</span>{% endif %}
+      {% if campagne %} · {{ campagne.culture|default:_("Culture non renseignée") }}{% if campagne.variety %} · {{ campagne.variety }}{% endif %}{% endif %}
+    </p>
+  </div>
+
+  {# ── Tuiles clés ── #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Surface" %}</p>
+      <p class="mt-1 text-2xl">{{ parcelle.area|default:"—" }}{% if parcelle.area %} <span class="text-base" style="color: var(--text-muted)">ha</span>{% endif %}</p>
+    </div>
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Compte en SAU" %}</p>
+      <p class="mt-1 text-2xl">{% if parcelle.surface_utile %}<span style="color: var(--success)">{% trans "Oui" %}</span>{% else %}<span style="color: var(--text-muted)">{% trans "Non" %}</span>{% endif %}</p>
+    </div>
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Irrigation" %}</p>
+      <p class="mt-1 text-2xl">{% if campagne %}{{ campagne.get_irrigation_type_display|default:"—" }}{% else %}—{% endif %}</p>
+    </div>
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Réf. cadastrale" %}</p>
+      <p class="mt-1 text-2xl">{{ parcelle.cadastral_ref|default:"—" }}</p>
     </div>
   </div>
 
+  {# ── Barre de campagne ── #}
+  <div class="hs-card flex flex-wrap items-center gap-3 p-3">
+    <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">event_repeat</span>
+    <span class="text-[13px] font-medium">{% trans "Campagne" %}</span>
+    {% if campagnes %}
+      <select onchange="location.href='{% url 'parcelles:detail' parcelle.pk %}?campagne=' + this.value" style="width: auto; min-width: 140px">
+        {% for c in campagnes %}
+          <option value="{{ c.pk }}"{% if campagne and c.pk == campagne.pk %} selected{% endif %}>{{ c.libelle }}</option>
+        {% endfor %}
+      </select>
+    {% else %}
+      <span class="text-[13px]" style="color: var(--text-muted)">{% trans "Aucune campagne" %}</span>
+    {% endif %}
+    <div class="ml-auto flex items-center gap-2">
+      {% if campagne %}
+        <a href="{% url 'parcelles:campagne_edit' campagne.pk %}" class="hs-btn-outline">{% trans "Modifier la campagne" %}</a>
+        <a href="{% url 'parcelles:campagne_delete' campagne.pk %}" class="hs-btn-outline" style="color: var(--danger)">{% trans "Supprimer" %}</a>
+      {% endif %}
+      <a href="{% url 'parcelles:campagne_create' parcelle.pk %}" class="hs-btn-primary"><span class="material-icons-round text-[18px]">add</span>{% trans "Campagne" %}</a>
+    </div>
+  </div>
+
+  {# ── Carte ── #}
+  {% if geojson or map_center %}
+  <div class="hs-card overflow-hidden p-0">
+    <div id="parcelle-map" style="height: 340px; min-height: 260px" class="w-full"></div>
+  </div>
+  {% endif %}
+
+  {# ── Grille des détails ── #}
   <div class="grid gap-4 md:grid-cols-2">
-    <div class="hs-card p-5 space-y-2">
-      <h2 class="text-[15px] font-medium">{% trans "Culture & sol" %}</h2>
-      <dl class="grid grid-cols-2 gap-1 text-[13px]">
-        <dt style="color: var(--text-muted)">{% trans "Variété" %}</dt><dd>{{ parcelle.variety|default:"—" }}</dd>
-        <dt style="color: var(--text-muted)">Kc</dt><dd>{{ parcelle.kc_value }}</dd>
-        <dt style="color: var(--text-muted)">{% trans "Type de sol" %}</dt><dd>{{ parcelle.soil_type|default:"—" }}</dd>
-        <dt style="color: var(--text-muted)">pH</dt><dd>{{ parcelle.soil_ph|default:"—" }}</dd>
+
+    {# Culture (campagne) #}
+    <div class="hs-card p-5 space-y-3">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium">
+        <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">grass</span>{% trans "Culture" %}
+        {% if campagne %}<span class="ml-auto text-[12px] font-normal" style="color: var(--text-muted)">{{ campagne.libelle }}</span>{% endif %}
+      </h2>
+      {% if campagne %}
+        <dl class="hs-dl">
+          <dt>{% trans "Culture" %}</dt><dd>{{ campagne.culture|default:"—" }}</dd>
+          <dt>{% trans "Variété" %}</dt><dd>{{ campagne.variety|default:"—" }}</dd>
+          <dt>{% trans "Coefficient Kc" %}</dt><dd>{{ campagne.kc_value }}</dd>
+          <dt>{% trans "Date de plantation" %}</dt><dd>{% if campagne.planting_date %}{{ campagne.planting_date|date:"d/m/Y" }}{% else %}—{% endif %}</dd>
+          <dt>{% trans "Âge des plants" %}</dt><dd>{% if campagne.tree_age_years %}{{ campagne.tree_age_years }} {% trans "ans" %}{% else %}—{% endif %}</dd>
+          <dt>{% trans "Densité" %}</dt><dd>{% if campagne.plant_density_per_ha %}{{ campagne.plant_density_per_ha }} {% trans "pieds/ha" %}{% else %}—{% endif %}</dd>
+        </dl>
+      {% else %}
+        <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez une campagne pour renseigner la culture." %}</p>
+      {% endif %}
+    </div>
+
+    {# Irrigation (campagne) #}
+    <div class="hs-card p-5 space-y-3">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium">
+        <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">water_drop</span>{% trans "Irrigation" %}
+        {% if campagne %}<span class="ml-auto text-[12px] font-normal" style="color: var(--text-muted)">{{ campagne.libelle }}</span>{% endif %}
+      </h2>
+      {% if campagne %}
+        <dl class="hs-dl">
+          <dt>{% trans "Type" %}</dt><dd>{{ campagne.get_irrigation_type_display|default:"—" }}</dd>
+          <dt>{% trans "Débit théorique" %}</dt><dd>{% if campagne.theoretical_flow_m3h %}{{ campagne.theoretical_flow_m3h }} m³/h{% else %}—{% endif %}</dd>
+          <dt>{% trans "Pression de service" %}</dt><dd>{% if campagne.service_pressure_bar %}{{ campagne.service_pressure_bar }} bar{% else %}—{% endif %}</dd>
+          <dt>{% trans "Nombre de buses" %}</dt><dd>{{ campagne.nozzle_count|default:"—" }}</dd>
+          <dt>{% trans "Débit buse" %}</dt><dd>{% if campagne.nozzle_flow_lh %}{{ campagne.nozzle_flow_lh }} L/h{% else %}—{% endif %}</dd>
+          <dt>{% trans "Écart entre rangs" %}</dt><dd>{% if campagne.row_spacing_m %}{{ campagne.row_spacing_m }} m{% else %}—{% endif %}</dd>
+          <dt>{% trans "Écart entre émetteurs" %}</dt><dd>{% if campagne.emitter_spacing_m %}{{ campagne.emitter_spacing_m }} m{% else %}—{% endif %}</dd>
+        </dl>
+      {% else %}
+        <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez une campagne pour renseigner l'irrigation." %}</p>
+      {% endif %}
+    </div>
+
+    {# Sol (parcelle) #}
+    <div class="hs-card p-5 space-y-3">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">terrain</span>{% trans "Sol" %}</h2>
+      <dl class="hs-dl">
+        <dt>{% trans "Type de sol" %}</dt><dd>{{ parcelle.soil_type|default:"—" }}</dd>
+        <dt>{% trans "pH du sol" %}</dt><dd>{{ parcelle.soil_ph|default:"—" }}</dd>
+        <dt>{% trans "Profondeur racinaire" %}</dt>
+        <dd>{% if parcelle.root_depth_cm %}{{ parcelle.root_depth_cm }} cm{% elif parcelle.root_depth %}{{ parcelle.root_depth }} m{% else %}—{% endif %}</dd>
+        <dt>{% trans "Rétention du sol" %}</dt><dd>{% if parcelle.soil_retention_mm_m %}{{ parcelle.soil_retention_mm_m }} mm/m{% else %}—{% endif %}</dd>
       </dl>
     </div>
-    <div class="hs-card p-5 space-y-2">
-      <h2 class="text-[15px] font-medium">{% trans "Irrigation" %}</h2>
-      <dl class="grid grid-cols-2 gap-1 text-[13px]">
-        <dt style="color: var(--text-muted)">{% trans "Type" %}</dt><dd>{{ parcelle.get_irrigation_type_display|default:"—" }}</dd>
-        <dt style="color: var(--text-muted)">{% trans "Débit" %}</dt><dd>{{ parcelle.theoretical_flow_m3h|default:"—" }} m³/h</dd>
-        <dt style="color: var(--text-muted)">{% trans "Pression" %}</dt><dd>{{ parcelle.service_pressure_bar|default:"—" }} bar</dd>
-        <dt style="color: var(--text-muted)">{% trans "Commune" %}</dt><dd>{{ parcelle.commune|default:"—" }}</dd>
+
+    {# Cadastre & administratif (parcelle) #}
+    <div class="hs-card p-5 space-y-3">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">description</span>{% trans "Cadastre & administratif" %}</h2>
+      <dl class="hs-dl">
+        <dt>{% trans "Réf. cadastrale" %}</dt><dd>{{ parcelle.cadastral_ref|default:"—" }}</dd>
+        <dt>{% trans "Commune" %}</dt><dd>{{ parcelle.commune|default:"—" }}</dd>
+        <dt>{% trans "Surface officielle" %}</dt><dd>{% if parcelle.official_area_ha %}{{ parcelle.official_area_ha }} ha{% else %}—{% endif %}</dd>
+        <dt>{% trans "Coordonnées" %}</dt>
+        <dd>{% if parcelle.latitude and parcelle.longitude %}{{ parcelle.latitude|floatformat:5 }}, {{ parcelle.longitude|floatformat:5 }}{% else %}—{% endif %}</dd>
+        <dt>{% trans "Acquise le" %}</dt><dd>{% if parcelle.acquired_at %}{{ parcelle.acquired_at|date:"d/m/Y" }}{% else %}—{% endif %}</dd>
+        <dt>{% trans "Créée le" %}</dt><dd>{{ parcelle.created_at|date:"d/m/Y" }}</dd>
       </dl>
     </div>
+  </div>
+
+  {# ── Stades culturaux (campagne) ── #}
+  <div class="hs-card p-5 space-y-3">
+    <h2 class="flex items-center gap-2 text-[15px] font-medium">
+      <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">timeline</span>{% trans "Stades culturaux" %}
+      {% if campagne %}<span class="ml-auto text-[12px] font-normal" style="color: var(--text-muted)">{{ campagne.libelle }}</span>{% endif %}
+    </h2>
+    {% if crop_stages %}
+      <div class="overflow-x-auto rounded-[10px]" style="border: 0.5px solid var(--border)">
+        <table class="hs-table">
+          <thead>
+            <tr>
+              <th>{% trans "Stade" %}</th>
+              <th>{% trans "Début" %}</th>
+              <th>{% trans "Fin" %}</th>
+              <th>Kc</th>
+              <th>{% trans "Prof. racinaire" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in crop_stages %}
+              <tr>
+                <td class="font-medium">{{ s.stage_name }}{% if s.stage_code %} <span style="color: var(--text-muted)">({{ s.stage_code }})</span>{% endif %}</td>
+                <td style="color: var(--text-secondary)">{{ s.start_date|date:"d/m/Y" }}</td>
+                <td style="color: var(--text-secondary)">{% if s.end_date %}{{ s.end_date|date:"d/m/Y" }}{% else %}—{% endif %}</td>
+                <td style="color: var(--text-secondary)">{{ s.kc_value }}</td>
+                <td style="color: var(--text-secondary)">{% if s.root_depth_m %}{{ s.root_depth_m }} m{% else %}—{% endif %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucun stade cultural pour cette campagne." %}</p>
+    {% endif %}
+  </div>
+
+  {# ── Analyses de sol (parcelle) ── #}
+  <div class="hs-card p-5 space-y-3">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">science</span>{% trans "Analyses de sol" %}</h2>
+      <a href="{% url 'analyse_sol:analyses_sol' %}" class="inline-flex items-center gap-1 text-[13px]" style="color: var(--action)">{% trans "Gérer les analyses" %} →</a>
+    </div>
+    {% if analyses_sol %}
+      <div class="overflow-x-auto rounded-[10px]" style="border: 0.5px solid var(--border)">
+        <table class="hs-table">
+          <thead>
+            <tr>
+              <th>{% trans "Date" %}</th>
+              <th>{% trans "Laboratoire" %}</th>
+              <th class="num">pH</th>
+              <th class="num">{% trans "MO %" %}</th>
+              <th class="num">N</th>
+              <th class="num">P</th>
+              <th class="num">K</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in analyses_sol %}
+              <tr>
+                <td class="font-medium"><a href="{% url 'analyse_sol:detail' a.pk %}" style="color: var(--action)">{{ a.date|date:"d/m/Y" }}</a></td>
+                <td style="color: var(--text-secondary)">{{ a.laboratoire|default:"—" }}</td>
+                <td class="num font-medium">{{ a.ph|default_if_none:"—" }}</td>
+                <td class="num font-medium">{{ a.matiere_organique|default_if_none:"—" }}</td>
+                <td class="num" style="color: var(--text-secondary)">{{ a.azote_total|default_if_none:"—" }}</td>
+                <td class="num" style="color: var(--text-secondary)">{{ a.phosphore_assimilable|default_if_none:"—" }}</td>
+                <td class="num" style="color: var(--text-secondary)">{{ a.potassium_echangeable|default_if_none:"—" }}</td>
+                <td class="num text-right"><a href="{% url 'analyse_sol:detail' a.pk %}" style="color: var(--text-muted)"><span class="material-icons-round text-[18px]">chevron_right</span></a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune analyse de sol pour cette parcelle." %} <a href="{% url 'analyse_sol:analyses_sol' %}" style="color: var(--action)">{% trans "Importer une analyse" %} →</a></p>
+    {% endif %}
   </div>
 
   <a href="{% url 'parcelles:list' %}" class="inline-flex items-center gap-1 text-[13px]" style="color: var(--action)">← {% trans "Retour aux parcelles" %}</a>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+{% if geojson or map_center %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  const centerEl = document.getElementById('parcelle-center');
+  const geoEl = document.getElementById('parcelle-geojson');
+  const center = centerEl ? JSON.parse(centerEl.textContent) : null;
+  const feature = geoEl ? JSON.parse(geoEl.textContent) : null;
+
+  function wmts(layer, format) {
+    return L.tileLayer(
+      'https://data.geopf.fr/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM' +
+      '&FORMAT=' + format + '&LAYER=' + layer + '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+      { maxZoom: 19, attribution: '© IGN / Géoplateforme' });
+  }
+
+  function init() {
+    const el = document.getElementById('parcelle-map');
+    if (!el) return;
+    const map = L.map('parcelle-map', { layers: [wmts('ORTHOIMAGERY.ORTHOPHOTOS', 'image/jpeg')] })
+      .setView(center || [46.6, 2.4], center ? 16 : 6);
+
+    if (feature && feature.geometry) {
+      const layer = L.geoJSON(feature, { style: { color: '#f59e0b', weight: 3, fillOpacity: 0.15 } }).addTo(map);
+      try { map.fitBounds(layer.getBounds(), { maxZoom: 17, padding: [24, 24] }); } catch (e) {}
+    } else if (center) {
+      L.marker(center).addTo(map);
+    }
+    setTimeout(() => map.invalidateSize(), 60);
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endif %}
 {% endblock %}

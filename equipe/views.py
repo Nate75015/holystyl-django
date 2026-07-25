@@ -130,3 +130,20 @@ def location_share(request, token):
         location_token=token, location_token_expires_at__gt=timezone.now()
     ).first()
     return render(request, "equipe/location_share.html", {"member": member, "token": token})
+
+
+def _rh_placeholder(request, title):
+    """Page « en préparation » pour une sous-section RH."""
+    return render(request, "equipe/placeholder.html", {"title": title, "page_title": title})
+
+
+@login_required
+def contrats(request):
+    """Contrats de travail — module RH en préparation."""
+    return _rh_placeholder(request, _("Contrats de travail"))
+
+
+@login_required
+def paie(request):
+    """Paie — module RH en préparation."""
+    return _rh_placeholder(request, _("Paie"))

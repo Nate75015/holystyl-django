@@ -159,8 +159,8 @@
   {# Modal — Enregistrer un apport #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
        class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="modal = false" class="flex max-h-full w-full max-w-lg items-start justify-center">
-      <div class="hs-popover w-full max-w-lg p-5 overflow-y-auto">
+    <div @click.self="modal = false" class="flex max-h-full w-full max-w-5xl items-start justify-center">
+      <div class="hs-popover w-full max-w-5xl p-5 overflow-y-auto">
         <div class="mb-4 flex items-center gap-3">
           <h3 class="flex-1 text-[15px] font-medium">{% trans "Enregistrer un apport" %}</h3>
           <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">✕</button>

@@ -9,7 +9,6 @@ from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
-from agronomie.models import Saison
 from exploitations.models import Exploitation
 from parcelles.models import Parcelle
 
@@ -44,7 +43,6 @@ def charges(request):
         "charges": charges_qs,
         "revenus": revenus_qs,
         "bilan": compute_bilan(exploitation),
-        "saison_active": Saison.objects.filter(exploitation=exploitation, active=True).first() if exploitation else None,
         "categories": Charge.Categorie.choices,
         "revenu_categories": Revenu.Categorie.choices,
         "parcelles": Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none(),
@@ -92,8 +90,6 @@ def revenu_create(request):
         Revenu.objects.create(
             exploitation=exploitation,
             parcelle=Parcelle.objects.filter(pk=request.POST.get("parcelle") or None, exploitation=exploitation).first(),
-            # Rattaché à la saison active pour le bilan par saison.
-            saison=Saison.objects.filter(exploitation=exploitation, active=True).first(),
             date=dt,
             categorie=categorie,
             montant=montant,

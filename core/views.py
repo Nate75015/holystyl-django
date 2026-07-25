@@ -1,11 +1,14 @@
-"""Vues du socle : dashboard (Pulse) et endpoint de santé."""
+"""Vues du socle : dashboard (Pulse), autocomplétion d'adresse et santé."""
 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.http import require_GET
 
 from exploitations.models import Exploitation
 from exploitations.services import compute_kpis
+
+from . import adresse as adresse_service
 
 
 def _reversed(qs):
@@ -91,6 +94,21 @@ def dashboard(request):
             "etp_count": etp_count,
         },
     )
+
+
+@login_required
+@require_GET
+def adresse_suggestions(request):
+    """Suggestions d'adresse pour les formulaires (Google Places ou BAN)."""
+    resultats = adresse_service.suggest(request.GET.get("q", ""))
+    return JsonResponse({"fournisseur": adresse_service.fournisseur(), "results": resultats})
+
+
+@login_required
+@require_GET
+def adresse_details(request):
+    """Composants d'une suggestion qui n'en portait pas (cas Google Places)."""
+    return JsonResponse({"adresse": adresse_service.details(request.GET.get("id", ""))})
 
 
 def healthz(request):

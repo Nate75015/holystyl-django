@@ -27,11 +27,13 @@ urlpatterns = [
     path("", include("operations.urls")),
     path("", include("interventions.urls")),
     path("", include("analyse_sol.urls")),
+    path("", include("elevage.urls")),
     path("", include("meteo.urls")),
     path("", include("pac.urls")),
     path("", include("environnement.urls")),
     path("", include("finances.urls")),
     path("", include("contrat.urls")),
+    path("", include("client.urls")),
     path("", include("reseaux.urls")),
     path("", include("core.urls")),
     path("", include("public.urls")),  # home "" en dernier

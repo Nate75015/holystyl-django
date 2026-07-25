@@ -65,6 +65,7 @@ def layout(request):
                 {"label": _("Fertigation"), "url_name": "agronomie:fertigation", "icon": "opacity"},
                 {"label": _("Interventions"), "url_name": "interventions:interventions", "icon": "build"},
                 {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
+                {"label": _("Élevage"), "url_name": "elevage:elevage", "icon": "pets"},
                 {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
                 {"label": _("DTI — Diagnostic technique d'irrigation"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
                 {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
@@ -81,7 +82,6 @@ def layout(request):
         {
             "label": _("Économie"), "key": "economie",
             "items": [
-                {"label": _("Saisons"), "url_name": "agronomie:saisons", "icon": "calendar_month"},
                 {"label": _("Charges"), "url_name": "finances:charges", "icon": "payments"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
                 {"label": _("Facturation"), "url_name": "finances:facturation", "icon": "receipt_long"},
@@ -107,6 +107,8 @@ def layout(request):
                 {"label": _("Planning"), "url_name": "planning:planning", "icon": "event"},
                 {"label": _("Équipe"), "url_name": "equipe:equipe", "icon": "groups"},
                 {"label": _("Tâches"), "url_name": "equipe:taches", "icon": "checklist"},
+                {"label": _("Contrats de travail"), "url_name": "equipe:contrats", "icon": "assignment_ind"},
+                {"label": _("Paie"), "url_name": "equipe:paie", "icon": "payments"},
             ],
         },
         {
@@ -117,6 +119,12 @@ def layout(request):
                 {"label": _("Patrimoine"), "url_name": "contrat:actes", "icon": "history_edu"},
                 {"label": _("Assurance"), "url_name": "contrat:assurances", "icon": "shield"},
                 {"label": _("Mutualité Sociale Agricole"), "url_name": "contrat:msa", "icon": "health_and_safety"},
+            ],
+        },
+        {
+            "label": _("Clients"), "key": "clients",
+            "items": [
+                {"label": _("Clients"), "url_name": "client:clients", "icon": "handshake"},
             ],
         },
         {
@@ -138,8 +146,8 @@ def layout(request):
     # Icône de section (présentation ; navigation de la sidebar)
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
-        "protection": "shield", "economie": "payments", "environnement": "park",
-        "rh": "groups", "contrat": "gavel", "compte": "person",
+        "protection": "lock", "economie": "payments", "environnement": "park",
+        "rh": "groups", "contrat": "gavel", "clients": "handshake", "compte": "person",
     }
     for section in nav_sections:
         section["icon"] = section_icons.get(section["key"], "folder")

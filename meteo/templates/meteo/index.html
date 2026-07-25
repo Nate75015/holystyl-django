@@ -15,17 +15,23 @@
   {# ── Section : mes lieux ── #}
   <div class="hs-card p-5">
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-      {# Lieu de l'exploitation #}
-      <a href="{% url 'meteo:detail' home.slug %}"
-         class="rounded-xl p-4 transition hover:opacity-90" style="border: 0.5px solid var(--border); background: var(--surface-alt)">
-        <div class="flex items-center justify-between">
+      {# Lieu de l'exploitation (masquable) #}
+      {% if home %}
+      <div class="relative rounded-xl p-4 transition hover:opacity-90" style="border: 0.5px solid var(--border); background: var(--surface-alt)">
+        <form method="post" action="{% url 'meteo:home_masquer' %}" class="absolute right-2 top-2 leading-none">
+          {% csrf_token %}
+          <button type="submit" class="transition hover:text-red-500" style="color: var(--text-muted)" title="{% trans 'Masquer le lieu de l’exploitation' %}">
+            <span class="material-icons-round text-[18px]">close</span>
+          </button>
+        </form>
+        <a href="{% url 'meteo:detail' home.slug %}" class="block">
           <span class="material-icons-round text-[28px]" style="color: var(--text-secondary)" title="{{ home.label }}">{{ home.icon }}</span>
-          <span class="material-icons-round text-[16px]" style="color: var(--action)" title="{% trans 'Mon exploitation' %}">home</span>
-        </div>
-        <p class="mt-2 truncate font-medium">{{ home.nom }}</p>
-        <p class="truncate text-[12px]" style="color: var(--text-secondary)">{{ home.label }}</p>
-        <p class="mt-1 text-[22px]">{% if home.temp != None %}{{ home.temp }}°{% else %}—{% endif %}</p>
-      </a>
+          <p class="mt-2 flex items-center gap-1 truncate font-medium"><span class="material-icons-round text-[15px]" style="color: var(--action)" title="{% trans 'Mon exploitation' %}">home</span>{{ home.nom }}</p>
+          <p class="truncate text-[12px]" style="color: var(--text-secondary)">{{ home.label }}</p>
+          <p class="mt-1 text-[22px]">{% if home.temp != None %}{{ home.temp }}°{% else %}—{% endif %}</p>
+        </a>
+      </div>
+      {% endif %}
 
       {% for v in villes %}
         <div class="relative rounded-xl p-4 transition hover:opacity-90" style="border: 0.5px solid var(--border)">
@@ -44,16 +50,26 @@
         </div>
       {% endfor %}
     </div>
-    {% if not villes %}
+    {% if not villes and not home %}
+      <p class="mt-3 text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez une ville pour suivre sa météo." %}</p>
+    {% elif not villes %}
       <p class="mt-3 text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez une ville pour suivre sa météo (en plus du lieu de votre exploitation)." %}</p>
+    {% endif %}
+    {% if masquer_lieu %}
+      <form method="post" action="{% url 'meteo:home_afficher' %}" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="inline-flex items-center gap-1 text-[13px]" style="color: var(--action)">
+          <span class="material-icons-round text-[16px]">add_home</span>{% trans "Réafficher le lieu de mon exploitation" %}
+        </button>
+      </form>
     {% endif %}
   </div>
 
   {# Modal : ajouter une ville #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
        class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="modal = false" class="flex w-full max-w-md justify-center">
-      <div class="hs-popover w-full max-w-lg p-5">
+    <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+      <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center justify-between">
           <h3 class="text-[15px] font-medium">{% trans "Ajouter une ville" %}</h3>
           <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>

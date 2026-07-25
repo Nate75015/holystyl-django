@@ -2,112 +2,139 @@
 {% load i18n %}
 
 {% block content %}
-<section class="mx-auto max-w-3xl space-y-5" x-data="{ step: 1, total: 5 }">
+<form method="post" class="space-y-5">
+  {% csrf_token %}
+
+  {# ── En-tête ── #}
   <div>
-    <p class="hs-crumb">{% trans "Cadastre" %} · {% trans "Parcelles" %}</p>
+    <p class="hs-crumb">
+      <a href="{% url 'parcelles:list' %}" style="color: inherit">{% trans "Cadastre" %} · {% trans "Parcelles" %}</a>
+      {% if parcelle %}· <a href="{% url 'parcelles:detail' parcelle.pk %}" style="color: inherit">{{ parcelle.name }}</a>{% endif %}
+    </p>
     <div class="flex flex-wrap items-center justify-between gap-3">
       <h1 class="text-[20px]">{{ page_title }}</h1>
-      <span class="text-[13px]" style="color: var(--text-muted)">{% trans "Étape" %} <span x-text="step"></span>/<span x-text="total"></span></span>
+      <div class="flex items-center gap-2">
+        {% if parcelle %}
+          <a href="{% url 'parcelles:detail' parcelle.pk %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+        {% else %}
+          <a href="{% url 'parcelles:list' %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+        {% endif %}
+        <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+      </div>
     </div>
   </div>
 
-  <div class="h-1.5 w-full overflow-hidden rounded-full" style="background: var(--surface-alt)">
-    <div class="h-full transition-all" style="background: var(--action)" :style="`width: ${step/total*100}%`"></div>
+  {% if form.non_field_errors or campagne_form.non_field_errors %}
+    <div class="hs-card p-3 text-[13px]" style="border-color: var(--danger); color: var(--danger)">{{ form.non_field_errors }}{{ campagne_form.non_field_errors }}</div>
+  {% endif %}
+
+  {# ── Identité & localisation ── #}
+  <div class="hs-card p-5 space-y-4">
+    <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">place</span>{% trans "Identité & localisation" %}</h2>
+    {% include "parcelles/_field.html" with field=form.name %}
+    {% include "parcelles/_field.html" with field=form.type_agriculture %}
+    <div class="grid gap-4 sm:grid-cols-2">
+      {% include "parcelles/_field.html" with field=form.area %}
+      {% include "parcelles/_field.html" with field=form.official_area_ha %}
+    </div>
+    <label class="flex items-start gap-3 rounded-[10px] p-3" style="border: 0.5px solid var(--border)" for="{{ form.surface_utile.id_for_label }}">
+      <input type="checkbox" name="{{ form.surface_utile.name }}" id="{{ form.surface_utile.id_for_label }}" class="mt-0.5 h-4 w-4" style="accent-color: var(--action)"{% if form.surface_utile.value %} checked{% endif %}>
+      <span>
+        <span class="block text-sm font-medium">{{ form.surface_utile.label }}</span>
+        <span class="block text-[11px]" style="color: var(--text-muted)">{{ form.surface_utile.help_text }}</span>
+      </span>
+    </label>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {% include "parcelles/_field.html" with field=form.latitude %}
+      {% include "parcelles/_field.html" with field=form.longitude %}
+    </div>
+    {{ form.boundaries }}
+    <div id="map" class="h-72 w-full rounded-[10px]" style="border: 0.5px solid var(--border)"></div>
+    <p class="text-[11px]" style="color: var(--text-muted)">{% trans "Cliquez sur la carte pour positionner la parcelle." %}</p>
   </div>
 
-  <form method="post" class="hs-card p-5 space-y-5">
-    {% csrf_token %}
-    {% if form.non_field_errors %}<p class="text-[11px]" style="color: var(--danger)">{{ form.non_field_errors }}</p>{% endif %}
-
-    {# Étape 1 — Identité & géométrie #}
-    <div x-show="step === 1" class="space-y-4">
-      <h2 class="text-[15px] font-medium">{% trans "Identité & localisation" %}</h2>
-      {% include "parcelles/_field.html" with field=form.name %}
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.area %}
-        {% include "parcelles/_field.html" with field=form.official_area_ha %}
-      </div>
-      <label class="flex items-start gap-3 rounded-[10px] p-3" style="border: 0.5px solid var(--border)" for="{{ form.surface_utile.id_for_label }}">
-        <input type="checkbox" name="{{ form.surface_utile.name }}" id="{{ form.surface_utile.id_for_label }}" class="mt-0.5 h-4 w-4" style="accent-color: var(--action)"{% if form.surface_utile.value %} checked{% endif %}>
-        <span>
-          <span class="block text-sm font-medium">{{ form.surface_utile.label }}</span>
-          <span class="block text-[11px]" style="color: var(--text-muted)">{{ form.surface_utile.help_text }}</span>
-        </span>
-      </label>
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.latitude %}
-        {% include "parcelles/_field.html" with field=form.longitude %}
-      </div>
-      {{ form.boundaries }}
-      <div id="map" class="h-64 w-full rounded-[10px]" style="border: 0.5px solid var(--border)"></div>
-      <p class="text-[11px]" style="color: var(--text-muted)">{% trans "Cliquez sur la carte pour positionner la parcelle." %}</p>
+  {# ── Campagne (culture & irrigation) ── #}
+  <div class="hs-card flex flex-wrap items-end gap-x-4 gap-y-2 p-4">
+    <span class="material-icons-round mb-1 text-[18px]" style="color: var(--text-muted)">event_repeat</span>
+    <div class="w-32">
+      {% include "parcelles/_field.html" with field=campagne_form.libelle %}
     </div>
+    <p class="mb-2 text-[12px]" style="color: var(--text-muted)">{% trans "La culture et l'irrigation ci-dessous concernent cette campagne." %}</p>
+    {% if parcelle %}
+      <a href="{% url 'parcelles:detail' parcelle.pk %}" class="mb-2 ml-auto text-[13px]" style="color: var(--action)">{% trans "Gérer les campagnes" %} →</a>
+    {% endif %}
+  </div>
 
-    {# Étape 2 — Culture #}
-    <div x-show="step === 2" x-cloak class="space-y-4">
-      <h2 class="text-[15px] font-medium">{% trans "Culture" %}</h2>
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.culture %}
-        {% include "parcelles/_field.html" with field=form.variety %}
+  {# ── Grille des sections ── #}
+  <div class="grid gap-4 md:grid-cols-2">
+
+    {# Culture (campagne) #}
+    <div class="hs-card p-5 space-y-4">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">grass</span>{% trans "Culture" %}</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=campagne_form.culture %}
+        {% include "parcelles/_field.html" with field=campagne_form.variety %}
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.kc_value %}
-        {% include "parcelles/_field.html" with field=form.tree_age_years %}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=campagne_form.kc_value %}
+        {% include "parcelles/_field.html" with field=campagne_form.tree_age_years %}
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.planting_date %}
-        {% include "parcelles/_field.html" with field=form.plant_density_per_ha %}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=campagne_form.planting_date %}
+        {% include "parcelles/_field.html" with field=campagne_form.plant_density_per_ha %}
       </div>
     </div>
 
-    {# Étape 3 — Sol #}
-    <div x-show="step === 3" x-cloak class="space-y-4">
-      <h2 class="text-[15px] font-medium">{% trans "Sol" %}</h2>
+    {# Irrigation (campagne) #}
+    <div class="hs-card p-5 space-y-4">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">water_drop</span>{% trans "Irrigation" %}</h2>
+      {% include "parcelles/_field.html" with field=campagne_form.irrigation_type %}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=campagne_form.theoretical_flow_m3h %}
+        {% include "parcelles/_field.html" with field=campagne_form.service_pressure_bar %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=campagne_form.nozzle_count %}
+        {% include "parcelles/_field.html" with field=campagne_form.nozzle_flow_lh %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=campagne_form.row_spacing_m %}
+        {% include "parcelles/_field.html" with field=campagne_form.emitter_spacing_m %}
+      </div>
+    </div>
+
+    {# Sol #}
+    <div class="hs-card p-5 space-y-4">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">terrain</span>{% trans "Sol" %}</h2>
       {% include "parcelles/_field.html" with field=form.soil_type %}
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid gap-4 sm:grid-cols-3">
         {% include "parcelles/_field.html" with field=form.root_depth_cm %}
         {% include "parcelles/_field.html" with field=form.soil_retention_mm_m %}
         {% include "parcelles/_field.html" with field=form.soil_ph %}
       </div>
     </div>
 
-    {# Étape 4 — Irrigation #}
-    <div x-show="step === 4" x-cloak class="space-y-4">
-      <h2 class="text-[15px] font-medium">{% trans "Irrigation" %}</h2>
-      {% include "parcelles/_field.html" with field=form.irrigation_type %}
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.theoretical_flow_m3h %}
-        {% include "parcelles/_field.html" with field=form.service_pressure_bar %}
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.nozzle_count %}
-        {% include "parcelles/_field.html" with field=form.nozzle_flow_lh %}
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        {% include "parcelles/_field.html" with field=form.row_spacing_m %}
-        {% include "parcelles/_field.html" with field=form.emitter_spacing_m %}
-      </div>
-    </div>
-
-    {# Étape 5 — Administratif #}
-    <div x-show="step === 5" x-cloak class="space-y-4">
-      <h2 class="text-[15px] font-medium">{% trans "Cadastre & statut" %}</h2>
-      <div class="grid grid-cols-2 gap-4">
+    {# Cadastre & statut #}
+    <div class="hs-card p-5 space-y-4">
+      <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">description</span>{% trans "Cadastre & statut" %}</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
         {% include "parcelles/_field.html" with field=form.cadastral_ref %}
         {% include "parcelles/_field.html" with field=form.commune %}
       </div>
       {% include "parcelles/_field.html" with field=form.status %}
     </div>
+  </div>
 
-    {# Navigation wizard #}
-    <div class="flex items-center justify-between pt-4" style="border-top: 0.5px solid var(--border)">
-      <button type="button" class="hs-btn-outline" x-show="step > 1" @click="step--">← {% trans "Précédent" %}</button>
-      <span></span>
-      <button type="button" class="hs-btn-primary" x-show="step < total" @click="step++">{% trans "Suivant" %} →</button>
-      <button type="submit" class="hs-btn-primary" x-show="step === total" x-cloak>{% trans "Enregistrer" %}</button>
-    </div>
-  </form>
-</section>
+  {# ── Barre d'actions ── #}
+  <div class="flex items-center justify-end gap-2 pt-1">
+    {% if parcelle %}
+      <a href="{% url 'parcelles:detail' parcelle.pk %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+    {% else %}
+      <a href="{% url 'parcelles:list' %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+    {% endif %}
+    <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+  </div>
+</form>
 {% endblock %}
 
 {% block extra_js %}

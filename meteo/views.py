@@ -59,17 +59,21 @@ def meteo_index(request):
     exploitation = _exploitation(request)
     villes = _with_current(list(VilleMeteo.objects.filter(exploitation=exploitation))) if exploitation else []
 
-    hlat, hlon, hloc = _home_location(request, exploitation)
-    home = {"nom": hloc, "lat": round(hlat, 4), "lon": round(hlon, 4), "slug": slugify(hloc) or "exploitation"}
-    try:
-        cw = fetch_current(hlat, hlon)
-        home.update(temp=cw["temp"], icon=cw["icon"], label=cw["label"])
-    except Exception:  # noqa: BLE001
-        home.update(temp=None, icon="help_outline", label="")
+    masquer_lieu = bool(exploitation and exploitation.meteo_masquer_lieu)
+    home = None
+    if not masquer_lieu:
+        hlat, hlon, hloc = _home_location(request, exploitation)
+        home = {"nom": hloc, "lat": round(hlat, 4), "lon": round(hlon, 4), "slug": slugify(hloc) or "exploitation"}
+        try:
+            cw = fetch_current(hlat, hlon)
+            home.update(temp=cw["temp"], icon=cw["icon"], label=cw["label"])
+        except Exception:  # noqa: BLE001
+            home.update(temp=None, icon="help_outline", label="")
 
     return render(request, "meteo/index.html", {
         "villes": villes,
         "home": home,
+        "masquer_lieu": masquer_lieu,
         "page_title": _("Météo"),
     })
 
@@ -223,6 +227,28 @@ def ville_add(request):
 def ville_delete(request, pk):
     exploitation = _exploitation(request)
     VilleMeteo.objects.filter(pk=pk, exploitation=exploitation).delete()
+    return redirect("meteo:index")
+
+
+@login_required
+@require_POST
+def home_masquer(request):
+    """Masque la carte « lieu de l'exploitation » sur la page météo."""
+    exploitation = _exploitation(request)
+    if exploitation:
+        exploitation.meteo_masquer_lieu = True
+        exploitation.save(update_fields=["meteo_masquer_lieu"])
+    return redirect("meteo:index")
+
+
+@login_required
+@require_POST
+def home_afficher(request):
+    """Réaffiche la carte « lieu de l'exploitation »."""
+    exploitation = _exploitation(request)
+    if exploitation:
+        exploitation.meteo_masquer_lieu = False
+        exploitation.save(update_fields=["meteo_masquer_lieu"])
     return redirect("meteo:index")
 
 

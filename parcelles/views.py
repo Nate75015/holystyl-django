@@ -6,6 +6,7 @@ import urllib.request
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -15,8 +16,8 @@ from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
 
-from .forms import ParcelleForm
-from .models import Parcelle
+from .forms import ParcelleCampagneForm, ParcelleForm
+from .models import Parcelle, ParcelleCampagne
 
 
 def _exploitation_or_redirect(request):
@@ -28,7 +29,8 @@ def _exploitation_or_redirect(request):
 def parcelle_list(request):
     exploitation = _exploitation_or_redirect(request)
     parcelles = (
-        Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none()
+        Parcelle.objects.filter(exploitation=exploitation).prefetch_related("analyses_sol")
+        if exploitation else Parcelle.objects.none()
     )
     features, total_area = [], 0.0
     for p in parcelles:
@@ -134,19 +136,26 @@ def parcelle_create(request):
 
     if request.method == "POST":
         form = ParcelleForm(request.POST)
-        if form.is_valid():
-            parcelle = form.save(commit=False)
-            parcelle.exploitation = exploitation
-            parcelle.save()
+        campagne_form = ParcelleCampagneForm(request.POST)
+        if form.is_valid() and campagne_form.is_valid():
+            with transaction.atomic():
+                parcelle = form.save(commit=False)
+                parcelle.exploitation = exploitation
+                parcelle.save()
+                campagne = campagne_form.save(commit=False)
+                campagne.parcelle = parcelle
+                campagne.save()
             messages.success(request, _("Parcelle créée."))
             return redirect("parcelles:detail", pk=parcelle.pk)
     else:
         form = ParcelleForm()
+        campagne_form = ParcelleCampagneForm()
 
     return render(
         request,
         "parcelles/form.html",
-        {"form": form, "page_title": _("Nouvelle parcelle"), "is_create": True},
+        {"form": form, "campagne_form": campagne_form,
+         "page_title": _("Nouvelle parcelle"), "is_create": True},
     )
 
 
@@ -154,11 +163,97 @@ def parcelle_create(request):
 def parcelle_detail(request, pk):
     exploitation = _exploitation_or_redirect(request)
     parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+
+    center = None
+    if parcelle.latitude is not None and parcelle.longitude is not None:
+        center = [parcelle.latitude, parcelle.longitude]
+    elif parcelle.boundaries:
+        c = _bounds_center(parcelle.boundaries)
+        if c:
+            center = [c[0], c[1]]
+
+    geojson = None
+    if parcelle.boundaries:
+        geojson = {
+            "type": "Feature",
+            "geometry": parcelle.boundaries,
+            "properties": {"name": parcelle.name},
+        }
+
+    # Campagne affichée : celle demandée (?campagne=<id>), sinon la plus récente.
+    campagnes = parcelle.campagnes.all()
+    campagne = None
+    sel_id = request.GET.get("campagne")
+    if sel_id:
+        campagne = campagnes.filter(pk=sel_id).first()
+    if campagne is None:
+        campagne = parcelle.campagne_courante
+
     return render(
         request,
         "parcelles/detail.html",
-        {"parcelle": parcelle, "page_title": parcelle.name},
+        {
+            "parcelle": parcelle,
+            "campagnes": campagnes,
+            "campagne": campagne,
+            "crop_stages": campagne.crop_stages.all() if campagne else [],
+            "analyses_sol": parcelle.analyses_sol.all(),
+            "geojson": geojson,
+            "map_center": center,
+            "page_title": parcelle.name,
+        },
     )
+
+
+@login_required
+def campagne_create(request, parcelle_pk):
+    exploitation = _exploitation_or_redirect(request)
+    parcelle = get_object_or_404(Parcelle, pk=parcelle_pk, exploitation=exploitation)
+    if request.method == "POST":
+        form = ParcelleCampagneForm(request.POST)
+        form.instance.parcelle = parcelle
+        if form.is_valid():
+            campagne = form.save()
+            messages.success(request, _("Campagne ajoutée."))
+            return redirect(f"{parcelle.get_absolute_url()}?campagne={campagne.pk}")
+    else:
+        form = ParcelleCampagneForm()
+    return render(request, "parcelles/campagne_form.html", {
+        "form": form, "parcelle": parcelle, "page_title": _("Nouvelle campagne"),
+    })
+
+
+@login_required
+def campagne_edit(request, pk):
+    exploitation = _exploitation_or_redirect(request)
+    campagne = get_object_or_404(ParcelleCampagne, pk=pk, parcelle__exploitation=exploitation)
+    parcelle = campagne.parcelle
+    if request.method == "POST":
+        form = ParcelleCampagneForm(request.POST, instance=campagne)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Campagne mise à jour."))
+            return redirect(f"{parcelle.get_absolute_url()}?campagne={campagne.pk}")
+    else:
+        form = ParcelleCampagneForm(instance=campagne)
+    return render(request, "parcelles/campagne_form.html", {
+        "form": form, "parcelle": parcelle, "campagne": campagne,
+        "page_title": _("Modifier la campagne %(l)s") % {"l": campagne.libelle},
+    })
+
+
+@login_required
+def campagne_delete(request, pk):
+    exploitation = _exploitation_or_redirect(request)
+    campagne = get_object_or_404(ParcelleCampagne, pk=pk, parcelle__exploitation=exploitation)
+    parcelle = campagne.parcelle
+    if request.method == "POST":
+        campagne.delete()
+        messages.success(request, _("Campagne supprimée."))
+        return redirect("parcelles:detail", pk=parcelle.pk)
+    return render(request, "parcelles/campagne_confirm_delete.html", {
+        "campagne": campagne, "parcelle": parcelle,
+    })
 
 
 def _bounds_center(geom):
@@ -184,10 +279,15 @@ def _bounds_center(geom):
 def parcelle_edit(request, pk):
     exploitation = _exploitation_or_redirect(request)
     parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+    campagne = parcelle.campagne_courante  # éditée en même temps que la parcelle
     if request.method == "POST":
         form = ParcelleForm(request.POST, instance=parcelle)
-        if form.is_valid():
-            form.save()
+        campagne_form = ParcelleCampagneForm(request.POST, instance=campagne)
+        campagne_form.instance.parcelle = parcelle
+        if form.is_valid() and campagne_form.is_valid():
+            with transaction.atomic():
+                form.save()
+                campagne_form.save()
             messages.success(request, _("Parcelle mise à jour."))
             return redirect("parcelles:detail", pk=parcelle.pk)
     else:
@@ -198,10 +298,12 @@ def parcelle_edit(request, pk):
                 parcelle.latitude, parcelle.longitude = center
                 parcelle.save(update_fields=["latitude", "longitude"])
         form = ParcelleForm(instance=parcelle)
+        campagne_form = ParcelleCampagneForm(instance=campagne)
     return render(
         request,
         "parcelles/form.html",
-        {"form": form, "parcelle": parcelle, "page_title": _("Modifier %(n)s") % {"n": parcelle.name}},
+        {"form": form, "campagne_form": campagne_form, "parcelle": parcelle,
+         "page_title": _("Modifier %(n)s") % {"n": parcelle.name}},
     )
 
 

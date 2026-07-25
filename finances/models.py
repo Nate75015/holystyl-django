@@ -51,7 +51,6 @@ class Revenu(models.Model):
 
     exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="revenus")
     parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.SET_NULL, null=True, blank=True)
-    saison = models.ForeignKey("agronomie.Saison", on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField()
     categorie = models.CharField(max_length=20, choices=Categorie.choices, default=Categorie.AUTRE)
     montant = models.FloatField()

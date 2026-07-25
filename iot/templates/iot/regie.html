@@ -2,69 +2,97 @@
 {% load i18n %}
 
 {% block content %}
+{{ initial_readings|json_script:"scada-readings" }}
+{{ initial_status|json_script:"scada-status" }}
 <section class="space-y-5" x-data="scada()">
   <p class="hs-crumb">{% trans "Cultures & terrain · Régie SCADA" %}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
     <h1 class="text-[20px]">{% trans "Régie SCADA" %}</h1>
     <span class="flex items-center gap-2 text-[13px]">
-      <span class="h-2.5 w-2.5 rounded-full" :class="connected ? 'bg-green-500' : 'bg-slate-400'"></span>
-      <span x-text="connected ? '{% trans "Temps réel actif" %}' : '{% trans "Hors ligne" %}'"></span>
+      <span class="h-2.5 w-2.5 rounded-full"
+            :class="connected ? 'bg-green-500' : (reconnecting ? 'bg-amber-500 animate-pulse' : 'bg-slate-400')"></span>
+      <span x-text="connected ? '{% trans "Temps réel actif" %}' : (reconnecting ? '{% trans "Reconnexion…" %}' : '{% trans "Hors ligne" %}')"></span>
+      <span x-show="lastUpdate" x-cloak style="color: var(--text-muted)">· <span x-text="lastUpdate"></span></span>
     </span>
   </div>
+
+  {% if devices %}
+    {# ── Indicateurs live ── #}
+    <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Devices en ligne" %}</p>
+        <p class="mt-1 text-2xl"><span x-text="onlineCount"></span> <span class="text-base" style="color: var(--text-muted)">/ {{ devices|length }}</span></p>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Alertes actives" %}</p>
+        <p class="mt-1 text-2xl" :style="{{ alerts|length }} ? 'color: var(--danger)' : ''">{{ alerts|length }}</p>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Débit total" %}</p>
+        <p class="mt-1 text-2xl"><span x-text="totalFlow ?? '—'"></span> <span class="text-base" style="color: var(--text-muted)">m³/h</span></p>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Puissance totale" %}</p>
+        <p class="mt-1 text-2xl"><span x-text="totalPower ?? '—'"></span> <span class="text-base" style="color: var(--text-muted)">kW</span></p>
+      </div>
+    </div>
+  {% endif %}
 
   {% if alerts %}
     <div class="space-y-2">
       {% for a in alerts %}
         <div class="hs-card border-l-4 {% if a.severity == 'danger' %}border-red-500{% elif a.severity == 'warning' %}border-amber-500{% else %}border-sky-500{% endif %}">
-          <p class="font-medium">{{ a.title }}</p>
-          <p class="text-[13px] mt-1" style="color: var(--text-secondary)">{{ a.message }}</p>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <p class="font-medium">{{ a.title }}</p>
+            <span class="text-[11px]" style="color: var(--text-muted)">{{ a.device.name }} · {{ a.created_at|date:"d/m H:i" }}</span>
+          </div>
+          {% if a.message %}<p class="text-[13px] mt-1" style="color: var(--text-secondary)">{{ a.message }}</p>{% endif %}
         </div>
       {% endfor %}
     </div>
   {% endif %}
 
-  {% if devices %}
-    <div class="grid gap-[10px] sm:grid-cols-2 lg:grid-cols-3">
-      {% for d in devices %}
-        <div class="hs-card" data-device-id="{{ d.id }}"
-             :class="(status[{{ d.id }}] || '{{ d.status }}') === 'online' ? 'glow-teal' : ''">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="h-2.5 w-2.5 rounded-full"
-                    :class="(status[{{ d.id }}] || '{{ d.status }}') === 'online' ? 'status-online' : 'status-offline'"></span>
-              <p class="font-medium">{{ d.name }}</p>
-            </div>
-            <span class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)"
-                  x-text="status[{{ d.id }}] || '{{ d.status }}'"></span>
-          </div>
-          <p class="text-[12px]" style="color: var(--text-secondary)">{{ d.get_device_type_display }} · {{ d.get_brand_display }}</p>
-          <div class="mt-4 grid grid-cols-2 gap-[10px]">
-            <div class="hs-tile">
-              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Débit" %}</p>
-              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.flow ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">m³/h</span></p>
-            </div>
-            <div class="hs-tile">
-              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Pression" %}</p>
-              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.pressure ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">bar</span></p>
-            </div>
-            <div class="hs-tile">
-              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Puissance" %}</p>
-              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.power ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">kW</span></p>
-            </div>
-            <div class="hs-tile">
-              <p class="text-[11px] uppercase" style="color: var(--text-muted)">{% trans "Humidité" %}</p>
-              <p class="text-[18px]"><span x-text="readings[{{ d.id }}]?.soil ?? '—'"></span> <span class="text-[12px]" style="color: var(--text-secondary)">%</span></p>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="hs-card">
-      <p class="text-[15px] font-medium">{% trans "Aucun device IoT connecté" %}</p>
-      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez-en via l'admin ou la page Capteurs." %}</p>
-    </div>
-  {% endif %}
+  <div class="hs-card overflow-x-auto">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Nom" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Statut" %}</th>
+          <th class="num">{% trans "Débit" %}</th>
+          <th class="num">{% trans "Pression" %}</th>
+          <th class="num">{% trans "Puissance" %}</th>
+          <th class="num">{% trans "Humidité" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in devices %}
+          <tr data-device-id="{{ d.id }}">
+            <td class="font-medium">{{ d.name }}</td>
+            <td style="color: var(--text-secondary)">{{ d.get_device_type_display }} · {{ d.get_brand_display }}{% if d.parcelle %} · {{ d.parcelle.name }}{% endif %}</td>
+            <td>
+              <span class="inline-flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full"
+                      :class="(status[{{ d.id }}] || '{{ d.status }}') === 'online' ? 'status-online' : 'status-offline'"></span>
+                <span class="text-[12px] uppercase tracking-wide" style="color: var(--text-muted)"
+                      x-text="status[{{ d.id }}] || '{{ d.status }}'"></span>
+              </span>
+            </td>
+            <td class="num"><span x-text="readings[{{ d.id }}]?.flow ?? '—'"></span> <span class="text-[11px]" style="color: var(--text-muted)">m³/h</span></td>
+            <td class="num"><span x-text="readings[{{ d.id }}]?.pressure ?? '—'"></span> <span class="text-[11px]" style="color: var(--text-muted)">bar</span></td>
+            <td class="num"><span x-text="readings[{{ d.id }}]?.power ?? '—'"></span> <span class="text-[11px]" style="color: var(--text-muted)">kW</span></td>
+            <td class="num"><span x-text="readings[{{ d.id }}]?.soil ?? '—'"></span> <span class="text-[11px]" style="color: var(--text-muted)">%</span></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not devices %}
+      <div class="p-6 text-center">
+        <p class="text-[15px] font-medium">{% trans "Aucun device IoT connecté" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ajoutez-en via l'admin ou la page Capteurs." %}</p>
+      </div>
+    {% endif %}
+  </div>
 </section>
 {% endblock %}
 
@@ -73,25 +101,68 @@
   function scada() {
     return {
       connected: false,
-      readings: {},
-      status: {},
+      reconnecting: false,
+      lastUpdate: '',
+      readings: JSON.parse(document.getElementById('scada-readings').textContent),
+      status: JSON.parse(document.getElementById('scada-status').textContent),
+      _ws: null,
+      _retry: 0,
+      _timer: null,
+
+      get onlineCount() {
+        return Object.values(this.status).filter(s => s === 'online').length;
+      },
+      get totalFlow() { return this._sum('flow'); },
+      get totalPower() { return this._sum('power'); },
+      _sum(key) {
+        let sum = 0, any = false;
+        for (const id in this.readings) {
+          const v = this.readings[id] && this.readings[id][key];
+          if (v != null) { sum += v; any = true; }
+        }
+        return any ? Math.round(sum * 10) / 10 : null;
+      },
+
       init() {
-        var proto = location.protocol === 'https:' ? 'wss' : 'ws';
-        var ws = new WebSocket(proto + '://' + location.host + '/ws/scada/');
-        ws.onopen = () => { this.connected = true; };
-        ws.onclose = () => { this.connected = false; };
+        this.connect();
+        // Ferme proprement le socket en quittant la page.
+        window.addEventListener('beforeunload', () => { if (this._ws) this._ws.close(); });
+      },
+
+      connect() {
+        const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+        let ws;
+        try {
+          ws = new WebSocket(proto + '://' + location.host + '/ws/scada/');
+        } catch (e) {
+          this._scheduleReconnect();
+          return;
+        }
+        this._ws = ws;
+        ws.onopen = () => { this.connected = true; this.reconnecting = false; this._retry = 0; };
+        ws.onclose = () => { this.connected = false; this._scheduleReconnect(); };
+        ws.onerror = () => { ws.close(); };
         ws.onmessage = (e) => {
-          var msg = JSON.parse(e.data);
+          let msg;
+          try { msg = JSON.parse(e.data); } catch (err) { return; }
           if (msg.event === 'telemetry') {
             this.readings[msg.deviceId] = {
               flow: msg.flowRateM3h, pressure: msg.pressureBar,
               power: msg.powerKw, soil: msg.soilMoisture,
             };
-            this.status[msg.deviceId] = msg.status;
+            if (msg.status) this.status[msg.deviceId] = msg.status;
+            this.lastUpdate = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
           } else if (msg.event === 'device_status') {
             this.status[msg.deviceId] = msg.status;
           }
         };
+      },
+
+      _scheduleReconnect() {
+        if (this._timer) return;  // reconnexion déjà planifiée
+        this.reconnecting = true;
+        const delay = Math.min(30000, 1000 * Math.pow(2, this._retry++));  // backoff exponentiel, plafonné à 30 s
+        this._timer = setTimeout(() => { this._timer = null; this.connect(); }, delay);
       },
     };
   }

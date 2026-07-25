@@ -169,6 +169,27 @@
   }
   .hs-btn-outline:hover { background: var(--surface-alt); color: var(--text); }
 
+  /* Petit bouton pastille (outils d'un champ : dictée, reformulation IA…) */
+  .hs-chip-btn {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium transition disabled:opacity-50;
+    color: var(--text-secondary); border: 0.5px solid var(--border);
+  }
+  .hs-chip-btn:hover { background: var(--surface-alt); color: var(--text); }
+  .hs-chip-btn.is-recording { color: var(--danger); border-color: var(--danger); }
+  .hs-chip-btn-active { color: var(--action); border-color: var(--action); font-weight: 500; }
+
+  /* Liste de suggestions (recherche d'adresse) */
+  .hs-suggestions {
+    @apply absolute z-50 mt-1 max-h-56 w-full overflow-y-auto rounded-[10px];
+    background: var(--surface); border: 0.5px solid var(--border-strong);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  }
+  .hs-suggestion {
+    @apply block w-full px-3 py-2 text-left text-[13px] transition;
+    color: var(--text);
+  }
+  .hs-suggestion:hover { background: var(--surface-alt); }
+
   /* ── Onglets de statut ── */
   .hs-tab {
     @apply inline-flex items-center text-sm transition;
@@ -188,6 +209,22 @@
   .hs-badge-patrimoine { background: var(--patrimoine-bg); color: var(--patrimoine-fg); }
   .hs-badge-msa        { background: var(--msa-bg);        color: var(--msa-fg); }
   .hs-badge-neutral    { background: var(--surface-alt);   color: var(--text-secondary); }
+
+  /* ── Pastille de statut ── */
+  .hs-pill {
+    @apply inline-flex items-center;
+    padding: 2px 9px; border-radius: 99px; font-size: 12px; font-weight: 500;
+  }
+
+  /* ── Liste de définitions (clé / valeur) ── */
+  .hs-dl {
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+    gap: 6px 12px;
+    font-size: 13px;
+  }
+  .hs-dl dt { color: var(--text-muted); }
+  .hs-dl dd { text-align: right; }
 
   /* ── Table ── */
   .hs-table { width: 100%; font-size: 13px; border-collapse: collapse; }
