@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ q: '', filtre: false }">
+
+  <p class="hs-crumb">{% trans "Cultures & Élevage" %} · {% trans "Campagnes" %}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Campagnes" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="filtre = !filtre" class="hs-btn-outline">{% trans "Filtrer" %}</button>
+      <a href="{% url 'parcelles:campagne_new' %}" class="hs-btn-primary">{% trans "Nouvelle campagne" %}</a>
+    </div>
+  </div>
+
+  {# ── Campagne affichée ── #}
+  {% if libelles %}
+    <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+      <a href="{% url 'parcelles:campagnes' %}?campagne=" class="hs-tab whitespace-nowrap {% if not selection %}hs-tab-active{% endif %}">{% trans "Toutes" %}</a>
+      {% for libelle in libelles %}
+        <a href="{% url 'parcelles:campagnes' %}?campagne={{ libelle|urlencode }}"
+           class="hs-tab whitespace-nowrap {% if selection == libelle %}hs-tab-active{% endif %}">
+          {{ libelle }}{% if libelle == courante %} <span class="text-[11px]" style="color: var(--text-muted)">· {% trans "en cours" %}</span>{% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div x-show="filtre" x-cloak class="flex items-center gap-2">
+    <input type="text" x-model="q" placeholder="{% trans 'Rechercher une parcelle ou une culture…' %}" class="max-w-xs">
+  </div>
+
+  <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Campagnes" %}</p><p class="text-[22px]">{{ kpi_count }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Parcelles couvertes" %}</p><p class="text-[22px]">{{ kpi_parcelles }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Surface" %}</p><p class="text-[22px]">{{ kpi_surface }} ha</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Cultures" %}</p><p class="text-[22px]">{{ kpi_cultures }}</p></div>
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Campagne" %}</th>
+          <th>{% trans "Parcelle" %}</th>
+          <th>{% trans "Culture" %}</th>
+          <th>{% trans "Variété" %}</th>
+          <th>{% trans "Irrigation" %}</th>
+          <th class="num">{% trans "Surface" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in campagnes %}
+          <tr x-show="!q || '{{ c.parcelle.name|escapejs }} {{ c.culture|escapejs }} {{ c.variety|escapejs }}'.toLowerCase().includes(q.toLowerCase())">
+            <td><span class="hs-badge hs-badge-neutral">{{ c.libelle }}</span></td>
+            <td><a href="{% url 'parcelles:detail' c.parcelle.pk %}?campagne={{ c.pk }}" style="color: inherit">{{ c.parcelle.name }}</a></td>
+            <td>{{ c.culture|default:"—" }}</td>
+            <td style="color: var(--text-secondary)">{{ c.variety|default:"—" }}</td>
+            <td style="color: var(--text-secondary)">{{ c.get_irrigation_type_display|default:"—" }}</td>
+            <td class="num" style="color: var(--text-secondary)">{% if c.parcelle.area %}{{ c.parcelle.area }} ha{% else %}—{% endif %}</td>
+            <td class="num">
+              <div class="flex items-center justify-end gap-2">
+                <a href="{% url 'parcelles:detail' c.parcelle.pk %}?campagne={{ c.pk }}" title="{% trans 'Consulter' %}" style="color: var(--text-muted)">
+                  <span class="material-icons-round text-[17px]">visibility</span>
+                </a>
+                <a href="{% url 'parcelles:campagne_edit' c.pk %}" title="{% trans 'Modifier' %}" style="color: var(--text-muted)">
+                  <span class="material-icons-round text-[17px]">edit</span>
+                </a>
+                <a href="{% url 'parcelles:campagne_delete' c.pk %}?next=campagnes" title="{% trans 'Supprimer' %}" style="color: var(--text-muted)">
+                  <span class="material-icons-round text-[17px]">delete</span>
+                </a>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not campagnes %}
+      <div class="px-14 py-10 text-center">
+        <p class="text-[15px] font-medium">{% trans "Aucune campagne enregistrée" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Une campagne porte la culture et l’irrigation d’une parcelle sur une saison culturale." %}</p>
+        {% if parcelles %}
+          <a href="{% url 'parcelles:campagne_new' %}" class="hs-btn-primary mt-4">{% trans "Nouvelle campagne" %}</a>
+        {% else %}
+          <a href="{% url 'parcelles:list' %}" class="hs-btn-primary mt-4">{% trans "Créer une parcelle" %}</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% load i18n %}
+{% comment %}
+  Libellé de campagne avec deux flèches pour reculer ou avancer d'une campagne
+  (« 2025/2026 » ↔ « 2026/2027 »). Attend `field`.
+{% endcomment %}
+<div>
+  <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)" for="{{ field.id_for_label }}">{{ field.label }}</label>
+  <div class="flex items-center gap-2">
+    <button type="button" class="hs-step-btn" title="{% trans 'Campagne précédente' %}"
+            onclick="hsCampagneShift('{{ field.id_for_label }}', -1)">
+      <span class="material-icons-round text-[18px]">chevron_left</span>
+    </button>
+    {# min-w-0 : laisse l'input rétrécir au lieu de pousser la flèche droite hors de sa colonne. #}
+    <div class="min-w-0 flex-1">{{ field }}</div>
+    <button type="button" class="hs-step-btn" title="{% trans 'Campagne suivante' %}"
+            onclick="hsCampagneShift('{{ field.id_for_label }}', 1)">
+      <span class="material-icons-round text-[18px]">chevron_right</span>
+    </button>
+  </div>
+  {% if field.help_text %}<p class="mt-1 text-[11px]" style="color: var(--text-muted)">{{ field.help_text|safe }}</p>{% endif %}
+  {% for error in field.errors %}<p class="mt-1 text-[11px]" style="color: var(--danger)">{{ error }}</p>{% endfor %}
+</div>

@@ -96,6 +96,7 @@
       </h2>
       {% if campagne %}
         <dl class="hs-dl">
+          <dt>{% trans "Type de culture" %}</dt><dd>{{ campagne.type_culture_label|default:"—" }}</dd>
           <dt>{% trans "Culture" %}</dt><dd>{{ campagne.culture|default:"—" }}</dd>
           <dt>{% trans "Variété" %}</dt><dd>{{ campagne.variety|default:"—" }}</dd>
           <dt>{% trans "Coefficient Kc" %}</dt><dd>{{ campagne.kc_value }}</dd>

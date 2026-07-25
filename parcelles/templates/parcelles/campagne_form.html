@@ -8,13 +8,17 @@
   {# ── En-tête ── #}
   <div>
     <p class="hs-crumb">
-      <a href="{% url 'parcelles:list' %}" style="color: inherit">{% trans "Cadastre" %} · {% trans "Parcelles" %}</a>
-      · <a href="{% url 'parcelles:detail' parcelle.pk %}" style="color: inherit">{{ parcelle.name }}</a>
+      {% if parcelle %}
+        <a href="{% url 'parcelles:list' %}" style="color: inherit">{% trans "Cadastre" %} · {% trans "Parcelles" %}</a>
+        · <a href="{% url 'parcelles:detail' parcelle.pk %}" style="color: inherit">{{ parcelle.name }}</a>
+      {% else %}
+        <a href="{% url 'parcelles:campagnes' %}" style="color: inherit">{% trans "Cultures & Élevage" %} · {% trans "Campagnes" %}</a>
+      {% endif %}
     </p>
     <div class="flex flex-wrap items-center justify-between gap-3">
       <h1 class="text-[20px]">{{ page_title }}</h1>
       <div class="flex items-center gap-2">
-        <a href="{% url 'parcelles:detail' parcelle.pk %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+        <a href="{{ retour_url }}" class="hs-btn-outline">{% trans "Annuler" %}</a>
         <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
       </div>
     </div>
@@ -27,8 +31,18 @@
   {# ── Campagne ── #}
   <div class="hs-card p-5 space-y-4">
     <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">event_repeat</span>{% trans "Campagne" %}</h2>
-    <div class="sm:max-w-xs">
-      {% include "parcelles/_field.html" with field=form.libelle %}
+    <div class="grid gap-4 sm:grid-cols-2 sm:max-w-2xl">
+      {% if parcelles %}
+        <div>
+          <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)" for="campagne-parcelle">{% trans "Parcelle" %}</label>
+          <select id="campagne-parcelle" name="parcelle" required>
+            <option value="">{% trans "— Choisir une parcelle —" %}</option>
+            {% for p in parcelles %}<option value="{{ p.pk }}"{% if parcelle_choisie == p.pk %} selected{% endif %}>{{ p.name }}</option>{% endfor %}
+          </select>
+          {% if erreur_parcelle %}<p class="mt-1 text-[11px]" style="color: var(--danger)">{{ erreur_parcelle }}</p>{% endif %}
+        </div>
+      {% endif %}
+      {% include "parcelles/_campagne_field.html" with field=form.libelle %}
     </div>
   </div>
 
@@ -39,15 +53,18 @@
     <div class="hs-card p-5 space-y-4">
       <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">grass</span>{% trans "Culture" %}</h2>
       <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=parcelle_form.type_agriculture %}
         {% include "parcelles/_field.html" with field=form.culture %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
         {% include "parcelles/_field.html" with field=form.variety %}
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2">
         {% include "parcelles/_field.html" with field=form.kc_value %}
-        {% include "parcelles/_field.html" with field=form.tree_age_years %}
       </div>
       <div class="grid gap-4 sm:grid-cols-2">
+        {% include "parcelles/_field.html" with field=form.tree_age_years %}
         {% include "parcelles/_field.html" with field=form.planting_date %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
         {% include "parcelles/_field.html" with field=form.plant_density_per_ha %}
       </div>
     </div>
@@ -73,7 +90,7 @@
 
   {# ── Barre d'actions ── #}
   <div class="flex items-center justify-end gap-2 pt-1">
-    <a href="{% url 'parcelles:detail' parcelle.pk %}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+    <a href="{{ retour_url }}" class="hs-btn-outline">{% trans "Annuler" %}</a>
     <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
   </div>
 </form>
