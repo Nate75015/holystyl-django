@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ modal: false }">
+
+  {# ── En-tête ── #}
+  <div>
+    <p class="hs-crumb">
+      <a href="{% url 'client:clients' %}" style="color: inherit">{% trans "Clients" %}</a> · {{ client.nom_complet }}
+    </p>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <h1 class="text-[20px]">{{ client.nom_complet }}</h1>
+        {% if client.statut == 'actif' %}
+          <span class="hs-pill" style="background: var(--success-subtle, rgba(22,163,74,.12)); color: var(--success)">{{ client.get_statut_display }}</span>
+        {% elif client.statut == 'prospect' %}
+          <span class="hs-pill" style="background: var(--warning-subtle, rgba(245,158,11,.12)); color: var(--warning)">{{ client.get_statut_display }}</span>
+        {% else %}
+          <span class="hs-pill" style="background: var(--surface-alt); color: var(--text-muted)">{{ client.get_statut_display }}</span>
+        {% endif %}
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" @click="modal = true" class="hs-btn-primary">{% trans "Modifier" %}</button>
+        <form method="post" action="{% url 'client:delete' client.pk %}" onsubmit="return confirm('{% trans "Supprimer ce client ?" %}')">
+          {% csrf_token %}
+          <button type="submit" class="hs-btn-outline" style="color: var(--danger)">{% trans "Supprimer" %}</button>
+        </form>
+      </div>
+    </div>
+    <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+      {{ client.type_label }}
+      {% if client.adresse_complete %} · {{ client.adresse_complete }}{% endif %}
+    </p>
+  </div>
+
+  {# ── Tuiles clés ── #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+    {% if client.est_particulier %}
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Téléphone" %}</p>
+        <p class="mt-1 text-2xl">{{ client.telephone|default:"—" }}</p>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Ville" %}</p>
+        <p class="mt-1 text-2xl">{{ client.ville|default:"—" }}</p>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Client depuis" %}</p>
+        <p class="mt-1 text-2xl">{{ client.created_at|date:"m/Y" }}</p>
+      </div>
+    {% else %}
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "CA annuel" %}</p>
+        <p class="mt-1 text-2xl">{{ client.ca_annuel|default_if_none:"—" }}{% if client.ca_annuel %} <span class="text-base" style="color: var(--text-muted)">€</span>{% endif %}</p>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Délai de paiement" %}</p>
+        <p class="mt-1 text-2xl">{{ client.delai_paiement_jours|default_if_none:"—" }}{% if client.delai_paiement_jours %} <span class="text-base" style="color: var(--text-muted)">{% trans "j" %}</span>{% endif %}</p>
+      </div>
+      <div class="hs-tile">
+        <p class="text-[12px]" style="color: var(--text-muted)">{% trans "SIRET" %}</p>
+        <p class="mt-1 text-2xl">{{ client.siret|default:"—" }}</p>
+      </div>
+    {% endif %}
+  </div>
+
+  {# ── Coordonnées ── #}
+  <div class="hs-card p-4">
+    <h2 class="mb-3 text-[15px] font-medium">{% trans "Coordonnées" %}</h2>
+    <dl class="grid grid-cols-1 gap-x-6 gap-y-2 text-[13px] sm:grid-cols-2">
+      {% if not client.est_particulier %}
+        <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Contact principal" %}</dt><dd>{{ client.contact_principal|default:"—" }}</dd></div>
+      {% endif %}
+      <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Email" %}</dt><dd>{% if client.email %}<a href="mailto:{{ client.email }}" style="color: var(--action)">{{ client.email }}</a>{% else %}—{% endif %}</dd></div>
+      <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Téléphone" %}</dt><dd>{% if client.telephone %}<a href="tel:{{ client.telephone }}" style="color: var(--action)">{{ client.telephone }}</a>{% else %}—{% endif %}</dd></div>
+      {% if not client.est_particulier %}
+        <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Site web" %}</dt><dd>{% if client.site_web %}<a href="{{ client.site_web }}" target="_blank" rel="noopener" style="color: var(--action)">{{ client.site_web }}</a>{% else %}—{% endif %}</dd></div>
+      {% endif %}
+      <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Adresse" %}</dt><dd class="text-right">{{ client.adresse_complete|default:"—" }}</dd></div>
+      {% if not client.est_particulier %}
+        <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "TVA intracommunautaire" %}</dt><dd>{{ client.tva_intracom|default:"—" }}</dd></div>
+      {% endif %}
+    </dl>
+    {% if client.notes %}
+      <p class="mt-4 whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ client.notes }}</p>
+    {% endif %}
+  </div>
+
+  {% include "client/_client_modal.html" %}
+</section>
+{% endblock %}

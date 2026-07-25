@@ -122,6 +122,12 @@ def layout(request):
             ],
         },
         {
+            "label": _("Clients"), "key": "clients",
+            "items": [
+                {"label": _("Clients"), "url_name": "client:clients", "icon": "handshake"},
+            ],
+        },
+        {
             "label": _("Mon compte"), "key": "compte",
             "items": [
                 {"label": _("Mon exploitation"), "url_name": "exploitations:settings", "icon": "home_work"},
@@ -141,7 +147,7 @@ def layout(request):
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
         "protection": "lock", "economie": "payments", "environnement": "park",
-        "rh": "groups", "contrat": "gavel", "compte": "person",
+        "rh": "groups", "contrat": "gavel", "clients": "handshake", "compte": "person",
     }
     for section in nav_sections:
         section["icon"] = section_icons.get(section["key"], "folder")
