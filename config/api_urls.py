@@ -7,7 +7,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from administration.api import smtp_config, smtp_send_test, smtp_test
-from agronomie.api import CultureKcViewSet, FertigationViewSet, SaisonViewSet, TypeSolViewSet
+from agronomie.api import CultureKcViewSet, FertigationViewSet, TypeSolViewSet
 from analyses.api import AnalysisResultViewSet, BiodiversiteFicheViewSet
 from analyse_sol.api import AnalyseSolViewSet
 from equipe.api import TaskViewSet, TeamMemberViewSet
@@ -55,15 +55,19 @@ from irrigation.api import (
     WaterMeterViewSet,
     WaterQuotaViewSet,
 )
-from parcelles.api import CropStageViewSet, ParcelleViewSet
+from parcelles.api import (
+    CropStageViewSet,
+    ParcelleCampagneViewSet,
+    ParcelleViewSet,
+)
 
 router = DefaultRouter()
 # Tranche 1
 router.register("parcelles", ParcelleViewSet, basename="parcelle")
+router.register("parcelle-campagnes", ParcelleCampagneViewSet, basename="parcellecampagne")
 router.register("crop-stages", CropStageViewSet, basename="cropstage")
 router.register("cultures-kc", CultureKcViewSet, basename="culturekc")
 router.register("types-sol", TypeSolViewSet, basename="typesol")
-router.register("saisons", SaisonViewSet, basename="saison")
 # Tranche 2 — IoT
 router.register("devices", IotDeviceViewSet, basename="device")
 router.register("alerts", IotAlertViewSet, basename="alert")

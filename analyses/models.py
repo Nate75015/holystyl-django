@@ -50,7 +50,6 @@ class AnalysisResult(models.Model):
 class BiodiversiteFiche(models.Model):
     exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="biodiversite_fiches")
     parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.CASCADE, related_name="biodiversite_fiches")
-    saison = models.ForeignKey("agronomie.Saison", on_delete=models.SET_NULL, null=True, blank=True)
     score = models.FloatField(default=0)
     nb_especes_vegetales = models.IntegerField(default=0)
     nb_especes_animales = models.IntegerField(default=0)

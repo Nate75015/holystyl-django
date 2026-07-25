@@ -1,6 +1,6 @@
-"""Référentiels agronomiques : coefficients Kc par culture, types de sol, saisons.
+"""Référentiels agronomiques : coefficients Kc par culture, types de sol.
 
-Fidèle aux tables Drizzle `cultures_kc`, `types_sol`, `saisons`.
+Fidèle aux tables Drizzle `cultures_kc`, `types_sol`.
 """
 
 from django.db import models
@@ -217,29 +217,6 @@ class Engrais(TimeStampedModel):
         verbose_name = _("engrais")
         verbose_name_plural = _("engrais")
         ordering = ("nom",)
-
-    def __str__(self):
-        return self.nom
-
-
-class Saison(TimeStampedModel):
-    """Saison agronomique d'une exploitation."""
-
-    exploitation = models.ForeignKey(
-        "exploitations.Exploitation",
-        on_delete=models.CASCADE,
-        related_name="saisons",
-    )
-    nom = models.CharField(_("nom"), max_length=100)
-    date_debut = models.DateField(_("date de début"))
-    date_fin = models.DateField(_("date de fin"))
-    active = models.BooleanField(_("active"), default=False)
-    notes = models.TextField(blank=True)
-
-    class Meta:
-        verbose_name = _("saison")
-        verbose_name_plural = _("saisons")
-        ordering = ("-date_debut",)
 
     def __str__(self):
         return self.nom
