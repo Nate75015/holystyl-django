@@ -89,3 +89,30 @@ def test_stream_endpoint_not_configured(client, user_exploitation, monkeypatch):
     assert resp.status_code == 200
     body = b"".join(resp.streaming_content).decode()
     assert "data:" in body and "done" in body
+
+
+@pytest.mark.django_db
+def test_reformuler_returns_ai_text(client, user_exploitation, monkeypatch):
+    from ia import views
+
+    user, _exploitation = user_exploitation
+    monkeypatch.setattr(views.llm, "is_configured", lambda: True)
+    monkeypatch.setattr(views.llm, "generate_text", lambda messages, **kw: '"Parcelle irriguée le 12 juin."')
+    client.force_login(user)
+
+    resp = client.post("/assistant/reformuler/", {"text": "arosé la parcelle le 12", "contexte": "Notes"})
+    assert resp.status_code == 200
+    assert resp.json()["text"] == "Parcelle irriguée le 12 juin."
+
+
+@pytest.mark.django_db
+def test_reformuler_requires_text_and_configured_ai(client, user_exploitation, monkeypatch):
+    from ia import views
+
+    user, _exploitation = user_exploitation
+    client.force_login(user)
+
+    assert client.post("/assistant/reformuler/", {"text": "  "}).status_code == 400
+
+    monkeypatch.setattr(views.llm, "is_configured", lambda: False)
+    assert client.post("/assistant/reformuler/", {"text": "un texte"}).status_code == 503

@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "environnement",
     "finances",
     "contrat",
+    "client",
     "reseaux",
     "storage",
     "public",
@@ -216,6 +217,11 @@ GEMINI_API_KEY = env("GEMINI_API_KEY", "")
 GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
 MISTRAL_API_KEY = env("MISTRAL_API_KEY", "")
 MISTRAL_MODEL = env("MISTRAL_MODEL", "mistral-small-latest")
+
+# ── Cartographie / adresses — Google Places (optionnel) ─────────────
+# Sans clé, l'autocomplétion d'adresse bascule sur la Base Adresse Nationale
+# (api-adresse.data.gouv.fr), gratuite et sans inscription.
+GOOGLE_MAPS_API_KEY = env("GOOGLE_MAPS_API_KEY", "")
 
 # ── Cron : token de l'endpoint de capture météo planifiée ───────────
 CRON_TOKEN = env("CRON_TOKEN", "")
