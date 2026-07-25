@@ -1,0 +1,54 @@
+{% load i18n %}
+<div x-show="lotModal" x-cloak x-transition.opacity @keydown.escape.window="lotModal = false"
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="lotModal = false" class="flex w-full max-w-5xl justify-center">
+    <div class="hs-popover w-full p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[16px] font-medium">{% trans "Nouveau lot" %}</h2>
+        <button type="button" @click="lotModal = false" style="color: var(--text-muted)">✕</button>
+      </div>
+      <form method="post" action="{% url 'aquaculture:lot_create' bassin.pk %}" class="space-y-3">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="lot-espece" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Espèce" %} <span style="color: var(--danger)">*</span></label>
+            <input id="lot-espece" name="espece" required placeholder="{% trans 'ex: Truite arc-en-ciel' %}">
+          </div>
+          <div>
+            <label for="lot-souche" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Souche / origine" %}</label>
+            <input id="lot-souche" name="souche" placeholder="{% trans 'ex: écloserie du Val' %}">
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="lot-effectif" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Effectif" %}</label>
+            <input id="lot-effectif" name="effectif" type="number" min="0" step="1" inputmode="numeric" placeholder="5000">
+          </div>
+          <div>
+            <label for="lot-poids" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Poids moyen (g)" %}</label>
+            <input id="lot-poids" name="poids_moyen_g" type="number" min="0" step="0.1" inputmode="decimal" placeholder="120">
+          </div>
+          <div>
+            <label for="lot-date" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Mise en charge" %}</label>
+            <input id="lot-date" name="date_mise_en_charge" type="date">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="lot-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+            <select id="lot-statut" name="statut_lot">{% for value, label in statuts_lot %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+        </div>
+        <div>
+          <label for="lot-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea id="lot-notes" name="notes" rows="3" placeholder="{% trans 'alimentation, traitements, mortalité…' %}"></textarea>
+          {% include "partials/_ai_text_tools.html" with target="lot-notes" contexte=_("Notes sur un lot aquacole") %}
+        </div>
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="lotModal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

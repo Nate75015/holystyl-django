@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ modal: false, tab: 'tous', q: '', filtre: false }">
+
+  <p class="hs-crumb">{% trans "Aquaculture" %} · {% trans "Bassins" %}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Bassins" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="filtre = !filtre" class="hs-btn-outline">{% trans "Filtrer" %}</button>
+      <button type="button" @click="modal = true" class="hs-btn-primary">{% trans "Nouvelle installation" %}</button>
+    </div>
+  </div>
+
+  <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+    <button type="button" class="hs-tab" :class="tab === 'tous' && 'hs-tab-active'" @click="tab = 'tous'">{% trans "Toutes" %}</button>
+    {% for value, label in statuts %}
+      <button type="button" class="hs-tab whitespace-nowrap" :class="tab === '{{ value }}' && 'hs-tab-active'" @click="tab = '{{ value }}'">{{ label }}</button>
+    {% endfor %}
+  </div>
+
+  <div x-show="filtre" x-cloak class="flex items-center gap-2">
+    <input type="text" x-model="q" placeholder="{% trans 'Rechercher une installation…' %}" class="max-w-xs">
+  </div>
+
+  <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Installations" %}</p><p class="text-[22px]">{{ kpi_count }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Volume total" %}</p><p class="text-[22px]">{{ kpi_volume }} m³</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Lots en élevage" %}</p><p class="text-[22px]">{{ kpi_lots }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Biomasse" %}</p><p class="text-[22px]">{{ kpi_biomasse }} kg</p></div>
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Installation" %}</th>
+          <th>{% trans "Eau" %}</th>
+          <th>{% trans "Statut" %}</th>
+          <th class="num">{% trans "Volume" %}</th>
+          <th class="num">{% trans "Biomasse" %}</th>
+          <th class="num">{% trans "Densité" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in bassins %}
+          <tr x-show="(tab === 'tous' || tab === '{{ b.statut }}') && (!q || '{{ b.nom|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
+            <td><span class="hs-badge hs-badge-neutral">{{ b.get_type_bassin_display }}</span></td>
+            <td><a href="{% url 'aquaculture:detail' b.pk %}" style="color: inherit">{{ b.nom }}</a></td>
+            <td style="color: var(--text-secondary)">{{ b.get_source_eau_display|default:"—" }}</td>
+            <td>
+              {% if b.statut == 'en_service' %}
+                <span class="hs-pill" style="background: var(--success-subtle, rgba(22,163,74,.12)); color: var(--success)">{{ b.get_statut_display }}</span>
+              {% elif b.statut == 'maintenance' or b.statut == 'assec' %}
+                <span class="hs-pill" style="background: var(--warning-subtle, rgba(245,158,11,.12)); color: var(--warning)">{{ b.get_statut_display }}</span>
+              {% else %}
+                <span class="hs-pill" style="background: var(--surface-alt); color: var(--text-muted)">{{ b.get_statut_display }}</span>
+              {% endif %}
+            </td>
+            <td class="num" style="color: var(--text-secondary)">{% if b.volume_m3 %}{{ b.volume_m3 }} m³{% else %}—{% endif %}</td>
+            <td class="num">{{ b.biomasse_kg }} kg</td>
+            <td class="num" style="color: var(--text-secondary)">{% if b.densite_kg_m3 %}{{ b.densite_kg_m3 }} kg/m³{% else %}—{% endif %}</td>
+            <td class="num">
+              <div class="flex items-center justify-end gap-2">
+                <a href="{% url 'aquaculture:detail' b.pk %}" title="{% trans 'Consulter' %}" style="color: var(--text-muted)">
+                  <span class="material-icons-round text-[17px]">visibility</span>
+                </a>
+                <form method="post" action="{% url 'aquaculture:delete' b.pk %}" onsubmit="return confirm('{% trans "Supprimer cette installation et ses lots ?" %}')">
+                  {% csrf_token %}
+                  <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not bassins %}
+      <div class="px-14 py-10 text-center">
+        <p class="text-[15px] font-medium">{% trans "Enregistrez votre première installation" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Étangs, bassins, cages ou tables : suivez le volume, les lots élevés et la densité." %}</p>
+        <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Nouvelle installation" %}</button>
+      </div>
+    {% endif %}
+  </div>
+
+  {% include "aquaculture/_bassin_modal.html" %}
+</section>
+{% endblock %}

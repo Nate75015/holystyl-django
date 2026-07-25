@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ modal: false, lotModal: false }">
+
+  {# ── En-tête ── #}
+  <div>
+    <p class="hs-crumb">
+      <a href="{% url 'aquaculture:bassins' %}" style="color: inherit">{% trans "Aquaculture" %} · {% trans "Bassins" %}</a> · {{ bassin.nom }}
+    </p>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <h1 class="text-[20px]">{{ bassin.nom }}</h1>
+        {% if bassin.statut == 'en_service' %}
+          <span class="hs-pill" style="background: var(--success-subtle, rgba(22,163,74,.12)); color: var(--success)">{{ bassin.get_statut_display }}</span>
+        {% elif bassin.statut == 'maintenance' or bassin.statut == 'assec' %}
+          <span class="hs-pill" style="background: var(--warning-subtle, rgba(245,158,11,.12)); color: var(--warning)">{{ bassin.get_statut_display }}</span>
+        {% else %}
+          <span class="hs-pill" style="background: var(--surface-alt); color: var(--text-muted)">{{ bassin.get_statut_display }}</span>
+        {% endif %}
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" @click="modal = true" class="hs-btn-primary">{% trans "Modifier" %}</button>
+        <form method="post" action="{% url 'aquaculture:delete' bassin.pk %}" onsubmit="return confirm('{% trans "Supprimer cette installation et ses lots ?" %}')">
+          {% csrf_token %}
+          <button type="submit" class="hs-btn-outline" style="color: var(--danger)">{% trans "Supprimer" %}</button>
+        </form>
+      </div>
+    </div>
+    <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+      {{ bassin.get_type_bassin_display }}
+      {% if bassin.get_source_eau_display %} · {% trans "eau" %} : {{ bassin.get_source_eau_display }}{% endif %}
+    </p>
+  </div>
+
+  {# ── Tuiles clés ── #}
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Volume" %}</p>
+      <p class="mt-1 text-2xl">{{ bassin.volume_m3|default_if_none:"—" }}{% if bassin.volume_m3 %} <span class="text-base" style="color: var(--text-muted)">m³</span>{% endif %}</p>
+    </div>
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Surface" %}</p>
+      <p class="mt-1 text-2xl">{{ bassin.surface_m2|default_if_none:"—" }}{% if bassin.surface_m2 %} <span class="text-base" style="color: var(--text-muted)">m²</span>{% endif %}</p>
+    </div>
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Biomasse" %}</p>
+      <p class="mt-1 text-2xl">{{ bassin.biomasse_kg }} <span class="text-base" style="color: var(--text-muted)">kg</span></p>
+    </div>
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Densité" %}</p>
+      <p class="mt-1 text-2xl">{% if bassin.densite_kg_m3 %}{{ bassin.densite_kg_m3 }} <span class="text-base" style="color: var(--text-muted)">kg/m³</span>{% else %}—{% endif %}</p>
+    </div>
+  </div>
+
+  {# ── Caractéristiques ── #}
+  <div class="hs-card p-4">
+    <h2 class="mb-3 text-[15px] font-medium">{% trans "Caractéristiques" %}</h2>
+    <dl class="grid grid-cols-1 gap-x-6 gap-y-2 text-[13px] sm:grid-cols-2">
+      <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Type" %}</dt><dd>{{ bassin.get_type_bassin_display }}</dd></div>
+      <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Source d’eau" %}</dt><dd>{{ bassin.get_source_eau_display|default:"—" }}</dd></div>
+      <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Profondeur moyenne" %}</dt><dd>{% if bassin.profondeur_m %}{{ bassin.profondeur_m }} m{% else %}—{% endif %}</dd></div>
+      <div class="flex justify-between gap-3"><dt style="color: var(--text-secondary)">{% trans "Température cible" %}</dt><dd>{% if bassin.temperature_cible_c %}{{ bassin.temperature_cible_c }} °C{% else %}—{% endif %}</dd></div>
+    </dl>
+    {% if bassin.notes %}
+      <p class="mt-4 whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ bassin.notes }}</p>
+    {% endif %}
+  </div>
+
+  {# ── Lots élevés ── #}
+  <div class="hs-card overflow-hidden">
+    <div class="flex items-center justify-between px-4 pt-4">
+      <h2 class="text-[15px] font-medium">{% trans "Lots élevés" %}</h2>
+      <button type="button" @click="lotModal = true" class="hs-btn-outline">{% trans "Nouveau lot" %}</button>
+    </div>
+    {% if lots %}
+      <table class="hs-table mt-3">
+        <thead>
+          <tr>
+            <th>{% trans "Espèce" %}</th>
+            <th>{% trans "Souche" %}</th>
+            <th class="num">{% trans "Effectif" %}</th>
+            <th class="num">{% trans "Poids moyen" %}</th>
+            <th class="num">{% trans "Biomasse" %}</th>
+            <th>{% trans "Mise en charge" %}</th>
+            <th>{% trans "Statut" %}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lot in lots %}
+            <tr>
+              <td>{{ lot.espece }}</td>
+              <td style="color: var(--text-secondary)">{{ lot.souche|default:"—" }}</td>
+              <td class="num">{{ lot.effectif|default_if_none:"—" }}</td>
+              <td class="num" style="color: var(--text-secondary)">{% if lot.poids_moyen_g %}{{ lot.poids_moyen_g }} g{% else %}—{% endif %}</td>
+              <td class="num">{{ lot.biomasse_kg|floatformat:1 }} kg</td>
+              <td style="color: var(--text-secondary)">{% if lot.date_mise_en_charge %}{{ lot.date_mise_en_charge|date:"d/m/Y" }}{% else %}—{% endif %}</td>
+              <td>
+                {% if lot.statut == 'en_elevage' %}
+                  <span class="hs-pill" style="background: var(--success-subtle, rgba(22,163,74,.12)); color: var(--success)">{{ lot.get_statut_display }}</span>
+                {% else %}
+                  <span class="hs-pill" style="background: var(--surface-alt); color: var(--text-muted)">{{ lot.get_statut_display }}</span>
+                {% endif %}
+              </td>
+              <td class="num">
+                <form method="post" action="{% url 'aquaculture:lot_delete' lot.pk %}" onsubmit="return confirm('{% trans "Supprimer ce lot ?" %}')">
+                  {% csrf_token %}
+                  <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="px-14 py-8 text-center">
+        <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucun lot dans cette installation." %}</p>
+      </div>
+    {% endif %}
+  </div>
+
+  {% include "aquaculture/_bassin_modal.html" %}
+  {% include "aquaculture/_lot_modal.html" %}
+</section>
+{% endblock %}

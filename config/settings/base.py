@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "analyses",
     "analyse_sol",
     "elevage",
+    "aquaculture",
     "meteo",
     "pac",
     "environnement",
