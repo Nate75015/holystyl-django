@@ -142,8 +142,8 @@
   {# ── Modal — Ajouter une zone ── #}
   <div x-show="zoneModal" x-cloak x-transition.opacity @keydown.escape.window="zoneModal = false"
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="zoneModal = false" class="flex w-full max-w-lg justify-center">
-      <div class="hs-popover w-full max-w-lg p-5">
+    <div @click.self="zoneModal = false" class="flex w-full max-w-5xl justify-center">
+      <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center gap-3">
           <h3 class="flex-1 text-[15px] font-medium">{% trans "Ajouter une zone" %}</h3>
           <button type="button" @click="zoneModal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">✕</button>
@@ -203,8 +203,8 @@
   {# ── Modal — Ajouter un programme ── #}
   <div x-show="programModal" x-cloak x-transition.opacity @keydown.escape.window="programModal = false"
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="programModal = false" class="flex w-full max-w-lg justify-center">
-      <div class="hs-popover w-full max-w-lg p-5">
+    <div @click.self="programModal = false" class="flex w-full max-w-5xl justify-center">
+      <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center gap-3">
           <h3 class="flex-1 text-[15px] font-medium">{% trans "Ajouter un programme" %}</h3>
           <button type="button" @click="programModal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">✕</button>
@@ -270,8 +270,8 @@
   {# ── Modal — Ajouter une station ── #}
   <div x-show="stationModal" x-cloak x-transition.opacity @keydown.escape.window="stationModal = false"
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="stationModal = false" class="flex w-full max-w-lg justify-center">
-      <div class="hs-popover w-full max-w-lg p-5">
+    <div @click.self="stationModal = false" class="flex w-full max-w-5xl justify-center">
+      <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center gap-3">
           <h3 class="flex-1 text-[15px] font-medium">{% trans "Ajouter une station" %}</h3>
           <button type="button" @click="stationModal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">✕</button>

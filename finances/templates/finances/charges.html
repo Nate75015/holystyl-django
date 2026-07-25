@@ -137,8 +137,8 @@
   {# ── Modal — Enregistrer une charge ── #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="modal = false" class="flex w-full max-w-lg justify-center">
-      <div class="hs-popover w-full max-w-lg p-5">
+    <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+      <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center justify-between">
           <h3 class="text-[15px] font-medium">{% trans "Enregistrer une charge" %}</h3>
           <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
@@ -191,8 +191,8 @@
   {# ── Modal — Enregistrer un revenu ── #}
   <div x-show="revenuModal" x-cloak x-transition.opacity @keydown.escape.window="revenuModal = false"
        class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="revenuModal = false" class="flex w-full max-w-lg justify-center">
-      <div class="hs-popover w-full max-w-lg p-5">
+    <div @click.self="revenuModal = false" class="flex w-full max-w-5xl justify-center">
+      <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center justify-between">
           <h3 class="text-[15px] font-medium">{% trans "Enregistrer un revenu" %}</h3>
           <button type="button" @click="revenuModal = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>

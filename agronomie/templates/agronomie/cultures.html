@@ -298,7 +298,7 @@
 
   {# ── Modal : formulaire culture (espèce) ── #}
   <div x-show="cShow" x-cloak x-transition.opacity @keydown.escape.window="cShow = false" class="fixed inset-0 z-[55] flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="cShow = false" class="my-4 flex w-full max-w-3xl justify-center">
+    <div @click.self="cShow = false" class="my-4 flex w-full max-w-5xl justify-center">
       <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
         <div class="mb-4 flex items-center gap-3">
           <h3 class="flex-1 text-[17px] font-medium" x-text="cMode === 'edit' ? '{% trans "Modifier la culture" %}' : '{% trans "Nouvelle culture" %}'"></h3>
@@ -328,7 +328,7 @@
 
   {# ── Modal : formulaire variété ── #}
   <div x-show="vShow" x-cloak x-transition.opacity @keydown.escape.window="vShow = false" class="fixed inset-0 z-[55] flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="vShow = false" class="my-4 flex w-full max-w-3xl justify-center">
+    <div @click.self="vShow = false" class="my-4 flex w-full max-w-5xl justify-center">
       <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
         <div class="mb-4 flex items-center gap-3">
           <h3 class="flex-1 text-[17px] font-medium" x-text="vMode === 'edit' ? '{% trans "Modifier la variété" %}' : '{% trans "Nouvelle variété" %}'"></h3>
