@@ -178,6 +178,15 @@
   .hs-chip-btn.is-recording { color: var(--danger); border-color: var(--danger); }
   .hs-chip-btn-active { color: var(--action); border-color: var(--action); font-weight: 500; }
 
+  /* Bouton carré d'incrément (± une campagne) */
+  .hs-step-btn {
+    @apply grid shrink-0 place-items-center transition;
+    height: 34px; width: 34px; border-radius: 8px;
+    color: var(--text-secondary); background: var(--surface);
+    border: 0.5px solid var(--border-strong);
+  }
+  .hs-step-btn:hover { background: var(--surface-alt); color: var(--action); border-color: var(--action); }
+
   /* Liste de suggestions (recherche d'adresse) */
   .hs-suggestions {
     @apply absolute z-50 mt-1 max-h-56 w-full overflow-y-auto rounded-[10px];

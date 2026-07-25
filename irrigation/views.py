@@ -167,7 +167,7 @@ def dti(request):
         "history": history,
         "count": scores.count(),
         "parcelles": parcelles,
-        "page_title": _("DTI — Diagnostic technique d'irrigation"),
+        "page_title": _("DTI"),
     })
 
 

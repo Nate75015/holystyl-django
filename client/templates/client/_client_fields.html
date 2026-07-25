@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div class="grid gap-3" style="grid-template-columns: 100px 190px 1fr">
+  <div class="grid grid-cols-3 gap-3">
     <div>
       <label for="{{ p }}-numero-voie" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "N° voie" %}</label>
       <input id="{{ p }}-numero-voie" name="numero_voie" value="{{ c.numero_voie|default:'' }}" placeholder="12">
