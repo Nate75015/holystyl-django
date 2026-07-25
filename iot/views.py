@@ -6,26 +6,65 @@ from django.utils.translation import gettext as _
 
 from exploitations.models import Exploitation
 
-from .models import IotAlert, IotDevice
+from .models import IotAlert, IotDevice, IotTelemetry
 
 
 def _exploitation(request):
     return Exploitation.objects.filter(owner=request.user).first()
 
 
+def _round(value):
+    return round(value, 1) if value is not None else None
+
+
+def _initial_readings(exploitation):
+    """Dernière mesure connue par device (1 requête DISTINCT ON), pour éviter
+    d'afficher « — » en attendant le premier message WebSocket."""
+    latest = (
+        IotTelemetry.objects
+        .filter(device__exploitation=exploitation, timestamp__isnull=False)
+        .order_by("device_id", "-timestamp")
+        .distinct("device_id")
+    )
+    return {
+        t.device_id: {
+            "flow": _round(t.flow_rate_m3h),
+            "pressure": _round(t.pressure_bar),
+            "power": _round(t.power_kw),
+            "soil": _round(t.soil_moisture),
+        }
+        for t in latest
+    }
+
+
 @login_required
 def regie(request):
     """Dashboard SCADA : devices + télémétrie temps réel (WebSocket)."""
     exploitation = _exploitation(request)
-    devices = IotDevice.objects.filter(exploitation=exploitation) if exploitation else IotDevice.objects.none()
-    alerts = (
-        IotAlert.objects.filter(exploitation=exploitation, acknowledged=False)
-        if exploitation else IotAlert.objects.none()
-    )
+    if exploitation is None:
+        devices, alerts, initial = IotDevice.objects.none(), IotAlert.objects.none(), {}
+    else:
+        devices = IotDevice.objects.filter(exploitation=exploitation).order_by("name")
+        alerts = (
+            IotAlert.objects
+            .filter(exploitation=exploitation, acknowledged=False)
+            .select_related("device")
+            .order_by("-created_at")
+        )
+        initial = _initial_readings(exploitation)
+
+    initial_status = {d.id: d.status for d in devices}
+
     return render(
         request,
         "iot/regie.html",
-        {"devices": devices, "alerts": alerts, "page_title": _("Régie SCADA")},
+        {
+            "devices": devices,
+            "alerts": alerts,
+            "initial_readings": initial,
+            "initial_status": initial_status,
+            "page_title": _("Régie SCADA"),
+        },
     )
 
 
