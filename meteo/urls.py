@@ -10,6 +10,8 @@ urlpatterns = [
     path("meteo/cron/capturer/", views.cron_capturer, name="cron_capturer"),
     path("meteo/villes/ajouter/", views.ville_add, name="ville_add"),
     path("meteo/villes/<int:pk>/supprimer/", views.ville_delete, name="ville_delete"),
+    path("meteo/lieu/masquer/", views.home_masquer, name="home_masquer"),
+    path("meteo/lieu/afficher/", views.home_afficher, name="home_afficher"),
     path("meteo/<slug:slug>/capture-auto/", views.capture_config, name="capture_config"),
     path("meteo/<slug:slug>/", views.meteo_detail, name="detail"),
 ]
