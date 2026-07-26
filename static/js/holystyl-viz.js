@@ -50,9 +50,14 @@
       </svg>`;
   }
 
-  // Jauge de pourcentage générique (compte-tours 270°, dégradé teal→aqua).
+  // Jauge de pourcentage générique (compte-tours 270°), teintée du bleu d'action
+  // (celui des boutons primaires) : lue sur les tokens CSS, donc suit le thème.
   // Usage : <div class="pct-gauge" data-pct="72" data-size="80" data-label="remplis"></div>
   let pctSeq = 0;
+  function token(nom, defaut) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(nom).trim();
+    return v || defaut;
+  }
   function renderPctGauge(el) {
     const pct = Math.max(0, Math.min(100, parseFloat(el.dataset.pct || '0')));
     const size = parseInt(el.dataset.size || '120', 10);
@@ -62,7 +67,9 @@
     const fillEnd = START + (pct / 100) * SWEEP;
     const dark = document.documentElement.classList.contains('dark');
     const track = dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)';
-    const txt = dark ? '#67dded' : '#28738f';
+    const action = token('--action', dark ? '#5A8AB8' : '#335E8A');
+    const actionHover = token('--action-hover', dark ? '#6E9BC6' : '#28496B');
+    const txt = action;
     const sub = dark ? '#7c8a8a' : '#5b6b6b';
     const uid = 'pctgrad-' + (pctSeq++);
 
@@ -70,8 +77,8 @@
       `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
         <defs>
           <linearGradient id="${uid}" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#28738f"/>
-            <stop offset="100%" stop-color="#22d3ee"/>
+            <stop offset="0%" stop-color="${actionHover}"/>
+            <stop offset="100%" stop-color="${action}"/>
           </linearGradient>
         </defs>
         <path d="${arc(cx, cy, r, START, START + SWEEP)}" fill="none" stroke="${track}" stroke-width="${sw}" stroke-linecap="round"/>
