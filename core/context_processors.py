@@ -147,6 +147,7 @@ def layout(request):
                 {"label": _("Eau"), "url_name": "exploitations:section_eau", "icon": "water_drop"},
                 {"label": _("Certificats et labels"), "url_name": "exploitations:section_certifications", "icon": "verified"},
                 {"label": _("Sociétés liées"), "url_name": "exploitations:societes", "icon": "domain"},
+                {"label": _("RH et CA"), "url_name": "exploitations:section_economique", "icon": "payments"},
             ],
         },
     ]
