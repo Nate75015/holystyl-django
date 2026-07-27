@@ -223,7 +223,7 @@
 
   {# ── Modal : fiche variété (lecture) ── #}
   <div x-show="vview" x-cloak x-transition.opacity @keydown.escape.window="vview = null" class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="vview = null" class="my-4 flex w-full max-w-lg justify-center">
+    <div @click.self="vview = null" class="my-4 flex w-full max-w-5xl justify-center">
       <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-0">
         <template x-if="vview"><div>
           <template x-if="vview.photo"><div class="relative"><img :src="vview.photo" class="h-52 w-full rounded-t-[12px] object-cover"><button type="button" @click="vview = null" class="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-black/40 text-white backdrop-blur hover:bg-black/60">✕</button></div></template>
