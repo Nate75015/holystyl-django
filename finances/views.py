@@ -2,13 +2,17 @@
 
 from datetime import datetime
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from contrat import fermages as calcul_fermages
+from contrat.models import Bail, IndiceFermage
 from exploitations.models import Exploitation
 from parcelles.models import Parcelle
 
@@ -144,3 +148,80 @@ def facturation(request):
     exploitation = _exploitation(request)
     factures = Facture.objects.filter(exploitation=exploitation) if exploitation else Facture.objects.none()
     return render(request, "finances/facturation.html", {"factures": factures, "page_title": _("Facturation")})
+
+
+# ── Fermage : révision des loyers par l'indice national ──────────────────
+
+@login_required
+def fermage(request):
+    """Calcul du fermage dû : loyer de base révisé par les indices nationaux."""
+    exploitation = _exploitation(request)
+    baux = (
+        Bail.objects.filter(exploitation=exploitation).exclude(statut=Bail.Statut.RESILIE)
+        if exploitation else Bail.objects.none()
+    )
+    indices_qs = IndiceFermage.objects.all()
+    indices = {i.annee: i.variation_pct for i in indices_qs}
+
+    annees_connues = sorted(indices) or [timezone.now().year]
+    try:
+        annee = int(request.GET.get("annee") or annees_connues[-1])
+    except (TypeError, ValueError):
+        annee = annees_connues[-1]
+
+    lignes = [calcul_fermages.ligne_bail(b, indices, annee) for b in baux]
+    total = sum(l["total_annuel"] or 0 for l in lignes)
+    return render(request, "finances/fermage.html", {
+        "lignes": lignes,
+        "indices": indices_qs,
+        "annee": annee,
+        "annees": annees_connues,
+        "total_annuel": round(total, 2),
+        "page_title": _("Fermage"),
+    })
+
+
+@login_required
+@require_POST
+def indice_fermage_add(request):
+    """Ajoute (ou met à jour) l'indice d'une année — référentiel commun."""
+    try:
+        annee = int(request.POST.get("annee") or 0)
+    except (TypeError, ValueError):
+        annee = 0
+    variation = _to_float(request.POST.get("variation_pct"))
+    if annee and variation is not None:
+        IndiceFermage.objects.update_or_create(
+            annee=annee,
+            defaults={
+                "variation_pct": variation,
+                "reference": (request.POST.get("reference") or "").strip()[:255],
+            },
+        )
+    else:
+        messages.error(request, _("Indice incomplet : année et variation sont requises."))
+    return redirect("finances:fermage")
+
+
+@login_required
+@require_POST
+def indice_fermage_delete(request, pk):
+    IndiceFermage.objects.filter(pk=pk).delete()
+    return redirect("finances:fermage")
+
+
+@login_required
+@require_POST
+def bail_fermage_update(request, pk):
+    """Paramètres de révision d'un bail (loyer de base, année, encadrement)."""
+    exploitation = _exploitation(request)
+    bail = get_object_or_404(Bail, pk=pk, exploitation=exploitation)
+    bail.loyer_base_ha = _to_float(request.POST.get("loyer_base_ha"))
+    bail.loyer_mini_ha = _to_float(request.POST.get("loyer_mini_ha"))
+    bail.loyer_maxi_ha = _to_float(request.POST.get("loyer_maxi_ha"))
+    try:
+        bail.annee_reference = int(request.POST.get("annee_reference") or 0) or None
+    except (TypeError, ValueError):
+        bail.annee_reference = None
+    bail.save(update_fields=["loyer_base_ha", "annee_reference", "loyer_mini_ha", "loyer_maxi_ha"])
+    return redirect(f"{reverse('finances:fermage')}?annee={request.POST.get('annee') or ''}")

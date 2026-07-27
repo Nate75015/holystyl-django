@@ -1,0 +1,57 @@
+{% load i18n %}
+{# Rendez-vous avec un professionnel : crée une tâche dans le planning. #}
+<div x-show="rdv.open" x-cloak x-transition.opacity @keydown.escape.window="rdv.open = false"
+     class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="rdv.open = false" class="my-4 flex w-full max-w-2xl justify-center">
+    <div class="hs-popover max-h-[88vh] w-full overflow-y-auto p-5 sm:p-6">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[15px] font-medium">{% trans "Prendre rendez-vous" %}</h2>
+        <button type="button" @click="rdv.open = false" class="grid h-8 w-8 place-items-center rounded-full" style="color: var(--text-muted)">✕</button>
+      </div>
+
+      <form method="post" action="{% url 'contrat:rendez_vous_create' %}" class="space-y-3">
+        {% csrf_token %}
+        <div>
+          <label for="rdv-pro" class="mb-1 block text-[13px] font-medium">{% trans "Professionnel" %} <span style="color: var(--danger)">*</span></label>
+          <input id="rdv-pro" name="professionnel" x-model="rdv.professionnel" required autocomplete="off"
+                 placeholder="{% trans 'ex: Groupama — agence de Nîmes' %}" class="w-full">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="rdv-tel" class="mb-1 block text-[13px] font-medium">{% trans "Téléphone" %}</label>
+            <input id="rdv-tel" name="telephone" type="tel" x-model="rdv.telephone" class="w-full">
+          </div>
+          <div>
+            <label for="rdv-objet" class="mb-1 block text-[13px] font-medium">{% trans "Objet" %}</label>
+            <input id="rdv-objet" name="objet" placeholder="{% trans 'ex: Révision des garanties' %}" class="w-full">
+          </div>
+          <div>
+            <label for="rdv-date" class="mb-1 block text-[13px] font-medium">{% trans "Date et heure" %}</label>
+            <input id="rdv-date" name="date_debut" type="datetime-local" class="w-full">
+          </div>
+          <div>
+            <label for="rdv-duree" class="mb-1 block text-[13px] font-medium">{% trans "Durée (minutes)" %}</label>
+            <input id="rdv-duree" name="duree_minutes" type="number" min="15" step="15" value="60" class="w-full">
+          </div>
+        </div>
+
+        <div>
+          <label for="rdv-notes" class="mb-1 block text-[13px] font-medium">{% trans "Notes" %}</label>
+          <textarea id="rdv-notes" name="notes" rows="2" placeholder="{% trans 'points à aborder, documents à apporter…' %}" class="w-full"></textarea>
+        </div>
+
+        <p class="text-[12px]" style="color: var(--text-muted)">
+          {% trans "Le rendez-vous est ajouté à votre planning. Sans date, il reste à caler et part dans le backlog." %}
+        </p>
+
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="rdv.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">
+            <span class="material-icons-round text-[18px]">event_available</span>{% trans "Planifier" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -2,13 +2,17 @@
 
 from datetime import datetime
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
+from planning.models import PlanningTask
 
 from .models import ActeNotarie, Assurance, Bail, Contrat, Msa
 
@@ -277,3 +281,39 @@ def msa_delete(request, pk):
     exploitation = Exploitation.objects.filter(owner=request.user).first()
     get_object_or_404(Msa, pk=pk, exploitation=exploitation).delete()
     return redirect("contrat:msa")
+
+
+@login_required
+@require_POST
+def rendez_vous_create(request):
+    """Planifie un rendez-vous avec un professionnel depuis la page Assurances.
+
+    Le rendez-vous atterrit dans le planning existant (une tâche de type
+    « rendez-vous ») plutôt que dans un agenda parallèle.
+    """
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    professionnel = (request.POST.get("professionnel") or "").strip()
+    if not (exploitation and professionnel):
+        messages.error(request, _("Indiquez le professionnel à rencontrer."))
+        return redirect("contrat:assurances")
+
+    debut = parse_datetime(request.POST.get("date_debut") or "")
+    if debut and timezone.is_naive(debut):
+        debut = timezone.make_aware(debut)
+    objet = (request.POST.get("objet") or "").strip() or _("Rendez-vous assurance")
+
+    PlanningTask.objects.create(
+        exploitation=exploitation,
+        created_by=request.user,
+        type="rendez_vous",
+        titre=f"{objet} — {professionnel}"[:255],
+        description=(request.POST.get("notes") or "").strip(),
+        client_nom=professionnel[:255],
+        client_telephone=(request.POST.get("telephone") or "").strip()[:50],
+        date_debut=debut,
+        duree_estimee_minutes=int(_to_float(request.POST.get("duree_minutes"), 60) or 60),
+        # Sans date, le rendez-vous reste à caler : il va dans le backlog.
+        is_backlog=debut is None,
+    )
+    messages.success(request, _("Rendez-vous ajouté au planning."))
+    return redirect("contrat:assurances")

@@ -16,9 +16,9 @@ droite (ne le recouvre pas). Pilotée par la variable Alpine partagée `nav`.{% 
     <div x-show="navOpen && nav === '{{ section.key }}'" class="px-4 pb-4"{% if section.key != default_section %} style="display:none"{% endif %}>
       <p class="mb-2 text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{{ section.label }}</p>
       {% for sub in section.items %}
-        {% if sub.url_name %}
-          <a href="{% url sub.url_name %}{% if sub.anchor %}#{{ sub.anchor }}{% endif %}"
-             class="sidebar-link flex items-center gap-3.5 text-sm {% if sub.url_name == active_url_name and not sub.anchor %}sidebar-link-active{% endif %}">
+        {% if sub.href %}
+          <a href="{{ sub.href }}"
+             class="sidebar-link flex items-center gap-3.5 text-sm {% if sub.href == request.path %}sidebar-link-active{% endif %}">
             <span class="material-icons-round text-[20px]" style="color: var(--text-muted)">{{ sub.icon|default:'chevron_right' }}</span>
             <span>{{ sub.label }}</span>
           </a>

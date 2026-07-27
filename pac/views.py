@@ -4,11 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
+from parcelles.models import ParcelleCampagne
 
 from .models import AidePAC
 
@@ -20,11 +20,31 @@ def _to_float(value, default=None):
         return default
 
 
-def _campagne(request, annees):
-    try:
-        return int(request.GET.get("campagne") or (annees[0] if annees else timezone.now().year))
-    except (ValueError, TypeError):
-        return timezone.now().year
+def _libelles_campagnes(exploitation, base):
+    """Campagnes proposées : celles des parcelles, celles déjà utilisées, la courante.
+
+    La source de vérité reste la page « Campagnes » (Mes parcelles) ; on y ajoute
+    les campagnes portant déjà une aide, pour ne jamais masquer de données.
+    """
+    libelles = set(base.values_list("campagne", flat=True))
+    if exploitation:
+        libelles |= set(
+            ParcelleCampagne.objects
+            .filter(parcelle__exploitation=exploitation)
+            .values_list("libelle", flat=True)
+        )
+    libelles.discard("")
+    libelles.add(ParcelleCampagne.libelle_courant())
+    return sorted(libelles, reverse=True)
+
+
+def _campagne(request, libelles):
+    """Campagne affichée : ?campagne=… si connue, sinon la courante."""
+    demandee = (request.GET.get("campagne") or "").strip()
+    if demandee in libelles:
+        return demandee
+    courante = ParcelleCampagne.libelle_courant()
+    return courante if courante in libelles else (libelles[0] if libelles else courante)
 
 
 @login_required
@@ -32,19 +52,15 @@ def pac(request):
     exploitation = Exploitation.objects.filter(owner=request.user).first()
     base = AidePAC.objects.filter(exploitation=exploitation) if exploitation else AidePAC.objects.none()
 
-    annees = sorted(set(base.values_list("campagne", flat=True)), reverse=True)
-    current_year = timezone.now().year
-    if current_year not in annees:
-        annees = [current_year] + annees
-
-    campagne = _campagne(request, annees)
+    libelles = _libelles_campagnes(exploitation, base)
+    campagne = _campagne(request, libelles)
     aides = base.filter(campagne=campagne)
     agg = aides.aggregate(total=Sum("montant"), surface=Sum("surface_ha"))
     paye = aides.filter(statut=AidePAC.Statut.PAYE).aggregate(s=Sum("montant"))["s"] or 0
 
     return render(request, "pac/pac.html", {
         "aides": aides,
-        "annees": annees,
+        "libelles": libelles,
         "campagne": campagne,
         "kpi_total": round(agg["total"] or 0),
         "kpi_paye": round(paye),
@@ -52,7 +68,6 @@ def pac(request):
         "kpi_count": aides.count(),
         "categories": AidePAC.Categorie.choices,
         "statuts": AidePAC.Statut.choices,
-        "current_year": current_year,
         "page_title": _("PAC"),
     })
 
@@ -62,10 +77,7 @@ def pac(request):
 def pac_create(request):
     exploitation = Exploitation.objects.filter(owner=request.user).first()
     if exploitation:
-        try:
-            campagne = int(request.POST.get("campagne") or timezone.now().year)
-        except (ValueError, TypeError):
-            campagne = timezone.now().year
+        campagne = (request.POST.get("campagne") or "").strip() or ParcelleCampagne.libelle_courant()
         AidePAC.objects.create(
             exploitation=exploitation,
             campagne=campagne,

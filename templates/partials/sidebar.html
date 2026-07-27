@@ -15,12 +15,25 @@
         {% if section.items|length == 1 %}
           {# Section à item unique : lien direct (label + icône de section) #}
           {% with only=section.items.0 %}
-          <a href="{% url only.url_name %}{% if only.anchor %}#{{ only.anchor }}{% endif %}"
-             class="hs-side-link {% if only.url_name == active_url_name %}hs-side-link-active{% endif %}">
+          <a href="{{ only.href }}"
+             class="hs-side-link {% if only.href == request.path %}hs-side-link-active{% endif %}">
             <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">{{ only.icon|default:section.icon }}</span>
             <span class="flex-1 truncate text-left">{{ only.label }}</span>
           </a>
           {% endwith %}
+        {% else %}
+        {% if section.url_name %}
+        {# Section dotée d'une page : le libellé y mène, le chevron reste la bascule. #}
+        <a href="{{ section.href }}"
+           @click="nav = '{{ section.key }}'"
+           class="hs-side-link select-none"
+           :class="nav === '{{ section.key }}' ? 'hs-side-link-active' : ''">
+          <span class="material-icons-round text-[16px]" :style="nav === '{{ section.key }}' ? '' : 'color: var(--text-muted)'">{{ section.icon }}</span>
+          <span class="flex-1 truncate text-left">{{ section.label }}</span>
+          <span class="material-icons-round text-[14px] shrink-0" style="color: var(--text-muted)"
+                @click.prevent.stop="nav = (nav === '{{ section.key }}' ? '' : '{{ section.key }}')"
+                x-text="nav === '{{ section.key }}' ? 'expand_more' : 'chevron_right'">chevron_right</span>
+        </a>
         {% else %}
         {# Entrée de section (dépliable) #}
         <button type="button"
@@ -31,14 +44,15 @@
           <span class="flex-1 truncate text-left">{{ section.label }}</span>
           <span class="material-icons-round text-[14px]" style="color: var(--text-muted)" x-text="nav === '{{ section.key }}' ? 'expand_more' : 'chevron_right'">chevron_right</span>
         </button>
+        {% endif %}
 
         {# Sous-entrées #}
         <div x-show="nav === '{{ section.key }}'" x-collapse
              class="mt-0.5" style="margin-left: 15px; border-left: 0.5px solid var(--border); padding-left: 10px"
              {% if section.key != default_section %}x-cloak{% endif %}>
           {% for sub in section.items %}
-            <a href="{% url sub.url_name %}{% if sub.anchor %}#{{ sub.anchor }}{% endif %}"
-               class="hs-subitem {% if sub.url_name == active_url_name and not sub.anchor %}hs-subitem-active{% endif %}">
+            <a href="{{ sub.href }}"
+               class="hs-subitem {% if sub.href == request.path %}hs-subitem-active{% endif %}">
               <span class="min-w-0 flex-1 truncate">{{ sub.label }}</span>
               {% if sub.count %}<span class="shrink-0 text-[12px]" style="color: var(--text-muted)">{{ sub.count }}</span>{% endif %}
             </a>

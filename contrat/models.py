@@ -64,6 +64,15 @@ class Bail(models.Model):
     preneur = models.CharField(_("preneur"), max_length=255, blank=True)
     surface_ha = models.FloatField(_("surface (ha)"), null=True, blank=True)
     loyer_annuel = models.FloatField(_("fermage annuel (€)"), null=True, blank=True)
+    # Révision du fermage : loyer de base et son année, puis application des
+    # indices nationaux successifs. L'encadrement est fixé par arrêté préfectoral
+    # (il varie par département et par nature de culture), donc saisi par bail.
+    loyer_base_ha = models.FloatField(_("loyer de base (€/ha)"), null=True, blank=True)
+    annee_reference = models.PositiveIntegerField(
+        _("année de référence du loyer de base"), null=True, blank=True
+    )
+    loyer_mini_ha = models.FloatField(_("minimum préfectoral (€/ha)"), null=True, blank=True)
+    loyer_maxi_ha = models.FloatField(_("maximum préfectoral (€/ha)"), null=True, blank=True)
     date_debut = models.DateField(_("date de début"), null=True, blank=True)
     date_fin = models.DateField(_("date de fin"), null=True, blank=True)
     statut = models.CharField(
@@ -210,3 +219,30 @@ class Msa(models.Model):
 
     def __str__(self):
         return self.intitule
+
+
+class IndiceFermage(models.Model):
+    """Indice national des fermages d'une année (variation en %).
+
+    Publié chaque année par arrêté ministériel. Référentiel commun à toutes les
+    exploitations : il n'est rattaché à aucune d'elles.
+    """
+
+    annee = models.PositiveIntegerField(_("année"), unique=True)
+    variation_pct = models.DecimalField(
+        _("variation (%)"), max_digits=6, decimal_places=2,
+        help_text=_("Variation de l'indice par rapport à l'année précédente, ex. 1,62"),
+    )
+    reference = models.CharField(
+        _("référence de l'arrêté"), max_length=255, blank=True,
+        help_text=_("ex. arrêté du 15 juillet 2025"),
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("indice des fermages")
+        verbose_name_plural = _("indices des fermages")
+        ordering = ("-annee",)
+
+    def __str__(self):
+        return f"{self.annee} : {self.variation_pct} %"
