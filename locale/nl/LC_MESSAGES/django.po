@@ -388,9 +388,50 @@ msgstr "Methode"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Toevoegen"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Perceel toevoegen"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Perceel opnieuw tekenen"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Rijrichting"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Klik op een perceel, beweeg de muis om de pijl in de rijrichting te zetten en klik daarna om te bevestigen · « Esc » om te annuleren."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "rijrichting (° / Noord)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = Noord) — in te stellen op de percelenkaart."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Voltooien"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Contour bevestigen"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Klik op het perceel dat u opnieuw wilt tekenen en vervolgens op de punten van de nieuwe contour. Beëindig met « Contour bevestigen », een dubbelklik, of door opnieuw op het eerste punt te klikken. De oppervlakte wordt herberekend · « Esc » om te annuleren."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3941,10 +3982,10 @@ msgstr "Kadastrale ref."
 msgid "Acquise le"
 msgstr "Verworven op"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
-msgstr "Geen perceel. Klik op « Toevoegen » om er op de kaart te selecteren."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
+msgstr "Geen perceel. Klik op « Perceel toevoegen » om er op de kaart te selecteren."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."

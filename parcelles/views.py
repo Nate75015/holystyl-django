@@ -17,6 +17,7 @@ from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
 
+from . import geometrie
 from .forms import ParcelleCampagneForm, ParcelleForm, ParcelleTypeAgricultureForm
 from .models import Parcelle, ParcelleCampagne
 
@@ -40,7 +41,9 @@ def parcelle_list(request):
             features.append({
                 "type": "Feature",
                 "geometry": p.boundaries,
-                "properties": {"id": p.pk, "name": p.name, "area": p.area, "ref": p.cadastral_ref},
+                "properties": {"id": p.pk, "name": p.name, "area": p.area,
+                               "ref": p.cadastral_ref,
+                               "orientation": p.orientation_rangs_deg},
             })
     return render(request, "parcelles/list.html", {
         "parcelles": parcelles,
@@ -126,6 +129,63 @@ def parcelle_cadastre_save(request):
     if not created:
         return JsonResponse({"error": "Aucune parcelle valide."}, status=400)
     return JsonResponse({"ok": True, "created": created})
+
+
+@login_required
+@require_POST
+def parcelle_contour(request, pk):
+    """Redessine le contour d'une parcelle — POST JSON {geometry: Polygon}.
+
+    Le cadastre décrit la propriété, pas ce qui est cultivé : le contour tracé
+    sur la carte fait foi pour la surface. `official_area_ha` (surface
+    cadastrale) reste intacte, elle sert de référence administrative.
+    """
+    exploitation = _exploitation_or_redirect(request)
+    parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+    try:
+        body = json.loads(request.body)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "JSON invalide"}, status=400)
+
+    geometry = body.get("geometry") or {}
+    anneau = geometrie.anneau_exterieur(geometry) if geometry.get("type") == "Polygon" else None
+    # Un anneau fermé = au moins 3 sommets distincts + le retour au premier.
+    if not anneau or len(anneau) < 4:
+        return JsonResponse({"error": "Tracez au moins 3 points."}, status=400)
+    surface = geometrie.surface_ha(anneau)
+    if not surface:
+        return JsonResponse({"error": "Contour trop petit ou aplati."}, status=400)
+
+    parcelle.boundaries = geometry
+    parcelle.area = surface
+    parcelle.save(update_fields=["boundaries", "area", "updated_at"])
+    return JsonResponse({"ok": True, "id": parcelle.pk, "area": surface})
+
+
+@login_required
+@require_POST
+def parcelle_orientation(request, pk):
+    """Sens des rangs d'une parcelle — POST JSON {deg} (null pour effacer).
+
+    L'azimut se prend au clic sur la carte : 0 = Nord, sens horaire.
+    """
+    exploitation = _exploitation_or_redirect(request)
+    parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+    try:
+        body = json.loads(request.body)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "JSON invalide"}, status=400)
+
+    deg = body.get("deg")
+    if deg is None or deg == "":
+        parcelle.orientation_rangs_deg = None
+    else:
+        try:
+            parcelle.orientation_rangs_deg = int(round(float(deg))) % 360
+        except (ValueError, TypeError):
+            return JsonResponse({"error": "Angle invalide"}, status=400)
+    parcelle.save(update_fields=["orientation_rangs_deg", "updated_at"])
+    return JsonResponse({"ok": True, "orientation": parcelle.orientation_rangs_deg})
 
 
 @login_required

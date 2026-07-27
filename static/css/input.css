@@ -49,6 +49,12 @@
   --danger:         #A32D2D;
   --success:        #3B6D11;
   --notif-dot:      #EF9F27;
+
+  /* Outils de carte : le violet distingue le sens des rangs de l'action
+     (bleu) et du redessin (ambre) — trois modes exclusifs sur le même écran. */
+  --violet:         #4A3F9E;
+  --violet-hover:   #3C3489;
+  --violet-subtle:  #EEEDFE;
 }
 
 .dark {
@@ -75,6 +81,10 @@
   --warning:        #D9973B;
   --danger:         #D0655F;
   --success:        #7FB050;
+
+  --violet:         #A79FE8;
+  --violet-hover:   #B8B1EE;
+  --violet-subtle:  rgba(96,84,180,0.24);
 }
 
 @layer base {
@@ -168,6 +178,21 @@
     border: 0.5px solid var(--border-strong);
   }
   .hs-btn-outline:hover { background: var(--surface-alt); color: var(--text); }
+  /* Variante violette — outil « sens des rangs » de la carte des parcelles. */
+  .hs-btn-violet {
+    @apply inline-flex items-center justify-center gap-1.5 text-sm transition;
+    height: 30px; padding: 0 14px; border-radius: 8px;
+    font-weight: 500; color: #fff; background: var(--violet);
+  }
+  .hs-btn-violet:hover { background: var(--violet-hover); }
+  .dark .hs-btn-violet { color: #0f1215; }
+  .hs-btn-violet-outline {
+    @apply inline-flex items-center justify-center gap-1.5 text-sm transition;
+    height: 30px; padding: 0 12px; border-radius: 8px; font-weight: 500;
+    color: var(--violet); background: transparent;
+    border: 0.5px solid var(--violet);
+  }
+  .hs-btn-violet-outline:hover { background: var(--violet-subtle); }
 
   /* Petit bouton pastille (outils d'un champ : dictée, reformulation IA…) */
   .hs-chip-btn {

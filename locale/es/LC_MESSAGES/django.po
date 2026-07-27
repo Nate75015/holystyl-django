@@ -391,9 +391,50 @@ msgstr "Método"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Añadir"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Añadir parcela"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Redibujar parcela"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Sentido de las hileras"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Haga clic en una parcela, mueva el ratón para orientar la flecha en el sentido de las hileras y luego haga clic para validar · «Esc» para cancelar."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "sentido de las hileras (° / Norte)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = Norte) — se ajusta en el mapa de parcelas."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Finalizar"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Validar el contorno"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Haga clic en la parcela que desea redibujar y luego en los puntos de su nuevo contorno. Termine con «Validar el contorno», un doble clic o volviendo a hacer clic en el primer punto. La superficie se recalcula · «Esc» para cancelar."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3952,11 +3993,11 @@ msgstr "Ref. catastral"
 msgid "Acquise le"
 msgstr "Adquirida el"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
 msgstr ""
-"Ninguna parcela. Haga clic en «Añadir» para seleccionar algunas en el mapa."
+"Ninguna parcela. Haga clic en «Añadir parcela» para seleccionar algunas en el mapa."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."

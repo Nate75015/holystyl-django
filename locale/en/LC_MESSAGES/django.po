@@ -388,9 +388,50 @@ msgstr "Method"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Add"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Add plot"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Redraw plot"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Row direction"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Click a plot, move the mouse to point the arrow along the rows, then click to confirm · \"Esc\" to cancel."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "row direction (° / North)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = North) — set it on the plot map."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Finish"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Save outline"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Click the plot to redraw, then the points of its new outline. Finish with \"Save outline\", a double-click, or by clicking the first point again. The area is recalculated · \"Esc\" to cancel."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3935,10 +3976,10 @@ msgstr "Cadastral ref."
 msgid "Acquise le"
 msgstr "Acquired on"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
-msgstr "No plot. Click \"Add\" to select some on the map."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
+msgstr "No plot. Click \"Add plot\" to select some on the map."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."

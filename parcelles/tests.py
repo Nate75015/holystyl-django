@@ -296,3 +296,124 @@ def test_type_agriculture_depuis_nouvelle_campagne(client, user_exploitation):
     })
     parcelle.refresh_from_db()
     assert parcelle.type_agriculture == "conversion"
+
+
+# ── Redessin du contour ─────────────────────────────────────────────────────
+def _carre(lon=4.80, lat=43.95, cote=0.0025):
+    """Anneau fermé d'environ 200 m de côté (~4 ha à cette latitude)."""
+    return [[lon, lat], [lon + cote, lat], [lon + cote, lat + cote * 0.72],
+            [lon, lat + cote * 0.72], [lon, lat]]
+
+
+def _post_contour(client, parcelle, anneau):
+    return client.post(
+        reverse("parcelles:contour", args=[parcelle.pk]),
+        data={"geometry": {"type": "Polygon", "coordinates": [anneau]}},
+        content_type="application/json",
+    )
+
+
+@pytest.mark.django_db
+def test_contour_recalcule_la_surface_sans_toucher_au_cadastre(client, user_exploitation):
+    user, exploitation = user_exploitation
+    parcelle = Parcelle.objects.create(
+        exploitation=exploitation, name="Nord", area=1.0, official_area_ha=1.0)
+    client.force_login(user)
+
+    resp = _post_contour(client, parcelle, _carre())
+    assert resp.status_code == 200
+    parcelle.refresh_from_db()
+    assert parcelle.area == pytest.approx(4.0, abs=0.1)
+    assert parcelle.boundaries["type"] == "Polygon"
+    # La surface cadastrale reste la référence administrative.
+    assert parcelle.official_area_ha == 1.0
+
+
+@pytest.mark.django_db
+def test_contour_refuse_un_trace_degenere(client, user_exploitation):
+    user, exploitation = user_exploitation
+    parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord", area=1.0)
+    client.force_login(user)
+
+    resp = _post_contour(client, parcelle, [[4.8, 43.9], [4.81, 43.9], [4.8, 43.9]])
+    assert resp.status_code == 400
+    parcelle.refresh_from_db()
+    assert parcelle.area == 1.0
+    assert parcelle.boundaries is None
+
+
+@pytest.mark.django_db
+def test_contour_est_isole_par_exploitation(client, user_exploitation):
+    user, _exploitation = user_exploitation
+    autre = User.objects.create_user(email="d@ex.com", password="pwd12345")
+    autre_exp = Exploitation.objects.create(owner=autre, name="Ferme D")
+    parcelle = Parcelle.objects.create(exploitation=autre_exp, name="Voisine", area=3.0)
+
+    client.force_login(user)
+    assert _post_contour(client, parcelle, _carre()).status_code == 404
+    parcelle.refresh_from_db()
+    assert parcelle.area == 3.0
+
+
+# ── Sens des rangs ──────────────────────────────────────────────────────────
+def _post_orientation(client, parcelle, deg):
+    return client.post(
+        reverse("parcelles:orientation", args=[parcelle.pk]),
+        data={"deg": deg},
+        content_type="application/json",
+    )
+
+
+@pytest.mark.django_db
+def test_orientation_enregistre_un_azimut_normalise(client, user_exploitation):
+    user, exploitation = user_exploitation
+    parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord", area=2)
+    client.force_login(user)
+
+    assert _post_orientation(client, parcelle, 135).json()["orientation"] == 135
+    # Au-delà d'un tour complet, l'azimut revient dans [0, 360[.
+    assert _post_orientation(client, parcelle, 400).json()["orientation"] == 40
+    parcelle.refresh_from_db()
+    assert parcelle.orientation_rangs_deg == 40
+
+
+@pytest.mark.django_db
+def test_orientation_effacable_et_refuse_les_valeurs_absurdes(client, user_exploitation):
+    user, exploitation = user_exploitation
+    parcelle = Parcelle.objects.create(
+        exploitation=exploitation, name="Nord", area=2, orientation_rangs_deg=90)
+    client.force_login(user)
+
+    assert _post_orientation(client, parcelle, "nord-est").status_code == 400
+    parcelle.refresh_from_db()
+    assert parcelle.orientation_rangs_deg == 90
+
+    assert _post_orientation(client, parcelle, None).json()["orientation"] is None
+    parcelle.refresh_from_db()
+    assert parcelle.orientation_rangs_deg is None
+
+
+@pytest.mark.django_db
+def test_orientation_est_isolee_par_exploitation(client, user_exploitation):
+    user, _exploitation = user_exploitation
+    autre = User.objects.create_user(email="e@ex.com", password="pwd12345")
+    autre_exp = Exploitation.objects.create(owner=autre, name="Ferme E")
+    parcelle = Parcelle.objects.create(exploitation=autre_exp, name="Voisine", area=3)
+
+    client.force_login(user)
+    assert _post_orientation(client, parcelle, 90).status_code == 404
+    parcelle.refresh_from_db()
+    assert parcelle.orientation_rangs_deg is None
+
+
+@pytest.mark.django_db
+def test_orientation_exposee_dans_le_geojson_de_la_carte(client, user_exploitation):
+    user, exploitation = user_exploitation
+    Parcelle.objects.create(
+        exploitation=exploitation, name="Nord", area=2, orientation_rangs_deg=200,
+        boundaries={"type": "Polygon", "coordinates": [_carre()]})
+    client.force_login(user)
+
+    resp = client.get(reverse("parcelles:list"))
+    feature = resp.context["parcelles_geojson"]["features"][0]
+    assert feature["properties"]["orientation"] == 200

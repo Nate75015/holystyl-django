@@ -60,6 +60,12 @@ class Parcelle(TimeStampedModel):
     longitude = models.FloatField(null=True, blank=True)
     boundaries = models.JSONField(_("polygone"), null=True, blank=True)
     agro_polygon_id = models.CharField(max_length=100, blank=True)
+    # Sens des rangs : azimut de la culture (0 = Nord, sens horaire). Se règle
+    # sur la carte et s'y affiche comme une flèche au centre de la parcelle.
+    orientation_rangs_deg = models.PositiveSmallIntegerField(
+        _("sens des rangs (° / Nord)"), null=True, blank=True,
+        help_text=_("0–359° (0 = Nord) — se règle sur la carte des parcelles."),
+    )
 
     # Culture et irrigation sont désormais portées par ParcelleCampagne
     # (une campagne = une saison culturale, cf. ci-dessous).

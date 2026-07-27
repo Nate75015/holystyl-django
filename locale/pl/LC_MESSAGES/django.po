@@ -391,9 +391,50 @@ msgstr "Metoda"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Dodaj"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Dodaj działkę"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Narysuj działkę ponownie"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Kierunek rzędów"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Kliknij działkę, poruszaj myszą, aby ustawić strzałkę zgodnie z kierunkiem rzędów, a następnie kliknij, aby zatwierdzić · „Esc”, aby anulować."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "kierunek rzędów (° / północ)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = północ) — ustawia się na mapie działek."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Zakończ"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Zatwierdź obrys"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Kliknij działkę do ponownego narysowania, a następnie punkty jej nowego obrysu. Zakończ przyciskiem „Zatwierdź obrys”, podwójnym kliknięciem lub ponownym kliknięciem pierwszego punktu. Powierzchnia zostanie przeliczona · „Esc”, aby anulować."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3950,10 +3991,10 @@ msgstr "Nr ewidencyjny"
 msgid "Acquise le"
 msgstr "Nabyta dnia"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
-msgstr "Brak działek. Kliknij „Dodaj”, aby wybrać je na mapie."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
+msgstr "Brak działek. Kliknij „Dodaj działkę”, aby wybrać je na mapie."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."
