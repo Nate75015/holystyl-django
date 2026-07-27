@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ ajout: false }">
+
+  <p class="hs-crumb">{% trans "Relations" %} · {{ titre }}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{{ titre }}</h1>
+    <button type="button" @click="ajout = !ajout" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]" x-text="ajout ? 'close' : 'add'">add</span>
+      <span x-text="ajout ? '{% trans "Fermer" %}' : '{% blocktrans %}Ajouter un {{ singulier }}{% endblocktrans %}'">{% blocktrans %}Ajouter un {{ singulier }}{% endblocktrans %}</span>
+    </button>
+  </div>
+
+  {# ── Formulaire d'ajout (replié par défaut) ── #}
+  <form x-show="ajout" x-cloak x-transition method="post" action="{% url 'client:partenaire_create' %}"
+        class="hs-card p-6 sm:p-8">
+    {% csrf_token %}
+    <input type="hidden" name="type_partenaire" value="{{ type_partenaire }}">
+    <h2 class="mb-4 text-[15px] font-medium">{% blocktrans %}Nouveau {{ singulier }}{% endblocktrans %}</h2>
+    <div class="grid grid-cols-1 gap-x-24 gap-y-6 sm:grid-cols-2">
+      <div class="sm:col-span-2">
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-nom">{% trans "Nom / raison sociale" %} <span style="color: var(--danger)">*</span></label>
+        <input id="p-nom" name="nom" required class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-contact">{% trans "Contact principal" %}</label>
+        <input id="p-contact" name="contact_principal" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-tel">{% trans "Téléphone" %}</label>
+        <input id="p-tel" name="telephone" type="tel" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-email">{% trans "Email" %}</label>
+        <input id="p-email" name="email" type="email" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-web">{% trans "Site web" %}</label>
+        <input id="p-web" name="site_web" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-num">{% trans "N° de voie" %}</label>
+        <input id="p-num" name="numero_voie" placeholder="{% trans 'ex: 12 bis' %}" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-typevoie">{% trans "Catégorie de voie" %}</label>
+        <select id="p-typevoie" name="type_voie" class="w-full">
+          <option value="">—</option>
+          {% for code, libelle in types_voie %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-voie">{% trans "Voie" %}</label>
+        <input id="p-voie" name="voie" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-cp">{% trans "Code postal" %}</label>
+        <input id="p-cp" name="code_postal" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-ville">{% trans "Ville" %}</label>
+        <input id="p-ville" name="ville" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-siret">SIRET</label>
+        <input id="p-siret" name="siret" class="w-full">
+      </div>
+      <div class="sm:col-span-2">
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-notes">{% trans "Notes" %}</label>
+        <textarea id="p-notes" name="notes" rows="2" class="w-full"></textarea>
+      </div>
+    </div>
+    <div class="mt-6 flex items-center justify-end gap-2">
+      <button type="button" @click="ajout = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+      <button type="submit" class="hs-btn-primary">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter" %}
+      </button>
+    </div>
+  </form>
+
+  {# ── Une carte par partenaire ── #}
+  {% for p in partenaires %}
+    <div class="hs-card overflow-hidden">
+      <div class="flex flex-wrap items-center gap-3 px-5 py-3.5" style="border-bottom: 0.5px solid var(--border)">
+        <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">badge</span>
+        <h2 class="flex-1 truncate text-[15px] font-medium">
+          {{ p.nom }}
+          {% if p.contact_principal %}<span class="text-[12px] font-normal" style="color: var(--text-secondary)">· {{ p.contact_principal }}</span>{% endif %}
+        </h2>
+        <form method="post" action="{% url 'client:partenaire_delete' p.pk %}"
+              onsubmit="return confirm('{% trans "Supprimer cette fiche ?" %}')" class="leading-none">
+          {% csrf_token %}
+          <button type="submit" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                  style="color: var(--text-muted)" title="{% trans 'Supprimer' %}">
+            <span class="material-icons-round text-[18px]">delete_outline</span>
+          </button>
+        </form>
+      </div>
+      <div class="grid grid-cols-1 gap-x-24 gap-y-4 p-5 sm:grid-cols-2">
+        <div>
+          <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Contact" %}</p>
+          <p class="mt-0.5 text-[13px]">
+            {% if p.telephone %}{{ p.telephone }}{% endif %}
+            {% if p.email %}{% if p.telephone %} · {% endif %}{{ p.email }}{% endif %}
+            {% if not p.telephone and not p.email %}<span style="color: var(--text-muted)">—</span>{% endif %}
+          </p>
+          {% if p.site_web %}<p class="mt-0.5 truncate text-[12px]" style="color: var(--text-secondary)">{{ p.site_web }}</p>{% endif %}
+        </div>
+        <div>
+          <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Adresse" %}</p>
+          <p class="mt-0.5 text-[13px]">{{ p.adresse_complete|default:"—" }}</p>
+          {% if p.siret %}<p class="mt-0.5 text-[12px]" style="color: var(--text-secondary)">SIRET {{ p.siret }}</p>{% endif %}
+        </div>
+        {% if p.notes %}
+          <div class="sm:col-span-2">
+            <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Notes" %}</p>
+            <p class="mt-0.5 text-[13px]" style="color: var(--text-secondary)">{{ p.notes }}</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <div class="hs-card p-6 text-center sm:p-8">
+      <p class="text-[15px] font-medium">{% blocktrans %}Aucun {{ singulier }} enregistré.{% endblocktrans %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Cliquez sur « Ajouter » pour créer une fiche." %}</p>
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}

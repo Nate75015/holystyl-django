@@ -2,6 +2,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
@@ -10,7 +11,7 @@ from exploitations.models import Exploitation
 
 from core.adresse import TYPES_VOIE
 
-from .models import Client
+from .models import Client, Partenaire
 
 
 def _to_float(value, default=None):
@@ -137,3 +138,73 @@ def client_delete(request, pk):
     get_object_or_404(Client, pk=pk, exploitation=exploitation).delete()
     return redirect("client:clients")
 
+
+
+# ── Partenaires : bailleurs, comptables, avocats ─────────────────────────
+
+def _libelles_partenaire(type_partenaire):
+    """Titre et libellé au singulier, pour un gabarit partagé entre les types."""
+    pluriels = {
+        Partenaire.Type.BAILLEUR: (_("Bailleurs"), _("bailleur")),
+        Partenaire.Type.COMPTABLE: (_("Comptables"), _("comptable")),
+        Partenaire.Type.AVOCAT: (_("Avocats"), _("avocat")),
+    }
+    return pluriels.get(type_partenaire, (_("Partenaires"), _("partenaire")))
+
+
+@login_required
+def partenaires(request, type_partenaire):
+    """Liste des tiers d'un type donné (une page par type, même gabarit)."""
+    if type_partenaire not in {t.value for t in Partenaire.Type}:
+        raise Http404("Type de relation inconnu")
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    items = (
+        Partenaire.objects.filter(exploitation=exploitation, type_partenaire=type_partenaire)
+        if exploitation else Partenaire.objects.none()
+    )
+    titre, singulier = _libelles_partenaire(type_partenaire)
+    return render(request, "client/partenaires.html", {
+        "partenaires": items,
+        "type_partenaire": type_partenaire,
+        "titre": titre,
+        "singulier": singulier,
+        "types_voie": TYPES_VOIE,
+        "page_title": titre,
+    })
+
+
+@login_required
+@require_POST
+def partenaire_create(request):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    type_partenaire = request.POST.get("type_partenaire") or Partenaire.Type.AUTRE
+    nom = (request.POST.get("nom") or "").strip()
+    valides = {t.value for t in Partenaire.Type}
+    if exploitation and nom and type_partenaire in valides:
+        Partenaire.objects.create(
+            exploitation=exploitation,
+            type_partenaire=type_partenaire,
+            nom=nom[:255],
+            contact_principal=(request.POST.get("contact_principal") or "").strip()[:255],
+            email=(request.POST.get("email") or "").strip(),
+            telephone=(request.POST.get("telephone") or "").strip()[:30],
+            site_web=(request.POST.get("site_web") or "").strip()[:255],
+            numero_voie=(request.POST.get("numero_voie") or "").strip()[:10],
+            type_voie=request.POST.get("type_voie") or "",
+            voie=(request.POST.get("voie") or "").strip()[:255],
+            code_postal=(request.POST.get("code_postal") or "").strip()[:10],
+            ville=(request.POST.get("ville") or "").strip()[:100],
+            siret=(request.POST.get("siret") or "").strip()[:20],
+            notes=(request.POST.get("notes") or "").strip(),
+        )
+    return redirect("client:partenaires", type_partenaire=type_partenaire)
+
+
+@login_required
+@require_POST
+def partenaire_delete(request, pk):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    partenaire = get_object_or_404(Partenaire, pk=pk, exploitation=exploitation)
+    type_partenaire = partenaire.type_partenaire
+    partenaire.delete()
+    return redirect("client:partenaires", type_partenaire=type_partenaire)
