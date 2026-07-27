@@ -25,7 +25,11 @@ class AidePAC(models.Model):
     exploitation = models.ForeignKey(
         "exploitations.Exploitation", on_delete=models.CASCADE, related_name="aides_pac"
     )
-    campagne = models.PositiveIntegerField(_("campagne"))
+    # Libellé de campagne agricole, partagé avec les parcelles (« 2025/2026 »).
+    campagne = models.CharField(
+        _("campagne"), max_length=20,
+        help_text=_("Campagne agricole, ex. « 2025/2026 » (voir Mes parcelles › Campagnes)."),
+    )
     categorie = models.CharField(_("catégorie"), max_length=10, choices=Categorie.choices, default=Categorie.DPB)
     libelle = models.CharField(_("libellé"), max_length=255, blank=True)
     montant = models.FloatField(_("montant (€)"), null=True, blank=True)
