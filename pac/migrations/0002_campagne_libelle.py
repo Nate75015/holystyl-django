@@ -1,7 +1,11 @@
 """La campagne PAC passe de l'année entière au libellé partagé « 2025/2026 ».
 
-Conversion en quatre temps plutôt qu'un ALTER avec cast : le passage
-entier → texte n'est pas portable d'un moteur à l'autre.
+Conversion par étapes plutôt qu'un ALTER avec cast : le passage entier → texte
+n'est pas portable d'un moteur à l'autre.
+
+L'index (exploitation, campagne) est retiré avant la suppression de la colonne
+et recréé ensuite : PostgreSQL supprime l'index avec la colonne, SQLite
+reconstruit la table et l'index resterait pendant (« no such column »).
 """
 
 from django.db import migrations, models
@@ -30,6 +34,9 @@ class Migration(migrations.Migration):
     dependencies = [("pac", "0001_initial")]
 
     operations = [
+        migrations.RemoveIndex(
+            model_name="aidepac", name="pac_aidepac_exploit_b0fd76_idx",
+        ),
         migrations.AddField(
             model_name="aidepac",
             name="campagne_libelle",
@@ -48,6 +55,12 @@ class Migration(migrations.Migration):
                 help_text="Campagne agricole, ex. « 2025/2026 » (voir Mes parcelles › Campagnes).",
                 max_length=20,
                 verbose_name="campagne",
+            ),
+        ),
+        migrations.AddIndex(
+            model_name="aidepac",
+            index=models.Index(
+                fields=["exploitation", "campagne"], name="pac_aidepac_exploit_b0fd76_idx"
             ),
         ),
     ]
