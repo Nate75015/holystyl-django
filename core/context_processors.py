@@ -4,6 +4,7 @@ import os
 import unicodedata
 
 from django.conf import settings
+from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -81,9 +82,10 @@ def layout(request):
             ],
         },
         {
-            "label": _("Économie"), "key": "economie",
+            "label": _("Finance"), "key": "economie",
             "items": [
                 {"label": _("Charges"), "url_name": "finances:charges", "icon": "payments"},
+                {"label": _("Fermage"), "url_name": "finances:fermage", "icon": "agriculture"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
                 {"label": _("Facturation"), "url_name": "finances:facturation", "icon": "receipt_long"},
                 {"label": _("PAC"), "url_name": "pac:pac", "icon": "account_balance"},
@@ -130,15 +132,19 @@ def layout(request):
             ],
         },
         {
-            "label": _("Clients"), "key": "clients",
+            "label": _("Relations"), "key": "relations",
             "items": [
                 {"label": _("Clients"), "url_name": "client:clients", "icon": "handshake"},
+                {"label": _("Bailleur"), "url_name": "client:partenaires", "args": ["bailleur"], "icon": "real_estate_agent"},
+                {"label": _("Comptable"), "url_name": "client:partenaires", "args": ["comptable"], "icon": "calculate"},
+                {"label": _("Avocat"), "url_name": "client:partenaires", "args": ["avocat"], "icon": "balance"},
             ],
         },
         {
-            "label": _("Mon compte"), "key": "compte",
+            "label": _("Mon exploitation"), "key": "compte",
+            # La section elle-même mène à la vue d'ensemble.
+            "url_name": "exploitations:settings",
             "items": [
-                {"label": _("Mon exploitation"), "url_name": "exploitations:settings", "icon": "home_work"},
                 {"label": _("Identités"), "url_name": "exploitations:section_identite", "icon": "badge"},
                 {"label": _("Juridique"), "url_name": "exploitations:section_juridique", "icon": "gavel"},
                 {"label": _("Contact"), "url_name": "exploitations:contact", "icon": "call"},
@@ -156,7 +162,7 @@ def layout(request):
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
         "protection": "lock", "economie": "payments", "environnement": "park",
-        "rh": "groups", "contrat": "gavel", "clients": "handshake",
+        "rh": "groups", "contrat": "gavel", "relations": "handshake",
         "aquaculture": "waves", "compte": "person",
     }
     for section in nav_sections:
@@ -167,6 +173,21 @@ def layout(request):
     # Items de chaque sous-section triés par ordre alphabétique
     for section in nav_sections:
         section["items"].sort(key=lambda item: _sort_key(item["label"]))
+
+    # Lien de chaque entrée, résolu ici : c'est le seul endroit qui sait passer
+    # des arguments d'URL (ex. le type d'un partenaire) au reverse.
+    for section in nav_sections:
+        for item in section["items"]:
+            try:
+                href = reverse(item["url_name"], args=item.get("args") or [])
+            except NoReverseMatch:
+                href = ""
+            item["href"] = f"{href}#{item['anchor']}" if href and item.get("anchor") else href
+        if section.get("url_name"):
+            try:
+                section["href"] = reverse(section["url_name"])
+            except NoReverseMatch:
+                section["href"] = ""
 
     # Section + item contenant la page courante (le panneau volant reste ouvert dessus)
     current = getattr(getattr(request, "resolver_match", None), "view_name", None)
@@ -184,6 +205,13 @@ def layout(request):
         if item["url_name"] == current:
             active_section, active_url_name = section["key"], item["url_name"]
             break
+    # 1 bis) page portée par la section elle-même (son libellé est un lien) :
+    # aucune sous-entrée ne correspond, mais la section doit rester ouverte.
+    if not active_section:
+        for section in nav_sections:
+            if section.get("url_name") == current:
+                active_section = section["key"]
+                break
     # 2) repli par namespace (sous-pages : detail, create…) si le namespace est unique dans la nav
     if not active_url_name and current_ns and ns_counts.get(current_ns) == 1:
         for section, item in all_items:
