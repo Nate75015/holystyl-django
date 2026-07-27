@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ indices: false }">
+
+  <p class="hs-crumb">{% trans "Finance" %} · {% trans "Fermage" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Fermage" %}</h1>
+    <button type="button" @click="indices = !indices" class="hs-btn-outline">
+      <span class="material-icons-round text-[18px]">tune</span>{% trans "Indices des fermages" %}
+    </button>
+  </div>
+
+  {# ── Année de calcul ── #}
+  {% if annees %}
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-[13px]" style="color: var(--text-secondary)">{% trans "Année" %}</span>
+      {% for a in annees %}
+        <a href="?annee={{ a }}" class="hs-chip-btn {% if a == annee %}hs-chip-btn-active{% endif %}">{{ a }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {# ── Référentiel des indices (déplié à la demande) ── #}
+  <div x-show="indices" x-cloak x-transition class="hs-card overflow-hidden">
+    <div class="flex items-center gap-3 px-5 py-3.5" style="border-bottom: 0.5px solid var(--border)">
+      <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">percent</span>
+      <h2 class="flex-1 text-[15px] font-medium">{% trans "Indice national des fermages" %}</h2>
+      <span class="hs-badge hs-badge-neutral">{{ indices|length }}</span>
+    </div>
+    <div class="p-5">
+      <p class="mb-3 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Publié chaque année par arrêté ministériel. Référentiel commun : saisissez la variation officielle, elle sert au calcul de tous les baux." %}
+      </p>
+      <div class="space-y-2">
+        {% for i in indices %}
+          <div class="flex items-center justify-between gap-3 rounded-[10px] px-3 py-2.5" style="border: 0.5px solid var(--border)">
+            <p class="min-w-0 text-[13px]">
+              <span class="font-medium tabular-nums">{{ i.annee }}</span>
+              <span class="tabular-nums" style="color: var(--text-secondary)"> · {{ i.variation_pct }} %</span>
+              {% if i.reference %}<span class="text-[12px]" style="color: var(--text-muted)"> · {{ i.reference }}</span>{% endif %}
+            </p>
+            <form method="post" action="{% url 'finances:indice_fermage_delete' i.pk %}"
+                  onsubmit="return confirm('{% trans "Supprimer cet indice ?" %}')" class="shrink-0 leading-none">
+              {% csrf_token %}
+              <button type="submit" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                      style="color: var(--text-muted)" title="{% trans 'Supprimer' %}">
+                <span class="material-icons-round text-[18px]">delete_outline</span>
+              </button>
+            </form>
+          </div>
+        {% empty %}
+          <p class="text-[13px]" style="color: var(--text-muted)">{% trans "Aucun indice saisi : sans indice, le loyer de base est repris tel quel." %}</p>
+        {% endfor %}
+      </div>
+
+      <form method="post" action="{% url 'finances:indice_fermage_add' %}" class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-4">
+        {% csrf_token %}
+        <div>
+          <label class="mb-1 block text-[12px]" style="color: var(--text-secondary)" for="indice-annee">{% trans "Année" %}</label>
+          <input id="indice-annee" name="annee" type="number" min="1900" max="2100" required class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[12px]" style="color: var(--text-secondary)" for="indice-variation">{% trans "Variation (%)" %}</label>
+          <input id="indice-variation" name="variation_pct" required placeholder="ex: 1,62" class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[12px]" style="color: var(--text-secondary)" for="indice-reference">{% trans "Référence de l'arrêté" %}</label>
+          <input id="indice-reference" name="reference" placeholder="{% trans 'ex: arrêté du 15 juillet' %}" class="w-full">
+        </div>
+        <div class="flex items-end">
+          <button type="submit" class="hs-btn-primary w-full justify-center">
+            <span class="material-icons-round text-[18px]">add</span>{% trans "Enregistrer" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {# ── Total ── #}
+  <div class="grid grid-cols-2 gap-[10px]">
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Baux" %}</p>
+      <p class="text-[22px] tabular-nums">{{ lignes|length }}</p>
+    </div>
+    <div class="hs-tile">
+      <p class="text-[12px]" style="color: var(--text-secondary)">{% blocktrans %}Fermage {{ annee }}{% endblocktrans %}</p>
+      <p class="text-[22px] tabular-nums">{{ total_annuel|floatformat:0 }} €</p>
+    </div>
+  </div>
+
+  {# ── Une carte par bail ── #}
+  {% for l in lignes %}
+    <div class="hs-card overflow-hidden">
+      <div class="flex flex-wrap items-center gap-3 px-5 py-3.5" style="border-bottom: 0.5px solid var(--border)">
+        <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">agriculture</span>
+        <h2 class="flex-1 truncate text-[15px] font-medium">
+          {{ l.bail.designation }}
+          {% if l.bail.bailleur or l.bail.preneur %}
+            <span class="text-[12px] font-normal" style="color: var(--text-secondary)">· {{ l.bail.bailleur }}{% if l.bail.preneur %} → {{ l.bail.preneur }}{% endif %}</span>
+          {% endif %}
+        </h2>
+        {% if l.bail.surface_ha %}<span class="hs-badge hs-badge-neutral tabular-nums">{{ l.bail.surface_ha|floatformat:2 }} ha</span>{% endif %}
+      </div>
+
+      <div class="grid gap-5 p-5 lg:grid-cols-2">
+        {# Calcul #}
+        <div>
+          <p class="mb-2 text-[12px] font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Calcul" %}</p>
+          {% if l.base_ha %}
+            <dl class="space-y-1.5 text-[13px]">
+              <div class="flex justify-between gap-3">
+                <dt style="color: var(--text-secondary)">
+                  {% blocktrans with a=l.bail.annee_reference|default:"—" %}Loyer de base {{ a }}{% endblocktrans %}
+                  {% if l.base_deduite %}<span class="text-[11px]" style="color: var(--text-muted)"> · {% trans "déduit du fermage annuel" %}</span>{% endif %}
+                </dt>
+                <dd class="shrink-0 tabular-nums font-medium">{{ l.base_ha|floatformat:2 }} €/ha</dd>
+              </div>
+              {% for i in l.indices %}
+                <div class="flex justify-between gap-3">
+                  <dt style="color: var(--text-muted)">{% blocktrans with a=i.annee %}Indice {{ a }}{% endblocktrans %}</dt>
+                  <dd class="shrink-0 tabular-nums" style="color: var(--text-muted)">{% if i.variation_pct > 0 %}+{% endif %}{{ i.variation_pct }} %</dd>
+                </div>
+              {% empty %}
+                <div class="flex justify-between gap-3">
+                  <dt style="color: var(--text-muted)">{% trans "Aucun indice applicable" %}</dt>
+                  <dd class="shrink-0" style="color: var(--text-muted)">—</dd>
+                </div>
+              {% endfor %}
+              <div class="flex justify-between gap-3 pt-1.5" style="border-top: 0.5px solid var(--border)">
+                <dt class="font-medium">{% blocktrans with a=annee %}Loyer révisé {{ a }}{% endblocktrans %}</dt>
+                <dd class="shrink-0 tabular-nums font-medium">{{ l.revise_ha|floatformat:2 }} €/ha</dd>
+              </div>
+              {% if l.total_annuel %}
+                <div class="flex justify-between gap-3">
+                  <dt style="color: var(--text-secondary)">{% trans "Fermage annuel" %}</dt>
+                  <dd class="shrink-0 tabular-nums font-medium">{{ l.total_annuel|floatformat:2 }} €</dd>
+                </div>
+              {% endif %}
+            </dl>
+
+            {# Encadrement préfectoral #}
+            <div class="mt-3 rounded-[10px] px-3 py-2.5" style="border: 0.5px solid var(--border)">
+              <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Encadrement préfectoral" %}</p>
+              {% if l.conformite == 'inconnue' %}
+                <p class="mt-0.5 text-[13px]" style="color: var(--text-muted)">{% trans "Non renseigné — aucun contrôle effectué." %}</p>
+              {% else %}
+                <p class="mt-0.5 text-[13px] tabular-nums" style="color: var(--text-secondary)">
+                  {% if l.bail.loyer_mini_ha %}{% trans "mini" %} {{ l.bail.loyer_mini_ha|floatformat:2 }} €/ha{% endif %}
+                  {% if l.bail.loyer_maxi_ha %}{% if l.bail.loyer_mini_ha %} · {% endif %}{% trans "maxi" %} {{ l.bail.loyer_maxi_ha|floatformat:2 }} €/ha{% endif %}
+                </p>
+                <p class="mt-1 text-[13px] font-medium"
+                   style="color: {% if l.conformite == 'conforme' %}var(--success){% else %}var(--danger){% endif %}">
+                  {% if l.conformite == 'conforme' %}✓ {% trans "conforme" %}
+                  {% elif l.conformite == 'sous_mini' %}⚠ {% trans "sous le minimum" %}
+                  {% else %}⚠ {% trans "au-dessus du maximum" %}{% endif %}
+                </p>
+              {% endif %}
+            </div>
+          {% else %}
+            <p class="text-[13px]" style="color: var(--text-secondary)">
+              {% trans "Renseignez un loyer de base pour lancer le calcul." %}
+            </p>
+          {% endif %}
+        </div>
+
+        {# Paramètres du bail #}
+        <form method="post" action="{% url 'finances:bail_fermage_update' l.bail.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="annee" value="{{ annee }}">
+          <p class="mb-2 text-[12px] font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Paramètres" %}</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-[12px]" style="color: var(--text-secondary)" for="base-{{ l.bail.pk }}">{% trans "Loyer de base (€/ha)" %}</label>
+              <input id="base-{{ l.bail.pk }}" name="loyer_base_ha" value="{{ l.bail.loyer_base_ha|default_if_none:'' }}" class="w-full">
+            </div>
+            <div>
+              <label class="mb-1 block text-[12px]" style="color: var(--text-secondary)" for="ref-{{ l.bail.pk }}">{% trans "Année de référence" %}</label>
+              <input id="ref-{{ l.bail.pk }}" name="annee_reference" type="number" min="1900" max="2100" value="{{ l.bail.annee_reference|default_if_none:'' }}" class="w-full">
+            </div>
+            <div>
+              <label class="mb-1 block text-[12px]" style="color: var(--text-secondary)" for="mini-{{ l.bail.pk }}">{% trans "Minimum (€/ha)" %}</label>
+              <input id="mini-{{ l.bail.pk }}" name="loyer_mini_ha" value="{{ l.bail.loyer_mini_ha|default_if_none:'' }}" class="w-full">
+            </div>
+            <div>
+              <label class="mb-1 block text-[12px]" style="color: var(--text-secondary)" for="maxi-{{ l.bail.pk }}">{% trans "Maximum (€/ha)" %}</label>
+              <input id="maxi-{{ l.bail.pk }}" name="loyer_maxi_ha" value="{{ l.bail.loyer_maxi_ha|default_if_none:'' }}" class="w-full">
+            </div>
+          </div>
+          <div class="mt-3 flex justify-end">
+            <button type="submit" class="hs-btn-primary">
+              <span class="material-icons-round text-[18px]">check</span>{% trans "Enregistrer" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {% empty %}
+    <div class="hs-card p-6 text-center sm:p-8">
+      <p class="text-[15px] font-medium">{% trans "Aucun bail à réviser." %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Les baux se créent dans Contrat › Baux ; leur fermage se calcule ici." %}</p>
+      <a href="{% url 'contrat:baux' %}" class="hs-btn-outline mt-4 inline-flex">{% trans "Aller aux baux" %}</a>
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}
