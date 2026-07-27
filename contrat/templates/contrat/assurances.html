@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5" x-data="{ modal: false, tab: 'tous', q: '', filtre: false }">
+<section class="space-y-5" x-data="{ modal: false, tab: 'tous', q: '', filtre: false, rdv: { open: false, professionnel: '', telephone: '' } }">
 
   {# Fil d'Ariane #}
   <p class="hs-crumb">{% trans "Contrat" %} · {% trans "Assurances" %}</p>
@@ -12,6 +12,9 @@
     <h1 class="text-[20px]">{% trans "Assurances" %}</h1>
     <div class="flex items-center gap-2">
       <button type="button" @click="filtre = !filtre" class="hs-btn-outline">{% trans "Filtrer" %}</button>
+      <button type="button" @click="rdv = { open: true, professionnel: '', telephone: '' }" class="hs-btn-outline">
+        <span class="material-icons-round text-[18px]">event</span>{% trans "Prendre rendez-vous" %}
+      </button>
       <button type="button" @click="modal = true" class="hs-btn-primary">{% trans "Nouvelle assurance" %}</button>
     </div>
   </div>
@@ -60,10 +63,16 @@
             <td class="num" style="color: var(--text-secondary)">{% if a.date_fin %}{{ a.date_fin|date:"d/m/Y" }}{% else %}—{% endif %}</td>
             <td class="num">{{ a.prime_annuelle|default_if_none:"—" }}{% if a.prime_annuelle %} €{% endif %}</td>
             <td class="num">
-              <form method="post" action="{% url 'contrat:assurance_delete' a.pk %}" onsubmit="return confirm('{% trans "Supprimer cette assurance ?" %}')">
-                {% csrf_token %}
-                <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
-              </form>
+              <div class="flex items-center justify-end gap-1">
+                <button type="button" title="{% trans 'Prendre rendez-vous' %}" class="align-middle" style="color: var(--text-muted)"
+                        @click="rdv = { open: true, professionnel: '{{ a.assureur|escapejs }}', telephone: '' }">
+                  <span class="material-icons-round text-[17px]">event</span>
+                </button>
+                <form method="post" action="{% url 'contrat:assurance_delete' a.pk %}" onsubmit="return confirm('{% trans "Supprimer cette assurance ?" %}')">
+                  {% csrf_token %}
+                  <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
+                </form>
+              </div>
             </td>
           </tr>
         {% endfor %}
@@ -79,5 +88,6 @@
   </div>
 
   {% include "contrat/_assurance_modal.html" %}
+  {% include "contrat/_rendez_vous_modal.html" %}
 </section>
 {% endblock %}

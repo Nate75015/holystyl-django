@@ -20,7 +20,8 @@ TYPE_CHOICES = [
     ("irrigation", "Irrigation"), ("traitement", "Traitement"), ("fertilisation", "Fertilisation"),
     ("recolte", "Récolte"), ("semis", "Semis"), ("travail_sol", "Travail du sol"),
     ("taille", "Taille"), ("maintenance", "Maintenance"), ("observation", "Observation"),
-    ("chantier", "Chantier"), ("depannage", "Dépannage"), ("autre", "Autre"),
+    ("chantier", "Chantier"), ("depannage", "Dépannage"),
+    ("rendez_vous", "Rendez-vous"), ("autre", "Autre"),
 ]
 
 
