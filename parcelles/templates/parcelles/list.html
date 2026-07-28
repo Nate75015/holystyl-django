@@ -189,6 +189,79 @@
             <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune parcelle à analyser pour le moment." %}</p>
           </div>
         {% endif %}
+
+        {# ── Télédétection : indices satellite par parcelle ── #}
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+          <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Télédétection par parcelle" %}</p>
+          <p class="text-[12px]" style="color: var(--text-muted)">
+            {% trans "NDVI — vigueur végétale · NDWI — teneur en eau · Sentinel-2" %}
+            {% if not satellite_configure %}<span style="color: var(--warning)"> · {% trans "Copernicus non configuré" %}</span>{% endif %}
+          </p>
+        </div>
+        {% for r in teledetection %}
+          <div class="hs-card overflow-hidden">
+            <div class="flex flex-wrap items-center gap-3 px-5 py-3.5" style="border-bottom: 0.5px solid var(--border)">
+              <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">satellite_alt</span>
+              <h3 class="flex-1 truncate text-[15px] font-medium">
+                <a href="{% url 'parcelles:detail' r.parcelle.pk %}" style="color: var(--action)">{{ r.parcelle.name }}</a>
+                {% if r.derniere %}
+                  <span class="text-[12px] font-normal" style="color: var(--text-secondary)">
+                    · {% trans "dernière image" %} {{ r.derniere.acquisition_date|date:"d/m/Y" }}{% if r.derniere.cloud_coverage is not None %} · {% trans "nuages" %} {{ r.derniere.cloud_coverage|floatformat:0 }} %{% endif %}
+                  </span>
+                {% endif %}
+              </h3>
+              {% if r.nb_passages %}<span class="hs-badge hs-badge-neutral">{% blocktrans count n=r.nb_passages %}{{ n }} passage{% plural %}{{ n }} passages{% endblocktrans %}</span>{% endif %}
+              {% if r.parcelle.boundaries and satellite_configure %}
+                <form method="post" action="{% url 'parcelles:teledetection' r.parcelle.pk %}" class="leading-none">
+                  {% csrf_token %}
+                  <button type="submit" class="hs-btn-outline">
+                    <span class="material-icons-round text-[16px]">satellite_alt</span>{% if r.derniere %}{% trans "Réanalyser" %}{% else %}{% trans "Analyser" %}{% endif %}
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+
+            {% if r.derniere %}
+              <div class="grid gap-3 p-5 sm:grid-cols-2">
+                {% include "parcelles/_indice.html" with titre="NDVI" aide=_("Vigueur végétale") valeur=r.derniere.ndvi_mean vmin=r.derniere.ndvi_min vmax=r.derniere.ndvi_max info=r.lecture.ndvi %}
+                {% include "parcelles/_indice.html" with titre="NDWI" aide=_("Teneur en eau") valeur=r.derniere.ndwi_mean vmin=r.derniere.ndwi_min vmax=r.derniere.ndwi_max info=r.lecture.ndwi %}
+              </div>
+
+              {% if r.serie %}
+                <div class="px-5 pb-5">
+                  <p class="mb-2 text-[12px]" style="color: var(--text-muted)">
+                    {% trans "Évolution" %} · {{ r.serie.date_debut|date:"d/m/Y" }} → {{ r.serie.date_fin|date:"d/m/Y" }}
+                  </p>
+                  <div class="grid gap-2 sm:grid-cols-2">
+                    {% for cle, st in r.serie.items %}{% if cle == "ndvi" or cle == "ndwi" %}{% if st %}
+                      <div class="flex items-baseline justify-between gap-3 rounded-[10px] px-3 py-2.5 text-[13px]" style="border: 0.5px solid var(--border)">
+                        <span class="font-medium uppercase">{{ cle }}</span>
+                        <span class="tabular-nums" style="color: var(--text-secondary)">
+                          {% trans "min" %} {{ st.min }} · {% trans "max" %} {{ st.max }} · {% trans "dernier" %} {{ st.dernier }}
+                        </span>
+                        <span class="shrink-0 font-medium">
+                          {% if st.tendance == "hausse" %}<span style="color: var(--success)">↑ {% trans "hausse" %}</span>
+                          {% elif st.tendance == "baisse" %}<span style="color: var(--danger)">↓ {% trans "baisse" %}</span>
+                          {% else %}<span style="color: var(--text-muted)">→ {% trans "stable" %}</span>{% endif %}
+                        </span>
+                      </div>
+                    {% endif %}{% endif %}{% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            {% else %}
+              <p class="px-5 py-4 text-[13px]" style="color: var(--text-muted)">
+                {% if not r.parcelle.boundaries %}
+                  {% trans "Cette parcelle n'a pas de contour : importez-la depuis le cadastre (onglet Carte) pour permettre l'analyse satellite." %}
+                {% elif not satellite_configure %}
+                  {% trans "Identifiants Copernicus absents du fichier .env." %}
+                {% else %}
+                  {% trans "Aucune image satellite analysée. Lancez « Analyser » pour interroger Sentinel-2." %}
+                {% endif %}
+              </p>
+            {% endif %}
+          </div>
+        {% endfor %}
       </div>
     </div>
   </div>

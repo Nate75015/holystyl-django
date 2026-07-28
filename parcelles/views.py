@@ -16,6 +16,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
+from irrigation import satellite, teledetection
 
 from . import geometrie
 from .forms import ParcelleCampagneForm, ParcelleForm, ParcelleTypeAgricultureForm
@@ -31,7 +32,8 @@ def _exploitation_or_redirect(request):
 def parcelle_list(request):
     exploitation = _exploitation_or_redirect(request)
     parcelles = (
-        Parcelle.objects.filter(exploitation=exploitation).prefetch_related("analyses_sol")
+        Parcelle.objects.filter(exploitation=exploitation)
+        .prefetch_related("analyses_sol", "ndvi_data")
         if exploitation else Parcelle.objects.none()
     )
     features, total_area = [], 0.0
@@ -48,6 +50,9 @@ def parcelle_list(request):
     return render(request, "parcelles/list.html", {
         "parcelles": parcelles,
         "parcelles_geojson": {"type": "FeatureCollection", "features": features},
+        # Onglet Analyses : indices satellite NDVI / NDWI par parcelle.
+        "teledetection": teledetection.lignes_par_parcelle(parcelles),
+        "satellite_configure": satellite.is_configured(),
         "kpi_actives": parcelles.filter(status=Parcelle.Status.ACTIVE).count() if exploitation else 0,
         "kpi_total_area": round(total_area, 2),
         "needs_onboarding": exploitation is None,
@@ -467,3 +472,20 @@ def parcelle_delete(request, pk):
         messages.success(request, _("Parcelle supprimée."))
         return redirect("parcelles:list")
     return render(request, "parcelles/confirm_delete.html", {"parcelle": parcelle})
+
+
+@login_required
+@require_POST
+def parcelle_teledetection(request, pk):
+    """Analyse satellite d'une parcelle (Sentinel-2) depuis l'onglet Analyses."""
+    exploitation = _exploitation_or_redirect(request)
+    parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+    try:
+        mesure = satellite.analyser(parcelle)
+    except satellite.SatelliteError as erreur:
+        messages.error(request, str(erreur))
+    else:
+        messages.success(request, _("Analyse satellite du %(date)s enregistrée pour %(nom)s.") % {
+            "date": mesure.acquisition_date.strftime("%d/%m/%Y"), "nom": parcelle.name,
+        })
+    return redirect(f"{reverse('parcelles:list')}?tab=analyses")

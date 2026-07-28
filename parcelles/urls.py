@@ -6,6 +6,7 @@ app_name = "parcelles"
 
 urlpatterns = [
     path("parcelles/", views.parcelle_list, name="list"),
+    path("parcelles/<int:pk>/teledetection/", views.parcelle_teledetection, name="teledetection"),
     path("parcelles/cadastre/", views.parcelle_cadastre, name="cadastre"),
     path("parcelles/cadastre/enregistrer/", views.parcelle_cadastre_save, name="cadastre_save"),
     path("parcelles/nouvelle/", views.parcelle_create, name="create"),

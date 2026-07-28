@@ -1,0 +1,25 @@
+{% load i18n %}
+{# Carte d'un indice satellite : valeur, encadrement min/max, lecture. #}
+<div class="rounded-[10px] p-4" style="border: 0.5px solid var(--border)">
+  <div class="flex items-start justify-between gap-2">
+    <div>
+      <h4 class="text-[13px] font-medium">{{ titre }}</h4>
+      <p class="text-[10px] uppercase tracking-wide" style="color: var(--text-muted)">{{ aide }}</p>
+    </div>
+    {% if info %}
+      <span class="hs-badge shrink-0" style="color: {{ info.color }}; border-color: {{ info.color }}">{{ info.level }}</span>
+    {% endif %}
+  </div>
+
+  <div class="mt-2 flex items-end gap-3">
+    <p class="text-[28px] font-medium leading-none tabular-nums">
+      {% if valeur is not None %}{{ valeur|floatformat:2 }}{% else %}—{% endif %}
+    </p>
+    <p class="pb-0.5 text-[12px] tabular-nums" style="color: var(--text-muted)">
+      {% trans "min" %} {% if vmin is not None %}{{ vmin|floatformat:2 }}{% else %}—{% endif %}<br>
+      {% trans "max" %} {% if vmax is not None %}{{ vmax|floatformat:2 }}{% else %}—{% endif %}
+    </p>
+  </div>
+
+  {% if info %}<p class="mt-2 text-[12px]" style="color: var(--text-secondary)">{{ info.msg }}</p>{% endif %}
+</div>
