@@ -1,0 +1,686 @@
+{
+  "_note": "Spécimen complet : un exemplaire de chaque table de l'échange. Généré par l'exporteur réel puis annulé en base — les noms de champs sont donc exacts par construction. Régénérable côté Cultiveau.",
+  "empreinte": "8e1d619495c8ca3bb8151e85fb766c281f194a77bd7e6b56a623753dddfb58fb",
+  "payload": {
+    "dti": {
+      "canalisations": [
+        {
+          "annee": null,
+          "created_at": "2026-08-01T17:50:17Z",
+          "debit_m3h": "80.00",
+          "denivele_m": null,
+          "diametre_int_mm": "101.6",
+          "diametre_mm": 110,
+          "dti_id": 15,
+          "etat": "",
+          "geometry": {
+            "coordinates": [
+              [
+                2.5,
+                46.5
+              ],
+              [
+                2.51,
+                46.51
+              ]
+            ],
+            "type": "LineString"
+          },
+          "id": 4,
+          "longueur_m": 250.0,
+          "marque": "",
+          "materiau": "PE / PEHD",
+          "modele": "",
+          "nb_coudes": null,
+          "nb_tes": null,
+          "nb_vannes": null,
+          "nom": "Tronçon de référence",
+          "notes": "",
+          "ordre": 1,
+          "parcelle_id": 34,
+          "photos": [
+            {
+              "canalisation_id": 4,
+              "created_at": "2026-08-01T17:50:17Z",
+              "id": 1,
+              "image": "canalisations/2026/08/ref.png",
+              "legende": ""
+            }
+          ],
+          "pose": "",
+          "pression_entree_bar": null,
+          "pression_entree_theorique_bar": null,
+          "pression_nominale_pn": null,
+          "type_canalisation": "",
+          "valeur_estimee": null
+        }
+      ],
+      "couts": {
+        "conso_carburant_l": null,
+        "conso_electrique_kwh": "42000.00",
+        "cout_horaire_mo": "22.00",
+        "cout_pompage": null,
+        "dti_id": 15,
+        "heures_irrigation": "450.00",
+        "id": 6,
+        "main_oeuvre_entretien": "900.00",
+        "pieces_detachees": "1200.00",
+        "prix_carburant_l": "1.5",
+        "prix_electricite_kwh": "0.1800",
+        "redevance_eau": "0.0600",
+        "updated_at": "2026-08-01T17:50:17Z",
+        "volume_eau_m3": "38000.00",
+        "volume_eau_mesure": false
+      },
+      "created_at": "2026-08-01T17:50:17Z",
+      "cultures_irriguees": [
+        {
+          "charges_operationnelles": "850.00",
+          "created_at": "2026-08-01T17:50:17Z",
+          "culture": "Maïs",
+          "dti_id": 15,
+          "id": 5,
+          "prix_marche": "240.00",
+          "rendement_irrigue": "115.00",
+          "rendement_sec": "72.00",
+          "surface_ha": "40.00",
+          "unite_volume": "t/ha",
+          "volume_vendu": null
+        }
+      ],
+      "equipements": [
+        {
+          "amperage_ph1_a": null,
+          "amperage_ph2_a": null,
+          "amperage_ph3_a": null,
+          "amperage_plaque_a": null,
+          "annee": 2015,
+          "armoire_marque": "",
+          "armoire_presente": false,
+          "arroseurs": [],
+          "asp_etat_asperseurs": "",
+          "asp_portee_theorique_m": null,
+          "asp_raccords": "",
+          "asp_regulation": "",
+          "asp_repartition": "",
+          "asp_rotation": "",
+          "asp_roulement_balancier": "",
+          "asp_ventouse": "",
+          "auto_alimentation": "",
+          "auto_capteur_humidite": "",
+          "auto_capteur_pression": "",
+          "auto_programmateur": "",
+          "auto_regulant": "",
+          "auto_station_meteo": "",
+          "auto_telegestion": "",
+          "auto_vannes_nb": null,
+          "borne_source_id": null,
+          "carnet_entretien": false,
+          "categorie": "fixe",
+          "clapet_anti_retour": false,
+          "composants_station": [
+            {
+              "catalogue_ref": "",
+              "created_at": "2026-08-01T17:50:17Z",
+              "dn_mm": 100,
+              "equipement_id": 10,
+              "etat": "Bon",
+              "id": 1,
+              "image": "stations/2026/08/ref.png",
+              "image_url": "",
+              "manometre": false,
+              "marque": "MarqueTest",
+              "modele": "ModeleTest",
+              "notes": "",
+              "pression_amont_bar": null,
+              "pression_aval_bar": null,
+              "type_composant": "Clapet anti-retour"
+            }
+          ],
+          "consommation": null,
+          "contrat_maintenance": false,
+          "cpt_conforme": "",
+          "cpt_index_m3": null,
+          "cpt_present": "",
+          "cpt_type": "",
+          "cpt_volume_autorise_m3": null,
+          "cpt_volume_preleve_m3": null,
+          "created_at": "2026-08-01T17:50:17Z",
+          "date_mesure_elec": null,
+          "debit_canon_m3h": null,
+          "debit_goutteur_lh": null,
+          "debit_max_m3h": null,
+          "debit_min_m3h": null,
+          "debit_nominal_m3h": null,
+          "dernier_entretien": null,
+          "diametre_buse_mesure_mm": null,
+          "diametre_buse_nominal_mm": null,
+          "diametre_mm": null,
+          "diametre_tuyau_mm": null,
+          "dn_aspiration_mm": null,
+          "dn_conduite_mm": null,
+          "dn_refoulement_mm": null,
+          "dose_cible_mm": null,
+          "dti_id": 15,
+          "enr_alimentation": "",
+          "enr_avancement": "",
+          "enr_boitier": "",
+          "enr_capteur": "",
+          "enr_entrainement": "",
+          "enr_etat_cable": "",
+          "enr_etat_chariot": "",
+          "enr_etat_joint_tournant": "",
+          "enr_etat_turbine": "",
+          "enr_etat_tuyau": "",
+          "enr_frein": "",
+          "enr_heures_service": null,
+          "enr_nb_reparations": null,
+          "enr_regulateur": "",
+          "enr_telegestion": "",
+          "enr_trancannage": "",
+          "entretien_checklist": {},
+          "entretien_regulier": false,
+          "equipements_internes": [],
+          "espacement_gaines_m": null,
+          "espacement_goutteurs_m": null,
+          "etat": "Bon",
+          "fert_clapet_antiretour": "",
+          "fert_etalonnage": "",
+          "fert_injecteur": "",
+          "fert_rincage": "",
+          "fert_sonde_ec": "",
+          "fert_sonde_ph": "",
+          "filt_etat_media": "",
+          "filt_finesse_micron": null,
+          "filt_lavage": "",
+          "filt_pression_amont_bar": null,
+          "filt_pression_aval_bar": null,
+          "filt_type": "",
+          "frequence_entretien": "",
+          "gag_age_gaines_ans": null,
+          "gag_anticolmatage": "",
+          "gag_etat_goutteurs": "",
+          "gag_filtration_amont": "",
+          "gag_uniformite_cu": null,
+          "hmt_m": null,
+          "hmt_max_m": null,
+          "hmt_min_m": null,
+          "id": 10,
+          "installation_gag": "",
+          "largeur_bande_m": null,
+          "latitude": 46.5,
+          "lineaire_total_m": null,
+          "longitude": 2.5,
+          "longueur_m": null,
+          "longueur_tuyau_m": null,
+          "marque": "MarqueTest",
+          "mesures_electriques": [
+            {
+              "amperage_ph1_a": "14.20",
+              "amperage_ph2_a": "14.10",
+              "amperage_ph3_a": "14.30",
+              "amperage_plaque_a": "15.00",
+              "created_at": "2026-08-01T17:50:17Z",
+              "date_mesure": "2026-06-01",
+              "equipement_id": 10,
+              "id": 1,
+              "resistance_isolement_mohm": "12.50",
+              "resistance_phase1_ohm": null,
+              "resistance_phase2_ohm": null,
+              "resistance_phase3_ohm": null,
+              "technicien_mesure": "Technicien de référence",
+              "tension_mesuree_v": "400.0",
+              "tension_nominale": ""
+            }
+          ],
+          "modele": "ModeleTest",
+          "nom": "Station de référence",
+          "nombre_pompes": null,
+          "nombre_travees": null,
+          "notes": "",
+          "parafoudre": false,
+          "parcelle_id": 34,
+          "parcelles_desservies": [
+            34
+          ],
+          "photos": [
+            {
+              "created_at": "2026-08-01T17:50:17Z",
+              "equipement_id": 10,
+              "id": 3,
+              "image": "equipements/2026/08/ref.png",
+              "legende": "Station"
+            }
+          ],
+          "piv_alignement": "",
+          "piv_angle_deg": 360,
+          "piv_busage": null,
+          "piv_canon_bout": "",
+          "piv_debit_m3h": null,
+          "piv_entrainement": "",
+          "piv_etat_pneus": "",
+          "piv_longueur_arrosee_m": null,
+          "piv_motoreducteurs_anomalie": false,
+          "piv_motoreducteurs_notes": "",
+          "piv_orientation_deg": 0,
+          "piv_rayon_m": null,
+          "piv_securite_devers": "",
+          "piv_structure": "",
+          "piv_temps_tour_h": null,
+          "piv_uniformite": "",
+          "portee_canon_m": null,
+          "pression_aspiration_bar": null,
+          "pression_canon_bars": null,
+          "pression_entree_bars": null,
+          "pression_nominale_bar": null,
+          "pression_refoulement_bar": null,
+          "protection_marche_a_sec": false,
+          "protection_thermique": false,
+          "puissance_kw": null,
+          "quantite": 1,
+          "res_age_ans": null,
+          "res_materiau": "",
+          "res_nb_casses": null,
+          "resistance_isolement_mohm": null,
+          "resistance_phase1_ohm": null,
+          "resistance_phase2_ohm": null,
+          "resistance_phase3_ohm": null,
+          "schema_json": null,
+          "secteurs": [],
+          "src_age_ans": null,
+          "src_arrete_prefectoral": "",
+          "src_debit_exploitable_m3h": null,
+          "src_etat_cuvelage": "",
+          "src_niveau_dynamique_m": null,
+          "src_niveau_statique_m": null,
+          "src_profondeur_m": null,
+          "src_qualite_eau": "",
+          "station_photo": null,
+          "surface_couverte_ha": null,
+          "technicien_mesure": "",
+          "telegestion": false,
+          "tension_mesuree_v": null,
+          "tension_nominale": "",
+          "type_demarrage": "",
+          "type_energie": "",
+          "type_equipement": "Station de pompage",
+          "type_pompe": "",
+          "valeur_estimee": null,
+          "vanne_regulation_pression": "",
+          "variateur_filtre": "",
+          "variateur_frequence": false,
+          "variateur_ip": "",
+          "variateur_marque": "",
+          "variateur_modele": "",
+          "variateur_puissance_kw": null,
+          "vitesse_reenroulement_mh": null,
+          "vitesse_rotation_tr_min": null
+        }
+      ],
+      "exploitation": {
+        "annee_installation": 2005,
+        "code_postal": "00000",
+        "dti_id": 15,
+        "email": "contact@example.invalid",
+        "forme_juridique": "EARL",
+        "id": 28,
+        "nom": "EARL DE LA REFERENCE",
+        "nom_individu": "",
+        "notes": "",
+        "pacage": "000000000",
+        "prenom": "",
+        "responsable_nom": "",
+        "responsable_prenom": "",
+        "sau_ha": "95.50",
+        "siret": "00000000000000",
+        "surface_totale_ha": "120.00",
+        "telephone": "0000000000",
+        "telephone2": "",
+        "tva_intra": "FR00000000000",
+        "type_exploitant": "entreprise",
+        "type_exploitation": "Grandes cultures",
+        "updated_at": "2026-08-01T17:50:17Z",
+        "ville": "Communeville",
+        "voie_nom": "de la Référence",
+        "voie_numero": "1",
+        "voie_type": "Rue"
+      },
+      "groupes_parcelles": [
+        {
+          "created_at": "2026-08-01T17:50:17Z",
+          "dti_id": 15,
+          "id": 2,
+          "nom": "Îlot Nord",
+          "type_sol": ""
+        }
+      ],
+      "id": 15,
+      "mesures_debit": [
+        {
+          "canalisation_id": 4,
+          "created_at": "2026-08-01T17:50:17Z",
+          "date_mesure": "2026-06-15",
+          "debit_m3h": "78.50",
+          "dti_id": 15,
+          "equipement_id": 10,
+          "id": 1,
+          "methode": "Compteur",
+          "notes": "",
+          "point_libelle": "Sortie borne",
+          "pression_bar": "3.20",
+          "ressource_id": 21,
+          "technicien": "Technicien de référence"
+        }
+      ],
+      "nom": "DTI de référence",
+      "organisation": {
+        "arrosage_complet_critique": false,
+        "description": "",
+        "dti_id": 15,
+        "duree_tour_complet_h": 72,
+        "heures_pointe_h_j": 18,
+        "id": 6,
+        "irrigation_nuit": true,
+        "pertes_estimees_pct": 12,
+        "temps_perdu_h_j": 2,
+        "type_pilotage": "Sondes tensiométriques / capteurs d'humidité",
+        "updated_at": "2026-08-01T17:50:17Z"
+      },
+      "parcelles": [
+        {
+          "acquired_at": null,
+          "analyses_satellite": [
+            {
+              "cloud_cover_pct": 4.0,
+              "created_at": "2026-08-01T17:50:17Z",
+              "date_image": "2026-07-25",
+              "id": 17,
+              "ndvi_image": "teledetection/2026/07/ndvi_ref.png",
+              "ndvi_max": 0.88,
+              "ndvi_mean": 0.72,
+              "ndvi_min": 0.31,
+              "ndwi_image": "teledetection/2026/07/ndwi_ref.png",
+              "ndwi_max": 0.4,
+              "ndwi_mean": 0.21,
+              "ndwi_min": 0.05,
+              "parcelle_id": 34,
+              "raw": null,
+              "source": "copernicus"
+            }
+          ],
+          "assolements": [
+            {
+              "campagne": "2026",
+              "courante": true,
+              "created_at": "2026-08-01T17:50:17Z",
+              "culture": "Maïs",
+              "date_fin": null,
+              "date_recolte": null,
+              "date_semis": "2026-04-15",
+              "id": 1,
+              "notes": "",
+              "parcelle_id": 34,
+              "rendement": null,
+              "rendement_unite": "t/ha"
+            }
+          ],
+          "boundaries": null,
+          "cadastral_ref": "000A0000",
+          "cadastre_data": null,
+          "commune": "Communeville",
+          "created_at": "2026-08-01T17:50:17Z",
+          "culture": "Maïs",
+          "densite_arbres_ha": null,
+          "dti_id": 15,
+          "duree_tour_h": null,
+          "groupe_id": 2,
+          "id": 34,
+          "latitude": 46.5,
+          "longitude": 2.5,
+          "mode_irrigation": "",
+          "nb_arbres": null,
+          "nom": "Parcelle de référence",
+          "orientation_rangs_deg": null,
+          "photos": [
+            {
+              "created_at": "2026-08-01T17:50:17Z",
+              "id": 3,
+              "image": "parcelles/2026/08/ref.png",
+              "legende": "Vue d'ensemble",
+              "parcelle_id": 34
+            }
+          ],
+          "pic_et_mm_j": null,
+          "refs_cadastrales": null,
+          "surface_arrosee_ha": null,
+          "surface_ha": "12.50",
+          "surface_irriguee_ha": null,
+          "surface_reelle_ha": null,
+          "type_sol": "Limono-argileux"
+        }
+      ],
+      "ressources_eau": [
+        {
+          "cadastral_ref": "000A0000",
+          "categorie": "borne",
+          "commune": "Communeville",
+          "composants": [
+            {
+              "annee": 2015,
+              "created_at": "2026-08-01T17:50:17Z",
+              "dn_mm": 100,
+              "etat": "Bon",
+              "fournisseur": "Fournisseur de référence",
+              "id": 1,
+              "image": null,
+              "marque": "MarqueTest",
+              "materiau": "Fonte",
+              "modele": "ModeleTest",
+              "notes": "",
+              "photos": [
+                {
+                  "composant_id": 1,
+                  "created_at": "2026-08-01T17:50:17Z",
+                  "id": 1,
+                  "image": "bornes/2026/08/ref.png"
+                }
+              ],
+              "pn_bar": "10.0",
+              "reference": "REF-0001",
+              "ressource_id": 21,
+              "type_composant": "Corps de borne (fonte, incongelable)"
+            }
+          ],
+          "created_at": "2026-08-01T17:50:17Z",
+          "debit_max_m3h": null,
+          "diametre_dn_mm": 100,
+          "dti_id": 15,
+          "durete_th": null,
+          "fer_mg_l": null,
+          "id": 21,
+          "latitude": 46.5,
+          "longitude": 2.5,
+          "matieres_suspension": "",
+          "nom": "Borne de référence",
+          "notes": "",
+          "numero_point": "",
+          "parcelle_id": 34,
+          "ph": null,
+          "photos": [],
+          "pression_requise_bar": "3.50",
+          "profondeur_m": null,
+          "station_pompage_id": null,
+          "type_ressource": "",
+          "volume_autorise_m3": null
+        },
+        {
+          "cadastral_ref": "",
+          "categorie": "prelevement",
+          "commune": "",
+          "composants": [],
+          "created_at": "2026-08-01T17:50:17Z",
+          "debit_max_m3h": "80.00",
+          "diametre_dn_mm": null,
+          "dti_id": 15,
+          "durete_th": "32.0",
+          "fer_mg_l": "0.30",
+          "id": 22,
+          "latitude": 46.5,
+          "longitude": 2.5,
+          "matieres_suspension": "Faible",
+          "nom": "Forage de référence",
+          "notes": "",
+          "numero_point": "CPT-0001",
+          "parcelle_id": 34,
+          "ph": "7.8",
+          "photos": [
+            {
+              "created_at": "2026-08-01T17:50:17Z",
+              "id": 2,
+              "image": "ressources/2026/08/ref.png",
+              "legende": "Tête de forage",
+              "ressource_id": 22
+            }
+          ],
+          "pression_requise_bar": null,
+          "profondeur_m": "45.00",
+          "station_pompage_id": 10,
+          "type_ressource": "Forage",
+          "volume_autorise_m3": "45000.00"
+        }
+      ],
+      "updated_at": "2026-08-01T17:50:17Z"
+    },
+    "exported_at": "2026-08-01T17:50:25Z",
+    "indicateurs": {
+      "bareme": [
+        [
+          "A",
+          "≥ 80",
+          "Excellente"
+        ],
+        [
+          "B",
+          "65–79",
+          "Bonne"
+        ],
+        [
+          "C",
+          "50–64",
+          "Correcte"
+        ],
+        [
+          "D",
+          "35–49",
+          "Actions urgentes"
+        ],
+        [
+          "E",
+          "< 35",
+          "Critique"
+        ]
+      ],
+      "calcules_le": "2026-08-01T17:50:25Z",
+      "grade": "C",
+      "lignes": [
+        {
+          "detail": "Sondes tensiométriques / capteurs d'humidité",
+          "label": "Pilotage de l'irrigation",
+          "max": 25,
+          "pts": 25
+        },
+        {
+          "detail": "non assurée / non renseignée",
+          "label": "Capacité d'arrosage en pointe",
+          "max": 15,
+          "pts": 0
+        },
+        {
+          "detail": "12 % (modérées)",
+          "label": "Pertes réseau",
+          "max": 15,
+          "pts": 10
+        },
+        {
+          "detail": "1.11 kWh/m³ (mauvaise)",
+          "label": "Efficience énergétique",
+          "max": 15,
+          "pts": 2
+        },
+        {
+          "detail": "marge théorique négative",
+          "label": "Rentabilité des cultures",
+          "max": 20,
+          "pts": 0
+        },
+        {
+          "detail": "5/5 volets renseignés (surface, parcelles, coûts, pilotage, cultures)",
+          "label": "Complétude des données",
+          "max": 10,
+          "pts": 10
+        }
+      ],
+      "message": "Performance correcte, des améliorations sont possibles.",
+      "modificateurs": [
+        {
+          "apres": 50,
+          "avant": 47,
+          "detail": "mélange 80 % déclaratif / 20 % score d'usure (60/100)",
+          "label": "État technique du matériel (usure)"
+        }
+      ],
+      "score": 50
+    },
+    "medias": [
+      {
+        "bytes": 72,
+        "path": "bornes/2026/08/ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      },
+      {
+        "bytes": 72,
+        "path": "canalisations/2026/08/ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      },
+      {
+        "bytes": 72,
+        "path": "equipements/2026/08/ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      },
+      {
+        "bytes": 72,
+        "path": "parcelles/2026/08/ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      },
+      {
+        "bytes": 72,
+        "path": "ressources/2026/08/ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      },
+      {
+        "bytes": 72,
+        "path": "stations/2026/08/ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      },
+      {
+        "bytes": 72,
+        "path": "teledetection/2026/07/ndvi_ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      },
+      {
+        "bytes": 72,
+        "path": "teledetection/2026/07/ndwi_ref.png",
+        "sha256": "acef85643b7543debf890229fcbd2183a1a69d37964ff3eea61cfbfa947d8a41"
+      }
+    ],
+    "medias_archive": {
+      "bytes": 1232,
+      "cle": "dti/15/medias-3f7a44806f84ff26.zip",
+      "mode": "jointe",
+      "nb_fichiers": 8,
+      "sha256": "3f7a44806f84ff263fe7746d2a3162bbd2959cc216c2387e68c070d84a389816"
+    },
+    "schema_version": "1.0",
+    "source": "cultiveau"
+  }
+}
