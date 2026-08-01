@@ -15,8 +15,17 @@ Chaque entrée répond à trois questions :
    vocabulaire (`nom` / `name`, `surface_ha` / `area`) ; la traduction est ici,
    explicite, plutôt que dispersée dans l'importeur.
 3. **Comment reconnaître un objet déjà connu ?** `cle` désigne le champ
-   d'identité métier (le SIRET pour une exploitation) quand l'objet doit être
-   retrouvé plutôt que recréé.
+   d'identité métier — le SIRET d'une exploitation, la référence cadastrale
+   d'une parcelle, la date d'une analyse. Il départage deux régimes, et c'est
+   la distinction la plus importante de tout l'échange :
+
+   * les modèles **partagés** de Holystyl (exploitation, parcelle, campagne,
+     NDVI) portent une `cle` et sont **mis à jour** : une exploitation a un
+     parcellaire, qui évolue. Sans cela, chaque nouvelle version d'un
+     diagnostic recréerait quinze parcelles de plus ;
+   * les modèles de l'app **dti** n'en portent pas et sont **recréés à chaque
+     réception** : ils constituent l'instantané daté du diagnostic, et deux
+     passages successifs doivent pouvoir se comparer.
 
 Le principe directeur est de **ne jamais dupliquer ce que Holystyl sait déjà**.
 Une exploitation, une parcelle, une campagne culturale, une analyse NDVI et un
@@ -109,8 +118,10 @@ CORRESPONDANCE = {
     "parcelles.assolements": Cible(
         "parcelles.ParcelleCampagne",
         parent="parcelles",
+        cle="libelle",
         note="La campagne de la source est un libellé (« 2026 »), pas une "
-             "date : elle alimente libelle, et non une année typée.",
+             "date : elle alimente libelle, et non une année typée. Une "
+             "campagne est identifiée par sa parcelle et son libellé.",
         champs={
             "campagne": "libelle",
             "culture": "culture",
@@ -121,6 +132,7 @@ CORRESPONDANCE = {
     "parcelles.analyses_satellite": Cible(
         "irrigation.NdviData",
         parent="parcelles",
+        cle="acquisition_date",
         note="Holystyl stocke déjà l'historique NDVI ; un modèle de plus "
              "ferait deux sources pour la même courbe. Les deux schémas "
              "nomment identiquement les indices, seuls la date et le taux de "

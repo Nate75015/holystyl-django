@@ -248,3 +248,10 @@ GOOGLE_OAUTH_CLIENT_SECRET = env("GOOGLE_OAUTH_CLIENT_SECRET", "")
 # ── Divers ──────────────────────────────────────────────────────────
 APP_NAME = "Holystyl"
 APP_URL = env("APP_URL", "http://localhost:8000")
+
+# Réception des diagnostics techniques d'irrigation émis par Cultiveau.
+# Le courriel sert de transport et n'authentifie pas son expéditeur : chaque
+# enveloppe est signée en HMAC avec ce secret, partagé avec la source. Sans
+# lui, l'import refuse tout — n'importe qui pourrait sinon écrire en base en
+# déposant un message dans la boîte de réception.
+IMPORT_DTI_SECRET = env("IMPORT_DTI_SECRET", "")

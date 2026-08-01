@@ -164,6 +164,12 @@ class RessourceEau(ElementDti):
                                    null=True, blank=True)
     matieres_suspension = models.CharField(_("matières en suspension"), max_length=10, blank=True)
 
+    station_pompage = models.ForeignKey(
+        "dti.Equipement", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="points_eau", verbose_name=_("station de pompage"),
+        help_text=_("Station installée sur ce point d'eau. Forme un cycle avec "
+                    "Equipement.borne_source, résolu en second passage à l'import."))
+
     latitude = models.FloatField(_("latitude"), null=True, blank=True)
     longitude = models.FloatField(_("longitude"), null=True, blank=True)
     cadastral_ref = models.CharField(_("réf. cadastrale"), max_length=50, blank=True)

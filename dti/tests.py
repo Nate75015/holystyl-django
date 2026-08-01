@@ -167,3 +167,230 @@ class CouvertureDuPayloadTests(TestCase):
         self.assertNotEqual("2", corr.SCHEMA_MAJEUR_SUPPORTE,
                             "Pensez à relire la correspondance avant de passer "
                             "à un schéma majeur suivant.")
+
+
+class ImportationTests(TestCase):
+    """Réception d'un diagnostic, de bout en bout.
+
+    Tout se joue ici sur base éphémère : ces scénarios créent et détruisent des
+    parcelles, et n'ont rien à faire dans une base de travail.
+    """
+
+    SECRET = "secret-de-test"
+
+    def setUp(self):
+        import hashlib
+        import hmac
+        import json as _json
+        from django.contrib.auth import get_user_model
+        from django.test import override_settings
+
+        self.reglages = override_settings(IMPORT_DTI_SECRET=self.SECRET)
+        self.reglages.enable()
+        self.addCleanup(self.reglages.disable)
+
+        self.enveloppe = charger_reference()
+        payload = self.enveloppe["payload"]
+        # La fixture est livrée sans signature (elle serait invalide après
+        # anonymisation) : on la signe ici avec le secret de test.
+        octets = _json.dumps(payload, sort_keys=True, separators=(",", ":"),
+                             ensure_ascii=False).encode("utf-8")
+        self.enveloppe["signature"] = hmac.new(
+            self.SECRET.encode(), octets, hashlib.sha256).hexdigest()
+
+        self.User = get_user_model()
+        self.utilisateur = self.User.objects.create_user(
+            email="operateur@example.invalid", password="x")
+
+    def _exploitation(self, siret="00000000000000"):
+        from exploitations.models import Exploitation
+        return Exploitation.objects.create(
+            owner=self.utilisateur, name="Exploitation de test", siret=siret)
+
+    # ── Garde-fous d'entrée ──
+
+    def test_signature_invalide_refusee(self):
+        """Le courriel n'authentifie pas l'expéditeur : sans signature valide,
+        déposer un faux diagnostic suffirait à écrire en base."""
+        from . import importation
+        self.enveloppe["signature"] = "0" * 64
+        with self.assertRaises(importation.ImportRefuse):
+            importation.recevoir(self.enveloppe)
+
+    def test_payload_altere_apres_signature_refuse(self):
+        from . import importation
+        self.enveloppe["payload"]["dti"]["nom"] = "Diagnostic falsifié"
+        with self.assertRaises(importation.ImportRefuse):
+            importation.recevoir(self.enveloppe)
+
+    def test_version_majeure_inconnue_refusee(self):
+        from . import importation
+        self.enveloppe["payload"]["schema_version"] = "9.0"
+        with self.assertRaises(importation.ImportRefuse):
+            importation.recevoir(self.enveloppe)
+
+    def test_sans_secret_configure_rien_ne_passe(self):
+        from django.test import override_settings
+        from . import importation
+        with override_settings(IMPORT_DTI_SECRET=""):
+            with self.assertRaises(importation.ImportRefuse):
+                importation.recevoir(self.enveloppe)
+
+    # ── Quarantaine et rattachement ──
+
+    def test_siret_inconnu_met_en_quarantaine(self):
+        """Exploitation.owner est obligatoire : nul ne peut deviner à quel
+        utilisateur revient un diagnostic. Rien n'est perdu pour autant."""
+        from . import importation
+        from .models import DtiImport, RessourceEau
+        imp = importation.recevoir(self.enveloppe)
+        self.assertEqual(imp.statut, DtiImport.Statut.QUARANTAINE)
+        self.assertTrue(imp.payload, "le payload doit être conservé intégralement")
+        self.assertEqual(imp.siret_declare, "00000000000000")
+        self.assertEqual(RessourceEau.objects.count(), 0)
+
+    def test_rattachement_declenche_l_import(self):
+        from . import importation
+        from .models import Composant, DtiImport, Equipement, RessourceEau
+        imp = importation.recevoir(self.enveloppe)
+        exploitation = self._exploitation()
+        importation.rattacher(imp, exploitation)
+        imp.refresh_from_db()
+        self.assertEqual(imp.statut, DtiImport.Statut.IMPORTE)
+        self.assertEqual(RessourceEau.objects.count(), 2)
+        self.assertEqual(Equipement.objects.count(), 2)
+        self.assertEqual(Composant.objects.count(), 2)
+
+    def test_siret_connu_importe_directement(self):
+        from . import importation
+        from .models import DtiImport
+        self._exploitation()
+        imp = importation.recevoir(self.enveloppe)
+        self.assertEqual(imp.statut, DtiImport.Statut.IMPORTE)
+        self.assertTrue(imp.rapport)
+
+    # ── Idempotence : les deux défauts trouvés à l'aller-retour ──
+
+    def test_reimport_ne_duplique_pas_l_instantane(self):
+        """Rattacher un import déjà passé doublait tout : six ressources en
+        eau en devenaient douze."""
+        from . import importation
+        from .models import RessourceEau
+        exploitation = self._exploitation()
+        imp = importation.recevoir(self.enveloppe)
+        avant = RessourceEau.objects.count()
+        importation.importer(imp)
+        self.assertEqual(RessourceEau.objects.count(), avant)
+
+    def test_deux_versions_ne_dupliquent_pas_le_parcellaire(self):
+        """Le défaut le plus grave : sans clé naturelle, chaque nouvelle
+        version d'un diagnostic ajoutait quinze parcelles de plus.
+
+        Une exploitation a UN parcellaire, qui évolue ; le diagnostic, lui,
+        est historisé.
+        """
+        import hashlib
+        import hmac
+        import json as _json
+        from copy import deepcopy
+        from parcelles.models import Parcelle
+        from . import importation
+        from .models import DtiImport, RessourceEau
+
+        exploitation = self._exploitation()
+        importation.recevoir(self.enveloppe)
+        parcelles_v1 = Parcelle.objects.filter(exploitation=exploitation).count()
+
+        # Seconde version du même DTI : une valeur change, l'empreinte aussi.
+        v2 = deepcopy(self.enveloppe)
+        v2["payload"]["dti"]["parcelles"][0]["surface_ha"] = "13.75"
+        v2["empreinte"] = "b" * 64
+        octets = _json.dumps(v2["payload"], sort_keys=True, separators=(",", ":"),
+                             ensure_ascii=False).encode("utf-8")
+        v2["signature"] = hmac.new(self.SECRET.encode(), octets,
+                                   hashlib.sha256).hexdigest()
+        importation.recevoir(v2)
+
+        self.assertEqual(Parcelle.objects.filter(exploitation=exploitation).count(),
+                         parcelles_v1, "le parcellaire ne doit pas être dupliqué")
+        self.assertEqual(DtiImport.objects.count(), 2,
+                         "chaque réception reste historisée")
+        self.assertEqual(RessourceEau.objects.count(), 4,
+                         "l'instantané du diagnostic, lui, est bien historisé")
+        parcelle = Parcelle.objects.get(exploitation=exploitation,
+                                        cadastral_ref="000A0000")
+        self.assertEqual(parcelle.area, 13.75, "la mise à jour doit s'appliquer")
+
+    def test_meme_enveloppe_relue_ne_cree_pas_de_doublon(self):
+        """Un courriel peut être relu deux fois."""
+        from . import importation
+        from .models import DtiImport
+        self._exploitation()
+        a = importation.recevoir(self.enveloppe)
+        b = importation.recevoir(self.enveloppe)
+        self.assertEqual(a.pk, b.pk)
+        self.assertEqual(DtiImport.objects.count(), 1)
+
+    # ── Fidélité du contenu ──
+
+    def test_le_cycle_borne_station_est_resolu_dans_les_deux_sens(self):
+        """RessourceEau.station_pompage et Equipement.borne_source forment un
+        cycle : il ne peut se refermer qu'en second passage.
+
+        Les deux sens comptent — un point d'eau porte la station qui le pompe,
+        un enrouleur part d'une borne. N'en traiter qu'un perdait l'autre sans
+        que rien ne le signale.
+        """
+        from . import importation
+        from .models import Equipement, RessourceEau
+        self._exploitation()
+        importation.recevoir(self.enveloppe)
+
+        forage = RessourceEau.objects.get(
+            categorie=RessourceEau.Categorie.PRELEVEMENT)
+        self.assertIsNotNone(forage.station_pompage,
+                             "le point d'eau doit retrouver sa station")
+        self.assertEqual(forage.station_pompage.type_equipement, "Station de pompage")
+
+        borne = RessourceEau.objects.get(categorie=RessourceEau.Categorie.BORNE)
+        self.assertTrue(borne.equipements_alimentes.exists(),
+                        "l'enrouleur doit retrouver sa borne d'alimentation")
+        self.assertEqual(borne.equipements_alimentes.first().type_equipement,
+                         "Enrouleur")
+
+    def test_champs_hors_colonnes_atterrissent_en_caracteristiques(self):
+        """Les 175 colonnes polymorphes de l'équipement ne deviennent pas 175
+        colonnes ici, mais rien n'est perdu."""
+        from . import importation
+        from .models import Equipement
+        self._exploitation()
+        importation.recevoir(self.enveloppe)
+        eq = Equipement.objects.get(type_equipement="Station de pompage")
+        self.assertIsInstance(eq.caracteristiques, dict)
+        # Les colonnes propres au type ne disparaissent pas, elles changent
+        # seulement de place : elles gardent leurs noms d'origine.
+        self.assertNotIn("type_equipement", eq.caracteristiques)
+
+    def test_le_score_alimente_le_modele_existant(self):
+        from irrigation.models import DtiScore
+        from . import importation
+        exploitation = self._exploitation()
+        importation.recevoir(self.enveloppe)
+        self.assertEqual(DtiScore.objects.filter(exploitation=exploitation).count(), 1)
+
+    def test_exploitation_non_renommee_par_un_diagnostic(self):
+        """La source ne doit pas pouvoir renommer une fiche qui ne lui
+        appartient pas."""
+        from . import importation
+        exploitation = self._exploitation()
+        importation.recevoir(self.enveloppe)
+        exploitation.refresh_from_db()
+        self.assertEqual(exploitation.name, "Exploitation de test")
+
+    def test_rapport_denombre_ce_qui_a_ete_cree(self):
+        """Un import qui ne crée rien doit se voir."""
+        from . import importation
+        self._exploitation()
+        imp = importation.recevoir(self.enveloppe)
+        self.assertGreaterEqual(imp.rapport.get("ressources_eau", 0), 2)
+        self.assertGreaterEqual(imp.rapport.get("parcelles", 0), 1)
