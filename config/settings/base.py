@@ -255,3 +255,6 @@ APP_URL = env("APP_URL", "http://localhost:8000")
 # lui, l'import refuse tout — n'importe qui pourrait sinon écrire en base en
 # déposant un message dans la boîte de réception.
 IMPORT_DTI_SECRET = env("IMPORT_DTI_SECRET", "")
+# Boîte Gmail relevée par « manage.py relever_dti ». Elle doit correspondre à
+# un GmailAccount déjà connecté (mail/). Vide = ingestion éteinte.
+IMPORT_DTI_BOITE = env("IMPORT_DTI_BOITE", "")

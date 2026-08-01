@@ -169,11 +169,11 @@ class CouvertureDuPayloadTests(TestCase):
                             "à un schéma majeur suivant.")
 
 
-class ImportationTests(TestCase):
-    """Réception d'un diagnostic, de bout en bout.
+class EnveloppeSigneeMixin:
+    """Prépare une enveloppe signée et de quoi la rattacher.
 
-    Tout se joue ici sur base éphémère : ces scénarios créent et détruisent des
-    parcelles, et n'ont rien à faire dans une base de travail.
+    Un mixin, pas une classe de base : hériter d'un TestCase ferait rejouer
+    tous ses tests dans chaque sous-classe.
     """
 
     SECRET = "secret-de-test"
@@ -206,6 +206,14 @@ class ImportationTests(TestCase):
         from exploitations.models import Exploitation
         return Exploitation.objects.create(
             owner=self.utilisateur, name="Exploitation de test", siret=siret)
+
+
+class ImportationTests(EnveloppeSigneeMixin, TestCase):
+    """Réception d'un diagnostic, de bout en bout.
+
+    Tout se joue sur base éphémère : ces scénarios créent et détruisent des
+    parcelles, et n'ont rien à faire dans une base de travail.
+    """
 
     # ── Garde-fous d'entrée ──
 
@@ -394,3 +402,128 @@ class ImportationTests(TestCase):
         imp = importation.recevoir(self.enveloppe)
         self.assertGreaterEqual(imp.rapport.get("ressources_eau", 0), 2)
         self.assertGreaterEqual(imp.rapport.get("parcelles", 0), 1)
+
+
+class EcranRattachementTests(EnveloppeSigneeMixin, TestCase):
+    """L'écran qui porte le seul geste non automatisable de la chaîne."""
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(self.utilisateur)
+
+    def test_liste_met_la_quarantaine_en_tete(self):
+        from . import importation
+        importation.recevoir(self.enveloppe)
+        reponse = self.client.get("/dti/receptions/")
+        self.assertEqual(reponse.status_code, 200)
+        self.assertEqual(len(reponse.context["quarantaine"]), 1)
+
+    def test_detail_montre_le_contenu_avant_import(self):
+        """Rattacher à l'aveugle un dossier identifié par un seul numéro serait
+        demander à l'opérateur de signer sans lire."""
+        from . import importation
+        imp = importation.recevoir(self.enveloppe)
+        reponse = self.client.get(f"/dti/receptions/{imp.pk}/")
+        self.assertEqual(reponse.status_code, 200)
+        apercu = dict(reponse.context["apercu"])
+        self.assertEqual(apercu["ressources en eau"], 2)
+        self.assertEqual(apercu["parcelles"], 1)
+
+    def test_rattachement_importe_et_confirme(self):
+        from . import importation
+        from .models import DtiImport, RessourceEau
+        imp = importation.recevoir(self.enveloppe)
+        exploitation = self._exploitation()
+        reponse = self.client.post(f"/dti/receptions/{imp.pk}/rattacher/",
+                                   {"exploitation": exploitation.pk}, follow=True)
+        self.assertEqual(reponse.status_code, 200)
+        imp.refresh_from_db()
+        self.assertEqual(imp.statut, DtiImport.Statut.IMPORTE)
+        self.assertEqual(RessourceEau.objects.count(), 2)
+
+    def test_rattacher_une_exploitation_d_autrui_est_refuse(self):
+        from django.contrib.auth import get_user_model
+        from exploitations.models import Exploitation
+        from . import importation
+        imp = importation.recevoir(self.enveloppe)
+        autre = get_user_model().objects.create_user(
+            email="autre@example.invalid", password="x")
+        pas_a_moi = Exploitation.objects.create(owner=autre, name="Chez autrui")
+        reponse = self.client.post(f"/dti/receptions/{imp.pk}/rattacher/",
+                                   {"exploitation": pas_a_moi.pk})
+        self.assertEqual(reponse.status_code, 404)
+
+    def test_rattacher_deux_fois_ne_reimporte_pas(self):
+        from . import importation
+        imp = importation.recevoir(self.enveloppe)
+        exploitation = self._exploitation()
+        self.client.post(f"/dti/receptions/{imp.pk}/rattacher/",
+                         {"exploitation": exploitation.pk})
+        reponse = self.client.post(f"/dti/receptions/{imp.pk}/rattacher/",
+                                   {"exploitation": exploitation.pk}, follow=True)
+        self.assertContains(reponse, "déjà rattaché")
+
+
+class MediasTests(EnveloppeSigneeMixin, TestCase):
+    """Les photos suivent le diagnostic, ou leur absence est explicite."""
+
+    def _archive(self, chemins):
+        import io
+        import zipfile
+        tampon = io.BytesIO()
+        with zipfile.ZipFile(tampon, "w") as zf:
+            for chemin in chemins:
+                zf.writestr(chemin, b"contenu-photo")
+        return tampon.getvalue()
+
+    def test_manifeste_cree_une_entree_par_fichier(self):
+        from . import importation, medias
+        from .models import MediaDti
+        self._exploitation()
+        imp = importation.recevoir(self.enveloppe)
+        medias.enregistrer_manifeste(imp)
+        attendu = len(imp.payload.get("medias") or [])
+        self.assertEqual(MediaDti.objects.filter(import_dti=imp).count(), attendu)
+        self.assertGreater(attendu, 0)
+
+    def test_archive_alteree_est_rejetee_fichier_par_fichier(self):
+        """Une archive tronquée doit se voir, pas produire des photos
+        corrompues qu'on découvrirait à l'affichage."""
+        from . import importation, medias
+        self._exploitation()
+        imp = importation.recevoir(self.enveloppe)
+        chemins = [m["path"] for m in imp.payload["medias"] if not m.get("manquant")]
+        ranges, ignores = medias.recuperer(imp, octets_joints=self._archive(chemins))
+        # Le contenu ne correspond pas aux empreintes annoncées : tout est
+        # écarté, et l'import n'est pas marqué comme ayant ses médias.
+        self.assertEqual(ranges, 0)
+        self.assertEqual(ignores, len(chemins))
+        imp.refresh_from_db()
+        self.assertFalse(imp.medias_recuperes)
+
+    def test_media_absent_a_la_source_reste_signale(self):
+        from . import importation, medias
+        from .models import MediaDti
+        self._exploitation()
+        self.enveloppe["payload"]["medias"].append(
+            {"path": "parcelles/2026/08/perdue.png", "manquant": True})
+        # L'enveloppe change : il faut la resigner.
+        import hashlib, hmac, json as _json
+        octets = _json.dumps(self.enveloppe["payload"], sort_keys=True,
+                             separators=(",", ":"), ensure_ascii=False).encode()
+        self.enveloppe["signature"] = hmac.new(
+            self.SECRET.encode(), octets, hashlib.sha256).hexdigest()
+        imp = importation.recevoir(self.enveloppe)
+        medias.enregistrer_manifeste(imp)
+        perdue = MediaDti.objects.get(chemin_source="parcelles/2026/08/perdue.png")
+        self.assertTrue(perdue.manquant)
+
+
+class IngestionTests(TestCase):
+    """Relève de la boîte : le branchement, pas Gmail lui-même."""
+
+    def test_ingestion_inactive_sans_boite_configuree(self):
+        from django.test import override_settings
+        from . import ingestion
+        with override_settings(IMPORT_DTI_BOITE=""):
+            self.assertEqual(ingestion.relever()["etat"], "inactif")
