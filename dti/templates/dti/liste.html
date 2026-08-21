@@ -9,8 +9,8 @@
     <h1 class="text-[20px]">{% trans "Diagnostics techniques d'irrigation" %}</h1>
   </div>
 
-  {# En attente d'abord : ce n'est pas un journal d'erreurs, c'est une
-     question posée à un humain — elle mérite la tête de page. #}
+  {% comment %}En attente d'abord : ce n'est pas un journal d'erreurs, c'est une
+  question posée à un humain — elle mérite la tête de page.{% endcomment %}
   {% if quarantaine %}
     <div class="hs-card overflow-hidden">
       <div class="border-b px-5 py-3.5" style="border-color: var(--border)">

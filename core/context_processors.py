@@ -241,10 +241,11 @@ def layout(request):
     # Section ouverte par défaut dans le panneau latéral (jamais vide → toujours visible)
     default_section = active_section or (nav_sections[0]["key"] if nav_sections else "")
 
-    # Sélecteur d'espace : uniquement ceux ouverts à l'utilisateur. Un seul
-    # espace (le cas courant) ⇒ liste d'un élément, le template n'affiche rien.
+    # Sélecteur d'espace : les trois sont toujours affichés, ceux sans
+    # rattachement étant rendus inertes. Les masquer ferait disparaître le
+    # sélecteur entier chez la plupart des comptes, qui n'ont qu'un espace.
     disponibles = espaces_service.espaces_disponibles(request) if hasattr(request, "session") else []
-    espaces = [e for e in espaces_service.ESPACES if e["cle"] in disponibles]
+    espaces = [dict(e, disponible=e["cle"] in disponibles) for e in espaces_service.ESPACES]
 
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),

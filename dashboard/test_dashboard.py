@@ -117,9 +117,14 @@ def test_nav_exploitant_complete(client, expl):
         assert attendu in html
 
 
-def test_selecteur_masque_si_un_seul_espace(client, expl):
+def test_selecteur_montre_les_trois_espaces(client, expl):
+    """Les trois icônes restent visibles ; les espaces non ouverts sont inertes."""
     html = _log(client, expl.owner).get(reverse("dashboard:exploitant")).content.decode()
-    assert reverse("dashboard:basculer") not in html
+    for icone in ("business_center", "badge", "real_estate_agent"):
+        assert icone in html
+    # Seul l'exploitant est cliquable pour ce compte.
+    assert html.count('name="espace"') == 3
+    assert html.count("disabled") == 2
 
 
 def test_bascule(client, expl):
@@ -128,7 +133,7 @@ def test_bascule(client, expl):
     c = _log(client, expl.owner)
 
     html = c.get(reverse("dashboard:exploitant")).content.decode()
-    assert reverse("dashboard:basculer") in html        # sélecteur affiché
+    assert html.count("disabled") == 1                  # seul « bailleur » inerte
 
     r = c.post(reverse("dashboard:basculer"), {"espace": "employe"})
     assert r.status_code == 302
