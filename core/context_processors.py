@@ -7,6 +7,8 @@ from django.conf import settings
 from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext_lazy as _
 
+from . import espaces as espaces_service
+
 
 def _sort_key(label):
     """Clé de tri alphabétique insensible aux accents/casse, dans la langue active."""
@@ -158,6 +160,17 @@ def layout(request):
         },
     ]
 
+    # ── Filtrage par espace ──────────────────────────────────────────────
+    # Un employé ou un bailleur ne voit qu'une part de la nav. Le filtre est
+    # appliqué ici, avant la résolution des URL : inutile de reverse() des
+    # entrées qui ne seront pas affichées. Une section vidée disparaît.
+    autorisees = espaces_service.nav_autorisee(getattr(request, "espace", None))
+    if autorisees is not None:
+        nav_primary = [e for e in nav_primary if e["url_name"] in autorisees]
+        for section in nav_sections:
+            section["items"] = [i for i in section["items"] if i["url_name"] in autorisees]
+        nav_sections = [s for s in nav_sections if s["items"]]
+
     # Icône de section (présentation ; navigation de la sidebar)
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
@@ -228,8 +241,15 @@ def layout(request):
     # Section ouverte par défaut dans le panneau latéral (jamais vide → toujours visible)
     default_section = active_section or (nav_sections[0]["key"] if nav_sections else "")
 
+    # Sélecteur d'espace : uniquement ceux ouverts à l'utilisateur. Un seul
+    # espace (le cas courant) ⇒ liste d'un élément, le template n'affiche rien.
+    disponibles = espaces_service.espaces_disponibles(request) if hasattr(request, "session") else []
+    espaces = [e for e in espaces_service.ESPACES if e["cle"] in disponibles]
+
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
+        "espaces": espaces,
+        "espace_courant": getattr(request, "espace", None),
         "nav_primary": nav_primary,
         "nav_sections": nav_sections,
         "active_section": active_section,

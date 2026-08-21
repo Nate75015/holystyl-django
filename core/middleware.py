@@ -1,31 +1,29 @@
 """Middleware multi-tenant : attache l'exploitation courante à la requête.
 
-L'app `exploitations` n'existe qu'à partir de la Tranche 1. Ce middleware est
-posé dès le socle de façon défensive : tant que le modèle Exploitation n'est pas
-disponible (ou qu'aucune exploitation n'est rattachée à l'utilisateur), il pose
-`request.exploitation = None`. La résolution réelle sera complétée en Tranche 1.
+La résolution passe par l'espace actif (`core.espaces`) : un employé ou un
+bailleur n'est pas propriétaire de l'exploitation qu'il consulte, chercher un
+`owner=user` ne suffit donc pas.
+
+Reste défensif : tant qu'aucun rattachement n'existe (compte fraîchement créé,
+avant l'onboarding), `request.exploitation` vaut None et `request.espace` aussi.
 """
 
-from django.utils.functional import SimpleLazyObject
-
-
-def _resolve_exploitation(request):
-    user = getattr(request, "user", None)
-    if user is None or not user.is_authenticated:
-        return None
-    try:
-        from exploitations.models import Exploitation  # noqa: WPS433 (import tardif voulu)
-    except (ImportError, LookupError):
-        return None
-    return Exploitation.objects.filter(owner=user).first()
+from . import espaces as espaces_service
 
 
 class CurrentExploitationMiddleware:
-    """Rend `request.exploitation` disponible partout (résolu paresseusement)."""
+    """Rend `request.espace` et `request.exploitation` disponibles partout.
+
+    Résolus directement, et non via `SimpleLazyObject` : un objet paresseux
+    enveloppant None ne répond pas à `is None`, ce qui en fait un piège pour
+    tout le code appelant. La résolution tient en trois requêtes indexées, et
+    zéro pour un visiteur anonyme.
+    """
 
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-        request.exploitation = SimpleLazyObject(lambda: _resolve_exploitation(request))
+        request.espace = espaces_service.espace_courant(request)
+        request.exploitation = espaces_service.exploitation_de(request)
         return self.get_response(request)

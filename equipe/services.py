@@ -24,3 +24,37 @@ def generate_location_link(member) -> str:
     member.location_token_expires_at = timezone.now() + timedelta(hours=24)
     member.save(update_fields=["location_token", "location_token_expires_at"])
     return member.location_token
+
+
+# ── Accès pour les tableaux de bord ─────────────────────────────────────
+
+
+def compte_membres(exploitation) -> int:
+    """Nombre de membres d'équipe de l'exploitation (ETP affiché sur Pulse)."""
+    if exploitation is None:
+        return 0
+    from .models import TeamMember
+
+    return TeamMember.objects.filter(exploitation=exploitation).count()
+
+
+def membre_de(user):
+    """Le membre d'équipe actif rattaché à ce compte, ou None."""
+    if user is None or not user.is_authenticated:
+        return None
+    from .models import TeamMember
+
+    return TeamMember.objects.filter(user=user, is_active=True).first()
+
+
+def taches_du_membre(membre, limite=10):
+    """Les tâches en cours assignées au membre, les plus urgentes d'abord."""
+    if membre is None:
+        return []
+    from .models import Task
+
+    return list(
+        Task.objects.filter(assigned_to=membre)
+        .exclude(status__in=[Task.Status.DONE, Task.Status.VALIDATED])
+        .order_by("due_date", "-created_at")[:limite]
+    )

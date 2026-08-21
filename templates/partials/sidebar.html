@@ -63,8 +63,32 @@
     {% endfor %}
   </nav>
 
-  {# Séparateur + Assistant IA épinglé en bas #}
+  {# Sélecteur d'espace — masqué quand l'utilisateur n'en a qu'un (cas courant).
+     POST : changer d'espace modifie la session, pas un GET déclenchable par un
+     lien ou un préchargement. #}
+  {% if espaces|length > 1 %}
   <div class="mt-2 pt-2" style="border-top: 0.5px solid var(--border)">
+    <form method="post" action="{% url 'dashboard:basculer' %}"
+          class="grid gap-1" style="grid-template-columns: repeat({{ espaces|length }}, minmax(0, 1fr))"
+          x-data="{ survol: null }">
+      {% csrf_token %}
+      {% for e in espaces %}
+        <button type="submit" name="espace" value="{{ e.cle }}"
+                @mouseenter="survol = '{{ e.cle }}'" @mouseleave="survol = null"
+                class="relative flex items-center justify-center rounded-lg py-2 transition {% if e.cle != espace_courant %}hover:bg-black/5 dark:hover:bg-white/10{% endif %}"
+                style="{% if e.cle == espace_courant %}background: var(--action-subtle); color: var(--action-text){% else %}color: var(--text-muted){% endif %}">
+          <span class="material-icons-round text-[18px]">{{ e.icone }}</span>
+          <span x-show="survol === '{{ e.cle }}'" x-cloak x-transition.opacity.duration.100ms
+                class="hs-popover pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-[11px] font-medium"
+                style="color: var(--text)">{{ e.label }}</span>
+        </button>
+      {% endfor %}
+    </form>
+  </div>
+  {% endif %}
+
+  {# Assistant IA épinglé en bas #}
+  <div class="mt-1 pt-2" style="border-top: 0.5px solid var(--border)">
     <a href="{% url 'ia:assistant' %}" class="hs-side-link {% if request.resolver_match.view_name == 'ia:assistant' %}hs-side-link-active{% endif %}">
       <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">support_agent</span>
       <span class="flex-1 truncate text-left">{% trans "Assistant IA" %}</span>

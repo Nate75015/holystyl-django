@@ -79,3 +79,41 @@ def calculate_dti_score(kwh_per_m3: float, uniformity: float = 90) -> DtiResult:
         recommendations.append("Adapter le volume irrigué au bilan hydrique réel pour éviter le sur-arrosage")
 
     return DtiResult(score=score, numeric=min(100, numeric), recommendations=recommendations)
+
+
+# ── Séries pour les tableaux de bord ─────────────────────────────────────
+# Exposées ici plutôt que requêtées depuis `dashboard` : un dashboard ne doit
+# pas connaître l'ORM d'un autre domaine, sinon tout changement de schéma
+# casse chaque écran qui l'interroge.
+
+
+def _chronologique(qs):
+    """Le plus récent d'abord en base, le plus ancien d'abord sur un graphique."""
+    return list(reversed(list(qs)))
+
+
+def serie_dti(exploitation, limite=14):
+    """Les `limite` derniers scores DTI, du plus ancien au plus récent."""
+    if exploitation is None:
+        return []
+    from .models import DtiScore
+
+    return _chronologique(DtiScore.objects.filter(exploitation=exploitation)[:limite])
+
+
+def dernier_dti(exploitation):
+    """Le score DTI courant, ou None."""
+    if exploitation is None:
+        return None
+    from .models import DtiScore
+
+    return DtiScore.objects.filter(exploitation=exploitation).first()
+
+
+def serie_compteur_eau(exploitation, limite=14):
+    """Les `limite` derniers relevés de compteur, du plus ancien au plus récent."""
+    if exploitation is None:
+        return []
+    from .models import WaterMeter
+
+    return _chronologique(WaterMeter.objects.filter(exploitation=exploitation)[:limite])

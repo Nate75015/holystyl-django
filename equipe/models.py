@@ -32,7 +32,6 @@ class TeamMember(TimeStampedModel):
     last_seen_at = models.DateTimeField(null=True, blank=True)
     location_token = models.CharField(max_length=64, blank=True)
     location_token_expires_at = models.DateTimeField(null=True, blank=True)
-    password_hash = models.CharField(max_length=255, blank=True)
     allowed_modules = models.JSONField(default=list, blank=True)
     preferred_locale = models.CharField(max_length=5, default="fr")
     managed_by = models.ForeignKey(

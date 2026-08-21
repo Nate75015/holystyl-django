@@ -50,3 +50,12 @@ def broadcast_device_status(device):
             },
         },
     )
+
+
+def alertes_ouvertes(exploitation, limite=5):
+    """Les alertes non acquittées de l'exploitation (pour les tableaux de bord)."""
+    if exploitation is None:
+        return []
+    from .models import IotAlert
+
+    return list(IotAlert.objects.filter(exploitation=exploitation, acknowledged=False)[:limite])

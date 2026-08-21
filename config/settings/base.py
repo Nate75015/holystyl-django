@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "satkaar_agenda",  # moteur de calendrier (Event/RRULE) — backend du planning
     # Apps métier Holystyl (ajoutées au fil des tranches)
     "core",
+    "dashboard",
     "accounts",
     "exploitations",
     "agronomie",

@@ -34,7 +34,7 @@ def test_login_then_dashboard(client):
     User.objects.create_user(email="demo@example.com", password="pwd12345")
     ok = client.login(email="demo@example.com", password="pwd12345")
     assert ok
-    resp = client.get(reverse("core:dashboard"))
+    resp = client.get(reverse("core:dashboard"), follow=True)
     assert resp.status_code == 200
     assert b"Holystyl" in resp.content
 

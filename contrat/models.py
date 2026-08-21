@@ -61,6 +61,17 @@ class Bail(models.Model):
     )
     designation = models.CharField(_("désignation"), max_length=255)
     bailleur = models.CharField(_("bailleur"), max_length=255, blank=True)
+    # `bailleur` reste le nom en clair (saisie libre, baux historiques). Cette FK
+    # est ce qui rattache réellement le bail à une fiche Partenaire, et donc à
+    # l'espace bailleur : sans elle, on en serait réduit à comparer des chaînes.
+    partenaire = models.ForeignKey(
+        "client.Partenaire",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="baux",
+        verbose_name=_("fiche bailleur"),
+    )
     preneur = models.CharField(_("preneur"), max_length=255, blank=True)
     surface_ha = models.FloatField(_("surface (ha)"), null=True, blank=True)
     loyer_annuel = models.FloatField(_("fermage annuel (€)"), null=True, blank=True)

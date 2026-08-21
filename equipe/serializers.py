@@ -6,7 +6,7 @@ from .models import Task, TeamMember
 class TeamMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamMember
-        exclude = ["exploitation", "password_hash", "location_token", "location_token_expires_at"]
+        exclude = ["exploitation", "location_token", "location_token_expires_at"]
         read_only_fields = ["id", "is_online", "last_seen_at", "created_at", "updated_at"]
 
 
