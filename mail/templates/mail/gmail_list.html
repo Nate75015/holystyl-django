@@ -20,7 +20,7 @@
                class="input-bare w-full bg-transparent text-sm" autocomplete="off">
         <button type="button" x-show="q" @click="q = ''" class="material-icons-round text-[18px]" style="color: var(--text-muted)">close</button>
       </div>
-      <a href="{% url 'mail:compose' %}" class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-white transition hover:[background:var(--action-hover)] md:hidden" style="background: var(--action)">
+      <a href="{% url 'mail:compose' %}" class="grid h-10 w-10 shrink-0 place-items-center rounded-full transition hover:[background:var(--action-hover)] md:hidden" style="background: var(--action); color: var(--on-action)">
         <span class="material-icons-round text-[20px]">edit</span>
       </a>
     </div>

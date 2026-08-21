@@ -20,7 +20,7 @@
         {# Nouvelle conversation #}
         <a href="?new" title="{% trans 'Nouvelle conversation' %}"
            class="flex items-center gap-3 rounded-lg py-2 pl-1.5 pr-2 transition hover:bg-black/5 dark:hover:bg-white/10">
-          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-white" style="background: var(--action)">
+          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full" style="background: var(--action); color: var(--on-action)">
             <span class="material-icons-round text-[18px]">add</span>
           </span>
           <span x-show="open" x-cloak class="whitespace-nowrap text-sm font-medium">{% trans "Nouvelle conversation" %}</span>
@@ -68,7 +68,7 @@
 
     {# Accueil (aucun message ni historique) #}
     <div x-show="messages.length === 0 && !hasHistory" class="flex h-full flex-col items-center justify-center px-4 text-center">
-      <div class="grid h-16 w-16 place-items-center rounded-xl text-2xl font-medium text-white" style="background: var(--action)">E</div>
+      <div class="grid h-16 w-16 place-items-center rounded-xl text-2xl font-medium" style="background: var(--action); color: var(--on-action)">E</div>
       <h2 class="mt-4 text-[20px]">{% trans "Bonjour, je suis Eric." %}</h2>
       <p class="mt-2 max-w-md text-sm" style="color: var(--text-secondary)">
         {% trans "Votre conseiller agronome. Posez-moi vos questions sur l'irrigation, les cultures, la fertilisation ou vos analyses." %}
@@ -88,16 +88,16 @@
     <div x-show="messages.length > 0 || hasHistory" class="space-y-3 py-2">
       {% for m in history %}
         <div class="flex {% if m.role == 'user' %}justify-end{% endif %} items-end gap-2">
-          {% if m.role != 'user' %}<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-medium text-white" style="background: var(--action)">E</span>{% endif %}
-          <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm {% if m.role == 'user' %}text-white{% else %}bg-black/5 dark:bg-white/10{% endif %}"{% if m.role == 'user' %} style="background: var(--action)"{% endif %}>{{ m.content }}</div>
+          {% if m.role != 'user' %}<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-medium" style="background: var(--action); color: var(--on-action)">E</span>{% endif %}
+          <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm {% if m.role == 'user' %}{% else %}bg-black/5 dark:bg-white/10{% endif %}"{% if m.role == 'user' %} style="background: var(--action); color: var(--on-action)"{% endif %}>{{ m.content }}</div>
         </div>
       {% endfor %}
       <template x-for="(m, i) in messages" :key="i">
         <div class="flex items-end gap-2" :class="m.role === 'user' ? 'justify-end' : ''">
-          <template x-if="m.role !== 'user'"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-medium text-white" style="background: var(--action)">E</span></template>
+          <template x-if="m.role !== 'user'"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-medium" style="background: var(--action); color: var(--on-action)">E</span></template>
           <div class="max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm"
-               :class="m.role === 'user' ? 'text-white' : 'bg-black/5 dark:bg-white/10'"
-               :style="m.role === 'user' ? 'background: var(--action)' : ''"
+               :class="m.role === 'user' ? '' : 'bg-black/5 dark:bg-white/10'"
+               :style="m.role === 'user' ? 'background: var(--action); color: var(--on-action)' : ''"
                x-text="m.content || '…'"></div>
         </div>
       </template>

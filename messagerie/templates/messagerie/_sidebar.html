@@ -3,7 +3,7 @@
   <div class="flex items-center justify-between border-b px-4 py-3" style="border-color: var(--border)">
     <h2 class="text-[15px] font-medium">{% trans "Chat" %}</h2>
     <button type="button" @click="modal = true" title="{% trans 'Nouveau message' %}"
-            class="grid h-9 w-9 place-items-center rounded-lg text-white transition" style="background: var(--action)" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action)'">
+            class="grid h-9 w-9 place-items-center rounded-lg transition" style="background: var(--action); color: var(--on-action)" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action)'">
       <span class="material-icons-round text-[18px]">edit</span>
     </button>
   </div>

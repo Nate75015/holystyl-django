@@ -78,7 +78,7 @@
       </div>
       <div class="flex flex-wrap gap-2">
         <template x-for="ff in filters" :key="ff.v">
-          <button type="button" @click="cat = ff.v" x-text="ff.l" class="whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] transition" :class="cat === ff.v ? '' : ''" :style="cat === ff.v ? 'background: var(--action); color: #fff; border: 0.5px solid var(--action)' : 'border: 0.5px solid var(--border); color: var(--text-secondary)'"></button>
+          <button type="button" @click="cat = ff.v" x-text="ff.l" class="whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] transition" :class="cat === ff.v ? '' : ''" :style="cat === ff.v ? 'background: var(--action); color: var(--on-action); border: 0.5px solid var(--action)' : 'border: 0.5px solid var(--border); color: var(--text-secondary)'"></button>
         </template>
       </div>
 

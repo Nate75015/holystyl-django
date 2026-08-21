@@ -25,6 +25,9 @@
   --action-hover:   #28496B;
   --action-subtle:  #E6EEF6;
   --action-text:    #1E3A55;
+  /* Texte posé SUR --action (pastilles, bulles, boutons pleins). Le mode nuit
+     utilise un fond d'action clair : il faut un texte sombre, pas du blanc. */
+  --on-action:      #FFFFFF;
 
   /* Surfaces */
   --page:           #FAFAF8;
@@ -58,10 +61,11 @@
 }
 
 .dark {
-  --action:         #5A8AB8;
-  --action-hover:   #6E9BC6;
-  --action-subtle:  rgba(90,138,184,0.16);
-  --action-text:    #AEC7E0;
+  --action:         #67DDED;
+  --action-hover:   #8AE9F5;
+  --action-subtle:  rgba(103,221,237,0.16);
+  --action-text:    #A6EAF4;
+  --on-action:      #0B1620;
 
   --page:           #16181B;
   --surface:        #1D2024;
@@ -73,7 +77,7 @@
   --text-secondary: #A8A7A2;
   --text-muted:     #7C7B77;
 
-  --bail-bg:        rgba(90,138,184,0.20);  --bail-fg:        #AEC7E0;
+  --bail-bg:        rgba(103,221,237,0.20);  --bail-fg:        #A6EAF4;
   --assurance-bg:   rgba(186,117,23,0.22);  --assurance-fg:   #E8C58A;
   --patrimoine-bg:  rgba(96,84,180,0.24);   --patrimoine-fg:  #C4BEF6;
   --msa-bg:         rgba(59,109,17,0.24);    --msa-fg:         #B9D88C;
@@ -167,10 +171,9 @@
   .hs-btn-primary {
     @apply inline-flex items-center justify-center gap-1.5 text-sm transition;
     height: 30px; padding: 0 14px; border-radius: 8px;
-    font-weight: 500; color: #fff; background: var(--action);
+    font-weight: 500; color: var(--on-action); background: var(--action);
   }
   .hs-btn-primary:hover { background: var(--action-hover); }
-  .dark .hs-btn-primary { color: #0f1215; }
   .hs-btn-outline {
     @apply inline-flex items-center justify-center gap-1.5 text-sm transition;
     height: 30px; padding: 0 12px; border-radius: 8px; font-weight: 500;
@@ -302,15 +305,14 @@
   .nav-left { background: var(--surface-alt); border-color: var(--border); }
   .nav-flyout { background: var(--surface); border-color: var(--border); }
   .install-bar { background: var(--surface-alt); border-color: var(--border); }
-  .install-btn { @apply inline-flex items-center justify-center; border-radius: 8px; font-weight: 500; color: #fff; background: var(--action); }
+  .install-btn { @apply inline-flex items-center justify-center; border-radius: 8px; font-weight: 500; color: var(--on-action); background: var(--action); }
   .install-btn:hover { background: var(--action-hover); }
 
   .md-btn-primary {
     @apply inline-flex items-center justify-center gap-2 text-sm transition;
-    background: var(--action); min-height: 34px; border-radius: 8px; font-weight: 500; color: #fff; padding: 0 16px;
+    background: var(--action); min-height: 34px; border-radius: 8px; font-weight: 500; color: var(--on-action); padding: 0 16px;
   }
   .md-btn-primary:hover { background: var(--action-hover); }
-  .dark .md-btn-primary { color: #0f1215; }
   .md-icon-btn {
     @apply grid place-items-center transition;
     height: 34px; width: 34px; border-radius: 8px;

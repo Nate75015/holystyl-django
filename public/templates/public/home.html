@@ -3,7 +3,7 @@
 {% block title %}Holystyl — {% trans "Irrigation de précision pour agriculteurs" %}{% endblock %}
 
 {% block auth_header %}
-<header class="sticky top-0 z-30 w-full text-white" style="background: var(--action)">
+<header class="sticky top-0 z-30 w-full" style="background: var(--action); color: var(--on-action)">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
     <a href="{% url 'public:home' %}" class="flex items-center gap-2">
       {% include "partials/brand_mark.html" with size=30 icon=17 %}

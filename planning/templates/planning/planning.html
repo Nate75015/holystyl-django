@@ -68,7 +68,7 @@
                    title="{% trans 'Ajouter une tâche' %}"
                    class="group relative min-h-[5.5rem] cursor-pointer p-2 transition hover:bg-[color:var(--surface-alt)] {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if not d.in_month %}background: var(--surface-alt);{% endif %}">
                 <div class="flex items-center justify-between">
-                  <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-medium {% if d.date == today %}text-white{% elif not d.in_month %}text-slate-300 dark:text-slate-600{% endif %}" style="{% if d.date == today %}background: var(--action);{% elif d.in_month %}color: var(--text);{% endif %}">{{ d.date|date:'j' }}</span>
+                  <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-medium {% if d.date == today %}{% elif not d.in_month %}text-slate-300 dark:text-slate-600{% endif %}" style="{% if d.date == today %}background: var(--action); color: var(--on-action);{% elif d.in_month %}color: var(--text);{% endif %}">{{ d.date|date:'j' }}</span>
                   <span class="material-icons-round pointer-events-none text-[16px] opacity-0 transition group-hover:opacity-100" style="color: var(--text-muted)">add</span>
                 </div>
                 {% if d.tasks %}
