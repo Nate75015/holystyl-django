@@ -8,6 +8,8 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from core.decorators import espace_requis
+from core.espaces import EXPLOITANT
 from exploitations.models import Exploitation
 
 from .forms import TaskForm, TeamMemberForm
@@ -19,6 +21,7 @@ def _exploitation(request):
 
 
 @login_required
+@espace_requis(EXPLOITANT)
 def equipe(request):
     exploitation = _exploitation(request)
     form = TeamMemberForm()
@@ -138,12 +141,14 @@ def _rh_placeholder(request, title):
 
 
 @login_required
+@espace_requis(EXPLOITANT)
 def contrats(request):
     """Contrats de travail — module RH en préparation."""
     return _rh_placeholder(request, _("Contrats de travail"))
 
 
 @login_required
+@espace_requis(EXPLOITANT)
 def paie(request):
     """Paie — module RH en préparation."""
     return _rh_placeholder(request, _("Paie"))

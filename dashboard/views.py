@@ -15,6 +15,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
 from core import espaces as espaces_service
+from core.decorators import espace_requis
 
 
 def _courbe(objets, champ_date, champ_valeur, format_date, token, repli, label):
@@ -36,6 +37,7 @@ def _courbe(objets, champ_date, champ_valeur, format_date, token, repli, label):
 
 
 @login_required
+@espace_requis(espaces_service.EXPLOITANT, sans_espace=True)
 def exploitant(request):
     """Écran Pulse : jauge DTI, météo, alertes et graphiques de l'exploitation."""
     from equipe.services import compte_membres
@@ -71,6 +73,7 @@ def exploitant(request):
 
 
 @login_required
+@espace_requis(espaces_service.EMPLOYE)
 def employe(request):
     """Tableau de bord d'un membre d'équipe : ses tâches et son planning."""
     from equipe.services import membre_de, taches_du_membre
@@ -90,6 +93,7 @@ def employe(request):
 
 
 @login_required
+@espace_requis(espaces_service.BAILLEUR)
 def bailleur(request):
     """Tableau de bord d'un bailleur : les baux qu'il a consentis."""
     from client.services import partenaire_de
