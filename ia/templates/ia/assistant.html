@@ -9,10 +9,10 @@
   {% comment %}Rail latéral repliable (façon Claude) : fin par défaut, se déplie au
   survol en panneau flottant qui recouvre le chat sans le décaler. Collé au nav
   blanc et au bord supérieur, sans coin arrondi.{% endcomment %}
-  <aside class="relative hidden w-14 shrink-0 md:block"
+  <aside class="relative hidden w-14 shrink-0 min-[900px]:block"
          x-data="{ open: false }"
          @mouseenter="open = true" @mouseleave="open = false">
-    <div class="absolute inset-y-0 left-0 z-20 flex flex-col overflow-hidden transition-all duration-200 ease-out" style="border-right: 0.5px solid var(--border); background: var(--surface-alt)"
+    <div class="fixed inset-y-0 z-20 flex flex-col overflow-hidden transition-all duration-200 ease-out" style="left: var(--nav-w); border-right: 0.5px solid var(--border); background: var(--surface-alt)"
          :class="open ? 'w-64 hs-popover' : 'w-14'">
 
       {# Actions (icônes alignées à gauche, collées au nav blanc) #}
@@ -51,7 +51,7 @@
   {# Colonne principale (chat) #}
   <div class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-24 pt-6 lg:px-8 lg:pb-6">
 
-  <div class="mb-3 flex items-center justify-end md:hidden">
+  <div class="mb-3 flex items-center justify-end min-[900px]:hidden">
     <a href="?new" class="hs-btn-outline">
       <span class="material-icons-round text-[16px]">add</span>{% trans "Nouvelle conversation" %}
     </a>
