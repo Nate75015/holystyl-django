@@ -118,13 +118,31 @@ def test_nav_exploitant_complete(client, expl):
 
 
 def test_selecteur_montre_les_trois_espaces(client, expl):
-    """Les trois icônes restent visibles ; les espaces non ouverts sont inertes."""
+    """Les trois icônes restent visibles ; les espaces non ouverts ne basculent pas."""
     html = _log(client, expl.owner).get(reverse("dashboard:exploitant")).content.decode()
     for icone in ("business_center", "badge", "real_estate_agent"):
         assert icone in html
-    # Seul l'exploitant est cliquable pour ce compte.
-    assert html.count('name="espace"') == 3
-    assert html.count("disabled") == 2
+    # Seul l'exploitant bascule ; les deux autres sont des ancres, pas des boutons.
+    assert html.count('name="espace"') == 1
+
+
+def test_espace_indisponible_propose_son_action(client, expl):
+    """L'espace employé s'ouvre en rattachant un membre : l'icône y mène."""
+    html = _log(client, expl.owner).get(reverse("dashboard:exploitant")).content.decode()
+    assert f'<a href="{reverse("equipe:equipe")}"' in html
+    assert "définir les membres de l&#x27;équipe" in html
+    # Le bailleur n'a pas d'action : il reste inerte, sans lien.
+    assert "aucun rattachement" in html
+
+
+def test_action_absente_hors_de_l_espace_qui_y_donne_droit(client, expl):
+    """L'écran équipe est réservé à l'exploitant : ne pas le proposer ailleurs."""
+    u = U.objects.create_user(email="bailleur2@x.fr", password="x")
+    Partenaire.objects.create(exploitation=expl, user=u, nom="SCI",
+                              type_partenaire=Partenaire.Type.BAILLEUR)
+    html = _log(client, u).get(reverse("dashboard:bailleur")).content.decode()
+    assert f'<a href="{reverse("equipe:equipe")}"' not in html
+    assert html.count("aucun rattachement") == 2
 
 
 def test_bascule(client, expl):
@@ -133,7 +151,7 @@ def test_bascule(client, expl):
     c = _log(client, expl.owner)
 
     html = c.get(reverse("dashboard:exploitant")).content.decode()
-    assert html.count("disabled") == 1                  # seul « bailleur » inerte
+    assert html.count('name="espace"') == 2             # seul « bailleur » inerte
 
     r = c.post(reverse("dashboard:basculer"), {"espace": "employe"})
     assert r.status_code == 302

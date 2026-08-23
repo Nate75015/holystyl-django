@@ -244,8 +244,22 @@ def layout(request):
     # Sélecteur d'espace : les trois sont toujours affichés, ceux sans
     # rattachement étant rendus inertes. Les masquer ferait disparaître le
     # sélecteur entier chez la plupart des comptes, qui n'ont qu'un espace.
+    # Un espace indisponible n'est pas un cul-de-sac : quand une action existe
+    # pour l'ouvrir (« définir les membres de l'équipe » → espace employé) et que
+    # l'espace courant y donne droit, l'icône devient un lien vers cet écran.
     disponibles = espaces_service.espaces_disponibles(request) if hasattr(request, "session") else []
-    espaces = [dict(e, disponible=e["cle"] in disponibles) for e in espaces_service.ESPACES]
+    courant = getattr(request, "espace", None)
+    espaces = []
+    for e in espaces_service.ESPACES:
+        entree = dict(e, disponible=e["cle"] in disponibles)
+        action = e.get("action")
+        if not entree["disponible"] and action and action["depuis"] == courant:
+            try:
+                entree["action_url"] = reverse(action["vue"])
+                entree["action_libelle"] = action["libelle"]
+            except NoReverseMatch:
+                pass
+        espaces.append(entree)
 
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),

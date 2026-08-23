@@ -29,9 +29,23 @@ SESSION_KEY = "espace"
 
 #: Source de vérité pour l'affichage (sélecteur de la sidebar). L'ordre fait foi :
 #: c'est celui du sélecteur, et le premier espace disponible sert de défaut.
+#:
+#: `action` (facultatif) : que faire pour ouvrir cet espace quand il n'est pas
+#: encore disponible. Un espace se gagne par un rattachement, et ce rattachement
+#: se crée toujours depuis un autre espace — d'où `depuis`, qui évite de proposer
+#: un écran auquel le compte n'a pas accès.
 ESPACES = (
     {"cle": EXPLOITANT, "label": _("Chef d'entreprise"), "icone": "business_center"},
-    {"cle": EMPLOYE, "label": _("Employé"), "icone": "badge"},
+    {
+        "cle": EMPLOYE,
+        "label": _("Employé"),
+        "icone": "badge",
+        "action": {
+            "vue": "equipe:equipe",
+            "libelle": _("définir les membres de l'équipe"),
+            "depuis": EXPLOITANT,
+        },
+    },
     {"cle": BAILLEUR, "label": _("Bailleur"), "icone": "real_estate_agent"},
 )
 
@@ -125,7 +139,14 @@ def contexte(request):
     return cache
 
 
-def _invalider(request):
+def invalider(request):
+    """Oublie le cache de requête après un changement de rattachement.
+
+    Le contexte est résolu une fois par requête (middleware). Une vue qui crée
+    ou supprime un rattachement — accepter une invitation, par exemple — le rend
+    donc périmé au milieu de son propre traitement : sans cet appel, l'espace
+    tout juste ouvert paraîtrait encore indisponible.
+    """
     request._espaces_cache = None
 
 
@@ -157,7 +178,7 @@ def definir_espace(request, espace):
     if espace not in espaces_disponibles(request):
         return False
     request.session[SESSION_KEY] = espace
-    _invalider(request)
+    invalider(request)
     return True
 
 
