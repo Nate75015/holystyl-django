@@ -6,7 +6,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from equipe import services, tasks as celery_tasks
+from equipe import invitations, services, tasks as celery_tasks
 from equipe.models import Task, TeamMember
 from exploitations.models import Exploitation
 
@@ -122,3 +122,115 @@ def test_reminder_job_sets_flag_and_notifies(setup, monkeypatch):
     task.refresh_from_db()
     assert task.reminder_sent_24h is True
     assert sms == ["+33600000000"]
+
+
+# ── Invitation à ouvrir un espace employé ────────────────────────────────────
+
+
+@pytest.mark.django_db
+def test_invitation_envoyee_et_horodatee(client, setup, mailoutbox):
+    user, _expl, member = setup
+    client.force_login(user)
+    r = client.post(f"/equipe/{member.id}/inviter/")
+    assert r.status_code == 302
+    member.refresh_from_db()
+    assert member.invitation_sent_at is not None
+    assert len(mailoutbox) == 1
+    assert mailoutbox[0].to == ["aude@ex.com"]
+    assert invitations.jeton(member) in mailoutbox[0].body
+
+
+@pytest.mark.django_db
+def test_fiche_membre_propose_l_invitation(client, setup):
+    """La carte « Espace employé » suit l'état du membre : inviter → renvoyer → lié."""
+    user, _expl, member = setup
+    client.force_login(user)
+    url = f"/equipe/{member.id}/modifier/"
+
+    html = client.get(url).content.decode()
+    assert "Inviter par email" in html
+    assert f"/equipe/{member.id}/inviter/" in html
+
+    client.post(f"/equipe/{member.id}/inviter/")
+    assert "Renvoyer l'invitation" in client.get(url).content.decode()
+
+    member.refresh_from_db()
+    member.user = User.objects.create_user(email="lie@ex.com", password="pwd12345")
+    member.save(update_fields=["user"])
+    html = client.get(url).content.decode()
+    assert "Compte actif" in html
+    assert "Inviter par email" not in html
+
+
+@pytest.mark.django_db
+def test_invitation_refusee_sans_email(client, setup):
+    user, exploitation, _m = setup
+    sans_email = TeamMember.objects.create(exploitation=exploitation, name="Sans mail")
+    client.force_login(user)
+    client.post(f"/equipe/{sans_email.id}/inviter/")
+    sans_email.refresh_from_db()
+    assert sans_email.invitation_sent_at is None
+
+
+@pytest.mark.django_db
+def test_invitation_scoped_to_exploitation(client, setup, mailoutbox):
+    """Un autre exploitant ne peut pas inviter les membres d'une équipe voisine."""
+    _user, _expl, member = setup
+    intrus = User.objects.create_user(email="intrus@ex.com", password="pwd12345")
+    Exploitation.objects.create(owner=intrus, name="Ferme voisine")
+    client.force_login(intrus)
+    assert client.post(f"/equipe/{member.id}/inviter/").status_code == 404
+    assert mailoutbox == []
+
+
+@pytest.mark.django_db
+def test_acceptation_cree_le_compte_et_ouvre_l_espace(client, setup):
+    _user, _expl, member = setup
+    url = f"/equipe/invitation/{invitations.jeton(member)}/"
+    assert client.get(url).status_code == 200
+
+    r = client.post(url, {"first_name": "Aude", "last_name": "Martin",
+                          "password1": "Tr0ubadour!42", "password2": "Tr0ubadour!42"})
+    assert r.status_code == 302
+    member.refresh_from_db()
+    assert member.user is not None
+    assert member.user.email == "aude@ex.com"
+    assert member.invitation_accepted_at is not None
+    # L'espace employé est ouvert et actif, pas seulement disponible.
+    assert client.session["espace"] == "employe"
+
+
+@pytest.mark.django_db
+def test_acceptation_par_un_compte_connecte(client, setup):
+    _user, _expl, member = setup
+    autre = User.objects.create_user(email="aude@ex.com", password="pwd12345")
+    client.force_login(autre)
+    r = client.post(f"/equipe/invitation/{invitations.jeton(member)}/")
+    assert r.status_code == 302
+    member.refresh_from_db()
+    assert member.user == autre
+
+
+@pytest.mark.django_db
+def test_jeton_perime_si_l_email_change(setup):
+    """Le lien visait une personne : le réattribuer serait une fuite d'accès."""
+    _user, _expl, member = setup
+    token = invitations.jeton(member)
+    assert invitations.membre_du_jeton(token) == member
+    member.email = "quelquun.dautre@ex.com"
+    member.save(update_fields=["email"])
+    assert invitations.membre_du_jeton(token) is None
+
+
+@pytest.mark.django_db
+def test_jeton_bidon_repond_410(client, setup):
+    assert client.get("/equipe/invitation/nimportequoi/").status_code == 410
+
+
+@pytest.mark.django_db
+def test_invitation_deja_utilisee(client, setup):
+    _user, _expl, member = setup
+    token = invitations.jeton(member)
+    member.user = User.objects.create_user(email="deja@ex.com", password="pwd12345")
+    member.save(update_fields=["user"])
+    assert client.get(f"/equipe/invitation/{token}/").status_code == 410

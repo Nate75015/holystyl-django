@@ -318,6 +318,10 @@ class NdviData(models.Model):
     ndvi_max = models.FloatField(null=True, blank=True)
     ndvi_mean = models.FloatField()
     ndvi_std = models.FloatField(null=True, blank=True)
+    # NDWI : teneur en eau du couvert, lu à côté du NDVI (même image Sentinel-2).
+    ndwi_mean = models.FloatField(_("NDWI moyen"), null=True, blank=True)
+    ndwi_min = models.FloatField(_("NDWI min"), null=True, blank=True)
+    ndwi_max = models.FloatField(_("NDWI max"), null=True, blank=True)
     cloud_coverage = models.FloatField(null=True, blank=True)
     image_url = models.TextField(blank=True)
     source = models.CharField(max_length=50, default="sentinel2")

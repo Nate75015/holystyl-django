@@ -1,9 +1,13 @@
-"""Formulaire d'ajout d'un membre d'équipe (salarié)."""
+"""Formulaires équipe : membre, tâche, création de compte sur invitation."""
 
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 from .models import Task, TeamMember
+
+User = get_user_model()
 
 
 class TeamMemberForm(forms.ModelForm):
@@ -56,14 +60,15 @@ class TeamMemberForm(forms.ModelForm):
 
 
 class TaskForm(forms.ModelForm):
-    """Crée une tâche (titre, assignation, priorité, échéance)."""
+    """Crée une tâche (titre, assignation, priorité, période)."""
 
     class Meta:
         model = Task
-        fields = ["title", "assigned_to", "priority", "status", "due_date", "description"]
+        fields = ["title", "assigned_to", "priority", "status", "start_date", "due_date", "description"]
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": _("Ex. Tailler la parcelle nord")}),
             "description": forms.Textarea(attrs={"rows": 3, "placeholder": _("Détails (optionnel)")}),
+            "start_date": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
             "due_date": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
         }
         labels = {
@@ -71,6 +76,7 @@ class TaskForm(forms.ModelForm):
             "assigned_to": _("Assignée à"),
             "priority": _("Priorité"),
             "status": _("Statut"),
+            "start_date": _("Début"),
             "due_date": _("Échéance"),
             "description": _("Description"),
         }
@@ -85,5 +91,48 @@ class TaskForm(forms.ModelForm):
         self.fields["assigned_to"].required = False
         self.fields["assigned_to"].empty_label = _("Non assignée")
         self.fields["description"].required = False
-        self.fields["due_date"].required = False
-        self.fields["due_date"].input_formats = ["%Y-%m-%dT%H:%M"]
+        for champ in ("start_date", "due_date"):
+            self.fields[champ].required = False
+            self.fields[champ].input_formats = ["%Y-%m-%dT%H:%M"]
+
+
+class InvitationAccountForm(UserCreationForm):
+    """Crée le compte d'un membre invité.
+
+    Volontairement plus court que `RegisterForm` : l'email vient de la fiche
+    (il est la cible de l'invitation, pas une saisie), et on ne réclame ni date
+    de naissance ni adresse — un salarié qu'on invite doit pouvoir entrer en
+    deux champs. Le reste se complète depuis son profil.
+    """
+
+    first_name = forms.CharField(label=_("Prénom"), max_length=150)
+    last_name = forms.CharField(label=_("Nom"), max_length=150)
+
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name")
+
+    field_order = ["first_name", "last_name", "password1", "password2"]
+
+    def __init__(self, *args, email="", **kwargs):
+        super().__init__(*args, **kwargs)
+        self.email = email
+
+    def clean(self):
+        # `email` n'étant pas un champ du formulaire, sa contrainte d'unicité
+        # n'est pas vérifiée par le ModelForm : on la rejoue ici. Le cas normal
+        # est intercepté par la vue (qui renvoie vers la connexion) ; ceci ferme
+        # la course entre deux inscriptions simultanées.
+        if User.objects.filter(email__iexact=self.email).exists():
+            raise forms.ValidationError(
+                _("Un compte existe déjà pour %(email)s. Connectez-vous pour "
+                  "rejoindre l'équipe.") % {"email": self.email}
+            )
+        return super().clean()
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = User.objects.normalize_email(self.email)
+        if commit:
+            user.save()
+        return user

@@ -388,9 +388,50 @@ msgstr "Method"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Add"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Add plot"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Redraw plot"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Row direction"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Click a plot, move the mouse to point the arrow along the rows, then click to confirm · \"Esc\" to cancel."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "row direction (° / North)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = North) — set it on the plot map."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Finish"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Save outline"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Click the plot to redraw, then the points of its new outline. Finish with \"Save outline\", a double-click, or by clicking the first point again. The area is recalculated · \"Esc\" to cancel."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3935,10 +3976,10 @@ msgstr "Cadastral ref."
 msgid "Acquise le"
 msgstr "Acquired on"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
-msgstr "No plot. Click \"Add\" to select some on the map."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
+msgstr "No plot. Click \"Add plot\" to select some on the map."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."
@@ -4989,3 +5030,75 @@ msgstr "Let's bring meaning back to our profession"
 
 #~ msgid "Bassinage"
 #~ msgstr "Frost sprinkling"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "View the month"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Start"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Subtasks"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Add a subtask"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Same assignee"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Subtask of"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "High priority"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "parent task"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "e.g. Prepare the equipment"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "A subtask with dates also appears in its assignee's schedule."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Its subtasks will be deleted too:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Title of a farm planning task"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Description of a farm planning task"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "selected"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Clear selection"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "No plot on this farm."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Create one"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Plots with no drawn outline do not appear on the map."

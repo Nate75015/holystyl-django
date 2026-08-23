@@ -302,6 +302,9 @@ class GmailClient:
                         "filename": part["filename"],
                         "size": part.get("body", {}).get("size", 0),
                         "mime": part.get("mimeType", ""),
+                        # Nécessaire pour télécharger le binaire : sans lui, on
+                        # sait qu'une pièce jointe existe sans pouvoir la lire.
+                        "attachment_id": part.get("body", {}).get("attachmentId", ""),
                     }
                 )
             for sub in part.get("parts", []) or []:
@@ -313,6 +316,21 @@ class GmailClient:
     @staticmethod
     def _decode(data: str) -> str:
         return base64.urlsafe_b64decode(data.encode()).decode("utf-8", errors="replace")
+
+    def download_attachment(self, mid: str, attachment_id: str) -> bytes:
+        """Octets bruts d'une pièce jointe.
+
+        Gmail ne livre pas le corps des pièces jointes avec le message : il
+        faut un second appel, par identifiant.
+        """
+        data = (
+            self.service.users()
+            .messages()
+            .attachments()
+            .get(userId="me", messageId=mid, id=attachment_id)
+            .execute()
+        )
+        return base64.urlsafe_b64decode(data.get("data", "").encode())
 
     # ── Actions ─────────────────────────────────────────────────────
     def mark_read(self, mid: str):

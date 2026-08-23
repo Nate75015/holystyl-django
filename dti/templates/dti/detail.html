@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+
+  <p class="hs-crumb">
+    <a href="{% url 'dti:liste' %}" class="underline underline-offset-2">{% trans "Diagnostics reçus" %}</a>
+    · {{ import.nom_declare|default:_("Diagnostic") }}
+  </p>
+  <h1 class="text-[20px]">{{ import.nom_declare|default:_("Diagnostic technique d'irrigation") }}</h1>
+
+  {% if import.erreur %}
+    <div class="hs-card px-5 py-3 text-sm" style="color: var(--danger)">{{ import.erreur }}</div>
+  {% endif %}
+
+  <div class="grid gap-5 lg:grid-cols-[1fr_20rem]">
+
+    <div class="hs-card overflow-hidden">
+      <div class="border-b px-5 py-3.5" style="border-color: var(--border)">
+        <h2 class="text-[15px] font-medium">{% trans "Contenu du diagnostic" %}</h2>
+        <p class="mt-0.5 text-xs" style="color: var(--text-muted)">
+          {% trans "Ce que porte le fichier reçu, avant tout import." %}
+        </p>
+      </div>
+      <dl class="divide-y" style="border-color: var(--border)">
+        {% for libelle, n in apercu %}
+          <div class="flex items-center justify-between px-5 py-2.5 text-sm">
+            <dt style="color: var(--text-muted)">{{ libelle }}</dt>
+            <dd class="font-medium tabular-nums">{{ n }}</dd>
+          </div>
+        {% endfor %}
+      </dl>
+      {% if indicateurs.score %}
+        <div class="border-t px-5 py-3.5" style="border-color: var(--border)">
+          <p class="text-xs uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Score annoncé" %}</p>
+          <p class="mt-1 text-2xl font-medium">{{ indicateurs.score }}<span class="text-sm" style="color: var(--text-muted)">/100 · {{ indicateurs.grade }}</span></p>
+          {% if indicateurs.message %}<p class="mt-1 text-sm" style="color: var(--text-muted)">{{ indicateurs.message }}</p>{% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="space-y-5">
+
+      <div class="hs-card overflow-hidden">
+        <div class="border-b px-5 py-3.5" style="border-color: var(--border)">
+          <h2 class="text-[15px] font-medium">{% trans "Provenance" %}</h2>
+        </div>
+        <dl class="px-5 py-3 text-sm space-y-2">
+          <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "Nom déclaré" %}</dt>
+               <dd>{{ import.nom_declare|default:"—" }}</dd></div>
+          <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "SIRET déclaré" %}</dt>
+               <dd class="tabular-nums">{{ import.siret_declare|default:"—" }}</dd></div>
+          <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "Commune" %}</dt>
+               <dd>{{ source.ville|default:"—" }}</dd></div>
+          <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "Reçu le" %}</dt>
+               <dd>{{ import.recu_le|date:"d/m/Y H:i" }}</dd></div>
+          <div><dt class="text-xs" style="color: var(--text-muted)">{% trans "Version du schéma" %}</dt>
+               <dd>{{ import.schema_version }}</dd></div>
+        </dl>
+      </div>
+
+      {% if import.en_quarantaine %}
+        <div class="hs-card overflow-hidden">
+          <div class="border-b px-5 py-3.5" style="border-color: var(--border)">
+            <h2 class="text-[15px] font-medium">{% trans "Rattacher" %}</h2>
+            <p class="mt-0.5 text-xs" style="color: var(--text-muted)">
+              {% trans "Aucune exploitation ne porte ce SIRET. Indiquez de laquelle relève ce diagnostic — l'import démarrera aussitôt." %}
+            </p>
+          </div>
+          <form method="post" action="{% url 'dti:rattachement' import.pk %}" class="space-y-3 px-5 py-4">
+            {% csrf_token %}
+            <label class="block text-xs" style="color: var(--text-muted)">
+              {% trans "Exploitation" %}
+              <select name="exploitation" required class="mt-1 w-full rounded-lg px-3 py-2 text-sm">
+                <option value="">{% trans "Sélectionner…" %}</option>
+                {% for e in exploitations %}
+                  <option value="{{ e.pk }}">{{ e.name }}{% if e.siret %} · {{ e.siret }}{% endif %}</option>
+                {% endfor %}
+              </select>
+            </label>
+            <button type="submit" class="hs-btn-primary w-full">{% trans "Rattacher et importer" %}</button>
+          </form>
+        </div>
+      {% else %}
+        <div class="hs-card px-5 py-4 text-sm">
+          <p style="color: var(--text-muted)">{% trans "Rattaché à" %}</p>
+          <p class="mt-0.5 font-medium">{{ import.exploitation.name|default:"—" }}</p>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+{% endblock %}

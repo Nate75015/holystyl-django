@@ -20,9 +20,9 @@ def setup(db):
 def test_planning_week_grid_empty_state(client, setup):
     user, _ = setup
     client.force_login(user)
-    html = client.get("/planning/?semaine=2026-06-24").content.decode()
-    assert "ÉQUIPE" in html
-    assert "Aucun membre d'équipe" in html  # état vide (pas de salarié)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Équipe" in html
+    assert "Ajoutez un membre d'équipe" in html  # état vide (pas de salarié)
     # Les 7 numéros de jour de la semaine (lun 22 → dim 28) sont rendus.
     for day in (22, 23, 24, 25, 26, 27, 28):
         assert f">{day}<" in html
@@ -33,8 +33,11 @@ def test_planning_week_navigation(client, setup):
     user, _ = setup
     client.force_login(user)
     # Semaine fixée : le lundi 2026-06-22 doit afficher les jours 22 et 28.
-    html = client.get("/planning/?semaine=2026-06-24").content.decode()
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
     assert ">22<" in html and ">28<" in html
+    # Navigation : la semaine précédente commence le lundi 15 juin.
+    prec = client.get("/planning/?vue=semaine&date=2026-06-15").content.decode()
+    assert ">15<" in prec and ">21<" in prec
 
 
 @pytest.mark.django_db

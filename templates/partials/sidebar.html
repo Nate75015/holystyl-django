@@ -63,8 +63,38 @@
     {% endfor %}
   </nav>
 
-  {# Séparateur + Assistant IA épinglé en bas #}
+  {% comment %}Sélecteur d'espace. Les trois sont toujours visibles ; ceux auxquels
+  le compte n'est pas rattaché sont inertes, pour que le bloc ne disparaisse pas
+  chez les comptes n'ayant qu'un espace. POST : changer d'espace modifie la
+  session, pas un GET déclenchable par un lien ou un préchargement.{% endcomment %}
   <div class="mt-2 pt-2" style="border-top: 0.5px solid var(--border)">
+    <form method="post" action="{% url 'dashboard:basculer' %}"
+          class="grid grid-cols-3 gap-1" x-data="{ survol: null }">
+      {% csrf_token %}
+      {% trans "aucun rattachement" as sans_rattachement %}
+      {% for e in espaces %}
+        {% comment %}Un <button disabled> n'émet aucun événement souris : l'infobulle
+        d'un espace indisponible ne s'afficherait jamais. D'où l'ancre, qui se
+        survole toujours et porte le lien quand une action existe.{% endcomment %}
+        {% if e.disponible %}
+          <button type="submit" name="espace" value="{{ e.cle }}"
+        {% else %}
+          <a {% if e.action_url %}href="{{ e.action_url }}"{% endif %}
+        {% endif %}
+                @mouseenter="survol = '{{ e.cle }}'" @mouseleave="survol = null"
+                class="relative flex items-center justify-center rounded-lg py-2 transition {% if e.disponible and e.cle != espace_courant or e.action_url %}hover:bg-black/5 dark:hover:bg-white/10{% endif %}{% if not e.disponible %} opacity-40{% if e.action_url %} hover:opacity-100{% else %} cursor-default{% endif %}{% endif %}"
+                style="{% if e.cle == espace_courant %}background: var(--action-subtle); color: var(--action-text){% else %}color: var(--text-muted){% endif %}">
+          <span class="material-icons-round text-[18px]">{{ e.icone }}</span>
+          <span x-show="survol === '{{ e.cle }}'" x-cloak x-transition.opacity.duration.100ms
+                class="hs-popover pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-[11px] font-medium"
+                style="color: var(--text)">{{ e.label }}{% if not e.disponible %} · {{ e.action_libelle|default:sans_rattachement }}{% endif %}</span>
+        {% if e.disponible %}</button>{% else %}</a>{% endif %}
+      {% endfor %}
+    </form>
+  </div>
+
+  {# Assistant IA épinglé en bas #}
+  <div class="mt-1 pt-2" style="border-top: 0.5px solid var(--border)">
     <a href="{% url 'ia:assistant' %}" class="hs-side-link {% if request.resolver_match.view_name == 'ia:assistant' %}hs-side-link-active{% endif %}">
       <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">support_agent</span>
       <span class="flex-1 truncate text-left">{% trans "Assistant IA" %}</span>

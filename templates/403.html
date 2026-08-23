@@ -3,4 +3,7 @@
 {% block title %}{% trans "Accès refusé" %}{% endblock %}
 {% block code %}403{% endblock %}
 {% block heading %}{% trans "Accès refusé" %}{% endblock %}
-{% block message %}{% trans "Vous n'avez pas l'autorisation d'accéder à cette page." %}{% endblock %}
+{% comment %}Django passe l'exception en contexte : quand PermissionDenied porte
+un motif (par exemple « Cette page appartient à l'espace Chef d'entreprise. »),
+l'afficher évite un refus opaque.{% endcomment %}
+{% block message %}{% if exception %}{{ exception }}{% else %}{% trans "Vous n'avez pas l'autorisation d'accéder à cette page." %}{% endif %}{% endblock %}

@@ -388,9 +388,50 @@ msgstr "Metodo"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Aggiungi"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Aggiungi appezzamento"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Ridisegna appezzamento"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Orientamento dei filari"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Clicca su un appezzamento, muovi il mouse per orientare la freccia nel senso dei filari, poi clicca per confermare · « Esc » per annullare."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "orientamento dei filari (° / Nord)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = Nord) — si imposta sulla mappa degli appezzamenti."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Termina"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Conferma il contorno"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Clicca sull'appezzamento da ridisegnare, poi sui punti del nuovo contorno. Termina con « Conferma il contorno », un doppio clic, o ricliccando sul primo punto. La superficie viene ricalcolata · « Esc » per annullare."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3940,11 +3981,11 @@ msgstr "Rif. catastale"
 msgid "Acquise le"
 msgstr "Acquisito il"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
 msgstr ""
-"Nessun appezzamento. Clicca su « Aggiungi » per selezionarne sulla mappa."
+"Nessun appezzamento. Clicca su « Aggiungi appezzamento » per selezionarne sulla mappa."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."
@@ -4996,3 +5037,75 @@ msgstr "Ridiamo senso al nostro mestiere"
 
 #~ msgid "Administration"
 #~ msgstr "Amministrazione"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Vedi il mese"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Inizio"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Sottoattività"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Aggiungi una sottoattività"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Stesso assegnatario"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Sottoattività di"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Priorità alta"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "attività principale"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "es. Preparare l'attrezzatura"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Una sottoattività con data compare anche nella pianificazione dell'assegnatario."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Anche le sue sottoattività saranno eliminate:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Titolo di un'attività di pianificazione agricola"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Descrizione di un'attività di pianificazione agricola"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "selezionate"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Deseleziona tutto"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Nessuna particella in questa azienda."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Creane una"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Le particelle senza contorno tracciato non compaiono sulla mappa."

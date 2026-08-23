@@ -389,9 +389,50 @@ msgstr "Μέθοδος"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Προσθήκη"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Προσθήκη αγροτεμαχίου"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Επανασχεδίαση αγροτεμαχίου"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Κατεύθυνση γραμμών"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Κάντε κλικ σε ένα αγροτεμάχιο, μετακινήστε το ποντίκι για να στρέψετε το βέλος κατά τη φορά των γραμμών και μετά κάντε κλικ για επιβεβαίωση · «Esc» για ακύρωση."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "κατεύθυνση γραμμών (° / Βορράς)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = Βορράς) — ορίζεται στον χάρτη των αγροτεμαχίων."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Ολοκλήρωση"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Επιβεβαίωση περιγράμματος"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Κάντε κλικ στο αγροτεμάχιο που θέλετε να επανασχεδιάσετε και στη συνέχεια στα σημεία του νέου περιγράμματος. Ολοκληρώστε με «Επιβεβαίωση περιγράμματος», διπλό κλικ ή κάνοντας ξανά κλικ στο πρώτο σημείο. Η έκταση υπολογίζεται εκ νέου · «Esc» για ακύρωση."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3951,11 +3992,11 @@ msgstr "Κτηματολογικός αρ."
 msgid "Acquise le"
 msgstr "Αποκτήθηκε στις"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
 msgstr ""
-"Κανένα αγροτεμάχιο. Κάντε κλικ στο «Προσθήκη» για να επιλέξετε στον χάρτη."
+"Κανένα αγροτεμάχιο. Κάντε κλικ στο «Προσθήκη αγροτεμαχίου» για να επιλέξετε στον χάρτη."
 
 #: parcelles/templates/parcelles/list.html:122
 msgid "Analyses des parcelles — bientôt."
@@ -5013,3 +5054,75 @@ msgstr "Ας ξαναδώσουμε νόημα στο επάγγελμά μας"
 
 #~ msgid "Administration"
 #~ msgstr "Διαχείριση"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Προβολή του μήνα"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Έναρξη"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Υποεργασίες"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Προσθήκη υποεργασίας"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Ίδιος υπεύθυνος"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Υποεργασία του"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Υψηλή προτεραιότητα"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "γονική εργασία"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "π.χ. Προετοιμασία εξοπλισμού"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Μια υποεργασία με ημερομηνία εμφανίζεται και στο πρόγραμμα του υπευθύνου."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Οι υποεργασίες της θα διαγραφούν επίσης:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Τίτλος εργασίας γεωργικού προγραμματισμού"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Περιγραφή εργασίας γεωργικού προγραμματισμού"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "επιλεγμένες"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Αποεπιλογή όλων"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Κανένα αγροτεμάχιο σε αυτή την εκμετάλλευση."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Δημιουργήστε ένα"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Τα αγροτεμάχια χωρίς σχεδιασμένο περίγραμμα δεν εμφανίζονται στον χάρτη."

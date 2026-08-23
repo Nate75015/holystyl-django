@@ -387,9 +387,50 @@ msgstr "Methode"
 #: environnement/templates/environnement/taxonomie.html:178
 #: exploitations/templates/exploitations/settings.html:140
 #: meteo/templates/meteo/index.html:77 pac/templates/pac/pac.html:146
-#: parcelles/templates/parcelles/list.html:17
 msgid "Ajouter"
 msgstr "Hinzufügen"
+
+#: parcelles/templates/parcelles/list.html:18
+msgid "Ajouter une parcelle"
+msgstr "Parzelle hinzufügen"
+
+#: parcelles/templates/parcelles/list.html:22
+#: parcelles/templates/parcelles/list.html:23
+msgid "Redessiner une parcelle"
+msgstr "Parzelle neu zeichnen"
+
+#: parcelles/templates/parcelles/list.html:27
+#: parcelles/templates/parcelles/list.html:28
+msgid "Sens des rangs"
+msgstr "Reihenrichtung"
+
+#: parcelles/templates/parcelles/list.html:83
+msgid ""
+"Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler."
+msgstr ""
+"Klicken Sie auf eine Parzelle, richten Sie den Pfeil mit der Maus entlang der Reihen aus und klicken Sie dann zur Bestätigung · „Esc“ zum Abbrechen."
+
+#: parcelles/models.py:66
+msgid "sens des rangs (° / Nord)"
+msgstr "Reihenrichtung (° / Nord)"
+
+#: parcelles/models.py:67
+msgid "0–359° (0 = Nord) — se règle sur la carte des parcelles."
+msgstr "0–359° (0 = Nord) — wird auf der Parzellenkarte eingestellt."
+
+#: parcelles/templates/parcelles/list.html:22
+msgid "Terminer"
+msgstr "Fertig"
+
+#: parcelles/templates/parcelles/list.html:71
+msgid "Valider le contour"
+msgstr "Umriss bestätigen"
+
+#: parcelles/templates/parcelles/list.html:68
+msgid ""
+"Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler."
+msgstr ""
+"Klicken Sie auf die Parzelle, die neu gezeichnet werden soll, dann auf die Punkte ihres neuen Umrisses. Beenden Sie mit „Umriss bestätigen“, einem Doppelklick oder durch erneutes Klicken auf den ersten Punkt. Die Fläche wird neu berechnet · „Esc“ zum Abbrechen."
 
 #: agronomie/templates/agronomie/cultures.html:61
 msgid ""
@@ -3883,11 +3924,11 @@ msgstr "Katasterref."
 msgid "Acquise le"
 msgstr "Erworben am"
 
-#: parcelles/templates/parcelles/list.html:116
+#: parcelles/templates/parcelles/list.html:130
 msgid ""
-"Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte."
+"Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte."
 msgstr ""
-"Keine Parzelle. Klicken Sie auf „Hinzufügen“, um welche auf der Karte "
+"Keine Parzelle. Klicken Sie auf „Parzelle hinzufügen“, um welche auf der Karte "
 "auszuwählen."
 
 #: parcelles/templates/parcelles/list.html:122
@@ -5055,3 +5096,75 @@ msgstr "Geben wir unserem Beruf wieder einen Sinn."
 
 #~ msgid "Fermer"
 #~ msgstr "Schließen"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Monat anzeigen"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Beginn"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Teilaufgaben"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Teilaufgabe hinzufügen"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Gleiche Zuweisung"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Teilaufgabe von"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Hohe Priorität"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "übergeordnete Aufgabe"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "z. B. Material vorbereiten"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Eine Teilaufgabe mit Datum erscheint auch im Plan der zugewiesenen Person."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Ihre Teilaufgaben werden ebenfalls gelöscht:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Titel einer Aufgabe im Betriebsplan"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Beschreibung einer Aufgabe im Betriebsplan"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "ausgewählt"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Alle abwählen"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Kein Schlag in diesem Betrieb."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Einen anlegen"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Schläge ohne gezeichnete Grenze erscheinen nicht auf der Karte."

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+
+  <p class="hs-crumb">{% trans "Irrigation · Diagnostics reçus" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Diagnostics techniques d'irrigation" %}</h1>
+  </div>
+
+  {% comment %}En attente d'abord : ce n'est pas un journal d'erreurs, c'est une
+  question posée à un humain — elle mérite la tête de page.{% endcomment %}
+  {% if quarantaine %}
+    <div class="hs-card overflow-hidden">
+      <div class="border-b px-5 py-3.5" style="border-color: var(--border)">
+        <h2 class="text-[15px] font-medium">
+          {% blocktrans count n=quarantaine|length %}{{ n }} diagnostic en attente de rattachement{% plural %}{{ n }} diagnostics en attente de rattachement{% endblocktrans %}
+        </h2>
+        <p class="mt-0.5 text-xs" style="color: var(--text-muted)">
+          {% trans "Le SIRET annoncé ne correspond à aucune exploitation. Indiquez de laquelle relève le diagnostic." %}
+        </p>
+      </div>
+      <ul class="divide-y" style="border-color: var(--border)">
+        {% for i in quarantaine %}
+          <li class="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+            <div class="min-w-0">
+              <p class="truncate text-sm font-medium">{{ i.nom_declare|default:_("Exploitation non nommée") }}</p>
+              <p class="text-xs" style="color: var(--text-muted)">
+                {% trans "SIRET" %} {{ i.siret_declare|default:"—" }} ·
+                {% trans "reçu le" %} {{ i.recu_le|date:"d/m/Y H:i" }}
+              </p>
+            </div>
+            <a href="{% url 'dti:detail' i.pk %}" class="hs-btn-primary shrink-0">{% trans "Examiner" %}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <div class="hs-card overflow-hidden">
+    <div class="border-b px-5 py-3.5" style="border-color: var(--border)">
+      <h2 class="text-[15px] font-medium">{% trans "Réceptions" %}</h2>
+    </div>
+    {% if traites %}
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="text-xs uppercase tracking-wide" style="color: var(--text-muted)">
+              <th class="px-5 py-2 font-medium">{% trans "Exploitation" %}</th>
+              <th class="px-5 py-2 font-medium">{% trans "Statut" %}</th>
+              <th class="px-5 py-2 font-medium">{% trans "Reçu le" %}</th>
+              <th class="px-5 py-2 font-medium">{% trans "Contenu" %}</th>
+              <th class="px-5 py-2"><span class="sr-only">{% trans "Actions" %}</span></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y" style="border-color: var(--border)">
+            {% for i in traites %}
+              <tr>
+                <td class="px-5 py-2.5">{{ i.exploitation.name|default:i.nom_declare|default:"—" }}</td>
+                <td class="px-5 py-2.5">{{ i.get_statut_display }}</td>
+                <td class="px-5 py-2.5">{{ i.recu_le|date:"d/m/Y H:i" }}</td>
+                <td class="px-5 py-2.5 text-xs" style="color: var(--text-muted)">
+                  {% for cle, n in i.rapport.items %}{{ n }} {{ cle }}{% if not forloop.last %} · {% endif %}{% endfor %}
+                </td>
+                <td class="px-5 py-2.5 text-right">
+                  <a href="{% url 'dti:detail' i.pk %}" class="text-sm underline underline-offset-2">{% trans "Détail" %}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="px-5 py-8 text-center text-sm" style="color: var(--text-muted)">
+        {% trans "Aucun diagnostic reçu pour l'instant." %}
+      </p>
+    {% endif %}
+  </div>
+
+</section>
+{% endblock %}

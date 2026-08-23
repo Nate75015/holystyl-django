@@ -1,4 +1,4 @@
-"""Vues web planning : grille jour/semaine/mois d'équipe + bon d'intervention."""
+"""Vues web planning : grille jour/semaine/mois/année d'équipe + bon d'intervention."""
 
 import calendar as _calendar
 import json
@@ -7,6 +7,7 @@ from datetime import date, datetime, timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -21,8 +22,137 @@ from parcelles.models import Parcelle
 from .models import InterventionReport, PlanningTask
 
 
+PALETTE = ["#335E8A", "#3B6D11", "#BA7517", "#3C3489", "#A32D2D", "#0E7490", "#7C3AED", "#B45309"]
+
+#: Nombre de lignes de barres affichables dans une cellule du mois ; au-delà,
+#: les tâches en trop sont résumées par un « +N ».
+MONTH_MAX_LANES = 4
+
+
+def _member_colors(team_list):
+    """Couleur distincte par membre : sa couleur perso si définie, sinon une
+    couleur de palette stable (indexée sur l'ordre de l'équipe)."""
+    default_color = (TeamMember._meta.get_field("color").default or "").lower()
+    colors = {}
+    for i, m in enumerate(team_list):
+        custom = (m.color or "").strip()
+        colors[m.id] = custom if custom and custom.lower() != default_color else PALETTE[i % len(PALETTE)]
+    return colors
+
+
 def _exploitation(request):
     return Exploitation.objects.filter(owner=request.user).first()
+
+
+def _tasks_in_range(exploitation, members, start, end):
+    """Tâches (sous-tâches comprises) chevauchant la fenêtre [start, end].
+
+    Une tâche court de `start_date` à `due_date` ; si une seule des deux dates
+    est saisie, elle tient lieu de début et de fin (tâche d'une journée).
+    """
+    if not (exploitation and members):
+        return []
+    return list(
+        Task.objects.filter(exploitation=exploitation, assigned_to__in=members)
+        .annotate(d_start=Coalesce("start_date", "due_date"), d_end=Coalesce("due_date", "start_date"))
+        .filter(d_start__date__lte=end, d_end__date__gte=start)
+        .select_related("assigned_to", "parent")
+        .prefetch_related("subtasks", "parcelles")
+        .order_by("d_start", "priority", "id")
+    )
+
+
+def _payload(task):
+    """Données de la tâche passées à la modale (attribut @click, donc JSON)."""
+    debut, fin = task.periode
+    return json.dumps(
+        {
+            "id": task.id,
+            "title": task.title,
+            "member": task.assigned_to_id or "",
+            "start": timezone.localdate(debut).isoformat() if debut else "",
+            "end": timezone.localdate(fin).isoformat() if fin else "",
+            "priority": task.priority,
+            "status": task.status,
+            "description": task.description,
+            "parcelles": [str(p.id) for p in task.parcelles.all()],
+            "parent": task.parent.title if task.parent_id else "",
+            "subtasks": [
+                {
+                    "id": st.id,
+                    "title": st.title,
+                    "done": st.is_done,
+                    "member": st.assigned_to_id or "",
+                    "date": timezone.localdate(st.due_date).isoformat() if st.due_date else "",
+                }
+                for st in sorted(task.subtasks.all(), key=lambda st: st.created_at)
+            ],
+        }
+    )
+
+
+def _bars(tasks, days, colors=None, max_lanes=None):
+    """Découpe les tâches en barres continues sur la fenêtre `days`.
+
+    Chaque barre occupe les colonnes de son début à sa fin (bornées à la
+    fenêtre) et la première ligne libre, à la manière d'un agenda. Au-delà de
+    `max_lanes` lignes, les barres du bas sont remplacées par un « +N » par jour.
+    """
+    n = len(days)
+    first, last = days[0], days[-1]
+    bars = []
+    for t in tasks:
+        debut, fin = t.periode
+        if not (debut and fin):
+            continue
+        d0, d1 = timezone.localdate(debut), timezone.localdate(fin)
+        if d1 < d0:
+            d0, d1 = d1, d0
+        if d1 < first or d0 > last:
+            continue
+        col = max(0, (d0 - first).days)
+        col_end = min(n - 1, (d1 - first).days)
+        bars.append(
+            {
+                "task": t,
+                "payload": _payload(t),
+                "color": (colors or {}).get(t.assigned_to_id, PALETTE[0]),
+                "col": col,
+                "span": col_end - col + 1,
+                "opens": d0 >= first,  # début réel visible (bord arrondi à gauche)
+                "closes": d1 <= last,
+                "date": max(d0, first).isoformat(),
+            }
+        )
+    bars.sort(key=lambda b: (b["col"], -b["span"]))
+
+    lanes = []  # lanes[i] = première colonne libre de la ligne i
+    for b in bars:
+        for i, free_from in enumerate(lanes):
+            if b["col"] >= free_from:
+                b["lane"] = i
+                lanes[i] = b["col"] + b["span"]
+                break
+        else:
+            b["lane"] = len(lanes)
+            lanes.append(b["col"] + b["span"])
+
+    if max_lanes is None or len(lanes) <= max_lanes:
+        return {"bars": bars, "lanes": len(lanes), "more": [], "more_lane": None}
+
+    # Débordement : on garde les lignes du haut, la dernière sert au « +N ».
+    cap = max_lanes - 1
+    hidden = defaultdict(int)
+    for b in bars:
+        if b["lane"] >= cap:
+            for i in range(b["col"], b["col"] + b["span"]):
+                hidden[i] += 1
+    return {
+        "bars": [b for b in bars if b["lane"] < cap],
+        "lanes": max_lanes,
+        "more": [{"col": col, "count": count, "date": days[col].isoformat()} for col, count in sorted(hidden.items())],
+        "more_lane": cap,
+    }
 
 
 @login_required
@@ -32,9 +162,9 @@ def planning(request):
 
     today = timezone.localdate()
 
-    # Vue (jour / semaine / mois) et date de référence (?vue=&date=YYYY-MM-DD).
+    # Vue (jour / semaine / mois / année) et date de référence (?vue=&date=YYYY-MM-DD).
     vue = request.GET.get("vue", "semaine")
-    if vue not in ("jour", "semaine", "mois"):
+    if vue not in ("jour", "semaine", "mois", "annee"):
         vue = "semaine"
     raw = request.GET.get("date")
     try:
@@ -70,38 +200,18 @@ def planning(request):
             next_date=monday + timedelta(days=7),
             is_today_range=(monday == today - timedelta(days=today.weekday())),
         )
-    else:  # mois
+    elif vue == "mois":
         first = base.replace(day=1)
         weeks = _calendar.Calendar(firstweekday=0).monthdatescalendar(first.year, first.month)
-        # Couleur distincte par membre : sa couleur perso si définie, sinon une
-        # couleur de palette stable (indexée sur l'ordre de l'équipe).
-        palette = ["#335E8A", "#3B6D11", "#BA7517", "#3C3489", "#A32D2D", "#0E7490", "#7C3AED", "#B45309"]
-        default_color = (TeamMember._meta.get_field("color").default or "").lower()
         team_list = list(team_members)
-        member_color = {}
-        for i, m in enumerate(team_list):
-            custom = (m.color or "").strip()
-            member_color[m.id] = custom if custom and custom.lower() != default_color else palette[i % len(palette)]
-        by_date = defaultdict(list)
-        if exploitation and team_list:
-            month_tasks = (
-                Task.objects.filter(
-                    exploitation=exploitation,
-                    assigned_to__in=team_list,
-                    due_date__date__range=(weeks[0][0], weeks[-1][-1]),
-                )
-                .select_related("assigned_to")
-                .order_by("due_date", "priority")
-            )
-            for t in month_tasks:
-                t.chip_color = member_color.get(t.assigned_to_id, palette[0])
-                by_date[timezone.localdate(t.due_date)].append(t)
+        member_color = _member_colors(team_list)
+        month_tasks = _tasks_in_range(exploitation, team_list, weeks[0][0], weeks[-1][-1])
         ctx.update(
             month_weeks=[
-                [
-                    {"date": d, "in_month": d.month == first.month, "tasks": by_date.get(d, [])}
-                    for d in week
-                ]
+                {
+                    "days": [{"date": d, "in_month": d.month == first.month} for d in week],
+                    **_bars(month_tasks, week, member_color, MONTH_MAX_LANES),
+                }
                 for week in weeks
             ],
             month_legend=[{"name": m.name, "color": member_color[m.id]} for m in team_list],
@@ -112,30 +222,97 @@ def planning(request):
             is_today_range=(first.year == today.year and first.month == today.month),
         )
 
-    # Tâches d'équipe (app taches) placées dans la grille membre × jour
-    # d'échéance, pour les vues jour et semaine.
+    else:  # annee
+        cal = _calendar.Calendar(firstweekday=0)
+        months = [
+            {"date": date(base.year, m, 1), "weeks": cal.monthdatescalendar(base.year, m)}
+            for m in range(1, 13)
+        ]
+        team_list = list(team_members)
+        member_color = _member_colors(team_list)
+        # Pour chaque jour de l'année : les couleurs des membres occupés ce
+        # jour-là, sur toute la durée de leurs tâches.
+        day_colors = defaultdict(list)
+        window_start, window_end = months[0]["weeks"][0][0], months[-1]["weeks"][-1][-1]
+        for t in _tasks_in_range(exploitation, team_list, window_start, window_end):
+            debut, fin = t.periode
+            d0, d1 = timezone.localdate(debut), timezone.localdate(fin)
+            if d1 < d0:
+                d0, d1 = d1, d0
+            color = member_color.get(t.assigned_to_id, PALETTE[0])
+            d = max(d0, window_start)
+            while d <= min(d1, window_end):
+                if color not in day_colors[d]:
+                    day_colors[d].append(color)
+                d += timedelta(days=1)
+        ctx.update(
+            year_months=[
+                {
+                    "date": m["date"],
+                    "weekdays": m["weeks"][0],
+                    "weeks": [
+                        [
+                            {
+                                "date": d,
+                                "in_month": d.month == m["date"].month,
+                                "colors": day_colors.get(d, [])[:3],
+                            }
+                            for d in week
+                        ]
+                        for week in m["weeks"]
+                    ],
+                }
+                for m in months
+            ],
+            month_legend=[{"name": mb.name, "color": member_color[mb.id]} for mb in team_list],
+            year=base.year,
+            prev_date=date(base.year - 1, 1, 1),
+            next_date=date(base.year + 1, 1, 1),
+            is_today_range=(base.year == today.year),
+        )
+
+    # Vues jour / semaine : une ligne par membre, les tâches y sont posées en
+    # barres continues sur leur période.
     if vue in ("jour", "semaine"):
         days = ctx["days"]
-        by_cell = defaultdict(list)
-        if exploitation and team_members:
-            tasks = Task.objects.filter(
-                exploitation=exploitation,
-                assigned_to__in=team_members,
-                due_date__date__range=(days[0], days[-1]),
-            ).select_related("assigned_to")
-            for t in tasks:
-                by_cell[(t.assigned_to_id, timezone.localdate(t.due_date))].append(t)
-        ctx["rows"] = [
-            {
-                "member": m,
-                "cells": [{"date": d, "tasks": by_cell.get((m.id, d), [])} for d in days],
-            }
-            for m in team_members
-        ]
+        team_list = list(team_members)
+        tasks = _tasks_in_range(exploitation, team_list, days[0], days[-1])
+        by_member = defaultdict(list)
+        for t in tasks:
+            by_member[t.assigned_to_id].append(t)
+        rows = []
+        for m in team_list:
+            layout = _bars(by_member.get(m.id, []), days)
+            rows.append(
+                {
+                    "member": m,
+                    "cells": [{"date": d} for d in days],
+                    "height": max(72, 18 + layout["lanes"] * 28),
+                    **layout,
+                }
+            )
+        ctx["rows"] = rows
 
     ctx["priorities"] = Task.Priority.choices
     ctx["statuses"] = Task.Status.choices
-    ctx["parcelles"] = Parcelle.objects.filter(exploitation=exploitation) if exploitation else Parcelle.objects.none()
+    # Parcelles : la liste pour les pastilles, et leurs contours pour la carte
+    # de sélection (les agriculteurs reconnaissent leurs parcelles à la forme,
+    # pas à la référence cadastrale).
+    parcelles = list(Parcelle.objects.filter(exploitation=exploitation)) if exploitation else []
+    ctx["parcelles"] = parcelles
+    ctx["parcelles_geojson"] = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": p.boundaries,
+                "properties": {"id": p.pk, "name": p.name, "area": p.area},
+            }
+            for p in parcelles
+            if p.boundaries
+        ],
+    }
+    ctx["parcelles_mappables"] = sum(1 for p in parcelles if p.boundaries)
     return render(request, "planning/planning.html", ctx)
 
 
@@ -146,13 +323,64 @@ def _planning_url(request):
     return f"{reverse('planning:planning')}?vue={vue}" + (f"&date={d}" if d else "")
 
 
+def _aware(d):
+    """Date (jour) → datetime aware à minuit, ou None."""
+    return timezone.make_aware(datetime.combine(d, datetime.min.time())) if d else None
+
+
+def _save_subtasks(task, request, exploitation):
+    """Synchronise les tâches filles depuis le JSON du champ caché `subtasks`.
+
+    Une sous-tâche est une tâche à part entière : elle a son assigné, sa date et
+    son statut. Les lignes retirées côté modale sont supprimées.
+    """
+    try:
+        rows = json.loads(request.POST.get("subtasks") or "[]")
+    except json.JSONDecodeError:
+        return
+    if not isinstance(rows, list):
+        return
+    kept = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        title = (row.get("title") or "").strip()
+        if not title:
+            continue
+        try:
+            sub_id = int(row.get("id") or 0)
+        except (TypeError, ValueError):
+            sub_id = 0
+        sub = Task.objects.filter(pk=sub_id, parent=task, exploitation=exploitation).first() if sub_id else None
+        if sub is None:
+            sub = Task(exploitation=exploitation, parent=task, created_by=request.user, priority=task.priority)
+        sub.title = title[:255]
+        if row.get("done"):
+            sub.status = Task.Status.DONE
+        elif sub.is_done:
+            sub.status = Task.Status.TODO
+        sub.assigned_to = (
+            TeamMember.objects.filter(pk=row.get("member") or None, exploitation=exploitation).first() or task.assigned_to
+        )
+        d = parse_date(str(row.get("date") or ""))
+        sub.start_date = sub.due_date = _aware(d)
+        sub.save()
+        kept.append(sub.pk)
+    task.subtasks.exclude(pk__in=kept).delete()
+
+
 def _save_task(task, request, exploitation):
     """Applique les champs POST à une tâche (création ou édition). False si invalide."""
     title = (request.POST.get("title") or "").strip()
     member = TeamMember.objects.filter(pk=request.POST.get("assigned_to"), exploitation=exploitation).first()
     if not (exploitation and title and member):
         return False
-    d = parse_date(request.POST.get("due_date") or "")
+    # Période : début et fin. Une seule date saisie ⇒ tâche d'une journée.
+    debut = parse_date(request.POST.get("start_date") or "")
+    fin = parse_date(request.POST.get("due_date") or "")
+    debut, fin = debut or fin, fin or debut
+    if debut and fin and fin < debut:
+        debut, fin = fin, debut
     priority = request.POST.get("priority")
     if priority not in Task.Priority.values:
         priority = Task.Priority.NORMALE
@@ -161,12 +389,19 @@ def _save_task(task, request, exploitation):
         status = Task.Status.TODO
     task.title = title[:255]
     task.assigned_to = member
-    task.due_date = timezone.make_aware(datetime.combine(d, datetime.min.time())) if d else None
+    task.start_date = _aware(debut)
+    task.due_date = _aware(fin)
     task.priority = priority
     task.status = status
-    task.parcelle = Parcelle.objects.filter(pk=request.POST.get("parcelle") or None, exploitation=exploitation).first()
     task.description = (request.POST.get("description") or "").strip()
+    # Parcelles : sélection multiple ; `parcelle` garde la première (API, espace employé).
+    choisies = list(
+        Parcelle.objects.filter(pk__in=request.POST.getlist("parcelles"), exploitation=exploitation).order_by("name")
+    )
+    task.parcelle = choisies[0] if choisies else None
     task.save()
+    task.parcelles.set(choisies)
+    _save_subtasks(task, request, exploitation)
     return True
 
 

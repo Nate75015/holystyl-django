@@ -12,10 +12,22 @@
     <p class="hs-crumb">{% trans "Cadastre" %} · {% trans "Parcelles" %}</p>
     <div class="flex flex-wrap items-center justify-between gap-3">
       <h1 class="text-[20px]">{% trans "Mes Parcelles" %}</h1>
-      <button type="button" @click="tab = 'carte'; window.startAdding && window.startAdding()"
-              class="hs-btn-primary shrink-0">
-        <span class="material-icons-round text-[18px]">add_location_alt</span>{% trans "Ajouter" %}
-      </button>
+      <div class="flex shrink-0 flex-wrap items-center gap-2">
+        <button type="button" @click="tab = 'carte'; window.startAdding && window.startAdding()"
+                class="hs-btn-primary">
+          <span class="material-icons-round text-[18px]">add_location_alt</span>{% trans "Ajouter une parcelle" %}
+        </button>
+        <button type="button" id="btn-redraw" @click="tab = 'carte'; window.toggleRedraw && window.toggleRedraw()"
+                class="hs-btn-outline"
+                data-label-off="{% trans 'Redessiner une parcelle' %}" data-label-on="{% trans 'Terminer' %}">
+          <span class="material-icons-round text-[18px]">gesture</span>{% trans "Redessiner une parcelle" %}
+        </button>
+        <button type="button" id="btn-orient" @click="tab = 'carte'; window.toggleOrienting && window.toggleOrienting()"
+                class="hs-btn-violet-outline"
+                data-label-off="{% trans 'Sens des rangs' %}" data-label-on="{% trans 'Terminer' %}">
+          <span class="material-icons-round text-[18px]">explore</span>{% trans "Sens des rangs" %}
+        </button>
+      </div>
     </div>
   </div>
 
@@ -55,6 +67,20 @@
         <div id="add-hint" class="hidden rounded-[10px] px-4 py-2.5 text-sm" style="border: 0.5px solid var(--action); background: var(--action-subtle); color: var(--action-text)">
           <span class="material-icons-round align-middle text-[18px]">touch_app</span>
           {% trans "Cliquez sur les parcelles à ajouter (re-cliquez pour désélectionner), puis Enregistrer." %}
+        </div>
+        <div id="redraw-hint" class="hidden rounded-[10px] px-4 py-2.5 text-sm" style="border: 0.5px solid var(--warning); background: var(--surface-alt); color: var(--text-secondary)">
+          <span class="material-icons-round align-middle text-[18px]" style="color: var(--warning)">gesture</span>
+          {% trans "Cliquez la parcelle à redessiner, puis les points de son nouveau contour. Terminez par « Valider le contour », un double-clic, ou en recliquant sur le premier point. La surface est recalculée · « Échap » pour annuler." %}
+          <div class="mt-2 flex flex-wrap items-center gap-2">
+            <button type="button" id="btn-redraw-save" onclick="finishRedraw()" class="hs-btn-primary hidden">
+              <span class="material-icons-round text-[16px]">check</span>{% trans "Valider le contour" %}
+            </button>
+            <span id="redraw-status" class="text-[12px] font-medium" style="color: var(--warning)"></span>
+          </div>
+        </div>
+        <div id="orient-hint" class="hidden rounded-[10px] px-4 py-2.5 text-sm" style="border: 0.5px solid var(--violet); background: var(--violet-subtle); color: var(--text-secondary)">
+          <span class="material-icons-round align-middle text-[18px]" style="color: var(--violet)">explore</span>
+          {% trans "Cliquez une parcelle, bougez la souris pour orienter la flèche dans le sens des rangs, puis cliquez pour valider · « Échap » pour annuler." %}
         </div>
         <div class="relative">
           <div id="map" style="height: 62vh; min-height: 380px; border: 0.5px solid var(--border)" class="w-full rounded-[12px]"></div>
@@ -110,7 +136,7 @@
         {% else %}
           <div class="flex flex-col items-center justify-center py-10 text-center">
             <span class="material-icons-round mb-2 text-[36px]" style="color: var(--text-muted)">map</span>
-            <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune parcelle. Cliquez sur « Ajouter » pour en sélectionner sur la carte." %}</p>
+            <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune parcelle. Cliquez sur « Ajouter une parcelle » pour en sélectionner sur la carte." %}</p>
           </div>
         {% endif %}
       </div>
@@ -163,6 +189,79 @@
             <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune parcelle à analyser pour le moment." %}</p>
           </div>
         {% endif %}
+
+        {# ── Télédétection : indices satellite par parcelle ── #}
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+          <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Télédétection par parcelle" %}</p>
+          <p class="text-[12px]" style="color: var(--text-muted)">
+            {% trans "NDVI — vigueur végétale · NDWI — teneur en eau · Sentinel-2" %}
+            {% if not satellite_configure %}<span style="color: var(--warning)"> · {% trans "Copernicus non configuré" %}</span>{% endif %}
+          </p>
+        </div>
+        {% for r in teledetection %}
+          <div class="hs-card overflow-hidden">
+            <div class="flex flex-wrap items-center gap-3 px-5 py-3.5" style="border-bottom: 0.5px solid var(--border)">
+              <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">satellite_alt</span>
+              <h3 class="flex-1 truncate text-[15px] font-medium">
+                <a href="{% url 'parcelles:detail' r.parcelle.pk %}" style="color: var(--action)">{{ r.parcelle.name }}</a>
+                {% if r.derniere %}
+                  <span class="text-[12px] font-normal" style="color: var(--text-secondary)">
+                    · {% trans "dernière image" %} {{ r.derniere.acquisition_date|date:"d/m/Y" }}{% if r.derniere.cloud_coverage is not None %} · {% trans "nuages" %} {{ r.derniere.cloud_coverage|floatformat:0 }} %{% endif %}
+                  </span>
+                {% endif %}
+              </h3>
+              {% if r.nb_passages %}<span class="hs-badge hs-badge-neutral">{% blocktrans count n=r.nb_passages %}{{ n }} passage{% plural %}{{ n }} passages{% endblocktrans %}</span>{% endif %}
+              {% if r.parcelle.boundaries and satellite_configure %}
+                <form method="post" action="{% url 'parcelles:teledetection' r.parcelle.pk %}" class="leading-none">
+                  {% csrf_token %}
+                  <button type="submit" class="hs-btn-outline">
+                    <span class="material-icons-round text-[16px]">satellite_alt</span>{% if r.derniere %}{% trans "Réanalyser" %}{% else %}{% trans "Analyser" %}{% endif %}
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+
+            {% if r.derniere %}
+              <div class="grid gap-3 p-5 sm:grid-cols-2">
+                {% include "parcelles/_indice.html" with titre="NDVI" aide=_("Vigueur végétale") valeur=r.derniere.ndvi_mean vmin=r.derniere.ndvi_min vmax=r.derniere.ndvi_max info=r.lecture.ndvi %}
+                {% include "parcelles/_indice.html" with titre="NDWI" aide=_("Teneur en eau") valeur=r.derniere.ndwi_mean vmin=r.derniere.ndwi_min vmax=r.derniere.ndwi_max info=r.lecture.ndwi %}
+              </div>
+
+              {% if r.serie %}
+                <div class="px-5 pb-5">
+                  <p class="mb-2 text-[12px]" style="color: var(--text-muted)">
+                    {% trans "Évolution" %} · {{ r.serie.date_debut|date:"d/m/Y" }} → {{ r.serie.date_fin|date:"d/m/Y" }}
+                  </p>
+                  <div class="grid gap-2 sm:grid-cols-2">
+                    {% for cle, st in r.serie.items %}{% if cle == "ndvi" or cle == "ndwi" %}{% if st %}
+                      <div class="flex items-baseline justify-between gap-3 rounded-[10px] px-3 py-2.5 text-[13px]" style="border: 0.5px solid var(--border)">
+                        <span class="font-medium uppercase">{{ cle }}</span>
+                        <span class="tabular-nums" style="color: var(--text-secondary)">
+                          {% trans "min" %} {{ st.min }} · {% trans "max" %} {{ st.max }} · {% trans "dernier" %} {{ st.dernier }}
+                        </span>
+                        <span class="shrink-0 font-medium">
+                          {% if st.tendance == "hausse" %}<span style="color: var(--success)">↑ {% trans "hausse" %}</span>
+                          {% elif st.tendance == "baisse" %}<span style="color: var(--danger)">↓ {% trans "baisse" %}</span>
+                          {% else %}<span style="color: var(--text-muted)">→ {% trans "stable" %}</span>{% endif %}
+                        </span>
+                      </div>
+                    {% endif %}{% endif %}{% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            {% else %}
+              <p class="px-5 py-4 text-[13px]" style="color: var(--text-muted)">
+                {% if not r.parcelle.boundaries %}
+                  {% trans "Cette parcelle n'a pas de contour : importez-la depuis le cadastre (onglet Carte) pour permettre l'analyse satellite." %}
+                {% elif not satellite_configure %}
+                  {% trans "Identifiants Copernicus absents du fichier .env." %}
+                {% else %}
+                  {% trans "Aucune image satellite analysée. Lancez « Analyser » pour interroger Sentinel-2." %}
+                {% endif %}
+              </p>
+            {% endif %}
+          </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -178,6 +277,14 @@
   const fc = JSON.parse(document.getElementById('parcelles-geojson').textContent);
   let map, adding = false;
   const selection = {};
+  // Redessin : parcelle ciblée + sommets du contour en cours de tracé.
+  const parcelleLayers = {};
+  let redrawing = false, redrawTarget = null, redrawName = '';
+  let redrawPts = [], redrawLine = null, redrawDots = [], redrawHighlight = null;
+  let lastPt = null, lastPtTime = 0, redrawSaving = false;
+  // Sens des rangs : une flèche par parcelle, dans l'azimut de la culture.
+  const arrowLayers = {}, parcelleInfo = {};
+  let arrowGroup = null, orienting = false, orientActive = null, tmpArrow = null;
 
   function toast(msg) {
     const t = document.createElement('div');
@@ -212,12 +319,71 @@
       { position: 'topright' }
     ).addTo(map);
 
+    arrowGroup = L.layerGroup().addTo(map);
+
     // Parcelles enregistrées (toujours affichées par-dessus)
-    const existing = L.geoJSON(fc, { style: { color: '#16a34a', weight: 2, fillOpacity: 0.2 } })
-      .bindPopup(l => l.feature.properties.name || 'Parcelle').addTo(map);
+    const existing = L.geoJSON(fc, {
+      style: { color: '#16a34a', weight: 2, fillOpacity: 0.2 },
+      onEachFeature: (feature, layer) => {
+        const p = feature.properties || {};
+        parcelleLayers[p.id] = layer;
+        const info = parcelleGeom(feature.geometry);
+        if (info) parcelleInfo[p.id] = info;
+        layer.on('click', e => {
+          if (adding) return;   // le flux d'ajout gère le clic via map.on('click')
+          if (redrawing) {
+            L.DomEvent.stopPropagation(e);
+            // 1er clic = choix de la parcelle ; clics suivants = sommets du contour.
+            if (redrawTarget == null) selectRedraw(p.id, p.name);
+            else addRedrawPoint(e.latlng);
+            return;
+          }
+          if (orienting) {
+            L.DomEvent.stopPropagation(e);
+            // 1er clic = parcelle à orienter ; 2e = direction des rangs.
+            if (orientActive == null) beginOrient(p.id); else fixOrient(e.latlng);
+            return;
+          }
+          L.popup().setLatLng(e.latlng).setContent(p.name || 'Parcelle').openOn(map);
+        });
+        if (info && p.orientation != null) drawArrow(p.id, p.orientation);
+      },
+    }).addTo(map);
     if (fc.features.length) { try { map.fitBounds(existing.getBounds(), { maxZoom: 16 }); } catch (e) {} }
 
-    map.on('click', e => { if (adding) fetchCadastre(e.latlng.lat, e.latlng.lng); });
+    map.on('click', e => {
+      if (redrawing) {
+        // Sans parcelle choisie, un clic dans le vide ne dessine rien : sinon on
+        // trace un contour qui ne s'appliquera à aucune parcelle.
+        if (redrawTarget == null) { toast('Cliquez d\'abord la parcelle à redessiner.'); return; }
+        addRedrawPoint(e.latlng);
+        return;
+      }
+      if (orienting && orientActive != null) { fixOrient(e.latlng); return; }
+      if (adding) fetchCadastre(e.latlng.lat, e.latlng.lng);
+    });
+    map.on('dblclick', () => { if (redrawing) finishRedraw(); });
+    // Filet : Leaflet avale parfois le dblclick quand doubleClickZoom est coupé.
+    map.getContainer().addEventListener('dblclick', () => { if (redrawing) finishRedraw(); });
+    // Aperçu de la flèche : elle suit la souris tant que le sens n'est pas figé.
+    map.on('mousemove', e => {
+      if (!orienting || orientActive == null) return;
+      const info = parcelleInfo[orientActive];
+      clearTmp();
+      tmpArrow = arrowGroupFor(info, bearing(info.centroid, e.latlng), '#a78bfa');
+      tmpArrow.addTo(arrowGroup);
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (redrawing) {
+        if (redrawTarget != null || redrawPts.length) resetRedraw();
+        else window.toggleRedraw();
+        return;
+      }
+      if (!orienting) return;
+      if (orientActive != null) { orientActive = null; clearTmp(); }
+      else window.toggleOrienting();
+    });
 
     // Recherche de lieu (API BAN) → zoom
     const search = document.getElementById('map-search');
@@ -238,7 +404,244 @@
     });
   }
 
+  // ── Redessiner le contour réel d'une parcelle (le cadastre ≠ le cultivé) ──
+  function setRedrawStatus() {
+    const save = document.getElementById('btn-redraw-save');
+    const status = document.getElementById('redraw-status');
+    const n = redrawPts.length;
+    if (save) save.classList.toggle('hidden', n < 3);
+    if (status) {
+      status.textContent = redrawTarget == null
+        ? 'Cliquez la parcelle à redessiner…'
+        : '« ' + redrawName + ' » · ' + n + ' point(s)';
+    }
+  }
+
+  function clearRedrawTemp() {
+    if (redrawLine) { map.removeLayer(redrawLine); redrawLine = null; }
+    redrawDots.forEach(d => map.removeLayer(d));
+    redrawDots = [];
+  }
+
+  function drawRedrawTemp() {
+    clearRedrawTemp();
+    if (redrawPts.length) {
+      redrawLine = L.polygon(redrawPts, { color: '#ea580c', weight: 3, fillOpacity: 0.25, dashArray: '6,6' }).addTo(map);
+      redrawPts.forEach(p => redrawDots.push(
+        L.circleMarker(p, { radius: 4, color: '#ea580c', fillColor: '#fff', fillOpacity: 1, weight: 2 }).addTo(map)));
+    }
+    setRedrawStatus();
+  }
+
+  function clearHighlight() {
+    if (redrawHighlight && redrawHighlight.setStyle) {
+      redrawHighlight.setStyle({ color: '#16a34a', weight: 2, dashArray: null });
+    }
+    redrawHighlight = null;
+  }
+
+  function resetRedraw() {
+    redrawTarget = null; redrawName = ''; redrawPts = []; lastPt = null;
+    clearRedrawTemp(); clearHighlight(); setRedrawStatus();
+  }
+
+  function selectRedraw(id, name) {
+    redrawTarget = id; redrawName = name || 'parcelle'; redrawPts = []; lastPt = null;
+    clearRedrawTemp(); clearHighlight();
+    const layer = parcelleLayers[id];
+    if (layer && layer.setStyle) {
+      layer.setStyle({ color: '#ea580c', weight: 4, dashArray: '6,6' });
+      redrawHighlight = layer;
+    }
+    setRedrawStatus();
+    toast('« ' + redrawName + ' » sélectionnée : tracez le nouveau contour.');
+  }
+
+  // Ajoute un sommet — ou ferme le tracé si on reclique sur le 1er point, ou si
+  // deux clics rapprochés tombent au même endroit (double-clic fait maison, le
+  // dblclick de Leaflet étant peu fiable quand doubleClickZoom est désactivé).
+  function addRedrawPoint(latlng) {
+    if (redrawPts.length >= 3 && map) {
+      const premier = map.latLngToContainerPoint(redrawPts[0]);
+      const courant = map.latLngToContainerPoint(latlng);
+      if (premier.distanceTo(courant) < 14) { finishRedraw(); return; }
+    }
+    const now = (window.performance && performance.now) ? performance.now() : Date.now();
+    if (lastPt && (now - lastPtTime) < 450 && redrawPts.length >= 3 && map) {
+      const a = map.latLngToContainerPoint(lastPt), b = map.latLngToContainerPoint(latlng);
+      if (a.distanceTo(b) < 14) { lastPt = null; finishRedraw(); return; }
+    }
+    redrawPts.push(latlng);
+    drawRedrawTemp();
+    lastPtTime = now; lastPt = latlng;
+  }
+
+  window.toggleRedraw = function () {
+    if (adding) cancelSelect();
+    if (orienting) window.toggleOrienting();
+    redrawing = !redrawing;
+    resetRedraw();
+    const hint = document.getElementById('redraw-hint');
+    if (hint) hint.classList.toggle('hidden', !redrawing);
+    const btn = document.getElementById('btn-redraw');
+    if (btn) {
+      btn.lastChild.textContent = redrawing ? btn.dataset.labelOn : btn.dataset.labelOff;
+      btn.classList.toggle('hs-btn-primary', redrawing);
+      btn.classList.toggle('hs-btn-outline', !redrawing);
+    }
+    if (map) {
+      map.getContainer().style.cursor = redrawing ? 'crosshair' : '';
+      if (redrawing) map.doubleClickZoom.disable(); else map.doubleClickZoom.enable();
+      setTimeout(() => map.invalidateSize(), 60);
+    }
+  };
+
+  window.finishRedraw = function () {
+    // Le double-clic est écouté à deux endroits (Leaflet + conteneur natif) :
+    // sans ce garde-fou, un seul geste enverrait deux enregistrements.
+    if (redrawSaving) return;
+    if (redrawTarget == null) { toast('Choisissez d\'abord une parcelle.'); return; }
+    if (redrawPts.length < 3) { toast('Tracez au moins 3 points.'); return; }
+    redrawSaving = true;
+    const coords = redrawPts.map(p => [p.lng, p.lat]);
+    coords.push(coords[0]);   // ferme l'anneau
+    const btn = document.getElementById('btn-redraw-save');
+    if (btn) btn.disabled = true;
+    fetch(`/parcelles/${redrawTarget}/contour/`, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF },
+      body: JSON.stringify({ geometry: { type: 'Polygon', coordinates: [coords] } }),
+    })
+      .then(async r => {
+        let d = null;
+        try { d = await r.json(); } catch (e) { /* réponse non JSON */ }
+        if (!r.ok || !d || !d.ok) throw new Error((d && d.error) ? d.error : ('HTTP ' + r.status));
+        return d;
+      })
+      .then(d => {
+        toast('Contour enregistré · ' + d.area + ' ha');
+        location.reload();
+      })
+      .catch(e => {
+        redrawSaving = false;
+        if (btn) btn.disabled = false;
+        toast('Échec : ' + e.message);
+      });
+  };
+
+  // ── Sens des rangs (flèche d'orientation par parcelle) ──
+  // Centroïde (moyenne des sommets de l'anneau extérieur) et « rayon » de la
+  // parcelle, qui dimensionne la flèche. GeoJSON : coordonnées [lon, lat].
+  function ringOf(geom) {
+    if (!geom) return null;
+    if (geom.type === 'Polygon') return geom.coordinates[0];
+    if (geom.type === 'MultiPolygon') return geom.coordinates[0][0];
+    return null;
+  }
+
+  function parcelleGeom(geom) {
+    const ring = ringOf(geom);
+    if (!ring || ring.length < 3) return null;
+    let sx = 0, sy = 0;
+    ring.forEach(c => { sx += c[0]; sy += c[1]; });
+    const centroid = L.latLng(sy / ring.length, sx / ring.length);
+    let span = 0;
+    ring.forEach(c => { span = Math.max(span, centroid.distanceTo(L.latLng(c[1], c[0]))); });
+    return { centroid, spanM: span };
+  }
+
+  // Destination géodésique à `distM` mètres, cap `brg` (°) depuis un point.
+  function destLL(ll, brg, distM) {
+    const R = 6371000, d = distM / R, t = brg * Math.PI / 180;
+    const lat1 = ll.lat * Math.PI / 180, lon1 = ll.lng * Math.PI / 180;
+    const lat2 = Math.asin(Math.sin(lat1) * Math.cos(d) + Math.cos(lat1) * Math.sin(d) * Math.cos(t));
+    const lon2 = lon1 + Math.atan2(Math.sin(t) * Math.sin(d) * Math.cos(lat1),
+                                   Math.cos(d) - Math.sin(lat1) * Math.sin(lat2));
+    return [lat2 * 180 / Math.PI, lon2 * 180 / Math.PI];
+  }
+
+  function bearing(from, to) {
+    const lat1 = from.lat * Math.PI / 180, lat2 = to.lat * Math.PI / 180;
+    const dlon = (to.lng - from.lng) * Math.PI / 180;
+    const y = Math.sin(dlon) * Math.cos(lat2);
+    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dlon);
+    return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+  }
+
+  // Flèche à double barbe, centrée sur la parcelle, dans l'azimut `deg`.
+  function arrowGroupFor(info, deg, color) {
+    const len = Math.max(20, Math.min(info.spanM * 0.85, info.spanM));
+    const tip = destLL(info.centroid, deg, len / 2);
+    const tail = destLL(info.centroid, (deg + 180) % 360, len / 2);
+    const tipLL = L.latLng(tip[0], tip[1]);
+    const b1 = destLL(tipLL, (deg + 150) % 360, len * 0.28);
+    const b2 = destLL(tipLL, (deg + 210) % 360, len * 0.28);
+    const st = { color, weight: 4, opacity: 0.95 };
+    return L.layerGroup([
+      L.polyline([tail, tip], st), L.polyline([tip, b1], st), L.polyline([tip, b2], st),
+    ]);
+  }
+
+  function drawArrow(id, deg) {
+    if (arrowLayers[id]) arrowGroup.removeLayer(arrowLayers[id]);
+    const g = arrowGroupFor(parcelleInfo[id], deg, '#facc15');
+    g.addTo(arrowGroup);
+    arrowLayers[id] = g;
+  }
+
+  function clearTmp() { if (tmpArrow) { arrowGroup.removeLayer(tmpArrow); tmpArrow = null; } }
+
+  function beginOrient(id) {
+    if (!parcelleInfo[id]) { toast('Parcelle sans contour : redessinez-la d\'abord.'); return; }
+    orientActive = id;
+  }
+
+  function fixOrient(latlng) {
+    const id = orientActive, info = parcelleInfo[id];
+    const deg = Math.round(bearing(info.centroid, latlng));
+    clearTmp();
+    drawArrow(id, deg);
+    orientActive = null;
+    fetch(`/parcelles/${id}/orientation/`, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF },
+      body: JSON.stringify({ deg }),
+    })
+      .then(async r => {
+        let d = null;
+        try { d = await r.json(); } catch (e) { /* réponse non JSON */ }
+        if (!r.ok || !d || !d.ok) throw new Error((d && d.error) ? d.error : ('HTTP ' + r.status));
+        return d;
+      })
+      .then(d => toast('Sens des rangs enregistré (' + d.orientation + '°)'))
+      .catch(e => toast('Échec : ' + e.message));
+  }
+
+  window.toggleOrienting = function () {
+    if (adding) cancelSelect();
+    if (redrawing) window.toggleRedraw();
+    orienting = !orienting;
+    orientActive = null;
+    clearTmp();
+    const hint = document.getElementById('orient-hint');
+    if (hint) hint.classList.toggle('hidden', !orienting);
+    const btn = document.getElementById('btn-orient');
+    if (btn) {
+      btn.lastChild.textContent = orienting ? btn.dataset.labelOn : btn.dataset.labelOff;
+      btn.classList.toggle('hs-btn-violet', orienting);
+      btn.classList.toggle('hs-btn-violet-outline', !orienting);
+    }
+    if (map) {
+      map.getContainer().style.cursor = orienting ? 'crosshair' : '';
+      setTimeout(() => map.invalidateSize(), 60);
+    }
+  };
+
   window.startAdding = function () {
+    if (redrawing) window.toggleRedraw();
+    if (orienting) window.toggleOrienting();
     adding = true;
     const h = document.getElementById('add-hint');
     if (h) h.classList.remove('hidden');

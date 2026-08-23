@@ -1,17 +1,26 @@
 """Vues web équipe : équipe, tâches, mes-tâches (technicien), partage géoloc public."""
 
 from django.contrib import messages
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.core.mail import BadHeaderError
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from core import espaces as espaces_service
+from core.decorators import espace_requis
+from core.espaces import EMPLOYE, EXPLOITANT
 from exploitations.models import Exploitation
 
-from .forms import TaskForm, TeamMemberForm
+from . import invitations
+from .forms import InvitationAccountForm, TaskForm, TeamMemberForm
 from .models import Task, TeamMember
+
+User = get_user_model()
 
 
 def _exploitation(request):
@@ -19,6 +28,7 @@ def _exploitation(request):
 
 
 @login_required
+@espace_requis(EXPLOITANT)
 def equipe(request):
     exploitation = _exploitation(request)
     form = TeamMemberForm()
@@ -50,6 +60,86 @@ def membre_edit(request, pk):
     else:
         form = TeamMemberForm(instance=member)
     return render(request, "equipe/edit.html", {"form": form, "member": member, "page_title": _("Modifier le membre")})
+
+
+@login_required
+@require_POST
+def membre_inviter(request, pk):
+    """Envoie au membre le lien qui lui ouvrira son espace employé."""
+    exploitation = _exploitation(request)
+    member = get_object_or_404(TeamMember, pk=pk, exploitation=exploitation)
+    if member.user_id is not None:
+        messages.info(request, _("%(name)s a déjà un compte lié.") % {"name": member.name})
+    elif not member.email:
+        messages.error(request, _("Renseignez un email avant d'inviter %(name)s.") % {"name": member.name})
+    else:
+        try:
+            invitations.envoyer(member, request)
+        except (BadHeaderError, OSError):
+            # SMTP indisponible ou refusé : le dire, ne pas laisser croire à un envoi.
+            messages.error(request, _("L'invitation n'a pas pu être envoyée à %(email)s. "
+                                      "Réessayez dans un instant.") % {"email": member.email})
+        else:
+            messages.success(request, _("Invitation envoyée à %(email)s.") % {"email": member.email})
+    return redirect("equipe:membre_edit", pk=member.pk)
+
+
+def invitation(request, token):
+    """Acceptation d'une invitation — publique, le jeton fait l'authentification.
+
+    Quatre situations, une seule page : lien mort, compte à créer, compte
+    existant à connecter, ou compte déjà connecté à confirmer.
+    """
+    member = invitations.membre_du_jeton(token)
+    if member is None:
+        return render(request, "equipe/invitation.html",
+                      {"etat": "invalide", "page_title": _("Invitation")}, status=410)
+
+    if member.user_id is not None:
+        if request.user.is_authenticated and request.user.pk == member.user_id:
+            return redirect("core:dashboard")
+        return render(request, "equipe/invitation.html",
+                      {"etat": "deja_utilisee", "membre": member, "page_title": _("Invitation")},
+                      status=410)
+
+    if request.user.is_authenticated:
+        etat = "confirmer"
+        form = None
+    elif User.objects.filter(email__iexact=member.email).exists():
+        etat = "connexion"
+        form = None
+    else:
+        etat = "creation"
+        form = InvitationAccountForm(email=member.email)
+
+    if request.method == "POST" and etat in ("confirmer", "creation"):
+        user = request.user
+        if etat == "creation":
+            form = InvitationAccountForm(request.POST, email=member.email)
+            if not form.is_valid():
+                return _rendre_invitation(request, etat, member, form)
+            user = form.save()
+            login(request, user)
+        invitations.accepter(member, user)
+        # Le rattachement vient de naître : le contexte d'espaces posé par le
+        # middleware en début de requête l'ignore encore.
+        espaces_service.invalider(request)
+        # L'invitation porte sur l'espace employé : l'ouvrir tout de suite,
+        # sans quoi un exploitant invité resterait sur son espace habituel.
+        espaces_service.definir_espace(request, EMPLOYE)
+        messages.success(request, _("Bienvenue dans l'équipe de %(expl)s.")
+                         % {"expl": member.exploitation.name})
+        return redirect("core:dashboard")
+
+    return _rendre_invitation(request, etat, member, form)
+
+
+def _rendre_invitation(request, etat, member, form):
+    return render(request, "equipe/invitation.html", {
+        "etat": etat, "membre": member, "form": form,
+        "url_connexion": f"{reverse('accounts:login')}?next={request.path}",
+        "page_title": _("Invitation"),
+    })
 
 
 @login_required
@@ -86,7 +176,7 @@ def taches(request):
             q |= Q(email__iexact=request.user.email)
         my_member = TeamMember.objects.filter(exploitation=exploitation).filter(q).first()
     tasks = list(
-        Task.objects.filter(exploitation=exploitation).select_related("assigned_to")
+        Task.objects.filter(exploitation=exploitation).select_related("assigned_to", "parent")
         if exploitation else Task.objects.none()
     )
     for t in tasks:
@@ -138,12 +228,14 @@ def _rh_placeholder(request, title):
 
 
 @login_required
+@espace_requis(EXPLOITANT)
 def contrats(request):
     """Contrats de travail — module RH en préparation."""
     return _rh_placeholder(request, _("Contrats de travail"))
 
 
 @login_required
+@espace_requis(EXPLOITANT)
 def paie(request):
     """Paie — module RH en préparation."""
     return _rh_placeholder(request, _("Paie"))

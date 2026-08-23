@@ -16,7 +16,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
+from irrigation import satellite, teledetection
 
+from . import geometrie
 from .forms import ParcelleCampagneForm, ParcelleForm, ParcelleTypeAgricultureForm
 from .models import Parcelle, ParcelleCampagne
 
@@ -30,7 +32,8 @@ def _exploitation_or_redirect(request):
 def parcelle_list(request):
     exploitation = _exploitation_or_redirect(request)
     parcelles = (
-        Parcelle.objects.filter(exploitation=exploitation).prefetch_related("analyses_sol")
+        Parcelle.objects.filter(exploitation=exploitation)
+        .prefetch_related("analyses_sol", "ndvi_data")
         if exploitation else Parcelle.objects.none()
     )
     features, total_area = [], 0.0
@@ -40,11 +43,16 @@ def parcelle_list(request):
             features.append({
                 "type": "Feature",
                 "geometry": p.boundaries,
-                "properties": {"id": p.pk, "name": p.name, "area": p.area, "ref": p.cadastral_ref},
+                "properties": {"id": p.pk, "name": p.name, "area": p.area,
+                               "ref": p.cadastral_ref,
+                               "orientation": p.orientation_rangs_deg},
             })
     return render(request, "parcelles/list.html", {
         "parcelles": parcelles,
         "parcelles_geojson": {"type": "FeatureCollection", "features": features},
+        # Onglet Analyses : indices satellite NDVI / NDWI par parcelle.
+        "teledetection": teledetection.lignes_par_parcelle(parcelles),
+        "satellite_configure": satellite.is_configured(),
         "kpi_actives": parcelles.filter(status=Parcelle.Status.ACTIVE).count() if exploitation else 0,
         "kpi_total_area": round(total_area, 2),
         "needs_onboarding": exploitation is None,
@@ -126,6 +134,63 @@ def parcelle_cadastre_save(request):
     if not created:
         return JsonResponse({"error": "Aucune parcelle valide."}, status=400)
     return JsonResponse({"ok": True, "created": created})
+
+
+@login_required
+@require_POST
+def parcelle_contour(request, pk):
+    """Redessine le contour d'une parcelle — POST JSON {geometry: Polygon}.
+
+    Le cadastre décrit la propriété, pas ce qui est cultivé : le contour tracé
+    sur la carte fait foi pour la surface. `official_area_ha` (surface
+    cadastrale) reste intacte, elle sert de référence administrative.
+    """
+    exploitation = _exploitation_or_redirect(request)
+    parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+    try:
+        body = json.loads(request.body)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "JSON invalide"}, status=400)
+
+    geometry = body.get("geometry") or {}
+    anneau = geometrie.anneau_exterieur(geometry) if geometry.get("type") == "Polygon" else None
+    # Un anneau fermé = au moins 3 sommets distincts + le retour au premier.
+    if not anneau or len(anneau) < 4:
+        return JsonResponse({"error": "Tracez au moins 3 points."}, status=400)
+    surface = geometrie.surface_ha(anneau)
+    if not surface:
+        return JsonResponse({"error": "Contour trop petit ou aplati."}, status=400)
+
+    parcelle.boundaries = geometry
+    parcelle.area = surface
+    parcelle.save(update_fields=["boundaries", "area", "updated_at"])
+    return JsonResponse({"ok": True, "id": parcelle.pk, "area": surface})
+
+
+@login_required
+@require_POST
+def parcelle_orientation(request, pk):
+    """Sens des rangs d'une parcelle — POST JSON {deg} (null pour effacer).
+
+    L'azimut se prend au clic sur la carte : 0 = Nord, sens horaire.
+    """
+    exploitation = _exploitation_or_redirect(request)
+    parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+    try:
+        body = json.loads(request.body)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "JSON invalide"}, status=400)
+
+    deg = body.get("deg")
+    if deg is None or deg == "":
+        parcelle.orientation_rangs_deg = None
+    else:
+        try:
+            parcelle.orientation_rangs_deg = int(round(float(deg))) % 360
+        except (ValueError, TypeError):
+            return JsonResponse({"error": "Angle invalide"}, status=400)
+    parcelle.save(update_fields=["orientation_rangs_deg", "updated_at"])
+    return JsonResponse({"ok": True, "orientation": parcelle.orientation_rangs_deg})
 
 
 @login_required
@@ -407,3 +472,20 @@ def parcelle_delete(request, pk):
         messages.success(request, _("Parcelle supprimée."))
         return redirect("parcelles:list")
     return render(request, "parcelles/confirm_delete.html", {"parcelle": parcelle})
+
+
+@login_required
+@require_POST
+def parcelle_teledetection(request, pk):
+    """Analyse satellite d'une parcelle (Sentinel-2) depuis l'onglet Analyses."""
+    exploitation = _exploitation_or_redirect(request)
+    parcelle = get_object_or_404(Parcelle, pk=pk, exploitation=exploitation)
+    try:
+        mesure = satellite.analyser(parcelle)
+    except satellite.SatelliteError as erreur:
+        messages.error(request, str(erreur))
+    else:
+        messages.success(request, _("Analyse satellite du %(date)s enregistrée pour %(nom)s.") % {
+            "date": mesure.acquisition_date.strftime("%d/%m/%Y"), "nom": parcelle.name,
+        })
+    return redirect(f"{reverse('parcelles:list')}?tab=analyses")

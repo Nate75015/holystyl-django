@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "satkaar_agenda",  # moteur de calendrier (Event/RRULE) — backend du planning
     # Apps métier Holystyl (ajoutées au fil des tranches)
     "core",
+    "dashboard",
     "accounts",
     "exploitations",
     "agronomie",
@@ -73,6 +74,8 @@ INSTALLED_APPS = [
     "contrat",
     "client",
     "reseaux",
+    # Diagnostics techniques d'irrigation reçus de Cultiveau
+    "dti",
     "storage",
     "public",
     "administration",
@@ -246,3 +249,13 @@ GOOGLE_OAUTH_CLIENT_SECRET = env("GOOGLE_OAUTH_CLIENT_SECRET", "")
 # ── Divers ──────────────────────────────────────────────────────────
 APP_NAME = "Holystyl"
 APP_URL = env("APP_URL", "http://localhost:8000")
+
+# Réception des diagnostics techniques d'irrigation émis par Cultiveau.
+# Le courriel sert de transport et n'authentifie pas son expéditeur : chaque
+# enveloppe est signée en HMAC avec ce secret, partagé avec la source. Sans
+# lui, l'import refuse tout — n'importe qui pourrait sinon écrire en base en
+# déposant un message dans la boîte de réception.
+IMPORT_DTI_SECRET = env("IMPORT_DTI_SECRET", "")
+# Boîte Gmail relevée par « manage.py relever_dti ». Elle doit correspondre à
+# un GmailAccount déjà connecté (mail/). Vide = ingestion éteinte.
+IMPORT_DTI_BOITE = env("IMPORT_DTI_BOITE", "")

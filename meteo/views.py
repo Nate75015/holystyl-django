@@ -13,7 +13,7 @@ from django.views.decorators.http import require_POST
 from exploitations.models import Exploitation
 from parcelles.models import Parcelle
 
-from .models import ReleveMeteo, VilleMeteo
+from .models import CAPTURE_HEURE_DEFAUT, ReleveMeteo, VilleMeteo
 from .scheduler import run_scheduled_captures
 from .services import fetch_current, fetch_weather, geocode
 
@@ -86,10 +86,14 @@ def capture_config(request, slug):
     ville = get_object_or_404(VilleMeteo, slug=slug, exploitation=exploitation)
     ville.capture_auto = request.POST.get("enabled") == "on"
     try:
-        ville.capture_frequence = int(request.POST.get("frequence") or VilleMeteo.Frequence.QUOTIDIEN)
+        ville.capture_frequence = int(request.POST.get("frequence") or VilleMeteo.Frequence.DOUZE_H)
     except (ValueError, TypeError):
-        ville.capture_frequence = VilleMeteo.Frequence.QUOTIDIEN
-    ville.save(update_fields=["capture_auto", "capture_frequence"])
+        ville.capture_frequence = VilleMeteo.Frequence.DOUZE_H
+    try:
+        ville.capture_heure_debut = int(request.POST.get("heure_debut")) % 24
+    except (ValueError, TypeError):
+        ville.capture_heure_debut = CAPTURE_HEURE_DEFAUT
+    ville.save(update_fields=["capture_auto", "capture_frequence", "capture_heure_debut"])
     messages.success(request, _("Capture automatique mise à jour."))
     return redirect("meteo:detail", slug=slug)
 
@@ -154,7 +158,7 @@ def meteo_detail(request, slug):
         "history": history[:30],
         "chart_data": chart_data,
         "frequences": VilleMeteo.Frequence.choices,
-        "default_frequence": VilleMeteo.Frequence.QUOTIDIEN,
+        "heures_jour": range(24),
         "page_title": location,
     })
 

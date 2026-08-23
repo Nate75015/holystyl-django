@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+
+  <p class="hs-crumb">{% trans "Accueil" %} · {% trans "Mon espace" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Mon espace" %}</h1>
+    {% if membre %}
+      <a href="{% url 'planning:planning' %}" class="hs-btn-outline">{% trans "Mon planning" %}</a>
+    {% endif %}
+  </div>
+
+  {% if not membre %}
+    {% comment %}Filet : l'espace employé n'est atteignable que via un TeamMember
+    actif, mais le rattachement peut être retiré pendant la session.{% endcomment %}
+    <div class="hs-card p-5">
+      <p class="text-[15px] font-medium">{% trans "Aucun rattachement" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Votre compte n'est rattaché à aucune équipe. Contactez le chef d'exploitation." %}
+      </p>
+    </div>
+  {% else %}
+
+    {# ── Identité ── #}
+    <div class="hs-card flex flex-wrap items-center justify-between gap-4 p-5">
+      <div class="flex min-w-0 items-center gap-3">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-medium"
+              style="background: var(--action); color: var(--on-action)">{{ membre.name|slice:":1"|upper }}</span>
+        <div class="min-w-0">
+          <p class="truncate text-[16px] font-medium">{{ membre.name }}</p>
+          <p class="truncate text-[13px]" style="color: var(--text-secondary)">
+            {{ membre.get_role_display }}{% if exploitation %} · {{ exploitation.name }}{% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {# ── Compteurs ── #}
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div class="hs-card p-4">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Tâches en cours" %}</p>
+        <p class="text-[22px]">{{ taches|length }}</p>
+      </div>
+      <div class="hs-card p-4">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Rôle" %}</p>
+        <p class="text-[22px]">{{ membre.get_role_display }}</p>
+      </div>
+    </div>
+
+    {# ── Tâches ── #}
+    <div class="hs-card p-5">
+      <p class="text-[15px] font-medium">{% trans "Mes tâches" %}</p>
+      {% if taches %}
+        <div class="mt-3 space-y-0.5">
+          {% for t in taches %}
+            <div class="flex items-center gap-3 rounded-lg px-2 py-2 transition hover:bg-black/5 dark:hover:bg-white/10">
+              <span class="h-2 w-2 shrink-0 rounded-full"
+                    style="background: {% if t.priority == 'haute' %}var(--danger){% elif t.priority == 'normale' %}var(--warning){% else %}var(--text-muted){% endif %}"></span>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-[14px]">{{ t.title }}</p>
+                {% if t.parcelles.all %}
+                  <p class="truncate text-[12px]" style="color: var(--text-secondary)">
+                    {% for p in t.parcelles.all %}{{ p.name }}{% if not forloop.last %} · {% endif %}{% endfor %}
+                  </p>
+                {% endif %}
+              </div>
+              <span class="shrink-0 text-[12px]" style="color: var(--text-muted)">
+                {{ t.due_date|date:"d/m H:i"|default:"—" }}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+        <a href="{% url 'equipe:taches' %}" class="mt-3 inline-flex items-center gap-1 text-[13px]" style="color: var(--action)">
+          {% trans "Toutes les tâches" %} →
+        </a>
+      {% else %}
+        <p class="mt-3 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune tâche en cours." %}</p>
+      {% endif %}
+    </div>
+
+  {% endif %}
+</section>
+{% endblock %}

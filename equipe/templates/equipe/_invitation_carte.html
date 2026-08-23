@@ -1,0 +1,68 @@
+{% comment %}Corps de la page d'invitation. Attend `etat`, et selon lui `membre`,
+`form`, `url_connexion`.{% endcomment %}
+{% load i18n %}
+
+<div class="mx-auto max-w-md">
+  <div class="hs-card p-6">
+
+    {% if etat == "invalide" %}
+      <p class="text-[16px] font-medium">{% trans "Lien d'invitation invalide" %}</p>
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Ce lien a expiré (les invitations sont valables 7 jours) ou l'email du membre a changé depuis l'envoi. Demandez une nouvelle invitation à votre chef d'exploitation." %}
+      </p>
+
+    {% elif etat == "deja_utilisee" %}
+      <p class="text-[16px] font-medium">{% trans "Invitation déjà utilisée" %}</p>
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Un compte est déjà rattaché à cette fiche. Connectez-vous avec ce compte." %}
+      </p>
+      <a href="{% url 'accounts:login' %}" class="hs-btn-primary mt-5 inline-flex">{% trans "Se connecter" %}</a>
+
+    {% else %}
+      <p class="text-[16px] font-medium">
+        {% blocktrans with expl=membre.exploitation.name %}Rejoignez l'équipe de {{ expl }}{% endblocktrans %}
+      </p>
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+        {% blocktrans with nom=membre.name role=membre.get_role_display %}Vous avez été ajouté(e) comme {{ role }} sous le nom {{ nom }}. Votre espace employé vous donnera vos tâches et votre planning.{% endblocktrans %}
+      </p>
+
+      {% if etat == "connexion" %}
+        <p class="mt-4 text-[13px]" style="color: var(--text-secondary)">
+          {% blocktrans with email=membre.email %}Un compte existe déjà pour {{ email }} : connectez-vous, vous reviendrez ici pour confirmer.{% endblocktrans %}
+        </p>
+        <a href="{{ url_connexion }}" class="hs-btn-primary mt-5 inline-flex">{% trans "Se connecter" %}</a>
+
+      {% elif etat == "confirmer" %}
+        <form method="post" class="mt-5">
+          {% csrf_token %}
+          <p class="mb-3 text-[13px]" style="color: var(--text-secondary)">
+            {% blocktrans with email=user.email %}Le compte {{ email }} sera rattaché à cette fiche.{% endblocktrans %}
+          </p>
+          <button type="submit" class="hs-btn-primary">{% trans "Rejoindre l'équipe" %}</button>
+        </form>
+
+      {% else %}
+        <form method="post" class="mt-6 space-y-4">
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+            <div class="rounded-[10px] px-4 py-3 text-sm" style="border: 0.5px solid var(--danger); color: var(--danger)">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+          <div>
+            <p class="mb-1.5 text-sm font-medium">{% trans "Email" %}</p>
+            <p class="text-[13px]" style="color: var(--text-secondary)">{{ membre.email }}</p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {% include "accounts/_field.html" with field=form.first_name %}
+            {% include "accounts/_field.html" with field=form.last_name %}
+          </div>
+          {% include "accounts/_field.html" with field=form.password1 %}
+          {% include "accounts/_field.html" with field=form.password2 %}
+          <button type="submit" class="hs-btn-primary w-full">{% trans "Créer mon compte" %}</button>
+        </form>
+      {% endif %}
+    {% endif %}
+
+  </div>
+</div>

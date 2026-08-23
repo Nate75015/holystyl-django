@@ -3,8 +3,11 @@
 # le volume ici. À la place, le CronJob déclenche un endpoint interne (token) et
 # c'est le pod web (qui possède la base) qui effectue les écritures.
 #
-# Cadence horaire ; l'endpoint ne capture que les exploitations « dues » selon
-# leur fréquence configurée (horaire / 6h / 12h / quotidienne).
+# Cadence horaire : c'est un simple battement, pas la planification. Les créneaux
+# sont ancrés côté app sur l'horloge locale (Europe/Paris) — par défaut 06:00 et
+# 18:00 — et l'endpoint ne capture qu'une fois par créneau échu. Ce CronJob doit
+# donc rester au moins horaire ; l'heure exacte du battement (HH:05) ne fait que
+# décaler la capture de quelques minutes après le créneau.
 #
 # Pré-requis : la clé CRON_TOKEN doit exister dans le secret `holystyl-env`
 # (même valeur que le settings CRON_TOKEN de l'app).

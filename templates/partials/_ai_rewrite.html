@@ -1,0 +1,11 @@
+{% load i18n %}
+{% comment %}
+  Bouton « Reformuler avec l'IA » à poser sur la ligne du label d'un champ.
+  Paramètres : `target` (id du champ), `contexte` (oriente la reformulation) et
+  `x_disabled` (expression Alpine facultative, pour griser quand le champ est vide).
+{% endcomment %}
+<button type="button" class="hs-chip-btn" title="{% trans 'Reformuler avec l’IA' %}"
+        {% if x_disabled %}:disabled="{{ x_disabled }}"{% endif %}
+        onclick="hsRewrite(this, '{{ target }}', '{% url 'ia:reformuler' %}', '{{ contexte|escapejs }}')">
+  <span class="material-icons-round text-[16px]">auto_fix_high</span>{% trans "Reformuler avec l’IA" %}
+</button>

@@ -150,3 +150,32 @@ def fetch_weather(lat, lon):
         })
 
     return {"current": current, "days": days}
+
+
+def villes_avec_meteo(exploitation, limite=2):
+    """Les `limite` premières villes de l'exploitation, météo courante attachée.
+
+    Cache de 30 min par coordonnées arrondies : plusieurs exploitations proches
+    partagent le même appel. Une ville dont la météo est indisponible est
+    renvoyée quand même, avec des valeurs neutres — un tableau de bord ne doit
+    pas tomber parce qu'une API tierce est muette.
+    """
+    if exploitation is None:
+        return []
+
+    from django.core.cache import cache
+
+    from .models import VilleMeteo
+
+    villes = list(VilleMeteo.objects.filter(exploitation=exploitation)[:limite])
+    for v in villes:
+        cle = f"dash_current:{round(v.latitude, 3)}:{round(v.longitude, 3)}"
+        courant = cache.get(cle)
+        if courant is None:
+            try:
+                courant = fetch_current(v.latitude, v.longitude)
+            except Exception:  # noqa: BLE001 — météo ville indisponible
+                courant = {"temp": None, "icon": "help_outline", "label": ""}
+            cache.set(cle, courant, 1800)
+        v.temp, v.icon, v.label = courant.get("temp"), courant.get("icon"), courant.get("label")
+    return villes

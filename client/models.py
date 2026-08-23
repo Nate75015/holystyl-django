@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -121,6 +122,16 @@ class Partenaire(models.Model):
     )
     type_partenaire = models.CharField(
         _("type"), max_length=15, choices=Type.choices, default=Type.AUTRE
+    )
+    # Compte de connexion du partenaire. Renseigné pour un bailleur à qui on
+    # ouvre l'espace bailleur ; laissé vide pour une simple fiche de contact.
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="partenariats",
+        verbose_name=_("compte de connexion"),
     )
     nom = models.CharField(_("nom / raison sociale"), max_length=255)
     contact_principal = models.CharField(_("contact principal"), max_length=255, blank=True)

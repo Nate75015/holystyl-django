@@ -14,7 +14,7 @@
         <span class="material-icons-round text-[16px]">delete_outline</span>
       </button>
     {% endif %}
-    <div class="max-w-[75%] rounded-[12px] px-3.5 py-2 text-sm" style="{% if message.sender_id == request.user.id %}background: var(--action); color: #fff{% else %}background: var(--surface-alt); color: var(--text){% endif %}">
+    <div class="max-w-[75%] rounded-[12px] px-3.5 py-2 text-sm" style="{% if message.sender_id == request.user.id %}background: var(--action); color: var(--on-action){% else %}background: var(--surface-alt); color: var(--text){% endif %}">
       {% if conversation.is_group and message.sender_id != request.user.id %}
         <p class="mb-0.5 text-[11px] font-medium opacity-70">{{ message.sender.display_name }}</p>
       {% endif %}

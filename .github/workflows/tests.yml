@@ -1,0 +1,88 @@
+# Tests de non-régression.
+#
+# Le contrat d'échange avec Cultiveau est éprouvé ici. `dti/tests.py` vérifie
+# que la correspondance déclarée reste applicable : un champ renommé côté
+# Holystyl y casse immédiatement, plutôt que de se découvrir des mois plus tard
+# sur un import silencieusement tronqué.
+name: Tests
+
+on:
+  push:
+    branches: [develop, preprod, main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: tests-holystyl-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  django:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: holystyl
+          POSTGRES_PASSWORD: holystyl
+          POSTGRES_DB: holystyl
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      DATABASE_URL: postgres://holystyl:holystyl@localhost:5432/holystyl
+      SECRET_KEY: cle-de-test-ci
+      IMPORT_DTI_SECRET: secret-de-test-ci
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # requirements.txt tire satkaar-agenda depuis un dépôt privé, en SSH.
+      # Un runner GitHub n'a pas de clé : sans jeton, le clone échoue avec une
+      # erreur SSH peu parlante. On vérifie donc d'abord, puis on réécrit
+      # l'URL en HTTPS authentifié.
+      - name: Vérifier l'accès aux dépendances privées
+        run: |
+          if [ -z "${{ secrets.SATKAAR_AGENDA_TOKEN }}" ]; then
+            echo "::error::Secret SATKAAR_AGENDA_TOKEN absent — créez-le dans Settings > Secrets > Actions, avec un jeton ayant accès en lecture au dépôt privé satkaar/agenda."
+            exit 1
+          fi
+
+      - name: Autoriser le clone du dépôt privé
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.SATKAAR_AGENDA_TOKEN }}@github.com/".insteadOf "ssh://git@github.com/"
+
+      - name: Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Contrôles Django
+        run: python manage.py check
+
+      - name: Migrations à jour
+        run: python manage.py makemigrations --check --dry-run
+
+      - name: Contrat d'échange DTI
+        # Isolé du reste : c'est la partie qui doit rester verte en toutes
+        # circonstances, puisque sa rupture casse l'interopérabilité avec
+        # Cultiveau et non seulement une page de l'application.
+        run: python -m pytest dti/ -q
+
+      - name: Suite complète
+        # Tolérée en échec pour l'instant : six tests étaient déjà rouges
+        # (aquaculture, exploitations, planning) avant l'ajout de cette CI.
+        # À repasser en bloquant une fois ces échecs traités.
+        continue-on-error: true
+        run: python -m pytest -q

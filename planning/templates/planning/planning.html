@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5"
+<section class="flex flex-col space-y-5 {% if vue == 'mois' %}hs-fill-viewport{% endif %}"
          x-data="planningTasks('{% url 'planning:task_create' %}', '{% url 'planning:task_edit' 0 %}', '{% url 'planning:task_delete' 0 %}')">
 
   {# ── Fil d'Ariane + titre + sélecteur de vue ── #}
@@ -16,11 +16,13 @@
          class="{% if vue == 'semaine' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Semaine" %}</a>
       <a href="?vue=mois&date={{ anchor|date:'Y-m-d' }}"
          class="{% if vue == 'mois' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Mois" %}</a>
+      <a href="?vue=annee&date={{ anchor|date:'Y-m-d' }}"
+         class="{% if vue == 'annee' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Année" %}</a>
     </div>
   </div>
 
   {# ── Carte calendrier ── #}
-  <div class="hs-card overflow-hidden">
+  <div class="hs-card flex min-h-0 flex-1 flex-col overflow-hidden">
     {# En-tête : navigation de période #}
     <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3" style="border-bottom: 0.5px solid var(--border)">
       <div class="flex items-center gap-2">
@@ -30,6 +32,7 @@
         <span class="min-w-[11rem] text-center text-sm font-medium">
           {% if vue == 'jour' %}{{ label|date:'l j F Y'|capfirst }}
           {% elif vue == 'semaine' %}{{ week_start|date:'j' }} – {{ week_end|date:'j F Y' }}
+          {% elif vue == 'annee' %}{{ year }}
           {% else %}{{ month|date:'F Y'|capfirst }}{% endif %}
         </span>
         <a href="?vue={{ vue }}&date={{ next_date|date:'Y-m-d' }}" class="md-icon-btn" title="{% trans 'Suivant' %}">
@@ -44,11 +47,11 @@
     </div>
 
     {# Grille #}
-    <div class="overflow-x-auto">
+    <div class="flex min-h-0 flex-1 flex-col overflow-x-auto">
       {% if vue == 'mois' %}
-        {# ── Vue Mois : calendrier classique ── #}
+        {# ── Vue Mois : les tâches s'affichent en barres continues sur leur période ── #}
         {% if month_legend %}
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-5 py-2.5" style="border-bottom: 0.5px solid var(--border)">
+          <div class="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1.5 px-5 py-2.5" style="border-bottom: 0.5px solid var(--border)">
             {% for m in month_legend %}
               <span class="inline-flex items-center gap-1.5 text-xs" style="color: var(--text-secondary)">
                 <span class="h-2.5 w-2.5 shrink-0 rounded-full" style="background: {{ m.color }}"></span>{{ m.name }}
@@ -56,37 +59,88 @@
             {% endfor %}
           </div>
         {% endif %}
-        <div class="grid grid-cols-7" style="border-bottom: 0.5px solid var(--border)">
-          {% for d in month_weeks.0 %}
+        <div class="grid shrink-0 grid-cols-7" style="border-bottom: 0.5px solid var(--border)">
+          {% for d in month_weeks.0.days %}
             <div class="py-2.5 text-center text-xs font-medium uppercase tracking-wide {% if not forloop.last %}border-r{% endif %}" style="color: var(--text-muted); border-color: var(--border)">{{ d.date|date:'D' }}</div>
           {% endfor %}
         </div>
         {% for week in month_weeks %}
-          <div class="grid grid-cols-7 last:border-b-0" style="border-bottom: 0.5px solid var(--border)">
-            {% for d in week %}
+          <div class="relative grid flex-1 grid-cols-7 overflow-hidden last:border-b-0"
+               style="border-bottom: 0.5px solid var(--border); min-height: calc(2.6rem + ({{ week.lanes }} * 23px))">
+            {# Fond : une cellule par jour (numéro + clic pour ajouter) #}
+            {% for d in week.days %}
               <div @click="openAdd('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"
                    title="{% trans 'Ajouter une tâche' %}"
-                   class="group relative min-h-[5.5rem] cursor-pointer p-2 transition hover:bg-[color:var(--surface-alt)] {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if not d.in_month %}background: var(--surface-alt);{% endif %}">
+                   class="group cursor-pointer p-2 transition hover:bg-[color:var(--surface-alt)] {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if not d.in_month %}background: var(--surface-alt);{% endif %}">
                 <div class="flex items-center justify-between">
-                  <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-medium {% if d.date == today %}text-white{% elif not d.in_month %}text-slate-300 dark:text-slate-600{% endif %}" style="{% if d.date == today %}background: var(--action);{% elif d.in_month %}color: var(--text);{% endif %}">{{ d.date|date:'j' }}</span>
+                  <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-medium {% if d.date == today %}{% elif not d.in_month %}text-slate-300 dark:text-slate-600{% endif %}" style="{% if d.date == today %}background: var(--action); color: var(--on-action);{% elif d.in_month %}color: var(--text);{% endif %}">{{ d.date|date:'j' }}</span>
                   <span class="material-icons-round pointer-events-none text-[16px] opacity-0 transition group-hover:opacity-100" style="color: var(--text-muted)">add</span>
                 </div>
-                {% if d.tasks %}
-                  <div class="mt-1 space-y-1">
-                    {% for t in d.tasks %}
-                      <div @click.stop="openEdit({ id: {{ t.id }}, title: '{{ t.title|escapejs }}', member: {{ t.assigned_to_id }}, date: '{{ d.date|date:"Y-m-d" }}', priority: '{{ t.priority }}', status: '{{ t.status }}', description: '{{ t.description|escapejs }}', parcelle: '{{ t.parcelle_id|default:"" }}' })"
-                           title="{{ t.title }} · {{ t.assigned_to.name }} · {{ t.get_priority_display }} · {{ t.get_status_display }}"
-                           class="cursor-pointer truncate rounded-md border-l-[3px] px-1.5 py-0.5 text-[11px] leading-tight transition hover:brightness-95 {% if t.status == 'done' or t.status == 'validated' %}line-through opacity-60{% endif %}"
-                           style="border-color: {{ t.chip_color }}; background: color-mix(in srgb, {{ t.chip_color }} 14%, transparent); color: var(--text);">
-                        {{ t.title }}
-                      </div>
-                    {% endfor %}
-                  </div>
-                {% endif %}
               </div>
             {% endfor %}
+            {# Barres de tâches, superposées à la grille des jours #}
+            {% if week.bars or week.more %}
+              <div class="pointer-events-none absolute inset-x-0 bottom-1 top-[2.4rem] grid grid-cols-7 gap-y-[3px] px-1" style="grid-auto-rows: 20px">
+                {% for b in week.bars %}{% include "planning/_bar.html" %}{% endfor %}
+                {% for m in week.more %}
+                  <a href="?vue=jour&date={{ m.date }}"
+                     class="pointer-events-auto flex items-center rounded-md px-1.5 text-[11px] font-medium leading-none transition hover:bg-[color:var(--surface-alt)]"
+                     style="grid-column: {{ m.col|add:1 }}; grid-row: {{ week.more_lane|add:1 }}; color: var(--text-secondary)">+{{ m.count }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
           </div>
         {% endfor %}
+
+      {% elif vue == 'annee' %}
+        {# ── Vue Année : 12 mini-calendriers ── #}
+        {% if month_legend %}
+          <div class="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1.5 px-5 py-2.5" style="border-bottom: 0.5px solid var(--border)">
+            {% for m in month_legend %}
+              <span class="inline-flex items-center gap-1.5 text-xs" style="color: var(--text-secondary)">
+                <span class="h-2.5 w-2.5 shrink-0 rounded-full" style="background: {{ m.color }}"></span>{{ m.name }}
+              </span>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          {% for m in year_months %}
+            <div class="rounded-xl p-3" style="border: 0.5px solid var(--border)">
+              <div class="mb-2 flex items-center justify-between">
+                <a href="?vue=mois&date={{ m.date|date:'Y-m-d' }}"
+                   class="text-sm font-medium capitalize transition hover:opacity-70"
+                   style="color: {% if m.date.month == today.month and m.date.year == today.year %}var(--action){% else %}var(--text){% endif %}"
+                   title="{% trans 'Voir le mois' %}">{{ m.date|date:'F' }}</a>
+                <a href="?vue=mois&date={{ m.date|date:'Y-m-d' }}" class="md-icon-btn" title="{% trans 'Voir le mois' %}">
+                  <span class="material-icons-round text-[16px]">open_in_full</span>
+                </a>
+              </div>
+              <div class="grid grid-cols-7 gap-y-0.5">
+                {% for d in m.weekdays %}
+                  <span class="py-1 text-center text-[10px] font-medium uppercase" style="color: var(--text-muted)">{{ d|date:'D'|slice:":1" }}</span>
+                {% endfor %}
+                {% for week in m.weeks %}
+                  {% for d in week %}
+                    <button type="button"
+                            @click="openAdd('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"
+                            title="{{ d.date|date:'l j F Y'|capfirst }}"
+                            class="relative grid h-7 place-items-center rounded-md text-[11px] leading-none transition hover:bg-[color:var(--surface-alt)] {% if not d.in_month %}opacity-30{% endif %}">
+                      <span class="grid h-6 w-6 place-items-center rounded-full font-medium"
+                            style="{% if d.date == today %}background: var(--action); color: var(--on-action);{% else %}color: var(--text);{% endif %}">{{ d.date|date:'j' }}</span>
+                      {% if d.colors %}
+                        <span class="absolute inset-x-0 bottom-0 flex justify-center gap-[2px]">
+                          {% for c in d.colors %}
+                            <span class="h-[3px] w-[3px] rounded-full" style="background: {{ c }}"></span>
+                          {% endfor %}
+                        </span>
+                      {% endif %}
+                    </button>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
 
       {% else %}
         {# ── Vue Jour / Semaine : grille équipe × jours ── #}
@@ -105,29 +159,24 @@
 
         {% if team_members %}
           {% for row in rows %}
-            <div class="grid last:border-b-0" style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr)); border-bottom: 0.5px solid var(--border);">
+            <div class="relative grid last:border-b-0" style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr)); min-height: {{ row.height }}px; border-bottom: 0.5px solid var(--border);">
               <div class="flex items-center gap-2 border-r px-3 py-4" style="border-color: var(--border)">
                 <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-medium text-white" style="background: {{ row.member.color }}">{{ row.member.name|slice:":1"|upper }}</span>
                 <span class="min-w-0 truncate text-sm font-medium">{{ row.member.name }}</span>
               </div>
+              {# Fond : une cellule par jour (clic pour ajouter) #}
               {% for cell in row.cells %}
                 <div @click="openAdd({{ row.member.id }}, '{{ cell.date|date:"Y-m-d" }}')"
                      title="{% trans 'Ajouter une tâche' %}"
-                     class="group min-h-[4.5rem] cursor-pointer space-y-1 p-1.5 transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}">
-                  {% for t in cell.tasks %}
-                    <div @click.stop="openEdit({ id: {{ t.id }}, title: '{{ t.title|escapejs }}', member: {{ row.member.id }}, date: '{{ cell.date|date:"Y-m-d" }}', priority: '{{ t.priority }}', status: '{{ t.status }}', description: '{{ t.description|escapejs }}', parcelle: '{{ t.parcelle_id|default:"" }}' })"
-                         title="{{ t.title }} · {{ t.get_priority_display }} · {{ t.get_status_display }}"
-                         class="cursor-pointer truncate rounded-md border-l-2 px-1.5 py-0.5 text-[11px] leading-tight transition hover:brightness-95
-                                {% if t.status == 'done' or t.status == 'validated' %}line-through opacity-60 {% endif %}
-                                {% if t.priority == 'haute' %}border-red-500 bg-red-500/10 text-red-700 dark:text-red-300
-                                {% elif t.priority == 'basse' %}border-slate-400 bg-slate-400/10 text-slate-600 dark:text-slate-300
-                                {% else %}text-[color:var(--action)]{% endif %}"
-                         style="{% if t.priority != 'haute' and t.priority != 'basse' %}border-color: var(--action); background: color-mix(in srgb, var(--action) 10%, transparent);{% endif %}">
-                      {{ t.title }}
-                    </div>
-                  {% endfor %}
-                </div>
+                     class="group cursor-pointer transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}"></div>
               {% endfor %}
+              {# Barres de tâches, superposées aux colonnes de jours #}
+              {% if row.bars %}
+                <div class="pointer-events-none absolute bottom-2 top-2 grid gap-y-[3px] px-1.5"
+                     style="left: 12rem; right: 0; grid-template-columns: repeat({{ ncols }}, minmax(0, 1fr)); grid-auto-rows: 24px">
+                  {% for b in row.bars %}{% include "planning/_bar.html" %}{% endfor %}
+                </div>
+              {% endif %}
             </div>
           {% endfor %}
         {% else %}
@@ -147,7 +196,13 @@
     <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
       <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center justify-between">
-          <h3 class="text-[15px] font-medium" x-text="editing ? '{% trans "Modifier la tâche" %}' : '{% trans "Nouvelle tâche" %}'">{% trans "Nouvelle tâche" %}</h3>
+          <div class="min-w-0">
+            <h3 class="text-[15px] font-medium" x-text="editing ? '{% trans "Modifier la tâche" %}' : '{% trans "Nouvelle tâche" %}'">{% trans "Nouvelle tâche" %}</h3>
+            <p x-show="form.parent" x-cloak class="mt-0.5 flex items-center gap-1 truncate text-xs" style="color: var(--text-secondary)">
+              <span class="material-icons-round text-[14px]">subdirectory_arrow_right</span>
+              <span>{% trans "Sous-tâche de" %} <span class="font-medium" x-text="form.parent"></span></span>
+            </p>
+          </div>
           <button type="button" @click="modal = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
             <span class="material-icons-round text-[20px]">close</span>
           </button>
@@ -159,11 +214,14 @@
             <input type="hidden" name="vue" value="{{ vue }}">
             <input type="hidden" name="date" value="{{ anchor|date:'Y-m-d' }}">
             <div>
-              <label for="task-title" class="mb-1 block text-sm font-medium">{% trans "Titre" %} <span style="color: var(--danger)">*</span></label>
+              <div class="mb-1 flex items-center justify-between gap-3">
+                <label for="task-title" class="text-sm font-medium">{% trans "Titre" %} <span style="color: var(--danger)">*</span></label>
+                {% include "partials/_ai_rewrite.html" with target="task-title" contexte=_("Titre d'une tâche de planning agricole") x_disabled="!form.title.trim()" %}
+              </div>
               <input id="task-title" name="title" required x-model="form.title" placeholder="{% trans 'ex: Traitement parcelle Nord' %}"
                      class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent">
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid gap-3 sm:grid-cols-2">
               <div>
                 <label for="task-assigned" class="mb-1 block text-sm font-medium">{% trans "Assigné à" %} <span style="color: var(--danger)">*</span></label>
                 <select id="task-assigned" name="assigned_to" required x-model="form.assigned_to"
@@ -171,10 +229,17 @@
                   {% for m in team_members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
                 </select>
               </div>
-              <div>
-                <label for="task-date" class="mb-1 block text-sm font-medium">{% trans "Date" %}</label>
-                <input id="task-date" name="due_date" type="date" x-model="form.due_date"
-                       class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="task-start" class="mb-1 block text-sm font-medium">{% trans "Début" %}</label>
+                  <input id="task-start" name="start_date" type="date" x-model="form.start_date" @change="if (form.due_date && form.due_date < form.start_date) form.due_date = form.start_date"
+                         class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
+                </div>
+                <div>
+                  <label for="task-end" class="mb-1 block text-sm font-medium">{% trans "Fin" %}</label>
+                  <input id="task-end" name="due_date" type="date" x-model="form.due_date" :min="form.start_date"
+                         class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
+                </div>
               </div>
             </div>
 
@@ -205,22 +270,107 @@
               </div>
               <input type="hidden" name="status" :value="form.status">
             </div>
+            {# Parcelles — sélection multiple par pastilles #}
             <div>
-              <label for="task-parcelle" class="mb-1 block text-sm font-medium">{% trans "Parcelle" %}</label>
-              <select id="task-parcelle" name="parcelle" x-model="form.parcelle"
-                      class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
-                <option value="">{% trans "—" %}</option>
-                {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
-              </select>
+              <div class="mb-1.5 flex items-center gap-3">
+                <label class="text-sm font-medium">{% trans "Parcelles" %}</label>
+                <span x-show="form.parcelles.length" x-cloak class="text-xs tabular-nums" style="color: var(--text-secondary)"
+                      x-text="`${form.parcelles.length} {% trans "sélectionnée(s)" %}`"></span>
+                <button type="button" x-show="form.parcelles.length" x-cloak @click="form.parcelles = []"
+                        class="ml-auto text-xs font-medium transition hover:opacity-80" style="color: var(--action)">{% trans "Tout désélectionner" %}</button>
+              </div>
+              {% if parcelles %}
+                <div class="grid gap-3 {% if parcelles_mappables %}sm:grid-cols-2{% endif %}">
+                {% if parcelles_mappables %}
+                  {# Carte de sélection : on reconnaît une parcelle à sa forme, pas à sa référence #}
+                  <div class="overflow-hidden rounded-xl" style="border: 0.5px solid var(--border)">
+                    <div id="planning-parcelles-map" class="h-56 w-full" style="background: var(--surface-alt)"></div>
+                  </div>
+                {% endif %}
+                <div class="flex max-h-56 flex-wrap content-start gap-2 overflow-y-auto">
+                  {% for p in parcelles %}
+                    <button type="button" @click="toggleParcelle('{{ p.pk }}')"
+                            @mouseenter="surlignerParcelle('{{ p.pk }}')" @mouseleave="surlignerParcelle(null)"
+                            class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition"
+                            :class="form.parcelles.includes('{{ p.pk }}') ? 'border-[color:var(--action)] text-[color:var(--action)]' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'"
+                            style="border-color: var(--border)">
+                      <span class="material-icons-round text-[15px]"
+                            x-text="form.parcelles.includes('{{ p.pk }}') ? 'check_circle' : 'radio_button_unchecked'"></span>{{ p.name }}
+                    </button>
+                  {% endfor %}
+                </div>
+                </div>
+                {% if parcelles_mappables < parcelles|length %}
+                  <p class="mt-1.5 text-xs" style="color: var(--text-muted)">{% trans "Les parcelles sans contour tracé n'apparaissent pas sur la carte." %}</p>
+                {% endif %}
+              {% else %}
+                <p class="text-sm" style="color: var(--text-secondary)">
+                  {% trans "Aucune parcelle sur cette exploitation." %}
+                  <a href="{% url 'parcelles:create' %}" class="font-medium" style="color: var(--action)">{% trans "En créer une" %}</a>
+                </p>
+              {% endif %}
+              <template x-for="id in form.parcelles" :key="id">
+                <input type="hidden" name="parcelles" :value="id">
+              </template>
             </div>
+            {# Sous-tâches — tâches filles : titre, assigné, date, statut fait/à faire #}
             <div>
-              <label for="task-description" class="mb-1 block text-sm font-medium">{% trans "Description" %}</label>
+              <div class="mb-1.5 flex items-center gap-3">
+                <label class="text-sm font-medium">{% trans "Sous-tâches" %}</label>
+                <template x-if="form.subtasks.length">
+                  <div class="flex items-center gap-2">
+                    <div class="h-1.5 w-24 overflow-hidden rounded-full" style="background: var(--surface-alt)">
+                      <div class="h-full rounded-full transition-all" style="background: var(--action)" :style="`width: ${(subDone() / form.subtasks.length) * 100}%`"></div>
+                    </div>
+                    <span class="text-xs tabular-nums" style="color: var(--text-secondary)" x-text="`${subDone()}/${form.subtasks.length}`"></span>
+                  </div>
+                </template>
+              </div>
+              <div class="space-y-1.5">
+                <template x-for="(st, i) in form.subtasks" :key="i">
+                  <div class="flex items-center gap-2">
+                    <button type="button" @click="st.done = !st.done"
+                            class="grid h-6 w-6 shrink-0 place-items-center rounded-md border transition"
+                            :style="st.done ? 'background: var(--action); border-color: var(--action); color: var(--on-action)' : 'border-color: var(--border); color: transparent'">
+                      <span class="material-icons-round text-[15px]">check</span>
+                    </button>
+                    <input type="text" x-model="st.title" placeholder="{% trans 'ex: Préparer le matériel' %}"
+                           class="min-w-0 flex-1 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none"
+                           :class="st.done ? 'line-through opacity-60' : ''" style="border: 0.5px solid var(--border); background: transparent">
+                    <select x-model="st.member"
+                            class="hidden w-36 shrink-0 rounded-lg px-2 py-1.5 text-sm focus:outline-none dark:[color-scheme:dark] sm:block" style="border: 0.5px solid var(--border); background: transparent">
+                      <option value="">{% trans "Même assigné" %}</option>
+                      {% for m in team_members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
+                    </select>
+                    {# width en inline : la règle de base input[type=date] impose w-full #}
+                    <input type="date" x-model="st.date"
+                           class="hidden shrink-0 rounded-lg px-2 py-1.5 text-sm focus:outline-none dark:[color-scheme:dark] sm:block" style="width: 9.5rem; border: 0.5px solid var(--border); background: transparent">
+                    <button type="button" @click="form.subtasks.splice(i, 1)" title="{% trans 'Retirer' %}"
+                            class="grid h-7 w-7 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
+                      <span class="material-icons-round text-[16px]">close</span>
+                    </button>
+                  </div>
+                </template>
+              </div>
+              <button type="button" @click="addSub()"
+                      class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium transition hover:opacity-80" style="color: var(--action)">
+                <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une sous-tâche" %}
+              </button>
+              <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Une sous-tâche datée apparaît aussi dans le planning de son assigné." %}</p>
+              <input type="hidden" name="subtasks" :value="JSON.stringify(form.subtasks)">
+            </div>
+
+            <div>
+              <div class="mb-1 flex items-center justify-between gap-3">
+                <label for="task-description" class="text-sm font-medium">{% trans "Description" %}</label>
+                {% include "partials/_ai_rewrite.html" with target="task-description" contexte=_("Description d'une tâche de planning agricole") x_disabled="!form.description.trim()" %}
+              </div>
               <textarea id="task-description" name="description" rows="2" x-model="form.description"
                         class="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style="border: 0.5px solid var(--border); background: transparent"></textarea>
             </div>
             <div class="flex items-center justify-between gap-2 pt-1">
               <button type="button" x-show="editing" x-cloak
-                      @click="del = { open: true, action: delAction, name: form.title }; modal = false"
+                      @click="del = { open: true, action: delAction, name: form.title, subs: form.subtasks.length }; modal = false"
                       class="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition hover:bg-red-500/10" style="color: var(--danger)">
                 <span class="material-icons-round text-[18px]">delete_outline</span>{% trans "Supprimer" %}
               </button>
@@ -243,6 +393,7 @@
     <div @click.self="del.open = false" class="hs-popover w-full max-w-sm p-5">
       <h3 class="text-[15px] font-medium">{% trans "Supprimer cette tâche ?" %}</h3>
       <p class="mt-1 text-sm" style="color: var(--text-secondary)"><span class="font-medium" style="color: var(--text)" x-text="del.name"></span> — {% trans "cette action est irréversible." %}</p>
+      <p x-show="del.subs" x-cloak class="mt-1 text-sm" style="color: var(--danger)" x-text="`{% trans 'Ses sous-tâches seront supprimées aussi :' %} ${del.subs}`"></p>
       <form method="post" :action="del.action" class="mt-5 flex justify-end gap-2">
         {% csrf_token %}
         <input type="hidden" name="vue" value="{{ vue }}">
@@ -256,24 +407,143 @@
 
 <script>
   function planningTasks(createUrl, editUrl0, delUrl0) {
+    const blank = () => ({
+      title: '', assigned_to: '', start_date: '', due_date: '', priority: 'normale', status: 'todo',
+      description: '', parcelles: [], parent: '', subtasks: [],
+    });
     return {
       modal: false, editing: false, action: createUrl, delAction: '',
-      form: { title: '', assigned_to: '', due_date: '', priority: 'normale', status: 'todo', description: '', parcelle: '' },
-      del: { open: false, action: '', name: '' },
+      form: blank(),
+      del: { open: false, action: '', name: '', subs: 0 },
+      init() {
+        // La carte des parcelles vit hors d'Alpine (Leaflet) : on la tient
+        // synchronisée avec la sélection et on la (ré)affiche à l'ouverture.
+        this.$watch('form.parcelles', ids => window.hsParcellesMap && window.hsParcellesMap.select(ids));
+        this.$watch('modal', open => open && window.hsParcellesMap && window.hsParcellesMap.show(this.form.parcelles));
+      },
       openAdd(memberId, date) {
         this.editing = false;
         this.action = createUrl;
-        this.form = { title: '', assigned_to: String(memberId), due_date: date, priority: 'normale', status: 'todo', description: '', parcelle: '' };
+        this.form = { ...blank(), assigned_to: String(memberId), start_date: date, due_date: date };
         this.modal = true;
       },
       openEdit(t) {
         this.editing = true;
         this.action = editUrl0.replace('/0/', '/' + t.id + '/');
         this.delAction = delUrl0.replace('/0/', '/' + t.id + '/');
-        this.form = { title: t.title, assigned_to: String(t.member), due_date: t.date, priority: t.priority, status: t.status, description: t.description, parcelle: t.parcelle || '' };
+        this.form = {
+          title: t.title, assigned_to: String(t.member), start_date: t.start, due_date: t.end,
+          priority: t.priority, status: t.status, description: t.description, parcelles: t.parcelles || [],
+          parent: t.parent || '', subtasks: (t.subtasks || []).map(st => ({ ...st, member: String(st.member || '') })),
+        };
         this.modal = true;
+      },
+      surlignerParcelle(id) {
+        if (window.hsParcellesMap) window.hsParcellesMap.highlight(id, this.form.parcelles);
+      },
+      toggleParcelle(id) {
+        const i = this.form.parcelles.indexOf(id);
+        i === -1 ? this.form.parcelles.push(id) : this.form.parcelles.splice(i, 1);
+      },
+      addSub() {
+        this.form.subtasks.push({ id: null, title: '', done: false, member: '', date: '' });
+      },
+      subDone() {
+        return this.form.subtasks.filter(st => st.done).length;
       },
     };
   }
 </script>
+{% endblock %}
+
+{% block extra_js %}
+{% if parcelles_mappables %}
+{{ parcelles_geojson|json_script:"planning-parcelles-geojson" }}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // ── Carte de sélection des parcelles (modale de tâche) ──
+  // Leaflet vit hors d'Alpine : la modale la réveille à l'ouverture
+  // (`show`) et lui pousse la sélection courante (`select`) ; un clic sur une
+  // parcelle rebascule la sélection côté Alpine.
+  window.hsParcellesMap = (function () {
+    var BASE = { color: '#ffffff', weight: 1.5, fillColor: '#ffffff', fillOpacity: 0.12 };
+    var SELECTED = { color: '#38bdf8', weight: 2.5, fillColor: '#38bdf8', fillOpacity: 0.45 };
+    var HOVER = { color: '#fbbf24', weight: 3, fillColor: '#fbbf24', fillOpacity: 0.35 };
+    var map = null, layers = {}, bounds = null;
+
+    function alpine() {
+      var section = document.querySelector('section[x-data]');
+      return section && window.Alpine ? window.Alpine.$data(section) : null;
+    }
+
+    function ign(layer, format) {
+      return L.tileLayer(
+        'https://data.geopf.fr/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM' +
+        '&FORMAT=' + format + '&LAYER=' + layer + '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+        { maxZoom: 19, attribution: '© IGN' });
+    }
+
+    function build() {
+      var el = document.getElementById('planning-parcelles-map');
+      var data = document.getElementById('planning-parcelles-geojson');
+      if (!el || !data || !window.L) return false;
+      var fc = JSON.parse(data.textContent);
+      map = L.map(el, { layers: [ign('ORTHOIMAGERY.ORTHOPHOTOS', 'image/jpeg')], attributionControl: false });
+      var geo = L.geoJSON(fc, {
+        style: BASE,
+        onEachFeature: function (feature, layer) {
+          var p = feature.properties || {};
+          layers[String(p.id)] = layer;
+          layer.bindTooltip(p.name + (p.area ? ' — ' + p.area + ' ha' : ''), { direction: 'top', sticky: true });
+          layer.on('click', function () {
+            var data = alpine();
+            if (data) data.toggleParcelle(String(p.id));
+          });
+        },
+      }).addTo(map);
+      bounds = geo.getBounds();
+      // La modale s'ouvre en fondu : le conteneur peut encore être à 0×0 au
+      // moment de l'init, on recadre dès qu'il a une taille réelle.
+      if (window.ResizeObserver) {
+        new ResizeObserver(function () { map.invalidateSize(); }).observe(el);
+      }
+      return true;
+    }
+
+    function cadrer() {
+      var el = document.getElementById('planning-parcelles-map');
+      if (!map || !el || el.clientHeight < 20) return;
+      map.invalidateSize();
+      if (bounds && bounds.isValid()) map.fitBounds(bounds, { padding: [14, 14] });
+    }
+
+    return {
+      show: function (ids) {
+        if (!map && !build()) return;
+        var self = this;
+        [60, 250, 600].forEach(function (ms) {
+          setTimeout(function () { cadrer(); self.select(ids); }, ms);
+        });
+      },
+      select: function (ids) {
+        if (!map) return;
+        var choisies = ids || [];
+        Object.keys(layers).forEach(function (id) {
+          layers[id].setStyle(choisies.indexOf(id) === -1 ? BASE : SELECTED);
+        });
+      },
+      // Survol d'une pastille : on montre de quelle parcelle il s'agit.
+      highlight: function (id, ids) {
+        if (!map) return;
+        this.select(ids);
+        var layer = id && layers[String(id)];
+        if (!layer) return;
+        layer.setStyle(HOVER);
+        layer.bringToFront();
+      },
+    };
+  })();
+</script>
+{% endif %}
 {% endblock %}

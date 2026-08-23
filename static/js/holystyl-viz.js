@@ -103,10 +103,13 @@
       return g;
     };
     // Multi-séries (conf.datasets) ou série unique (conf.data)
-    const series = conf.datasets || [{ label: conf.label || '', data: conf.data || [], color: conf.color || '#0891b2' }];
+    const series = conf.datasets || [{ label: conf.label || '', data: conf.data || [],
+                                       color: conf.color, color_token: conf.color_token }];
     const type = conf.type === 'bar' ? 'bar' : 'line';
     const datasets = series.map((s) => {
-      const color = s.color || '#0891b2';
+      // `color_token` désigne un token CSS (« --action ») : la courbe suit alors
+      // le thème. `color` reste accepté, et sert de repli si le token est absent.
+      const color = (s.color_token ? token(s.color_token, s.color) : s.color) || '#0891b2';
       return type === 'bar'
         ? { label: s.label || '', data: s.data || [], backgroundColor: color, borderRadius: 6 }
         : { label: s.label || '', data: s.data || [], borderColor: color, backgroundColor: mkFill(color),
