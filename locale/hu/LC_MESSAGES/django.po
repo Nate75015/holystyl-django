@@ -5037,3 +5037,75 @@ msgstr "Adjunk újra értelmet a szakmánknak"
 
 #~ msgid "Administration"
 #~ msgstr "Adminisztráció"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Hónap megtekintése"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Kezdés"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Részfeladatok"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Részfeladat hozzáadása"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Ugyanaz a felelős"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Részfeladata:"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Magas prioritás"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "szülőfeladat"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "pl. Eszközök előkészítése"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "A dátummal ellátott részfeladat a felelős beosztásában is megjelenik."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "A részfeladatai is törlődnek:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Mezőgazdasági ütemterv feladatának címe"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Mezőgazdasági ütemterv feladatának leírása"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "kiválasztva"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Kijelölés törlése"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Ehhez a gazdasághoz nincs tábla."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Létrehozás"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "A körvonal nélküli táblák nem jelennek meg a térképen."

@@ -60,14 +60,15 @@ class TeamMemberForm(forms.ModelForm):
 
 
 class TaskForm(forms.ModelForm):
-    """Crée une tâche (titre, assignation, priorité, échéance)."""
+    """Crée une tâche (titre, assignation, priorité, période)."""
 
     class Meta:
         model = Task
-        fields = ["title", "assigned_to", "priority", "status", "due_date", "description"]
+        fields = ["title", "assigned_to", "priority", "status", "start_date", "due_date", "description"]
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": _("Ex. Tailler la parcelle nord")}),
             "description": forms.Textarea(attrs={"rows": 3, "placeholder": _("Détails (optionnel)")}),
+            "start_date": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
             "due_date": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
         }
         labels = {
@@ -75,6 +76,7 @@ class TaskForm(forms.ModelForm):
             "assigned_to": _("Assignée à"),
             "priority": _("Priorité"),
             "status": _("Statut"),
+            "start_date": _("Début"),
             "due_date": _("Échéance"),
             "description": _("Description"),
         }
@@ -89,8 +91,9 @@ class TaskForm(forms.ModelForm):
         self.fields["assigned_to"].required = False
         self.fields["assigned_to"].empty_label = _("Non assignée")
         self.fields["description"].required = False
-        self.fields["due_date"].required = False
-        self.fields["due_date"].input_formats = ["%Y-%m-%dT%H:%M"]
+        for champ in ("start_date", "due_date"):
+            self.fields[champ].required = False
+            self.fields[champ].input_formats = ["%Y-%m-%dT%H:%M"]
 
 
 class InvitationAccountForm(UserCreationForm):

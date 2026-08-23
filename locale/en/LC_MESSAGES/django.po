@@ -5030,3 +5030,75 @@ msgstr "Let's bring meaning back to our profession"
 
 #~ msgid "Bassinage"
 #~ msgstr "Frost sprinkling"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "View the month"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Start"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Subtasks"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Add a subtask"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Same assignee"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Subtask of"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "High priority"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "parent task"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "e.g. Prepare the equipment"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "A subtask with dates also appears in its assignee's schedule."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Its subtasks will be deleted too:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Title of a farm planning task"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Description of a farm planning task"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "selected"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Clear selection"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "No plot on this farm."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Create one"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Plots with no drawn outline do not appear on the map."

@@ -60,7 +60,11 @@
                     style="background: {% if t.priority == 'haute' %}var(--danger){% elif t.priority == 'normale' %}var(--warning){% else %}var(--text-muted){% endif %}"></span>
               <div class="min-w-0 flex-1">
                 <p class="truncate text-[14px]">{{ t.title }}</p>
-                {% if t.parcelle %}<p class="truncate text-[12px]" style="color: var(--text-secondary)">{{ t.parcelle.name }}</p>{% endif %}
+                {% if t.parcelles.all %}
+                  <p class="truncate text-[12px]" style="color: var(--text-secondary)">
+                    {% for p in t.parcelles.all %}{{ p.name }}{% if not forloop.last %} · {% endif %}{% endfor %}
+                  </p>
+                {% endif %}
               </div>
               <span class="shrink-0 text-[12px]" style="color: var(--text-muted)">
                 {{ t.due_date|date:"d/m H:i"|default:"—" }}

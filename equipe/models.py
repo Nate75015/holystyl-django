@@ -73,8 +73,22 @@ class Task(TimeStampedModel):
     title = models.CharField(_("titre"), max_length=255)
     description = models.TextField(blank=True)
     assigned_to = models.ForeignKey(TeamMember, on_delete=models.SET_NULL, null=True, blank=True, related_name="tasks")
+    #: Parcelle principale — conservée (API, espace employé) et tenue à jour
+    #: avec la première parcelle de `parcelles`.
     parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.SET_NULL, null=True, blank=True)
+    #: Une tâche peut couvrir plusieurs parcelles.
+    parcelles = models.ManyToManyField(
+        "parcelles.Parcelle", blank=True, related_name="tasks", verbose_name=_("parcelles")
+    )
+    #: Une tâche peut s'étaler sur plusieurs jours : `start_date` est le début,
+    #: `due_date` la fin (et reste l'échéance utilisée par les rappels).
+    start_date = models.DateTimeField(_("début"), null=True, blank=True)
     due_date = models.DateTimeField(null=True, blank=True)
+    #: Sous-tâche : une tâche fille est une tâche à part entière (assignable,
+    #: datée, avec son statut) rattachée à son parent.
+    parent = models.ForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="subtasks", verbose_name=_("tâche parente")
+    )
     priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.NORMALE)
     status = models.CharField(max_length=12, choices=Status.choices, default=Status.TODO)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
@@ -91,6 +105,25 @@ class Task(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    @property
+    def periode(self):
+        """(début, fin) en dates, l'une valant l'autre si une seule est saisie."""
+        debut = self.start_date or self.due_date
+        fin = self.due_date or self.start_date
+        return debut, fin
+
+    @property
+    def is_done(self) -> bool:
+        return self.status in (self.Status.DONE, self.Status.VALIDATED)
+
+    @property
+    def subtasks_done(self) -> int:
+        return sum(1 for st in self.subtasks.all() if st.is_done)
+
+    @property
+    def subtasks_total(self) -> int:
+        return len(self.subtasks.all())
 
 
 class TaskReminder(models.Model):

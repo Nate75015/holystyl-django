@@ -1,9 +1,20 @@
 {% comment %}Rendu d'un champ de formulaire (label + widget + aide + erreurs).
-Usage : {% include "accounts/_field.html" with field=form.first_name %}{% endcomment %}
+Usage : {% include "accounts/_field.html" with field=form.first_name %}
+Passer `ai_contexte` ajoute un bouton « Reformuler avec l'IA » sur la ligne du
+label : {% include "accounts/_field.html" with field=form.description ai_contexte=_("Notes sur…") %}{% endcomment %}
 <div>
-  <label class="mb-1.5 block text-sm font-medium" style="color: var(--text)" for="{{ field.id_for_label }}">
-    {{ field.label }}{% if field.field.required %} <span style="color: var(--danger)">*</span>{% endif %}
-  </label>
+  {% if ai_contexte %}
+    <div class="mb-1.5 flex items-center justify-between gap-3">
+      <label class="text-sm font-medium" style="color: var(--text)" for="{{ field.id_for_label }}">
+        {{ field.label }}{% if field.field.required %} <span style="color: var(--danger)">*</span>{% endif %}
+      </label>
+      {% include "partials/_ai_rewrite.html" with target=field.id_for_label contexte=ai_contexte %}
+    </div>
+  {% else %}
+    <label class="mb-1.5 block text-sm font-medium" style="color: var(--text)" for="{{ field.id_for_label }}">
+      {{ field.label }}{% if field.field.required %} <span style="color: var(--danger)">*</span>{% endif %}
+    </label>
+  {% endif %}
   {{ field }}
   {% if field.help_text %}<p class="mt-1 text-xs" style="color: var(--text-muted)">{{ field.help_text|safe }}</p>{% endif %}
   {% for error in field.errors %}<p class="mt-1 text-xs" style="color: var(--danger)">{{ error }}</p>{% endfor %}

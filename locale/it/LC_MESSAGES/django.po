@@ -5037,3 +5037,75 @@ msgstr "Ridiamo senso al nostro mestiere"
 
 #~ msgid "Administration"
 #~ msgstr "Amministrazione"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Vedi il mese"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Inizio"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Sottoattività"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Aggiungi una sottoattività"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Stesso assegnatario"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Sottoattività di"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Priorità alta"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "attività principale"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "es. Preparare l'attrezzatura"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Una sottoattività con data compare anche nella pianificazione dell'assegnatario."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Anche le sue sottoattività saranno eliminate:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Titolo di un'attività di pianificazione agricola"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Descrizione di un'attività di pianificazione agricola"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "selezionate"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Deseleziona tutto"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Nessuna particella in questa azienda."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Creane una"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Le particelle senza contorno tracciato non compaiono sulla mappa."

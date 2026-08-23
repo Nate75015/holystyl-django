@@ -56,5 +56,6 @@ def taches_du_membre(membre, limite=10):
     return list(
         Task.objects.filter(assigned_to=membre)
         .exclude(status__in=[Task.Status.DONE, Task.Status.VALIDATED])
+        .prefetch_related("parcelles")
         .order_by("due_date", "-created_at")[:limite]
     )

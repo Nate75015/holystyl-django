@@ -4845,3 +4845,75 @@ msgstr ""
 #: templates/partials/sidebar.html:8
 msgid "Remettons du sens dans notre métier"
 msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr ""
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr ""

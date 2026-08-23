@@ -5038,3 +5038,75 @@ msgstr "Laten we ons beroep weer zin geven"
 
 #~ msgid "Administration"
 #~ msgstr "Beheer"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Bekijk de maand"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Start"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Subtaken"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Subtaak toevoegen"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Zelfde toegewezene"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Subtaak van"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Hoge prioriteit"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "bovenliggende taak"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "bv. Materiaal klaarzetten"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Een subtaak met datum verschijnt ook in de planning van de toegewezene."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "De bijbehorende subtaken worden ook verwijderd:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Titel van een taak in de teeltplanning"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Omschrijving van een taak in de teeltplanning"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "geselecteerd"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Alles wissen"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Geen percelen op dit bedrijf."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Maak er een"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Percelen zonder ingetekende contour verschijnen niet op de kaart."

@@ -5054,3 +5054,75 @@ msgstr "Ας ξαναδώσουμε νόημα στο επάγγελμά μας"
 
 #~ msgid "Administration"
 #~ msgstr "Διαχείριση"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Προβολή του μήνα"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Έναρξη"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Υποεργασίες"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Προσθήκη υποεργασίας"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Ίδιος υπεύθυνος"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Υποεργασία του"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Υψηλή προτεραιότητα"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "γονική εργασία"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "π.χ. Προετοιμασία εξοπλισμού"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Μια υποεργασία με ημερομηνία εμφανίζεται και στο πρόγραμμα του υπευθύνου."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Οι υποεργασίες της θα διαγραφούν επίσης:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Τίτλος εργασίας γεωργικού προγραμματισμού"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Περιγραφή εργασίας γεωργικού προγραμματισμού"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "επιλεγμένες"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Αποεπιλογή όλων"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Κανένα αγροτεμάχιο σε αυτή την εκμετάλλευση."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Δημιουργήστε ένα"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Τα αγροτεμάχια χωρίς σχεδιασμένο περίγραμμα δεν εμφανίζονται στον χάρτη."

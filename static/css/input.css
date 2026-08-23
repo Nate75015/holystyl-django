@@ -160,6 +160,14 @@
   }
   .md-card { padding: 1.25rem; }
 
+  /* ── Calendrier plein écran : la grille descend jusqu'en bas de la fenêtre ── */
+  .hs-fill-viewport {
+    min-height: calc(100vh - 9rem);   /* mobile : barre de nav basse (pb-24) */
+  }
+  @media (min-width: 900px) {
+    .hs-fill-viewport { min-height: calc(100vh - 4.75rem); }
+  }
+
   /* ── Tuile d'indicateur : surface-alt, sans bordure, rayon 8px ── */
   .hs-tile {
     background: var(--surface-alt);

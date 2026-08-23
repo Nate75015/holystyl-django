@@ -1,0 +1,19 @@
+{% load i18n %}
+{# Barre de tâche : court du jour de début au jour de fin, coupée en bord de fenêtre. #}
+<div @click.stop="openEdit({{ b.payload }})"
+     title="{{ b.task.title }} · {{ b.task.assigned_to.name }} · {{ b.task.get_priority_display }} · {{ b.task.get_status_display }}{% for p in b.task.parcelles.all %}{% if forloop.first %} · {% else %}, {% endif %}{{ p.name }}{% endfor %}"
+     class="pointer-events-auto flex cursor-pointer items-center gap-1 overflow-hidden border-l-[3px] px-1.5 text-[11px] leading-none transition hover:brightness-95
+            {% if b.opens %}rounded-l-md{% else %}border-l-0 pl-1{% endif %} {% if b.closes %}rounded-r-md{% endif %}
+            {% if b.task.is_done %}line-through opacity-60{% endif %}"
+     style="grid-column: {{ b.col|add:1 }} / span {{ b.span }}; grid-row: {{ b.lane|add:1 }};
+            border-color: {{ b.color }}; background: color-mix(in srgb, {{ b.color }} 16%, transparent); color: var(--text);">
+  {% if not b.opens %}<span class="material-icons-round shrink-0 text-[12px]" style="color: {{ b.color }}">chevron_left</span>{% endif %}
+  {% if b.task.priority == 'haute' %}<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" title="{% trans 'Priorité haute' %}"></span>{% endif %}
+  {% if b.task.parent_id %}<span class="material-icons-round shrink-0 text-[12px]" style="color: var(--text-muted)">subdirectory_arrow_right</span>{% endif %}
+  <span class="truncate">{{ b.task.title }}</span>
+  {% if b.task.subtasks_total %}
+    <span class="ml-auto shrink-0 rounded-full px-1.5 py-[1px] text-[10px] tabular-nums"
+          style="background: color-mix(in srgb, {{ b.color }} 28%, transparent)">{{ b.task.subtasks_done }}/{{ b.task.subtasks_total }}</span>
+  {% endif %}
+  {% if not b.closes %}<span class="material-icons-round ml-auto shrink-0 text-[12px]" style="color: {{ b.color }}">chevron_right</span>{% endif %}
+</div>

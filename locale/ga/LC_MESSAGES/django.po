@@ -5046,3 +5046,75 @@ msgstr "Cuirimis brí ar ais inár ngairm"
 
 #~ msgid "Administration"
 #~ msgstr "Riarachán"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Féach ar an mí"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Tosach"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Fothascanna"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Cuir fothasc leis"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "An duine céanna"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Fothasc de"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Tosaíocht ard"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "máthairthasc"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "m.sh. Ullmhaigh an trealamh"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Taispeántar fothasc a bhfuil dáta aige i sceideal an duine atá freagrach as."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Scriosfar a cuid fothascanna freisin:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Teideal tasc pleanála feirme"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Cur síos ar thasc pleanála feirme"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "roghnaithe"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Glan an rogha"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Níl aon gharraí ag an bhfeirm seo."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Cruthaigh ceann"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Ní thaispeántar garraithe gan imlíne tarraingthe ar an léarscáil."

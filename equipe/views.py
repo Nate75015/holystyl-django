@@ -176,7 +176,7 @@ def taches(request):
             q |= Q(email__iexact=request.user.email)
         my_member = TeamMember.objects.filter(exploitation=exploitation).filter(q).first()
     tasks = list(
-        Task.objects.filter(exploitation=exploitation).select_related("assigned_to")
+        Task.objects.filter(exploitation=exploitation).select_related("assigned_to", "parent")
         if exploitation else Task.objects.none()
     )
     for t in tasks:

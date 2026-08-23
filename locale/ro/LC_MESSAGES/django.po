@@ -5038,3 +5038,75 @@ msgstr "Să redăm sens meseriei noastre"
 
 #~ msgid "Administration"
 #~ msgstr "Administrare"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Vezi luna"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Început"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Subsarcini"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Adaugă o subsarcină"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Aceeași persoană"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Subsarcină a"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Prioritate ridicată"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "sarcină părinte"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "ex.: Pregătește echipamentul"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "O subsarcină cu dată apare și în planificarea persoanei desemnate."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Subsarcinile sale vor fi șterse și ele:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Titlul unei sarcini din planificarea agricolă"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Descrierea unei sarcini din planificarea agricolă"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "selectate"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Deselectează tot"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Nicio parcelă în această exploatație."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Creează una"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Parcelele fără contur trasat nu apar pe hartă."

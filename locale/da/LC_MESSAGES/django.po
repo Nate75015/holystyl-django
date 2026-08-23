@@ -5030,3 +5030,75 @@ msgstr "Lad os give mening til vores fag igen"
 
 #~ msgid "Administration"
 #~ msgstr "Administration"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Vis måneden"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Start"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Underopgaver"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Tilføj en underopgave"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Samme ansvarlige"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Underopgave til"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Høj prioritet"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "overordnet opgave"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "f.eks. Klargør udstyret"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "En underopgave med dato vises også i den ansvarliges plan."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Dens underopgaver slettes også:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Titel på en opgave i markplanen"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Beskrivelse af en opgave i markplanen"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "valgt"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Fravælg alle"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Ingen marker på denne bedrift."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Opret en"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Marker uden indtegnet omrids vises ikke på kortet."

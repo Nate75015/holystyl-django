@@ -5052,3 +5052,75 @@ msgstr "Przywróćmy sens naszemu zawodowi"
 
 #~ msgid "Bassinage"
 #~ msgstr "Zraszanie"
+
+#: planning/templates/planning/planning.html
+msgid "Voir le mois"
+msgstr "Zobacz miesiąc"
+
+#: planning/templates/planning/planning.html
+msgid "Début"
+msgstr "Początek"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâches"
+msgstr "Podzadania"
+
+#: planning/templates/planning/planning.html
+msgid "Ajouter une sous-tâche"
+msgstr "Dodaj podzadanie"
+
+#: planning/templates/planning/planning.html
+msgid "Même assigné"
+msgstr "Ta sama osoba"
+
+#: planning/templates/planning/planning.html
+msgid "Sous-tâche de"
+msgstr "Podzadanie"
+
+#: planning/templates/planning/planning.html
+msgid "Priorité haute"
+msgstr "Wysoki priorytet"
+
+#: planning/templates/planning/planning.html
+msgid "tâche parente"
+msgstr "zadanie nadrzędne"
+
+#: planning/templates/planning/planning.html
+msgid "ex: Préparer le matériel"
+msgstr "np. Przygotuj sprzęt"
+
+#: planning/templates/planning/planning.html
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "Podzadanie z datą pojawia się także w planie osoby odpowiedzialnej."
+
+#: planning/templates/planning/planning.html
+msgid "Ses sous-tâches seront supprimées aussi :"
+msgstr "Jej podzadania również zostaną usunięte:"
+
+#: planning/templates/planning/planning.html
+msgid "Titre d'une tâche de planning agricole"
+msgstr "Tytuł zadania w planie prac rolnych"
+
+#: planning/templates/planning/planning.html
+msgid "Description d'une tâche de planning agricole"
+msgstr "Opis zadania w planie prac rolnych"
+
+#: planning/templates/planning/planning.html
+msgid "sélectionnée(s)"
+msgstr "wybrano"
+
+#: planning/templates/planning/planning.html
+msgid "Tout désélectionner"
+msgstr "Odznacz wszystko"
+
+#: planning/templates/planning/planning.html
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Brak działek w tym gospodarstwie."
+
+#: planning/templates/planning/planning.html
+msgid "En créer une"
+msgstr "Utwórz"
+
+#: planning/templates/planning/planning.html
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Działki bez wyrysowanego obrysu nie pojawiają się na mapie."

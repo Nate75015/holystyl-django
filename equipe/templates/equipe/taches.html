@@ -46,6 +46,11 @@
              x-show="(filter === 'all' || $el.dataset.mine === '1') && (prioFilter === 'all' || $el.dataset.prio === prioFilter) && (statusFilter === 'all' || $el.dataset.status === statusFilter)"
              class="flex items-center justify-between gap-3 rounded-[12px] p-4" style="border: 0.5px solid var(--border)">
           <div class="min-w-0">
+            {% if t.parent_id %}
+              <p class="flex items-center gap-1 truncate text-[11px]" style="color: var(--text-muted)">
+                <span class="material-icons-round text-[13px]">subdirectory_arrow_right</span>{{ t.parent.title }}
+              </p>
+            {% endif %}
             <p class="truncate font-medium">{{ t.title }}</p>
             <p class="truncate text-[12px]" style="color: var(--text-secondary)">{{ t.assigned_to.name|default:_("Non assignée") }} · {{ t.get_priority_display }}{% if t.due_date %} · {% trans "échéance" %} {{ t.due_date|date:"d/m/Y H:i" }}{% endif %}</p>
             <p class="mt-0.5 text-[11px]" style="color: var(--text-muted)">{% trans "Créée le" %} {{ t.created_at|date:"d/m/Y à H:i" }}</p>
@@ -65,7 +70,7 @@
             <button type="button" title="{% trans 'Modifier' %}"
                     data-id="{{ t.pk }}" data-title="{{ t.title }}" data-assigned="{{ t.assigned_to_id|default:'' }}"
                     data-priority="{{ t.priority }}" data-status="{{ t.status }}"
-                    data-due="{{ t.due_date|date:'Y-m-d\TH:i' }}" data-description="{{ t.description }}"
+                    data-start="{{ t.start_date|date:'Y-m-d\TH:i' }}" data-due="{{ t.due_date|date:'Y-m-d\TH:i' }}" data-description="{{ t.description }}"
                     @click="openEdit($event.currentTarget)"
                     class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
               <span class="material-icons-round text-[18px]">edit</span>
@@ -155,9 +160,10 @@
           {% if form.non_field_errors %}
             <div class="rounded-xl px-4 py-3 text-sm" style="border: 0.5px solid var(--danger); color: var(--danger)">{{ form.non_field_errors }}</div>
           {% endif %}
-          {% include "accounts/_field.html" with field=form.title %}
-          <div class="grid gap-4 sm:grid-cols-2">
+          {% include "accounts/_field.html" with field=form.title ai_contexte=_("Titre d'une tâche de planning agricole") %}
+          <div class="grid gap-4 sm:grid-cols-3">
             {% include "accounts/_field.html" with field=form.assigned_to %}
+            {% include "accounts/_field.html" with field=form.start_date %}
             {% include "accounts/_field.html" with field=form.due_date %}
           </div>
 
@@ -189,7 +195,7 @@
             <input type="hidden" name="status" :value="stat">
           </div>
 
-          {% include "accounts/_field.html" with field=form.description %}
+          {% include "accounts/_field.html" with field=form.description ai_contexte=_("Description d'une tâche de planning agricole") %}
 
           <div class="flex justify-end gap-2 pt-1">
             <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
@@ -235,6 +241,7 @@
         f.setAttribute('action', '/taches/' + d.id + '/modifier/');
         this._set('id_title', d.title);
         this._set('id_assigned_to', d.assigned);
+        this._set('id_start_date', d.start);
         this._set('id_due_date', d.due);
         this._set('id_description', d.description);
         this.prio = d.priority;
