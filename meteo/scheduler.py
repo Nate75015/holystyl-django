@@ -1,7 +1,5 @@
 """Logique de capture planifiée (par ville), partagée par la commande et l'endpoint cron."""
 
-from datetime import timedelta
-
 from django.utils import timezone
 
 from .models import ReleveMeteo, VilleMeteo
@@ -16,12 +14,7 @@ def run_scheduled_captures(force=False):
     now = timezone.now()
     total = 0
     for v in VilleMeteo.objects.filter(capture_auto=True):
-        due = (
-            force
-            or v.capture_last_run is None
-            or (now - v.capture_last_run) >= timedelta(hours=v.capture_frequence)
-        )
-        if not due:
+        if not (force or v.capture_due(now)):
             continue
         try:
             w = fetch_weather(v.latitude, v.longitude)

@@ -49,10 +49,23 @@
             <option value="{{ value }}" {% if ville.capture_frequence == value %}selected{% endif %}>{{ label }}</option>
           {% endfor %}
         </select>
+        <label class="inline-flex items-center gap-2 whitespace-nowrap text-sm" for="capture-heure-debut">
+          {% trans "à partir de" %}
+          <select id="capture-heure-debut" name="heure_debut" class="text-sm">
+            {% for h in heures_jour %}
+              <option value="{{ h }}" {% if ville.capture_heure_debut == h %}selected{% endif %}>{{ h|stringformat:"02d" }}:00</option>
+            {% endfor %}
+          </select>
+        </label>
         <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
         {% if ville.capture_last_run %}<span class="text-xs" style="color: var(--text-muted)">{% trans "Dernière capture auto" %} : {{ ville.capture_last_run|date:"d/m/Y H:i" }}</span>{% endif %}
       </form>
-      <p class="mt-2 text-xs" style="color: var(--text-muted)">{% trans "Un relevé de cette ville est enregistré automatiquement à la fréquence choisie." %}</p>
+      <p class="mt-2 text-xs" style="color: var(--text-muted)">
+        {% comment %}Les créneaux sont ancrés sur l'horloge : les annoncer évite
+        d'avoir à deviner à quelle heure la capture tombera.{% endcomment %}
+        {% trans "Relevé enregistré automatiquement à heure fixe :" %}
+        {% for h in ville.heures_capture %}{{ h|stringformat:"02d" }}:00{% if not forloop.last %}, {% endif %}{% endfor %}.
+      </p>
     </div>
   {% endif %}
 
