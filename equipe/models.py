@@ -33,6 +33,11 @@ class TeamMember(TimeStampedModel):
     location_token = models.CharField(max_length=64, blank=True)
     location_token_expires_at = models.DateTimeField(null=True, blank=True)
     allowed_modules = models.JSONField(default=list, blank=True)
+    #: Invitation à ouvrir un espace employé. Aucun jeton stocké : il est signé
+    #: (`equipe.invitations`) et porte l'email, donc changer l'email d'un membre
+    #: périme les liens déjà envoyés. Ces deux dates ne servent qu'à l'affichage.
+    invitation_sent_at = models.DateTimeField(_("invitation envoyée le"), null=True, blank=True)
+    invitation_accepted_at = models.DateTimeField(_("invitation acceptée le"), null=True, blank=True)
     preferred_locale = models.CharField(max_length=5, default="fr")
     managed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="managed_members"
@@ -45,6 +50,11 @@ class TeamMember(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def peut_etre_invite(self) -> bool:
+        """Un membre s'invite s'il a un email et pas encore de compte lié."""
+        return bool(self.email) and self.user_id is None
 
 
 class Task(TimeStampedModel):

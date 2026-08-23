@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% comment %}Page d'acceptation d'invitation. Elle est atteinte aussi bien
+déconnecté (lien reçu par email) que connecté : `base.html` bascule seul entre
+la mise en page authentifiée et la mise en page publique, d'où les deux blocs
+qui pointent sur le même contenu.{% endcomment %}
+
+{% block title %}{% trans "Invitation" %} · {{ APP_NAME }}{% endblock %}
+
+{% block content %}{% include "equipe/_invitation_carte.html" %}{% endblock %}
+
+{% block auth_content %}
+<div class="w-full max-w-md py-10">
+  <div class="mb-6 flex justify-center">
+    <a href="{% url 'public:home' %}" class="flex items-center gap-2">
+      {% include "partials/brand_mark.html" with size=36 %}
+      <span class="text-lg font-medium tracking-tight">{{ APP_NAME }}</span>
+    </a>
+  </div>
+  {% include "equipe/_invitation_carte.html" %}
+</div>
+{% endblock %}

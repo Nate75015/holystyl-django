@@ -25,5 +25,37 @@
       </div>
     </form>
   </div>
+
+  {% comment %}Accès employé. Hors du formulaire d'édition : inviter n'est pas
+  enregistrer, et imbriquer deux <form> est invalide.{% endcomment %}
+  <div class="hs-card p-5">
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div class="min-w-0">
+        <p class="text-[15px] font-medium">{% trans "Espace employé" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+          {% if member.user_id %}
+            {% blocktrans with email=member.user.email %}Compte lié : {{ email }}. {{ member }} accède à ses tâches et à son planning.{% endblocktrans %}
+          {% elif not member.email %}
+            {% trans "Renseignez un email ci-dessus, puis enregistrez, pour pouvoir inviter ce membre." %}
+          {% elif member.invitation_sent_at %}
+            {% blocktrans with email=member.email date=member.invitation_sent_at|date:"d/m/Y à H:i" %}Invitation envoyée à {{ email }} le {{ date }}, pas encore acceptée. Le lien est valable 7 jours.{% endblocktrans %}
+          {% else %}
+            {% blocktrans with email=member.email %}Invitez {{ email }} à créer son compte : il ouvrira son espace employé et verra ses tâches.{% endblocktrans %}
+          {% endif %}
+        </p>
+      </div>
+
+      {% if member.user_id %}
+        <span class="hs-badge hs-badge-patrimoine shrink-0">{% trans "Compte actif" %}</span>
+      {% elif member.email %}
+        <form method="post" action="{% url 'equipe:membre_inviter' member.pk %}" class="shrink-0">
+          {% csrf_token %}
+          <button type="submit" class="{% if member.invitation_sent_at %}hs-btn-outline{% else %}hs-btn-primary{% endif %}">
+            {% if member.invitation_sent_at %}{% trans "Renvoyer l'invitation" %}{% else %}{% trans "Inviter par email" %}{% endif %}
+          </button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
 </section>
 {% endblock %}
