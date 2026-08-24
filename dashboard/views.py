@@ -128,6 +128,10 @@ def index(request):
         espaces_service.EXPLOITANT: "dashboard:exploitant",
         espaces_service.EMPLOYE: "dashboard:employe",
         espaces_service.BAILLEUR: "dashboard:bailleur",
+        # Le comptable travaille sur les comptes : son point de chute est le bilan.
+        espaces_service.COMPTABLE: "finances:bilan_economique",
+        # Le client n'a pas de tableau de bord : ses documents en tiennent lieu.
+        espaces_service.CLIENT: "client:espace",
     }
     # Sans espace (compte fraîchement créé), l'écran exploitant porte déjà
     # l'invite d'onboarding : c'est le bon point de chute.

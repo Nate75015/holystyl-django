@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% comment %}
+  Espace client : la seule page ouverte à un client. Il y retrouve ce qui le
+  concerne — ses devis, dont ceux qu'il doit signer, et ses factures.
+{% endcomment %}
+
+{% block content %}
+<section class="space-y-5">
+
+  <p class="hs-crumb">{% trans "Mon espace" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Mes documents" %}</h1>
+    <span class="text-[13px]" style="color: var(--text-secondary)">
+      {% blocktrans with fournisseur=fiche.exploitation.raison_sociale|default:fiche.exploitation.name %}Fournisseur : {{ fournisseur }}{% endblocktrans %}
+    </span>
+  </div>
+
+  {# ── Devis : c'est ici que le client signe ── #}
+  <div class="hs-card overflow-hidden">
+    <div class="px-5 py-3" style="border-bottom: 0.5px solid var(--border)">
+      <h2 class="text-sm font-medium">{% trans "Devis" %}</h2>
+    </div>
+    {% if devis %}
+      <table class="hs-table">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th class="num">{% trans "Émis le" %}</th>
+            <th class="num">{% trans "Valable jusqu’au" %}</th>
+            <th class="num">TTC</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in devis %}
+            <tr>
+              <td class="font-medium">{{ d.numero }}</td>
+              <td class="num">{{ d.date_emission|date:"d/m/Y" }}</td>
+              <td class="num">{{ d.date_validite|date:"d/m/Y"|default:"—" }}</td>
+              <td class="num">{{ d.montant_ttc }} €</td>
+              <td class="num">
+                {% if d.facture %}
+                  <span class="hs-badge hs-badge-success">{% trans "Facturé" %}</span>
+                {% elif d.est_signe %}
+                  <span class="hs-badge hs-badge-success">{% trans "Signé" %}</span>
+                {% elif d.est_expire %}
+                  <span class="hs-badge hs-badge-danger">{% trans "Expiré" %}</span>
+                {% else %}
+                  <a href="{% url 'finances:devis_signature' d.pk %}" class="hs-btn-primary">
+                    <span class="material-icons-round text-[18px]">draw</span>{% trans "Lire et signer" %}
+                  </a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="px-5 py-6 text-center text-[13px]" style="color: var(--text-secondary)">{% trans "Aucun devis pour le moment." %}</p>
+    {% endif %}
+  </div>
+
+  {# ── Factures ── #}
+  <div class="hs-card overflow-hidden">
+    <div class="px-5 py-3" style="border-bottom: 0.5px solid var(--border)">
+      <h2 class="text-sm font-medium">{% trans "Factures" %}</h2>
+    </div>
+    {% if factures %}
+      <table class="hs-table">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th class="num">{% trans "Émission" %}</th>
+            <th class="num">{% trans "Échéance" %}</th>
+            <th class="num">TTC</th>
+            <th>{% trans "Statut" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in factures %}
+            <tr>
+              <td class="font-medium">{{ f.numero }}</td>
+              <td class="num">{{ f.date_emission|date:"d/m/Y" }}</td>
+              <td class="num">{{ f.date_echeance|date:"d/m/Y"|default:"—" }}</td>
+              <td class="num">{{ f.montant_ttc }} €</td>
+              <td><span class="hs-badge hs-badge-neutral">{{ f.get_statut_display }}</span></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="px-5 py-6 text-center text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune facture pour le moment." %}</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

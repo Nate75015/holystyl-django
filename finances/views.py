@@ -405,8 +405,15 @@ def devis_signature(request, pk):
     aujourd'hui, depuis son propre espace demain : la page ne montre que le
     document et ce qu'il doit signer.
     """
+    # Deux regards sur le même document : l'exploitant qui le fait signer, et
+    # le client qui le signe depuis son espace. Chacun n'atteint que le sien.
     exploitation = _exploitation(request)
-    document = get_object_or_404(Devis, pk=pk, exploitation=exploitation)
+    if exploitation:
+        document = get_object_or_404(Devis, pk=pk, exploitation=exploitation)
+        retour = reverse("finances:devis")
+    else:
+        document = get_object_or_404(Devis, pk=pk, client_ref__user=request.user)
+        retour = reverse("client:espace")
 
     if request.method == "POST":
         signature = (request.POST.get("signature_url") or "").strip()
@@ -434,11 +441,12 @@ def devis_signature(request, pk):
                 _("Devis %(numero)s signé par %(nom)s : il peut être facturé.")
                 % {"numero": document.numero, "nom": document.signature_nom},
             )
-            return redirect("finances:devis")
+            return redirect(retour)
 
     return render(request, "finances/devis_signature.html", {
         "devis": document,
-        "emetteur": _emetteur(exploitation),
+        "emetteur": _emetteur(document.exploitation),
+        "retour": retour,
         "mention_attendue": _("Bon pour accord"),
         "page_title": _("Signature du devis %(numero)s") % {"numero": document.numero},
     })

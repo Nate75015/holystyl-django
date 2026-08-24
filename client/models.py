@@ -32,6 +32,13 @@ class Client(models.Model):
     exploitation = models.ForeignKey(
         "exploitations.Exploitation", on_delete=models.CASCADE, related_name="clients"
     )
+    #: Compte du client, quand il en a un : c'est ce rattachement qui lui ouvre
+    #: son espace (consulter ses devis, les signer). Une fiche sans compte reste
+    #: une fiche ordinaire, tenue par l'exploitation.
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="fiches_client", verbose_name=_("compte lié"),
+    )
     nom = models.CharField(_("nom / raison sociale"), max_length=255)
     prenom = models.CharField(_("prénom"), max_length=255, blank=True)  # particuliers seulement
     categorie = models.CharField(

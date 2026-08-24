@@ -96,6 +96,28 @@ def clients(request):
 
 
 @login_required
+def espace_client(request):
+    """Ce que le client voit de son côté : ses devis et ses factures.
+
+    Le périmètre vient de sa fiche, pas d'un filtre d'affichage : on ne lit que
+    les documents qui le concernent. Le reste de l'application lui est fermé
+    (`core.middleware`), son espace étant externe à l'exploitation.
+    """
+    from finances.models import Devis, Facture
+
+    fiche = Client.objects.filter(user=request.user, exploitation=request.exploitation).first()
+    if fiche is None:
+        raise Http404
+
+    return render(request, "client/espace.html", {
+        "fiche": fiche,
+        "devis": Devis.objects.filter(client_ref=fiche).select_related("facture"),
+        "factures": Facture.objects.filter(client_ref=fiche),
+        "page_title": _("Mes documents"),
+    })
+
+
+@login_required
 @require_POST
 def client_create(request):
     exploitation = _exploitation(request)

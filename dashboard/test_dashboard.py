@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 from client.models import Partenaire
+from core import espaces as E
 from contrat.models import Bail
 from equipe.models import Task, TeamMember
 from exploitations.models import Exploitation
@@ -142,7 +143,10 @@ def test_action_absente_hors_de_l_espace_qui_y_donne_droit(client, expl):
                               type_partenaire=Partenaire.Type.BAILLEUR)
     html = _log(client, u).get(reverse("dashboard:bailleur")).content.decode()
     assert f'<a href="{reverse("equipe:equipe")}"' not in html
-    assert html.count("aucun rattachement") == 2
+    # Depuis l'espace bailleur, aucune action d'ouverture ne s'applique : tous
+    # les autres espaces restent inertes. Compté d'après la liste, pour ne pas
+    # casser au prochain espace ajouté.
+    assert html.count("aucun rattachement") == len(E.ESPACES) - 1
 
 
 def test_bascule(client, expl):

@@ -46,6 +46,9 @@ def layout(request):
             "label": _("Accueil"), "key": "accueil",
             "items": [
                 {"label": _("Tableau de bord"), "url_name": "core:dashboard", "icon": "dashboard"},
+                # Réservée à l'espace client : elle n'a pas de sens ailleurs.
+                {"label": _("Mes documents"), "url_name": "client:espace", "icon": "description",
+                 "espaces": (espaces_service.CLIENT,)},
             ],
         },
         {
@@ -165,12 +168,24 @@ def layout(request):
     # Un employé ou un bailleur ne voit qu'une part de la nav. Le filtre est
     # appliqué ici, avant la résolution des URL : inutile de reverse() des
     # entrées qui ne seront pas affichées. Une section vidée disparaît.
-    autorisees = espaces_service.nav_autorisee(getattr(request, "espace", None))
+    espace_actif = getattr(request, "espace", None)
+
+    # Une entrée peut se réserver à des espaces précis (clé `espaces`) : elle
+    # disparaît partout ailleurs, y compris chez l'exploitant qui voit tout.
+    def _reservee(entree):
+        reserve = entree.get("espaces")
+        return reserve is not None and espace_actif not in reserve
+
+    nav_primary = [e for e in nav_primary if not _reservee(e)]
+    for section in nav_sections:
+        section["items"] = [i for i in section["items"] if not _reservee(i)]
+
+    autorisees = espaces_service.nav_autorisee(espace_actif)
     if autorisees is not None:
         nav_primary = [e for e in nav_primary if e["url_name"] in autorisees]
         for section in nav_sections:
             section["items"] = [i for i in section["items"] if i["url_name"] in autorisees]
-        nav_sections = [s for s in nav_sections if s["items"]]
+    nav_sections = [s for s in nav_sections if s["items"]]
 
     # Icône de section (présentation ; navigation de la sidebar)
     section_icons = {
@@ -271,6 +286,8 @@ def layout(request):
         "active_section": active_section,
         "active_url_name": active_url_name,
         "default_section": default_section,
+        # Espace externe (client) : l'ossature masque ce qu'il ne peut pas ouvrir.
+        "espace_ferme": espaces_service.est_ferme(espace_actif),
         "unread_notifications": unread_notifications,
         "css_version": _css_version(),
     }

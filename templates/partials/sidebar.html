@@ -93,11 +93,13 @@
     </form>
   </div>
 
-  {# Assistant IA épinglé en bas #}
-  <div class="mt-1 pt-2" style="border-top: 0.5px solid var(--border)">
-    <a href="{% url 'ia:assistant' %}" class="hs-side-link {% if request.resolver_match.view_name == 'ia:assistant' %}hs-side-link-active{% endif %}">
-      <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">support_agent</span>
-      <span class="flex-1 truncate text-left">{% trans "Assistant IA" %}</span>
-    </a>
-  </div>
+  {# Assistant IA épinglé en bas — hors d'un espace fermé, où il est refusé #}
+  {% if not espace_ferme %}
+    <div class="mt-1 pt-2" style="border-top: 0.5px solid var(--border)">
+      <a href="{% url 'ia:assistant' %}" class="hs-side-link {% if request.resolver_match.view_name == 'ia:assistant' %}hs-side-link-active{% endif %}">
+        <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">support_agent</span>
+        <span class="flex-1 truncate text-left">{% trans "Assistant IA" %}</span>
+      </a>
+    </div>
+  {% endif %}
 </aside>

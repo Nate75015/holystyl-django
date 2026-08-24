@@ -5,6 +5,8 @@ from . import views
 app_name = "client"
 
 urlpatterns = [
+    # « mon-espace » est déjà l'écran de l'espace employé (dashboard:employe).
+    path("mes-documents/", views.espace_client, name="espace"),
     path("clients/", views.clients, name="clients"),
     # Les routes spécifiques d'abord : « partenaire » ne doit pas être pris pour un type.
     path("relations/partenaire/ajouter/", views.partenaire_create, name="partenaire_create"),
