@@ -55,6 +55,12 @@ class Client(models.Model):
     pays = models.CharField(_("pays"), max_length=100, blank=True)
     siret = models.CharField(_("SIRET"), max_length=20, blank=True)
     tva_intracom = models.CharField(_("TVA intracommunautaire"), max_length=20, blank=True)
+    #: Adresse de facturation électronique (annuaire), forme « 0225:315143296_68152 ».
+    #: Sans elle, une facture ne peut pas être routée jusqu'à ce client.
+    superpdp_adresse = models.CharField(
+        _("adresse de facturation électronique"), max_length=100, blank=True,
+        help_text=_("Identifiant d'annuaire, par exemple « 0225:315143296_68152 »."),
+    )
     delai_paiement_jours = models.PositiveIntegerField(
         _("délai de paiement (jours)"), null=True, blank=True
     )

@@ -64,10 +64,21 @@
             </td>
             <td class="num">{{ c.ca_annuel|default_if_none:"—" }}{% if c.ca_annuel %} €{% endif %}</td>
             <td class="num">
-              <form method="post" action="{% url 'client:delete' c.pk %}" onsubmit="return confirm('{% trans "Supprimer ce client ?" %}')">
-                {% csrf_token %}
-                <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
-              </form>
+              {# Mêmes cibles d'action que sur la facturation : rondes, 32 px, espacées. #}
+              <div class="flex items-center justify-end gap-1.5">
+                <a href="{% url 'client:edit' c.pk %}" title="{% trans 'Modifier' %}"
+                   class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
+                  <span class="material-icons-round text-[18px]">edit</span>
+                </a>
+                <form method="post" action="{% url 'client:delete' c.pk %}" class="leading-none"
+                      onsubmit="return confirm('{% trans "Supprimer ce client ?" %}')">
+                  {% csrf_token %}
+                  <button type="submit" title="{% trans 'Supprimer' %}"
+                          class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
+                    <span class="material-icons-round text-[18px]">delete</span>
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
         {% endfor %}

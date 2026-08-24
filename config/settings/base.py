@@ -222,6 +222,14 @@ GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
 MISTRAL_API_KEY = env("MISTRAL_API_KEY", "")
 MISTRAL_MODEL = env("MISTRAL_MODEL", "mistral-small-latest")
 
+# ── SUPER PDP — plateforme agréée (facturation électronique) ────────
+# C'est la clé d'application qui décide de l'environnement : une clé bac à
+# sable ne peut pas toucher aux données de production. Sans identifiants, le
+# client reste inerte et la page Facturation l'explique.
+SUPERPDP_ENDPOINT = env("SUPERPDP_ENDPOINT", "https://api.superpdp.tech")
+SUPERPDP_CLIENT_ID = env("SUPERPDP_CLIENT_ID", "")
+SUPERPDP_CLIENT_SECRET = env("SUPERPDP_CLIENT_SECRET", "")
+
 # ── Cartographie / adresses — Google Places (optionnel) ─────────────
 # Sans clé, l'autocomplétion d'adresse bascule sur la Base Adresse Nationale
 # (api-adresse.data.gouv.fr), gratuite et sans inscription.

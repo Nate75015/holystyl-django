@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5" x-data="{ modal: false }">
+<section class="space-y-5" x-data="{ modal: {{ ouvrir_modification|yesno:'true,false' }} }">
 
   {# ── En-tête ── #}
   <div>

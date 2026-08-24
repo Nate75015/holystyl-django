@@ -89,9 +89,9 @@ def layout(request):
                 {"label": _("Charges"), "url_name": "finances:charges", "icon": "payments"},
                 {"label": _("Fermage"), "url_name": "finances:fermage", "icon": "agriculture"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
-                {"label": _("Facturation"), "url_name": "finances:facturation", "icon": "receipt_long"},
+                {"label": _("Facture"), "url_name": "finances:facturation", "icon": "receipt_long"},
+                {"label": _("Devis"), "url_name": "finances:devis", "icon": "request_quote"},
                 {"label": _("PAC"), "url_name": "pac:pac", "icon": "account_balance"},
-                {"label": _("Parc matériel"), "url_name": "operations:parc_materiel", "icon": "agriculture"},
             ],
         },
         {
@@ -156,6 +156,7 @@ def layout(request):
                 {"label": _("Certificats et labels"), "url_name": "exploitations:section_certifications", "icon": "verified"},
                 {"label": _("Sociétés liées"), "url_name": "exploitations:societes", "icon": "domain"},
                 {"label": _("RH et CA"), "url_name": "exploitations:section_economique", "icon": "payments"},
+                {"label": _("Parc matériel"), "url_name": "operations:parc_materiel", "icon": "agriculture"},
             ],
         },
     ]

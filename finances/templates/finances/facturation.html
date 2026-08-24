@@ -4,55 +4,129 @@
 {% block content %}
 <section class="space-y-5">
 
-  <p class="hs-crumb">{% trans "Économie" %} · {% trans "Facturation" %}</p>
+  <p class="hs-crumb">{% trans "Économie" %} · {% trans "Facture" %}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
-    <h1 class="text-[20px]">{% trans "Facturation" %}</h1>
+    <h1 class="text-[20px]">{% trans "Facture" %}</h1>
+    <a href="{% url 'finances:facture_editeur' %}" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Nouvelle facture" %}
+    </a>
   </div>
 
-  {# ── Section : Factures ── #}
-  {% if factures %}
-    <div class="hs-card overflow-hidden">
-      <table class="hs-table">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>{% trans "Client" %}</th>
-            <th class="num">{% trans "Émission" %}</th>
-            <th class="num">TTC</th>
-            <th>{% trans "Statut" %}</th>
-          </tr>
-        </thead>
+  {# ── Connexion à la plateforme agréée ── #}
+  <div class="hs-card p-4">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg"
+              style="background: var(--surface-alt); color: {% if pdp.entreprise %}var(--success, #16a34a){% elif pdp.erreur %}var(--danger){% else %}var(--text-muted){% endif %}">
+          <span class="material-icons-round text-[20px]">{% if pdp.entreprise %}verified{% else %}cloud_off{% endif %}</span>
+        </span>
+        <div class="min-w-0">
+          <p class="text-sm font-medium">{% trans "Facturation électronique — SUPER PDP" %}</p>
+          {% if pdp.entreprise %}
+            <p class="truncate text-[12px]" style="color: var(--text-secondary)">
+              {{ pdp.entreprise.formal_name }}
+              {% if pdp.adresse %} · <span class="tabular-nums">{{ pdp.adresse }}</span>{% endif %}
+            </p>
+          {% elif pdp.erreur %}
+            <p class="truncate text-[12px]" style="color: var(--danger)">{{ pdp.erreur }}</p>
+          {% else %}
+            <p class="text-[12px]" style="color: var(--text-secondary)">
+              {% trans "Non configurée : renseignez SUPERPDP_CLIENT_ID et SUPERPDP_CLIENT_SECRET." %}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+      {% if pdp.entreprise %}
+        <span class="hs-badge {% if pdp.entreprise.env == 'sandbox' %}hs-badge-neutral{% else %}hs-badge-success{% endif %}">
+          {% if pdp.entreprise.env == 'sandbox' %}{% trans "Bac à sable" %}{% else %}{% trans "Production" %}{% endif %}
+        </span>
+      {% endif %}
+    </div>
+    {% if pdp.entreprise.env == 'sandbox' %}
+      <p class="mt-3 text-[12px]" style="color: var(--text-muted)">
+        {% trans "En bac à sable, les factures circulent sur un réseau de test : rien n'est transmis à l'administration ni à vos vrais clients." %}
+      </p>
+    {% endif %}
+  </div>
+
+  {# ── Factures ── #}
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>{% trans "Client" %}</th>
+          <th class="num">{% trans "Émission" %}</th>
+          <th class="num">TTC</th>
+          <th>{% trans "Statut" %}</th>
+          <th>{% trans "Transmission" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      {% if factures %}
         <tbody>
           {% for f in factures %}
             <tr>
-              <td>{{ f.numero }}</td>
+              <td class="font-medium">{{ f.numero }}</td>
               <td>{{ f.client_nom|default:"—" }}</td>
               <td class="num">{{ f.date_emission|date:"d/m/Y" }}</td>
               <td class="num">{{ f.montant_ttc }} €</td>
               <td><span class="hs-badge hs-badge-neutral">{{ f.get_statut_display }}</span></td>
+              <td>
+                {% if f.superpdp_statut %}
+                  <span class="hs-badge {% if f.superpdp_ton == 'danger' %}hs-badge-danger{% elif f.superpdp_ton == 'success' %}hs-badge-success{% else %}hs-badge-neutral{% endif %}">{{ f.superpdp_libelle }}</span>
+                {% elif f.superpdp_erreur %}
+                  <span class="hs-badge hs-badge-danger" title="{{ f.superpdp_erreur }}">{% trans "Échec" %}</span>
+                {% else %}
+                  <span class="text-[12px]" style="color: var(--text-muted)">{% trans "Non transmise" %}</span>
+                {% endif %}
+              </td>
+              <td>
+                <div class="flex items-center justify-end gap-1.5">
+                  <a href="{% url 'finances:facture_xml' f.pk %}" target="_blank" title="{% trans 'Voir le fichier UBL' %}"
+                     class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
+                    <span class="material-icons-round text-[18px]">code</span>
+                  </a>
+                  {% if f.superpdp_id %}
+                    <form method="post" action="{% url 'finances:facture_statut' f.pk %}" class="leading-none">
+                      {% csrf_token %}
+                      <button type="submit" title="{% trans 'Actualiser le statut' %}"
+                              class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-secondary)">
+                        <span class="material-icons-round text-[18px]">refresh</span>
+                      </button>
+                    </form>
+                  {% elif pdp.entreprise %}
+                    <form method="post" action="{% url 'finances:facture_envoyer' f.pk %}" class="leading-none"
+                          onsubmit="return confirm('{% trans "Transmettre cette facture par la plateforme agréée ?" %}')">
+                      {% csrf_token %}
+                      <button type="submit" class="hs-chip-btn">
+                        <span class="material-icons-round text-[16px]">send</span>{% trans "Transmettre" %}
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
+              </td>
             </tr>
+            {% if f.superpdp_erreur and not f.superpdp_id %}
+              <tr>
+                <td colspan="7" class="pt-0">
+                  <p class="text-[12px]" style="color: var(--danger)">{{ f.superpdp_erreur }}</p>
+                </td>
+              </tr>
+            {% endif %}
           {% endfor %}
         </tbody>
-      </table>
-    </div>
-  {% else %}
-    <div class="hs-card overflow-hidden">
-      <table class="hs-table">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>{% trans "Client" %}</th>
-            <th class="num">{% trans "Émission" %}</th>
-            <th class="num">TTC</th>
-            <th>{% trans "Statut" %}</th>
-          </tr>
-        </thead>
-      </table>
+      {% endif %}
+    </table>
+    {% if not factures %}
       <div class="p-5 text-center">
         <p class="text-[15px] font-medium">{% trans "Créez votre première facture" %}</p>
         <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune facture émise pour le moment." %}</p>
+        <a href="{% url 'finances:facture_editeur' %}" class="hs-btn-primary mt-4">{% trans "Nouvelle facture" %}</a>
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
+  </div>
+
 </section>
+
 {% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5">
+
+  <p class="hs-crumb">{% trans "Économie" %} · {% trans "Devis" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Devis" %}</h1>
+    <a href="{% url 'finances:devis_editeur' %}" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Nouveau devis" %}
+    </a>
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>{% trans "Client" %}</th>
+          <th class="num">{% trans "Émission" %}</th>
+          <th class="num">{% trans "Validité" %}</th>
+          <th class="num">TTC</th>
+          <th>{% trans "Statut" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      {% if devis %}
+        <tbody>
+          {% for d in devis %}
+            <tr>
+              <td class="font-medium">{{ d.numero }}</td>
+              <td>{{ d.client_nom|default:"—" }}</td>
+              <td class="num">{{ d.date_emission|date:"d/m/Y" }}</td>
+              <td class="num">
+                {% if d.date_validite %}
+                  <span {% if d.est_expire %}style="color: var(--danger)" title="{% trans 'Dépassée' %}"{% endif %}>{{ d.date_validite|date:"d/m/Y" }}</span>
+                {% else %}—{% endif %}
+              </td>
+              <td class="num">{{ d.montant_ttc }} €</td>
+              <td>
+                {% if d.facture %}
+                  <span class="hs-badge hs-badge-success">{% trans "Facturé" %}</span>
+                {% elif d.est_expire %}
+                  <span class="hs-badge hs-badge-danger">{% trans "Expiré" %}</span>
+                {% else %}
+                  <span class="hs-badge {% if d.statut == 'accepte' %}hs-badge-success{% elif d.statut == 'refuse' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ d.get_statut_display }}</span>
+                {% endif %}
+              </td>
+              <td>
+                <div class="flex items-center justify-end gap-1.5">
+                  {% if d.facture %}
+                    <a href="{% url 'finances:facturation' %}" class="text-[12px] font-medium" style="color: var(--action)">{{ d.facture.numero }}</a>
+                  {% elif d.convertible %}
+                    <form method="post" action="{% url 'finances:devis_convertir' d.pk %}" class="leading-none">
+                      {% csrf_token %}
+                      <button type="submit" class="hs-chip-btn">
+                        <span class="material-icons-round text-[16px]">receipt_long</span>{% trans "Convertir en facture" %}
+                      </button>
+                    </form>
+                  {% elif d.statut != 'refuse' %}
+                    {# Réponse du client : deux issues, une seule action chacune. #}
+                    <form method="post" action="{% url 'finances:devis_statut' d.pk %}" class="leading-none">
+                      {% csrf_token %}
+                      <input type="hidden" name="statut" value="accepte">
+                      <button type="submit" title="{% trans 'Marquer accepté' %}"
+                              class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--success)">
+                        <span class="material-icons-round text-[18px]">check_circle</span>
+                      </button>
+                    </form>
+                    <form method="post" action="{% url 'finances:devis_statut' d.pk %}" class="leading-none">
+                      {% csrf_token %}
+                      <input type="hidden" name="statut" value="refuse">
+                      <button type="submit" title="{% trans 'Marquer refusé' %}"
+                              class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
+                        <span class="material-icons-round text-[18px]">cancel</span>
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      {% endif %}
+    </table>
+    {% if not devis %}
+      <div class="p-5 text-center">
+        <p class="text-[15px] font-medium">{% trans "Créez votre premier devis" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+          {% trans "Un devis accepté se convertit en facture sans ressaisie." %}
+        </p>
+        <a href="{% url 'finances:devis_editeur' %}" class="hs-btn-primary mt-4">{% trans "Nouveau devis" %}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
