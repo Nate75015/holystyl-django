@@ -215,7 +215,7 @@ from finances.models import Devis
 
 
 @pytest.mark.django_db
-def test_devis_accepte_se_convertit_en_facture(client, setup):
+def test_devis_signe_se_convertit_en_facture(client, setup):
     user, exploitation = setup
     client.force_login(user)
     cl = FicheClient.objects.create(exploitation=exploitation, nom="Tricatel")
@@ -224,6 +224,8 @@ def test_devis_accepte_se_convertit_en_facture(client, setup):
         date_emission=timezone.now(), statut=Devis.Statut.ACCEPTE,
         lignes=[{"designation": "Semis", "quantite": 2, "prix_unitaire": 100, "taux_tva": 20}],
         montant_ht=200, montant_tva=40, montant_ttc=240,
+        signature_url="data:image/png;base64,iVBORw0KGgo=", signature_nom="M. Tricatel",
+        signature_mention="Bon pour accord", signature_date=timezone.now(),
     )
     resp = client.post(f"/devis/{devis.pk}/convertir/")
     assert resp.status_code == 302
@@ -238,7 +240,7 @@ def test_devis_accepte_se_convertit_en_facture(client, setup):
 
 
 @pytest.mark.django_db
-def test_devis_non_accepte_ne_se_convertit_pas(client, setup):
+def test_devis_non_signe_ne_se_convertit_pas(client, setup):
     user, exploitation = setup
     client.force_login(user)
     devis = Devis.objects.create(
@@ -277,3 +279,91 @@ def test_les_series_de_numerotation_sont_independantes(client, setup):
                          client_nom="X", date_emission=timezone.now())
     assert _prochain_numero(exploitation) == f"F-{annee}-002"
     assert _prochain_numero(exploitation, Devis, "D") == f"D-{annee}-002"
+
+
+# ── Signature du devis ──────────────────────────────────────────────
+#
+# Un devis n'engage qu'une fois signé de la main du client sous la mention
+# « Bon pour accord ». Tant qu'elle manque, il n'y a rien à facturer.
+
+SIGNATURE = "data:image/png;base64,iVBORw0KGgo="
+
+
+def _signer(client, devis, mention="Bon pour accord", nom="M. Tricatel", signature=SIGNATURE):
+    return client.post(f"/devis/{devis.pk}/signature/", {
+        "signature_url": signature, "signature_nom": nom, "signature_mention": mention,
+    })
+
+
+@pytest.fixture
+def devis_a_signer(setup):
+    _, exploitation = setup
+    fiche = FicheClient.objects.create(exploitation=exploitation, nom="Tricatel")
+    return Devis.objects.create(
+        exploitation=exploitation, numero="D-2026-100", client_ref=fiche, client_nom=fiche.nom,
+        date_emission=timezone.now(), statut=Devis.Statut.ENVOYE,
+        lignes=[{"designation": "Taille", "quantite": 4, "prix_unitaire": 150, "taux_tva": 20}],
+        montant_ht=600, montant_tva=120, montant_ttc=720,
+    )
+
+
+@pytest.mark.django_db
+def test_un_devis_non_signe_ne_se_facture_pas(client, setup, devis_a_signer):
+    user, _ = setup
+    client.force_login(user)
+    assert devis_a_signer.convertible is False
+    client.post(f"/devis/{devis_a_signer.pk}/convertir/")
+    assert Facture.objects.filter(devis=devis_a_signer).count() == 0
+
+
+@pytest.mark.django_db
+def test_la_mention_doit_etre_recopiee(client, setup, devis_a_signer):
+    """« Ok pour moi » n'engage pas : la mention légale est attendue."""
+    user, _ = setup
+    client.force_login(user)
+    _signer(client, devis_a_signer, mention="ok pour moi")
+    devis_a_signer.refresh_from_db()
+    assert devis_a_signer.est_signe is False
+
+
+@pytest.mark.django_db
+def test_la_mention_tolere_casse_accents_et_espaces(client, setup, devis_a_signer):
+    """Le client l'écrit à la main : on compare le sens, pas les caractères."""
+    user, _ = setup
+    client.force_login(user)
+    _signer(client, devis_a_signer, mention="  BON  pour Accord ")
+    devis_a_signer.refresh_from_db()
+    assert devis_a_signer.est_signe is True
+
+
+@pytest.mark.django_db
+def test_signature_sans_trace_refusee(client, setup, devis_a_signer):
+    user, _ = setup
+    client.force_login(user)
+    _signer(client, devis_a_signer, signature="")
+    devis_a_signer.refresh_from_db()
+    assert devis_a_signer.est_signe is False
+
+
+@pytest.mark.django_db
+def test_le_devis_signe_vaut_accepte_et_se_facture(client, setup, devis_a_signer):
+    user, _ = setup
+    client.force_login(user)
+    _signer(client, devis_a_signer)
+    devis_a_signer.refresh_from_db()
+    assert devis_a_signer.statut == Devis.Statut.ACCEPTE
+    assert devis_a_signer.signature_date is not None
+    client.post(f"/devis/{devis_a_signer.pk}/convertir/")
+    devis_a_signer.refresh_from_db()
+    assert devis_a_signer.facture.montant_ttc == 720
+
+
+@pytest.mark.django_db
+def test_un_devis_signe_n_expire_pas(setup, devis_a_signer):
+    """La signature fige l'accord : la date de validité ne le défait pas."""
+    devis_a_signer.date_validite = timezone.now() - timedelta(days=1)
+    devis_a_signer.signature_url = SIGNATURE
+    devis_a_signer.signature_nom = "M. Tricatel"
+    devis_a_signer.signature_mention = "Bon pour accord"
+    devis_a_signer.signature_date = timezone.now()
+    assert devis_a_signer.est_expire is False

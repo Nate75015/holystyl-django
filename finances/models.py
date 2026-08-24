@@ -154,6 +154,16 @@ class Devis(TimeStampedModel):
     montant_ttc = models.FloatField(default=0)
     notes = models.TextField(blank=True)
 
+    # ── Acceptation par le client ──────────────────────────────────────
+    #: Un devis n'engage qu'une fois signé de la main du client, sous la
+    #: mention manuscrite « Bon pour accord » (art. 1583 du code civil : la
+    #: vente est parfaite dès l'accord sur la chose et le prix). Tant que ces
+    #: trois éléments manquent, on ne facture pas.
+    signature_url = models.TextField(_("signature"), blank=True)
+    signature_nom = models.CharField(_("nom du signataire"), max_length=255, blank=True)
+    signature_mention = models.CharField(_("mention"), max_length=100, blank=True)
+    signature_date = models.DateTimeField(_("signé le"), null=True, blank=True)
+
     class Meta:
         verbose_name = _("devis")
         verbose_name_plural = _("devis")
@@ -172,13 +182,19 @@ class Devis(TimeStampedModel):
         return bool(
             self.date_validite
             and self.date_validite < timezone.now()
+            and not self.signature_date
             and self.statut in (self.Statut.BROUILLON, self.Statut.ENVOYE)
         )
 
     @property
+    def est_signe(self) -> bool:
+        """Signature, nom et mention réunis : le client s'est engagé."""
+        return bool(self.signature_url and self.signature_nom and self.signature_mention)
+
+    @property
     def convertible(self) -> bool:
-        """Un devis accepté et pas encore facturé peut devenir une facture."""
-        return self.statut == self.Statut.ACCEPTE and not hasattr(self, "facture")
+        """Seul un devis signé et pas encore facturé devient une facture."""
+        return self.est_signe and not hasattr(self, "facture")
 
 
 class Facture(TimeStampedModel):

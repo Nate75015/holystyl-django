@@ -19,6 +19,7 @@ urlpatterns = [
     path("devis/nouveau/", views.devis_editeur, name="devis_editeur"),
     path("devis/creer/", views.devis_create, name="devis_create"),
     path("devis/<int:pk>/statut/", views.devis_statut, name="devis_statut"),
+    path("devis/<int:pk>/signature/", views.devis_signature, name="devis_signature"),
     path("devis/<int:pk>/convertir/", views.devis_convertir, name="devis_convertir"),
     path("fermage/", views.fermage, name="fermage"),
     path("fermage/indice/ajouter/", views.indice_fermage_add, name="indice_fermage_add"),

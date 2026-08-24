@@ -1,5 +1,6 @@
 """Vues web finances : charges, revenus, bilan économique, facturation."""
 
+import unicodedata
 from datetime import datetime, timedelta
 
 from django.contrib import messages
@@ -385,6 +386,64 @@ def devis_statut(request, pk):
     return redirect("finances:devis")
 
 
+#: Mention manuscrite qui engage le client. On la compare sans tenir compte de
+#: la casse, des accents ni des espaces surnuméraires : le client l'écrit à la
+#: main, pas au caractère près.
+MENTION_ACCORD = "bon pour accord"
+
+
+def _mention_normalisee(texte: str) -> str:
+    sans_accents = unicodedata.normalize("NFKD", texte or "").encode("ascii", "ignore").decode()
+    return " ".join(sans_accents.lower().split())
+
+
+@login_required
+def devis_signature(request, pk):
+    """Signature du devis par le client, sous la mention « Bon pour accord ».
+
+    Pensée pour être présentée au client — sur la tablette de l'exploitant
+    aujourd'hui, depuis son propre espace demain : la page ne montre que le
+    document et ce qu'il doit signer.
+    """
+    exploitation = _exploitation(request)
+    document = get_object_or_404(Devis, pk=pk, exploitation=exploitation)
+
+    if request.method == "POST":
+        signature = (request.POST.get("signature_url") or "").strip()
+        nom = (request.POST.get("signature_nom") or "").strip()
+        mention = (request.POST.get("signature_mention") or "").strip()
+
+        if not signature.startswith("data:image/"):
+            messages.error(request, _("La signature manque : faites signer dans le cadre prévu."))
+        elif not nom:
+            messages.error(request, _("Indiquez le nom du signataire."))
+        elif _mention_normalisee(mention) != MENTION_ACCORD:
+            messages.error(request, _("Recopiez exactement la mention « Bon pour accord »."))
+        else:
+            document.signature_url = signature
+            document.signature_nom = nom[:255]
+            document.signature_mention = mention[:100]
+            document.signature_date = timezone.now()
+            # La signature vaut acceptation : inutile de la ressaisir ailleurs.
+            document.statut = Devis.Statut.ACCEPTE
+            document.save(update_fields=[
+                "signature_url", "signature_nom", "signature_mention", "signature_date", "statut", "updated_at",
+            ])
+            messages.success(
+                request,
+                _("Devis %(numero)s signé par %(nom)s : il peut être facturé.")
+                % {"numero": document.numero, "nom": document.signature_nom},
+            )
+            return redirect("finances:devis")
+
+    return render(request, "finances/devis_signature.html", {
+        "devis": document,
+        "emetteur": _emetteur(exploitation),
+        "mention_attendue": _("Bon pour accord"),
+        "page_title": _("Signature du devis %(numero)s") % {"numero": document.numero},
+    })
+
+
 @login_required
 @require_POST
 def devis_convertir(request, pk):
@@ -392,7 +451,11 @@ def devis_convertir(request, pk):
     exploitation = _exploitation(request)
     document = get_object_or_404(Devis, pk=pk, exploitation=exploitation)
     if not document.convertible:
-        messages.error(request, _("Seul un devis accepté et pas encore facturé peut être converti."))
+        messages.error(
+            request,
+            _("Un devis se facture une fois signé par le client sous la mention « Bon pour accord ».")
+            if not document.est_signe else _("Ce devis a déjà été facturé."),
+        )
         return redirect("finances:devis")
 
     facture = Facture(

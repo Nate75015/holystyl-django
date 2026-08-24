@@ -41,10 +41,12 @@
               <td>
                 {% if d.facture %}
                   <span class="hs-badge hs-badge-success">{% trans "Facturé" %}</span>
+                {% elif d.est_signe %}
+                  <span class="hs-badge hs-badge-success" title="{{ d.signature_mention }} — {{ d.signature_nom }}, {{ d.signature_date|date:'d/m/Y' }}">{% trans "Signé" %}</span>
                 {% elif d.est_expire %}
                   <span class="hs-badge hs-badge-danger">{% trans "Expiré" %}</span>
                 {% else %}
-                  <span class="hs-badge {% if d.statut == 'accepte' %}hs-badge-success{% elif d.statut == 'refuse' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ d.get_statut_display }}</span>
+                  <span class="hs-badge {% if d.statut == 'refuse' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ d.get_statut_display }}</span>
                 {% endif %}
               </td>
               <td>
@@ -59,15 +61,10 @@
                       </button>
                     </form>
                   {% elif d.statut != 'refuse' %}
-                    {# Réponse du client : deux issues, une seule action chacune. #}
-                    <form method="post" action="{% url 'finances:devis_statut' d.pk %}" class="leading-none">
-                      {% csrf_token %}
-                      <input type="hidden" name="statut" value="accepte">
-                      <button type="submit" title="{% trans 'Marquer accepté' %}"
-                              class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--success)">
-                        <span class="material-icons-round text-[18px]">check_circle</span>
-                      </button>
-                    </form>
+                    {# Tant que le client n'a pas signé « Bon pour accord », rien à facturer. #}
+                    <a href="{% url 'finances:devis_signature' d.pk %}" class="hs-chip-btn">
+                      <span class="material-icons-round text-[16px]">draw</span>{% trans "Faire signer" %}
+                    </a>
                     <form method="post" action="{% url 'finances:devis_statut' d.pk %}" class="leading-none">
                       {% csrf_token %}
                       <input type="hidden" name="statut" value="refuse">
@@ -88,7 +85,7 @@
       <div class="p-5 text-center">
         <p class="text-[15px] font-medium">{% trans "Créez votre premier devis" %}</p>
         <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
-          {% trans "Un devis accepté se convertit en facture sans ressaisie." %}
+          {% trans "Un devis signé par le client se convertit en facture sans ressaisie." %}
         </p>
         <a href="{% url 'finances:devis_editeur' %}" class="hs-btn-primary mt-4">{% trans "Nouveau devis" %}</a>
       </div>
