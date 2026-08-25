@@ -18,7 +18,7 @@
           <div class="min-w-0 flex-1">
             <div class="flex items-baseline justify-between gap-2">
               <p class="truncate text-sm font-medium">{{ c.title }}</p>
-              <span class="shrink-0 text-[11px]" style="{% if c.unread %}color: var(--action); font-weight: 500{% else %}color: var(--text-muted){% endif %}">{{ c.time_label }}</span>
+              <span class="shrink-0 text-[11px] transition-opacity group-hover:opacity-0" style="{% if c.unread %}color: var(--action); font-weight: 500{% else %}color: var(--text-muted){% endif %}">{{ c.time_label }}</span>
             </div>
             <p class="truncate text-xs" style="color: var(--text-muted)">{{ c.preview|default:_("Aucun message") }}</p>
           </div>
@@ -28,10 +28,10 @@
         </a>
         <form method="post" action="{% url 'messagerie:conversation_delete' c.pk %}"
               onsubmit="return confirm('{% trans "Supprimer cette conversation ?" %}')"
-              class="absolute right-2 top-1/2 -translate-y-1/2 leading-none opacity-0 transition group-hover:opacity-100">
+              class="absolute right-2 top-2 leading-none opacity-0 transition group-hover:opacity-100">
           {% csrf_token %}
           <button type="submit" title="{% trans 'Supprimer la conversation' %}"
-                  class="grid h-8 w-8 place-items-center rounded-full backdrop-blur transition" style="background: var(--surface); color: var(--text-muted)" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--text-muted)'">
+                  class="grid h-7 w-7 place-items-center rounded-full transition" style="background: var(--surface); color: var(--text-muted)" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--text-muted)'">
             <span class="material-icons-round text-[18px]">delete_outline</span>
           </button>
         </form>

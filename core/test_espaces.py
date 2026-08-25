@@ -1,4 +1,4 @@
-"""Résolution des espaces (chef d'entreprise, employé, bailleur)."""
+"""Résolution des espaces (chef d'entreprise, employé, bailleur, comptable, client)."""
 import pytest
 from django.contrib.auth import get_user_model
 from django.test import RequestFactory
@@ -8,7 +8,7 @@ from core import espaces as E
 from core.middleware import CurrentExploitationMiddleware
 from exploitations.models import Exploitation
 from equipe.models import TeamMember
-from client.models import Partenaire
+from client.models import Client, Partenaire
 
 U = get_user_model()
 
@@ -56,12 +56,43 @@ def test_bailleur(expl):
     assert r.exploitation.pk == expl.pk       # avant : None
 
 
-def test_partenaire_non_bailleur_na_pas_despace(expl):
+def test_comptable_a_son_espace(expl):
+    """Le comptable rattaché à l'exploitation y accède, comme le bailleur."""
     u = U.objects.create_user(email="compta@x.fr", password="x")
     Partenaire.objects.create(exploitation=expl, user=u, nom="Cabinet",
                               type_partenaire=Partenaire.Type.COMPTABLE)
     r = _apply(u)
+    assert r.espace == E.COMPTABLE
+    assert r.exploitation.pk == expl.pk
+
+
+def test_partenaire_sans_type_reconnu_na_pas_despace(expl):
+    u = U.objects.create_user(email="avocat@x.fr", password="x")
+    Partenaire.objects.create(exploitation=expl, user=u, nom="Cabinet",
+                              type_partenaire=Partenaire.Type.AVOCAT)
+    r = _apply(u)
     assert r.espace is None and r.exploitation is None
+
+
+def test_client_rattache_a_un_compte_a_son_espace(expl):
+    u = U.objects.create_user(email="acheteur@x.fr", password="x")
+    Client.objects.create(exploitation=expl, user=u, nom="Tricatel")
+    r = _apply(u)
+    assert r.espace == E.CLIENT
+    assert r.exploitation.pk == expl.pk
+
+
+def test_fiche_client_sans_compte_nouvre_aucun_espace(expl):
+    """Une fiche ordinaire, tenue par l'exploitation, n'est pas un compte."""
+    Client.objects.create(exploitation=expl, nom="Sans compte")
+    u = U.objects.create_user(email="passant@x.fr", password="x")
+    assert E.espaces_de(u) == []
+
+
+def test_lespace_client_est_ferme_les_autres_non():
+    assert E.est_ferme(E.CLIENT) is True
+    assert E.est_ferme(E.COMPTABLE) is False
+    assert E.est_ferme(E.EXPLOITANT) is False
 
 
 def test_employe_inactif_exclu(expl):
@@ -94,3 +125,58 @@ def test_espace_memorise_devenu_invalide(expl):
     r = _req(expl.owner)
     r.session[E.SESSION_KEY] = E.BAILLEUR
     assert E.espace_courant(r) == E.EXPLOITANT
+
+
+# ── Cloisonnement de l'espace client ────────────────────────────────
+#
+# Le client est le seul titulaire externe à l'exploitation : masquer les
+# entrées de navigation ne suffit pas, il faut refuser les URL.
+
+
+@pytest.fixture
+def compte_client(expl):
+    u = U.objects.create_user(email="acheteur@x.fr", password="secret123")
+    Client.objects.create(exploitation=expl, user=u, nom="Tricatel")
+    return u
+
+
+@pytest.mark.django_db
+def test_le_client_atteint_son_espace(client, compte_client):
+    client.force_login(compte_client)
+    from django.urls import reverse
+
+    assert client.get(reverse("client:espace")).status_code == 200
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("vue", ["finances:facturation", "finances:charges", "client:clients", "equipe:paie"])
+def test_le_client_ne_voit_pas_la_ferme(client, compte_client, vue):
+    """Une vue non ouverte à l'espace client est refusée, pas seulement masquée."""
+    from django.urls import reverse
+
+    client.force_login(compte_client)
+    assert client.get(reverse(vue)).status_code == 403
+
+
+@pytest.mark.django_db
+def test_le_client_garde_la_deconnexion(client, compte_client):
+    """Fermer l'espace ne doit pas enfermer son titulaire dedans."""
+    from django.urls import reverse
+
+    client.force_login(compte_client)
+    assert client.post(reverse("accounts:logout")).status_code in (200, 302)
+
+
+@pytest.mark.django_db
+def test_le_comptable_voit_les_finances_mais_pas_le_reste(client, expl):
+    """Espace interne : la nav est filtrée, l'URL reste ouverte (cf. NAV_AUTORISEE)."""
+    from django.urls import reverse
+
+    u = U.objects.create_user(email="cabinet@x.fr", password="secret123")
+    Partenaire.objects.create(exploitation=expl, user=u, nom="Cabinet",
+                              type_partenaire=Partenaire.Type.COMPTABLE)
+    client.force_login(u)
+    assert client.get(reverse("finances:facturation")).status_code == 200
+    autorisees = E.nav_autorisee(E.COMPTABLE)
+    assert "finances:bilan_economique" in autorisees
+    assert "parcelles:list" not in autorisees

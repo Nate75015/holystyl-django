@@ -32,6 +32,13 @@ class Client(models.Model):
     exploitation = models.ForeignKey(
         "exploitations.Exploitation", on_delete=models.CASCADE, related_name="clients"
     )
+    #: Compte du client, quand il en a un : c'est ce rattachement qui lui ouvre
+    #: son espace (consulter ses devis, les signer). Une fiche sans compte reste
+    #: une fiche ordinaire, tenue par l'exploitation.
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="fiches_client", verbose_name=_("compte lié"),
+    )
     nom = models.CharField(_("nom / raison sociale"), max_length=255)
     prenom = models.CharField(_("prénom"), max_length=255, blank=True)  # particuliers seulement
     categorie = models.CharField(
@@ -55,6 +62,12 @@ class Client(models.Model):
     pays = models.CharField(_("pays"), max_length=100, blank=True)
     siret = models.CharField(_("SIRET"), max_length=20, blank=True)
     tva_intracom = models.CharField(_("TVA intracommunautaire"), max_length=20, blank=True)
+    #: Adresse de facturation électronique (annuaire), forme « 0225:315143296_68152 ».
+    #: Sans elle, une facture ne peut pas être routée jusqu'à ce client.
+    superpdp_adresse = models.CharField(
+        _("adresse de facturation électronique"), max_length=100, blank=True,
+        help_text=_("Identifiant d'annuaire, par exemple « 0225:315143296_68152 »."),
+    )
     delai_paiement_jours = models.PositiveIntegerField(
         _("délai de paiement (jours)"), null=True, blank=True
     )

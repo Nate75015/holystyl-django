@@ -1,9 +1,11 @@
 """Vues web finances : charges, revenus, bilan économique, facturation."""
 
-from datetime import datetime
+import unicodedata
+from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -16,7 +18,11 @@ from contrat.models import Bail, IndiceFermage
 from exploitations.models import Exploitation
 from parcelles.models import Parcelle
 
-from .models import Charge, Facture, Revenu
+from . import facturation_electronique as fe
+from . import superpdp, ubl
+from client.models import Client
+
+from .models import Charge, Devis, Facture, Revenu
 from .services import compute_bilan
 
 
@@ -146,8 +152,463 @@ def bilan_economique(request):
 @login_required
 def facturation(request):
     exploitation = _exploitation(request)
-    factures = Facture.objects.filter(exploitation=exploitation) if exploitation else Facture.objects.none()
-    return render(request, "finances/facturation.html", {"factures": factures, "page_title": _("Facturation")})
+    factures = (
+        Facture.objects.filter(exploitation=exploitation).select_related("client_ref")
+        if exploitation else Facture.objects.none()
+    )
+    for f in factures:
+        f.superpdp_libelle = fe.libelle_statut(f.superpdp_statut)
+        f.superpdp_ton = fe.ton_statut(f.superpdp_statut)
+
+    # État de la connexion à la plateforme agréée. Un échec ici ne doit pas
+    # empêcher de consulter ses factures : on l'affiche comme un encart.
+    pdp = {"configure": superpdp.is_configured()}
+    if pdp["configure"]:
+        try:
+            pdp["entreprise"] = fe.entreprise()
+            pdp["adresse"] = fe.endpoint_vendeur()
+        except superpdp.SuperPDPError as exc:
+            pdp["erreur"] = str(exc)
+
+    return render(request, "finances/facturation.html", {
+        "factures": factures,
+        "clients": Client.objects.filter(exploitation=exploitation) if exploitation else [],
+        "pdp": pdp,
+        "prochain_numero": _prochain_numero(exploitation),
+        "page_title": _("Facturation"),
+    })
+
+
+def _prochain_numero(exploitation, modele=Facture, lettre="F") -> str:
+    """Numéro suivant, séquentiel par année et par série (F-2026-004, D-2026-002).
+
+    Le numéro ne doit contenir ni espace ni caractère exotique : la règle
+    française BR-FR-01 rejette la facture sinon.
+    """
+    annee = timezone.localdate().year
+    prefixe = f"{lettre}-{annee}-"
+    if not exploitation:
+        return f"{prefixe}001"
+    existants = (
+        modele.objects.filter(exploitation=exploitation, numero__startswith=prefixe)
+        .values_list("numero", flat=True)
+    )
+    rangs = [int(n.rsplit("-", 1)[-1]) for n in existants if n.rsplit("-", 1)[-1].isdigit()]
+    return f"{prefixe}{(max(rangs) + 1) if rangs else 1:03d}"
+
+
+#: Champs de la fiche client que l'éditeur peut renseigner. `voie` reçoit
+#: l'adresse saisie en une ligne ; la fiche complète se gère sur /clients/.
+_CHAMPS_CLIENT = {
+    "adresse": "voie",
+    "ville": "ville",
+    "code_postal": "code_postal",
+    "siret": "siret",
+    "superpdp_adresse": "superpdp_adresse",
+}
+
+
+def _client_depuis_post(request, exploitation):
+    """Client visé par le document, dans le référentiel de l'exploitation.
+
+    Choisi dans la liste, ou créé à la volée depuis l'éditeur — auquel cas il
+    rejoint la page Clients comme n'importe quelle autre fiche. Un client
+    existant complété ici (adresse d'annuaire notamment) voit sa fiche mise à
+    jour : l'éditeur ne doit pas devenir une source de données parallèle.
+    """
+    client = Client.objects.filter(pk=request.POST.get("client") or None, exploitation=exploitation).first()
+    if client:
+        a_changer = []
+        for saisi, champ in _CHAMPS_CLIENT.items():
+            valeur = (request.POST.get(f"client_{saisi}") or "").strip()
+            if valeur and getattr(client, champ) != valeur:
+                setattr(client, champ, valeur)
+                a_changer.append(champ)
+        if a_changer:
+            client.save(update_fields=[*a_changer, "updated_at"])
+        return client
+
+    nom = (request.POST.get("client_nom") or "").strip()
+    if not nom:
+        return None
+    return Client.objects.create(
+        exploitation=exploitation,
+        nom=nom,
+        **{champ: (request.POST.get(f"client_{saisi}") or "").strip() for saisi, champ in _CHAMPS_CLIENT.items()},
+    )
+
+
+def _lignes_depuis_post(request) -> list[dict]:
+    """Lignes saisies dans l'éditeur, normalisées pour le JSON du document."""
+    lignes = []
+    designations = request.POST.getlist("ligne_designation")
+    quantites = request.POST.getlist("ligne_quantite")
+    prix = request.POST.getlist("ligne_prix")
+    unites = request.POST.getlist("ligne_unite")
+    taux = request.POST.getlist("ligne_tva")
+    for i, designation in enumerate(designations):
+        designation = (designation or "").strip()
+        if not designation:
+            continue
+        quantite = _to_float(quantites[i] if i < len(quantites) else 1) or 1
+        prix_unitaire = _to_float(prix[i] if i < len(prix) else 0) or 0
+        lignes.append({
+            "designation": designation,
+            "quantite": quantite,
+            "prix_unitaire": prix_unitaire,
+            "unite": (unites[i] if i < len(unites) else "") or "C62",
+            "taux_tva": _to_float(taux[i] if i < len(taux) else 20) or 0,
+            "montant": round(quantite * prix_unitaire, 2),
+        })
+    return lignes
+
+
+def _jour(valeur):
+    """Date du formulaire → datetime aware à minuit, ou None."""
+    d = parse_date(valeur or "")
+    return timezone.make_aware(datetime.combine(d, datetime.min.time())) if d else None
+
+
+@login_required
+def facture_editeur(request):
+    """Éditeur de facture : le formulaire a la forme du document produit."""
+    exploitation = _exploitation(request)
+    return render(request, "finances/document_editeur.html", {
+        **_contexte_editeur(request, exploitation),
+        "mode": "facture",
+        "titre": _("Nouvelle facture"),
+        "action": reverse("finances:facture_create"),
+        "retour": reverse("finances:facturation"),
+        "prochain_numero": _prochain_numero(exploitation),
+        "pdp_pret": superpdp.is_configured(),
+        "page_title": _("Nouvelle facture"),
+    })
+
+
+def _contexte_editeur(request, exploitation) -> dict:
+    """Ce que facture et devis partagent : émetteur, clients, mise en page."""
+    return {
+        "emetteur": _emetteur(exploitation),
+        "clients": Client.objects.filter(exploitation=exploitation) if exploitation else [],
+    }
+
+
+# ── Devis ───────────────────────────────────────────────────────────────
+#
+# Un devis n'est pas une facture : il ne part pas sur le réseau de facturation
+# électronique. Il partage l'éditeur, mais garde ses états et sa numérotation.
+
+
+@login_required
+def devis(request):
+    exploitation = _exploitation(request)
+    documents = (
+        Devis.objects.filter(exploitation=exploitation).select_related("client_ref", "facture")
+        if exploitation else Devis.objects.none()
+    )
+    return render(request, "finances/devis.html", {
+        "devis": documents,
+        "page_title": _("Devis"),
+    })
+
+
+@login_required
+def devis_editeur(request):
+    exploitation = _exploitation(request)
+    return render(request, "finances/document_editeur.html", {
+        **_contexte_editeur(request, exploitation),
+        "mode": "devis",
+        "titre": _("Nouveau devis"),
+        "action": reverse("finances:devis_create"),
+        "retour": reverse("finances:devis"),
+        "prochain_numero": _prochain_numero(exploitation, Devis, "D"),
+        "page_title": _("Nouveau devis"),
+    })
+
+
+@login_required
+@require_POST
+def devis_create(request):
+    exploitation = _exploitation(request)
+    if not exploitation:
+        return redirect("finances:devis")
+
+    if request.FILES.get("logo"):
+        exploitation.logo = request.FILES["logo"]
+        exploitation.save(update_fields=["logo", "updated_at"])
+
+    client = _client_depuis_post(request, exploitation)
+    if not client:
+        messages.error(request, _("Indiquez un client pour le devis."))
+        return redirect("finances:devis_editeur")
+
+    lignes = _lignes_depuis_post(request)
+    if not lignes:
+        messages.error(request, _("Ajoutez au moins une ligne au devis."))
+        return redirect("finances:devis_editeur")
+
+    document = Devis(
+        exploitation=exploitation,
+        numero=(request.POST.get("numero") or "").strip() or _prochain_numero(exploitation, Devis, "D"),
+        client_ref=client,
+        client_nom=client.nom_complet,
+        date_emission=_jour(request.POST.get("date_emission")) or timezone.now(),
+        date_validite=_jour(request.POST.get("date_validite")),
+        lignes=lignes,
+        notes=(request.POST.get("notes") or "").strip(),
+        taux_tva=lignes[0]["taux_tva"],
+        statut=Devis.Statut.ENVOYE if request.POST.get("action") == "envoyer" else Devis.Statut.BROUILLON,
+    )
+    ht, tva = ubl.totaux_lignes(document)
+    document.montant_ht = float(ht)
+    document.montant_tva = float(tva)
+    document.montant_ttc = float(ht + tva)
+    document.save()
+    messages.success(request, _("Devis %(numero)s créé.") % {"numero": document.numero})
+    return redirect("finances:devis")
+
+
+@login_required
+@require_POST
+def devis_statut(request, pk):
+    """Change l'état d'un devis (envoyé, accepté, refusé)."""
+    document = get_object_or_404(Devis, pk=pk, exploitation=_exploitation(request))
+    statut = request.POST.get("statut")
+    if statut not in Devis.Statut.values:
+        messages.error(request, _("Statut inconnu."))
+        return redirect("finances:devis")
+    document.statut = statut
+    document.save(update_fields=["statut", "updated_at"])
+    messages.success(
+        request,
+        _("Devis %(numero)s : %(statut)s") % {"numero": document.numero, "statut": document.get_statut_display()},
+    )
+    return redirect("finances:devis")
+
+
+#: Mention manuscrite qui engage le client. On la compare sans tenir compte de
+#: la casse, des accents ni des espaces surnuméraires : le client l'écrit à la
+#: main, pas au caractère près.
+MENTION_ACCORD = "bon pour accord"
+
+
+def _mention_normalisee(texte: str) -> str:
+    sans_accents = unicodedata.normalize("NFKD", texte or "").encode("ascii", "ignore").decode()
+    return " ".join(sans_accents.lower().split())
+
+
+@login_required
+def devis_signature(request, pk):
+    """Signature du devis par le client, sous la mention « Bon pour accord ».
+
+    Pensée pour être présentée au client — sur la tablette de l'exploitant
+    aujourd'hui, depuis son propre espace demain : la page ne montre que le
+    document et ce qu'il doit signer.
+    """
+    # Deux regards sur le même document : l'exploitant qui le fait signer, et
+    # le client qui le signe depuis son espace. Chacun n'atteint que le sien.
+    exploitation = _exploitation(request)
+    if exploitation:
+        document = get_object_or_404(Devis, pk=pk, exploitation=exploitation)
+        retour = reverse("finances:devis")
+    else:
+        document = get_object_or_404(Devis, pk=pk, client_ref__user=request.user)
+        retour = reverse("client:espace")
+
+    if request.method == "POST":
+        signature = (request.POST.get("signature_url") or "").strip()
+        nom = (request.POST.get("signature_nom") or "").strip()
+        mention = (request.POST.get("signature_mention") or "").strip()
+
+        if not signature.startswith("data:image/"):
+            messages.error(request, _("La signature manque : faites signer dans le cadre prévu."))
+        elif not nom:
+            messages.error(request, _("Indiquez le nom du signataire."))
+        elif _mention_normalisee(mention) != MENTION_ACCORD:
+            messages.error(request, _("Recopiez exactement la mention « Bon pour accord »."))
+        else:
+            document.signature_url = signature
+            document.signature_nom = nom[:255]
+            document.signature_mention = mention[:100]
+            document.signature_date = timezone.now()
+            # La signature vaut acceptation : inutile de la ressaisir ailleurs.
+            document.statut = Devis.Statut.ACCEPTE
+            document.save(update_fields=[
+                "signature_url", "signature_nom", "signature_mention", "signature_date", "statut", "updated_at",
+            ])
+            messages.success(
+                request,
+                _("Devis %(numero)s signé par %(nom)s : il peut être facturé.")
+                % {"numero": document.numero, "nom": document.signature_nom},
+            )
+            return redirect(retour)
+
+    return render(request, "finances/devis_signature.html", {
+        "devis": document,
+        "emetteur": _emetteur(document.exploitation),
+        "retour": retour,
+        "mention_attendue": _("Bon pour accord"),
+        "page_title": _("Signature du devis %(numero)s") % {"numero": document.numero},
+    })
+
+
+@login_required
+@require_POST
+def devis_convertir(request, pk):
+    """Transforme un devis accepté en facture, sans ressaisie."""
+    exploitation = _exploitation(request)
+    document = get_object_or_404(Devis, pk=pk, exploitation=exploitation)
+    if not document.convertible:
+        messages.error(
+            request,
+            _("Un devis se facture une fois signé par le client sous la mention « Bon pour accord ».")
+            if not document.est_signe else _("Ce devis a déjà été facturé."),
+        )
+        return redirect("finances:devis")
+
+    facture = Facture(
+        exploitation=exploitation,
+        numero=_prochain_numero(exploitation),
+        client_ref=document.client_ref,
+        client_nom=document.client_nom,
+        date_emission=timezone.now(),
+        date_echeance=timezone.now() + timedelta(days=30),
+        lignes=document.lignes,
+        notes=document.notes,
+        taux_tva=document.taux_tva,
+        montant_ht=document.montant_ht,
+        montant_tva=document.montant_tva,
+        montant_ttc=document.montant_ttc,
+        devis=document,
+    )
+    facture.save()
+    messages.success(
+        request,
+        _("Facture %(facture)s créée depuis le devis %(devis)s.")
+        % {"facture": facture.numero, "devis": document.numero},
+    )
+    return redirect("finances:facturation")
+
+
+def _emetteur(exploitation) -> dict:
+    """Bloc émetteur de la facture, tel qu'il s'imprime en tête."""
+    if not exploitation:
+        return {}
+    commune = " ".join(m for m in (exploitation.postal_code, exploitation.city) if m)
+    return {
+        "nom": exploitation.raison_sociale or exploitation.name,
+        "adresse": exploitation.address,
+        "commune": commune,
+        "siret": exploitation.siret,
+        "tva": exploitation.tva_intra,
+        "logo_url": exploitation.logo.url if exploitation.logo else "",
+    }
+
+
+@login_required
+@require_POST
+def facture_create(request):
+    """Crée une facture depuis l'éditeur, et la transmet si demandé."""
+    exploitation = _exploitation(request)
+    if not exploitation:
+        return redirect("finances:facturation")
+
+    # Le logo appartient à l'exploitation : déposé ici, il sert aux documents
+    # suivants sans avoir à le redonner.
+    if request.FILES.get("logo"):
+        exploitation.logo = request.FILES["logo"]
+        exploitation.save(update_fields=["logo", "updated_at"])
+
+    client = _client_depuis_post(request, exploitation)
+    if not client:
+        messages.error(request, _("Indiquez un client pour la facture."))
+        return redirect("finances:facture_editeur")
+
+    lignes = _lignes_depuis_post(request)
+    if not lignes:
+        messages.error(request, _("Ajoutez au moins une ligne à la facture."))
+        return redirect("finances:facture_editeur")
+
+    facture = Facture(
+        exploitation=exploitation,
+        numero=(request.POST.get("numero") or "").strip() or _prochain_numero(exploitation),
+        client_ref=client,
+        client_nom=client.nom_complet,
+        date_emission=_jour(request.POST.get("date_emission")) or timezone.now(),
+        date_echeance=_jour(request.POST.get("date_echeance")),
+        lignes=lignes,
+        notes=(request.POST.get("notes") or "").strip(),
+        taux_tva=lignes[0]["taux_tva"],
+    )
+    ht, tva = ubl.totaux_lignes(facture)
+    facture.montant_ht = float(ht)
+    facture.montant_tva = float(tva)
+    facture.montant_ttc = float(ht + tva)
+    facture.save()
+    messages.success(request, _("Facture %(numero)s créée.") % {"numero": facture.numero})
+
+    if request.POST.get("action") == "transmettre":
+        try:
+            fe.envoyer(facture)
+        except (fe.EnvoiImpossible, superpdp.SuperPDPError) as exc:
+            messages.error(request, str(exc))
+        else:
+            messages.success(
+                request,
+                _("Facture %(numero)s transmise (n° SUPER PDP %(id)s).")
+                % {"numero": facture.numero, "id": facture.superpdp_id},
+            )
+    return redirect("finances:facturation")
+
+
+@login_required
+@require_POST
+def facture_envoyer(request, pk):
+    """Valide puis dépose la facture sur la plateforme agréée."""
+    facture = get_object_or_404(Facture, pk=pk, exploitation=_exploitation(request))
+    try:
+        fe.envoyer(facture)
+    except (fe.EnvoiImpossible, superpdp.SuperPDPError) as exc:
+        messages.error(request, str(exc))
+    else:
+        messages.success(
+            request,
+            _("Facture %(numero)s transmise (n° SUPER PDP %(id)s).")
+            % {"numero": facture.numero, "id": facture.superpdp_id},
+        )
+    return redirect("finances:facturation")
+
+
+@login_required
+@require_POST
+def facture_statut(request, pk):
+    """Relit le statut du cycle de vie chez SUPER PDP."""
+    facture = get_object_or_404(Facture, pk=pk, exploitation=_exploitation(request))
+    try:
+        statut = fe.rafraichir_statut(facture)
+    except superpdp.SuperPDPError as exc:
+        messages.error(request, str(exc))
+    else:
+        messages.success(
+            request,
+            _("Statut de %(numero)s : %(statut)s")
+            % {"numero": facture.numero, "statut": fe.libelle_statut(statut) or _("inconnu")},
+        )
+    return redirect("finances:facturation")
+
+
+@login_required
+def facture_xml(request, pk):
+    """UBL de la facture, tel qu'il serait déposé — pour vérifier ou archiver."""
+    facture = get_object_or_404(Facture, pk=pk, exploitation=_exploitation(request))
+    try:
+        xml = fe.construire_xml(facture)
+    except (fe.EnvoiImpossible, superpdp.SuperPDPError) as exc:
+        messages.error(request, str(exc))
+        return redirect("finances:facturation")
+    reponse = HttpResponse(xml, content_type="application/xml; charset=utf-8")
+    reponse["Content-Disposition"] = f'inline; filename="{facture.numero}.xml"'
+    return reponse
 
 
 # ── Fermage : révision des loyers par l'indice national ──────────────────

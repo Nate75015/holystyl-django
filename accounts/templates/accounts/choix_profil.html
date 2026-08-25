@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% comment %}
+  Première connexion sans invitation : on demande qui est la personne plutôt
+  que de supposer un chef d'entreprise. Le choix oriente l'accueil, il n'ouvre
+  aucun droit — seul un rattachement le fait.
+{% endcomment %}
+
+{% block content_nu %}
+<section class="mx-auto max-w-2xl space-y-6 py-6">
+
+  <div class="text-center">
+    <h1 class="text-[22px]">{% trans "Bienvenue sur Holystyl" %}</h1>
+    <p class="mt-2 text-[14px]" style="color: var(--text-secondary)">
+      {% trans "Pour vous conduire au bon endroit, dites-nous qui vous êtes." %}
+    </p>
+  </div>
+
+  <form method="post" class="space-y-3">
+    {% csrf_token %}
+    {% for p in profils %}
+      <button type="submit" name="profil" value="{{ p.cle }}"
+              class="hs-card group flex w-full items-center gap-4 p-4 text-left transition hover:border-[color:var(--action)]">
+        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl transition"
+              style="background: var(--surface-alt); color: var(--text-secondary)">
+          <span class="material-icons-round text-[22px]">{{ p.icone }}</span>
+        </span>
+        <span class="min-w-0 flex-1">
+          <span class="block text-[15px] font-medium">{{ p.label }}</span>
+          <span class="mt-0.5 block text-[13px]" style="color: var(--text-secondary)">{{ p.description }}</span>
+        </span>
+        <span class="material-icons-round shrink-0 text-[20px] opacity-0 transition group-hover:opacity-100" style="color: var(--action)">arrow_forward</span>
+      </button>
+    {% endfor %}
+  </form>
+
+  <p class="text-center text-[13px]" style="color: var(--text-muted)">
+    {% trans "Vous avez reçu une invitation par e-mail ? Suivez son lien : votre espace est déjà prêt." %}
+  </p>
+</section>
+{% endblock %}

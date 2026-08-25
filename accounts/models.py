@@ -23,6 +23,12 @@ class User(AbstractUser):
     address_zip = models.CharField(_("code postal"), max_length=16, blank=True)
     address_city = models.CharField(_("ville"), max_length=128, blank=True)
 
+    #: Profil déclaré à la première connexion, faute d'invitation. Il ne donne
+    #: aucun droit : seul un rattachement ouvre un espace (`core.espaces`). Il
+    #: sert à orienter l'accueil — créer son exploitation, ou attendre d'être
+    #: rattaché par celle qui vous emploie.
+    profil_souhaite = models.CharField(_("profil déclaré"), max_length=20, blank=True)
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 

@@ -112,7 +112,11 @@
     color: var(--text);
   }
 
-  /* Champs : rayon 8px, bordure 0.5px, focus action */
+  /* Champs : rayon 8px, bordure 0.5px, focus action.
+     `input:not([type])` compte : un input sans attribut type est un champ
+     texte, mais il n'est pas atteint par `input[type="text"]` — sans lui, une
+     centaine de champs du projet restaient sans cadre ni fond. */
+  input:not([type]),
   input[type="text"], input[type="email"], input[type="password"],
   input[type="number"], input[type="search"], input[type="date"],
   input[type="datetime-local"], input[type="tel"], input[type="url"], input[type="file"],
@@ -160,6 +164,15 @@
   }
   .md-card { padding: 1.25rem; }
 
+  /* Champs dans un panneau flottant : le fond du panneau est déjà `--surface`,
+     un champ de la même couleur s'y fond. On le distingue par la surface
+     secondaire, sans alourdir la bordure. */
+  .hs-popover input:not([type="checkbox"]):not([type="radio"]):not(.hs-champ-ligne),
+  .hs-popover select,
+  .hs-popover textarea {
+    background: var(--surface-alt);
+  }
+
   /* ── Calendrier plein écran : la grille descend jusqu'en bas de la fenêtre ── */
   .hs-fill-viewport {
     min-height: calc(100vh - 9rem);   /* mobile : barre de nav basse (pb-24) */
@@ -167,6 +180,35 @@
   @media (min-width: 900px) {
     .hs-fill-viewport { min-height: calc(100vh - 4.75rem); }
   }
+
+  /* ── Éditeur de facture : le formulaire a la forme du document ──
+     Les champs se signalent par un liseré pointillé plutôt que par une boîte,
+     pour que la page se lise comme une facture et non comme un formulaire. */
+  .hs-champ-papier {
+    border: 0.5px dashed var(--border-strong);
+    border-radius: 10px;
+    background: transparent;
+    transition: border-color .15s, background .15s;
+  }
+  .hs-champ-papier:hover, .hs-champ-papier:focus-within { border-color: var(--action); }
+  .hs-champ-ligne, input.hs-champ-ligne, select.hs-champ-ligne {
+    @apply w-full text-sm;
+    padding: 8px 12px;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent;
+    min-height: 36px;
+  }
+  .hs-champ-ligne:focus {
+    outline: none;
+    box-shadow: none !important;
+    background: color-mix(in srgb, var(--action) 6%, transparent);
+  }
+  /* Trame de la feuille : des filets pointillés séparent les champs, comme sur
+     un imprimé. Déclarés après .hs-champ-ligne pour l'emporter sur son
+     `border: 0` (même spécificité, l'ordre décide). */
+  .hs-bloc-papier > * + *   { border-top: 0.5px dashed var(--border-strong) !important; }
+  .hs-cellule + .hs-cellule { border-left: 0.5px dashed var(--border-strong) !important; }
 
   /* ── Tuile d'indicateur : surface-alt, sans bordure, rayon 8px ── */
   .hs-tile {
@@ -254,6 +296,9 @@
   .hs-badge-patrimoine { background: var(--patrimoine-bg); color: var(--patrimoine-fg); }
   .hs-badge-msa        { background: var(--msa-bg);        color: var(--msa-fg); }
   .hs-badge-neutral    { background: var(--surface-alt);   color: var(--text-secondary); }
+  /* Issue d'un traitement : vert quand c'est acquis, rouge quand c'est refusé. */
+  .hs-badge-success    { background: color-mix(in srgb, var(--success) 14%, transparent); color: var(--success); }
+  .hs-badge-danger     { background: color-mix(in srgb, var(--danger) 14%, transparent);  color: var(--danger); }
 
   /* ── Pastille de statut ── */
   .hs-pill {

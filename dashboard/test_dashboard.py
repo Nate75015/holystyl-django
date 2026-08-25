@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 from client.models import Partenaire
+from core import espaces as E
 from contrat.models import Bail
 from equipe.models import Task, TeamMember
 from exploitations.models import Exploitation
@@ -80,11 +81,18 @@ def test_bail_non_rattache_invisible(client, expl):
     assert "Vieux bail" not in html
 
 
-def test_sans_espace_tombe_sur_exploitant(client, db):
+def test_sans_espace_on_demande_le_profil(client, db):
+    """Sans rattachement, on ne suppose plus un chef d'entreprise : on demande."""
     u = U.objects.create_user(email="neuf@x.fr", password="x")
     r = _log(client, u).get(reverse("core:dashboard"))
-    assert r.url == reverse("dashboard:exploitant")
-    html = _log(client, u).get(reverse("dashboard:exploitant")).content.decode()
+    assert r.url == reverse("accounts:choix_profil")
+
+
+def test_profil_exploitant_declare_mene_a_l_onboarding(client, db):
+    u = U.objects.create_user(email="neuf3@x.fr", password="x", profil_souhaite=E.EXPLOITANT)
+    c = _log(client, u)
+    assert c.get(reverse("core:dashboard")).url == reverse("dashboard:exploitant")
+    html = c.get(reverse("dashboard:exploitant")).content.decode()
     assert "Configurer mon exploitation" in html        # onboarding
 
 
@@ -142,7 +150,10 @@ def test_action_absente_hors_de_l_espace_qui_y_donne_droit(client, expl):
                               type_partenaire=Partenaire.Type.BAILLEUR)
     html = _log(client, u).get(reverse("dashboard:bailleur")).content.decode()
     assert f'<a href="{reverse("equipe:equipe")}"' not in html
-    assert html.count("aucun rattachement") == 2
+    # Depuis l'espace bailleur, aucune action d'ouverture ne s'applique : tous
+    # les autres espaces restent inertes. Compté d'après la liste, pour ne pas
+    # casser au prochain espace ajouté.
+    assert html.count("aucun rattachement") == len(E.ESPACES) - 1
 
 
 def test_bascule(client, expl):
@@ -167,3 +178,37 @@ def test_bascule_vers_espace_interdit_ignoree(client, expl):
 def test_bascule_refuse_le_get(client, expl):
     r = _log(client, expl.owner).get(reverse("dashboard:basculer"))
     assert r.status_code == 405
+
+
+# ── Espace comptable ────────────────────────────────────────────────
+
+
+@pytest.fixture
+def comptable_user(expl):
+    u = U.objects.create_user(email="cabinet@x.fr", password="x")
+    Partenaire.objects.create(exploitation=expl, user=u, nom="Cabinet",
+                              type_partenaire=Partenaire.Type.COMPTABLE)
+    return u
+
+
+def test_le_comptable_atterrit_sur_son_tableau(client, expl, comptable_user):
+    r = _log(client, comptable_user).get(reverse("core:dashboard"))
+    assert r.url == reverse("dashboard:comptable")
+
+
+def test_le_tableau_comptable_montre_l_exercice(client, expl, comptable_user):
+    from finances.models import Facture
+    from django.utils import timezone
+
+    Facture.objects.create(exploitation=expl, numero="F-1", client_nom="X",
+                           date_emission=timezone.now(), montant_ht=1000,
+                           montant_tva=200, montant_ttc=1200)
+    html = _log(client, comptable_user).get(reverse("dashboard:comptable")).content.decode()
+    assert "Espace comptable" in html
+    assert "F-1" in html                       # la pièce est listée
+    assert "200" in html                       # la TVA collectée est reprise
+
+
+def test_le_tableau_comptable_est_reserve_a_son_espace(client, expl):
+    """Un exploitant n'a rien à faire sur l'écran de son comptable."""
+    assert _log(client, expl.owner).get(reverse("dashboard:comptable")).status_code == 403

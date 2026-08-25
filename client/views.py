@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
@@ -51,6 +52,9 @@ def _client_fields(request):
         "type_client": "" if particulier else (request.POST.get("type_client") or Client.TypeClient.AUTRE),
         "siret": "" if particulier else (request.POST.get("siret") or "").strip(),
         "tva_intracom": "" if particulier else (request.POST.get("tva_intracom") or "").strip(),
+        # Adresse d'annuaire : elle sert à router les factures électroniques,
+        # donc sans objet pour un particulier (hors périmètre de la réforme).
+        "superpdp_adresse": "" if particulier else (request.POST.get("superpdp_adresse") or "").strip(),
         "statut": request.POST.get("statut") or Client.Statut.PROSPECT,
         "contact_principal": (request.POST.get("contact_principal") or "").strip(),
         "email": (request.POST.get("email") or "").strip(),
@@ -92,6 +96,28 @@ def clients(request):
 
 
 @login_required
+def espace_client(request):
+    """Ce que le client voit de son côté : ses devis et ses factures.
+
+    Le périmètre vient de sa fiche, pas d'un filtre d'affichage : on ne lit que
+    les documents qui le concernent. Le reste de l'application lui est fermé
+    (`core.middleware`), son espace étant externe à l'exploitation.
+    """
+    from finances.models import Devis, Facture
+
+    fiche = Client.objects.filter(user=request.user, exploitation=request.exploitation).first()
+    if fiche is None:
+        raise Http404
+
+    return render(request, "client/espace.html", {
+        "fiche": fiche,
+        "devis": Devis.objects.filter(client_ref=fiche).select_related("facture"),
+        "factures": Facture.objects.filter(client_ref=fiche),
+        "page_title": _("Mes documents"),
+    })
+
+
+@login_required
 @require_POST
 def client_create(request):
     exploitation = _exploitation(request)
@@ -109,6 +135,8 @@ def client_detail(request, pk):
 
     return render(request, "client/detail.html", {
         "client": client,
+        # ?modifier=1 → la fiche s'ouvre directement sur le formulaire.
+        "ouvrir_modification": request.GET.get("modifier") == "1",
         "types": Client.TypeClient.choices,
         "categories": Client.Categorie.choices,
         "types_voie": TYPES_VOIE,
@@ -118,10 +146,18 @@ def client_detail(request, pk):
 
 
 @login_required
-@require_POST
 def client_edit(request, pk):
+    """Modification d'un client.
+
+    En POST, c'est la cible du formulaire de la fiche. En GET, l'URL est un
+    raccourci : on renvoie sur la fiche avec le formulaire déjà ouvert, plutôt
+    que de répondre « méthode non autorisée » à quelqu'un qui suit un lien.
+    """
     exploitation = _exploitation(request)
     client = get_object_or_404(Client, pk=pk, exploitation=exploitation)
+
+    if request.method != "POST":
+        return redirect(f"{reverse('client:detail', args=[client.pk])}?modifier=1")
 
     nom = (request.POST.get("nom") or "").strip()
     if nom:

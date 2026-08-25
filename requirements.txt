@@ -44,6 +44,10 @@ weasyprint>=63,<70
 # Paiements — Stripe (webhooks)
 stripe>=11,<16
 
+# HTTP — client de l'API SUPER PDP (déjà tiré par stripe/twilio, déclaré ici
+# parce que le projet l'utilise maintenant directement).
+requests>=2.31,<3
+
 # Agenda — moteur de calendrier réutilisable (backend du planning équipe)
 satkaar-agenda @ git+ssh://git@github.com/satkaar/agenda.git@main
 

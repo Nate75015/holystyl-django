@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% comment %}
+  Éditeur de document (facture ou devis) : le formulaire a la forme du document
+  qu'il produit ; `mode` dit lequel des deux on est en train d'écrire.
+  Chaque zone en pointillés est un champ ; les totaux se recalculent à la
+  saisie. Ce qui part réellement sur le réseau, c'est l'UBL généré à partir de
+  ces mêmes données (finances/ubl.py).
+{% endcomment %}
+
+{% block content %}
+<section class="mx-auto max-w-4xl space-y-4 pb-10" x-data="editeurFacture()">
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <p class="hs-crumb">{% trans "Économie" %} · <a href="{{ retour }}" style="color: inherit">{% if mode == 'devis' %}{% trans "Devis" %}{% else %}{% trans "Facture" %}{% endif %}</a></p>
+      <h1 class="text-[20px]">{{ titre }}</h1>
+    </div>
+    <a href="{{ retour }}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+  </div>
+
+  <form method="post" action="{{ action }}" enctype="multipart/form-data" class="space-y-4">
+    {% csrf_token %}
+
+    {# ── La feuille ── #}
+    <div class="hs-card space-y-8 p-6 sm:p-10">
+
+      {# En-tête : logo + émetteur / destinataire #}
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="space-y-4">
+          {# Logo — enregistré sur l'exploitation, donc repris sur les factures suivantes #}
+          <label class="hs-champ-papier flex h-24 cursor-pointer items-center gap-4 px-4">
+            <span class="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full" style="background: var(--surface-alt)">
+              <template x-if="apercuLogo">
+                <img :src="apercuLogo" alt="" class="h-full w-full object-cover">
+              </template>
+              <template x-if="!apercuLogo">
+                <span class="material-icons-round text-[26px]" style="color: var(--text-muted)">image</span>
+              </template>
+            </span>
+            <span class="min-w-0 flex-1 truncate text-sm" style="color: var(--text-secondary)"
+                  x-text="nomLogo || '{% trans "Importer votre logo" %}'">{% trans "Importer votre logo" %}</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full" style="border: 0.5px solid var(--border); color: var(--text-secondary)">
+              <span class="material-icons-round text-[18px]">file_upload</span>
+            </span>
+            <input type="file" name="logo" accept="image/*" class="hidden" @change="choisirLogo($event)">
+          </label>
+
+          {# Émetteur : lecture seule, il vient de la fiche exploitation #}
+          <div class="hs-champ-papier px-4 py-3 text-sm leading-relaxed">
+            <p class="font-medium">{{ emetteur.nom }}</p>
+            {% if emetteur.adresse %}<p style="color: var(--text-secondary)">{{ emetteur.adresse }}</p>{% endif %}
+            {% if emetteur.commune %}<p style="color: var(--text-secondary)">{{ emetteur.commune }}</p>{% endif %}
+            <p style="color: var(--text-muted)">
+              {% if emetteur.siret %}SIRET {{ emetteur.siret }}{% endif %}
+              {% if emetteur.tva %} · {% trans "TVA" %} {{ emetteur.tva }}{% endif %}
+            </p>
+            <a href="{% url 'exploitations:section_identite' %}" class="mt-1 inline-block text-xs" style="color: var(--action)">{% trans "Modifier mes informations" %}</a>
+          </div>
+        </div>
+
+        {# Destinataire #}
+        <div class="space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <a href="{% url 'client:clients' %}" class="text-xs font-medium uppercase tracking-wide transition hover:opacity-70"
+               style="color: var(--text-muted)" title="{% trans 'Gérer mes clients' %}">{% trans "Client" %}</a>
+            {% if clients %}
+              <select x-model="clientId" @change="remplirClient()" name="client"
+                      class="max-w-[60%] truncate rounded-lg px-2 py-1 text-xs dark:[color-scheme:dark]" style="border: 0.5px solid var(--border); background: transparent">
+                <option value="">{% trans "Nouveau client…" %}</option>
+                {% for c in clients %}
+                  <option value="{{ c.pk }}"
+                          data-nom="{{ c.nom_complet }}" data-adresse="{{ c.adresse_ligne }}" data-cp="{{ c.code_postal }}"
+                          data-ville="{{ c.ville }}" data-siret="{{ c.siret }}" data-pdp="{{ c.superpdp_adresse }}">{{ c.nom_complet }}</option>
+                {% endfor %}
+              </select>
+            {% else %}
+              <input type="hidden" name="client" value="">
+            {% endif %}
+          </div>
+          <div class="hs-bloc-papier overflow-hidden rounded-xl" style="border: 0.5px dashed var(--border-strong)">
+            <input name="client_nom" x-model="client.nom" required placeholder="{% trans 'Nom du client' %}"
+                   class="hs-champ-ligne font-medium" style="background: var(--surface-alt)">
+            <input name="client_adresse" x-model="client.adresse" placeholder="{% trans 'Adresse postale' %}" class="hs-champ-ligne">
+            <div class="grid grid-cols-3">
+              <input name="client_code_postal" x-model="client.code_postal" placeholder="{% trans 'Code postal' %}" class="hs-champ-ligne hs-cellule">
+              <input name="client_ville" x-model="client.ville" placeholder="{% trans 'Ville' %}" class="hs-champ-ligne hs-cellule col-span-2">
+            </div>
+            <input name="client_siret" x-model="client.siret" placeholder="SIRET" inputmode="numeric" class="hs-champ-ligne">
+            {% if mode != 'devis' %}
+              <input name="client_superpdp_adresse" x-model="client.pdp" placeholder="{% trans 'Adresse de facturation électronique — 0225:…' %}" class="hs-champ-ligne">
+            {% endif %}
+          </div>
+          {% if mode != 'devis' %}
+            <p class="text-xs" style="color: var(--text-muted)">
+              {% trans "L'adresse de facturation électronique sert à router la facture sur le réseau." %}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+
+      {# Type, numéro, dates #}
+      <div class="grid gap-4 sm:grid-cols-4">
+        <div>
+          {% comment %}
+            Seule la facture (code 380) est émise pour l'instant : un avoir
+            demande de référencer la facture d'origine (BT-25), pas encore fait.
+          {% endcomment %}
+          <span class="mb-1 block text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Document" %}</span>
+          <p class="hs-champ-papier px-3 py-2 text-sm">{% if mode == 'devis' %}{% trans "Devis" %}{% else %}{% trans "Facture" %}{% endif %}</p>
+        </div>
+        <div>
+          <label for="fac-numero" class="mb-1 block text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Numéro" %}</label>
+          <input id="fac-numero" name="numero" value="{{ prochain_numero }}" required
+                 pattern="[A-Za-z0-9+\-_/]+" title="{% trans 'Lettres, chiffres et + - _ / uniquement (règle BR-FR-01).' %}"
+                 class="hs-champ-papier w-full px-3 py-2 text-sm tabular-nums">
+        </div>
+        <div>
+          <label for="fac-emission" class="mb-1 block text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Date d'émission" %}</label>
+          <input id="fac-emission" name="date_emission" type="date" x-model="emission" @change="majEcheance()"
+                 class="hs-champ-papier w-full px-3 py-2 text-sm dark:[color-scheme:dark]">
+        </div>
+        <div>
+          {% if mode == 'devis' %}
+            <label for="doc-validite" class="mb-1 block text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Validité" %}</label>
+            <select id="doc-validite" x-model="reglement" @change="majEcheance()"
+                    class="hs-champ-papier w-full px-3 py-2 text-sm dark:[color-scheme:dark]">
+              <option value="15">{% trans "15 jours" %}</option>
+              <option value="30">{% trans "30 jours" %}</option>
+              <option value="60">{% trans "60 jours" %}</option>
+              <option value="90">{% trans "90 jours" %}</option>
+            </select>
+            <input type="hidden" name="date_validite" :value="echeance">
+            <p class="mt-1 text-xs tabular-nums" style="color: var(--text-muted)" x-text="'{% trans "Valable jusqu’au" %} ' + echeanceLisible()"></p>
+          {% else %}
+            <label for="doc-reglement" class="mb-1 block text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Règlement" %}</label>
+            <select id="doc-reglement" x-model="reglement" @change="majEcheance()"
+                    class="hs-champ-papier w-full px-3 py-2 text-sm dark:[color-scheme:dark]">
+              <option value="0">{% trans "à réception" %}</option>
+              <option value="15">{% trans "15 jours" %}</option>
+              <option value="30">{% trans "30 jours" %}</option>
+              <option value="45">{% trans "45 jours" %}</option>
+              <option value="60">{% trans "60 jours" %}</option>
+            </select>
+            <input type="hidden" name="date_echeance" :value="echeance">
+            <p class="mt-1 text-xs tabular-nums" style="color: var(--text-muted)" x-text="'{% trans "Échéance" %} ' + echeanceLisible()"></p>
+          {% endif %}
+        </div>
+      </div>
+
+      {# Lignes #}
+      <div>
+        <div class="grid grid-cols-12 gap-px overflow-hidden rounded-t-xl text-[11px] font-medium uppercase tracking-wide text-white" style="background: var(--action)">
+          <div class="col-span-4 px-3 py-2.5">{% trans "Désignation" %}</div>
+          <div class="col-span-1 px-2 py-2.5 text-right">{% trans "Qté" %}</div>
+          <div class="col-span-2 px-2 py-2.5">{% trans "Unité" %}</div>
+          <div class="col-span-2 px-2 py-2.5 text-right">{% trans "PU HT" %}</div>
+          <div class="col-span-1 px-2 py-2.5 text-right">TVA</div>
+          <div class="col-span-2 px-3 py-2.5 text-right">{% trans "Montant HT" %}</div>
+        </div>
+        <div class="hs-bloc-papier" style="border: 0.5px dashed var(--border-strong); border-top: 0; border-radius: 0 0 12px 12px">
+          <template x-for="(l, i) in lignes" :key="i">
+            <div class="group relative grid grid-cols-12 items-center">
+              <input name="ligne_designation" x-model="l.designation" required placeholder="{% trans 'Désignation' %}"
+                     title="{% trans 'Nommez la ligne, ou retirez-la avec la croix.' %}" class="hs-champ-ligne hs-cellule col-span-4">
+              <input name="ligne_quantite" x-model="l.quantite" inputmode="decimal" class="hs-champ-ligne hs-cellule col-span-1 text-right tabular-nums">
+              <input name="ligne_unite" x-model="l.unite" list="unites-facture" class="hs-champ-ligne hs-cellule col-span-2">
+              <input name="ligne_prix" x-model="l.prix" inputmode="decimal" placeholder="0,00" class="hs-champ-ligne hs-cellule col-span-2 text-right tabular-nums">
+              <input name="ligne_tva" x-model="l.tva" inputmode="decimal" class="hs-champ-ligne hs-cellule col-span-1 text-right tabular-nums">
+              <div class="hs-cellule col-span-2 px-3 py-2 text-right text-sm tabular-nums" x-text="montantLigne(l)"></div>
+              <button type="button" @click="lignes.splice(i, 1)" x-show="lignes.length > 1" x-cloak
+                      title="{% trans 'Supprimer la ligne' %}"
+                      class="absolute -right-9 grid h-7 w-7 place-items-center rounded-full opacity-0 transition group-hover:opacity-100" style="color: var(--text-muted)">
+                <span class="material-icons-round text-[16px]">close</span>
+              </button>
+            </div>
+          </template>
+        </div>
+        <datalist id="unites-facture">
+          <option value="C62">{% trans "unité" %}</option>
+          <option value="KGM">{% trans "kilogramme" %}</option>
+          <option value="TNE">{% trans "tonne" %}</option>
+          <option value="LTR">{% trans "litre" %}</option>
+          <option value="HUR">{% trans "heure" %}</option>
+          <option value="DAY">{% trans "jour" %}</option>
+          <option value="HAR">{% trans "hectare" %}</option>
+        </datalist>
+
+        <button type="button" @click="ajouterLigne()"
+                class="mt-3 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition hover:bg-black/5 dark:hover:bg-white/10"
+                style="border: 0.5px solid var(--border); color: var(--action)">
+          <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une ligne" %}
+        </button>
+      </div>
+
+      {# Totaux #}
+      <div class="flex justify-end">
+        <div class="w-full max-w-xs space-y-2">
+          <div class="flex items-center justify-between text-sm">
+            <span style="color: var(--text-secondary)">{% trans "Total HT" %}</span>
+            <span class="tabular-nums" x-text="euros(totalHT())"></span>
+          </div>
+          <template x-for="st in parTaux()" :key="st.taux">
+            <div class="flex items-center justify-between text-sm">
+              <span style="color: var(--text-secondary)" x-text="`{% trans "TVA" %} ${st.taux} %`"></span>
+              <span class="tabular-nums" x-text="euros(st.base * st.taux / 100)"></span>
+            </div>
+          </template>
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-[17px] font-medium" style="color: var(--action)">{% trans "Total TTC" %}</span>
+            <span class="rounded-full px-4 py-1.5 text-[17px] font-medium tabular-nums"
+                  style="background: color-mix(in srgb, var(--action) 12%, transparent); color: var(--action)"
+                  x-text="euros(totalTTC())"></span>
+          </div>
+        </div>
+      </div>
+
+      {# Notes #}
+      <div>
+        <label for="fac-notes" class="mb-1 block text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Notes" %}</label>
+        <textarea id="fac-notes" name="notes" rows="2" placeholder="{% trans 'Conditions particulières, référence de commande…' %}"
+                  class="hs-champ-papier w-full px-3 py-2 text-sm"></textarea>
+        {% if mode != 'devis' %}
+          <p class="mt-1 text-xs" style="color: var(--text-muted)">
+            {% trans "Les mentions légales obligatoires (frais de recouvrement, pénalités de retard, escompte) sont ajoutées automatiquement." %}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Barre d'actions #}
+    <div class="flex flex-wrap items-center justify-end gap-2">
+      <a href="{{ retour }}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+      <button type="submit" name="action" value="brouillon" class="hs-btn-outline">{% trans "Enregistrer" %}</button>
+      {% if mode == 'devis' %}
+        <button type="submit" name="action" value="envoyer" class="hs-btn-primary">
+          <span class="material-icons-round text-[18px]">outgoing_mail</span>{% trans "Enregistrer et marquer envoyé" %}
+        </button>
+      {% elif pdp_pret %}
+        <button type="submit" name="action" value="transmettre" class="hs-btn-primary">
+          <span class="material-icons-round text-[18px]">send</span>{% trans "Enregistrer et transmettre" %}
+        </button>
+      {% endif %}
+    </div>
+  </form>
+</section>
+
+<script>
+  function editeurFacture() {
+    const jour = (d) => d.toISOString().slice(0, 10);
+    return {
+      clientId: '',
+      client: { nom: '', adresse: '', code_postal: '', ville: '', siret: '', pdp: '' },
+      emission: jour(new Date()),
+      reglement: '{% if mode == "devis" %}30{% else %}30{% endif %}',
+      echeance: jour(new Date(Date.now() + 30 * 864e5)),
+      apercuLogo: '{{ emetteur.logo_url|default:"" }}',
+      nomLogo: '',
+      lignes: [{ designation: '', quantite: 1, unite: 'C62', prix: '', tva: 20 }],
+
+      choisirLogo(e) {
+        const fichier = e.target.files[0];
+        if (!fichier) return;
+        this.nomLogo = fichier.name;
+        this.apercuLogo = URL.createObjectURL(fichier);
+      },
+      remplirClient() {
+        const opt = this.$refs ? null : null;
+        const select = document.querySelector('select[name="client"]');
+        const choisi = select && select.selectedOptions[0];
+        if (!choisi || !choisi.value) {
+          this.client = { nom: '', adresse: '', code_postal: '', ville: '', siret: '', pdp: '' };
+          return;
+        }
+        const d = choisi.dataset;
+        this.client = { nom: d.nom || '', adresse: d.adresse || '', code_postal: d.cp || '',
+                        ville: d.ville || '', siret: d.siret || '', pdp: d.pdp || '' };
+      },
+      majEcheance() {
+        const base = new Date(this.emission || Date.now());
+        base.setDate(base.getDate() + parseInt(this.reglement, 10));
+        this.echeance = jour(base);
+      },
+      echeanceLisible() {
+        const [a, m, j] = this.echeance.split('-');
+        return `${j}/${m}/${a}`;
+      },
+      ajouterLigne() {
+        const derniere = this.lignes[this.lignes.length - 1];
+        this.lignes.push({ designation: '', quantite: 1, unite: derniere?.unite || 'C62', prix: '', tva: derniere?.tva ?? 20 });
+      },
+      nombre(v) { return parseFloat(String(v).replace(',', '.')) || 0; },
+      ligneHT(l) { return this.nombre(l.quantite) * this.nombre(l.prix); },
+      montantLigne(l) { return this.euros(this.ligneHT(l)); },
+      totalHT() { return this.lignes.reduce((s, l) => s + this.ligneHT(l), 0); },
+      parTaux() {
+        // Un sous-total par taux de TVA, du plus faible au plus élevé, comme
+        // sur la facture finale (l'UBL les ordonne de la même façon).
+        const groupes = {};
+        for (const l of this.lignes) {
+          const taux = this.nombre(l.tva);
+          groupes[taux] = (groupes[taux] || 0) + this.ligneHT(l);
+        }
+        return Object.entries(groupes)
+          .map(([taux, base]) => ({ taux: parseFloat(taux), base }))
+          .sort((a, b) => a.taux - b.taux);
+      },
+      totalTTC() {
+        return this.lignes.reduce((s, l) => s + this.ligneHT(l) * (1 + this.nombre(l.tva) / 100), 0);
+      },
+      euros(v) { return (v || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; },
+    };
+  }
+</script>
+{% endblock %}

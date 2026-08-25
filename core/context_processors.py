@@ -46,6 +46,9 @@ def layout(request):
             "label": _("Accueil"), "key": "accueil",
             "items": [
                 {"label": _("Tableau de bord"), "url_name": "core:dashboard", "icon": "dashboard"},
+                # Réservée à l'espace client : elle n'a pas de sens ailleurs.
+                {"label": _("Mes documents"), "url_name": "client:espace", "icon": "description",
+                 "espaces": (espaces_service.CLIENT,)},
             ],
         },
         {
@@ -89,9 +92,9 @@ def layout(request):
                 {"label": _("Charges"), "url_name": "finances:charges", "icon": "payments"},
                 {"label": _("Fermage"), "url_name": "finances:fermage", "icon": "agriculture"},
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
-                {"label": _("Facturation"), "url_name": "finances:facturation", "icon": "receipt_long"},
+                {"label": _("Facture"), "url_name": "finances:facturation", "icon": "receipt_long"},
+                {"label": _("Devis"), "url_name": "finances:devis", "icon": "request_quote"},
                 {"label": _("PAC"), "url_name": "pac:pac", "icon": "account_balance"},
-                {"label": _("Parc matériel"), "url_name": "operations:parc_materiel", "icon": "agriculture"},
             ],
         },
         {
@@ -156,6 +159,7 @@ def layout(request):
                 {"label": _("Certificats et labels"), "url_name": "exploitations:section_certifications", "icon": "verified"},
                 {"label": _("Sociétés liées"), "url_name": "exploitations:societes", "icon": "domain"},
                 {"label": _("RH et CA"), "url_name": "exploitations:section_economique", "icon": "payments"},
+                {"label": _("Parc matériel"), "url_name": "operations:parc_materiel", "icon": "agriculture"},
             ],
         },
     ]
@@ -164,12 +168,29 @@ def layout(request):
     # Un employé ou un bailleur ne voit qu'une part de la nav. Le filtre est
     # appliqué ici, avant la résolution des URL : inutile de reverse() des
     # entrées qui ne seront pas affichées. Une section vidée disparaît.
-    autorisees = espaces_service.nav_autorisee(getattr(request, "espace", None))
+    espace_actif = getattr(request, "espace", None)
+
+    # Sans rattachement, on se règle sur le profil déclaré : quelqu'un qui
+    # vient de se dire employé voit la forme de son futur espace, pas toute
+    # l'application dont chaque lien le mènerait à un refus.
+    espace_affiche = espace_actif or getattr(getattr(request, "user", None), "profil_souhaite", "")
+
+    # Une entrée peut se réserver à des espaces précis (clé `espaces`) : elle
+    # disparaît partout ailleurs, y compris chez l'exploitant qui voit tout.
+    def _reservee(entree):
+        reserve = entree.get("espaces")
+        return reserve is not None and espace_affiche not in reserve
+
+    nav_primary = [e for e in nav_primary if not _reservee(e)]
+    for section in nav_sections:
+        section["items"] = [i for i in section["items"] if not _reservee(i)]
+
+    autorisees = espaces_service.nav_autorisee(espace_affiche)
     if autorisees is not None:
         nav_primary = [e for e in nav_primary if e["url_name"] in autorisees]
         for section in nav_sections:
             section["items"] = [i for i in section["items"] if i["url_name"] in autorisees]
-        nav_sections = [s for s in nav_sections if s["items"]]
+    nav_sections = [s for s in nav_sections if s["items"]]
 
     # Icône de section (présentation ; navigation de la sidebar)
     section_icons = {
@@ -264,12 +285,17 @@ def layout(request):
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
         "espaces": espaces,
-        "espace_courant": getattr(request, "espace", None),
+        # Le sélecteur marque l'espace où l'on se trouve. Sans rattachement,
+        # c'est le profil déclaré qui fait foi : on est bien sur son tableau de
+        # bord, même si l'espace n'est pas encore ouvert.
+        "espace_courant": espace_affiche,
         "nav_primary": nav_primary,
         "nav_sections": nav_sections,
         "active_section": active_section,
         "active_url_name": active_url_name,
         "default_section": default_section,
+        # Espace externe (client) : l'ossature masque ce qu'il ne peut pas ouvrir.
+        "espace_ferme": espaces_service.est_ferme(espace_actif),
         "unread_notifications": unread_notifications,
         "css_version": _css_version(),
     }

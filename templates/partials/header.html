@@ -28,15 +28,17 @@
     {# Langue — écrans larges (bascule dans le menu avatar sous 900px) #}
     <div class="hidden min-[900px]:block">{% include "partials/lang_switcher.html" %}</div>
 
-    {# Notifications #}
-    <a href="{% url 'notifications:center' %}" title="{% trans 'Notifications' %}"
-       class="relative grid h-[28px] w-[28px] place-items-center rounded-[6px] transition-colors hover:bg-[color:var(--surface-alt)]"
-       style="color: var(--text-secondary)">
-      <span class="material-icons-round text-[17px]">notifications_none</span>
-      {% if unread_notifications %}
-        <span class="absolute right-1 top-1 h-[7px] w-[7px] rounded-full" style="background: var(--notif-dot); border: 1.5px solid var(--page)"></span>
-      {% endif %}
-    </a>
+    {# Notifications — pas dans un espace fermé, qui n'y a pas accès #}
+    {% if not espace_ferme %}
+      <a href="{% url 'notifications:center' %}" title="{% trans 'Notifications' %}"
+         class="relative grid h-[28px] w-[28px] place-items-center rounded-[6px] transition-colors hover:bg-[color:var(--surface-alt)]"
+         style="color: var(--text-secondary)">
+        <span class="material-icons-round text-[17px]">notifications_none</span>
+        {% if unread_notifications %}
+          <span class="absolute right-1 top-1 h-[7px] w-[7px] rounded-full" style="background: var(--notif-dot); border: 1.5px solid var(--page)"></span>
+        {% endif %}
+      </a>
+    {% endif %}
 
     {# Thème — écrans larges (bascule dans le menu avatar sous 900px) #}
     <button @click="toggle()" title="{% trans 'Thème' %}"
@@ -105,9 +107,11 @@
         </div>
 
         <div style="border-top: 0.5px solid var(--border); margin-top: 4px; padding-top: 4px">
-          <a href="{% url 'exploitations:settings' %}" class="hs-side-link">
-            <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">home_work</span>{% trans "Mon exploitation" %}
-          </a>
+          {% if not espace_ferme %}
+            <a href="{% url 'exploitations:settings' %}" class="hs-side-link">
+              <span class="material-icons-round text-[16px]" style="color: var(--text-muted)">home_work</span>{% trans "Mon exploitation" %}
+            </a>
+          {% endif %}
           <form method="post" action="{% url 'accounts:logout' %}">
             {% csrf_token %}
             <button type="submit" class="hs-side-link w-full text-left" style="color: var(--danger)">

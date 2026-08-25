@@ -1,4 +1,4 @@
-"""Espaces : chef d'entreprise, employé, bailleur.
+"""Espaces : chef d'entreprise, employé, bailleur, comptable, client.
 
 Un espace est une **audience**, pas un domaine : les trois regardent les mêmes
 apps métier (parcelles, contrat, equipe…), mais chacun n'en voit qu'une part.
@@ -9,6 +9,12 @@ qui existent déjà en base, pour ne pas dupliquer une vérité qui vit ailleurs
     exploitant → Exploitation.owner
     employé    → equipe.TeamMember.user   (membre actif)
     bailleur   → client.Partenaire.user   (type_partenaire = bailleur)
+    comptable  → client.Partenaire.user   (type_partenaire = comptable)
+    client     → client.Client.user
+
+Les quatre derniers sont des audiences restreintes. Le client est la seule
+**externe** à l'exploitation : son espace est donc fermé par défaut (cf.
+`EST_FERME`), là où les autres se contentent d'un filtrage de navigation.
 
 Un même compte peut relever de plusieurs espaces (un associé salarié de sa
 propre exploitation, par exemple) : d'où `espaces_de()` qui renvoie une liste,
@@ -23,6 +29,8 @@ from django.utils.translation import gettext_lazy as _
 EXPLOITANT = "exploitant"
 EMPLOYE = "employe"
 BAILLEUR = "bailleur"
+COMPTABLE = "comptable"
+CLIENT = "client"
 
 #: Clé de session portant l'espace actif.
 SESSION_KEY = "espace"
@@ -47,7 +55,33 @@ ESPACES = (
         },
     },
     {"cle": BAILLEUR, "label": _("Bailleur"), "icone": "real_estate_agent"},
+    {
+        "cle": COMPTABLE,
+        "label": _("Comptable"),
+        "icone": "calculate",
+        "action": {
+            "vue": "client:partenaires",
+            "libelle": _("rattacher un comptable"),
+            "depuis": EXPLOITANT,
+        },
+    },
+    {
+        "cle": CLIENT,
+        "label": _("Client"),
+        "icone": "storefront",
+        "action": {
+            "vue": "client:clients",
+            "libelle": _("rattacher un client à un compte"),
+            "depuis": EXPLOITANT,
+        },
+    },
 )
+
+#: Espaces dont le titulaire est extérieur à l'exploitation. Pour ceux-là,
+#: masquer ne suffit pas : tout ce qui n'est pas explicitement autorisé est
+#: refusé (`core.middleware`). Un client ne doit pas atteindre la comptabilité
+#: de son fournisseur en tapant une URL.
+EST_FERME = frozenset({CLIENT})
 
 ORDRE = tuple(e["cle"] for e in ESPACES)
 
@@ -74,12 +108,98 @@ NAV_AUTORISEE = {
         "messagerie:inbox",
         "contrat:baux",
     },
+    #: Le comptable travaille sur les comptes de l'exploitation qui l'a
+    #: rattaché : il voit les écrans financiers, pas le reste de la ferme.
+    COMPTABLE: {
+        "core:dashboard",
+        "notifications:center",
+        "messagerie:inbox",
+        "finances:bilan_economique",
+        "finances:charges",
+        "finances:facturation",
+        "finances:devis",
+        "finances:fermage",
+    },
+    #: Le client ne voit que ses propres documents. Toute autre vue lui est
+    #: refusée, pas seulement masquée.
+    CLIENT: {
+        "client:espace",
+        "finances:devis_signature",
+    },
 }
+
+#: Profils qu'un nouvel inscrit peut déclarer lui-même, faute d'invitation.
+#: Le client en est absent : une fiche client se crée depuis l'exploitation qui
+#: le facture, personne ne se déclare client d'un fournisseur qu'il n'a pas.
+PROFILS_DECLARABLES = (EXPLOITANT, EMPLOYE, BAILLEUR, COMPTABLE)
+
+#: Ce que devient un profil déclaré : l'exploitant crée son exploitation,
+#: les autres attendent d'être rattachés par celle qui les emploie ou les loge.
+SE_RATTACHE_SEUL = frozenset({EXPLOITANT})
+
+#: Où atterrit chaque espace. Source unique : l'aiguillage d'après connexion et
+#: le choix de profil s'y réfèrent tous les deux.
+TABLEAU_DE_BORD = {
+    EXPLOITANT: "dashboard:exploitant",
+    EMPLOYE: "dashboard:employe",
+    BAILLEUR: "dashboard:bailleur",
+    COMPTABLE: "dashboard:comptable",
+    CLIENT: "client:espace",
+}
+
+#: Le geste qui ouvre l'espace, quand on ne peut pas se rattacher soi-même.
+#: Affiché sur le tableau de bord tant que le rattachement manque.
+CONSIGNE_RATTACHEMENT = {
+    EMPLOYE: _(
+        "Demandez à votre employeur de vous ajouter à son équipe avec l'adresse de ce compte : "
+        "votre espace s'ouvrira automatiquement."
+    ),
+    BAILLEUR: _(
+        "Demandez à l'exploitation qui loue vos terres de vous enregistrer comme bailleur avec "
+        "l'adresse de ce compte : votre espace s'ouvrira automatiquement."
+    ),
+    COMPTABLE: _(
+        "Demandez à l'exploitation dont vous tenez les comptes de vous enregistrer comme comptable "
+        "avec l'adresse de ce compte : votre espace s'ouvrira automatiquement."
+    ),
+}
+
+
+def tableau_de_bord(espace) -> str:
+    """Nom de vue du tableau de bord d'un espace (repli : celui de l'exploitant)."""
+    return TABLEAU_DE_BORD.get(espace, "dashboard:exploitant")
+
+
+def profils_declarables():
+    """Les espaces proposés au choix, dans l'ordre d'affichage."""
+    return [e for e in ESPACES if e["cle"] in PROFILS_DECLARABLES]
+
+
+#: Vues traversées par tout compte connecté, quel que soit son espace :
+#: l'aiguillage d'après connexion en fait partie, sans quoi un client serait
+#: refusé sur la page même qui doit le conduire chez lui.
+#: Vues traversées par tout compte connecté, quel que soit son espace :
+#: l'aiguillage d'après connexion en fait partie, sans quoi un client serait
+#: refusé sur la page même qui doit le conduire chez lui.
+ROUTES_COMMUNES = frozenset({"core:dashboard"})
 
 
 def nav_autorisee(espace):
     """Les noms de vue visibles dans cet espace, ou None si tout est ouvert."""
     return NAV_AUTORISEE.get(espace)
+
+
+def libelle(espace) -> str:
+    """Libellé affichable d'un espace (« Client »), ou la clé à défaut."""
+    for e in ESPACES:
+        if e["cle"] == espace:
+            return str(e["label"])
+    return str(espace or "")
+
+
+def est_ferme(espace) -> bool:
+    """Cet espace refuse-t-il tout ce qui ne lui est pas explicitement ouvert ?"""
+    return espace in EST_FERME
 
 
 def _rattachement(user, espace):
@@ -101,12 +221,16 @@ def _rattachement(user, espace):
 
         return TeamMember.objects.filter(user=user, is_active=True).first()
 
-    if espace == BAILLEUR:
+    if espace in (BAILLEUR, COMPTABLE):
         from client.models import Partenaire
 
-        return Partenaire.objects.filter(
-            user=user, type_partenaire=Partenaire.Type.BAILLEUR
-        ).first()
+        type_attendu = Partenaire.Type.BAILLEUR if espace == BAILLEUR else Partenaire.Type.COMPTABLE
+        return Partenaire.objects.filter(user=user, type_partenaire=type_attendu).first()
+
+    if espace == CLIENT:
+        from client.models import Client
+
+        return Client.objects.filter(user=user).first()
 
     return None
 

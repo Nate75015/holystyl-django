@@ -49,19 +49,22 @@ jobs:
           cache: pip
 
       # requirements.txt tire satkaar-agenda depuis un dépôt privé, en SSH.
-      # Un runner GitHub n'a pas de clé : sans jeton, le clone échoue avec une
-      # erreur SSH peu parlante. On vérifie donc d'abord, puis on réécrit
-      # l'URL en HTTPS authentifié.
-      - name: Vérifier l'accès aux dépendances privées
+      # Un runner GitHub n'a pas de clé : on installe la deploy key read-only
+      # d'organisation, la même que celle utilisée par le build d'image
+      # (Dockerfile). Un seul accès à faire tourner pour la CI et le déploiement.
+      - name: Autoriser le clone du dépôt privé
+        env:
+          AGENDA_DEPLOY_KEY: ${{ secrets.AGENDA_DEPLOY_KEY }}
         run: |
-          if [ -z "${{ secrets.SATKAAR_AGENDA_TOKEN }}" ]; then
-            echo "::error::Secret SATKAAR_AGENDA_TOKEN absent — créez-le dans Settings > Secrets > Actions, avec un jeton ayant accès en lecture au dépôt privé satkaar/agenda."
+          if [ -z "$AGENDA_DEPLOY_KEY" ]; then
+            echo "::error::Secret AGENDA_DEPLOY_KEY absent — c'est un secret d'organisation satkaar, vérifiez que ce dépôt fait partie des dépôts autorisés."
             exit 1
           fi
-
-      - name: Autoriser le clone du dépôt privé
-        run: |
-          git config --global url."https://x-access-token:${{ secrets.SATKAAR_AGENDA_TOKEN }}@github.com/".insteadOf "ssh://git@github.com/"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$AGENDA_DEPLOY_KEY" > ~/.ssh/id_agenda
+          chmod 600 ~/.ssh/id_agenda
+          ssh-keyscan -t ed25519,rsa github.com >> ~/.ssh/known_hosts 2>/dev/null
+          printf 'Host github.com\n  IdentityFile ~/.ssh/id_agenda\n  IdentitiesOnly yes\n' >> ~/.ssh/config
 
       - name: Installer les dépendances
         run: |

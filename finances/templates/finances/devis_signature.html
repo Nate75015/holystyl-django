@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% comment %}
+  Page de signature d'un devis. Elle ne montre que ce que le client doit lire
+  et ce qu'il doit signer — pas les commandes de l'exploitation. C'est
+  volontaire : la même page sera présentée demain depuis l'espace client.
+{% endcomment %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl space-y-4 pb-10" x-data="signatureDevis()">
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <p class="hs-crumb">{% trans "Économie" %} · <a href="{{ retour }}" style="color: inherit">{% trans "Devis" %}</a></p>
+      <h1 class="text-[20px]">{% trans "Signature du devis" %} {{ devis.numero }}</h1>
+    </div>
+    <a href="{{ retour }}" class="hs-btn-outline">{% trans "Retour" %}</a>
+  </div>
+
+  {# ── Le document, tel que le client doit le lire ── #}
+  <div class="hs-card space-y-6 p-6 sm:p-8">
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div class="text-sm leading-relaxed">
+        <p class="text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Émetteur" %}</p>
+        <p class="mt-1 font-medium">{{ emetteur.nom }}</p>
+        {% if emetteur.adresse %}<p style="color: var(--text-secondary)">{{ emetteur.adresse }}</p>{% endif %}
+        {% if emetteur.commune %}<p style="color: var(--text-secondary)">{{ emetteur.commune }}</p>{% endif %}
+        {% if emetteur.siret %}<p style="color: var(--text-muted)">SIRET {{ emetteur.siret }}</p>{% endif %}
+      </div>
+      <div class="text-sm leading-relaxed">
+        <p class="text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Client" %}</p>
+        <p class="mt-1 font-medium">{{ devis.client_nom }}</p>
+        {% if devis.client_ref.adresse_ligne %}<p style="color: var(--text-secondary)">{{ devis.client_ref.adresse_ligne }}</p>{% endif %}
+        {% if devis.client_ref.code_postal or devis.client_ref.ville %}
+          <p style="color: var(--text-secondary)">{{ devis.client_ref.code_postal }} {{ devis.client_ref.ville }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="grid gap-4 text-sm sm:grid-cols-3">
+      <div>
+        <p class="text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Devis" %}</p>
+        <p class="mt-1 tabular-nums">{{ devis.numero }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Émis le" %}</p>
+        <p class="mt-1 tabular-nums">{{ devis.date_emission|date:"d/m/Y" }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Valable jusqu’au" %}</p>
+        <p class="mt-1 tabular-nums">{{ devis.date_validite|date:"d/m/Y"|default:"—" }}</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="grid grid-cols-12 rounded-t-xl text-[11px] font-medium uppercase tracking-wide text-white" style="background: var(--action)">
+        <div class="col-span-6 px-3 py-2.5">{% trans "Désignation" %}</div>
+        <div class="col-span-2 px-2 py-2.5 text-right">{% trans "Qté" %}</div>
+        <div class="col-span-2 px-2 py-2.5 text-right">{% trans "PU HT" %}</div>
+        <div class="col-span-2 px-3 py-2.5 text-right">{% trans "Montant HT" %}</div>
+      </div>
+      <div style="border: 0.5px solid var(--border); border-top: 0; border-radius: 0 0 12px 12px">
+        {% for l in devis.lignes %}
+          <div class="grid grid-cols-12 text-sm {% if not forloop.last %}border-b{% endif %}" style="border-color: var(--border)">
+            <div class="col-span-6 px-3 py-2">{{ l.designation }}</div>
+            <div class="col-span-2 px-2 py-2 text-right tabular-nums">{{ l.quantite }} {{ l.unite|default:"" }}</div>
+            <div class="col-span-2 px-2 py-2 text-right tabular-nums">{{ l.prix_unitaire }} €</div>
+            <div class="col-span-2 px-3 py-2 text-right tabular-nums">{{ l.montant }} €</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <div class="w-full max-w-xs space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span style="color: var(--text-secondary)">{% trans "Total HT" %}</span>
+          <span class="tabular-nums">{{ devis.montant_ht }} €</span>
+        </div>
+        <div class="flex justify-between">
+          <span style="color: var(--text-secondary)">{% trans "TVA" %}</span>
+          <span class="tabular-nums">{{ devis.montant_tva }} €</span>
+        </div>
+        <div class="flex items-center justify-between pt-1">
+          <span class="text-[17px] font-medium" style="color: var(--action)">{% trans "Total TTC" %}</span>
+          <span class="rounded-full px-4 py-1.5 text-[17px] font-medium tabular-nums"
+                style="background: color-mix(in srgb, var(--action) 12%, transparent); color: var(--action)">{{ devis.montant_ttc }} €</span>
+        </div>
+      </div>
+    </div>
+
+    {% if devis.notes %}
+      <p class="text-sm" style="color: var(--text-secondary)">{{ devis.notes|linebreaksbr }}</p>
+    {% endif %}
+  </div>
+
+  {# ── Signature ── #}
+  {% if devis.est_signe %}
+    <div class="hs-card p-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="text-sm font-medium">{% trans "Devis signé" %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+            {{ devis.signature_mention }} — {{ devis.signature_nom }}, {% trans "le" %} {{ devis.signature_date|date:"d/m/Y à H:i" }}
+          </p>
+        </div>
+        <img src="{{ devis.signature_url }}" alt="{% trans 'Signature du client' %}"
+             class="h-20 rounded-lg bg-white p-2" style="border: 0.5px solid var(--border)">
+      </div>
+      {% if devis.convertible %}
+        <form method="post" action="{% url 'finances:devis_convertir' devis.pk %}" class="mt-5 flex justify-end">
+          {% csrf_token %}
+          <button type="submit" class="hs-btn-primary">
+            <span class="material-icons-round text-[18px]">receipt_long</span>{% trans "Convertir en facture" %}
+          </button>
+        </form>
+      {% endif %}
+    </div>
+  {% else %}
+    <form method="post" class="hs-card space-y-4 p-6" @submit="preparer()">
+      {% csrf_token %}
+      <input type="hidden" name="signature_url" x-ref="champSignature">
+
+      <div>
+        <p class="text-sm font-medium">{% trans "Accord du client" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+          {% trans "Le devis n'engage qu'une fois signé. Recopiez la mention, indiquez votre nom, puis signez dans le cadre." %}
+        </p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="sig-mention" class="mb-1 block text-sm font-medium">
+            {% trans "Mention" %} <span style="color: var(--danger)">*</span>
+          </label>
+          <input id="sig-mention" name="signature_mention" type="text" required
+                 placeholder="{{ mention_attendue }}" value="{{ request.POST.signature_mention|default:'' }}"
+                 autocomplete="off" autocapitalize="off">
+          <p class="mt-1 text-xs" style="color: var(--text-muted)">
+            {% blocktrans with mention=mention_attendue %}Recopiez exactement : « {{ mention }} ».{% endblocktrans %}
+          </p>
+        </div>
+        <div>
+          <label for="sig-nom" class="mb-1 block text-sm font-medium">
+            {% trans "Nom du signataire" %} <span style="color: var(--danger)">*</span>
+          </label>
+          <input id="sig-nom" name="signature_nom" type="text" required
+                 value="{{ request.POST.signature_nom|default:devis.client_nom }}">
+        </div>
+      </div>
+
+      <div>
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-sm font-medium">{% trans "Signature" %} <span style="color: var(--danger)">*</span></span>
+          <button type="button" @click="effacer()" class="hs-chip-btn">
+            <span class="material-icons-round text-[16px]">restart_alt</span>{% trans "Effacer" %}
+          </button>
+        </div>
+        <canvas x-ref="canvas" height="180"
+                class="w-full cursor-crosshair touch-none rounded-xl bg-white"
+                style="border: 0.5px dashed var(--border-strong)"></canvas>
+        <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Signez avec le doigt, un stylet ou la souris." %}</p>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <a href="{{ retour }}" class="hs-btn-outline">{% trans "Annuler" %}</a>
+        <button type="submit" class="hs-btn-primary" :disabled="!signe"
+                :style="!signe && 'opacity: .5; cursor: not-allowed'">
+          <span class="material-icons-round text-[18px]">draw</span>{% trans "Valider la signature" %}
+        </button>
+      </div>
+    </form>
+  {% endif %}
+</section>
+
+<script>
+  function signatureDevis() {
+    return {
+      ctx: null, trace: false, signe: false,
+      init() {
+        const c = this.$refs.canvas;
+        if (!c) return;
+        // Le canevas est dimensionné en pixels réels : sinon le tracé se décale.
+        const ajuster = () => {
+          const donnees = this.signe ? c.toDataURL() : null;
+          c.width = c.offsetWidth;
+          this.ctx = c.getContext('2d');
+          this.ctx.lineWidth = 2;
+          this.ctx.lineCap = 'round';
+          this.ctx.strokeStyle = '#0f172a';
+          if (donnees) { const img = new Image(); img.onload = () => this.ctx.drawImage(img, 0, 0); img.src = donnees; }
+        };
+        ajuster();
+        window.addEventListener('resize', ajuster);
+
+        const point = (e) => {
+          const r = c.getBoundingClientRect();
+          const t = e.touches ? e.touches[0] : e;
+          return [t.clientX - r.left, t.clientY - r.top];
+        };
+        const debut = (e) => { this.trace = true; this.signe = true; this.ctx.beginPath(); this.ctx.moveTo(...point(e)); e.preventDefault(); };
+        const suite = (e) => { if (!this.trace) return; this.ctx.lineTo(...point(e)); this.ctx.stroke(); e.preventDefault(); };
+        const fin = () => { this.trace = false; };
+        c.addEventListener('mousedown', debut); c.addEventListener('mousemove', suite); window.addEventListener('mouseup', fin);
+        c.addEventListener('touchstart', debut); c.addEventListener('touchmove', suite); c.addEventListener('touchend', fin);
+      },
+      effacer() {
+        this.ctx.clearRect(0, 0, this.$refs.canvas.width, this.$refs.canvas.height);
+        this.signe = false;
+      },
+      preparer() {
+        this.$refs.champSignature.value = this.$refs.canvas.toDataURL('image/png');
+      },
+    };
+  }
+</script>
+{% endblock %}
