@@ -31,7 +31,12 @@
   </script>
 </head>
 <body class="min-h-screen">
-{% if user.is_authenticated %}
+{% comment %}
+  `layout_nu` : une page d'accueil de compte (choix du profil, attente de
+  rattachement) se passe de l'ossature — la navigation n'a pas de sens tant
+  qu'aucun espace n'est ouvert.
+{% endcomment %}
+{% if user.is_authenticated and not layout_nu %}
   <div class="flex h-screen overflow-hidden"
        style="--nav-offset: 293px; --nav-w: 293px"
        x-data="{ nav: '{{ default_section }}', drawer: false, scrolled: false }">
@@ -70,6 +75,7 @@
   {% block auth_hero %}{% endblock %}
   <main class="{% block auth_main_class %}flex min-h-[calc(100vh-4rem)] items-center justify-center px-4{% endblock %}">
     {% block auth_content %}{% endblock %}
+    {% if layout_nu %}{% block content_nu %}{% endblock %}{% endif %}
   </main>
   {% block auth_footer %}{% endblock %}
 {% endif %}

@@ -1,0 +1,9 @@
+{% load i18n %}
+{% comment %}
+  L'adresse du compte, à donner à l'exploitation qui doit rattacher la personne :
+  c'est sur elle que le rattachement se fera, et l'espace s'ouvrira seul.
+{% endcomment %}
+<div class="mt-4 inline-flex items-center gap-3 rounded-xl px-4 py-2.5" style="background: var(--surface-alt)">
+  <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">alternate_email</span>
+  <span class="text-[14px] font-medium">{{ request.user.email }}</span>
+</div>

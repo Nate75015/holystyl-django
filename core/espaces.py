@@ -128,6 +128,53 @@ NAV_AUTORISEE = {
     },
 }
 
+#: Profils qu'un nouvel inscrit peut déclarer lui-même, faute d'invitation.
+#: Le client en est absent : une fiche client se crée depuis l'exploitation qui
+#: le facture, personne ne se déclare client d'un fournisseur qu'il n'a pas.
+PROFILS_DECLARABLES = (EXPLOITANT, EMPLOYE, BAILLEUR, COMPTABLE)
+
+#: Ce que devient un profil déclaré : l'exploitant crée son exploitation,
+#: les autres attendent d'être rattachés par celle qui les emploie ou les loge.
+SE_RATTACHE_SEUL = frozenset({EXPLOITANT})
+
+#: Où atterrit chaque espace. Source unique : l'aiguillage d'après connexion et
+#: le choix de profil s'y réfèrent tous les deux.
+TABLEAU_DE_BORD = {
+    EXPLOITANT: "dashboard:exploitant",
+    EMPLOYE: "dashboard:employe",
+    BAILLEUR: "dashboard:bailleur",
+    COMPTABLE: "dashboard:comptable",
+    CLIENT: "client:espace",
+}
+
+#: Le geste qui ouvre l'espace, quand on ne peut pas se rattacher soi-même.
+#: Affiché sur le tableau de bord tant que le rattachement manque.
+CONSIGNE_RATTACHEMENT = {
+    EMPLOYE: _(
+        "Demandez à votre employeur de vous ajouter à son équipe avec l'adresse de ce compte : "
+        "votre espace s'ouvrira automatiquement."
+    ),
+    BAILLEUR: _(
+        "Demandez à l'exploitation qui loue vos terres de vous enregistrer comme bailleur avec "
+        "l'adresse de ce compte : votre espace s'ouvrira automatiquement."
+    ),
+    COMPTABLE: _(
+        "Demandez à l'exploitation dont vous tenez les comptes de vous enregistrer comme comptable "
+        "avec l'adresse de ce compte : votre espace s'ouvrira automatiquement."
+    ),
+}
+
+
+def tableau_de_bord(espace) -> str:
+    """Nom de vue du tableau de bord d'un espace (repli : celui de l'exploitant)."""
+    return TABLEAU_DE_BORD.get(espace, "dashboard:exploitant")
+
+
+def profils_declarables():
+    """Les espaces proposés au choix, dans l'ordre d'affichage."""
+    return [e for e in ESPACES if e["cle"] in PROFILS_DECLARABLES]
+
+
 #: Vues traversées par tout compte connecté, quel que soit son espace :
 #: l'aiguillage d'après connexion en fait partie, sans quoi un client serait
 #: refusé sur la page même qui doit le conduire chez lui.

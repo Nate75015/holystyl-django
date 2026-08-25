@@ -16,10 +16,9 @@
     {% comment %}Filet : l'espace employé n'est atteignable que via un TeamMember
     actif, mais le rattachement peut être retiré pendant la session.{% endcomment %}
     <div class="hs-card p-5">
-      <p class="text-[15px] font-medium">{% trans "Aucun rattachement" %}</p>
-      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
-        {% trans "Votre compte n'est rattaché à aucune équipe. Contactez le chef d'exploitation." %}
-      </p>
+      <p class="text-[15px] font-medium">{% trans "Votre espace n'est pas encore ouvert" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{{ consigne }}</p>
+      {% include "partials/_adresse_a_communiquer.html" %}
     </div>
   {% else %}
 

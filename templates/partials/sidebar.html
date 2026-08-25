@@ -82,8 +82,11 @@
           <a {% if e.action_url %}href="{{ e.action_url }}"{% endif %}
         {% endif %}
                 @mouseenter="survol = '{{ e.cle }}'" @mouseleave="survol = null"
-                class="relative flex items-center justify-center rounded-lg py-2 transition {% if e.disponible and e.cle != espace_courant or e.action_url %}hover:bg-black/5 dark:hover:bg-white/10{% endif %}{% if not e.disponible %} opacity-40{% if e.action_url %} hover:opacity-100{% else %} cursor-default{% endif %}{% endif %}"
-                style="{% if e.cle == espace_courant %}background: var(--action-subtle); color: var(--action-text){% else %}color: var(--text-muted){% endif %}">
+                class="relative flex items-center justify-center rounded-lg py-2 transition {% if e.disponible and e.cle != espace_courant or e.action_url %}hover:bg-black/5 dark:hover:bg-white/10{% endif %}{% if not e.disponible and e.cle != espace_courant %} opacity-40{% if e.action_url %} hover:opacity-100{% else %} cursor-default{% endif %}{% endif %}"
+                {% comment %}L'espace où l'on se trouve se lit à l'encre pleine ; les
+                autres restent en gris. La pastille situe la zone, la couleur dit
+                lequel est actif.{% endcomment %}
+                style="{% if e.cle == espace_courant %}background: var(--action-subtle); color: var(--text){% else %}color: var(--text-muted){% endif %}">
           <span class="material-icons-round text-[18px]">{{ e.icone }}</span>
           <span x-show="survol === '{{ e.cle }}'" x-cloak x-transition.opacity.duration.100ms
                 class="hs-popover pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-[11px] font-medium"

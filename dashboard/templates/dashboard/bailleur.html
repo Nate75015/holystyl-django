@@ -12,10 +12,9 @@
   {% if not partenaire %}
     {# Filet : la fiche peut être détachée du compte pendant la session. #}
     <div class="hs-card p-5">
-      <p class="text-[15px] font-medium">{% trans "Aucune fiche bailleur" %}</p>
-      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
-        {% trans "Votre compte n'est rattaché à aucune fiche bailleur. Contactez l'exploitant." %}
-      </p>
+      <p class="text-[15px] font-medium">{% trans "Votre espace n'est pas encore ouvert" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{{ consigne }}</p>
+      {% include "partials/_adresse_a_communiquer.html" %}
     </div>
   {% else %}
 

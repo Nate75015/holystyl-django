@@ -13,6 +13,7 @@ app_name = "dashboard"
 urlpatterns = [
     path("tableau-de-bord/", views.exploitant, name="exploitant"),
     path("mon-espace/", views.employe, name="employe"),
+    path("espace-comptable/", views.comptable, name="comptable"),
     path("espace-bailleur/", views.bailleur, name="bailleur"),
     path("espace/basculer/", views.basculer, name="basculer"),
 ]

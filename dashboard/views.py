@@ -12,6 +12,8 @@ employé et un bailleur ne sont pas propriétaires de celle qu'ils consultent.
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.utils import timezone
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from core import espaces as espaces_service
@@ -73,7 +75,7 @@ def exploitant(request):
 
 
 @login_required
-@espace_requis(espaces_service.EMPLOYE)
+@espace_requis(espaces_service.EMPLOYE, ou_profil_declare=True)
 def employe(request):
     """Tableau de bord d'un membre d'équipe : ses tâches et son planning."""
     from equipe.services import membre_de, taches_du_membre
@@ -87,13 +89,14 @@ def employe(request):
             "page_title": "Mon espace",
             "exploitation": request.exploitation,
             "membre": membre,
+            "consigne": espaces_service.CONSIGNE_RATTACHEMENT[espaces_service.EMPLOYE],
             "taches": taches_du_membre(membre),
         },
     )
 
 
 @login_required
-@espace_requis(espaces_service.BAILLEUR)
+@espace_requis(espaces_service.BAILLEUR, ou_profil_declare=True)
 def bailleur(request):
     """Tableau de bord d'un bailleur : les baux qu'il a consentis."""
     from client.services import partenaire_de
@@ -110,11 +113,60 @@ def bailleur(request):
             "page_title": "Espace bailleur",
             "exploitation": request.exploitation,
             "partenaire": partenaire,
+            "consigne": espaces_service.CONSIGNE_RATTACHEMENT[espaces_service.BAILLEUR],
             "baux": baux,
             "surface_totale": surface_totale,
             "loyer_total": loyer_total,
         },
     )
+
+
+@login_required
+@espace_requis(espaces_service.COMPTABLE, ou_profil_declare=True)
+def comptable(request):
+    """Tableau de bord d'un comptable : l'exercice de l'exploitation qu'il suit.
+
+    Il regarde des flux, pas des parcelles : ce qui a été facturé, ce qui reste
+    à encaisser, la TVA collectée et les charges de l'exercice. Les montants
+    viennent des mêmes sources que le bilan — on ne recalcule pas une seconde
+    vérité à côté.
+    """
+    from client.services import partenaire_de
+    from finances.models import Charge, Devis, Facture
+    from finances.services import compute_bilan
+
+    exploitation = request.exploitation
+    annee = timezone.localdate().year
+    factures = Facture.objects.filter(exploitation=exploitation, date_emission__year=annee)
+
+    encaisse = sum(f.montant_ttc for f in factures if f.statut == Facture.Statut.PAYEE)
+    attente = sum(f.montant_ttc for f in factures if f.statut == Facture.Statut.EN_ATTENTE)
+    retard = [f for f in factures if f.statut == Facture.Statut.EN_RETARD]
+
+    # Les charges par poste : c'est la ventilation qu'un comptable saisit.
+    charges = Charge.objects.filter(exploitation=exploitation, date__year=annee)
+    par_poste = {}
+    for charge in charges:
+        par_poste[charge.get_categorie_display()] = par_poste.get(charge.get_categorie_display(), 0) + charge.montant
+    postes = sorted(par_poste.items(), key=lambda kv: -kv[1])[:6]
+
+    return render(request, "dashboard/comptable.html", {
+        "page_title": _("Espace comptable"),
+        "partenaire": partenaire_de(request.user, espaces_service.COMPTABLE),
+        "consigne": espaces_service.CONSIGNE_RATTACHEMENT[espaces_service.COMPTABLE],
+        "exploitation": exploitation,
+        "annee": annee,
+        "bilan": compute_bilan(exploitation, annee),
+        "facture_total": round(sum(f.montant_ttc for f in factures), 2),
+        "facture_encaisse": round(encaisse, 2),
+        "facture_attente": round(attente, 2),
+        "factures_en_retard": retard,
+        "tva_collectee": round(sum(f.montant_tva for f in factures), 2),
+        "postes": postes,
+        # Un devis signé mais pas encore facturé, c'est du produit à venir.
+        "devis_a_facturer": [d for d in Devis.objects.filter(exploitation=exploitation) if d.convertible],
+        "dernieres_factures": factures.order_by("-date_emission")[:8],
+    })
 
 
 @login_required
@@ -124,18 +176,17 @@ def index(request):
     C'est la cible de `core:dashboard`, conservée pour ne casser aucun lien
     existant (`{% url %}` dans les templates, nav de la sidebar).
     """
-    destinations = {
-        espaces_service.EXPLOITANT: "dashboard:exploitant",
-        espaces_service.EMPLOYE: "dashboard:employe",
-        espaces_service.BAILLEUR: "dashboard:bailleur",
-        # Le comptable travaille sur les comptes : son point de chute est le bilan.
-        espaces_service.COMPTABLE: "finances:bilan_economique",
-        # Le client n'a pas de tableau de bord : ses documents en tiennent lieu.
-        espaces_service.CLIENT: "client:espace",
-    }
-    # Sans espace (compte fraîchement créé), l'écran exploitant porte déjà
-    # l'invite d'onboarding : c'est le bon point de chute.
-    return redirect(destinations.get(request.espace, "dashboard:exploitant"))
+    if request.espace:
+        return redirect(espaces_service.tableau_de_bord(request.espace))
+
+    # Aucun rattachement : le compte n'a pas été invité. On lui demande qui il
+    # est plutôt que de supposer un chef d'entreprise — et s'il l'a déjà dit,
+    # on l'envoie sur le tableau de bord de ce profil, qui l'accueille vide et
+    # lui indique ce qui manque.
+    profil = getattr(request.user, "profil_souhaite", "")
+    if not profil:
+        return redirect("accounts:choix_profil")
+    return redirect(espaces_service.tableau_de_bord(profil))
 
 
 @login_required

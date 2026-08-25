@@ -170,17 +170,22 @@ def layout(request):
     # entrées qui ne seront pas affichées. Une section vidée disparaît.
     espace_actif = getattr(request, "espace", None)
 
+    # Sans rattachement, on se règle sur le profil déclaré : quelqu'un qui
+    # vient de se dire employé voit la forme de son futur espace, pas toute
+    # l'application dont chaque lien le mènerait à un refus.
+    espace_affiche = espace_actif or getattr(getattr(request, "user", None), "profil_souhaite", "")
+
     # Une entrée peut se réserver à des espaces précis (clé `espaces`) : elle
     # disparaît partout ailleurs, y compris chez l'exploitant qui voit tout.
     def _reservee(entree):
         reserve = entree.get("espaces")
-        return reserve is not None and espace_actif not in reserve
+        return reserve is not None and espace_affiche not in reserve
 
     nav_primary = [e for e in nav_primary if not _reservee(e)]
     for section in nav_sections:
         section["items"] = [i for i in section["items"] if not _reservee(i)]
 
-    autorisees = espaces_service.nav_autorisee(espace_actif)
+    autorisees = espaces_service.nav_autorisee(espace_affiche)
     if autorisees is not None:
         nav_primary = [e for e in nav_primary if e["url_name"] in autorisees]
         for section in nav_sections:
@@ -280,7 +285,10 @@ def layout(request):
     return {
         "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
         "espaces": espaces,
-        "espace_courant": getattr(request, "espace", None),
+        # Le sélecteur marque l'espace où l'on se trouve. Sans rattachement,
+        # c'est le profil déclaré qui fait foi : on est bien sur son tableau de
+        # bord, même si l'espace n'est pas encore ouvert.
+        "espace_courant": espace_affiche,
         "nav_primary": nav_primary,
         "nav_sections": nav_sections,
         "active_section": active_section,

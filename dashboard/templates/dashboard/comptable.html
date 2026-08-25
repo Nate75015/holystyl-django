@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% comment %}
+  Tableau de bord du comptable : l'exercice de l'exploitation qu'il suit, vu
+  comme des flux — facturé, encaissé, TVA, charges par poste. Pas de parcelle
+  ni de météo : ce n'est pas son métier.
+{% endcomment %}
+
+{% block content %}
+<section class="space-y-5">
+
+  <p class="hs-crumb">{% trans "Accueil" %} · {% trans "Espace comptable" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Espace comptable" %}</h1>
+    <div class="flex items-center gap-2">
+      <a href="{% url 'finances:report_csv' %}" class="hs-btn-outline">
+        <span class="material-icons-round text-[18px]">download</span>{% trans "Export CSV" %}
+      </a>
+      <a href="{% url 'finances:bilan_economique' %}" class="hs-btn-primary">{% trans "Bilan économique" %}</a>
+    </div>
+  </div>
+
+  {% if not partenaire %}
+    {% comment %}Filet : la fiche peut être détachée du compte pendant la session.{% endcomment %}
+    <div class="hs-card p-5">
+      <p class="text-[15px] font-medium">{% trans "Votre espace n'est pas encore ouvert" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{{ consigne }}</p>
+      {% include "partials/_adresse_a_communiquer.html" %}
+    </div>
+  {% else %}
+
+    {# ── Qui, pour qui ── #}
+    <div class="hs-card flex flex-wrap items-center justify-between gap-4 p-5">
+      <div class="min-w-0">
+        <p class="truncate text-[16px] font-medium">{{ exploitation.raison_sociale|default:exploitation.name }}</p>
+        <p class="truncate text-[13px]" style="color: var(--text-secondary)">
+          {% if exploitation.siret %}SIRET {{ exploitation.siret }}{% endif %}
+          {% if exploitation.tva_intra %} · {% trans "TVA" %} {{ exploitation.tva_intra }}{% endif %}
+        </p>
+      </div>
+      <div class="text-right">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Exercice" %}</p>
+        <p class="text-[18px] tabular-nums">{{ annee }}</p>
+      </div>
+    </div>
+
+    {# ── Le compte de résultat en quatre nombres ── #}
+    <div class="grid gap-3 sm:grid-cols-4">
+      <div class="hs-card p-4">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Produits saisis" %}</p>
+        <p class="text-[22px] tabular-nums">{{ bilan.total_revenus }} €</p>
+      </div>
+      <div class="hs-card p-4">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Charges" %}</p>
+        <p class="text-[22px] tabular-nums">{{ bilan.total_charges }} €</p>
+      </div>
+      <div class="hs-card p-4">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Résultat" %}</p>
+        <p class="text-[22px] tabular-nums" style="color: {% if bilan.resultat_net < 0 %}var(--danger){% else %}var(--success){% endif %}">{{ bilan.resultat_net }} €</p>
+      </div>
+      <div class="hs-card p-4">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "TVA collectée" %}</p>
+        <p class="text-[22px] tabular-nums">{{ tva_collectee }} €</p>
+      </div>
+    </div>
+
+    <p class="text-[12px]" style="color: var(--text-muted)">
+      {% trans "Produits et charges viennent du journal de l'exploitation ; la facturation ci-dessous est tenue à part et ne l'alimente pas encore." %}
+    </p>
+
+    <div class="grid gap-4 lg:grid-cols-2">
+
+      {# ── Encaissement ── #}
+      <div class="hs-card p-5">
+        <h2 class="text-sm font-medium">{% trans "Facturation" %} {{ annee }}</h2>
+        <div class="mt-4 space-y-3 text-sm">
+          <div class="flex items-center justify-between">
+            <span style="color: var(--text-secondary)">{% trans "Facturé TTC" %}</span>
+            <span class="tabular-nums">{{ facture_total }} €</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span style="color: var(--text-secondary)">{% trans "Encaissé" %}</span>
+            <span class="tabular-nums" style="color: var(--success)">{{ facture_encaisse }} €</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span style="color: var(--text-secondary)">{% trans "En attente" %}</span>
+            <span class="tabular-nums">{{ facture_attente }} €</span>
+          </div>
+          {% if factures_en_retard %}
+            <div class="flex items-center justify-between pt-2" style="border-top: 0.5px solid var(--border)">
+              <span style="color: var(--danger)">{% trans "En retard" %}</span>
+              <span class="tabular-nums" style="color: var(--danger)">{{ factures_en_retard|length }}</span>
+            </div>
+          {% endif %}
+        </div>
+        <a href="{% url 'finances:facturation' %}" class="mt-4 inline-block text-[13px] font-medium" style="color: var(--action)">{% trans "Voir les factures" %}</a>
+      </div>
+
+      {# ── Ventilation des charges ── #}
+      <div class="hs-card p-5">
+        <h2 class="text-sm font-medium">{% trans "Charges par poste" %}</h2>
+        {% if postes %}
+          <div class="mt-4 space-y-2.5">
+            {% for libelle, montant in postes %}
+              <div class="flex items-center gap-3 text-sm">
+                <span class="w-32 shrink-0 truncate" style="color: var(--text-secondary)">{{ libelle }}</span>
+                <span class="h-1.5 flex-1 overflow-hidden rounded-full" style="background: var(--surface-alt)">
+                  <span class="block h-full rounded-full" style="background: var(--action); width: {% widthratio montant postes.0.1 100 %}%"></span>
+                </span>
+                <span class="w-24 shrink-0 text-right tabular-nums">{{ montant|floatformat:2 }} €</span>
+              </div>
+            {% endfor %}
+          </div>
+          <a href="{% url 'finances:charges' %}" class="mt-4 inline-block text-[13px] font-medium" style="color: var(--action)">{% trans "Voir les charges" %}</a>
+        {% else %}
+          <p class="mt-4 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune charge saisie sur l'exercice." %}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    {# ── Produit à venir : signé, pas encore facturé ── #}
+    {% if devis_a_facturer %}
+      <div class="hs-card p-5">
+        <h2 class="text-sm font-medium">{% trans "Devis signés à facturer" %}</h2>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+          {% trans "Acceptés par le client, ils n'ont pas encore donné lieu à facture." %}
+        </p>
+        <div class="mt-3 space-y-2">
+          {% for d in devis_a_facturer %}
+            <div class="flex items-center justify-between text-sm">
+              <span>{{ d.numero }} · {{ d.client_nom }}</span>
+              <span class="tabular-nums">{{ d.montant_ttc }} €</span>
+            </div>
+          {% endfor %}
+        </div>
+        <a href="{% url 'finances:devis' %}" class="mt-4 inline-block text-[13px] font-medium" style="color: var(--action)">{% trans "Voir les devis" %}</a>
+      </div>
+    {% endif %}
+
+    {# ── Dernières pièces ── #}
+    <div class="hs-card overflow-hidden">
+      <div class="px-5 py-3" style="border-bottom: 0.5px solid var(--border)">
+        <h2 class="text-sm font-medium">{% trans "Dernières factures" %}</h2>
+      </div>
+      {% if dernieres_factures %}
+        <table class="hs-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>{% trans "Client" %}</th>
+              <th class="num">{% trans "Émission" %}</th>
+              <th class="num">HT</th>
+              <th class="num">TVA</th>
+              <th class="num">TTC</th>
+              <th>{% trans "Statut" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for f in dernieres_factures %}
+              <tr>
+                <td class="font-medium">{{ f.numero }}</td>
+                <td>{{ f.client_nom|default:"—" }}</td>
+                <td class="num">{{ f.date_emission|date:"d/m/Y" }}</td>
+                <td class="num">{{ f.montant_ht }} €</td>
+                <td class="num">{{ f.montant_tva }} €</td>
+                <td class="num">{{ f.montant_ttc }} €</td>
+                <td><span class="hs-badge hs-badge-neutral">{{ f.get_statut_display }}</span></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="px-5 py-6 text-center text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune facture sur l'exercice." %}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

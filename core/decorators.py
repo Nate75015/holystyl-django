@@ -22,7 +22,7 @@ def _libelles(cles):
     return f"{', '.join(noms[:-1])} {_('ou')} {noms[-1]}"
 
 
-def espace_requis(*autorises, sans_espace=False):
+def espace_requis(*autorises, sans_espace=False, ou_profil_declare=False):
     """Restreint une vue aux espaces donnés.
 
     Le contrôle porte sur l'espace **actif**, pas sur les droits : un compte
@@ -35,6 +35,12 @@ def espace_requis(*autorises, sans_espace=False):
     rattachement (`request.espace is None`), c'est-à-dire ceux qui n'ont pas
     fait l'onboarding : sans quoi ils seraient enfermés dehors par la page même
     qui doit les accueillir.
+
+    `ou_profil_declare=True` ouvre la page à qui s'est déclaré de cet espace
+    sans y être encore rattaché — un employé qui vient de s'inscrire voit son
+    tableau de bord, vide, avec la marche à suivre. Contrairement à
+    `sans_espace`, le profil déclaré doit correspondre : celui qui s'est dit
+    bailleur n'entre pas chez les employés.
 
     Les espaces sont validés à l'import : une faute de frappe casse au
     démarrage, pas au premier accès à la vue.
@@ -55,7 +61,12 @@ def espace_requis(*autorises, sans_espace=False):
                 return redirect_to_login(request.get_full_path())
 
             espace = getattr(request, "espace", None)
-            if espace in autorises or (espace is None and sans_espace):
+            declare = getattr(user, "profil_souhaite", "") if espace is None else ""
+            if (
+                espace in autorises
+                or (espace is None and sans_espace)
+                or (ou_profil_declare and declare in autorises)
+            ):
                 return vue(request, *args, **kwargs)
 
             raise PermissionDenied(
