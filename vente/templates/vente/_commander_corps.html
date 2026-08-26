@@ -1,0 +1,83 @@
+{% load i18n %}
+<section class="mx-auto max-w-4xl space-y-5 px-4 py-8 lg:px-8">
+  {% include "vente/_messages.html" %}
+  <p class="hs-crumb"><a href="{% url 'vente:panier' %}">{% trans "Mon panier" %}</a> · {% trans "Validation" %}</p>
+  <h1 class="text-[26px] font-medium tracking-tight">{% trans "Valider ma commande" %}</h1>
+
+  {% if groupes|length > 1 %}
+    <div class="hs-card p-4">
+      <p class="text-[13px]" style="color: var(--text-secondary)">
+        {% blocktrans count n=groupes|length %}Votre panier vient d'une ferme.{% plural %}Votre panier vient de {{ n }} fermes : il donnera {{ n }} commandes, chacune à retirer chez son producteur.{% endblocktrans %}
+      </p>
+    </div>
+  {% endif %}
+
+  <form method="post" class="hs-card space-y-4 p-5">
+    {% csrf_token %}
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div>
+        <label for="c-nom" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Votre nom" %} <span style="color: var(--danger)">*</span></label>
+        <input id="c-nom" name="nom" value="{{ saisie.nom|default:'' }}" required placeholder="{% trans 'Prénom et nom' %}">
+      </div>
+      <div>
+        <label for="c-tel" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Téléphone" %}</label>
+        <input id="c-tel" name="telephone" value="{{ saisie.telephone|default:'' }}" placeholder="06 12 34 56 78">
+      </div>
+    </div>
+    <div>
+      <label for="c-email" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Email" %}</label>
+      <input id="c-email" name="email" type="email" value="{{ saisie.email|default:'' }}" placeholder="vous@exemple.fr">
+      <p class="mt-1 text-[12px]" style="color: var(--text-muted)">{% trans "Un email ou un téléphone suffit : c'est par là que la ferme vous confirmera." %}</p>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-3">
+      <div>
+        <label for="c-mode" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Je veux" %}</label>
+        <select id="c-mode" name="mode_retrait">
+          {% for value, label in modes_retrait %}<option value="{{ value }}" {% if saisie.mode_retrait == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="c-date" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date souhaitée" %}</label>
+        <input id="c-date" name="date_souhaitee" type="date" value="{{ saisie.date_souhaitee|default:'' }}">
+      </div>
+      <div>
+        <label for="c-creneau" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Créneau" %}</label>
+        <input id="c-creneau" name="creneau" value="{{ saisie.creneau|default:'' }}" placeholder="{% trans 'plutôt le matin' %}">
+      </div>
+    </div>
+
+    <div>
+      <label for="c-adresse" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Adresse de livraison" %}</label>
+      <textarea id="c-adresse" name="adresse_livraison" rows="2" placeholder="{% trans 'seulement si vous demandez une livraison' %}">{{ saisie.adresse_livraison|default:'' }}</textarea>
+    </div>
+    <div>
+      <label for="c-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Message pour la ferme" %}</label>
+      <textarea id="c-notes" name="notes" rows="2" placeholder="{% trans 'une précision sur votre commande…' %}">{{ saisie.notes|default:'' }}</textarea>
+    </div>
+
+    {% for groupe in groupes %}
+      <div style="border-top: 0.5px solid var(--border); padding-top: 1rem">
+        <p class="text-[14px] font-medium">{{ groupe.boutique.nom }}</p>
+        <ul class="mt-1 space-y-0.5 text-[13px]" style="color: var(--text-secondary)">
+          {% for ligne in groupe.lignes %}
+            <li class="flex justify-between gap-4">
+              <span>{{ ligne.quantite|floatformat:"-2" }} × {{ ligne.produit.nom }}</span>
+              <span>{{ ligne.montant|floatformat:"-2" }} €</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+
+    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+      <p class="text-[20px]">{{ total|floatformat:"-2" }} €
+        <span class="text-[12px]" style="color: var(--text-muted)">{% trans "à régler au retrait" %}</span>
+      </p>
+      <div class="flex gap-2">
+        <a href="{% url 'vente:panier' %}" class="hs-btn-outline">{% trans "Retour au panier" %}</a>
+        <button type="submit" class="hs-btn-primary">{% trans "Envoyer ma commande" %}</button>
+      </div>
+    </div>
+  </form>
+</section>

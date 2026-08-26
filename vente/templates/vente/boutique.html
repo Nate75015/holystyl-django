@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="max-w-3xl space-y-5">
+
+  <p class="hs-crumb">{% trans "Vente directe" %} · {% trans "Ma boutique" %}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Ma boutique" %}</h1>
+    <div class="flex items-center gap-2">
+      <a href="{% url 'vente:produits' %}" class="hs-btn-outline">{% trans "Mes produits" %}</a>
+      {% if boutique and boutique.est_ouverte %}
+        <a href="{{ boutique.get_absolute_url }}" target="_blank" rel="noopener" class="hs-btn-primary">{% trans "Voir ma vitrine" %}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if boutique %}
+    <div class="hs-card flex flex-wrap items-center justify-between gap-3 p-4">
+      <div class="min-w-0">
+        <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Adresse de votre boutique" %}</p>
+        <p class="truncate text-[14px]">{{ request.scheme }}://{{ request.get_host }}{{ boutique.get_absolute_url }}</p>
+      </div>
+      <span class="hs-badge {% if boutique.est_ouverte %}hs-badge-success{% else %}hs-badge-neutral{% endif %}">
+        {% if boutique.est_ouverte %}{% trans "Ouverte" %}{% else %}{% trans "Fermée" %}{% endif %}
+      </span>
+    </div>
+  {% else %}
+    <div class="hs-card p-4">
+      <p class="text-[14px] font-medium">{% trans "Vous n'avez pas encore de boutique" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Remplissez ces réglages : votre vitrine sera créée, fermée, le temps que vous y mettiez des produits." %}</p>
+    </div>
+  {% endif %}
+
+  <form method="post" class="hs-card space-y-4 p-5">
+    {% csrf_token %}
+
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label for="b-titre" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Nom public" %}</label>
+        <input id="b-titre" name="titre" value="{{ boutique.titre|default:'' }}" placeholder="{% trans 'ex: La ferme du Clos' %}">
+      </div>
+      <div>
+        <label for="b-slug" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Adresse web" %}</label>
+        <input id="b-slug" name="slug" value="{{ boutique.slug|default:'' }}" placeholder="la-ferme-du-clos">
+      </div>
+    </div>
+
+    <div>
+      <label for="b-accroche" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Accroche" %}</label>
+      <input id="b-accroche" name="accroche" value="{{ boutique.accroche|default:'' }}" placeholder="{% trans 'Maraîchage bio en Vaucluse depuis 1998' %}">
+    </div>
+
+    <div>
+      <label for="b-description" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Présentation" %}</label>
+      <textarea id="b-description" name="description" rows="4" placeholder="{% trans 'votre ferme, vos pratiques, ce qui vous distingue…' %}">{{ boutique.description|default:'' }}</textarea>
+    </div>
+
+    <div class="space-y-2" style="border-top: 0.5px solid var(--border); padding-top: 1rem">
+      <p class="text-[14px] font-medium">{% trans "Retrait et livraison" %}</p>
+      <label class="flex items-center gap-2 text-sm" style="color: var(--text-secondary)">
+        <input type="checkbox" name="retrait_ferme" value="1" {% if boutique.retrait_ferme %}checked{% endif %}>{% trans "Retrait à la ferme" %}
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="b-lieu" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Lieu de retrait" %}</label>
+          <input id="b-lieu" name="adresse_retrait" value="{{ boutique.adresse_retrait|default:'' }}" placeholder="{% trans 'hangar, route de…' %}">
+        </div>
+        <div>
+          <label for="b-horaires" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Horaires" %}</label>
+          <input id="b-horaires" name="horaires_retrait" value="{{ boutique.horaires_retrait|default:'' }}" placeholder="{% trans 'mercredi et samedi, 9h–12h' %}">
+        </div>
+      </div>
+      <label class="flex items-center gap-2 text-sm" style="color: var(--text-secondary)">
+        <input type="checkbox" name="livraison" value="1" {% if boutique.livraison %}checked{% endif %}>{% trans "Je livre" %}
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="b-rayon" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Rayon (km)" %}</label>
+          <input id="b-rayon" name="rayon_livraison_km" type="number" min="0" step="1" value="{{ boutique.rayon_livraison_km|default:'' }}" placeholder="20">
+        </div>
+        <div>
+          <label for="b-zone" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Zone livrée" %}</label>
+          <input id="b-zone" name="zone_livraison" value="{{ boutique.zone_livraison|default:'' }}" placeholder="{% trans 'Avignon et alentours' %}">
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-2" style="border-top: 0.5px solid var(--border); padding-top: 1rem">
+      <p class="text-[14px] font-medium">{% trans "Contact affiché" %}</p>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="b-tel" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Téléphone" %}</label>
+          <input id="b-tel" name="telephone" value="{{ boutique.telephone|default:'' }}" placeholder="06 12 34 56 78">
+        </div>
+        <div>
+          <label for="b-email" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Email" %}</label>
+          <input id="b-email" name="email" type="email" value="{{ boutique.email|default:'' }}" placeholder="contact@ferme.fr">
+        </div>
+      </div>
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "C'est par là que les acheteurs vous joignent : sans téléphone ni email, votre fiche produit n'a pas de bouton de commande." %}</p>
+    </div>
+
+    <div class="space-y-2" style="border-top: 0.5px solid var(--border); padding-top: 1rem">
+      <p class="text-[14px] font-medium">{% trans "Visibilité" %}</p>
+      <label class="flex items-center gap-2 text-sm" style="color: var(--text-secondary)">
+        <input type="checkbox" name="est_ouverte" value="1" {% if boutique.est_ouverte %}checked{% endif %}>{% trans "Boutique ouverte au public" %}
+      </label>
+      <label class="flex items-center gap-2 text-sm" style="color: var(--text-secondary)">
+        <input type="checkbox" name="visible_marche" value="1" {% if boutique.visible_marche or not boutique %}checked{% endif %}>{% trans "Apparaître sur la place de marché" %}
+      </label>
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Fermée, votre vitrine et vos produits n'existent pour personne — vos données restent intactes." %}</p>
+    </div>
+
+    <div class="flex items-center justify-between gap-3 pt-1">
+      <p class="text-[12px]" style="color: var(--text-muted)">
+        {% blocktrans count n=nb_en_ligne %}{{ n }} produit en ligne{% plural %}{{ n }} produits en ligne{% endblocktrans %}
+      </p>
+      <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% load i18n %}
+{% comment %}
+  Modale partagée par la page Stock et le journal : `retour` dit d'où l'on
+  vient, la vue n'y renvoie que si le nom de vue lui est connu.
+{% endcomment %}
+<div x-show="mouvement" x-cloak x-transition.opacity @keydown.escape.window="mouvement = false"
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="mouvement = false" class="flex w-full max-w-5xl justify-center">
+    <div class="hs-popover w-full max-w-2xl p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[16px] font-medium">{% trans "Nouveau mouvement" %}</h2>
+        <button type="button" @click="mouvement = false" style="color: var(--text-muted)">✕</button>
+      </div>
+      <form method="post" action="{% url 'stock:mouvement_create' %}" class="space-y-3">
+        {% csrf_token %}
+        <input type="hidden" name="retour" value="{{ retour }}">
+        <div>
+          <label for="mvt-article" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Article" %} <span style="color: var(--danger)">*</span></label>
+          <select id="mvt-article" name="article" x-model="mvt.article" required>
+            <option value="">{% trans "Choisir un article…" %}</option>
+            {% for a in articles %}<option value="{{ a.pk }}">{{ a.nom }} ({{ a.quantite }} {{ a.get_unite_display }})</option>{% endfor %}
+          </select>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="mvt-sens" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Sens" %}</label>
+            <select id="mvt-sens" name="type_mouvement" x-model="mvt.type_mouvement">{% for value, label in types_mouvement %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+          <div>
+            <label for="mvt-quantite" class="mb-1 block text-sm" style="color: var(--text-secondary)">
+              <span x-show="mvt.type_mouvement !== 'correction'">{% trans "Quantité" %}</span>
+              <span x-show="mvt.type_mouvement === 'correction'" x-cloak>{% trans "Stock constaté" %}</span>
+              <span style="color: var(--danger)">*</span>
+            </label>
+            <input id="mvt-quantite" name="quantite" type="number" step="0.01" min="0" inputmode="decimal" x-model="mvt.quantite" required placeholder="0">
+          </div>
+          <div>
+            <label for="mvt-motif" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Motif" %}</label>
+            <select id="mvt-motif" name="motif" x-model="mvt.motif">{% for value, label in motifs %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="mvt-parcelle" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Parcelle concernée" %}</label>
+            <select id="mvt-parcelle" name="parcelle" x-model="mvt.parcelle">
+              <option value="">{% trans "Aucune" %}</option>
+              {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="mvt-cout" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Coût unitaire (€)" %}</label>
+            <input id="mvt-cout" name="cout_unitaire" type="number" step="0.01" min="0" inputmode="decimal" x-model="mvt.cout_unitaire" placeholder="0.00">
+          </div>
+        </div>
+        <div>
+          <label for="mvt-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea id="mvt-notes" name="notes" rows="2" x-model="mvt.notes" placeholder="{% trans 'bon de livraison, chantier…' %}"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="mouvement = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

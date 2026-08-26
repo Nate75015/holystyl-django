@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block auth_header %}{% include "vente/_entete_public.html" %}{% endblock %}
+{% block auth_main_class %}{% endblock %}
+{# La vitrine se visite connecté comme anonyme : le corps sert les deux branches de base.html. #}
+{% block content %}{% include "vente/_marche_corps.html" %}{% endblock %}
+{% block auth_content %}{% include "vente/_marche_corps.html" %}{% endblock %}

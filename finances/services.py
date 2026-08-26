@@ -7,10 +7,31 @@ des données de subvention (parité `reports.exportSubvention`).
 from dataclasses import asdict, dataclass
 
 from django.db.models import Sum
+from django.utils import timezone
 
 from irrigation.models import DtiScore, EnergyLog, WaterMeter
 
-from .models import Charge, Revenu
+from .models import Charge, Facture, Revenu
+
+
+def prochain_numero(exploitation, modele=Facture, lettre="F") -> str:
+    """Numéro suivant, séquentiel par année et par série (F-2026-004, D-2026-002).
+
+    Le numéro ne doit contenir ni espace ni caractère exotique : la règle
+    française BR-FR-01 rejette la facture sinon. Ce calcul vit ici et non dans
+    une vue : la vente directe émet aussi des factures, et deux implantations
+    finiraient par diverger — donc par produire deux fois le même numéro.
+    """
+    annee = timezone.localdate().year
+    prefixe = f"{lettre}-{annee}-"
+    if not exploitation:
+        return f"{prefixe}001"
+    existants = (
+        modele.objects.filter(exploitation=exploitation, numero__startswith=prefixe)
+        .values_list("numero", flat=True)
+    )
+    rangs = [int(n.rsplit("-", 1)[-1]) for n in existants if n.rsplit("-", 1)[-1].isdigit()]
+    return f"{prefixe}{(max(rangs) + 1) if rangs else 1:03d}"
 
 
 @dataclass

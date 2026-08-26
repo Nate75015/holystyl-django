@@ -1,0 +1,97 @@
+{% load i18n %}
+<div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+    <div class="hs-popover w-full max-w-2xl p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[16px] font-medium">
+          <span x-show="!form.id">{% trans "Nouveau produit" %}</span>
+          <span x-show="form.id" x-cloak>{% trans "Modifier le produit" %}</span>
+        </h2>
+        <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+      </div>
+      <form method="post" action="{% url 'vente:produit_save' %}" enctype="multipart/form-data" class="space-y-3">
+        {% csrf_token %}
+        <input type="hidden" name="id" :value="form.id || ''">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="produit-nom" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Nom" %} <span style="color: var(--danger)">*</span></label>
+            <input id="produit-nom" name="nom" x-model="form.nom" required placeholder="{% trans 'ex: panier de légumes de saison' %}">
+          </div>
+          <div>
+            <label for="produit-categorie" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Catégorie" %}</label>
+            <select id="produit-categorie" name="categorie" x-model="form.categorie">{% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+        </div>
+
+        <div>
+          <label for="produit-article" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Servi depuis le stock" %}</label>
+          <select id="produit-article" name="article" x-model="form.article">
+            <option value="">{% trans "Sur commande (pas de stock suivi)" %}</option>
+            {% for a in articles %}<option value="{{ a.pk }}">{{ a.nom }} — {{ a.quantite }} {{ a.get_unite_display }}</option>{% endfor %}
+          </select>
+          <p class="mt-1 text-[12px]" style="color: var(--text-muted)">{% trans "L'article rattaché dit ce qu'il reste ; sans lui, le produit reste affiché sans disponibilité." %}</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="produit-unite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Vendu" %}</label>
+            <select id="produit-unite" name="unite_vente" x-model="form.unite_vente">{% for value, label in unites_vente %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+          <div>
+            <label for="produit-conditionnement" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Contenu" %}</label>
+            <input id="produit-conditionnement" name="conditionnement" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.conditionnement" placeholder="1">
+            <p class="mt-1 text-[12px]" style="color: var(--text-muted)">{% trans "unités de stock par vente" %}</p>
+          </div>
+          <div>
+            <label for="produit-min" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Minimum" %}</label>
+            <input id="produit-min" name="quantite_min" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.quantite_min" placeholder="1">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="produit-prix" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Prix TTC (€)" %}</label>
+            <input id="produit-prix" name="prix_ttc" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.prix_ttc" placeholder="0.00">
+          </div>
+          <div>
+            <label for="produit-tva" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "TVA (%)" %}</label>
+            <input id="produit-tva" name="taux_tva" type="number" step="0.1" min="0" inputmode="decimal" x-model="form.taux_tva" placeholder="5.5">
+            <p class="mt-1 text-[12px]" style="color: var(--text-muted)">{% trans "5,5 % en alimentaire non transformé, 20 % sur le vin et les fleurs." %}</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="produit-du" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Disponible à partir du" %}</label>
+            <input id="produit-du" name="disponible_du" type="date" x-model="form.disponible_du">
+          </div>
+          <div>
+            <label for="produit-au" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Jusqu'au" %}</label>
+            <input id="produit-au" name="disponible_au" type="date" x-model="form.disponible_au">
+          </div>
+        </div>
+
+        <div>
+          <label for="produit-photo" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Photo" %}</label>
+          <input id="produit-photo" name="photo" type="file" accept="image/*">
+        </div>
+
+        <div>
+          <label for="produit-description" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Description" %}</label>
+          <textarea id="produit-description" name="description" rows="3" x-model="form.description" placeholder="{% trans 'variété, mode de production, conseils de conservation…' %}"></textarea>
+        </div>
+
+        <label class="flex items-center gap-2 text-sm" style="color: var(--text-secondary)">
+          <input type="checkbox" name="visible_marche" value="1" x-model="form.visible_marche">
+          {% trans "Proposer aussi sur la place de marché" %}
+        </label>
+
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

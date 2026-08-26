@@ -1,0 +1,19 @@
+{% load i18n %}
+{% comment %}
+  `base.html` n'affiche les messages que dans sa branche connectée : sur la
+  vitrine, un acheteur anonyme se ferait refuser sans rien voir. On les rend
+  donc ici, et seulement pour lui — sans quoi un exploitant les verrait deux fois.
+{% endcomment %}
+{% if messages and not user.is_authenticated %}
+  <div class="space-y-2">
+    {% for message in messages %}
+      <div class="flex items-start gap-2 rounded-lg px-4 py-2.5 text-sm"
+           style="border: 0.5px solid {% if message.level >= 40 %}var(--danger){% elif message.level >= 30 %}var(--warning){% else %}var(--border){% endif %};
+                  background: {% if message.level >= 40 %}color-mix(in srgb, var(--danger) 8%, transparent){% else %}var(--surface){% endif %};
+                  color: {% if message.level >= 40 %}var(--danger){% elif message.level >= 30 %}var(--warning){% else %}var(--text){% endif %}">
+        <span class="material-icons-round mt-px text-[16px]">{% if message.level >= 40 %}error_outline{% elif message.level >= 30 %}warning_amber{% else %}check_circle{% endif %}</span>
+        <span class="min-w-0">{{ message }}</span>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

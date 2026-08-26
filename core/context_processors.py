@@ -49,6 +49,8 @@ def layout(request):
                 # Réservée à l'espace client : elle n'a pas de sens ailleurs.
                 {"label": _("Mes documents"), "url_name": "client:espace", "icon": "description",
                  "espaces": (espaces_service.CLIENT,)},
+                {"label": _("Mes commandes"), "url_name": "vente:mes_commandes", "icon": "shopping_basket",
+                 "espaces": (espaces_service.CLIENT,)},
             ],
         },
         {
@@ -130,6 +132,24 @@ def layout(request):
             ],
         },
         {
+            "label": _("Vente directe"), "key": "vente",
+            "items": [
+                {"label": _("Commandes"), "url_name": "vente:commandes", "icon": "receipt_long"},
+                {"label": _("Mes produits"), "url_name": "vente:produits", "icon": "local_offer"},
+                {"label": _("Ma boutique"), "url_name": "vente:boutique", "icon": "storefront"},
+                {"label": _("Le marché"), "url_name": "vente:marche", "icon": "travel_explore"},
+            ],
+        },
+        {
+            "label": _("Stock"), "key": "stock",
+            "items": [
+                {"label": _("Articles"), "url_name": "stock:articles", "icon": "inventory_2"},
+                {"label": _("Récoltes"), "url_name": "stock:recoltes", "icon": "agriculture"},
+                {"label": _("Mouvements"), "url_name": "stock:mouvements", "icon": "swap_vert"},
+                {"label": _("Dépôts"), "url_name": "stock:depots", "icon": "warehouse"},
+            ],
+        },
+        {
             "label": _("Aquaculture"), "key": "aquaculture",
             "items": [
                 {"label": _("Bassins"), "url_name": "aquaculture:bassins", "icon": "set_meal"},
@@ -197,6 +217,7 @@ def layout(request):
         "accueil": "home", "communication": "forum", "cultures": "eco",
         "protection": "lock", "economie": "payments", "environnement": "park",
         "rh": "groups", "contrat": "gavel", "relations": "handshake",
+        "stock": "inventory_2", "vente": "storefront",
         "aquaculture": "waves", "compte": "person",
     }
     for section in nav_sections:
