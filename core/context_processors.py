@@ -38,7 +38,7 @@ def layout(request):
         {"label": _("Parcelles"), "url_name": "parcelles:list"},
         {"label": _("Irrigation"), "url_name": "irrigation:irrigation"},
         {"label": _("Planning"), "url_name": "planning:planning"},
-        {"label": _("Assistant"), "url_name": "ia:assistant"},
+        {"label": _("Agent IA"), "url_name": "ia:assistant"},
     ]
 
     nav_sections = [

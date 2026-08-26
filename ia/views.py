@@ -1,4 +1,4 @@
-"""Vues web IA : page Assistant + endpoint SSE de streaming."""
+"""Vues web IA : page de l'agent + endpoint SSE de streaming."""
 
 import json
 import uuid
@@ -139,7 +139,7 @@ def reformuler(request):
     if not text:
         return JsonResponse({"error": _("Rien à reformuler : le champ est vide.")}, status=400)
     if not llm.is_configured():
-        return JsonResponse({"error": _("Assistant IA non configuré.")}, status=503)
+        return JsonResponse({"error": _("Agent IA non configuré.")}, status=503)
 
     consigne = _(
         "Reformule ce texte en français : plus clair, mieux écrit et professionnel. "

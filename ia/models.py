@@ -1,4 +1,4 @@
-"""Assistant IA : conversations, dictionnaire vocal, rapports quotidiens.
+"""Agent IA : conversations, dictionnaire vocal, rapports quotidiens.
 
 Fidèle aux tables Drizzle `ai_conversations`, `vocal_dictionary`, `daily_reports`.
 """

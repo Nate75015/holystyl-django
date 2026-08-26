@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class IaConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "ia"
-    verbose_name = "Assistant IA"
+    verbose_name = "Agent IA"

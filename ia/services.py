@@ -1,4 +1,4 @@
-"""Logique de l'assistant IA : contexte, chat, extraction d'intentions, rapport.
+"""Logique de l'agent IA : contexte, chat, extraction d'intentions, rapport.
 
 Reproduit le comportement du routeur `ai` tRPC (server/routers.ts) :
 - chat conversationnel contextualisé,
@@ -24,7 +24,7 @@ from . import llm
 from .models import AiConversation, DailyReport
 
 ASSISTANT_NOT_CONFIGURED = (
-    "L'assistant IA n'est pas encore configuré (clé API manquante). "
+    "L'agent IA n'est pas encore configuré (clé API manquante). "
     "Renseignez la clé du fournisseur actif (GEMINI_API_KEY ou MISTRAL_API_KEY) pour l'activer."
 )
 
