@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5"
+         x-data="{
+           modal: false, filtre: false, tab: 'toutes', q: '',
+           form: { article: '', unite: 'kg', qualite: 'cat1', depot: '' },
+         }">
+
+  <p class="hs-crumb">{% trans "Stock" %} · {% trans "Récoltes" %}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Récoltes" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="filtre = !filtre" class="hs-btn-outline">{% trans "Filtrer" %}</button>
+      <a href="{% url 'stock:articles' %}" class="hs-btn-outline">{% trans "Stock" %}</a>
+      <button type="button" @click="modal = true" class="hs-btn-primary" {% if not parcelles %}disabled{% endif %}>{% trans "Rentrer une récolte" %}</button>
+    </div>
+  </div>
+
+  <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+    <button type="button" class="hs-tab" :class="tab === 'toutes' && 'hs-tab-active'" @click="tab = 'toutes'">{% trans "Toutes" %}</button>
+    {% for value, label in qualites %}
+      <button type="button" class="hs-tab whitespace-nowrap" :class="tab === '{{ value }}' && 'hs-tab-active'" @click="tab = '{{ value }}'">{{ label }}</button>
+    {% endfor %}
+  </div>
+
+  <div x-show="filtre" x-cloak class="flex items-center gap-2">
+    <input type="text" x-model="q" placeholder="{% trans 'Rechercher une parcelle, un produit…' %}" class="max-w-xs">
+  </div>
+
+  <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Récoltes" %}</p><p class="text-[22px]">{{ kpi_count }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Volume rentré" %}</p><p class="text-[22px]">{{ kpi_kg }} kg</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Parcelles récoltées" %}</p><p class="text-[22px]">{{ kpi_parcelles }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Valorisation" %}</p><p class="text-[22px]">{{ kpi_valeur }} €</p></div>
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Date" %}</th>
+          <th>{% trans "Parcelle" %}</th>
+          <th>{% trans "Entrée en stock" %}</th>
+          <th>{% trans "Qualité" %}</th>
+          <th class="num">{% trans "Quantité" %}</th>
+          <th class="num">{% trans "Prix" %}</th>
+          <th class="num">{% trans "Valorisation" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in recoltes %}
+          <tr x-show="(tab === 'toutes' || tab === '{{ r.qualite }}')
+                      && (!q || '{{ r.parcelle.name|escapejs }} {{ r.entree.article.nom|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
+            <td style="color: var(--text-secondary)">{{ r.date|date:"d/m/Y" }}</td>
+            <td>{{ r.parcelle.name }}</td>
+            <td>
+              {% if r.entree %}
+                {{ r.entree.article.nom }}
+                <span class="ml-1 text-[12px]" style="color: var(--text-muted)">{% blocktrans with stock=r.entree.quantite_apres|floatformat:"-2" unite=r.entree.article.get_unite_display %}stock : {{ stock }} {{ unite }}{% endblocktrans %}</span>
+              {% else %}—{% endif %}
+            </td>
+            <td><span class="hs-badge {% if r.qualite == 'extra' %}hs-badge-success{% elif r.qualite == 'declasse' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ r.get_qualite_display }}</span></td>
+            <td class="num">{{ r.quantite_kg|floatformat:"-2" }} kg</td>
+            <td class="num" style="color: var(--text-secondary)">{% if r.prix_unitaire %}{{ r.prix_unitaire|floatformat:"-2" }} €/kg{% else %}—{% endif %}</td>
+            <td class="num">{% if r.valorisation %}{{ r.valorisation|floatformat:"-2" }} €{% else %}—{% endif %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not recoltes %}
+      <div class="px-14 py-10 text-center">
+        {% if parcelles %}
+          <p class="text-[15px] font-medium">{% trans "Rentrez votre première récolte" %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ce que vous déclarez ici entre dans votre stock, prêt à être proposé à la vente." %}</p>
+          <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Rentrer une récolte" %}</button>
+        {% else %}
+          <p class="text-[15px] font-medium">{% trans "Déclarez d'abord vos parcelles" %}</p>
+          <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Une récolte se rattache à la parcelle qui l'a produite : c'est ce qui rend le lot traçable jusqu'à l'acheteur." %}</p>
+          <a href="{% url 'parcelles:list' %}" class="hs-btn-primary mt-4 inline-block">{% trans "Mes parcelles" %}</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  {% include "stock/_recolte_modal.html" %}
+</section>
+{% endblock %}

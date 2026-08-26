@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5"
+         x-data="{
+           modal: false, q: '', filtre: false,
+           depots: JSON.parse(document.getElementById('stock-depots').textContent),
+           form: {},
+           nouveau() { this.form = { type_depot: 'hangar', unite_capacite: '' }; this.modal = true },
+           editer(id) { this.form = Object.assign({}, this.depots.find(d => d.id === id)); this.modal = true },
+         }">
+
+  {{ depots_json|json_script:"stock-depots" }}
+
+  <p class="hs-crumb">{% trans "Stock" %} · {% trans "Dépôts" %}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Dépôts" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="filtre = !filtre" class="hs-btn-outline">{% trans "Filtrer" %}</button>
+      <a href="{% url 'stock:articles' %}" class="hs-btn-outline">{% trans "Articles" %}</a>
+      <button type="button" @click="nouveau()" class="hs-btn-primary">{% trans "Nouveau dépôt" %}</button>
+    </div>
+  </div>
+
+  <div x-show="filtre" x-cloak class="flex items-center gap-2">
+    <input type="text" x-model="q" placeholder="{% trans 'Rechercher un dépôt…' %}" class="max-w-xs">
+  </div>
+
+  <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Dépôts" %}</p><p class="text-[22px]">{{ kpi_count }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Articles rangés" %}</p><p class="text-[22px]">{{ kpi_articles }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Sans emplacement" %}</p><p class="text-[22px]">{{ kpi_sans_depot }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Valeur stockée" %}</p><p class="text-[22px]">{{ kpi_valeur }} €</p></div>
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Dépôt" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Localisation" %}</th>
+          <th class="num">{% trans "Capacité" %}</th>
+          <th class="num">{% trans "Articles" %}</th>
+          <th class="num">{% trans "Valeur" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in depots %}
+          <tr x-show="!q || '{{ d.nom|escapejs }} {{ d.localisation|escapejs }}'.toLowerCase().includes(q.toLowerCase())">
+            <td>{{ d.nom }}</td>
+            <td><span class="hs-badge hs-badge-neutral">{{ d.get_type_depot_display }}</span></td>
+            <td style="color: var(--text-secondary)">{{ d.localisation|default:"—" }}</td>
+            <td class="num" style="color: var(--text-secondary)">{% if d.capacite %}{{ d.capacite|floatformat:"-2" }} {{ d.get_unite_capacite_display }}{% else %}—{% endif %}</td>
+            <td class="num">{{ d.nb_articles }}</td>
+            <td class="num">{{ d.valeur }} €</td>
+            <td class="num whitespace-nowrap">
+              <button type="button" title="{% trans 'Modifier' %}" @click="editer({{ d.pk }})" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">edit</span></button>
+              <form method="post" action="{% url 'stock:depot_delete' d.pk %}" class="inline" onsubmit="return confirm('{% trans "Supprimer ce dépôt ? Les articles resteront, sans emplacement." %}')">
+                {% csrf_token %}
+                <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not depots %}
+      <div class="px-14 py-10 text-center">
+        <p class="text-[15px] font-medium">{% trans "Déclarez vos lieux de stockage" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Hangar, silo, cuve ou local phytosanitaire : chaque article sait alors où il se trouve." %}</p>
+        <button type="button" @click="nouveau()" class="hs-btn-primary mt-4">{% trans "Nouveau dépôt" %}</button>
+      </div>
+    {% endif %}
+  </div>
+
+  {% include "stock/_depot_modal.html" %}
+</section>
+{% endblock %}

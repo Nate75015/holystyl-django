@@ -1,0 +1,92 @@
+{% load i18n %}
+{% comment %}
+  Déclarer une récolte, c'est la faire entrer en stock : le formulaire demande
+  donc où elle va, et sait ouvrir un article si le paysan rentre ce produit
+  pour la première fois.
+{% endcomment %}
+<div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+    <div class="hs-popover w-full max-w-2xl p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[16px] font-medium">{% trans "Rentrer une récolte" %}</h2>
+        <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+      </div>
+      <form method="post" action="{% url 'stock:recolte_create' %}" class="space-y-3">
+        {% csrf_token %}
+        <input type="hidden" name="retour" value="{{ retour }}">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="recolte-parcelle" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Parcelle récoltée" %} <span style="color: var(--danger)">*</span></label>
+            <select id="recolte-parcelle" name="parcelle" x-model="form.parcelle" required>
+              <option value="">{% trans "Choisir une parcelle…" %}</option>
+              {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="recolte-date" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date" %}</label>
+            <input id="recolte-date" name="date" type="datetime-local" x-model="form.date">
+          </div>
+        </div>
+
+        <div>
+          <label for="recolte-article" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Entre en stock dans" %}</label>
+          <select id="recolte-article" name="article" x-model="form.article">
+            <option value="">{% trans "— Nouveau produit —" %}</option>
+            {% for a in articles %}<option value="{{ a.pk }}">{{ a.nom }} ({{ a.quantite }} {{ a.get_unite_display }})</option>{% endfor %}
+          </select>
+        </div>
+
+        {# Premier lot de ce produit : on ouvre sa fiche article en même temps. #}
+        <div x-show="!form.article" class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="recolte-nom" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Produit" %} <span style="color: var(--danger)">*</span></label>
+            <input id="recolte-nom" name="nom_article" x-model="form.nom_article" :required="!form.article" placeholder="{% trans 'ex: tomates cœur de bœuf' %}">
+          </div>
+          <div>
+            <label for="recolte-unite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Tenu en" %}</label>
+            <select id="recolte-unite" name="unite" x-model="form.unite">{% for value, label in unites %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+          <div>
+            <label for="recolte-depot" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Dépôt" %}</label>
+            <select id="recolte-depot" name="depot" x-model="form.depot">
+              <option value="">{% trans "Sans emplacement" %}</option>
+              {% for d in depots %}<option value="{{ d.pk }}">{{ d.nom }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="recolte-quantite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Quantité (kg)" %} <span style="color: var(--danger)">*</span></label>
+            <input id="recolte-quantite" name="quantite_kg" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.quantite_kg" required placeholder="0">
+          </div>
+          <div>
+            <label for="recolte-qualite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Qualité" %}</label>
+            <select id="recolte-qualite" name="qualite" x-model="form.qualite">{% for value, label in qualites %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+          <div>
+            <label for="recolte-prix" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Prix visé (€/kg)" %}</label>
+            <input id="recolte-prix" name="prix_unitaire" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.prix_unitaire" placeholder="0.00">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="recolte-mo" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Coût main d'œuvre (€)" %}</label>
+            <input id="recolte-mo" name="cout_main_oeuvre" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.cout_main_oeuvre" placeholder="0.00">
+          </div>
+          <div>
+            <label for="recolte-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+            <input id="recolte-notes" name="notes" x-model="form.notes" placeholder="{% trans 'variété, chantier, météo…' %}">
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Rentrer en stock" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

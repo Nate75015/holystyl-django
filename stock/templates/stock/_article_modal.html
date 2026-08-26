@@ -1,0 +1,87 @@
+{% load i18n %}
+{% comment %}
+  Un seul formulaire pour l'ajout et la modification : `form.id` fait la
+  différence, et la vue `article_save` décide en conséquence.
+{% endcomment %}
+<div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+  <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+    <div class="hs-popover w-full p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-[16px] font-medium">
+          <span x-show="!form.id">{% trans "Nouvel article" %}</span>
+          <span x-show="form.id" x-cloak>{% trans "Modifier l'article" %}</span>
+        </h2>
+        <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+      </div>
+      <form method="post" action="{% url 'stock:article_save' %}" class="space-y-3">
+        {% csrf_token %}
+        <input type="hidden" name="id" :value="form.id || ''">
+        <div>
+          <label for="article-nom" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Désignation" %} <span style="color: var(--danger)">*</span></label>
+          <input id="article-nom" name="nom" x-model="form.nom" required placeholder="{% trans 'ex: ammonitrate 33,5' %}">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="article-categorie" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Catégorie" %}</label>
+            <select id="article-categorie" name="categorie" x-model="form.categorie">{% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+          <div>
+            <label for="article-depot" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Dépôt" %}</label>
+            <select id="article-depot" name="depot" x-model="form.depot">
+              <option value="">{% trans "Sans emplacement" %}</option>
+              {% for d in depots %}<option value="{{ d.pk }}">{{ d.nom }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="article-unite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Unité" %}</label>
+            <select id="article-unite" name="unite" x-model="form.unite">{% for value, label in unites %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+          <div x-show="!form.id">
+            {# La quantité n'est saisissable qu'à la création : ensuite, seul un mouvement la change. #}
+            <label for="article-quantite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Stock initial" %}</label>
+            <input id="article-quantite" name="quantite" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.quantite" placeholder="0">
+          </div>
+          <div>
+            <label for="article-seuil" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Seuil d'alerte" %}</label>
+            <input id="article-seuil" name="seuil_alerte" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.seuil_alerte" placeholder="{% trans 'aucun' %}">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="article-prix" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Prix unitaire (€)" %}</label>
+            <input id="article-prix" name="prix_unitaire" type="number" step="0.01" min="0" inputmode="decimal" x-model="form.prix_unitaire" placeholder="0.00">
+          </div>
+          <div>
+            <label for="article-fournisseur" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Fournisseur" %}</label>
+            <input id="article-fournisseur" name="fournisseur" x-model="form.fournisseur" placeholder="{% trans 'coopérative, négociant…' %}">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="article-lot" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "N° de lot" %}</label>
+            <input id="article-lot" name="lot" x-model="form.lot" placeholder="{% trans 'traçabilité' %}">
+          </div>
+          <div>
+            <label for="article-peremption" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de péremption" %}</label>
+            <input id="article-peremption" name="date_peremption" type="date" x-model="form.date_peremption">
+          </div>
+        </div>
+        <div>
+          <label for="article-reference" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Référence" %}</label>
+          <input id="article-reference" name="reference" x-model="form.reference" placeholder="{% trans 'code article, AMM…' %}">
+        </div>
+        <div>
+          <label for="article-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+          <textarea id="article-notes" name="notes" rows="2" x-model="form.notes" placeholder="{% trans 'conditions de stockage, précautions…' %}"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-1">
+          <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

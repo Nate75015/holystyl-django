@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5"
+         x-data="{ mouvement: false, filtre: false, tab: 'tous', q: '', mvt: {} }">
+
+  <p class="hs-crumb">{% trans "Stock" %} · {% trans "Mouvements" %}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Mouvements de stock" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="filtre = !filtre" class="hs-btn-outline">{% trans "Filtrer" %}</button>
+      <a href="{% url 'stock:articles' %}" class="hs-btn-outline">{% trans "Articles" %}</a>
+      <button type="button" @click="mvt = { type_mouvement: 'sortie', motif: 'autre' }; mouvement = true" class="hs-btn-primary">{% trans "Nouveau mouvement" %}</button>
+    </div>
+  </div>
+
+  <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+    <button type="button" class="hs-tab" :class="tab === 'tous' && 'hs-tab-active'" @click="tab = 'tous'">{% trans "Tous" %}</button>
+    {% for value, label in types_mouvement %}
+      <button type="button" class="hs-tab whitespace-nowrap" :class="tab === '{{ value }}' && 'hs-tab-active'" @click="tab = '{{ value }}'">{{ label }}</button>
+    {% endfor %}
+  </div>
+
+  <div x-show="filtre" x-cloak class="flex items-center gap-2">
+    <input type="text" x-model="q" placeholder="{% trans 'Rechercher un article…' %}" class="max-w-xs">
+  </div>
+
+  <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Mouvements" %}</p><p class="text-[22px]">{{ kpi_count }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Entrées (30 j)" %}</p><p class="text-[22px]">{{ kpi_entrees }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Sorties (30 j)" %}</p><p class="text-[22px]">{{ kpi_sorties }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Coût des entrées (30 j)" %}</p><p class="text-[22px]">{{ kpi_achats }} €</p></div>
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Date" %}</th>
+          <th>{% trans "Sens" %}</th>
+          <th>{% trans "Article" %}</th>
+          <th>{% trans "Motif" %}</th>
+          <th>{% trans "Parcelle" %}</th>
+          <th class="num">{% trans "Quantité" %}</th>
+          <th class="num">{% trans "Stock après" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in mouvements %}
+          <tr x-show="(tab === 'tous' || tab === '{{ m.type_mouvement }}')
+                      && (!q || '{{ m.article.nom|escapejs }} {{ m.notes|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
+            <td style="color: var(--text-secondary)">{{ m.date|date:"d/m/Y H:i" }}</td>
+            <td>
+              <span class="hs-badge {% if m.type_mouvement == 'entree' %}hs-badge-success{% elif m.type_mouvement == 'sortie' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ m.get_type_mouvement_display }}</span>
+            </td>
+            <td>{{ m.article.nom }}</td>
+            <td style="color: var(--text-secondary)">{{ m.get_motif_display }}</td>
+            <td style="color: var(--text-secondary)">{{ m.parcelle.name|default:"—" }}</td>
+            <td class="num">{% if m.type_mouvement == 'sortie' %}−{% elif m.type_mouvement == 'entree' %}+{% endif %}{{ m.quantite|floatformat:"-2" }} {{ m.article.get_unite_display }}</td>
+            <td class="num">{{ m.quantite_apres|floatformat:"-2" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not mouvements %}
+      <div class="px-14 py-10 text-center">
+        <p class="text-[15px] font-medium">{% trans "Aucun mouvement enregistré" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Chaque entrée, sortie ou comptage laisse ici la trace du stock atteint." %}</p>
+        {% if articles %}
+          <button type="button" @click="mvt = { type_mouvement: 'sortie', motif: 'autre' }; mouvement = true" class="hs-btn-primary mt-4">{% trans "Nouveau mouvement" %}</button>
+        {% else %}
+          <a href="{% url 'stock:articles' %}" class="hs-btn-primary mt-4 inline-block">{% trans "Créer un premier article" %}</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  {% include "stock/_mouvement_modal.html" %}
+</section>
+{% endblock %}

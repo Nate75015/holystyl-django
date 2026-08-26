@@ -130,6 +130,15 @@ def layout(request):
             ],
         },
         {
+            "label": _("Stock"), "key": "stock",
+            "items": [
+                {"label": _("Articles"), "url_name": "stock:articles", "icon": "inventory_2"},
+                {"label": _("Récoltes"), "url_name": "stock:recoltes", "icon": "agriculture"},
+                {"label": _("Mouvements"), "url_name": "stock:mouvements", "icon": "swap_vert"},
+                {"label": _("Dépôts"), "url_name": "stock:depots", "icon": "warehouse"},
+            ],
+        },
+        {
             "label": _("Aquaculture"), "key": "aquaculture",
             "items": [
                 {"label": _("Bassins"), "url_name": "aquaculture:bassins", "icon": "set_meal"},
@@ -197,6 +206,7 @@ def layout(request):
         "accueil": "home", "communication": "forum", "cultures": "eco",
         "protection": "lock", "economie": "payments", "environnement": "park",
         "rh": "groups", "contrat": "gavel", "relations": "handshake",
+        "stock": "inventory_2",
         "aquaculture": "waves", "compte": "person",
     }
     for section in nav_sections:
