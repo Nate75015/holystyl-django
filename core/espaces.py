@@ -124,6 +124,7 @@ NAV_AUTORISEE = {
     #: refusée, pas seulement masquée.
     CLIENT: {
         "client:espace",
+        "vente:mes_commandes",
         "finances:devis_signature",
     },
 }
@@ -178,10 +179,22 @@ def profils_declarables():
 #: Vues traversées par tout compte connecté, quel que soit son espace :
 #: l'aiguillage d'après connexion en fait partie, sans quoi un client serait
 #: refusé sur la page même qui doit le conduire chez lui.
-#: Vues traversées par tout compte connecté, quel que soit son espace :
-#: l'aiguillage d'après connexion en fait partie, sans quoi un client serait
-#: refusé sur la page même qui doit le conduire chez lui.
-ROUTES_COMMUNES = frozenset({"core:dashboard"})
+#:
+#: La vitrine de vente directe y figure aussi : elle s'adresse au tout-venant,
+#: et un espace fermé ne doit pas être plus mal traité qu'un visiteur anonyme
+#: sur des pages que celui-ci consulte librement.
+ROUTES_COMMUNES = frozenset({
+    "core:dashboard",
+    "vente:marche",
+    "vente:marche_categorie",
+    "vente:boutique_publique",
+    "vente:produit_public",
+    "vente:panier",
+    "vente:panier_ajouter",
+    "vente:panier_ligne",
+    "vente:commander",
+    "vente:suivi",
+})
 
 
 def nav_autorisee(espace):

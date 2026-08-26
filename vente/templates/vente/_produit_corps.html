@@ -1,0 +1,88 @@
+{% load i18n %}
+<section class="mx-auto max-w-5xl space-y-6 px-4 py-8 lg:px-8">
+  {% include "vente/_messages.html" %}
+
+  <p class="hs-crumb">
+    <a href="{% url 'vente:marche' %}">{% trans "Le marché" %}</a> ·
+    <a href="{{ boutique.get_absolute_url }}">{{ boutique.nom }}</a> · {{ produit.nom }}
+  </p>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="hs-card aspect-[4/3] overflow-hidden" style="background: var(--surface-alt)">
+      {% if produit.photo %}
+        <img src="{{ produit.photo.url }}" alt="{{ produit.nom }}" class="h-full w-full object-cover">
+      {% else %}
+        <div class="flex h-full items-center justify-center">
+          <span class="material-icons-round text-[40px]" style="color: var(--text-muted)">photo_camera</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <p class="hs-badge hs-badge-neutral">{{ produit.get_categorie_display }}</p>
+        <h1 class="mt-2 text-[26px] font-medium tracking-tight">{{ produit.nom }}</h1>
+        <p class="mt-1 text-[14px]" style="color: var(--text-secondary)">
+          <a href="{{ boutique.get_absolute_url }}" style="color: var(--action)">{{ boutique.nom }}</a>
+          {% if boutique.localite %} · {{ boutique.localite }}{% endif %}
+        </p>
+      </div>
+
+      <p class="text-[24px]">{{ produit.prix_ttc|floatformat:"-2" }} €
+        <span class="text-[14px]" style="color: var(--text-secondary)">{{ produit.get_unite_vente_display }}</span>
+      </p>
+
+      {% if produit.est_epuise %}
+        <p class="hs-badge hs-badge-danger">{% trans "Épuisé pour le moment" %}</p>
+      {% elif produit.disponible %}
+        <p class="text-[13px]" style="color: var(--text-secondary)">
+          {% blocktrans count n=produit.disponible %}{{ n }} disponible{% plural %}{{ n }} disponibles{% endblocktrans %}
+        </p>
+      {% endif %}
+
+      {% if produit.description %}
+        <p class="whitespace-pre-line text-[14px] leading-relaxed" style="color: var(--text-secondary)">{{ produit.description }}</p>
+      {% endif %}
+
+      <div class="hs-card space-y-3 p-4">
+        {% if produit.est_epuise %}
+          <p class="text-[14px] font-medium">{% trans "Repassez à la prochaine récolte" %}</p>
+          <p class="text-[13px]" style="color: var(--text-secondary)">{% trans "Ce produit est épuisé : rien ne peut être réservé pour l'instant." %}</p>
+        {% else %}
+          <form method="post" action="{% url 'vente:panier_ajouter' %}" class="space-y-3">
+            {% csrf_token %}
+            <input type="hidden" name="produit" value="{{ produit.pk }}">
+            <input type="hidden" name="retour" value="{{ request.get_full_path }}">
+            <div class="flex items-end gap-3">
+              <div class="w-28">
+                <label for="qte" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Quantité" %}</label>
+                <input id="qte" name="quantite" type="number" step="0.5" min="{{ produit.quantite_min|floatformat:'-2' }}"
+                       {% if produit.disponible is not None %}max="{{ produit.disponible }}"{% endif %}
+                       value="{{ produit.quantite_min|floatformat:'-2' }}" inputmode="decimal">
+              </div>
+              <button type="submit" class="hs-btn-primary">{% trans "Ajouter au panier" %}</button>
+            </div>
+          </form>
+          <p class="text-[12px]" style="color: var(--text-muted)">
+            {% if boutique.retrait_ferme %}{% trans "Vous réglez au retrait, à la ferme." %}
+            {% else %}{% trans "Vous réglez à la livraison." %}{% endif %}
+            {% if boutique.horaires_retrait %} · {{ boutique.horaires_retrait }}{% endif %}
+          </p>
+        {% endif %}
+        <div class="flex flex-wrap gap-2 pt-1" style="border-top: 0.5px solid var(--border); padding-top: 0.75rem">
+          {% if boutique.telephone %}<a href="tel:{{ boutique.telephone }}" class="hs-btn-outline">{% trans "Appeler la ferme" %}</a>{% endif %}
+          {% if boutique.email %}<a href="mailto:{{ boutique.email }}?subject={{ produit.nom|urlencode }}" class="hs-btn-outline">{% trans "Écrire" %}</a>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if autres %}
+    <div class="space-y-3">
+      <h2 class="text-[17px] font-medium">{% trans "Aussi chez cette ferme" %}</h2>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {% for p in autres %}{% include "vente/_carte_produit.html" with p=p %}{% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>

@@ -1,0 +1,63 @@
+{% load i18n %}
+<section class="mx-auto max-w-4xl space-y-5 px-4 py-8 lg:px-8">
+  {% include "vente/_messages.html" %}
+  <h1 class="text-[26px] font-medium tracking-tight">{% trans "Mon panier" %}</h1>
+
+  {% for groupe in groupes %}
+    <div class="hs-card overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-2 p-4" style="border-bottom: 0.5px solid var(--border)">
+        <a href="{{ groupe.boutique.get_absolute_url }}" class="text-[15px] font-medium" style="color: var(--action)">{{ groupe.boutique.nom }}</a>
+        {% if groupe.boutique.localite %}<span class="text-[12px]" style="color: var(--text-muted)">{{ groupe.boutique.localite }}</span>{% endif %}
+      </div>
+      <table class="hs-table">
+        <tbody>
+          {% for ligne in groupe.lignes %}
+            <tr>
+              <td>
+                <a href="{{ ligne.produit.get_absolute_url }}">{{ ligne.produit.nom }}</a>
+                <span class="ml-1 text-[12px]" style="color: var(--text-muted)">{{ ligne.produit.prix_ttc|floatformat:"-2" }} € {{ ligne.produit.get_unite_vente_display }}</span>
+              </td>
+              <td class="num">
+                <form method="post" action="{% url 'vente:panier_ligne' ligne.produit.pk %}" class="flex items-center justify-end gap-2">
+                  {% csrf_token %}
+                  <input name="quantite" type="number" step="0.5" min="0" value="{{ ligne.quantite|floatformat:'-2' }}" class="w-20" inputmode="decimal">
+                  <button type="submit" class="hs-chip-btn">{% trans "Mettre à jour" %}</button>
+                </form>
+              </td>
+              <td class="num">{{ ligne.montant|floatformat:"-2" }} €</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="flex items-center justify-between p-4" style="border-top: 0.5px solid var(--border)">
+        <span class="text-[13px]" style="color: var(--text-secondary)">
+          {% if groupe.boutique.retrait_ferme %}{% trans "Retrait à la ferme" %}{% else %}{% trans "Livraison" %}{% endif %}
+        </span>
+        <span class="text-[15px]">{{ groupe.total|floatformat:"-2" }} €</span>
+      </div>
+    </div>
+  {% empty %}
+    <div class="hs-card px-8 py-12 text-center">
+      <p class="text-[15px] font-medium">{% trans "Votre panier est vide" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Parcourez le marché : chaque ferme prépare et remet ses commandes elle-même." %}</p>
+      <a href="{% url 'vente:marche' %}" class="hs-btn-primary mt-4 inline-block">{% trans "Voir le marché" %}</a>
+    </div>
+  {% endfor %}
+
+  {% if groupes %}
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="text-[20px]">{{ total|floatformat:"-2" }} €</p>
+        {% if groupes|length > 1 %}
+          <p class="text-[12px]" style="color: var(--text-muted)">
+            {% blocktrans count n=groupes|length %}{{ n }} ferme{% plural %}{{ n }} fermes : une commande et un retrait par ferme{% endblocktrans %}
+          </p>
+        {% endif %}
+      </div>
+      <div class="flex gap-2">
+        <a href="{% url 'vente:marche' %}" class="hs-btn-outline">{% trans "Continuer" %}</a>
+        <a href="{% url 'vente:commander' %}" class="hs-btn-primary">{% trans "Valider ma commande" %}</a>
+      </div>
+    </div>
+  {% endif %}
+</section>

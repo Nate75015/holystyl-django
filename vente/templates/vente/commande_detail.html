@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="max-w-3xl space-y-5">
+
+  <p class="hs-crumb"><a href="{% url 'vente:commandes' %}">{% trans "Commandes" %}</a> · {{ commande.numero }}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h1 class="text-[20px]">{{ commande.numero }}</h1>
+      <p class="text-[13px]" style="color: var(--text-secondary)">{{ commande.created_at|date:"d/m/Y H:i" }}</p>
+    </div>
+    <span class="hs-badge {% if commande.statut == 'servie' %}hs-badge-success{% elif commande.statut == 'refusee' or commande.statut == 'annulee' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ commande.get_statut_display }}</span>
+  </div>
+
+  {# Les actions offertes sont exactement les transitions permises depuis ce statut. #}
+  <div class="flex flex-wrap gap-2">
+    {% if peut.confirmer %}
+      <form method="post" action="{% url 'vente:commande_transition' commande.pk 'confirmer' %}">{% csrf_token %}
+        <button type="submit" class="hs-btn-primary">{% trans "Confirmer" %}</button>
+      </form>
+      <form method="post" action="{% url 'vente:commande_transition' commande.pk 'refuser' %}" onsubmit="return confirm('{% trans "Refuser cette commande ?" %}')">{% csrf_token %}
+        <button type="submit" class="hs-btn-outline">{% trans "Refuser" %}</button>
+      </form>
+    {% endif %}
+    {% if peut.prete %}
+      <form method="post" action="{% url 'vente:commande_transition' commande.pk 'prete' %}">{% csrf_token %}
+        <button type="submit" class="hs-btn-primary">{% trans "Marquer prête" %}</button>
+      </form>
+    {% endif %}
+    {% if peut.servir %}
+      <form method="post" action="{% url 'vente:commande_transition' commande.pk 'servir' %}">{% csrf_token %}
+        <button type="submit" class="hs-btn-primary">{% trans "Remise à l'acheteur" %}</button>
+      </form>
+    {% endif %}
+    {% if peut.annuler %}
+      <form method="post" action="{% url 'vente:commande_transition' commande.pk 'annuler' %}" onsubmit="return confirm('{% trans "Annuler cette commande ?" %}')">{% csrf_token %}
+        <button type="submit" class="hs-btn-outline">{% trans "Annuler" %}</button>
+      </form>
+    {% endif %}
+  </div>
+
+  {% if peut.servir %}
+    <p class="text-[12px]" style="color: var(--text-muted)">
+      {% trans "La marchandise ne sortira du stock qu'à la remise : d'ici là, elle est réservée." %}
+    </p>
+  {% endif %}
+
+  {# La facture n'est pas automatique : tout le monde n'en réclame pas une. #}
+  {% if commande.facture %}
+    <div class="hs-card flex flex-wrap items-center justify-between gap-3 p-4">
+      <div>
+        <p class="text-[14px] font-medium">{% trans "Facture" %} {{ commande.facture.numero }}</p>
+        <p class="text-[12px]" style="color: var(--text-secondary)">
+          {{ commande.facture.montant_ttc|floatformat:"-2" }} € TTC · {{ commande.facture.get_statut_display }}
+          {% if commande.facture.superpdp_envoyee %} · {% trans "transmise" %} ({{ commande.facture.superpdp_statut|default:"—" }}){% endif %}
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        {% if commande.client_ref.categorie == 'professionnel' and not commande.facture.superpdp_envoyee %}
+          <form method="post" action="{% url 'finances:facture_envoyer' commande.facture.pk %}">{% csrf_token %}
+            <button type="submit" class="hs-btn-outline">{% trans "Transmettre (SUPER PDP)" %}</button>
+          </form>
+        {% endif %}
+        <a href="{% url 'finances:facturation' %}" class="hs-btn-outline">{% trans "Mes factures" %}</a>
+      </div>
+    </div>
+  {% elif facturable %}
+    <div class="hs-card flex flex-wrap items-center justify-between gap-3 p-4">
+      <div>
+        <p class="text-[14px] font-medium">{% trans "Facturer cette commande" %}</p>
+        <p class="text-[12px]" style="color: var(--text-secondary)">
+          {% trans "Reprend les lignes telles qu'elles ont été vendues, chacune avec son taux de TVA." %}
+        </p>
+      </div>
+      <form method="post" action="{% url 'vente:commande_facturer' commande.pk %}">{% csrf_token %}
+        <button type="submit" class="hs-btn-primary">{% trans "Émettre la facture" %}</button>
+      </form>
+    </div>
+  {% endif %}
+
+  <div class="hs-card p-5">
+    <p class="text-[14px] font-medium">{% trans "Acheteur" %}</p>
+    <dl class="hs-dl mt-2">
+      <dt>{% trans "Nom" %}</dt><dd>{{ commande.acheteur_nom }}</dd>
+      {% if commande.acheteur_telephone %}<dt>{% trans "Téléphone" %}</dt><dd><a href="tel:{{ commande.acheteur_telephone }}" style="color: var(--action)">{{ commande.acheteur_telephone }}</a></dd>{% endif %}
+      {% if commande.acheteur_email %}<dt>{% trans "Email" %}</dt><dd><a href="mailto:{{ commande.acheteur_email }}" style="color: var(--action)">{{ commande.acheteur_email }}</a></dd>{% endif %}
+      <dt>{% trans "Retrait" %}</dt><dd>{{ commande.get_mode_retrait_display }}</dd>
+      {% if commande.date_souhaitee %}<dt>{% trans "Date souhaitée" %}</dt><dd>{{ commande.date_souhaitee|date:"d/m/Y" }}</dd>{% endif %}
+      {% if commande.creneau %}<dt>{% trans "Créneau" %}</dt><dd>{{ commande.creneau }}</dd>{% endif %}
+      {% if commande.client_ref %}<dt>{% trans "Fiche client" %}</dt><dd><a href="{% url 'client:detail' commande.client_ref.pk %}" style="color: var(--action)">{{ commande.client_ref.nom }}</a></dd>{% endif %}
+    </dl>
+    {% if commande.adresse_livraison %}
+      <p class="mt-3 whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ commande.adresse_livraison }}</p>
+    {% endif %}
+    {% if commande.notes %}
+      <p class="mt-3 whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">« {{ commande.notes }} »</p>
+    {% endif %}
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Produit" %}</th>
+          <th>{% trans "Prélevé sur" %}</th>
+          <th class="num">{% trans "Quantité" %}</th>
+          <th class="num">{% trans "Prix" %}</th>
+          <th class="num">{% trans "Total" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for l in lignes %}
+          <tr>
+            <td>{{ l.libelle }} <span class="text-[12px]" style="color: var(--text-muted)">{{ l.unite_libelle }}</span></td>
+            <td style="color: var(--text-secondary)">
+              {% if l.article %}{{ l.article.nom }} <span class="text-[12px]" style="color: var(--text-muted)">− {{ l.quantite_stock|floatformat:"-2" }} {{ l.article.get_unite_display }}</span>{% else %}—{% endif %}
+            </td>
+            <td class="num">{{ l.quantite|floatformat:"-2" }}</td>
+            <td class="num">{{ l.prix_unitaire_ttc|floatformat:"-2" }} €</td>
+            <td class="num">{{ l.montant_ttc|floatformat:"-2" }} €</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="space-y-1 p-4" style="border-top: 0.5px solid var(--border)">
+      <div class="flex justify-between text-[13px]" style="color: var(--text-secondary)"><span>{% trans "Total HT" %}</span><span>{{ commande.montant_ht|floatformat:"-2" }} €</span></div>
+      <div class="flex justify-between text-[13px]" style="color: var(--text-secondary)"><span>{% trans "TVA" %}</span><span>{{ commande.montant_tva|floatformat:"-2" }} €</span></div>
+      <div class="flex justify-between text-[16px]"><span>{% trans "Total TTC" %}</span><span>{{ commande.montant_ttc|floatformat:"-2" }} €</span></div>
+    </div>
+  </div>
+
+  <p class="text-[12px]" style="color: var(--text-muted)">
+    {% trans "Lien de suivi de l'acheteur" %} : {{ request.scheme }}://{{ request.get_host }}{{ commande.get_absolute_url }}
+  </p>
+</section>
+{% endblock %}

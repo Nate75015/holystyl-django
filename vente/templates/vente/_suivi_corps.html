@@ -1,0 +1,91 @@
+{% load i18n %}
+<section class="mx-auto max-w-3xl space-y-5 px-4 py-8 lg:px-8">
+  {% include "vente/_messages.html" %}
+
+  <div class="hs-card p-5">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <p class="hs-crumb">{% trans "Commande" %} {{ commande.numero }}</p>
+        <h1 class="mt-1 text-[24px] font-medium tracking-tight">{{ boutique.nom|default:commande.exploitation.name }}</h1>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+          {% if commande.mode_retrait == 'ferme' %}{% trans "À retirer à la ferme" %}{% else %}{% trans "Livraison" %}{% endif %}
+          {% if commande.date_souhaitee %} · {{ commande.date_souhaitee|date:"d/m/Y" }}{% endif %}
+          {% if commande.creneau %} · {{ commande.creneau }}{% endif %}
+        </p>
+      </div>
+      <span class="hs-badge {% if commande.statut == 'servie' %}hs-badge-success{% elif commande.statut == 'refusee' or commande.statut == 'annulee' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">
+        {{ commande.get_statut_display }}
+      </span>
+    </div>
+
+    {% if commande.statut == 'refusee' or commande.statut == 'annulee' %}
+      <p class="mt-4 text-[13px]" style="color: var(--danger)">
+        {% if commande.motif_refus %}{{ commande.motif_refus }}
+        {% else %}{% trans "La ferme n'a pas pu honorer cette commande." %}{% endif %}
+      </p>
+    {% else %}
+      <ol class="mt-5 space-y-3">
+        {% for etape in etapes %}
+          <li class="flex items-start gap-3">
+            <span class="material-icons-round text-[18px]" style="color: {% if etape.le %}var(--success){% else %}var(--text-muted){% endif %}">
+              {% if etape.le %}check_circle{% else %}radio_button_unchecked{% endif %}
+            </span>
+            <span class="text-[14px]" style="color: {% if etape.le %}var(--text){% else %}var(--text-muted){% endif %}">
+              {{ etape.label }}
+              {% if etape.le %}<span class="ml-1 text-[12px]" style="color: var(--text-muted)">{{ etape.le|date:"d/m/Y H:i" }}</span>{% endif %}
+            </span>
+          </li>
+        {% endfor %}
+      </ol>
+    {% endif %}
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <tbody>
+        {% for ligne in lignes %}
+          <tr>
+            <td>{{ ligne.libelle }} <span class="text-[12px]" style="color: var(--text-muted)">{{ ligne.unite_libelle }}</span></td>
+            <td class="num">{{ ligne.quantite|floatformat:"-2" }}</td>
+            <td class="num">{{ ligne.montant_ttc|floatformat:"-2" }} €</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="flex items-center justify-between p-4" style="border-top: 0.5px solid var(--border)">
+      <span class="text-[13px]" style="color: var(--text-secondary)">{% trans "Total à régler" %}</span>
+      <span class="text-[17px]">{{ commande.montant_ttc|floatformat:"-2" }} €</span>
+    </div>
+  </div>
+
+  {% if boutique %}
+    <div class="hs-card space-y-1 p-4">
+      <p class="text-[14px] font-medium">{% trans "Où retirer" %}</p>
+      <p class="text-[13px]" style="color: var(--text-secondary)">
+        {{ boutique.adresse_retrait|default:boutique.localite }}
+        {% if boutique.horaires_retrait %} · {{ boutique.horaires_retrait }}{% endif %}
+      </p>
+      <div class="flex flex-wrap gap-2 pt-2">
+        {% if boutique.telephone %}<a href="tel:{{ boutique.telephone }}" class="hs-btn-outline">{{ boutique.telephone }}</a>{% endif %}
+        <a href="{{ boutique.get_absolute_url }}" class="hs-btn-outline">{% trans "Voir la ferme" %}</a>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if autres %}
+    <div class="hs-card space-y-2 p-4">
+      <p class="text-[14px] font-medium">{% trans "Vos autres commandes" %}</p>
+      <p class="text-[12px]" style="color: var(--text-muted)">{% trans "Chaque ferme prépare la sienne de son côté." %}</p>
+      {% for c in autres %}
+        <a href="{{ c.get_absolute_url }}" class="flex items-center justify-between gap-2 text-[13px]" style="color: var(--action)">
+          <span>{{ c.exploitation.boutique.nom }} · {{ c.numero }}</span>
+          <span>{{ c.montant_ttc|floatformat:"-2" }} €</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <p class="text-center text-[12px]" style="color: var(--text-muted)">
+    {% trans "Gardez ce lien : il suit votre commande jusqu'au retrait." %}
+  </p>
+</section>

@@ -37,6 +37,7 @@ urlpatterns = [
     path("", include("client.urls")),
     path("", include("reseaux.urls")),
     path("", include("stock.urls")),
+    path("", include("vente.urls")),
     path("", include("dti.urls")),
     path("", include("dashboard.urls")),
     path("", include("core.urls")),

@@ -19,7 +19,7 @@ from exploitations.models import Exploitation
 from parcelles.models import Parcelle
 
 from . import facturation_electronique as fe
-from . import superpdp, ubl
+from . import services, superpdp, ubl
 from client.models import Client
 
 from .models import Charge, Devis, Facture, Revenu
@@ -180,21 +180,8 @@ def facturation(request):
 
 
 def _prochain_numero(exploitation, modele=Facture, lettre="F") -> str:
-    """Numéro suivant, séquentiel par année et par série (F-2026-004, D-2026-002).
-
-    Le numéro ne doit contenir ni espace ni caractère exotique : la règle
-    française BR-FR-01 rejette la facture sinon.
-    """
-    annee = timezone.localdate().year
-    prefixe = f"{lettre}-{annee}-"
-    if not exploitation:
-        return f"{prefixe}001"
-    existants = (
-        modele.objects.filter(exploitation=exploitation, numero__startswith=prefixe)
-        .values_list("numero", flat=True)
-    )
-    rangs = [int(n.rsplit("-", 1)[-1]) for n in existants if n.rsplit("-", 1)[-1].isdigit()]
-    return f"{prefixe}{(max(rangs) + 1) if rangs else 1:03d}"
+    """Numéro suivant — la règle vit dans `finances.services`, partagée avec la vente."""
+    return services.prochain_numero(exploitation, modele=modele, lettre=lettre)
 
 
 #: Champs de la fiche client que l'éditeur peut renseigner. `voie` reçoit

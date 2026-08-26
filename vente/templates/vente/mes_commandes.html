@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="max-w-4xl space-y-5">
+
+  <p class="hs-crumb">{% trans "Accueil" %} · {% trans "Mes commandes" %}</p>
+  <h1 class="text-[20px]">{% trans "Mes commandes" %}</h1>
+
+  {% for c in commandes %}
+    <div class="hs-card overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-3 p-4" style="border-bottom: 0.5px solid var(--border)">
+        <div>
+          <p class="text-[15px] font-medium">{{ c.exploitation.boutique.nom|default:c.exploitation.name }}</p>
+          <p class="text-[12px]" style="color: var(--text-secondary)">
+            {{ c.numero }} · {{ c.created_at|date:"d/m/Y" }}
+            {% if c.date_souhaitee %} · {% trans "retrait" %} {{ c.date_souhaitee|date:"d/m/Y" }}{% endif %}
+          </p>
+        </div>
+        <span class="hs-badge {% if c.statut == 'servie' %}hs-badge-success{% elif c.statut == 'refusee' or c.statut == 'annulee' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ c.get_statut_display }}</span>
+      </div>
+      <ul class="space-y-1 p-4 text-[13px]" style="color: var(--text-secondary)">
+        {% for l in c.lignes.all %}
+          <li class="flex justify-between gap-4"><span>{{ l.quantite|floatformat:"-2" }} × {{ l.libelle }}</span><span>{{ l.montant_ttc|floatformat:"-2" }} €</span></li>
+        {% endfor %}
+      </ul>
+      <div class="flex flex-wrap items-center justify-between gap-3 p-4" style="border-top: 0.5px solid var(--border)">
+        <span class="text-[15px]">{{ c.montant_ttc|floatformat:"-2" }} €</span>
+        <div class="flex flex-wrap gap-2">
+          {% if c.facture %}<span class="hs-badge hs-badge-neutral">{% trans "Facture" %} {{ c.facture.numero }}</span>{% endif %}
+          <a href="{{ c.get_absolute_url }}" class="hs-btn-outline">{% trans "Suivre" %}</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="hs-card px-8 py-12 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucune commande pour l'instant" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Vos commandes passées chez vos producteurs apparaîtront ici." %}</p>
+      <a href="{% url 'vente:marche' %}" class="hs-btn-primary mt-4 inline-block">{% trans "Voir le marché" %}</a>
+    </div>
+  {% endfor %}
+
+  <p class="text-[12px]" style="color: var(--text-muted)">
+    {% trans "Vos factures et devis sont dans" %} <a href="{% url 'client:espace' %}" style="color: var(--action)">{% trans "Mes documents" %}</a>.
+  </p>
+</section>
+{% endblock %}

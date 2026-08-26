@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "client",
     "reseaux",
     "stock",
+    "vente",
     # Diagnostics techniques d'irrigation reçus de Cultiveau
     "dti",
     "storage",

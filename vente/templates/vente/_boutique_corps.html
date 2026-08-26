@@ -1,0 +1,55 @@
+{% load i18n %}
+<section class="mx-auto max-w-6xl space-y-6 px-4 py-8 lg:px-8">
+  {% include "vente/_messages.html" %}
+
+  <p class="hs-crumb"><a href="{% url 'vente:marche' %}">{% trans "Le marché" %}</a> · {{ boutique.nom }}</p>
+
+  <div class="hs-card p-6">
+    <div class="flex flex-wrap items-start gap-5">
+      {% if exploitation.logo %}
+        <img src="{{ exploitation.logo.url }}" alt="{{ boutique.nom }}" class="h-16 w-16 rounded-full object-cover">
+      {% endif %}
+      <div class="min-w-0 flex-1 space-y-2">
+        <h1 class="text-[26px] font-medium tracking-tight">{{ boutique.nom }}</h1>
+        {% if boutique.accroche %}<p class="text-[15px]" style="color: var(--text-secondary)">{{ boutique.accroche }}</p>{% endif %}
+        {% if boutique.localite %}
+          <p class="flex items-center gap-1 text-[13px]" style="color: var(--text-muted)">
+            <span class="material-icons-round text-[15px]">place</span>{{ boutique.localite }}
+          </p>
+        {% endif %}
+        <div class="flex flex-wrap gap-2 pt-1">
+          {% if boutique.retrait_ferme %}<span class="hs-badge hs-badge-success">{% trans "Retrait à la ferme" %}</span>{% endif %}
+          {% if boutique.livraison %}
+            <span class="hs-badge hs-badge-neutral">
+              {% if boutique.rayon_livraison_km %}{% blocktrans with km=boutique.rayon_livraison_km %}Livraison à {{ km }} km{% endblocktrans %}{% else %}{% trans "Livraison" %}{% endif %}
+            </span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="space-y-1 text-[13px]">
+        {% if boutique.telephone %}<p><a href="tel:{{ boutique.telephone }}" class="flex items-center gap-1" style="color: var(--action)"><span class="material-icons-round text-[15px]">call</span>{{ boutique.telephone }}</a></p>{% endif %}
+        {% if boutique.email %}<p><a href="mailto:{{ boutique.email }}" class="flex items-center gap-1" style="color: var(--action)"><span class="material-icons-round text-[15px]">mail</span>{{ boutique.email }}</a></p>{% endif %}
+      </div>
+    </div>
+    {% if boutique.description %}<p class="mt-5 whitespace-pre-line text-[14px] leading-relaxed" style="color: var(--text-secondary)">{{ boutique.description }}</p>{% endif %}
+    {% if boutique.horaires_retrait %}
+      <p class="mt-4 flex items-center gap-1 text-[13px]" style="color: var(--text-secondary)">
+        <span class="material-icons-round text-[15px]">schedule</span>{{ boutique.horaires_retrait }}
+      </p>
+    {% endif %}
+  </div>
+
+  {% for rayon in rayons %}
+    <div class="space-y-3">
+      <h2 class="text-[17px] font-medium">{{ rayon.label }}</h2>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {% for p in rayon.produits %}{% include "vente/_carte_produit.html" with p=p %}{% endfor %}
+      </div>
+    </div>
+  {% empty %}
+    <div class="hs-card px-8 py-12 text-center">
+      <p class="text-[15px] font-medium">{% trans "Cette ferme n'a rien en vente pour l'instant" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ses produits reviendront avec la saison." %}</p>
+    </div>
+  {% endfor %}
+</section>

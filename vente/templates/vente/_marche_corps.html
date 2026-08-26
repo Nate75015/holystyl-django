@@ -1,0 +1,42 @@
+{% load i18n %}
+<section class="mx-auto max-w-6xl space-y-6 px-4 py-8 lg:px-8">
+  {% include "vente/_messages.html" %}
+
+  <div class="space-y-2">
+    <h1 class="text-[28px] font-medium tracking-tight">
+      {% if categorie_label %}{{ categorie_label }}{% else %}{% trans "Acheter directement à la ferme" %}{% endif %}
+    </h1>
+    <p class="text-[15px]" style="color: var(--text-secondary)">
+      {% blocktrans count fermes=nb_fermes %}{{ fermes }} ferme propose sa production.{% plural %}{{ fermes }} fermes proposent leur production.{% endblocktrans %}
+    </p>
+  </div>
+
+  <form method="get" action="{% if categorie %}{% url 'vente:marche_categorie' categorie %}{% else %}{% url 'vente:marche' %}{% endif %}" class="flex flex-wrap items-center gap-2">
+    <input type="search" name="q" value="{{ recherche }}" class="max-w-sm" placeholder="{% trans 'Un produit, une ferme, une ville…' %}">
+    <button type="submit" class="hs-btn-primary">{% trans "Rechercher" %}</button>
+    {% if recherche or categorie %}
+      <a href="{% url 'vente:marche' %}" class="hs-btn-outline">{% trans "Tout voir" %}</a>
+    {% endif %}
+  </form>
+
+  <div class="flex flex-wrap gap-2">
+    <a href="{% url 'vente:marche' %}" class="hs-chip-btn {% if not categorie %}hs-chip-btn-active{% endif %}">{% trans "Tout" %}</a>
+    {% for f in familles %}
+      <a href="{% url 'vente:marche_categorie' f.cle %}" class="hs-chip-btn {% if categorie == f.cle %}hs-chip-btn-active{% endif %}">{{ f.label }} · {{ f.n }}</a>
+    {% endfor %}
+  </div>
+
+  {% if produits %}
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {% for p in produits %}{% include "vente/_carte_produit.html" with p=p avec_ferme=True %}{% endfor %}
+    </div>
+  {% else %}
+    <div class="hs-card px-8 py-12 text-center">
+      <p class="text-[15px] font-medium">{% trans "Rien à cet endroit du marché" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Aucune ferme ne propose ce produit pour le moment. Revenez à la saison prochaine, ou élargissez votre recherche." %}
+      </p>
+      <a href="{% url 'vente:marche' %}" class="hs-btn-primary mt-4 inline-block">{% trans "Voir tout le marché" %}</a>
+    </div>
+  {% endif %}
+</section>

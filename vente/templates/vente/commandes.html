@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ tab: 'tous', q: '' }">
+
+  <p class="hs-crumb">{% trans "Vente directe" %} · {% trans "Commandes" %}</p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Commandes" %}</h1>
+    <div class="flex items-center gap-2">
+      <input type="text" x-model="q" placeholder="{% trans 'Rechercher…' %}" class="max-w-[180px]">
+      <a href="{% url 'vente:produits' %}" class="hs-btn-outline">{% trans "Mes produits" %}</a>
+    </div>
+  </div>
+
+  <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+    <button type="button" class="hs-tab" :class="tab === 'tous' && 'hs-tab-active'" @click="tab = 'tous'">{% trans "Toutes" %}</button>
+    {% for value, label in statuts %}
+      <button type="button" class="hs-tab whitespace-nowrap" :class="tab === '{{ value }}' && 'hs-tab-active'" @click="tab = '{{ value }}'">{{ label }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "À traiter" %}</p><p class="text-[22px]">{{ kpi_a_traiter }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "En cours" %}</p><p class="text-[22px]">{{ kpi_en_cours }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Servies" %}</p><p class="text-[22px]">{{ kpi_servies }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Encaissé" %}</p><p class="text-[22px]">{{ kpi_ca }} €</p></div>
+  </div>
+
+  <div class="hs-card overflow-hidden">
+    <table class="hs-table">
+      <thead>
+        <tr>
+          <th>{% trans "Numéro" %}</th>
+          <th>{% trans "Acheteur" %}</th>
+          <th>{% trans "Reçue" %}</th>
+          <th>{% trans "Retrait" %}</th>
+          <th class="num">{% trans "Montant" %}</th>
+          <th>{% trans "Statut" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in commandes %}
+          <tr x-show="(tab === 'tous' || tab === '{{ c.statut }}')
+                      && (!q || '{{ c.numero|escapejs }} {{ c.acheteur_nom|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
+            <td><a href="{% url 'vente:commande_detail' c.pk %}" style="color: var(--action)">{{ c.numero }}</a></td>
+            <td>{{ c.acheteur_nom }}</td>
+            <td style="color: var(--text-secondary)">{{ c.created_at|date:"d/m/Y H:i" }}</td>
+            <td style="color: var(--text-secondary)">
+              {% if c.date_souhaitee %}{{ c.date_souhaitee|date:"d/m/Y" }}{% else %}—{% endif %}
+              {% if c.mode_retrait == 'livraison' %} <span class="hs-badge hs-badge-neutral">{% trans "Livraison" %}</span>{% endif %}
+            </td>
+            <td class="num">{{ c.montant_ttc|floatformat:"-2" }} €</td>
+            <td>
+              <span class="hs-badge {% if c.statut == 'servie' %}hs-badge-success{% elif c.statut == 'nouvelle' %}hs-badge-assurance{% elif c.statut == 'refusee' or c.statut == 'annulee' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ c.get_statut_display }}</span>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not commandes %}
+      <div class="px-14 py-10 text-center">
+        <p class="text-[15px] font-medium">{% trans "Aucune commande pour l'instant" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Les commandes passées sur votre vitrine arrivent ici, et vous êtes prévenu à chaque fois." %}</p>
+        <a href="{% url 'vente:produits' %}" class="hs-btn-primary mt-4 inline-block">{% trans "Voir mes produits" %}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

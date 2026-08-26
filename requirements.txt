@@ -41,6 +41,11 @@ twilio>=9.0,<10
 # Export PDF certifié (dossiers subvention)
 weasyprint>=63,<70
 
+# Images — requis par les ImageField (logo d'exploitation, photos de produits).
+# Arrivait jusqu'ici en dépendance transitive de weasyprint : déclaré, il ne
+# disparaîtra pas le jour où l'export PDF changera de bibliothèque.
+Pillow>=11,<14
+
 # Paiements — Stripe (webhooks)
 stripe>=11,<16
 
