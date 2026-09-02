@@ -112,7 +112,6 @@ def layout(request):
             "label": _("Environnement"), "key": "environnement",
             "items": [
                 {"label": _("Biodiversité"), "url_name": "environnement:biodiversite", "icon": "eco"},
-                {"label": _("Bilan eau"), "url_name": "environnement:bilan_eau", "icon": "water_drop"},
                 {"label": _("Bilan azoté"), "url_name": "environnement:bilan_azote", "icon": "science"},
                 {"label": _("Empreinte carbone"), "url_name": "environnement:empreinte_carbone", "icon": "cloud"},
                 {"label": _("Rapport environnemental"), "url_name": "environnement:rapport", "icon": "assessment"},

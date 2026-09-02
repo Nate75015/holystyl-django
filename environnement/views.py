@@ -7,13 +7,9 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
-import csv
-from collections import defaultdict
 
-from django.http import HttpResponse
 
 from exploitations.models import Exploitation
-from irrigation.models import IrrigationSession
 from parcelles.models import Parcelle
 
 from django.db.models import Avg, Sum
@@ -21,8 +17,6 @@ from django.utils.dateparse import parse_date
 
 from .models import ActiviteTaxonomie, Biodiversite
 
-_DEFAULT_QUOTA_M3 = 45000.0
-_PRIX_EAU_M3 = 0.08
 
 
 def _to_float(value, default=None):
@@ -120,84 +114,22 @@ def biodiversite_delete(request, pk):
     return redirect("environnement:biodiversite")
 
 
-def _bilan_eau_data(request):
-    exploitation = _exploitation(request)
-    sessions = (
-        list(IrrigationSession.objects.filter(exploitation=exploitation).select_related("parcelle"))
-        if exploitation else []
-    )
-    total_m3 = sum(s.volume_delivered_m3 or 0 for s in sessions)
-    quota = exploitation.water_quota_m3 if exploitation and exploitation.water_quota_m3 else _DEFAULT_QUOTA_M3
-    prix_m3 = exploitation.prix_eau_m3 if exploitation and exploitation.prix_eau_m3 is not None else _PRIX_EAU_M3
-
-    # Consommation mensuelle
-    monthly = defaultdict(float)
-    for s in sessions:
-        if s.start_time and s.volume_delivered_m3:
-            monthly[s.start_time.strftime("%Y-%m")] += s.volume_delivered_m3
-    months = sorted(monthly)
-
-    # Consommation quotidienne, un graphique par parcelle (TOUTES les parcelles)
-    parcelles = list(Parcelle.objects.filter(exploitation=exploitation)) if exploitation else []
-    daily_by_parcelle = defaultdict(lambda: defaultdict(float))
-    for s in sessions:
-        if s.parcelle_id and s.start_time and s.volume_delivered_m3:
-            daily_by_parcelle[s.parcelle_id][s.start_time.strftime("%Y-%m-%d")] += s.volume_delivered_m3
-
-    parcelle_charts = []
-    for p in parcelles:
-        days = daily_by_parcelle.get(p.pk, {})
-        ordered = sorted(days)
-        parcelle_charts.append({
-            "nom": p.name,
-            "total": round(sum(days.values()), 1),
-            "labels": [f"{d[8:10]}/{d[5:7]}" for d in ordered],
-            "data": [round(days[d], 1) for d in ordered],
-        })
-    parcelle_charts.sort(key=lambda c: c["total"], reverse=True)
-
-    return {
-        "exploitation": exploitation,
-        "sessions": sessions,
-        "total_m3": round(total_m3, 1),
-        "nb_sessions": len(sessions),
-        "quota": quota,
-        "quota_display": f"{int(quota):,}".replace(",", " "),
-        "pct_quota": round(total_m3 / quota * 100, 1) if quota else 0,
-        "cout": round(total_m3 * prix_m3),
-        "prix_m3": prix_m3,
-        "monthly_chart": {
-            "labels": [f"{m[5:7]}/{m[:4]}" for m in months],
-            "data": [round(monthly[m], 1) for m in months],
-        },
-        "parcelle_charts": parcelle_charts,
-        "has_parcelles": bool(parcelles),
-    }
+# ── Bilan eau : la page a rejoint le DTI ────────────────────────────
+#
+# Elle répondait à la même question que le diagnostic — ce que l'installation
+# fait de l'eau — depuis un autre menu. Les deux adresses subsistent en
+# redirection permanente : un lien partagé ou un signet doit continuer de
+# mener quelque part.
 
 
 @login_required
 def bilan_eau(request):
-    ctx = _bilan_eau_data(request)
-    ctx["page_title"] = _("Bilan Eau")
-    return render(request, "environnement/bilan_eau.html", ctx)
+    return redirect("irrigation:dti", permanent=True)
 
 
 @login_required
 def bilan_eau_export(request):
-    data = _bilan_eau_data(request)
-    response = HttpResponse(content_type="text/csv")
-    response["Content-Disposition"] = 'attachment; filename="bilan_eau.csv"'
-    writer = csv.writer(response)
-    writer.writerow(["Date", "Parcelle", "Volume (m³)", "Déclencheur", "kWh/m³"])
-    for s in data["sessions"]:
-        writer.writerow([
-            s.start_time.strftime("%d/%m/%Y %H:%M") if s.start_time else "",
-            s.parcelle.name if s.parcelle else "",
-            s.volume_delivered_m3 or "",
-            s.get_triggered_by_display(),
-            s.kwh_per_m3 or "",
-        ])
-    return response
+    return redirect("irrigation:bilan_eau_export", permanent=True)
 
 
 @login_required

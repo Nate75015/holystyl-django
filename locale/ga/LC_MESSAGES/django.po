@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 22:55+0200\n"
+"POT-Creation-Date: 2026-09-02 23:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -385,7 +385,7 @@ msgstr "Baill"
 #: agronomie/models.py:84
 #: environnement/templates/environnement/biodiversite.html:254
 #: irrigation/models.py:287 irrigation/teledetection.py:33
-#: irrigation/views.py:452
+#: irrigation/views.py:481
 msgid "Faible"
 msgstr "Íseal"
 
@@ -395,7 +395,7 @@ msgstr "Íseal"
 msgid "Moyen"
 msgstr "Meánach"
 
-#: agronomie/models.py:86 irrigation/models.py:289 irrigation/views.py:456
+#: agronomie/models.py:86 irrigation/models.py:289 irrigation/views.py:485
 msgid "Élevé"
 msgstr "Ard"
 
@@ -2430,7 +2430,7 @@ msgid "Analyse supprimée."
 msgstr "Gabháltas scriosta."
 
 #: analyses/models.py:15 aquaculture/templates/aquaculture/bassins.html:41
-#: core/context_processors.py:189 exploitations/views.py:43
+#: core/context_processors.py:188 exploitations/views.py:43
 #: finances/models.py:18 finances/templates/finances/bilan_economique.html:38
 #: finances/templates/finances/subvention_pdf.html:31
 #: irrigation/templates/irrigation/bassinage.html:162
@@ -2979,7 +2979,7 @@ msgstr ""
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/detail.html:10
 #: aquaculture/templates/aquaculture/especes.html:33
-#: core/context_processors.py:163
+#: core/context_processors.py:162
 #, fuzzy
 #| msgid "culture"
 msgid "Aquaculture"
@@ -2988,7 +2988,7 @@ msgstr "barr"
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/bassins.html:10
 #: aquaculture/templates/aquaculture/detail.html:10 aquaculture/views.py:87
-#: core/context_processors.py:165
+#: core/context_processors.py:164
 #, fuzzy
 #| msgid "Basse"
 msgid "Bassins"
@@ -3386,7 +3386,7 @@ msgstr ""
 msgid "Origine (ex : Bretagne)"
 msgstr ""
 
-#: aquaculture/views.py:208 core/context_processors.py:166
+#: aquaculture/views.py:208 core/context_processors.py:165
 #, fuzzy
 #| msgid "pièces jointes"
 msgid "Espèces aquacoles"
@@ -3538,21 +3538,21 @@ msgid "clients"
 msgstr "cliaint"
 
 #: client/models.py:128 contrat/templates/contrat/_bail_modal.html:18
-#: core/context_processors.py:173 core/espaces.py:57
+#: core/context_processors.py:172 core/espaces.py:57
 #, fuzzy
 #| msgid "Taille"
 msgid "Bailleur"
 msgstr "Bearradh"
 
-#: client/models.py:129 core/context_processors.py:174 core/espaces.py:60
+#: client/models.py:129 core/context_processors.py:173 core/espaces.py:60
 msgid "Comptable"
 msgstr ""
 
-#: client/models.py:130 core/context_processors.py:175
+#: client/models.py:130 core/context_processors.py:174
 msgid "Avocat"
 msgstr ""
 
-#: client/models.py:131 client/views.py:208 core/context_processors.py:176
+#: client/models.py:131 client/views.py:208 core/context_processors.py:175
 #: planning/templates/planning/planning.html:211
 msgid "CUMA"
 msgstr "CUMA"
@@ -3731,7 +3731,7 @@ msgstr "Ríomhphost nua"
 #: client/templates/client/clients.html:11
 #: client/templates/client/clients.html:30
 #: client/templates/client/detail.html:10 client/views.py:94
-#: core/context_processors.py:172
+#: core/context_processors.py:171
 #, fuzzy
 #| msgid "Client"
 msgid "Clients"
@@ -3780,7 +3780,7 @@ msgid "Client"
 msgstr "Cliant"
 
 #: client/templates/client/clients.html:42
-#: client/templates/client/partenaires.html:103 core/context_processors.py:186
+#: client/templates/client/partenaires.html:103 core/context_processors.py:185
 #: exploitations/views.py:225 exploitations/views.py:390
 #: exploitations/views.py:391 public/templates/public/home.html:482
 msgid "Contact"
@@ -3935,7 +3935,7 @@ msgstr ""
 msgid "Aucune facture pour le moment."
 msgstr "Níl aon chomhrá go fóill."
 
-#: client/templates/client/partenaires.html:7 core/context_processors.py:170
+#: client/templates/client/partenaires.html:7 core/context_processors.py:169
 #, fuzzy
 #| msgid "exploitations"
 msgid "Relations"
@@ -4065,7 +4065,7 @@ msgstr "Rialaitheoir comhla"
 msgid "Approvisionnement"
 msgstr "Comhshaol"
 
-#: contrat/models.py:13 core/context_processors.py:140 finances/models.py:23
+#: contrat/models.py:13 core/context_processors.py:139 finances/models.py:23
 msgid "Assurance"
 msgstr "Árachas"
 
@@ -4752,7 +4752,7 @@ msgstr "Pleanáilte"
 #: contrat/templates/contrat/assurances.html:8
 #: contrat/templates/contrat/baux.html:7
 #: contrat/templates/contrat/contrats.html:7
-#: contrat/templates/contrat/msa.html:7 core/context_processors.py:135
+#: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
 #, fuzzy
 #| msgid "Contact"
@@ -4761,7 +4761,7 @@ msgstr "Teagmháil"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:148
-#: core/context_processors.py:139
+#: core/context_processors.py:138
 msgid "Patrimoine"
 msgstr ""
 
@@ -4883,7 +4883,7 @@ msgstr ""
 
 #: contrat/templates/contrat/baux.html:7 contrat/templates/contrat/baux.html:10
 #: contrat/templates/contrat/baux.html:29 contrat/views.py:100
-#: core/context_processors.py:138
+#: core/context_processors.py:137
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
@@ -4934,7 +4934,7 @@ msgstr ""
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/contrats.html:10
 #: contrat/templates/contrat/contrats.html:29 contrat/views.py:49
-#: core/context_processors.py:137
+#: core/context_processors.py:136
 #, fuzzy
 #| msgid "Contact"
 msgid "Contrats"
@@ -5284,8 +5284,9 @@ msgstr "Ceapacha"
 #: core/context_processors.py:39 core/context_processors.py:90
 #: core/context_processors.py:92
 #: finances/templates/finances/subvention_pdf.html:49
-#: interventions/models.py:12 irrigation/templates/irrigation/irrigation.html:7
-#: irrigation/views.py:84 notifications/models.py:42 operations/materiel.py:27
+#: interventions/models.py:12 irrigation/templates/irrigation/dti.html:7
+#: irrigation/templates/irrigation/irrigation.html:7 irrigation/views.py:85
+#: notifications/models.py:42 operations/materiel.py:27
 #: operations/models.py:165 parcelles/templates/parcelles/campagne_form.html:74
 #: parcelles/templates/parcelles/campagnes.html:49
 #: parcelles/templates/parcelles/detail.html:50
@@ -5294,7 +5295,7 @@ msgstr "Ceapacha"
 msgid "Irrigation"
 msgstr "Uisciú"
 
-#: core/context_processors.py:40 core/context_processors.py:126
+#: core/context_processors.py:40 core/context_processors.py:125
 #: planning/templates/planning/planning.html:18 planning/views.py:311
 #: planning/views.py:333
 msgid "Planning"
@@ -5391,18 +5392,19 @@ msgstr "Ard"
 
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
-#: irrigation/templates/irrigation/bassinage.html:19 irrigation/views.py:308
+#: irrigation/templates/irrigation/bassinage.html:19 irrigation/views.py:337
 #, fuzzy
 #| msgid "Basse"
 msgid "Bassinage"
 msgstr "Íseal"
 
 #: core/context_processors.py:94 irrigation/templates/irrigation/antigel.html:8
-#: irrigation/templates/irrigation/antigel.html:9 irrigation/views.py:512
+#: irrigation/templates/irrigation/antigel.html:9 irrigation/views.py:541
 msgid "Anti-gel"
 msgstr ""
 
-#: core/context_processors.py:95 irrigation/views.py:170
+#: core/context_processors.py:95 irrigation/templates/irrigation/dti.html:7
+#: irrigation/views.py:176
 msgid "DTI"
 msgstr ""
 
@@ -5458,7 +5460,6 @@ msgid "PAC"
 msgstr "PAC"
 
 #: core/context_processors.py:112
-#: environnement/templates/environnement/bilan_eau.html:7
 #: environnement/templates/environnement/biodiversite.html:8
 #: environnement/templates/environnement/placeholder.html:6
 #: environnement/templates/environnement/taxonomie.html:7
@@ -5468,41 +5469,35 @@ msgstr "Comhshaol"
 #: core/context_processors.py:114
 #: environnement/templates/environnement/biodiversite.html:8
 #: environnement/templates/environnement/biodiversite.html:10
-#: environnement/views.py:73
+#: environnement/views.py:67
 msgid "Biodiversité"
 msgstr "Bithéagsúlacht"
 
-#: core/context_processors.py:115
-#: environnement/templates/environnement/bilan_eau.html:7
-#: environnement/templates/environnement/bilan_eau.html:9
-msgid "Bilan eau"
-msgstr "Iarmhéid uisce"
-
-#: core/context_processors.py:116 environnement/views.py:205
+#: core/context_processors.py:115 environnement/views.py:137
 msgid "Bilan azoté"
 msgstr "Iarmhéid nítrigine"
 
-#: core/context_processors.py:117 environnement/views.py:212
+#: core/context_processors.py:116 environnement/views.py:144
 msgid "Empreinte carbone"
 msgstr "Lorg carbóin"
 
-#: core/context_processors.py:118 environnement/views.py:219
+#: core/context_processors.py:117 environnement/views.py:151
 #, fuzzy
 #| msgid "Environnement"
 msgid "Rapport environnemental"
 msgstr "Comhshaol"
 
-#: core/context_processors.py:119 environnement/views.py:226
+#: core/context_processors.py:118 environnement/views.py:158
 msgid "Santé végétale"
 msgstr "Sláinte plandaí"
 
-#: core/context_processors.py:120
+#: core/context_processors.py:119
 #: environnement/templates/environnement/taxonomie.html:9
-#: environnement/views.py:264 public/templates/public/home.html:102
+#: environnement/views.py:196 public/templates/public/home.html:102
 msgid "Taxonomie EU"
 msgstr "Tacsanomaíocht AE"
 
-#: core/context_processors.py:124 equipe/templates/equipe/contrats.html:7
+#: core/context_processors.py:123 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/equipe.html:8 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/placeholder.html:6
@@ -5510,37 +5505,37 @@ msgstr "Tacsanomaíocht AE"
 msgid "RH"
 msgstr "AD"
 
-#: core/context_processors.py:127 equipe/templates/equipe/equipe.html:8
+#: core/context_processors.py:126 equipe/templates/equipe/equipe.html:8
 #: equipe/templates/equipe/equipe.html:10 equipe/views.py:49
 #: planning/templates/planning/planning.html:165
 msgid "Équipe"
 msgstr "Foireann"
 
-#: core/context_processors.py:128 equipe/templates/equipe/taches.html:8
+#: core/context_processors.py:127 equipe/templates/equipe/taches.html:8
 #: equipe/templates/equipe/taches.html:10 equipe/views.py:210
 msgid "Tâches"
 msgstr "Tascanna"
 
-#: core/context_processors.py:129 equipe/templates/equipe/contrats.html:7
+#: core/context_processors.py:128 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
 msgstr ""
 
-#: core/context_processors.py:130 equipe/templates/equipe/offres.html:11
+#: core/context_processors.py:129 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
 msgstr ""
 
-#: core/context_processors.py:131 equipe/templates/equipe/paie.html:8
+#: core/context_processors.py:130 equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
 msgstr ""
 
-#: core/context_processors.py:141
+#: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
 msgstr ""
 
-#: core/context_processors.py:145 vente/templates/vente/boutique.html:7
+#: core/context_processors.py:144 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/produits.html:16
 #, fuzzy
@@ -5548,7 +5543,7 @@ msgstr ""
 msgid "Vente directe"
 msgstr "Díol torthaí"
 
-#: core/context_processors.py:147 vente/templates/vente/commande_detail.html:7
+#: core/context_processors.py:146 vente/templates/vente/commande_detail.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/commandes.html:10 vente/views.py:257
 #, fuzzy
@@ -5556,7 +5551,7 @@ msgstr "Díol torthaí"
 msgid "Commandes"
 msgstr "Baile"
 
-#: core/context_processors.py:148 vente/templates/vente/boutique.html:12
+#: core/context_processors.py:147 vente/templates/vente/boutique.html:12
 #: vente/templates/vente/commandes.html:13
 #: vente/templates/vente/produits.html:16
 #: vente/templates/vente/produits.html:19 vente/views.py:147
@@ -5565,18 +5560,18 @@ msgstr "Baile"
 msgid "Mes produits"
 msgstr "Táirge"
 
-#: core/context_processors.py:149 vente/templates/vente/boutique.html:7
+#: core/context_processors.py:148 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/boutique.html:10
 #: vente/templates/vente/produits.html:22 vente/views.py:117
 msgid "Ma boutique"
 msgstr ""
 
-#: core/context_processors.py:150 vente/templates/vente/_boutique_corps.html:5
+#: core/context_processors.py:149 vente/templates/vente/_boutique_corps.html:5
 #: vente/templates/vente/_produit_corps.html:6
 msgid "Le marché"
 msgstr ""
 
-#: core/context_processors.py:154 stock/templates/stock/articles.html:20
+#: core/context_processors.py:153 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:23 stock/templates/stock/depots.html:16
 #: stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/recoltes.html:11
@@ -5585,34 +5580,34 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: core/context_processors.py:156 stock/templates/stock/articles.html:20
+#: core/context_processors.py:155 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:47 stock/templates/stock/depots.html:22
 #: stock/templates/stock/depots.html:46
 #: stock/templates/stock/mouvements.html:14
 msgid "Articles"
 msgstr ""
 
-#: core/context_processors.py:157 public/templates/public/home.html:276
+#: core/context_processors.py:156 public/templates/public/home.html:276
 #: stock/templates/stock/recoltes.html:11
 #: stock/templates/stock/recoltes.html:14
 #: stock/templates/stock/recoltes.html:34 stock/views.py:301
 msgid "Récoltes"
 msgstr "Fómhair"
 
-#: core/context_processors.py:158 stock/templates/stock/mouvements.html:8
+#: core/context_processors.py:157 stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/mouvements.html:31
 #, fuzzy
 #| msgid "document"
 msgid "Mouvements"
 msgstr "doiciméad"
 
-#: core/context_processors.py:159 stock/templates/stock/depots.html:16
+#: core/context_processors.py:158 stock/templates/stock/depots.html:16
 #: stock/templates/stock/depots.html:19 stock/templates/stock/depots.html:32
 #: stock/views.py:371
 msgid "Dépôts"
 msgstr ""
 
-#: core/context_processors.py:180
+#: core/context_processors.py:179
 #: exploitations/templates/exploitations/adresses.html:7
 #: exploitations/templates/exploitations/contact.html:7
 #: exploitations/templates/exploitations/juridique.html:7
@@ -5626,46 +5621,46 @@ msgstr ""
 msgid "Mon exploitation"
 msgstr "M'fheirm"
 
-#: core/context_processors.py:184 exploitations/views.py:33
+#: core/context_processors.py:183 exploitations/views.py:33
 #, fuzzy
 #| msgid "Identité"
 msgid "Identités"
 msgstr "Aitheantas"
 
-#: core/context_processors.py:185 exploitations/views.py:36
+#: core/context_processors.py:184 exploitations/views.py:36
 #: exploitations/views.py:308 exploitations/views.py:309
 msgid "Juridique"
 msgstr "Dlíthiúil"
 
-#: core/context_processors.py:187 exploitations/views.py:39
+#: core/context_processors.py:186 exploitations/views.py:39
 #: exploitations/views.py:432 exploitations/views.py:433
 #: stock/templates/stock/_depot_modal.html:26
 #: stock/templates/stock/depots.html:44
 msgid "Localisation"
 msgstr "Suíomh"
 
-#: core/context_processors.py:188 exploitations/views.py:41
+#: core/context_processors.py:187 exploitations/views.py:41
 msgid "Caractéristiques agricoles"
 msgstr "Saintréithe talmhaíochta"
 
-#: core/context_processors.py:190 exploitations/views.py:45
+#: core/context_processors.py:189 exploitations/views.py:45
 #, fuzzy
 #| msgid "Notifications"
 msgid "Certificats et labels"
 msgstr "Fógraí"
 
-#: core/context_processors.py:191
+#: core/context_processors.py:190
 #: exploitations/templates/exploitations/societes.html:32
 #: exploitations/views.py:226 exploitations/views.py:739
 #: exploitations/views.py:740
 msgid "Sociétés liées"
 msgstr "Cuideachtaí gaolmhara"
 
-#: core/context_processors.py:192 exploitations/views.py:47
+#: core/context_processors.py:191 exploitations/views.py:47
 msgid "RH et CA"
 msgstr ""
 
-#: core/context_processors.py:193
+#: core/context_processors.py:192
 #: operations/templates/operations/parc_materiel.html:36
 #: operations/templates/operations/parc_materiel.html:38
 #: operations/views.py:104 public/templates/public/home.html:261
@@ -5761,7 +5756,7 @@ msgid "Espace comptable"
 msgstr "Achar iomlán"
 
 #: dashboard/templates/dashboard/comptable.html:18
-#: environnement/templates/environnement/bilan_eau.html:11
+#: irrigation/templates/irrigation/_bilan_eau.html:9
 msgid "Export CSV"
 msgstr "Easpórtáil CSV"
 
@@ -6953,75 +6948,6 @@ msgstr "Branar"
 msgid "observations"
 msgstr "Breathnuithe"
 
-#: environnement/templates/environnement/bilan_eau.html:18
-#, fuzzy
-#| msgid "Irrigation"
-msgid "Irrigation totale"
-msgstr "Uisciú"
-
-#: environnement/templates/environnement/bilan_eau.html:22
-#, fuzzy
-#| msgid "sessions enregistrées"
-msgid "Sessions enregistrées"
-msgstr "seisiúin chláraithe"
-
-#: environnement/templates/environnement/bilan_eau.html:26
-#, fuzzy
-#| msgid "Quota eau"
-msgid "Quota"
-msgstr "Cuóta uisce"
-
-#: environnement/templates/environnement/bilan_eau.html:33
-msgid "estimé"
-msgstr "measta"
-
-#: environnement/templates/environnement/bilan_eau.html:40
-msgid "Consommation mensuelle (m³)"
-msgstr "Tomhaltas míosúil (m³)"
-
-#: environnement/templates/environnement/bilan_eau.html:46
-#: environnement/templates/environnement/bilan_eau.html:74
-msgid "Aucune session d'irrigation enregistrée"
-msgstr "Níl aon seisiún uiscithe cláraithe"
-
-#: environnement/templates/environnement/bilan_eau.html:47
-msgid "Les données apparaîtront dès la première session."
-msgstr ""
-
-#: environnement/templates/environnement/bilan_eau.html:54
-msgid "Consommation par parcelle (m³/jour)"
-msgstr "Tomhaltas de réir gabháltais (m³/lá)"
-
-#: environnement/templates/environnement/bilan_eau.html:67
-msgid "Aucune session d'irrigation"
-msgstr "Níl aon seisiún uiscithe"
-
-#: environnement/templates/environnement/bilan_eau.html:75
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
-msgid "Enregistrez une session pour voir la consommation par parcelle."
-msgstr ""
-"Níl aon ghabháltas cláraithe. Cruthaigh do ghabháltais chun an tomhaltas in "
-"aghaidh an ghabháltais a fheiceáil."
-
-#: environnement/templates/environnement/bilan_eau.html:79
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
-msgid "Aucune parcelle enregistrée"
-msgstr "Níl aon chostas cláraithe."
-
-#: environnement/templates/environnement/bilan_eau.html:80
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
-msgid "Créez vos parcelles pour voir la consommation par parcelle."
-msgstr ""
-"Níl aon ghabháltas cláraithe. Cruthaigh do ghabháltais chun an tomhaltas in "
-"aghaidh an ghabháltais a fheiceáil."
-
 #: environnement/templates/environnement/biodiversite.html:12
 #: environnement/templates/environnement/biodiversite.html:96
 #, fuzzy
@@ -7168,12 +7094,12 @@ msgid "Très faible"
 msgstr "Le déanamh"
 
 #: environnement/templates/environnement/biodiversite.html:254
-#: irrigation/views.py:137 planning/models.py:261 planning/models.py:297
+#: irrigation/views.py:138 planning/models.py:261 planning/models.py:297
 msgid "Bon"
 msgstr "Maith"
 
 #: environnement/templates/environnement/biodiversite.html:254
-#: irrigation/views.py:137
+#: irrigation/views.py:138
 msgid "Excellent"
 msgstr ""
 
@@ -7341,11 +7267,7 @@ msgstr "LD (€)"
 msgid "Justification"
 msgstr "Fógraí"
 
-#: environnement/views.py:181
-msgid "Bilan Eau"
-msgstr "Iarmhéid Uisce"
-
-#: environnement/views.py:206
+#: environnement/views.py:138
 msgid ""
 "Bilan azoté (méthode du bilan) : entrées, exports par les cultures, "
 "reliquats et pression sur la directive Nitrates."
@@ -7353,7 +7275,7 @@ msgstr ""
 "Iarmhéid nítrigine (modh an iarmhéid): ionchuir, easpórtáil ag na barra, "
 "fuíoll agus brú ar an treoir Níotráití."
 
-#: environnement/views.py:213
+#: environnement/views.py:145
 msgid ""
 "Émissions de gaz à effet de serre de l'exploitation et stockage carbone des "
 "sols (diagnostic type GES / label bas-carbone)."
@@ -7361,7 +7283,7 @@ msgstr ""
 "Astaíochtaí gás ceaptha teasa an ghabháltais agus stóráil charbóin na n-"
 "ithreacha (diagnóis chineál GES / lipéad ísealcharbóin)."
 
-#: environnement/views.py:220
+#: environnement/views.py:152
 msgid ""
 "Synthèse environnementale de l'exploitation, exportable, regroupant les "
 "indicateurs (eau, azote, carbone, biodiversité)."
@@ -7369,7 +7291,7 @@ msgstr ""
 "Achoimre chomhshaoil an ghabháltais, easpórtáilte, a chuimsíonn na táscairí "
 "(uisce, nítrigin, carbón, bithéagsúlacht)."
 
-#: environnement/views.py:227
+#: environnement/views.py:159
 msgid ""
 "Suivi sanitaire des cultures : maladies, ravageurs, observations et "
 "indicateurs de fréquence de traitement (IFT)."
@@ -10425,7 +10347,7 @@ msgstr ""
 #: exploitations/templates/exploitations/section.html:192
 #: exploitations/templates/exploitations/settings.html:7
 #: exploitations/templates/exploitations/societes.html:127
-#: irrigation/views.py:86
+#: irrigation/views.py:87
 msgid "Vue d'ensemble"
 msgstr ""
 
@@ -12608,7 +12530,7 @@ msgstr "scór DTI"
 msgid "scores DTI"
 msgstr "scóir DTI"
 
-#: irrigation/models.py:290 irrigation/views.py:137 irrigation/views.py:457
+#: irrigation/models.py:290 irrigation/views.py:138 irrigation/views.py:486
 #: planning/models.py:300
 msgid "Critique"
 msgstr "Criticiúil"
@@ -12733,6 +12655,81 @@ msgstr "Taise"
 #: irrigation/teledetection.py:57
 msgid "Bonne teneur en eau (ou présence d'eau libre)."
 msgstr ""
+
+#: irrigation/templates/irrigation/_bilan_eau.html:8
+#, fuzzy
+#| msgid "Bilan eau"
+msgid "Bilan d'eau"
+msgstr "Iarmhéid uisce"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:14
+#, fuzzy
+#| msgid "Irrigation"
+msgid "Irrigation totale"
+msgstr "Uisciú"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:18
+#, fuzzy
+#| msgid "sessions enregistrées"
+msgid "Sessions enregistrées"
+msgstr "seisiúin chláraithe"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:22
+#, fuzzy
+#| msgid "Quota eau"
+msgid "Quota"
+msgstr "Cuóta uisce"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:29
+msgid "estimé"
+msgstr "measta"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:36
+msgid "Consommation mensuelle (m³)"
+msgstr "Tomhaltas míosúil (m³)"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:42
+#: irrigation/templates/irrigation/_bilan_eau.html:70
+msgid "Aucune session d'irrigation enregistrée"
+msgstr "Níl aon seisiún uiscithe cláraithe"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:43
+msgid "Les données apparaîtront dès la première session."
+msgstr ""
+
+#: irrigation/templates/irrigation/_bilan_eau.html:50
+msgid "Consommation par parcelle (m³/jour)"
+msgstr "Tomhaltas de réir gabháltais (m³/lá)"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:63
+msgid "Aucune session d'irrigation"
+msgstr "Níl aon seisiún uiscithe"
+
+#: irrigation/templates/irrigation/_bilan_eau.html:71
+#, fuzzy
+#| msgid ""
+#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
+#| "consommation par parcelle."
+msgid "Enregistrez une session pour voir la consommation par parcelle."
+msgstr ""
+"Níl aon ghabháltas cláraithe. Cruthaigh do ghabháltais chun an tomhaltas in "
+"aghaidh an ghabháltais a fheiceáil."
+
+#: irrigation/templates/irrigation/_bilan_eau.html:75
+#, fuzzy
+#| msgid "Aucune charge enregistrée."
+msgid "Aucune parcelle enregistrée"
+msgstr "Níl aon chostas cláraithe."
+
+#: irrigation/templates/irrigation/_bilan_eau.html:76
+#, fuzzy
+#| msgid ""
+#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
+#| "consommation par parcelle."
+msgid "Créez vos parcelles pour voir la consommation par parcelle."
+msgstr ""
+"Níl aon ghabháltas cláraithe. Cruthaigh do ghabháltais chun an tomhaltas in "
+"aghaidh an ghabháltais a fheiceáil."
 
 #: irrigation/templates/irrigation/_etc_card.html:9
 #, fuzzy
@@ -12918,7 +12915,7 @@ msgstr "Méadar fuinnimh"
 msgid "Coût eau"
 msgstr "Costas uisce"
 
-#: irrigation/templates/irrigation/_pumping_card.html:64 irrigation/views.py:98
+#: irrigation/templates/irrigation/_pumping_card.html:64 irrigation/views.py:99
 #, fuzzy
 #| msgid "Coût eau"
 msgid "Coût total"
@@ -13240,10 +13237,6 @@ msgstr "cuóta uisce (m³)"
 msgid "Supprimer ce bassinage ?"
 msgstr "An chabhair seo a scriosadh?"
 
-#: irrigation/templates/irrigation/dti.html:7
-msgid "Cultures & Élevage · DTI"
-msgstr ""
-
 #: irrigation/templates/irrigation/dti.html:15
 #, fuzzy
 #| msgid "Score DTI"
@@ -13340,13 +13333,13 @@ msgstr ""
 msgid "Gestion de l'irrigation"
 msgstr "seisiún uiscithe"
 
-#: irrigation/templates/irrigation/irrigation.html:24 irrigation/views.py:90
+#: irrigation/templates/irrigation/irrigation.html:24 irrigation/views.py:91
 #, fuzzy
 #| msgid "Capteurs"
 msgid "Calculateurs"
 msgstr "Braiteoirí"
 
-#: irrigation/templates/irrigation/irrigation.html:35 irrigation/views.py:87
+#: irrigation/templates/irrigation/irrigation.html:35 irrigation/views.py:88
 msgid "Zones"
 msgstr "Criosanna"
 
@@ -13360,7 +13353,7 @@ msgstr "Cruthaigh cuntas"
 msgid "Regroupez vos parcelles pour piloter leur irrigation."
 msgstr ""
 
-#: irrigation/templates/irrigation/irrigation.html:62 irrigation/views.py:88
+#: irrigation/templates/irrigation/irrigation.html:62 irrigation/views.py:89
 msgid "Programmes"
 msgstr "Cláir"
 
@@ -13376,7 +13369,7 @@ msgstr ""
 msgid "Automatisez l'arrosage selon un horaire et une fréquence."
 msgstr ""
 
-#: irrigation/templates/irrigation/irrigation.html:89 irrigation/views.py:91
+#: irrigation/templates/irrigation/irrigation.html:89 irrigation/views.py:92
 msgid "Stations"
 msgstr "Stáisiúin"
 
@@ -13507,155 +13500,155 @@ msgstr "Sreabhadh uasta"
 msgid "Pression max (bar)"
 msgstr "Brú uasta"
 
-#: irrigation/views.py:89
+#: irrigation/views.py:90
 msgid "Sessions"
 msgstr "Seisiúin"
 
-#: irrigation/views.py:94
+#: irrigation/views.py:95
 #, fuzzy
 #| msgid "Aides couplées"
 msgid "Zones configurées"
 msgstr "Cabhracha cúpláilte"
 
-#: irrigation/views.py:95
+#: irrigation/views.py:96
 #, fuzzy
 #| msgid "Sessions"
 msgid "Sessions actives"
 msgstr "Seisiúin"
 
-#: irrigation/views.py:96
+#: irrigation/views.py:97
 #, fuzzy
 #| msgid "Surface totale"
 msgid "Eau totale"
 msgstr "Achar iomlán"
 
-#: irrigation/views.py:97
+#: irrigation/views.py:98
 #, fuzzy
 #| msgid "Sessions"
 msgid "Sessions totales"
 msgstr "Seisiúin"
 
-#: irrigation/views.py:137
+#: irrigation/views.py:138
 msgid "À optimiser"
 msgstr ""
 
-#: irrigation/views.py:195
+#: irrigation/views.py:224
 #, fuzzy
 #| msgid "Exploitation enregistrée."
 msgid "Diagnostic DTI enregistré."
 msgstr "Gabháltas cláraithe."
 
-#: irrigation/views.py:226
+#: irrigation/views.py:255
 #, python-format
 msgid "Zone « %(z)s » ajoutée."
 msgstr ""
 
-#: irrigation/views.py:260
+#: irrigation/views.py:289
 #, python-format
 msgid "Programme « %(p)s » ajouté."
 msgstr ""
 
-#: irrigation/views.py:285
+#: irrigation/views.py:314
 #, python-format
 msgid "Station « %(s)s » ajoutée."
 msgstr ""
 
-#: irrigation/views.py:331
+#: irrigation/views.py:360
 #, fuzzy
 #| msgid "Parcelle mise à jour."
 msgid "Bassinage mis à jour."
 msgstr "Gabháltas nuashonraithe."
 
-#: irrigation/views.py:358
+#: irrigation/views.py:387
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Bassinage supprimé."
 msgstr "Gabháltas scriosta."
 
-#: irrigation/views.py:389
+#: irrigation/views.py:418
 #, python-format
 msgid "Bassinage — %(v)s ≥ %(s)s°C"
 msgstr ""
 
-#: irrigation/views.py:397
+#: irrigation/views.py:426
 #, python-format
 msgid "Alerte bassinage ajoutée pour %(v)s."
 msgstr ""
 
-#: irrigation/views.py:399 irrigation/views.py:554
+#: irrigation/views.py:428 irrigation/views.py:583
 msgid "Choisissez une ville et un seuil pour ajouter l'alerte."
 msgstr ""
 
-#: irrigation/views.py:419
+#: irrigation/views.py:448
 msgid "Bassinage déclenché."
 msgstr ""
 
-#: irrigation/views.py:425
+#: irrigation/views.py:454
 msgid "Vigne (débourrement)"
 msgstr ""
 
-#: irrigation/views.py:426
+#: irrigation/views.py:455
 msgid "Vigne (floraison)"
 msgstr ""
 
-#: irrigation/views.py:427
+#: irrigation/views.py:456
 msgid "Tomate (jeune plant)"
 msgstr ""
 
-#: irrigation/views.py:428
+#: irrigation/views.py:457
 msgid "Blé (tallage)"
 msgstr ""
 
-#: irrigation/views.py:429
+#: irrigation/views.py:458
 msgid "Maïs (levée)"
 msgstr ""
 
-#: irrigation/views.py:430
+#: irrigation/views.py:459
 msgid "Abricotier (fleurs)"
 msgstr ""
 
-#: irrigation/views.py:436
+#: irrigation/views.py:465
 msgid "Aucun risque de gel (min ≥ 3°C)"
 msgstr ""
 
-#: irrigation/views.py:437
+#: irrigation/views.py:466
 msgid "Risque faible (0 à 3°C)"
 msgstr ""
 
-#: irrigation/views.py:438
+#: irrigation/views.py:467
 msgid "Risque modéré (-1 à 0°C)"
 msgstr ""
 
-#: irrigation/views.py:439
+#: irrigation/views.py:468
 msgid "Risque élevé (-3 à -1°C)"
 msgstr ""
 
-#: irrigation/views.py:440
+#: irrigation/views.py:469
 msgid "Risque critique (min < -3°C)"
 msgstr ""
 
-#: irrigation/views.py:441
+#: irrigation/views.py:470
 msgid "Données indisponibles"
 msgstr ""
 
-#: irrigation/views.py:448
+#: irrigation/views.py:477
 msgid "Inconnu"
 msgstr ""
 
-#: irrigation/views.py:450
+#: irrigation/views.py:479
 msgid "Aucun"
 msgstr ""
 
-#: irrigation/views.py:454
+#: irrigation/views.py:483
 msgid "Modéré"
 msgstr ""
 
-#: irrigation/views.py:544
+#: irrigation/views.py:573
 #, python-format
 msgid "Gel — %(v)s ≤ %(s)s°C"
 msgstr ""
 
-#: irrigation/views.py:552
+#: irrigation/views.py:581
 #, python-format
 msgid "Alerte anti-gel ajoutée pour %(v)s."
 msgstr ""
