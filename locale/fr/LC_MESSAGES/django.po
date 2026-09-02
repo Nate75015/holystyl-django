@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 17:00+0200\n"
+"POT-Creation-Date: 2026-09-02 20:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -301,10 +301,11 @@ msgstr ""
 #: core/adresse.py:73 elevage/models.py:26 elevage/models.py:36
 #: exploitations/formes_juridiques.py:79 exploitations/models.py:97
 #: finances/models.py:24 finances/models.py:50 interventions/models.py:26
-#: operations/models.py:21 operations/models.py:87 operations/models.py:119
-#: operations/models.py:152 pac/models.py:18 planning/models.py:111
-#: planning/models.py:151 planning/models.py:215 stock/models.py:44
-#: stock/models.py:86 stock/models.py:155 vente/models.py:159
+#: operations/materiel.py:31 operations/materiel.py:127
+#: operations/models.py:135 operations/models.py:167 pac/models.py:18
+#: planning/models.py:111 planning/models.py:151 planning/models.py:215
+#: stock/models.py:44 stock/models.py:86 stock/models.py:155
+#: vente/models.py:159
 msgid "Autre"
 msgstr ""
 
@@ -312,7 +313,7 @@ msgstr ""
 #: analyse_sol/models.py:134 aquaculture/models.py:39 aquaculture/models.py:148
 #: elevage/models.py:38 equipe/models.py:23 exploitations/models.py:105
 #: iot/models.py:40 messagerie/models.py:115 meteo/models.py:49
-#: operations/models.py:30 parcelles/models.py:44 stock/models.py:49
+#: operations/models.py:48 parcelles/models.py:44 stock/models.py:49
 #: vente/models.py:189 vente/models.py:339
 msgid "nom"
 msgstr ""
@@ -520,7 +521,7 @@ msgstr ""
 #: agronomie/models.py:209 client/models.py:48 client/models.py:138
 #: contrat/models.py:28 contrat/models.py:166 dti/models.py:143
 #: dti/models.py:238 dti/models.py:289 exploitations/models.py:472
-#: stock/models.py:51
+#: operations/models.py:49 operations/models.py:196 stock/models.py:51
 msgid "type"
 msgstr ""
 
@@ -680,7 +681,7 @@ msgstr ""
 #: agronomie/templates/agronomie/cultures.html:263
 #: agronomie/templates/agronomie/cultures.html:314
 #: agronomie/templates/agronomie/cultures.html:350 interventions/models.py:16
-#: operations/models.py:113
+#: operations/models.py:161
 msgid "Semis"
 msgstr ""
 
@@ -690,7 +691,7 @@ msgstr ""
 #: agronomie/templates/agronomie/cultures.html:239
 #: agronomie/templates/agronomie/cultures.html:315
 #: agronomie/templates/agronomie/cultures.html:351 interventions/models.py:15
-#: operations/models.py:115 stock/models.py:85
+#: operations/models.py:163 stock/models.py:85
 msgid "Récolte"
 msgstr ""
 
@@ -788,6 +789,7 @@ msgstr ""
 #: messagerie/templates/messagerie/detail.html:91
 #: notifications/templates/notifications/center.html:76
 #: notifications/templates/notifications/center.html:163
+#: operations/templates/operations/parc_materiel.html:169
 #: parcelles/templates/parcelles/campagne_confirm_delete.html:14
 #: parcelles/templates/parcelles/campagnes.html:71
 #: parcelles/templates/parcelles/confirm_delete.html:13
@@ -941,6 +943,7 @@ msgstr ""
 #: exploitations/templates/exploitations/juridique.html:14
 #: exploitations/templates/exploitations/societes.html:13
 #: mail/templates/mail/compose.html:19
+#: operations/templates/operations/parc_materiel.html:42
 msgid "Fermer"
 msgstr ""
 
@@ -1116,6 +1119,7 @@ msgstr ""
 #: finances/templates/finances/document_editeur.html:222
 #: interventions/templates/interventions/interventions.html:146
 #: irrigation/templates/irrigation/bassinage.html:264
+#: operations/templates/operations/parc_materiel.html:144
 #: stock/templates/stock/_article_modal.html:77
 #: stock/templates/stock/_depot_modal.html:44
 #: stock/templates/stock/_mouvement_modal.html:56
@@ -1150,6 +1154,7 @@ msgstr ""
 #: irrigation/templates/irrigation/irrigation.html:318
 #: meteo/templates/meteo/meteo.html:60
 #: notifications/templates/notifications/center.html:146
+#: operations/templates/operations/parc_materiel.html:150
 #: parcelles/templates/parcelles/campagne_form.html:22
 #: parcelles/templates/parcelles/campagne_form.html:94
 #: parcelles/templates/parcelles/form.html:22
@@ -1299,7 +1304,9 @@ msgstr ""
 #: contrat/templates/contrat/_assurance_modal.html:18
 #: contrat/templates/contrat/_contrat_modal.html:18
 #: iot/templates/iot/capteurs.html:23 iot/templates/iot/regie.html:60
-#: notifications/forms.py:26 parcelles/templates/parcelles/detail.html:120
+#: notifications/forms.py:26
+#: operations/templates/operations/parc_materiel.html:57
+#: parcelles/templates/parcelles/detail.html:120
 #: planning/templates/planning/bon_intervention.html:16
 #: stock/templates/stock/_depot_modal.html:22
 #: stock/templates/stock/depots.html:43
@@ -3951,6 +3958,7 @@ msgstr ""
 #: finances/templates/finances/devis_signature.html:58
 #: finances/templates/finances/document_editeur.html:156
 #: finances/templates/finances/document_editeur.html:166
+#: operations/templates/operations/parc_materiel.html:53
 #: stock/templates/stock/_article_modal.html:21
 msgid "Désignation"
 msgstr ""
@@ -3960,6 +3968,7 @@ msgid "ex: bail parcelles nord"
 msgstr ""
 
 #: contrat/templates/contrat/_bail_modal.html:19 exploitations/models.py:103
+#: operations/models.py:63
 msgid "propriétaire"
 msgstr ""
 
@@ -4443,7 +4452,7 @@ msgstr ""
 msgid "Plaine"
 msgstr ""
 
-#: core/adresse.py:54
+#: core/adresse.py:54 operations/materiel.py:85
 msgid "Plateau"
 msgstr ""
 
@@ -4542,8 +4551,8 @@ msgstr ""
 #: core/context_processors.py:39 core/context_processors.py:78
 #: finances/templates/finances/subvention_pdf.html:49
 #: interventions/models.py:12 irrigation/templates/irrigation/irrigation.html:7
-#: irrigation/views.py:84 notifications/models.py:42 operations/models.py:117
-#: parcelles/templates/parcelles/campagne_form.html:74
+#: irrigation/views.py:84 notifications/models.py:42 operations/materiel.py:27
+#: operations/models.py:165 parcelles/templates/parcelles/campagne_form.html:74
 #: parcelles/templates/parcelles/campagnes.html:49
 #: parcelles/templates/parcelles/detail.html:50
 #: parcelles/templates/parcelles/detail.html:115
@@ -4630,7 +4639,7 @@ msgid "Interventions"
 msgstr ""
 
 #: core/context_processors.py:77 elevage/templates/elevage/elevage.html:33
-#: elevage/views.py:61
+#: elevage/views.py:61 operations/materiel.py:29
 msgid "Élevage"
 msgstr ""
 
@@ -4846,7 +4855,7 @@ msgstr ""
 #: exploitations/templates/exploitations/settings.html:10
 #: exploitations/templates/exploitations/societes.html:7
 #: exploitations/views.py:282 meteo/templates/meteo/index.html:29
-#: operations/templates/operations/parc_materiel.html:7
+#: operations/templates/operations/parc_materiel.html:36
 #: templates/partials/header.html:112
 msgid "Mon exploitation"
 msgstr ""
@@ -4887,9 +4896,9 @@ msgid "RH et CA"
 msgstr ""
 
 #: core/context_processors.py:183
-#: operations/templates/operations/parc_materiel.html:7
-#: operations/templates/operations/parc_materiel.html:9 operations/views.py:20
-#: public/templates/public/home.html:261
+#: operations/templates/operations/parc_materiel.html:36
+#: operations/templates/operations/parc_materiel.html:38
+#: operations/views.py:104 public/templates/public/home.html:261
 msgid "Parc matériel"
 msgstr ""
 
@@ -8323,7 +8332,7 @@ msgstr ""
 msgid "Main d'œuvre"
 msgstr ""
 
-#: finances/models.py:22 operations/models.py:118 planning/models.py:214
+#: finances/models.py:22 operations/models.py:166 planning/models.py:214
 msgid "Transport"
 msgstr ""
 
@@ -9354,15 +9363,15 @@ msgid ""
 "d'exploitation. Tu écris dans un français clair et professionnel."
 msgstr ""
 
-#: interventions/models.py:13 operations/models.py:114
+#: interventions/models.py:13 operations/models.py:162
 msgid "Traitement"
 msgstr ""
 
-#: interventions/models.py:14 operations/models.py:116
+#: interventions/models.py:14 operations/models.py:164
 msgid "Fertilisation"
 msgstr ""
 
-#: interventions/models.py:17
+#: interventions/models.py:17 operations/materiel.py:22
 msgid "Travail du sol"
 msgstr ""
 
@@ -9387,7 +9396,7 @@ msgid "Vendange"
 msgstr ""
 
 #: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:133
-#: operations/models.py:25 operations/models.py:55
+#: operations/models.py:43 operations/models.py:103
 msgid "Maintenance"
 msgstr ""
 
@@ -9513,7 +9522,7 @@ msgstr ""
 msgid "Capteur de pression"
 msgstr ""
 
-#: iot/models.py:18
+#: iot/models.py:18 operations/materiel.py:122
 msgid "Station météo"
 msgstr ""
 
@@ -9695,6 +9704,7 @@ msgid "Télémétrie récente"
 msgstr ""
 
 #: iot/templates/iot/capteurs.html:24
+#: operations/templates/operations/parc_materiel.html:69
 msgid "Marque"
 msgstr ""
 
@@ -9775,11 +9785,11 @@ msgstr ""
 msgid "Aspersion"
 msgstr ""
 
-#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:147
+#: irrigation/models.py:22 operations/materiel.py:94 parcelles/models.py:147
 msgid "Pivot"
 msgstr ""
 
-#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:146
+#: irrigation/models.py:23 operations/materiel.py:93 parcelles/models.py:146
 msgid "Enrouleur"
 msgstr ""
 
@@ -9863,11 +9873,11 @@ msgstr ""
 msgid "sessions d'irrigation"
 msgstr ""
 
-#: irrigation/models.py:132 operations/models.py:24
+#: irrigation/models.py:132 operations/models.py:42
 msgid "Opérationnelle"
 msgstr ""
 
-#: irrigation/models.py:134 operations/models.py:26
+#: irrigation/models.py:134 operations/models.py:44
 msgid "En panne"
 msgstr ""
 
@@ -9876,6 +9886,7 @@ msgid "stations de pompage"
 msgstr ""
 
 #: irrigation/models.py:160 notifications/models.py:45
+#: operations/materiel.py:124
 msgid "Capteur"
 msgstr ""
 
@@ -11664,132 +11675,505 @@ msgstr ""
 msgid "Règle « %(r)s » supprimée."
 msgstr ""
 
-#: operations/models.py:16 operations/models.py:151
-msgid "Pompe"
+#: operations/materiel.py:21
+msgid "Automoteurs"
 msgstr ""
 
-#: operations/models.py:17 operations/models.py:143
-msgid "Tracteur"
+#: operations/materiel.py:23
+msgid "Semis et plantation"
 msgstr ""
 
-#: operations/models.py:20 operations/models.py:144
-msgid "Pulvérisateur"
+#: operations/materiel.py:24
+msgid "Fertilisation et protection"
 msgstr ""
 
-#: operations/models.py:27
-msgid "Réformée"
+#: operations/materiel.py:25
+msgid "Récolte et fourrage"
 msgstr ""
 
-#: operations/models.py:44
-msgid "machine"
+#: operations/materiel.py:26
+msgid "Transport et manutention"
 msgstr ""
 
-#: operations/models.py:45
-msgid "machines"
+#: operations/materiel.py:28
+msgid "Bâtiment et post-récolte"
 msgstr ""
 
-#: operations/models.py:54
-msgid "Utilisation"
+#: operations/materiel.py:30
+msgid "Numérique"
 msgstr ""
 
-#: operations/models.py:56 operations/models.py:85
-msgid "Réparation"
+#: operations/materiel.py:36
+msgid "Tracteur standard"
 msgstr ""
 
-#: operations/models.py:57
-msgid "Inspection"
+#: operations/materiel.py:37
+msgid "Tracteur vigneron (étroit)"
 msgstr ""
 
-#: operations/models.py:79
-msgid "Vidange"
+#: operations/materiel.py:38
+msgid "Tracteur chenillé"
 msgstr ""
 
-#: operations/models.py:80 reseaux/templates/reseaux/reseaux.html:128
-msgid "Filtres"
+#: operations/materiel.py:39
+msgid "Télescopique ou chargeur"
 msgstr ""
 
-#: operations/models.py:81
-msgid "Courroies"
+#: operations/materiel.py:40
+msgid "Moissonneuse-batteuse"
 msgstr ""
 
-#: operations/models.py:82
-msgid "Pneumatiques"
+#: operations/materiel.py:41
+msgid "Ensileuse"
 msgstr ""
 
-#: operations/models.py:83
-msgid "Freins"
+#: operations/materiel.py:42
+msgid "Machine à vendanger"
 msgstr ""
 
-#: operations/models.py:84
-msgid "Révision complète"
+#: operations/materiel.py:43
+msgid "Automoteur de pulvérisation"
 msgstr ""
 
-#: operations/models.py:86
-msgid "Contrôle technique"
+#: operations/materiel.py:44
+msgid "Quad ou UTV"
 msgstr ""
 
-#: operations/models.py:105
-msgid "entretien"
+#: operations/materiel.py:45
+msgid "Camion"
 msgstr ""
 
-#: operations/models.py:106
-msgid "entretiens"
+#: operations/materiel.py:46
+msgid "Chariot élévateur"
 msgstr ""
 
-#: operations/models.py:112
-msgid "Labour"
-msgstr ""
-
-#: operations/models.py:134
-msgid "affectation d'engin"
-msgstr ""
-
-#: operations/models.py:135
-msgid "affectations d'engins"
-msgstr ""
-
-#: operations/models.py:145
-msgid "Semoir"
-msgstr ""
-
-#: operations/models.py:146
-msgid "Épandeur"
-msgstr ""
-
-#: operations/models.py:147
-msgid "Moissonneuse"
-msgstr ""
-
-#: operations/models.py:148
+#: operations/materiel.py:49
 msgid "Charrue"
 msgstr ""
 
-#: operations/models.py:149
+#: operations/materiel.py:50
+msgid "Déchaumeur"
+msgstr ""
+
+#: operations/materiel.py:51
 msgid "Cultivateur"
 msgstr ""
 
-#: operations/models.py:150
+#: operations/materiel.py:52
+msgid "Vibroculteur"
+msgstr ""
+
+#: operations/materiel.py:53
+msgid "Herse rotative"
+msgstr ""
+
+#: operations/materiel.py:54
+msgid "Herse étrille"
+msgstr ""
+
+#: operations/materiel.py:55
+msgid "Rouleau"
+msgstr ""
+
+#: operations/materiel.py:56
+msgid "Décompacteur"
+msgstr ""
+
+#: operations/materiel.py:57
+msgid "Broyeur"
+msgstr ""
+
+#: operations/materiel.py:60
+msgid "Semoir en ligne"
+msgstr ""
+
+#: operations/materiel.py:61
+msgid "Semoir monograine"
+msgstr ""
+
+#: operations/materiel.py:62
+msgid "Semoir direct"
+msgstr ""
+
+#: operations/materiel.py:63
+msgid "Planteuse"
+msgstr ""
+
+#: operations/materiel.py:64
+msgid "Bineuse"
+msgstr ""
+
+#: operations/materiel.py:67
+msgid "Épandeur d'engrais centrifuge"
+msgstr ""
+
+#: operations/materiel.py:68
+msgid "Épandeur à fumier"
+msgstr ""
+
+#: operations/materiel.py:69
+msgid "Tonne à lisier"
+msgstr ""
+
+#: operations/materiel.py:70
+msgid "Pulvérisateur porté ou traîné"
+msgstr ""
+
+#: operations/materiel.py:71
+msgid "Atomiseur (arboriculture, viticulture)"
+msgstr ""
+
+#: operations/materiel.py:74
+msgid "Faucheuse"
+msgstr ""
+
+#: operations/materiel.py:75
+msgid "Faneuse"
+msgstr ""
+
+#: operations/materiel.py:76
+msgid "Andaineur"
+msgstr ""
+
+#: operations/materiel.py:77
+msgid "Presse à balles"
+msgstr ""
+
+#: operations/materiel.py:78
+msgid "Enrubanneuse"
+msgstr ""
+
+#: operations/materiel.py:79
+msgid "Autochargeuse"
+msgstr ""
+
+#: operations/materiel.py:80
+msgid "Arracheuse"
+msgstr ""
+
+#: operations/materiel.py:83
+msgid "Remorque"
+msgstr ""
+
+#: operations/materiel.py:84
 msgid "Benne"
 msgstr ""
 
-#: operations/models.py:170
+#: operations/materiel.py:86
+msgid "Godet"
+msgstr ""
+
+#: operations/materiel.py:87
+msgid "Fourche"
+msgstr ""
+
+#: operations/materiel.py:88
+msgid "Pince à balles"
+msgstr ""
+
+#: operations/materiel.py:91
+msgid "Pompe"
+msgstr ""
+
+#: operations/materiel.py:92
+msgid "Station de pompage"
+msgstr ""
+
+#: operations/materiel.py:95
+msgid "Rampe"
+msgstr ""
+
+#: operations/materiel.py:96
+msgid "Goutte-à-goutte"
+msgstr ""
+
+#: operations/materiel.py:97
+msgid "Filtration"
+msgstr ""
+
+#: operations/materiel.py:98
+msgid "Borne"
+msgstr ""
+
+#: operations/materiel.py:101
+msgid "Séchoir"
+msgstr ""
+
+#: operations/materiel.py:102
+msgid "Trieuse"
+msgstr ""
+
+#: operations/materiel.py:103
+msgid "Calibreuse"
+msgstr ""
+
+#: operations/materiel.py:104 stock/models.py:40
+msgid "Chambre froide"
+msgstr ""
+
+#: operations/materiel.py:105
+msgid "Groupe électrogène"
+msgstr ""
+
+#: operations/materiel.py:106
+msgid "Nettoyeur haute pression"
+msgstr ""
+
+#: operations/materiel.py:107 stock/models.py:39
+msgid "Cuve"
+msgstr ""
+
+#: operations/materiel.py:108
+msgid "Pressoir"
+msgstr ""
+
+#: operations/materiel.py:111
+msgid "Mélangeuse"
+msgstr ""
+
+#: operations/materiel.py:112
+msgid "Désileuse"
+msgstr ""
+
+#: operations/materiel.py:113
+msgid "Robot de traite"
+msgstr ""
+
+#: operations/materiel.py:114
+msgid "Salle de traite"
+msgstr ""
+
+#: operations/materiel.py:115
+msgid "Tank à lait"
+msgstr ""
+
+#: operations/materiel.py:116
+msgid "Pailleuse"
+msgstr ""
+
+#: operations/materiel.py:117
+msgid "Racleur"
+msgstr ""
+
+#: operations/materiel.py:120
+msgid "Console GPS"
+msgstr ""
+
+#: operations/materiel.py:121
+msgid "Autoguidage RTK"
+msgstr ""
+
+#: operations/materiel.py:123
+msgid "Drone"
+msgstr ""
+
+#: operations/models.py:35
+msgid "En propre"
+msgstr ""
+
+#: operations/models.py:36
+msgid "En CUMA"
+msgstr ""
+
+#: operations/models.py:37
+msgid "En copropriété"
+msgstr ""
+
+#: operations/models.py:38
+msgid "En location"
+msgstr ""
+
+#: operations/models.py:39
+msgid "Confié à une ETA"
+msgstr ""
+
+#: operations/models.py:45
+msgid "Réformée"
+msgstr ""
+
+#: operations/models.py:60
+msgid "détention"
+msgstr ""
+
+#: operations/models.py:64
+msgid ""
+"La CUMA, le loueur ou l'ETA à qui appartient l'engin. Vide quand il est à "
+"l'exploitation."
+msgstr ""
+
+#: operations/models.py:69
+msgid "machine"
+msgstr ""
+
+#: operations/models.py:70
+msgid "machines"
+msgstr ""
+
+#: operations/models.py:102
+msgid "Utilisation"
+msgstr ""
+
+#: operations/models.py:104 operations/models.py:133
+msgid "Réparation"
+msgstr ""
+
+#: operations/models.py:105
+msgid "Inspection"
+msgstr ""
+
+#: operations/models.py:127
+msgid "Vidange"
+msgstr ""
+
+#: operations/models.py:128 reseaux/templates/reseaux/reseaux.html:128
+msgid "Filtres"
+msgstr ""
+
+#: operations/models.py:129
+msgid "Courroies"
+msgstr ""
+
+#: operations/models.py:130
+msgid "Pneumatiques"
+msgstr ""
+
+#: operations/models.py:131
+msgid "Freins"
+msgstr ""
+
+#: operations/models.py:132
+msgid "Révision complète"
+msgstr ""
+
+#: operations/models.py:134
+msgid "Contrôle technique"
+msgstr ""
+
+#: operations/models.py:153
+msgid "entretien"
+msgstr ""
+
+#: operations/models.py:154
+msgid "entretiens"
+msgstr ""
+
+#: operations/models.py:160
+msgid "Labour"
+msgstr ""
+
+#: operations/models.py:182
+msgid "affectation d'engin"
+msgstr ""
+
+#: operations/models.py:183
+msgid "affectations d'engins"
+msgstr ""
+
+#: operations/models.py:210
 msgid "modèle d'engin (catalogue)"
 msgstr ""
 
-#: operations/models.py:171
+#: operations/models.py:211
 msgid "catalogue d'engins"
 msgstr ""
 
-#: operations/templates/operations/parc_materiel.html:22
+#: operations/templates/operations/parc_materiel.html:9
+msgid "marques proposées pour cette famille"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:41
+msgid "Ajouter un matériel"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:50
+msgid "Nouveau matériel"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:54
+msgid "ex: John Deere 6120M"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:74
+msgid "Autre marque…"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:77
+msgid "Nom de la marque"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:79
+msgid "Choisissez d'abord un type."
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:84
+msgid "Revenir à la liste"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:87
+msgid "Modèle"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:91
+msgid "N° de série"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:95
+msgid "Date d'achat"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:99
+msgid "Heures au compteur"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:103
+msgid "Heures au compteur (curseur)"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:112
+msgid "État"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:118
+msgid "Détention"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:124
+msgid "Propriétaire"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:135
+#, python-format
+msgid ""
+"Aucune CUMA enregistrée. <a href=\"%(url_cuma)s\" "
+"class=\"underline\">Ajoutez-la dans Relations</a>."
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:140
+#, python-format
+msgid ""
+"Aucune relation enregistrée. <a href=\"%(url_partenaires)s\" "
+"class=\"underline\">Ajoutez-en une</a>."
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:146
+msgid "Notes sur un matériel de l'exploitation"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:166
+msgid "Supprimer ce matériel ?"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:184
 msgid "prochain entretien"
 msgstr ""
 
-#: operations/templates/operations/parc_materiel.html:28
-msgid "Ajoutez une machine"
+#: operations/templates/operations/parc_materiel.html:192
+msgid "Ajoutez un matériel"
 msgstr ""
 
-#: operations/templates/operations/parc_materiel.html:29
-msgid "Aucune machine pour le moment. Ajoutez-en via l'admin ou l'API."
+#: operations/templates/operations/parc_materiel.html:193
+msgid ""
+"Votre parc est vide. Cliquez sur « Ajouter » pour y faire entrer un engin."
 msgstr ""
 
 #: pac/models.py:9
@@ -13648,14 +14032,6 @@ msgstr ""
 
 #: stock/models.py:38
 msgid "Silo"
-msgstr ""
-
-#: stock/models.py:39
-msgid "Cuve"
-msgstr ""
-
-#: stock/models.py:40
-msgid "Chambre froide"
 msgstr ""
 
 #: stock/models.py:41

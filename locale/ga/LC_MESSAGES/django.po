@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 17:00+0200\n"
+"POT-Creation-Date: 2026-09-02 20:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -320,10 +320,11 @@ msgstr "Garraíodóireacht mhargaidh"
 #: core/adresse.py:73 elevage/models.py:26 elevage/models.py:36
 #: exploitations/formes_juridiques.py:79 exploitations/models.py:97
 #: finances/models.py:24 finances/models.py:50 interventions/models.py:26
-#: operations/models.py:21 operations/models.py:87 operations/models.py:119
-#: operations/models.py:152 pac/models.py:18 planning/models.py:111
-#: planning/models.py:151 planning/models.py:215 stock/models.py:44
-#: stock/models.py:86 stock/models.py:155 vente/models.py:159
+#: operations/materiel.py:31 operations/materiel.py:127
+#: operations/models.py:135 operations/models.py:167 pac/models.py:18
+#: planning/models.py:111 planning/models.py:151 planning/models.py:215
+#: stock/models.py:44 stock/models.py:86 stock/models.py:155
+#: vente/models.py:159
 msgid "Autre"
 msgstr "Eile"
 
@@ -331,7 +332,7 @@ msgstr "Eile"
 #: analyse_sol/models.py:134 aquaculture/models.py:39 aquaculture/models.py:148
 #: elevage/models.py:38 equipe/models.py:23 exploitations/models.py:105
 #: iot/models.py:40 messagerie/models.py:115 meteo/models.py:49
-#: operations/models.py:30 parcelles/models.py:44 stock/models.py:49
+#: operations/models.py:48 parcelles/models.py:44 stock/models.py:49
 #: vente/models.py:189 vente/models.py:339
 msgid "nom"
 msgstr "ainm"
@@ -577,7 +578,7 @@ msgstr "leasú-uisciúcháin"
 #: agronomie/models.py:209 client/models.py:48 client/models.py:138
 #: contrat/models.py:28 contrat/models.py:166 dti/models.py:143
 #: dti/models.py:238 dti/models.py:289 exploitations/models.py:472
-#: stock/models.py:51
+#: operations/models.py:49 operations/models.py:196 stock/models.py:51
 msgid "type"
 msgstr "cineál"
 
@@ -755,7 +756,7 @@ msgstr "Catagóir"
 #: agronomie/templates/agronomie/cultures.html:263
 #: agronomie/templates/agronomie/cultures.html:314
 #: agronomie/templates/agronomie/cultures.html:350 interventions/models.py:16
-#: operations/models.py:113
+#: operations/models.py:161
 msgid "Semis"
 msgstr "Síolchur"
 
@@ -765,7 +766,7 @@ msgstr "Síolchur"
 #: agronomie/templates/agronomie/cultures.html:239
 #: agronomie/templates/agronomie/cultures.html:315
 #: agronomie/templates/agronomie/cultures.html:351 interventions/models.py:15
-#: operations/models.py:115 stock/models.py:85
+#: operations/models.py:163 stock/models.py:85
 msgid "Récolte"
 msgstr "Fómhar"
 
@@ -865,6 +866,7 @@ msgstr "Cuir in eagar"
 #: messagerie/templates/messagerie/detail.html:91
 #: notifications/templates/notifications/center.html:76
 #: notifications/templates/notifications/center.html:163
+#: operations/templates/operations/parc_materiel.html:169
 #: parcelles/templates/parcelles/campagne_confirm_delete.html:14
 #: parcelles/templates/parcelles/campagnes.html:71
 #: parcelles/templates/parcelles/confirm_delete.html:13
@@ -1038,6 +1040,7 @@ msgstr ""
 #: exploitations/templates/exploitations/juridique.html:14
 #: exploitations/templates/exploitations/societes.html:13
 #: mail/templates/mail/compose.html:19
+#: operations/templates/operations/parc_materiel.html:42
 msgid "Fermer"
 msgstr ""
 
@@ -1221,6 +1224,7 @@ msgstr "fómhar"
 #: finances/templates/finances/document_editeur.html:222
 #: interventions/templates/interventions/interventions.html:146
 #: irrigation/templates/irrigation/bassinage.html:264
+#: operations/templates/operations/parc_materiel.html:144
 #: stock/templates/stock/_article_modal.html:77
 #: stock/templates/stock/_depot_modal.html:44
 #: stock/templates/stock/_mouvement_modal.html:56
@@ -1255,6 +1259,7 @@ msgstr "Nótaí"
 #: irrigation/templates/irrigation/irrigation.html:318
 #: meteo/templates/meteo/meteo.html:60
 #: notifications/templates/notifications/center.html:146
+#: operations/templates/operations/parc_materiel.html:150
 #: parcelles/templates/parcelles/campagne_form.html:22
 #: parcelles/templates/parcelles/campagne_form.html:94
 #: parcelles/templates/parcelles/form.html:22
@@ -1424,7 +1429,9 @@ msgstr "Leasachán"
 #: contrat/templates/contrat/_assurance_modal.html:18
 #: contrat/templates/contrat/_contrat_modal.html:18
 #: iot/templates/iot/capteurs.html:23 iot/templates/iot/regie.html:60
-#: notifications/forms.py:26 parcelles/templates/parcelles/detail.html:120
+#: notifications/forms.py:26
+#: operations/templates/operations/parc_materiel.html:57
+#: parcelles/templates/parcelles/detail.html:120
 #: planning/templates/planning/bon_intervention.html:16
 #: stock/templates/stock/_depot_modal.html:22
 #: stock/templates/stock/depots.html:43
@@ -4541,6 +4548,7 @@ msgstr "Ríomhphost nua"
 #: finances/templates/finances/devis_signature.html:58
 #: finances/templates/finances/document_editeur.html:156
 #: finances/templates/finances/document_editeur.html:166
+#: operations/templates/operations/parc_materiel.html:53
 #: stock/templates/stock/_article_modal.html:21
 #, fuzzy
 #| msgid "Irrigation"
@@ -4554,6 +4562,7 @@ msgid "ex: bail parcelles nord"
 msgstr "Ar ais go dtí na gabháltais"
 
 #: contrat/templates/contrat/_bail_modal.html:19 exploitations/models.py:103
+#: operations/models.py:63
 msgid "propriétaire"
 msgstr "úinéir"
 
@@ -5131,7 +5140,7 @@ msgstr ""
 msgid "Plaine"
 msgstr "Seachtain"
 
-#: core/adresse.py:54
+#: core/adresse.py:54 operations/materiel.py:85
 msgid "Plateau"
 msgstr ""
 
@@ -5240,8 +5249,8 @@ msgstr "Ceapacha"
 #: core/context_processors.py:39 core/context_processors.py:78
 #: finances/templates/finances/subvention_pdf.html:49
 #: interventions/models.py:12 irrigation/templates/irrigation/irrigation.html:7
-#: irrigation/views.py:84 notifications/models.py:42 operations/models.py:117
-#: parcelles/templates/parcelles/campagne_form.html:74
+#: irrigation/views.py:84 notifications/models.py:42 operations/materiel.py:27
+#: operations/models.py:165 parcelles/templates/parcelles/campagne_form.html:74
 #: parcelles/templates/parcelles/campagnes.html:49
 #: parcelles/templates/parcelles/detail.html:50
 #: parcelles/templates/parcelles/detail.html:115
@@ -5336,7 +5345,7 @@ msgid "Interventions"
 msgstr "Idirghabhálacha"
 
 #: core/context_processors.py:77 elevage/templates/elevage/elevage.html:33
-#: elevage/views.py:61
+#: elevage/views.py:61 operations/materiel.py:29
 #, fuzzy
 #| msgid "Élevé"
 msgid "Élevage"
@@ -5570,7 +5579,7 @@ msgstr ""
 #: exploitations/templates/exploitations/settings.html:10
 #: exploitations/templates/exploitations/societes.html:7
 #: exploitations/views.py:282 meteo/templates/meteo/index.html:29
-#: operations/templates/operations/parc_materiel.html:7
+#: operations/templates/operations/parc_materiel.html:36
 #: templates/partials/header.html:112
 msgid "Mon exploitation"
 msgstr "M'fheirm"
@@ -5615,9 +5624,9 @@ msgid "RH et CA"
 msgstr ""
 
 #: core/context_processors.py:183
-#: operations/templates/operations/parc_materiel.html:7
-#: operations/templates/operations/parc_materiel.html:9 operations/views.py:20
-#: public/templates/public/home.html:261
+#: operations/templates/operations/parc_materiel.html:36
+#: operations/templates/operations/parc_materiel.html:38
+#: operations/views.py:104 public/templates/public/home.html:261
 msgid "Parc matériel"
 msgstr "Flít trealaimh"
 
@@ -9539,7 +9548,7 @@ msgstr "Fuinneamh"
 msgid "Main d'œuvre"
 msgstr "Lucht saothair"
 
-#: finances/models.py:22 operations/models.py:118 planning/models.py:214
+#: finances/models.py:22 operations/models.py:166 planning/models.py:214
 msgid "Transport"
 msgstr "Iompar"
 
@@ -10727,15 +10736,15 @@ msgid ""
 "d'exploitation. Tu écris dans un français clair et professionnel."
 msgstr ""
 
-#: interventions/models.py:13 operations/models.py:114
+#: interventions/models.py:13 operations/models.py:162
 msgid "Traitement"
 msgstr "Cóireáil"
 
-#: interventions/models.py:14 operations/models.py:116
+#: interventions/models.py:14 operations/models.py:164
 msgid "Fertilisation"
 msgstr "Leasú"
 
-#: interventions/models.py:17
+#: interventions/models.py:17 operations/materiel.py:22
 msgid "Travail du sol"
 msgstr "Saothrú ithreach"
 
@@ -10760,7 +10769,7 @@ msgid "Vendange"
 msgstr "Fómhar fíonchaor"
 
 #: interventions/models.py:24 irrigation/models.py:31 irrigation/models.py:133
-#: operations/models.py:25 operations/models.py:55
+#: operations/models.py:43 operations/models.py:103
 msgid "Maintenance"
 msgstr "Cothabháil"
 
@@ -10911,7 +10920,7 @@ msgstr "Sreabhmhéadar"
 msgid "Capteur de pression"
 msgstr "Braiteoir brú"
 
-#: iot/models.py:18
+#: iot/models.py:18 operations/materiel.py:122
 msgid "Station météo"
 msgstr "Stáisiún aimsire"
 
@@ -11093,6 +11102,7 @@ msgid "Télémétrie récente"
 msgstr "Teiliméadracht le déanaí"
 
 #: iot/templates/iot/capteurs.html:24
+#: operations/templates/operations/parc_materiel.html:69
 msgid "Marque"
 msgstr "Branda"
 
@@ -11187,11 +11197,11 @@ msgstr "Braon ar bhraon"
 msgid "Aspersion"
 msgstr "Spréáil"
 
-#: irrigation/models.py:22 operations/models.py:19 parcelles/models.py:147
+#: irrigation/models.py:22 operations/materiel.py:94 parcelles/models.py:147
 msgid "Pivot"
 msgstr "Maighne"
 
-#: irrigation/models.py:23 operations/models.py:18 parcelles/models.py:146
+#: irrigation/models.py:23 operations/materiel.py:93 parcelles/models.py:146
 msgid "Enrouleur"
 msgstr "Rolladóir"
 
@@ -11275,11 +11285,11 @@ msgstr "seisiún uiscithe"
 msgid "sessions d'irrigation"
 msgstr "seisiúin uiscithe"
 
-#: irrigation/models.py:132 operations/models.py:24
+#: irrigation/models.py:132 operations/models.py:42
 msgid "Opérationnelle"
 msgstr "Oibríochtúil"
 
-#: irrigation/models.py:134 operations/models.py:26
+#: irrigation/models.py:134 operations/models.py:44
 msgid "En panne"
 msgstr "Briste"
 
@@ -11288,6 +11298,7 @@ msgid "stations de pompage"
 msgstr "stáisiúin chaidéalaithe"
 
 #: irrigation/models.py:160 notifications/models.py:45
+#: operations/materiel.py:124
 msgid "Capteur"
 msgstr "Braiteoir"
 
@@ -13374,137 +13385,608 @@ msgstr ""
 msgid "Règle « %(r)s » supprimée."
 msgstr ""
 
-#: operations/models.py:16 operations/models.py:151
-msgid "Pompe"
-msgstr "Caidéal"
+#: operations/materiel.py:21
+#, fuzzy
+#| msgid "Auto"
+msgid "Automoteurs"
+msgstr "Uathoibríoch"
 
-#: operations/models.py:17 operations/models.py:143
-msgid "Tracteur"
+#: operations/materiel.py:23
+#, fuzzy
+#| msgid "date de plantation"
+msgid "Semis et plantation"
+msgstr "dáta plandála"
+
+#: operations/materiel.py:24
+#, fuzzy
+#| msgid "Fertilisation"
+msgid "Fertilisation et protection"
+msgstr "Leasú"
+
+#: operations/materiel.py:25
+#, fuzzy
+#| msgid "Récolte"
+msgid "Récolte et fourrage"
+msgstr "Fómhar"
+
+#: operations/materiel.py:26
+msgid "Transport et manutention"
+msgstr ""
+
+#: operations/materiel.py:28
+#, fuzzy
+#| msgid "Redessiner une parcelle"
+msgid "Bâtiment et post-récolte"
+msgstr "Aththarraing ceapach"
+
+#: operations/materiel.py:30
+#, fuzzy
+#| msgid "Générique"
+msgid "Numérique"
+msgstr "Cineálach"
+
+#: operations/materiel.py:36
+#, fuzzy
+#| msgid "Tracteur"
+msgid "Tracteur standard"
 msgstr "Tarracóir"
 
-#: operations/models.py:20 operations/models.py:144
-msgid "Pulvérisateur"
-msgstr "Spréire"
+#: operations/materiel.py:37
+msgid "Tracteur vigneron (étroit)"
+msgstr ""
 
-#: operations/models.py:27
-msgid "Réformée"
-msgstr "Athchóirithe"
+#: operations/materiel.py:38
+#, fuzzy
+#| msgid "Tracteur"
+msgid "Tracteur chenillé"
+msgstr "Tarracóir"
 
-#: operations/models.py:44
-msgid "machine"
-msgstr "meaisín"
+#: operations/materiel.py:39
+msgid "Télescopique ou chargeur"
+msgstr ""
 
-#: operations/models.py:45
-msgid "machines"
-msgstr "meaisíní"
-
-#: operations/models.py:54
-msgid "Utilisation"
-msgstr "Úsáid"
-
-#: operations/models.py:56 operations/models.py:85
-msgid "Réparation"
-msgstr "Deisiú"
-
-#: operations/models.py:57
-msgid "Inspection"
-msgstr "Iniúchadh"
-
-#: operations/models.py:79
-msgid "Vidange"
-msgstr "Folmhú ola"
-
-#: operations/models.py:80 reseaux/templates/reseaux/reseaux.html:128
-msgid "Filtres"
-msgstr "Scagairí"
-
-#: operations/models.py:81
-msgid "Courroies"
-msgstr "Criosanna"
-
-#: operations/models.py:82
-msgid "Pneumatiques"
-msgstr "Boinn"
-
-#: operations/models.py:83
-msgid "Freins"
-msgstr "Coscáin"
-
-#: operations/models.py:84
-msgid "Révision complète"
-msgstr "Athbhreithniú iomlán"
-
-#: operations/models.py:86
-msgid "Contrôle technique"
-msgstr "Tástáil theicniúil"
-
-#: operations/models.py:105
-msgid "entretien"
-msgstr "cothabháil"
-
-#: operations/models.py:106
-msgid "entretiens"
-msgstr "cothabhálacha"
-
-#: operations/models.py:112
-msgid "Labour"
-msgstr "Treabhadh"
-
-#: operations/models.py:134
-msgid "affectation d'engin"
-msgstr "sannadh innill"
-
-#: operations/models.py:135
-msgid "affectations d'engins"
-msgstr "sannaí innill"
-
-#: operations/models.py:145
-msgid "Semoir"
-msgstr "Síolaire"
-
-#: operations/models.py:146
-msgid "Épandeur"
-msgstr "Scaipire"
-
-#: operations/models.py:147
-msgid "Moissonneuse"
+#: operations/materiel.py:40
+#, fuzzy
+#| msgid "Moissonneuse"
+msgid "Moissonneuse-batteuse"
 msgstr "Inneall buainte"
 
-#: operations/models.py:148
+#: operations/materiel.py:41
+msgid "Ensileuse"
+msgstr ""
+
+#: operations/materiel.py:42
+msgid "Machine à vendanger"
+msgstr ""
+
+#: operations/materiel.py:43
+#, fuzzy
+#| msgid "Ajouter une parcelle"
+msgid "Automoteur de pulvérisation"
+msgstr "Cuir ceapach leis"
+
+#: operations/materiel.py:44
+msgid "Quad ou UTV"
+msgstr ""
+
+#: operations/materiel.py:45
+msgid "Camion"
+msgstr ""
+
+#: operations/materiel.py:46
+msgid "Chariot élévateur"
+msgstr ""
+
+#: operations/materiel.py:49
 msgid "Charrue"
 msgstr "Céachta"
 
-#: operations/models.py:149
+#: operations/materiel.py:50
+msgid "Déchaumeur"
+msgstr ""
+
+#: operations/materiel.py:51
 msgid "Cultivateur"
 msgstr "Saothróir"
 
-#: operations/models.py:150
+#: operations/materiel.py:52
+#, fuzzy
+#| msgid "culture"
+msgid "Vibroculteur"
+msgstr "barr"
+
+#: operations/materiel.py:53
+#, fuzzy
+#| msgid "Alertes actives"
+msgid "Herse rotative"
+msgstr "Foláirimh ghníomhacha"
+
+#: operations/materiel.py:54
+msgid "Herse étrille"
+msgstr ""
+
+#: operations/materiel.py:55
+#, fuzzy
+#| msgid "Enrouleur"
+msgid "Rouleau"
+msgstr "Rolladóir"
+
+#: operations/materiel.py:56
+#, fuzzy
+#| msgid "Se connecter"
+msgid "Décompacteur"
+msgstr "Logáil isteach"
+
+#: operations/materiel.py:57
+msgid "Broyeur"
+msgstr ""
+
+#: operations/materiel.py:60
+#, fuzzy
+#| msgid "En ligne"
+msgid "Semoir en ligne"
+msgstr "Ar líne"
+
+#: operations/materiel.py:61
+msgid "Semoir monograine"
+msgstr ""
+
+#: operations/materiel.py:62
+#, fuzzy
+#| msgid "Semoir"
+msgid "Semoir direct"
+msgstr "Síolaire"
+
+#: operations/materiel.py:63
+#, fuzzy
+#| msgid "Plante"
+msgid "Planteuse"
+msgstr "Planda"
+
+#: operations/materiel.py:64
+#, fuzzy
+#| msgid "Moissonneuse"
+msgid "Bineuse"
+msgstr "Inneall buainte"
+
+#: operations/materiel.py:67
+msgid "Épandeur d'engrais centrifuge"
+msgstr ""
+
+#: operations/materiel.py:68
+#, fuzzy
+#| msgid "Épandeur"
+msgid "Épandeur à fumier"
+msgstr "Scaipire"
+
+#: operations/materiel.py:69
+msgid "Tonne à lisier"
+msgstr ""
+
+#: operations/materiel.py:70
+msgid "Pulvérisateur porté ou traîné"
+msgstr ""
+
+#: operations/materiel.py:71
+msgid "Atomiseur (arboriculture, viticulture)"
+msgstr ""
+
+#: operations/materiel.py:74
+#, fuzzy
+#| msgid "Sous-tâches"
+msgid "Faucheuse"
+msgstr "Fothascanna"
+
+#: operations/materiel.py:75
+msgid "Faneuse"
+msgstr ""
+
+#: operations/materiel.py:76
+msgid "Andaineur"
+msgstr ""
+
+#: operations/materiel.py:77
+#, fuzzy
+#| msgid "Pression basse"
+msgid "Presse à balles"
+msgstr "Brú íseal"
+
+#: operations/materiel.py:78
+#, fuzzy
+#| msgid "En panne"
+msgid "Enrubanneuse"
+msgstr "Briste"
+
+#: operations/materiel.py:79
+#, fuzzy
+#| msgid "charges"
+msgid "Autochargeuse"
+msgstr "costais"
+
+#: operations/materiel.py:80
+msgid "Arracheuse"
+msgstr ""
+
+#: operations/materiel.py:83
+#, fuzzy
+#| msgid "Marque"
+msgid "Remorque"
+msgstr "Branda"
+
+#: operations/materiel.py:84
 msgid "Benne"
 msgstr "Tralaí"
 
-#: operations/models.py:170
+#: operations/materiel.py:86
+msgid "Godet"
+msgstr ""
+
+#: operations/materiel.py:87
+#, fuzzy
+#| msgid "Source"
+msgid "Fourche"
+msgstr "Foinse"
+
+#: operations/materiel.py:88
+msgid "Pince à balles"
+msgstr ""
+
+#: operations/materiel.py:91
+msgid "Pompe"
+msgstr "Caidéal"
+
+#: operations/materiel.py:92
+#, fuzzy
+#| msgid "station de pompage"
+msgid "Station de pompage"
+msgstr "stáisiún caidéalaithe"
+
+#: operations/materiel.py:95
+msgid "Rampe"
+msgstr ""
+
+#: operations/materiel.py:96
+#, fuzzy
+#| msgid "Goutte à goutte"
+msgid "Goutte-à-goutte"
+msgstr "Braon ar bhraon"
+
+#: operations/materiel.py:97
+#, fuzzy
+#| msgid "Facturation"
+msgid "Filtration"
+msgstr "Sonrascadh"
+
+#: operations/materiel.py:98
+msgid "Borne"
+msgstr ""
+
+#: operations/materiel.py:101
+msgid "Séchoir"
+msgstr ""
+
+#: operations/materiel.py:102
+msgid "Trieuse"
+msgstr ""
+
+#: operations/materiel.py:103
+msgid "Calibreuse"
+msgstr ""
+
+#: operations/materiel.py:104 stock/models.py:40
+msgid "Chambre froide"
+msgstr ""
+
+#: operations/materiel.py:105
+msgid "Groupe électrogène"
+msgstr ""
+
+#: operations/materiel.py:106
+#, fuzzy
+#| msgid "Capteur de pression"
+msgid "Nettoyeur haute pression"
+msgstr "Braiteoir brú"
+
+#: operations/materiel.py:107 stock/models.py:39
+msgid "Cuve"
+msgstr ""
+
+#: operations/materiel.py:108
+#, fuzzy
+#| msgid "Pression"
+msgid "Pressoir"
+msgstr "Brú"
+
+#: operations/materiel.py:111
+msgid "Mélangeuse"
+msgstr ""
+
+#: operations/materiel.py:112
+msgid "Désileuse"
+msgstr ""
+
+#: operations/materiel.py:113
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Robot de traite"
+msgstr "dáta breithe"
+
+#: operations/materiel.py:114
+#, fuzzy
+#| msgid "Température"
+msgid "Salle de traite"
+msgstr "Teocht"
+
+#: operations/materiel.py:115
+msgid "Tank à lait"
+msgstr ""
+
+#: operations/materiel.py:116
+#, fuzzy
+#| msgid "Taille"
+msgid "Pailleuse"
+msgstr "Bearradh"
+
+#: operations/materiel.py:117
+#, fuzzy
+#| msgid "Enrouleur"
+msgid "Racleur"
+msgstr "Rolladóir"
+
+#: operations/materiel.py:120
+msgid "Console GPS"
+msgstr ""
+
+#: operations/materiel.py:121
+msgid "Autoguidage RTK"
+msgstr ""
+
+#: operations/materiel.py:123
+msgid "Drone"
+msgstr ""
+
+#: operations/models.py:35
+msgid "En propre"
+msgstr ""
+
+#: operations/models.py:36
+#, fuzzy
+#| msgid "CUMA"
+msgid "En CUMA"
+msgstr "CUMA"
+
+#: operations/models.py:37
+#, fuzzy
+#| msgid "propriétaire"
+msgid "En copropriété"
+msgstr "úinéir"
+
+#: operations/models.py:38
+#, fuzzy
+#| msgid "Location"
+msgid "En location"
+msgstr "Cíos"
+
+#: operations/models.py:39
+msgid "Confié à une ETA"
+msgstr ""
+
+#: operations/models.py:45
+msgid "Réformée"
+msgstr "Athchóirithe"
+
+#: operations/models.py:60
+#, fuzzy
+#| msgid "Rétention"
+msgid "détention"
+msgstr "Coinneáil"
+
+#: operations/models.py:64
+msgid ""
+"La CUMA, le loueur ou l'ETA à qui appartient l'engin. Vide quand il est à "
+"l'exploitation."
+msgstr ""
+
+#: operations/models.py:69
+msgid "machine"
+msgstr "meaisín"
+
+#: operations/models.py:70
+msgid "machines"
+msgstr "meaisíní"
+
+#: operations/models.py:102
+msgid "Utilisation"
+msgstr "Úsáid"
+
+#: operations/models.py:104 operations/models.py:133
+msgid "Réparation"
+msgstr "Deisiú"
+
+#: operations/models.py:105
+msgid "Inspection"
+msgstr "Iniúchadh"
+
+#: operations/models.py:127
+msgid "Vidange"
+msgstr "Folmhú ola"
+
+#: operations/models.py:128 reseaux/templates/reseaux/reseaux.html:128
+msgid "Filtres"
+msgstr "Scagairí"
+
+#: operations/models.py:129
+msgid "Courroies"
+msgstr "Criosanna"
+
+#: operations/models.py:130
+msgid "Pneumatiques"
+msgstr "Boinn"
+
+#: operations/models.py:131
+msgid "Freins"
+msgstr "Coscáin"
+
+#: operations/models.py:132
+msgid "Révision complète"
+msgstr "Athbhreithniú iomlán"
+
+#: operations/models.py:134
+msgid "Contrôle technique"
+msgstr "Tástáil theicniúil"
+
+#: operations/models.py:153
+msgid "entretien"
+msgstr "cothabháil"
+
+#: operations/models.py:154
+msgid "entretiens"
+msgstr "cothabhálacha"
+
+#: operations/models.py:160
+msgid "Labour"
+msgstr "Treabhadh"
+
+#: operations/models.py:182
+msgid "affectation d'engin"
+msgstr "sannadh innill"
+
+#: operations/models.py:183
+msgid "affectations d'engins"
+msgstr "sannaí innill"
+
+#: operations/models.py:210
 msgid "modèle d'engin (catalogue)"
 msgstr "samhail innill (catalóg)"
 
-#: operations/models.py:171
+#: operations/models.py:211
 msgid "catalogue d'engins"
 msgstr "catalóg innill"
 
-#: operations/templates/operations/parc_materiel.html:22
+#: operations/templates/operations/parc_materiel.html:9
+msgid "marques proposées pour cette famille"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:41
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter un matériel"
+msgstr "Gníomhachtaigh cód"
+
+#: operations/templates/operations/parc_materiel.html:50
+#, fuzzy
+#| msgid "Nouveau mail"
+msgid "Nouveau matériel"
+msgstr "Ríomhphost nua"
+
+#: operations/templates/operations/parc_materiel.html:54
+msgid "ex: John Deere 6120M"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:74
+msgid "Autre marque…"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:77
+#, fuzzy
+#| msgid "Nom du groupe"
+msgid "Nom de la marque"
+msgstr "Ainm an ghrúpa"
+
+#: operations/templates/operations/parc_materiel.html:79
+msgid "Choisissez d'abord un type."
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:84
+msgid "Revenir à la liste"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:87
+msgid "Modèle"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:91
+msgid "N° de série"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:95
+#, fuzzy
+#| msgid "type d'agriculture"
+msgid "Date d'achat"
+msgstr "cineál talmhaíochta"
+
+#: operations/templates/operations/parc_materiel.html:99
+#, fuzzy
+#| msgid "Créer un compte"
+msgid "Heures au compteur"
+msgstr "Cruthaigh cuntas"
+
+#: operations/templates/operations/parc_materiel.html:103
+#, fuzzy
+#| msgid "Créer un compte"
+msgid "Heures au compteur (curseur)"
+msgstr "Cruthaigh cuntas"
+
+#: operations/templates/operations/parc_materiel.html:112
+msgid "État"
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:118
+#, fuzzy
+#| msgid "Rétention"
+msgid "Détention"
+msgstr "Coinneáil"
+
+#: operations/templates/operations/parc_materiel.html:124
+#, fuzzy
+#| msgid "propriétaire"
+msgid "Propriétaire"
+msgstr "úinéir"
+
+#: operations/templates/operations/parc_materiel.html:135
+#, python-format
+msgid ""
+"Aucune CUMA enregistrée. <a href=\"%(url_cuma)s\" "
+"class=\"underline\">Ajoutez-la dans Relations</a>."
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:140
+#, python-format
+msgid ""
+"Aucune relation enregistrée. <a href=\"%(url_partenaires)s\" "
+"class=\"underline\">Ajoutez-en une</a>."
+msgstr ""
+
+#: operations/templates/operations/parc_materiel.html:146
+#, fuzzy
+#| msgid "Aucune parcelle sur cette exploitation."
+msgid "Notes sur un matériel de l'exploitation"
+msgstr "Níl aon gharraí ag an bhfeirm seo."
+
+#: operations/templates/operations/parc_materiel.html:166
+#, fuzzy
+#| msgid "Supprimer cette aide ?"
+msgid "Supprimer ce matériel ?"
+msgstr "An chabhair seo a scriosadh?"
+
+#: operations/templates/operations/parc_materiel.html:184
 msgid "prochain entretien"
 msgstr "chéad chothabháil eile"
 
-#: operations/templates/operations/parc_materiel.html:28
+#: operations/templates/operations/parc_materiel.html:192
 #, fuzzy
 #| msgid "Activer un code"
-msgid "Ajoutez une machine"
+msgid "Ajoutez un matériel"
 msgstr "Gníomhachtaigh cód"
 
-#: operations/templates/operations/parc_materiel.html:29
+#: operations/templates/operations/parc_materiel.html:193
 #, fuzzy
-#| msgid "Aucune machine. Ajoutez-en via l'admin ou l'API."
-msgid "Aucune machine pour le moment. Ajoutez-en via l'admin ou l'API."
-msgstr "Níl aon mheaisín. Cuir cinn leis tríd an riarachán nó an API."
+#| msgid ""
+#| "Cliquez sur « Enregistrer apport » pour ajouter un apport de fertigation."
+msgid ""
+"Votre parc est vide. Cliquez sur « Ajouter » pour y faire entrer un engin."
+msgstr ""
+"Cliceáil ar « Sábháil ionchur » chun ionchur leasú-uiscithe a chur leis."
 
 #: pac/models.py:9
 msgid "DPB — Droits à paiement de base"
@@ -15629,14 +16111,6 @@ msgstr ""
 
 #: stock/models.py:38
 msgid "Silo"
-msgstr ""
-
-#: stock/models.py:39
-msgid "Cuve"
-msgstr ""
-
-#: stock/models.py:40
-msgid "Chambre froide"
 msgstr ""
 
 #: stock/models.py:41

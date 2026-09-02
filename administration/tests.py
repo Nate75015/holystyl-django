@@ -38,7 +38,7 @@ def test_ai_intent_creates_entretien(setup, monkeypatch):
     from ia import services
 
     user, exploitation = setup
-    machine = Machine.objects.create(exploitation=exploitation, name="Tracteur", type="tractor")
+    machine = Machine.objects.create(exploitation=exploitation, name="Tracteur", type="tracteur_standard")
     monkeypatch.setattr(services.llm, "is_configured", lambda: True)
     monkeypatch.setattr(
         services.llm, "generate_json",
