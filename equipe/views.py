@@ -15,6 +15,7 @@ from core import espaces as espaces_service
 from core.decorators import espace_requis
 from core.espaces import EMPLOYE, EXPLOITANT
 from exploitations.models import Exploitation
+from parcelles.models import Parcelle
 
 from . import invitations
 from .forms import InvitationAccountForm, TaskForm, TeamMemberForm
@@ -440,6 +441,18 @@ def _champs_offre(request):
     }
 
 
+def _communes(exploitation):
+    """Les communes où l'exploitation a des parcelles, sans doublon."""
+    if exploitation is None:
+        return []
+    return sorted({
+        c.strip() for c in Parcelle.objects
+        .filter(exploitation=exploitation)
+        .exclude(commune="")
+        .values_list("commune", flat=True) if c.strip()
+    })
+
+
 @login_required
 @espace_requis(EXPLOITANT)
 def offres(request):
@@ -449,6 +462,9 @@ def offres(request):
            .prefetch_related("candidatures") if exploitation else [])
     return render(request, "equipe/offres.html", {
         "offres": lot,
+        # Le lieu de travail se choisit parmi les communes des parcelles : une
+        # offre situe le poste là où la ferme travaille, pas ailleurs.
+        "communes": _communes(exploitation),
         "types": ModeleContrat.Type.choices,
         "statuts": OffreEmploi.Statut.choices,
         "statuts_candidature": Candidature.Statut.choices,

@@ -547,3 +547,48 @@ def test_les_champs_redactionnels_offrent_la_reformulation_ia(client, ferme_rh):
     assert html.count("/assistant/reformuler/") == 3
     # Le bouton reste inactif tant que le champ est vide.
     assert ":disabled=\"!(offre.titre || '').trim()\"" in html
+
+
+@pytest.mark.django_db
+def test_le_lieu_se_choisit_parmi_les_communes_des_parcelles(client, ferme_rh):
+    from parcelles.models import Parcelle
+
+    patron, exploitation, _membre = ferme_rh
+    Parcelle.objects.create(exploitation=exploitation, name="Le Clos", commune="Carpentras")
+    Parcelle.objects.create(exploitation=exploitation, name="Les Hauts", commune="Mazan")
+    Parcelle.objects.create(exploitation=exploitation, name="Le Bas", commune="Carpentras")
+    Parcelle.objects.create(exploitation=exploitation, name="Sans commune", commune="")
+
+    client.force_login(patron)
+    resp = client.get("/offres-emploi/")
+    # Sans doublon, sans vide, et dans l'ordre.
+    assert resp.context["communes"] == ["Carpentras", "Mazan"]
+
+    html = resp.content.decode()
+    assert '<select id="o-lieu" name="lieu"' in html
+    assert "<option value=\"Carpentras\">Carpentras</option>" in html
+    assert "{#" not in html and "{{" not in html
+
+
+@pytest.mark.django_db
+def test_sans_commune_renseignee_on_renvoie_vers_les_parcelles(client, ferme_rh):
+    patron, _exploitation, _membre = ferme_rh
+    client.force_login(patron)
+    resp = client.get("/offres-emploi/")
+    assert resp.context["communes"] == []
+    assert "Aucune commune renseignée sur vos" in resp.content.decode()
+
+
+@pytest.mark.django_db
+def test_les_communes_du_voisin_ne_sont_pas_proposees(client, ferme_rh):
+    from exploitations.models import Exploitation
+    from parcelles.models import Parcelle
+
+    patron, exploitation, _membre = ferme_rh
+    Parcelle.objects.create(exploitation=exploitation, name="Chez moi", commune="Carpentras")
+    voisin = User.objects.create_user(email="voisin-communes@ex.com", password="pwd12345")
+    ferme_voisine = Exploitation.objects.create(owner=voisin, name="Ferme voisine")
+    Parcelle.objects.create(exploitation=ferme_voisine, name="Chez lui", commune="Avignon")
+
+    client.force_login(patron)
+    assert client.get("/offres-emploi/").context["communes"] == ["Carpentras"]

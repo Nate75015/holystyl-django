@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 22:20+0200\n"
+"POT-Creation-Date: 2026-09-02 22:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -806,7 +806,7 @@ msgstr "Visualizza"
 #: environnement/templates/environnement/biodiversite.html:75
 #: equipe/templates/equipe/contrats.html:155
 #: equipe/templates/equipe/equipe.html:55
-#: equipe/templates/equipe/offres.html:121
+#: equipe/templates/equipe/offres.html:139
 #: equipe/templates/equipe/taches.html:70
 #: exploitations/templates/exploitations/adresses.html:19
 #: exploitations/templates/exploitations/juridique.html:19
@@ -858,7 +858,7 @@ msgstr "Modifica"
 #: equipe/templates/equipe/contrats.html:204
 #: equipe/templates/equipe/equipe.html:59
 #: equipe/templates/equipe/equipe.html:115
-#: equipe/templates/equipe/offres.html:129
+#: equipe/templates/equipe/offres.html:147
 #: equipe/templates/equipe/taches.html:78
 #: equipe/templates/equipe/taches.html:141
 #: exploitations/templates/exploitations/adresses.html:104
@@ -1099,7 +1099,7 @@ msgstr "Anche le sue sottoattività saranno eliminate:"
 #: equipe/templates/equipe/contrats.html:120
 #: equipe/templates/equipe/edit.html:22 equipe/templates/equipe/equipe.html:23
 #: equipe/templates/equipe/equipe.html:114
-#: equipe/templates/equipe/offres.html:91
+#: equipe/templates/equipe/offres.html:109
 #: equipe/templates/equipe/taches.html:140
 #: equipe/templates/equipe/taches.html:201
 #: exploitations/templates/exploitations/adresses.html:74
@@ -1265,7 +1265,7 @@ msgstr "Note"
 #: elevage/templates/elevage/elevage.html:290
 #: environnement/templates/environnement/biodiversite.html:167
 #: equipe/templates/equipe/contrats.html:121
-#: equipe/templates/equipe/edit.html:24 equipe/templates/equipe/offres.html:92
+#: equipe/templates/equipe/edit.html:24 equipe/templates/equipe/offres.html:110
 #: equipe/templates/equipe/taches.html:202
 #: finances/templates/finances/document_editeur.html:236
 #: finances/templates/finances/fermage.html:74
@@ -5501,34 +5501,34 @@ msgid "Taxonomie EU"
 msgstr "Tassonomia UE"
 
 #: core/context_processors.py:115 equipe/templates/equipe/contrats.html:7
-#: equipe/templates/equipe/equipe.html:8 equipe/templates/equipe/offres.html:7
+#: equipe/templates/equipe/equipe.html:8 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/placeholder.html:6
 #: equipe/templates/equipe/taches.html:8
 msgid "RH"
 msgstr "Personale"
 
 #: core/context_processors.py:118 equipe/templates/equipe/equipe.html:8
-#: equipe/templates/equipe/equipe.html:10 equipe/views.py:48
+#: equipe/templates/equipe/equipe.html:10 equipe/views.py:49
 #: planning/templates/planning/planning.html:165
 msgid "Équipe"
 msgstr "Squadra"
 
 #: core/context_processors.py:119 equipe/templates/equipe/taches.html:8
-#: equipe/templates/equipe/taches.html:10 equipe/views.py:190
+#: equipe/templates/equipe/taches.html:10 equipe/views.py:191
 msgid "Tâches"
 msgstr "Attività"
 
 #: core/context_processors.py:120 equipe/templates/equipe/contrats.html:7
-#: equipe/templates/equipe/contrats.html:9 equipe/views.py:259
+#: equipe/templates/equipe/contrats.html:9 equipe/views.py:260
 msgid "Contrats de travail"
 msgstr ""
 
-#: core/context_processors.py:121 equipe/templates/equipe/offres.html:7
-#: equipe/templates/equipe/offres.html:9 equipe/views.py:455
+#: core/context_processors.py:121 equipe/templates/equipe/offres.html:11
+#: equipe/templates/equipe/offres.html:13 equipe/views.py:471
 msgid "Offres d'emploi"
 msgstr ""
 
-#: core/context_processors.py:122 equipe/views.py:419
+#: core/context_processors.py:122 equipe/views.py:420
 msgid "Paie"
 msgstr ""
 
@@ -7411,7 +7411,7 @@ msgid "Poste occupé"
 msgstr ""
 
 #: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
-#: equipe/templates/equipe/offres.html:45
+#: equipe/templates/equipe/offres.html:50
 #, fuzzy
 #| msgid "Lieu introuvable."
 msgid "Lieu de travail"
@@ -7848,7 +7848,7 @@ msgid "Refusée"
 msgstr "Rifiutato"
 
 #: equipe/models.py:326 equipe/templates/equipe/_emploi_detail_corps.html:69
-#: equipe/templates/equipe/offres.html:152
+#: equipe/templates/equipe/offres.html:170
 msgid "CV"
 msgstr ""
 
@@ -7891,7 +7891,7 @@ msgstr "Ogni ora"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:22
 #: equipe/templates/equipe/_emplois_corps.html:33
-#: equipe/templates/equipe/offres.html:49
+#: equipe/templates/equipe/offres.html:67
 #, fuzzy
 #| msgid "Partage de position"
 msgid "Prise de poste"
@@ -7902,7 +7902,7 @@ msgid "heures"
 msgstr ""
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:30
-#: equipe/templates/equipe/offres.html:61
+#: equipe/templates/equipe/offres.html:79
 #, fuzzy
 #| msgid "En génération"
 msgid "Rémunération"
@@ -7925,7 +7925,7 @@ msgid "Le poste"
 msgstr "codice postale"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:43
-#: equipe/templates/equipe/offres.html:73
+#: equipe/templates/equipe/offres.html:91
 msgid "Profil recherché"
 msgstr ""
 
@@ -8153,7 +8153,7 @@ msgid "si CDD"
 msgstr ""
 
 #: equipe/templates/equipe/contrats.html:63
-#: equipe/templates/equipe/offres.html:57
+#: equipe/templates/equipe/offres.html:75
 #, fuzzy
 #| msgid "Créer un compte"
 msgid "Heures par semaine"
@@ -8264,7 +8264,7 @@ msgstr "Nessuna conversazione al momento."
 msgid "Retour"
 msgstr "Indietro"
 
-#: equipe/templates/equipe/edit.html:12 equipe/views.py:64
+#: equipe/templates/equipe/edit.html:12 equipe/views.py:65
 #, fuzzy
 #| msgid "Modifier"
 msgid "Modifier le membre"
@@ -8348,8 +8348,8 @@ msgstr ""
 msgid "Supprimer ce membre ?"
 msgstr "Eliminare questo aiuto?"
 
-#: equipe/templates/equipe/invitation.html:9 equipe/views.py:98
-#: equipe/views.py:104 equipe/views.py:143
+#: equipe/templates/equipe/invitation.html:9 equipe/views.py:99
+#: equipe/views.py:105 equipe/views.py:144
 #, fuzzy
 #| msgid "Irrigation"
 msgid "Invitation"
@@ -8393,102 +8393,110 @@ msgstr "Errore durante la condivisione."
 msgid "Accès à la position refusé."
 msgstr "Accesso alla posizione negato."
 
-#: equipe/templates/equipe/offres.html:12
+#: equipe/templates/equipe/offres.html:16
 msgid "Voir la page publique"
 msgstr ""
 
-#: equipe/templates/equipe/offres.html:15
-#: equipe/templates/equipe/offres.html:26
+#: equipe/templates/equipe/offres.html:19
+#: equipe/templates/equipe/offres.html:31
 #, fuzzy
 #| msgid "Nouvelle parcelle"
 msgid "Nouvelle offre"
 msgstr "Nuovo appezzamento"
 
-#: equipe/templates/equipe/offres.html:25
+#: equipe/templates/equipe/offres.html:30
 #, fuzzy
 #| msgid "Modifier"
 msgid "Modifier l'offre"
 msgstr "Modifica"
 
-#: equipe/templates/equipe/offres.html:31
+#: equipe/templates/equipe/offres.html:36
 #, fuzzy
 #| msgid "Identité"
 msgid "Intitulé du poste"
 msgstr "Identità"
 
-#: equipe/templates/equipe/offres.html:33
+#: equipe/templates/equipe/offres.html:38
 msgid "ex : ouvrier arboricole pour la récolte"
 msgstr ""
 
-#: equipe/templates/equipe/offres.html:35
+#: equipe/templates/equipe/offres.html:40
 #, fuzzy
 #| msgid "Titre d'une tâche de planning agricole"
 msgid "Intitulé d'une offre d'emploi agricole"
 msgstr "Titolo di un'attività di pianificazione agricola"
 
-#: equipe/templates/equipe/offres.html:39
+#: equipe/templates/equipe/offres.html:44
 #, fuzzy
 #| msgid "Type de sol"
 msgid "Type de contrat"
 msgstr "Tipo di suolo"
 
-#: equipe/templates/equipe/offres.html:53
+#: equipe/templates/equipe/offres.html:62
+#, python-format
+msgid ""
+"Aucune commune renseignée sur vos <a href=\"%(url_parcelles)s\" "
+"class=\"underline\">parcelles</a>. L'offre indiquera la commune de "
+"l'exploitation."
+msgstr ""
+
+#: equipe/templates/equipe/offres.html:71
 msgid "Visible jusqu'au"
 msgstr ""
 
-#: equipe/templates/equipe/offres.html:63
+#: equipe/templates/equipe/offres.html:81
 msgid "ex : SMIC agricole, selon profil"
 msgstr ""
 
-#: equipe/templates/equipe/offres.html:66
+#: equipe/templates/equipe/offres.html:84
 #, fuzzy
 #| msgid "fertigation"
 msgid "Description du poste"
 msgstr "fertirrigazione"
 
-#: equipe/templates/equipe/offres.html:69
+#: equipe/templates/equipe/offres.html:87
 #, fuzzy
 #| msgid "Description d'une tâche de planning agricole"
 msgid "Description du poste dans une offre d'emploi agricole"
 msgstr "Descrizione di un'attività di pianificazione agricola"
 
-#: equipe/templates/equipe/offres.html:76
+#: equipe/templates/equipe/offres.html:94
 msgid "Profil recherché dans une offre d'emploi agricole"
 msgstr ""
 
-#: equipe/templates/equipe/offres.html:80
+#: equipe/templates/equipe/offres.html:98
 #, fuzzy
 #| msgid "membres de conversation"
 msgid "Email de contact"
 msgstr "membri della conversazione"
 
-#: equipe/templates/equipe/offres.html:86
+#: equipe/templates/equipe/offres.html:104
 msgid "Logement possible sur place"
 msgstr ""
 
-#: equipe/templates/equipe/offres.html:104
+#: equipe/templates/equipe/offres.html:122
 #, fuzzy
 #| msgid "Client"
 msgid "en ligne depuis le"
 msgstr "Cliente"
 
-#: equipe/templates/equipe/offres.html:105
+#: equipe/templates/equipe/offres.html:123
 msgid "jusqu'au"
 msgstr ""
 
-#: equipe/templates/equipe/offres.html:111
+#: equipe/templates/equipe/offres.html:129
 #, fuzzy
 #| msgid "En ligne"
 msgid "Voir en ligne"
 msgstr "Online"
 
-#: equipe/templates/equipe/offres.html:126
+#: equipe/templates/equipe/offres.html:144
 #, fuzzy
 #| msgid "Supprimer cette aide ?"
 msgid "Supprimer cette offre et ses candidatures ?"
 msgstr "Eliminare questo aiuto?"
 
-#: equipe/templates/equipe/offres.html:137
+#: equipe/templates/equipe/offres.html:155
 #, fuzzy, python-format
 #| msgid "%(n)s vote"
 #| msgid_plural "%(n)s votes"
@@ -8497,19 +8505,19 @@ msgid_plural "%(n)s candidatures"
 msgstr[0] "%(n)s voto"
 msgstr[1] "%(n)s voti"
 
-#: equipe/templates/equipe/offres.html:164
+#: equipe/templates/equipe/offres.html:182
 #, fuzzy
 #| msgid "Aucune facture."
 msgid "Aucune candidature reçue."
 msgstr "Nessuna fattura."
 
-#: equipe/templates/equipe/offres.html:169
+#: equipe/templates/equipe/offres.html:187
 #, fuzzy
 #| msgid "Aucune facture."
 msgid "Aucune offre"
 msgstr "Nessuna fattura."
 
-#: equipe/templates/equipe/offres.html:170
+#: equipe/templates/equipe/offres.html:188
 msgid ""
 "Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page "
 "publique des emplois."
@@ -8608,106 +8616,106 @@ msgstr "Titolo di un'attività di pianificazione agricola"
 msgid "Description d'une tâche de planning agricole"
 msgstr "Descrizione di un'attività di pianificazione agricola"
 
-#: equipe/views.py:39
+#: equipe/views.py:40
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation avant d'ajouter un membre."
 msgstr "Configura prima la tua azienda."
 
-#: equipe/views.py:44
+#: equipe/views.py:45
 #, python-format
 msgid "%(name)s a été ajouté à l'équipe."
 msgstr ""
 
-#: equipe/views.py:60
+#: equipe/views.py:61
 #, python-format
 msgid "%(name)s a été mis à jour."
 msgstr ""
 
-#: equipe/views.py:74
+#: equipe/views.py:75
 #, fuzzy, python-format
 #| msgid "Déjà un compte ?"
 msgid "%(name)s a déjà un compte lié."
 msgstr "Hai già un account?"
 
-#: equipe/views.py:76
+#: equipe/views.py:77
 #, python-format
 msgid "Renseignez un email avant d'inviter %(name)s."
 msgstr ""
 
-#: equipe/views.py:82
+#: equipe/views.py:83
 #, python-format
 msgid ""
 "L'invitation n'a pas pu être envoyée à %(email)s. Réessayez dans un instant."
 msgstr ""
 
-#: equipe/views.py:85
+#: equipe/views.py:86
 #, python-format
 msgid "Invitation envoyée à %(email)s."
 msgstr ""
 
-#: equipe/views.py:132
+#: equipe/views.py:133
 #, python-format
 msgid "Bienvenue dans l'équipe de %(expl)s."
 msgstr ""
 
-#: equipe/views.py:153
+#: equipe/views.py:154
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Membre supprimé."
 msgstr "Appezzamento eliminato."
 
-#: equipe/views.py:163
+#: equipe/views.py:164
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation avant d'ajouter une tâche."
 msgstr "Configura prima la tua azienda."
 
-#: equipe/views.py:171
+#: equipe/views.py:172
 #, python-format
 msgid "Tâche « %(t)s » ajoutée."
 msgstr ""
 
-#: equipe/views.py:203
+#: equipe/views.py:204
 #, python-format
 msgid "Tâche « %(t)s » modifiée."
 msgstr ""
 
-#: equipe/views.py:205 notifications/views.py:67
+#: equipe/views.py:206 notifications/views.py:67
 msgid "Modification impossible : vérifiez les champs."
 msgstr ""
 
-#: equipe/views.py:215
+#: equipe/views.py:216
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Tâche supprimée."
 msgstr "Appezzamento eliminato."
 
-#: equipe/views.py:274 equipe/views.py:294 equipe/views.py:465
+#: equipe/views.py:275 equipe/views.py:295 equipe/views.py:481
 #: stock/views.py:311
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation."
 msgstr "Configura prima la tua azienda."
 
-#: equipe/views.py:284
+#: equipe/views.py:285
 #, python-format
 msgid "%(n)s modèle(s) ajouté(s)."
 msgstr ""
 
-#: equipe/views.py:302
+#: equipe/views.py:303
 msgid "Un modèle a besoin d'un nom et d'un corps."
 msgstr ""
 
-#: equipe/views.py:350
+#: equipe/views.py:351
 msgid "Choisissez un salarié et un modèle."
 msgstr ""
 
-#: equipe/views.py:358
+#: equipe/views.py:359
 msgid "Contrat établi. Relisez-le avant de le remettre."
 msgstr ""
 
-#: equipe/views.py:472
+#: equipe/views.py:488
 msgid "Une offre a besoin d'un intitulé et d'une description."
 msgstr ""
 
