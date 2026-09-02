@@ -1,9 +1,9 @@
-"""Tests Clients : fiches clients et cloisonnement par exploitation."""
+"""Tests Clients : fiches clients, relations, cloisonnement par exploitation."""
 
 import pytest
 from django.contrib.auth import get_user_model
 
-from client.models import Client
+from client.models import Client, Partenaire
 from exploitations.models import Exploitation
 
 User = get_user_model()
@@ -112,3 +112,41 @@ def test_particulier_ignores_professional_fields(client, setup):
 def test_clients_requires_login(client):
     resp = client.get("/clients/")
     assert resp.status_code == 302 and "/login" in resp["Location"]
+
+
+@pytest.mark.django_db
+def test_relation_cuma(client, setup):
+    """La CUMA est un type de relation à part entière, accordé au féminin."""
+    user, exploitation = setup
+    client.force_login(user)
+
+    vide = client.get("/relations/cuma/")
+    assert vide.status_code == 200
+    corps = vide.content.decode()
+    assert "Ajouter une CUMA" in corps and "Aucune CUMA enregistrée." in corps
+
+    resp = client.post("/relations/partenaire/ajouter/", {
+        "type_partenaire": "cuma", "nom": "CUMA des Dentelles",
+        "contact_principal": "Paul Reynaud", "email": "contact@cuma-dentelles.fr",
+        "numero_voie": "4", "type_voie": "route", "voie": "de Gigondas",
+        "code_postal": "84190", "ville": "Beaumes-de-Venise",
+    })
+    assert resp.status_code == 302 and resp["Location"] == "/relations/cuma/"
+
+    cuma = Partenaire.objects.get(nom="CUMA des Dentelles")
+    assert cuma.exploitation == exploitation
+    assert cuma.type_partenaire == Partenaire.Type.CUMA
+    assert cuma.adresse_complete == "4 Route de Gigondas, 84190 Beaumes-de-Venise"
+
+    # Elle ne déborde pas sur les autres pages de relations.
+    assert "CUMA des Dentelles" in client.get("/relations/cuma/").content.decode()
+    assert "CUMA des Dentelles" not in client.get("/relations/bailleur/").content.decode()
+
+
+@pytest.mark.django_db
+def test_relation_accorde_le_masculin_a_voyelle(client, setup):
+    """« Nouvel avocat », et non « Nouveau avocat »."""
+    user, _exploitation = setup
+    client.force_login(user)
+    corps = client.get("/relations/avocat/").content.decode()
+    assert "Nouvel avocat" in corps and "Aucun avocat enregistré." in corps

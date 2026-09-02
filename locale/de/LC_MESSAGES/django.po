@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 15:58+0200\n"
+"POT-Creation-Date: 2026-09-02 17:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,12 +102,12 @@ msgstr ""
 msgid "rue"
 msgstr "Marke"
 
-#: accounts/models.py:23 client/models.py:60 client/models.py:157
+#: accounts/models.py:23 client/models.py:60 client/models.py:158
 #: exploitations/models.py:136 exploitations/models.py:407
 msgid "code postal"
 msgstr "Postleitzahl"
 
-#: accounts/models.py:24 client/models.py:61 client/models.py:158
+#: accounts/models.py:24 client/models.py:61 client/models.py:159
 #: exploitations/models.py:135 exploitations/models.py:406
 msgid "ville"
 msgstr "Stadt"
@@ -312,7 +312,7 @@ msgstr "Gartenbau"
 
 #: agronomie/models.py:34 analyse_sol/models.py:166 aquaculture/models.py:19
 #: aquaculture/models.py:28 aquaculture/models.py:131 aquaculture/models.py:146
-#: client/models.py:24 client/models.py:131 contrat/models.py:15
+#: client/models.py:24 client/models.py:132 contrat/models.py:15
 #: contrat/models.py:115 contrat/models.py:153 contrat/models.py:201
 #: core/adresse.py:73 elevage/models.py:26 elevage/models.py:36
 #: exploitations/formes_juridiques.py:79 exploitations/models.py:97
@@ -571,7 +571,7 @@ msgstr "Fertigation"
 msgid "fertigations"
 msgstr "Fertigationen"
 
-#: agronomie/models.py:209 client/models.py:48 client/models.py:137
+#: agronomie/models.py:209 client/models.py:48 client/models.py:138
 #: contrat/models.py:28 contrat/models.py:166 dti/models.py:143
 #: dti/models.py:238 dti/models.py:289 exploitations/models.py:472
 #: stock/models.py:51
@@ -2025,17 +2025,17 @@ msgstr ""
 msgid "région"
 msgstr ""
 
-#: analyse_sol/models.py:141 client/models.py:54 client/models.py:151
+#: analyse_sol/models.py:141 client/models.py:54 client/models.py:152
 #: vente/models.py:340
 msgid "email"
 msgstr "E-Mail"
 
-#: analyse_sol/models.py:142 client/models.py:55 client/models.py:152
+#: analyse_sol/models.py:142 client/models.py:55 client/models.py:153
 #: equipe/models.py:25 vente/models.py:341
 msgid "téléphone"
 msgstr "Telefon"
 
-#: analyse_sol/models.py:143 client/models.py:56 client/models.py:153
+#: analyse_sol/models.py:143 client/models.py:56 client/models.py:154
 msgid "site web"
 msgstr "Website"
 
@@ -2387,7 +2387,7 @@ msgid "Analyse supprimée."
 msgstr "Parzelle gelöscht."
 
 #: analyses/models.py:15 aquaculture/templates/aquaculture/bassins.html:41
-#: core/context_processors.py:178 exploitations/views.py:43
+#: core/context_processors.py:179 exploitations/views.py:43
 #: finances/models.py:18 finances/templates/finances/bilan_economique.html:38
 #: finances/templates/finances/subvention_pdf.html:31
 #: irrigation/templates/irrigation/bassinage.html:162
@@ -2554,7 +2554,7 @@ msgid "température cible (°C)"
 msgstr "Temperatur (°C)"
 
 #: aquaculture/models.py:53 aquaculture/models.py:100 aquaculture/models.py:163
-#: client/models.py:75 client/models.py:160 contrat/models.py:37
+#: client/models.py:75 client/models.py:161 contrat/models.py:37
 #: contrat/models.py:92 contrat/models.py:129 contrat/models.py:177
 #: contrat/models.py:222 dti/models.py:177 dti/models.py:295 dti/models.py:338
 #: elevage/models.py:43 stock/models.py:58 stock/models.py:109
@@ -3414,7 +3414,7 @@ msgstr "Archiviert"
 msgid "compte lié"
 msgstr ""
 
-#: client/models.py:42 client/models.py:149
+#: client/models.py:42 client/models.py:150
 #, fuzzy
 #| msgid "raison sociale"
 msgid "nom / raison sociale"
@@ -3429,25 +3429,25 @@ msgstr "Vorname"
 msgid "catégorie"
 msgstr "Kategorie"
 
-#: client/models.py:53 client/models.py:150
+#: client/models.py:53 client/models.py:151
 #, fuzzy
 #| msgid "productions principales"
 msgid "contact principal"
 msgstr "Hauptproduktionen"
 
-#: client/models.py:57 client/models.py:154 exploitations/models.py:129
+#: client/models.py:57 client/models.py:155 exploitations/models.py:129
 #: exploitations/models.py:401
 msgid "n° de voie"
 msgstr ""
 
-#: client/models.py:58 client/models.py:155 exploitations/models.py:131
+#: client/models.py:58 client/models.py:156 exploitations/models.py:131
 #: exploitations/models.py:403
 #, fuzzy
 #| msgid "catégorie"
 msgid "catégorie de voie"
 msgstr "Kategorie"
 
-#: client/models.py:59 client/models.py:156 exploitations/models.py:133
+#: client/models.py:59 client/models.py:157 exploitations/models.py:133
 #: exploitations/models.py:405
 msgid "voie"
 msgstr ""
@@ -3456,7 +3456,7 @@ msgstr ""
 msgid "pays"
 msgstr ""
 
-#: client/models.py:63 client/models.py:159
+#: client/models.py:63 client/models.py:160
 #: client/templates/client/_client_fields.html:94
 #: client/templates/client/detail.html:62 dti/templates/dti/liste.html:31
 #: exploitations/models.py:117 exploitations/models.py:273
@@ -3510,19 +3510,23 @@ msgstr ""
 msgid "Avocat"
 msgstr ""
 
-#: client/models.py:147
+#: client/models.py:131 client/views.py:208 core/context_processors.py:166
+msgid "CUMA"
+msgstr "CUMA"
+
+#: client/models.py:148
 #, fuzzy
 #| msgid "membre de conversation"
 msgid "compte de connexion"
 msgstr "Konversationsmitglied"
 
-#: client/models.py:164 client/views.py:188
+#: client/models.py:165
 #, fuzzy
 #| msgid "propriétaire"
 msgid "partenaire"
 msgstr "Eigentümer"
 
-#: client/models.py:165
+#: client/models.py:166
 msgid "partenaires"
 msgstr ""
 
@@ -3732,7 +3736,7 @@ msgid "Client"
 msgstr "Kunde"
 
 #: client/templates/client/clients.html:42
-#: client/templates/client/partenaires.html:103 core/context_processors.py:175
+#: client/templates/client/partenaires.html:103 core/context_processors.py:176
 #: exploitations/views.py:225 exploitations/views.py:390
 #: exploitations/views.py:391 public/templates/public/home.html:482
 msgid "Contact"
@@ -3891,18 +3895,6 @@ msgstr "Bisher keine Konversation."
 msgid "Relations"
 msgstr "Betriebe"
 
-#: client/templates/client/partenaires.html:12
-#, fuzzy, python-format
-#| msgid "Ajouter une ville"
-msgid "Ajouter un %(singulier)s"
-msgstr "Eine Stadt hinzufügen"
-
-#: client/templates/client/partenaires.html:21
-#, fuzzy, python-format
-#| msgid "Nouveau sondage"
-msgid "Nouveau %(singulier)s"
-msgstr "Neue Umfrage"
-
 #: client/templates/client/partenaires.html:44
 msgid "N° de voie"
 msgstr ""
@@ -3917,12 +3909,6 @@ msgstr ""
 msgid "Supprimer cette fiche ?"
 msgstr "Dieses Datenblatt löschen?"
 
-#: client/templates/client/partenaires.html:126
-#, fuzzy, python-format
-#| msgid "Aucun capteur enregistré."
-msgid "Aucun %(singulier)s enregistré."
-msgstr "Kein Sensor erfasst."
-
 #: client/templates/client/partenaires.html:127
 #, fuzzy
 #| msgid ""
@@ -3931,42 +3917,85 @@ msgid "Cliquez sur « Ajouter » pour créer une fiche."
 msgstr ""
 "Klicken Sie auf „Gabe erfassen“, um eine Fertigationsgabe hinzuzufügen."
 
-#: client/views.py:184
+#: client/views.py:190
 #, fuzzy
 #| msgid "Taille"
 msgid "Bailleurs"
 msgstr "Schnitt"
 
-#: client/views.py:184 contrat/models.py:63
-#: contrat/templates/contrat/baux.html:51
-#, fuzzy
-#| msgid "Taille"
-msgid "bailleur"
-msgstr "Schnitt"
+#: client/views.py:191
+msgid "Ajouter un bailleur"
+msgstr "Verpächter hinzufügen"
 
-#: client/views.py:185
+#: client/views.py:192
+msgid "Nouveau bailleur"
+msgstr "Neuer Verpächter"
+
+#: client/views.py:193
+msgid "Aucun bailleur enregistré."
+msgstr "Kein Verpächter erfasst."
+
+#: client/views.py:196
 msgid "Comptables"
 msgstr ""
 
-#: client/views.py:185
-#, fuzzy
-#| msgid "Mon compte"
-msgid "comptable"
-msgstr "Mein Konto"
+#: client/views.py:197
+msgid "Ajouter un comptable"
+msgstr "Buchhalter hinzufügen"
 
-#: client/views.py:186
+#: client/views.py:198
+msgid "Nouveau comptable"
+msgstr "Neuer Buchhalter"
+
+#: client/views.py:199
+msgid "Aucun comptable enregistré."
+msgstr "Kein Buchhalter erfasst."
+
+#: client/views.py:202
 msgid "Avocats"
 msgstr ""
 
-#: client/views.py:186
-msgid "avocat"
-msgstr ""
+#: client/views.py:203
+msgid "Ajouter un avocat"
+msgstr "Anwalt hinzufügen"
 
-#: client/views.py:188
+#: client/views.py:204
+msgid "Nouvel avocat"
+msgstr "Neuer Anwalt"
+
+#: client/views.py:205
+msgid "Aucun avocat enregistré."
+msgstr "Kein Anwalt erfasst."
+
+#: client/views.py:209
+msgid "Ajouter une CUMA"
+msgstr "CUMA hinzufügen"
+
+#: client/views.py:210
+msgid "Nouvelle CUMA"
+msgstr "Neue CUMA"
+
+#: client/views.py:211
+msgid "Aucune CUMA enregistrée."
+msgstr "Keine CUMA erfasst."
+
+#: client/views.py:215
 #, fuzzy
 #| msgid "Prestataire"
 msgid "Partenaires"
 msgstr "Dienstleister"
+
+#: client/views.py:216
+msgid "Ajouter un partenaire"
+msgstr "Partner hinzufügen"
+
+#: client/views.py:217
+msgid "Nouveau partenaire"
+msgstr "Neuer Partner"
+
+#: client/views.py:218
+msgid "Aucun partenaire enregistré."
+msgstr "Kein Partner erfasst."
 
 #: contrat/models.py:9
 msgid "Bail rural / fermage"
@@ -4048,6 +4077,12 @@ msgstr ""
 #| msgid "Irrigation"
 msgid "désignation"
 msgstr "Bewässerung"
+
+#: contrat/models.py:63 contrat/templates/contrat/baux.html:51
+#, fuzzy
+#| msgid "Taille"
+msgid "bailleur"
+msgstr "Schnitt"
 
 #: contrat/models.py:73
 #, fuzzy
@@ -5518,7 +5553,7 @@ msgstr "Abonnements"
 msgid "Dépôts"
 msgstr ""
 
-#: core/context_processors.py:169
+#: core/context_processors.py:170
 #: exploitations/templates/exploitations/adresses.html:7
 #: exploitations/templates/exploitations/contact.html:7
 #: exploitations/templates/exploitations/juridique.html:7
@@ -5532,46 +5567,46 @@ msgstr ""
 msgid "Mon exploitation"
 msgstr "Mein Betrieb"
 
-#: core/context_processors.py:173 exploitations/views.py:33
+#: core/context_processors.py:174 exploitations/views.py:33
 #, fuzzy
 #| msgid "Identité"
 msgid "Identités"
 msgstr "Identität"
 
-#: core/context_processors.py:174 exploitations/views.py:36
+#: core/context_processors.py:175 exploitations/views.py:36
 #: exploitations/views.py:308 exploitations/views.py:309
 msgid "Juridique"
 msgstr "Rechtliches"
 
-#: core/context_processors.py:176 exploitations/views.py:39
+#: core/context_processors.py:177 exploitations/views.py:39
 #: exploitations/views.py:432 exploitations/views.py:433
 #: stock/templates/stock/_depot_modal.html:26
 #: stock/templates/stock/depots.html:44
 msgid "Localisation"
 msgstr "Standort"
 
-#: core/context_processors.py:177 exploitations/views.py:41
+#: core/context_processors.py:178 exploitations/views.py:41
 msgid "Caractéristiques agricoles"
 msgstr "Landwirtschaftliche Merkmale"
 
-#: core/context_processors.py:179 exploitations/views.py:45
+#: core/context_processors.py:180 exploitations/views.py:45
 #, fuzzy
 #| msgid "Certifications & labels"
 msgid "Certificats et labels"
 msgstr "Zertifizierungen & Label"
 
-#: core/context_processors.py:180
+#: core/context_processors.py:181
 #: exploitations/templates/exploitations/societes.html:32
 #: exploitations/views.py:226 exploitations/views.py:739
 #: exploitations/views.py:740
 msgid "Sociétés liées"
 msgstr "Verbundene Unternehmen"
 
-#: core/context_processors.py:181 exploitations/views.py:47
+#: core/context_processors.py:182 exploitations/views.py:47
 msgid "RH et CA"
 msgstr ""
 
-#: core/context_processors.py:182
+#: core/context_processors.py:183
 #: operations/templates/operations/parc_materiel.html:7
 #: operations/templates/operations/parc_materiel.html:9 operations/views.py:20
 #: public/templates/public/home.html:261
@@ -15022,8 +15057,8 @@ msgstr "Ihr Betrieb verdient einen Assistenten, der nie schläft."
 
 #: public/templates/public/home.html:207
 msgid ""
-"Isidor répond aux 5 grandes préoccupations des agriculteurs français : "
-"temps de travail, charges, adaptation climatique, gestion d'équipe et "
+"Isidor répond aux 5 grandes préoccupations des agriculteurs français : temps "
+"de travail, charges, adaptation climatique, gestion d'équipe et "
 "accompagnement. Disponible à la voix, sur le tracteur, à 22h."
 msgstr ""
 "Isidor beantwortet die 5 großen Sorgen der französischen Landwirte: "
@@ -15271,9 +15306,9 @@ msgid ""
 msgstr ""
 "Erstellen Sie Ihr Konto online in 2 Minuten. Ein Schritt-für-Schritt-"
 "Einrichtungsleitfaden begleitet Sie beim Hinzufügen Ihrer Parzellen, "
-"Kulturen und Ihres Teams. Isidor verbindet sich mit Ihrem "
-"Bewässerungssystem (Vyrsa, IoT-Sensoren) und ist noch am selben Tag "
-"einsatzbereit, von Ihrem Smartphone oder Computer aus."
+"Kulturen und Ihres Teams. Isidor verbindet sich mit Ihrem Bewässerungssystem "
+"(Vyrsa, IoT-Sensoren) und ist noch am selben Tag einsatzbereit, von Ihrem "
+"Smartphone oder Computer aus."
 
 #: public/templates/public/home.html:423
 msgid "Isidor m'aide-t-il à réduire mes charges ?"

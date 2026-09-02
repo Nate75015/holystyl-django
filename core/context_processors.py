@@ -163,6 +163,7 @@ def layout(request):
                 {"label": _("Bailleur"), "url_name": "client:partenaires", "args": ["bailleur"], "icon": "real_estate_agent"},
                 {"label": _("Comptable"), "url_name": "client:partenaires", "args": ["comptable"], "icon": "calculate"},
                 {"label": _("Avocat"), "url_name": "client:partenaires", "args": ["avocat"], "icon": "balance"},
+                {"label": _("CUMA"), "url_name": "client:partenaires", "args": ["cuma"], "icon": "agriculture"},
             ],
         },
         {

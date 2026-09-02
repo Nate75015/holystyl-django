@@ -176,16 +176,47 @@ def client_delete(request, pk):
 
 
 
-# ── Partenaires : bailleurs, comptables, avocats ─────────────────────────
+# ── Partenaires : bailleurs, comptables, avocats, CUMA ─────────────────────────
 
 def _libelles_partenaire(type_partenaire):
-    """Titre et libellé au singulier, pour un gabarit partagé entre les types."""
-    pluriels = {
-        Partenaire.Type.BAILLEUR: (_("Bailleurs"), _("bailleur")),
-        Partenaire.Type.COMPTABLE: (_("Comptables"), _("comptable")),
-        Partenaire.Type.AVOCAT: (_("Avocats"), _("avocat")),
+    """Les phrases de la page, écrites en entier pour chaque type.
+
+    Un simple singulier ne suffit pas : une CUMA est féminine là où un
+    bailleur est masculin, et un avocat appelle « nouvel ». L'accord ne se
+    devine pas depuis le gabarit, chaque type porte donc ses propres phrases.
+    """
+    libelles = {
+        Partenaire.Type.BAILLEUR: {
+            "titre": _("Bailleurs"),
+            "ajouter": _("Ajouter un bailleur"),
+            "nouveau": _("Nouveau bailleur"),
+            "aucun": _("Aucun bailleur enregistré."),
+        },
+        Partenaire.Type.COMPTABLE: {
+            "titre": _("Comptables"),
+            "ajouter": _("Ajouter un comptable"),
+            "nouveau": _("Nouveau comptable"),
+            "aucun": _("Aucun comptable enregistré."),
+        },
+        Partenaire.Type.AVOCAT: {
+            "titre": _("Avocats"),
+            "ajouter": _("Ajouter un avocat"),
+            "nouveau": _("Nouvel avocat"),
+            "aucun": _("Aucun avocat enregistré."),
+        },
+        Partenaire.Type.CUMA: {
+            "titre": _("CUMA"),
+            "ajouter": _("Ajouter une CUMA"),
+            "nouveau": _("Nouvelle CUMA"),
+            "aucun": _("Aucune CUMA enregistrée."),
+        },
     }
-    return pluriels.get(type_partenaire, (_("Partenaires"), _("partenaire")))
+    return libelles.get(type_partenaire, {
+        "titre": _("Partenaires"),
+        "ajouter": _("Ajouter un partenaire"),
+        "nouveau": _("Nouveau partenaire"),
+        "aucun": _("Aucun partenaire enregistré."),
+    })
 
 
 @login_required
@@ -198,14 +229,13 @@ def partenaires(request, type_partenaire):
         Partenaire.objects.filter(exploitation=exploitation, type_partenaire=type_partenaire)
         if exploitation else Partenaire.objects.none()
     )
-    titre, singulier = _libelles_partenaire(type_partenaire)
+    libelles = _libelles_partenaire(type_partenaire)
     return render(request, "client/partenaires.html", {
         "partenaires": items,
         "type_partenaire": type_partenaire,
-        "titre": titre,
-        "singulier": singulier,
+        "libelles": libelles,
         "types_voie": TYPES_VOIE,
-        "page_title": titre,
+        "page_title": libelles["titre"],
     })
 
 
