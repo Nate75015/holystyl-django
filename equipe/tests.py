@@ -513,3 +513,23 @@ def test_les_candidatures_du_voisin_sont_hors_de_portee(client, ferme_rh, offre_
                        {"statut": "retenue"}).status_code == 404
     candidature.refresh_from_db()
     assert candidature.statut == Candidature.Statut.RECUE
+
+
+@pytest.mark.django_db
+def test_la_vitrine_reste_une_vitrine_meme_connecte(client, ferme_rh, offre_publiee):
+    """Un agriculteur connecté voit la même page qu'un candidat, sans son tableau de bord."""
+    patron, _exploitation, _membre = ferme_rh
+    client.force_login(patron)
+
+    for url in ("/emplois/", f"/emplois/{offre_publiee.slug}/"):
+        corps = client.get(url).content.decode()
+        assert "Emplois à la ferme" in corps           # l'entête vitrine…
+        assert "Tableau de bord" not in corps          # …et pas la barre latérale
+        assert "Contrats de travail" not in corps
+
+    # Une offre retirée aussi.
+    offre_publiee.statut = "close"
+    offre_publiee.save()
+    ferme = client.get(f"/emplois/{offre_publiee.slug}/")
+    assert ferme.status_code == 410
+    assert "Tableau de bord" not in ferme.content.decode()

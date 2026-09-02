@@ -3,6 +3,10 @@
 Ces vues sont ouvertes : aucun compte n'est requis pour consulter une offre ni
 pour y répondre. C'est le seul endroit de l'application où un anonyme dépose un
 fichier, d'où le contrôle serré du CV — extension, taille, et rien d'autre.
+
+Elles posent `layout_nu`, sur lequel `base.html` bascule : ces pages sont une
+vitrine et le restent pour tout le monde. Un agriculteur connecté qui ouvre une
+offre voit la même page qu'un candidat, sans son tableau de bord autour.
 """
 
 from django.contrib import messages
@@ -46,6 +50,7 @@ def emplois(request):
     return render(request, "equipe/emplois.html", {
         "offres": lot,
         "recherche": recherche,
+        "layout_nu": True,
         "page_title": _("Offres d'emploi agricoles"),
     })
 
@@ -58,9 +63,11 @@ def emploi_detail(request, slug):
         # Une offre retirée ne disparaît pas en 404 : le lien a pu être
         # partagé, on explique plutôt qu'on ne recrute plus.
         return render(request, "equipe/emploi_close.html",
-                      {"offre": offre, "page_title": offre.titre}, status=410)
+                      {"offre": offre, "layout_nu": True, "page_title": offre.titre},
+                      status=410)
     return render(request, "equipe/emploi_detail.html", {
         "offre": offre,
+        "layout_nu": True,
         "page_title": offre.titre,
     })
 

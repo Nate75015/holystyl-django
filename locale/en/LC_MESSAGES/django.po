@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 22:10+0200\n"
+"POT-Creation-Date: 2026-09-02 22:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7446,36 +7446,36 @@ msgstr "Valve controller"
 msgid "Convention de stage"
 msgstr "Login"
 
-#: equipe/emplois.py:49 equipe/templates/equipe/_emplois_corps.html:6
+#: equipe/emplois.py:54 equipe/templates/equipe/_emplois_corps.html:6
 msgid "Offres d'emploi agricoles"
 msgstr ""
 
-#: equipe/emplois.py:75
+#: equipe/emplois.py:82
 msgid "Le CV ne doit pas dépasser 5 Mo."
 msgstr ""
 
-#: equipe/emplois.py:78
+#: equipe/emplois.py:85
 msgid "Format de CV non accepté : PDF, Word, OpenDocument ou image."
 msgstr ""
 
-#: equipe/emplois.py:92
+#: equipe/emplois.py:99
 #, fuzzy
 #| msgid "Indiquez au moins un destinataire valide."
 msgid "Indiquez au moins votre nom et votre email."
 msgstr "Enter at least one valid recipient."
 
-#: equipe/emplois.py:110
+#: equipe/emplois.py:117
 #, fuzzy
 #| msgid "Nouvelle culture"
 msgid "Nouvelle candidature"
 msgstr "New crop"
 
-#: equipe/emplois.py:111
+#: equipe/emplois.py:118
 #, python-format
 msgid "%(qui)s a répondu à « %(offre)s »."
 msgstr ""
 
-#: equipe/emplois.py:113
+#: equipe/emplois.py:120
 #, fuzzy
 #| msgid "Demandé"
 msgid "Votre candidature est envoyée. Bonne chance !"
