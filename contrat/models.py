@@ -49,6 +49,25 @@ class Contrat(models.Model):
 class Bail(models.Model):
     """Un bail rural (fermage) : location de terres agricoles."""
 
+    class TypeBail(models.TextChoices):
+        """Les formes que prend la mise à disposition de terres.
+
+        Le bail à ferme de neuf ans est la règle ; le reste relève de régimes
+        particuliers, dont les durées et les congés diffèrent.
+        """
+
+        FERME_9 = "ferme_9", _("Bail à ferme (9 ans)")
+        LONG_TERME_18 = "long_terme_18", _("Bail à long terme (18 ans)")
+        LONG_TERME_25 = "long_terme_25", _("Bail à long terme (25 ans et plus)")
+        CARRIERE = "carriere", _("Bail de carrière")
+        CESSIBLE = "cessible", _("Bail cessible hors cadre familial")
+        PATURAGE = "paturage", _("Convention pluriannuelle de pâturage")
+        METAYAGE = "metayage", _("Bail à métayage")
+        COMMODAT = "commodat", _("Commodat (prêt à usage)")
+        SAFER = "safer", _("Mise à disposition SAFER")
+        PRECAIRE = "precaire", _("Convention précaire")
+        AUTRE = "autre", _("Autre")
+
     class Statut(models.TextChoices):
         BROUILLON = "brouillon", _("Brouillon")
         ACTIF = "actif", _("Actif")
@@ -59,6 +78,8 @@ class Bail(models.Model):
         "exploitations.Exploitation", on_delete=models.CASCADE, related_name="baux"
     )
     designation = models.CharField(_("désignation"), max_length=255)
+    type_bail = models.CharField(_("type de bail"), max_length=15,
+                                 choices=TypeBail.choices, default=TypeBail.FERME_9)
     bailleur = models.CharField(_("bailleur"), max_length=255, blank=True)
     # `bailleur` reste le nom en clair (saisie libre, baux historiques). Cette FK
     # est ce qui rattache réellement le bail à une fiche Partenaire, et donc à
@@ -88,6 +109,35 @@ class Bail(models.Model):
     statut = models.CharField(
         _("statut"), max_length=12, choices=Statut.choices, default=Statut.BROUILLON
     )
+    date_resiliation = models.DateField(_("résilié le"), null=True, blank=True)
+
+    # ── Ce qu'il faut savoir pour s'en servir ────────────────────────
+    #
+    # Un bail rural se joue sur des délais longs et impitoyables : le congé se
+    # donne dix-huit mois avant le terme, faute de quoi le bail se renouvelle
+    # pour neuf ans. Ces informations ne peuvent pas rester dans un champ notes.
+    preavis_conge_mois = models.PositiveIntegerField(
+        _("préavis de congé (mois)"), default=18,
+        help_text=_("Dix-huit mois avant le terme pour un bail rural : au-delà, "
+                    "le bail se renouvelle de plein droit."))
+    renouvellement_tacite = models.BooleanField(_("renouvellement tacite"), default=True)
+    date_revision_fermage = models.DateField(
+        _("date de révision du fermage"), null=True, blank=True,
+        help_text=_("Date anniversaire à laquelle l'indice s'applique."))
+    #: Ce que le preneur rembourse au bailleur, part récupérable de la taxe
+    #: foncière en tête — c'est la source de litige la plus fréquente.
+    charges_recuperables = models.TextField(_("charges récupérables"), blank=True)
+    taxe_fonciere_part_preneur = models.FloatField(
+        _("part de taxe foncière au preneur (%)"), null=True, blank=True)
+    etat_des_lieux = models.BooleanField(_("état des lieux établi"), default=False)
+    clauses_environnementales = models.TextField(_("clauses environnementales"), blank=True)
+    references_cadastrales = models.TextField(_("références cadastrales"), blank=True)
+    #: Le preneur en place est prioritaire si le bailleur vend. On note ici ce
+    #: que le bail en dit, quand il en dit quelque chose.
+    droit_preemption = models.TextField(_("droit de préemption"), blank=True)
+    contact_telephone = models.CharField(_("téléphone du bailleur"), max_length=30, blank=True)
+    contact_email = models.EmailField(_("email du bailleur"), blank=True)
+
     notes = models.TextField(_("notes"), blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -99,6 +149,84 @@ class Bail(models.Model):
 
     def __str__(self):
         return self.designation
+
+    @property
+    def jours_avant_echeance(self):
+        from django.utils import timezone
+
+        if not self.date_fin:
+            return None
+        return (self.date_fin - timezone.localdate()).days
+
+    @property
+    def date_limite_conge(self):
+        """Le dernier jour pour donner congé avant le terme.
+
+        C'est la date qui compte vraiment : passée, le bail se renouvelle de
+        plein droit pour une nouvelle période, que les parties le veuillent ou
+        non.
+        """
+        import calendar
+        from datetime import date
+
+        if not self.date_fin or not self.preavis_conge_mois:
+            return None
+        # Recul de N mois : on ramène en nombre de mois pour éviter les cas de
+        # bord, puis on borne le jour à la longueur du mois d'arrivée.
+        rang = (self.date_fin.year * 12 + self.date_fin.month - 1) - self.preavis_conge_mois
+        annee, mois = divmod(rang, 12)
+        mois += 1
+        jour = min(self.date_fin.day, calendar.monthrange(annee, mois)[1])
+        return date(annee, mois, jour)
+
+    @property
+    def jours_avant_conge(self):
+        """Jours restants pour donner congé ; négatif si la fenêtre est close."""
+        from django.utils import timezone
+
+        limite = self.date_limite_conge
+        return (limite - timezone.localdate()).days if limite else None
+
+    @property
+    def conge_imminent(self):
+        """Vrai dans les six mois qui précèdent la date limite de congé."""
+        restant = self.jours_avant_conge
+        return (self.statut == self.Statut.ACTIF
+                and restant is not None and 0 <= restant <= 183)
+
+    @property
+    def est_en_vigueur(self):
+        restant = self.jours_avant_echeance
+        return self.statut == self.Statut.ACTIF and (restant is None or restant >= 0)
+
+
+class DocumentBail(models.Model):
+    """Une pièce du dossier : le bail, son état des lieux, un avenant."""
+
+    class Type(models.TextChoices):
+        BAIL = "bail", _("Bail")
+        ETAT_DES_LIEUX = "etat_des_lieux", _("État des lieux")
+        AVENANT = "avenant", _("Avenant")
+        QUITTANCE = "quittance", _("Quittance de fermage")
+        CONGE = "conge", _("Congé")
+        PLAN = "plan", _("Plan ou extrait cadastral")
+        AUTRE = "autre", _("Autre")
+
+    bail = models.ForeignKey("contrat.Bail", on_delete=models.CASCADE, related_name="documents")
+    fichier = models.FileField(_("fichier"), upload_to="baux/%Y/%m/")
+    nom = models.CharField(_("nom"), max_length=255, blank=True)
+    type_document = models.CharField(_("type"), max_length=15,
+                                     choices=Type.choices, default=Type.BAIL)
+    extraction = models.JSONField(_("extraction"), default=dict, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("document de bail")
+        verbose_name_plural = _("documents de bail")
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return self.nom or self.fichier.name
 
 
 class ActeNotarie(models.Model):

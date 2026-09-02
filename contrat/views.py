@@ -90,36 +90,153 @@ def baux(request):
     loyer = base.aggregate(s=Sum("loyer_annuel"))["s"] or 0
     nb_actifs = base.filter(statut=Bail.Statut.ACTIF).count()
 
+    from .models import DocumentBail
+
+    liste = list(base.prefetch_related("documents"))
     return render(request, "contrat/baux.html", {
-        "baux": base,
-        "kpi_count": base.count(),
+        "baux": liste,
+        # La fenêtre de congé se ferme dix-huit mois avant le terme : passée,
+        # le bail se renouvelle pour neuf ans. C'est l'échéance qui compte.
+        "conges_imminents": [b for b in liste if b.conge_imminent],
+        "kpi_count": len(liste),
         "kpi_actifs": nb_actifs,
         "kpi_surface": round(surface, 2),
         "kpi_loyer": round(loyer),
+        "types": Bail.TypeBail.choices,
         "statuts": Bail.Statut.choices,
+        "types_document": DocumentBail.Type.choices,
         "page_title": _("Baux"),
     })
 
 
 @login_required
 @require_POST
-def bail_create(request):
-    exploitation = Exploitation.objects.filter(owner=request.user).first()
+def _champs_bail(request):
+    """Les champs d'un bail lus du POST, ou None sans désignation."""
     designation = (request.POST.get("designation") or "").strip()
-    if exploitation and designation:
-        Bail.objects.create(
-            exploitation=exploitation,
-            designation=designation,
-            bailleur=(request.POST.get("bailleur") or "").strip(),
-            preneur=(request.POST.get("preneur") or "").strip(),
-            surface_ha=_to_float(request.POST.get("surface_ha")),
-            loyer_annuel=_to_float(request.POST.get("loyer_annuel")),
-            date_debut=_to_date(request.POST.get("date_debut")),
-            date_fin=_to_date(request.POST.get("date_fin")),
-            statut=request.POST.get("statut") or Bail.Statut.BROUILLON,
-            notes=(request.POST.get("notes") or "").strip(),
-        )
+    if not designation:
+        return None
+
+    type_bail = request.POST.get("type_bail") or Bail.TypeBail.FERME_9
+    statut = request.POST.get("statut") or Bail.Statut.BROUILLON
+    return {
+        "designation": designation[:255],
+        "type_bail": (type_bail if type_bail in Bail.TypeBail.values else Bail.TypeBail.AUTRE),
+        "statut": statut if statut in Bail.Statut.values else Bail.Statut.BROUILLON,
+        "bailleur": (request.POST.get("bailleur") or "").strip()[:255],
+        "preneur": (request.POST.get("preneur") or "").strip()[:255],
+        "contact_telephone": (request.POST.get("contact_telephone") or "").strip()[:30],
+        "contact_email": (request.POST.get("contact_email") or "").strip(),
+        "surface_ha": _to_float(request.POST.get("surface_ha")),
+        "loyer_annuel": _to_float(request.POST.get("loyer_annuel")),
+        "loyer_base_ha": _to_float(request.POST.get("loyer_base_ha")),
+        "annee_reference": _to_int(request.POST.get("annee_reference")),
+        "date_debut": _to_date(request.POST.get("date_debut")),
+        "date_fin": _to_date(request.POST.get("date_fin")),
+        "date_resiliation": _to_date(request.POST.get("date_resiliation")),
+        # Les délais et les charges : ce qui se joue au renouvellement.
+        "preavis_conge_mois": _to_int(request.POST.get("preavis_conge_mois")) or 18,
+        "renouvellement_tacite": request.POST.get("renouvellement_tacite") == "on",
+        "date_revision_fermage": _to_date(request.POST.get("date_revision_fermage")),
+        "charges_recuperables": (request.POST.get("charges_recuperables") or "").strip(),
+        "taxe_fonciere_part_preneur": _to_float(request.POST.get("taxe_fonciere_part_preneur")),
+        "etat_des_lieux": request.POST.get("etat_des_lieux") == "on",
+        "clauses_environnementales": (request.POST.get("clauses_environnementales") or "").strip(),
+        "references_cadastrales": (request.POST.get("references_cadastrales") or "").strip(),
+        "droit_preemption": (request.POST.get("droit_preemption") or "").strip(),
+        "notes": (request.POST.get("notes") or "").strip(),
+    }
+
+
+@login_required
+@require_POST
+def bail_create(request, pk=None):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    if exploitation is None:
+        return redirect("contrat:baux")
+
+    champs = _champs_bail(request)
+    if champs is None:
+        messages.error(request, _("Un bail a besoin d'une désignation."))
+        return redirect("contrat:baux")
+
+    bail = (get_object_or_404(Bail, pk=pk, exploitation=exploitation)
+            if pk else Bail(exploitation=exploitation))
+    for champ, valeur in champs.items():
+        setattr(bail, champ, valeur)
+    bail.save()
+
+    fichier = request.FILES.get("document")
+    if fichier:
+        _archiver_document_bail(bail, request, fichier)
     return redirect("contrat:baux")
+
+
+def _archiver_document_bail(bail, request, fichier):
+    """Range une pièce au dossier du bail, avec les mêmes garde-fous."""
+    import os
+
+    from .models import DocumentBail
+
+    if os.path.splitext(fichier.name)[1].lower() not in EXTENSIONS_DOC:
+        messages.error(request, _("Document non accepté : PDF ou photo seulement."))
+        return None
+    if fichier.size > TAILLE_MAX_DOC:
+        messages.error(request, _("Le document ne doit pas dépasser 10 Mo."))
+        return None
+
+    type_document = request.POST.get("type_document") or DocumentBail.Type.BAIL
+    return DocumentBail.objects.create(
+        bail=bail, fichier=fichier, nom=fichier.name[:255],
+        type_document=(type_document if type_document in DocumentBail.Type.values
+                       else DocumentBail.Type.AUTRE))
+
+
+@login_required
+@require_POST
+def bail_document(request, pk):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    bail = get_object_or_404(Bail, pk=pk, exploitation=exploitation)
+    fichier = request.FILES.get("document")
+    if fichier:
+        _archiver_document_bail(bail, request, fichier)
+    return redirect("contrat:baux")
+
+
+@login_required
+@require_POST
+def bail_document_delete(request, pk):
+    from .models import DocumentBail
+
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    get_object_or_404(DocumentBail, pk=pk, bail__exploitation=exploitation).delete()
+    return redirect("contrat:baux")
+
+
+@login_required
+@require_POST
+def bail_scanner(request):
+    """Lit un bail déposé et renvoie les champs, sans rien enregistrer."""
+    import os
+
+    from django.http import JsonResponse
+
+    from . import bail_ocr
+
+    fichier = request.FILES.get("document")
+    if not fichier:
+        return JsonResponse({"error": _("Aucun document reçu.")}, status=400)
+    if os.path.splitext(fichier.name)[1].lower() not in EXTENSIONS_DOC:
+        return JsonResponse({"error": _("Format non lisible : PDF ou photo.")}, status=400)
+    if fichier.size > TAILLE_MAX_DOC:
+        return JsonResponse({"error": _("Le document ne doit pas dépasser 10 Mo.")}, status=400)
+
+    champs = bail_ocr.lire(fichier.read(), fichier.name)
+    if champs is None:
+        return JsonResponse(
+            {"error": _("Lecture impossible : Agent IA non configuré, ou document illisible.")},
+            status=503)
+    return JsonResponse({"champs": champs})
 
 
 @login_required

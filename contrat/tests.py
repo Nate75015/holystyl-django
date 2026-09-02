@@ -183,3 +183,144 @@ def test_la_police_du_voisin_est_hors_de_portee(client, setup):
     assert client.post(f"/assurances/{sa_police.pk}/document/", {}).status_code == 404
     assert client.post(f"/assurances/document/{son_doc.pk}/supprimer/").status_code == 404
     assert client.post(f"/assurances/{sa_police.pk}/supprimer/").status_code == 404
+
+
+# ── Baux : délais de congé, documents, lecture IA ────────────────────
+
+
+def _bail(**surcharges):
+    champs = {
+        "designation": "Parcelles des Coteaux",
+        "type_bail": "ferme_9",
+        "statut": "actif",
+        "bailleur": "SCI des Coteaux",
+        "preneur": "EARL du Ventoux",
+        "contact_telephone": "0490112233",
+        "surface_ha": "12,40",
+        "loyer_annuel": "1 860",
+        "date_debut": "2024-11-11",
+        "date_fin": "2033-11-11",
+        "preavis_conge_mois": "18",
+        "renouvellement_tacite": "on",
+        "taxe_fonciere_part_preneur": "20",
+        "references_cadastrales": "ZA 12, ZA 14",
+        "etat_des_lieux": "on",
+    }
+    champs.update(surcharges)
+    return champs
+
+
+@pytest.mark.django_db
+def test_enregistrer_un_bail_avec_ses_delais(client, setup):
+    from contrat.models import Bail
+
+    user, exploitation = setup
+    client.force_login(user)
+    assert client.post("/baux/nouveau/", _bail()).status_code == 302
+
+    b = Bail.objects.get(exploitation=exploitation)
+    assert b.type_bail == "ferme_9" and b.surface_ha == 12.4
+    assert b.preavis_conge_mois == 18 and b.renouvellement_tacite is True
+    assert b.taxe_fonciere_part_preneur == 20 and b.etat_des_lieux is True
+    assert b.references_cadastrales == "ZA 12, ZA 14"
+
+
+@pytest.mark.django_db
+def test_la_date_limite_de_conge_recule_du_preavis(setup):
+    """Dix-huit mois avant le terme : passée, le bail se renouvelle."""
+    from datetime import date
+
+    from contrat.models import Bail
+
+    _user, exploitation = setup
+    b = Bail.objects.create(exploitation=exploitation, designation="Coteaux",
+                            date_fin=date(2033, 11, 11), preavis_conge_mois=18)
+    assert b.date_limite_conge == date(2032, 5, 11)
+
+    # Fin de mois et année bissextile : le jour est borné, pas débordé.
+    b.date_fin = date(2033, 8, 31)
+    assert b.date_limite_conge == date(2032, 2, 29)
+
+    # Sans terme, il n'y a pas de fenêtre de congé.
+    b.date_fin = None
+    assert b.date_limite_conge is None and b.jours_avant_conge is None
+
+
+@pytest.mark.django_db
+def test_le_conge_imminent_remonte_sur_la_page(client, setup):
+    from datetime import timedelta
+
+    from contrat.models import Bail
+
+    user, exploitation = setup
+    # Terme dans 18 mois et 3 mois : la fenêtre de congé se ferme dans 3 mois.
+    Bail.objects.create(
+        exploitation=exploitation, designation="Coteaux", statut="actif",
+        preavis_conge_mois=18,
+        date_fin=timezone.localdate() + timedelta(days=548 + 90))
+    # Terme lointain : rien à signaler.
+    Bail.objects.create(
+        exploitation=exploitation, designation="Plaine", statut="actif",
+        preavis_conge_mois=18,
+        date_fin=timezone.localdate() + timedelta(days=548 + 900))
+
+    client.force_login(user)
+    resp = client.get("/baux/")
+    assert [b.designation for b in resp.context["conges_imminents"]] == ["Coteaux"]
+    html = resp.content.decode()
+    assert "congé est à donner bientôt" in html
+    assert "se renouvelle de plein droit" in html
+    assert "{#" not in html and "{{" not in html
+
+
+@pytest.mark.django_db
+def test_joindre_un_bail_scanne(client, setup):
+    from contrat.models import Bail, DocumentBail
+
+    user, exploitation = setup
+    b = Bail.objects.create(exploitation=exploitation, designation="Coteaux")
+    client.force_login(user)
+
+    assert client.post(f"/baux/{b.pk}/document/", {
+        "document": SimpleUploadedFile("bail.pdf", b"%PDF-1.4", content_type="application/pdf"),
+        "type_document": "bail"}).status_code == 302
+    assert DocumentBail.objects.get(bail=b).type_document == "bail"
+
+    # Un exécutable est refusé, comme pour les assurances.
+    client.post(f"/baux/{b.pk}/document/", {
+        "document": SimpleUploadedFile("bail.exe", b"MZ", content_type="application/octet-stream")})
+    assert DocumentBail.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_la_lecture_ia_du_bail_prefixe_sans_enregistrer(client, setup, monkeypatch):
+    from contrat import bail_ocr
+    from contrat.models import Bail
+
+    user, _exploitation = setup
+    monkeypatch.setattr(bail_ocr, "lire", lambda data, nom: {
+        "designation": "Parcelles des Coteaux", "surface_ha": 12.4,
+        "preavis_conge_mois": 18, "type_bail": "ferme_9"})
+    client.force_login(user)
+
+    resp = client.post("/baux/scanner/", {
+        "document": SimpleUploadedFile("bail.pdf", b"%PDF-1.4", content_type="application/pdf")})
+    assert resp.status_code == 200
+    assert resp.json()["champs"]["surface_ha"] == 12.4
+    assert Bail.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_le_bail_du_voisin_est_hors_de_portee(client, setup):
+    from contrat.models import Bail, DocumentBail
+
+    user, _exploitation = setup
+    voisin = User.objects.create_user(email="voisin-bail@ex.com", password="pwd12345")
+    ferme_voisine = Exploitation.objects.create(owner=voisin, name="Ferme voisine")
+    son_bail = Bail.objects.create(exploitation=ferme_voisine, designation="Ses terres")
+    son_doc = DocumentBail.objects.create(bail=son_bail, fichier="baux/x.pdf", nom="x.pdf")
+
+    client.force_login(user)
+    assert client.post(f"/baux/{son_bail.pk}/document/", {}).status_code == 404
+    assert client.post(f"/baux/document/{son_doc.pk}/supprimer/").status_code == 404
+    assert client.post(f"/baux/{son_bail.pk}/supprimer/").status_code == 404

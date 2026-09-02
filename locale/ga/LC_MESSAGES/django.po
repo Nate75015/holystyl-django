@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 23:23+0200\n"
+"POT-Creation-Date: 2026-09-02 23:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -317,26 +317,26 @@ msgstr "Garraíodóireacht mhargaidh"
 #: agronomie/models.py:34 analyse_sol/models.py:166 aquaculture/models.py:19
 #: aquaculture/models.py:28 aquaculture/models.py:131 aquaculture/models.py:146
 #: client/models.py:24 client/models.py:132 contrat/models.py:15
-#: contrat/models.py:114 contrat/models.py:169 contrat/models.py:273
-#: contrat/models.py:306 core/adresse.py:73 elevage/models.py:26
-#: elevage/models.py:36 equipe/models.py:168
-#: exploitations/formes_juridiques.py:79 exploitations/models.py:97
-#: finances/models.py:24 finances/models.py:50 interventions/models.py:26
-#: operations/materiel.py:31 operations/materiel.py:127
-#: operations/models.py:135 operations/models.py:167 pac/models.py:18
-#: planning/models.py:111 planning/models.py:151 planning/models.py:258
-#: stock/models.py:44 stock/models.py:86 stock/models.py:155
-#: vente/models.py:159
+#: contrat/models.py:69 contrat/models.py:213 contrat/models.py:242
+#: contrat/models.py:297 contrat/models.py:401 contrat/models.py:434
+#: core/adresse.py:73 elevage/models.py:26 elevage/models.py:36
+#: equipe/models.py:168 exploitations/formes_juridiques.py:79
+#: exploitations/models.py:97 finances/models.py:24 finances/models.py:50
+#: interventions/models.py:26 operations/materiel.py:31
+#: operations/materiel.py:127 operations/models.py:135 operations/models.py:167
+#: pac/models.py:18 planning/models.py:111 planning/models.py:151
+#: planning/models.py:258 stock/models.py:44 stock/models.py:86
+#: stock/models.py:155 vente/models.py:159
 msgid "Autre"
 msgstr "Eile"
 
 #: agronomie/models.py:36 agronomie/models.py:159 agronomie/models.py:208
 #: analyse_sol/models.py:134 aquaculture/models.py:39 aquaculture/models.py:148
-#: contrat/models.py:278 elevage/models.py:38 equipe/models.py:23
-#: equipe/models.py:322 exploitations/models.py:105 iot/models.py:40
-#: messagerie/models.py:115 meteo/models.py:49 operations/models.py:48
-#: parcelles/models.py:44 stock/models.py:49 vente/models.py:189
-#: vente/models.py:339
+#: contrat/models.py:217 contrat/models.py:406 elevage/models.py:38
+#: equipe/models.py:23 equipe/models.py:322 exploitations/models.py:105
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:49
+#: operations/models.py:48 parcelles/models.py:44 stock/models.py:49
+#: vente/models.py:189 vente/models.py:339
 msgid "nom"
 msgstr "ainm"
 
@@ -579,10 +579,10 @@ msgid "fertigations"
 msgstr "leasú-uisciúcháin"
 
 #: agronomie/models.py:209 client/models.py:48 client/models.py:138
-#: contrat/models.py:28 contrat/models.py:182 contrat/models.py:279
-#: dti/models.py:143 dti/models.py:238 dti/models.py:289 equipe/models.py:173
-#: equipe/models.py:206 exploitations/models.py:472 operations/models.py:49
-#: operations/models.py:213 stock/models.py:51
+#: contrat/models.py:28 contrat/models.py:218 contrat/models.py:310
+#: contrat/models.py:407 dti/models.py:143 dti/models.py:238 dti/models.py:289
+#: equipe/models.py:173 equipe/models.py:206 exploitations/models.py:472
+#: operations/models.py:49 operations/models.py:213 stock/models.py:51
 msgid "type"
 msgstr "cineál"
 
@@ -847,7 +847,7 @@ msgstr "Cuir in eagar"
 #: client/templates/client/partenaires.html:96
 #: contrat/templates/contrat/actes.html:58
 #: contrat/templates/contrat/assurances.html:167
-#: contrat/templates/contrat/baux.html:59
+#: contrat/templates/contrat/baux.html:149
 #: contrat/templates/contrat/contrats.html:59
 #: contrat/templates/contrat/msa.html:58
 #: elevage/templates/elevage/elevage.html:96
@@ -1087,7 +1087,7 @@ msgstr "Scriosfar a cuid fothascanna freisin:"
 #: client/templates/client/partenaires.html:76
 #: contrat/templates/contrat/_acte_modal.html:49
 #: contrat/templates/contrat/_assurance_modal.html:166
-#: contrat/templates/contrat/_bail_modal.html:55
+#: contrat/templates/contrat/_bail_modal.html:166
 #: contrat/templates/contrat/_contrat_modal.html:49
 #: contrat/templates/contrat/_msa_modal.html:55
 #: contrat/templates/contrat/_rendez_vous_modal.html:49
@@ -1235,7 +1235,7 @@ msgstr "fómhar"
 #: client/templates/client/partenaires.html:118
 #: contrat/templates/contrat/_acte_modal.html:45
 #: contrat/templates/contrat/_assurance_modal.html:162
-#: contrat/templates/contrat/_bail_modal.html:51
+#: contrat/templates/contrat/_bail_modal.html:162
 #: contrat/templates/contrat/_contrat_modal.html:45
 #: contrat/templates/contrat/_msa_modal.html:51
 #: contrat/templates/contrat/_rendez_vous_modal.html:40
@@ -1264,7 +1264,7 @@ msgstr "Nótaí"
 #: client/templates/client/_client_modal.html:26
 #: contrat/templates/contrat/_acte_modal.html:50
 #: contrat/templates/contrat/_assurance_modal.html:167
-#: contrat/templates/contrat/_bail_modal.html:56
+#: contrat/templates/contrat/_bail_modal.html:167
 #: contrat/templates/contrat/_contrat_modal.html:50
 #: contrat/templates/contrat/_msa_modal.html:56
 #: elevage/templates/elevage/elevage.html:251
@@ -2146,8 +2146,8 @@ msgid "type d'analyse"
 msgstr "tuarascáil anailíse"
 
 #: analyse_sol/models.py:179 aquaculture/models.py:44 aquaculture/models.py:98
-#: client/models.py:51 contrat/models.py:35 contrat/models.py:89
-#: contrat/models.py:191 contrat/models.py:326 dti/models.py:80
+#: client/models.py:51 contrat/models.py:35 contrat/models.py:110
+#: contrat/models.py:319 contrat/models.py:454 dti/models.py:80
 #: equipe/models.py:209 equipe/models.py:273 equipe/models.py:327
 #: equipe/models.py:374 pac/models.py:37 planning/models.py:226
 #: reseaux/models.py:31 vente/models.py:212 vente/models.py:343
@@ -2601,8 +2601,8 @@ msgstr "teocht (°C)"
 
 #: aquaculture/models.py:53 aquaculture/models.py:100 aquaculture/models.py:163
 #: client/models.py:75 client/models.py:161 contrat/models.py:37
-#: contrat/models.py:91 contrat/models.py:128 contrat/models.py:221
-#: contrat/models.py:327 dti/models.py:177 dti/models.py:295 dti/models.py:338
+#: contrat/models.py:141 contrat/models.py:256 contrat/models.py:349
+#: contrat/models.py:455 dti/models.py:177 dti/models.py:295 dti/models.py:338
 #: elevage/models.py:43 equipe/models.py:176 equipe/models.py:376
 #: stock/models.py:58 stock/models.py:109 stock/models.py:185
 #, fuzzy
@@ -2848,7 +2848,7 @@ msgstr ""
 #: client/templates/client/clients.html:44
 #: client/templates/client/espace.html:78
 #: contrat/templates/contrat/_assurance_modal.html:56
-#: contrat/templates/contrat/_bail_modal.html:47
+#: contrat/templates/contrat/_bail_modal.html:54
 #: contrat/templates/contrat/_contrat_modal.html:22
 #: contrat/templates/contrat/_msa_modal.html:22
 #: dashboard/templates/dashboard/bailleur.html:60
@@ -3001,7 +3001,7 @@ msgstr "Íseal"
 #: client/templates/client/clients.html:13
 #: contrat/templates/contrat/actes.html:12
 #: contrat/templates/contrat/assurances.html:18
-#: contrat/templates/contrat/baux.html:12
+#: contrat/templates/contrat/baux.html:16
 #: contrat/templates/contrat/contrats.html:12
 #: contrat/templates/contrat/msa.html:12
 #: parcelles/templates/parcelles/campagnes.html:12
@@ -3439,7 +3439,7 @@ msgstr "Easpórtáil"
 msgid "Prospect"
 msgstr ""
 
-#: client/models.py:28 contrat/models.py:19 contrat/models.py:54
+#: client/models.py:28 contrat/models.py:19 contrat/models.py:73
 #: irrigation/models.py:163 irrigation/templates/irrigation/bassinage.html:174
 msgid "Actif"
 msgstr "Gníomhach"
@@ -3540,7 +3540,7 @@ msgstr "cliant"
 msgid "clients"
 msgstr "cliaint"
 
-#: client/models.py:128 contrat/templates/contrat/_bail_modal.html:18
+#: client/models.py:128 contrat/templates/contrat/_bail_modal.html:60
 #: core/context_processors.py:172 core/espaces.py:57
 #, fuzzy
 #| msgid "Taille"
@@ -3744,7 +3744,7 @@ msgstr "Cliant"
 #: client/templates/client/clients.html:19
 #: contrat/templates/contrat/actes.html:19
 #: contrat/templates/contrat/assurances.html:28
-#: contrat/templates/contrat/baux.html:18
+#: contrat/templates/contrat/baux.html:22
 #: contrat/templates/contrat/contrats.html:18
 #: contrat/templates/contrat/msa.html:18 stock/templates/stock/articles.html:33
 #: stock/templates/stock/mouvements.html:20
@@ -3759,7 +3759,7 @@ msgid "Rechercher un client…"
 msgstr "Cuardaigh áit…"
 
 #: client/templates/client/clients.html:31
-#: contrat/templates/contrat/baux.html:30
+#: contrat/templates/contrat/baux.html:34
 #: contrat/templates/contrat/contrats.html:30
 #, fuzzy
 #| msgid "Actif"
@@ -3891,7 +3891,7 @@ msgid "Signé"
 msgstr "Ailínithe"
 
 #: client/templates/client/espace.html:49 contrat/models.py:20
-#: contrat/models.py:55 finances/models.py:140
+#: contrat/models.py:74 finances/models.py:140
 #: finances/templates/finances/devis.html:47
 #, fuzzy
 #| msgid "Expirée"
@@ -3925,7 +3925,6 @@ msgstr "Eisiúint"
 #: contrat/templates/contrat/_assurance_modal.html:90
 #: contrat/templates/contrat/_msa_modal.html:46
 #: contrat/templates/contrat/assurances.html:84
-#: contrat/templates/contrat/baux.html:41
 #: contrat/templates/contrat/contrats.html:41
 #: contrat/templates/contrat/msa.html:40
 #: dashboard/templates/dashboard/bailleur.html:59 equipe/forms.py:80
@@ -4078,18 +4077,18 @@ msgstr "Árachas"
 msgid "Contrat de travail"
 msgstr ""
 
-#: contrat/models.py:18 contrat/models.py:53 contrat/models.py:172
+#: contrat/models.py:18 contrat/models.py:72 contrat/models.py:300
 #: equipe/models.py:195 equipe/models.py:251 equipe/models.py:349
 #: finances/models.py:136 finances/models.py:202 planning/models.py:303
 #: vente/models.py:175
 msgid "Brouillon"
 msgstr "Dréacht"
 
-#: contrat/models.py:21 contrat/models.py:56
+#: contrat/models.py:21 contrat/models.py:75
 msgid "Résilié"
 msgstr ""
 
-#: contrat/models.py:26 contrat/models.py:180 contrat/models.py:317
+#: contrat/models.py:26 contrat/models.py:308 contrat/models.py:445
 #, fuzzy
 #| msgid "Identité"
 msgid "intitulé"
@@ -4101,17 +4100,17 @@ msgstr "Aitheantas"
 msgid "contractant"
 msgstr "Méid"
 
-#: contrat/models.py:31 contrat/models.py:86 contrat/models.py:188
+#: contrat/models.py:31 contrat/models.py:107 contrat/models.py:316
 #: equipe/models.py:214 exploitations/models.py:410
 msgid "date de début"
 msgstr "dáta tosaigh"
 
-#: contrat/models.py:32 contrat/models.py:87 equipe/models.py:215
+#: contrat/models.py:32 contrat/models.py:108 equipe/models.py:215
 #: exploitations/models.py:411
 msgid "date de fin"
 msgstr "dáta deiridh"
 
-#: contrat/models.py:33 contrat/models.py:127 contrat/models.py:323
+#: contrat/models.py:33 contrat/models.py:255 contrat/models.py:451
 #: pac/models.py:35
 msgid "montant (€)"
 msgstr "méid (€)"
@@ -4124,504 +4123,673 @@ msgstr ""
 msgid "contrats"
 msgstr ""
 
-#: contrat/models.py:61 dti/models.py:142 dti/models.py:191 dti/models.py:237
+#: contrat/models.py:59
+msgid "Bail à ferme (9 ans)"
+msgstr ""
+
+#: contrat/models.py:60
+msgid "Bail à long terme (18 ans)"
+msgstr ""
+
+#: contrat/models.py:61
+msgid "Bail à long terme (25 ans et plus)"
+msgstr ""
+
+#: contrat/models.py:62
+msgid "Bail de carrière"
+msgstr ""
+
+#: contrat/models.py:63
+msgid "Bail cessible hors cadre familial"
+msgstr ""
+
+#: contrat/models.py:64
+#, fuzzy
+#| msgid "Interventions"
+msgid "Convention pluriannuelle de pâturage"
+msgstr "Idirghabhálacha"
+
+#: contrat/models.py:65
+msgid "Bail à métayage"
+msgstr ""
+
+#: contrat/models.py:66
+msgid "Commodat (prêt à usage)"
+msgstr ""
+
+#: contrat/models.py:67
+msgid "Mise à disposition SAFER"
+msgstr ""
+
+#: contrat/models.py:68
+#, fuzzy
+#| msgid "Conversation privée"
+msgid "Convention précaire"
+msgstr "Comhrá príobháideach"
+
+#: contrat/models.py:80 dti/models.py:142 dti/models.py:191 dti/models.py:237
 #: stock/models.py:97 vente/models.py:425
 #, fuzzy
 #| msgid "Irrigation"
 msgid "désignation"
 msgstr "Uisciú"
 
-#: contrat/models.py:62 contrat/templates/contrat/baux.html:51
+#: contrat/models.py:81
+#, fuzzy
+#| msgid "type de sol"
+msgid "type de bail"
+msgstr "cineál ithreach"
+
+#: contrat/models.py:83 contrat/templates/contrat/baux.html:63
 #, fuzzy
 #| msgid "Taille"
 msgid "bailleur"
 msgstr "Bearradh"
 
-#: contrat/models.py:72
+#: contrat/models.py:93
 #, fuzzy
 #| msgid "fichier"
 msgid "fiche bailleur"
 msgstr "comhad"
 
-#: contrat/models.py:74
+#: contrat/models.py:95
 msgid "preneur"
 msgstr ""
 
-#: contrat/models.py:75 pac/models.py:36 parcelles/models.py:45
+#: contrat/models.py:96 pac/models.py:36 parcelles/models.py:45
 msgid "surface (ha)"
 msgstr "achar (ha)"
 
-#: contrat/models.py:76
+#: contrat/models.py:97
 msgid "fermage annuel (€)"
 msgstr ""
 
-#: contrat/models.py:80
+#: contrat/models.py:101
 msgid "loyer de base (€/ha)"
 msgstr ""
 
-#: contrat/models.py:82
+#: contrat/models.py:103
 msgid "année de référence du loyer de base"
 msgstr ""
 
-#: contrat/models.py:84
+#: contrat/models.py:105
 msgid "minimum préfectoral (€/ha)"
 msgstr ""
 
-#: contrat/models.py:85
+#: contrat/models.py:106
 msgid "maximum préfectoral (€/ha)"
 msgstr ""
 
-#: contrat/models.py:95
+#: contrat/models.py:112 contrat/templates/contrat/baux.html:75
+#, fuzzy
+#| msgid "fréquence"
+msgid "résilié le"
+msgstr "minicíocht"
+
+#: contrat/models.py:120
+#, fuzzy
+#| msgid "Prévisions 7 jours"
+msgid "préavis de congé (mois)"
+msgstr "Réamhaisnéis 7 lá"
+
+#: contrat/models.py:121
+msgid ""
+"Dix-huit mois avant le terme pour un bail rural : au-delà, le bail se "
+"renouvelle de plein droit."
+msgstr ""
+
+#: contrat/models.py:123
+#, fuzzy
+#| msgid "Nouvelle culture"
+msgid "renouvellement tacite"
+msgstr "Barr nua"
+
+#: contrat/models.py:125
+#, fuzzy
+#| msgid "date de fin"
+msgid "date de révision du fermage"
+msgstr "dáta deiridh"
+
+#: contrat/models.py:126
+msgid "Date anniversaire à laquelle l'indice s'applique."
+msgstr ""
+
+#: contrat/models.py:129
+#, fuzzy
+#| msgid "Parcelle créée."
+msgid "charges récupérables"
+msgstr "Gabháltas cruthaithe."
+
+#: contrat/models.py:131
+msgid "part de taxe foncière au preneur (%)"
+msgstr ""
+
+#: contrat/models.py:132
+#, fuzzy
+#| msgid "Contact"
+msgid "état des lieux établi"
+msgstr "Teagmháil"
+
+#: contrat/models.py:133
+#, fuzzy
+#| msgid "Environnement"
+msgid "clauses environnementales"
+msgstr "Comhshaol"
+
+#: contrat/models.py:134
+#, fuzzy
+#| msgid "réf. cadastrale"
+msgid "références cadastrales"
+msgstr "tag. cadastrach"
+
+#: contrat/models.py:137
+#, fuzzy
+#| msgid "date de plantation"
+msgid "droit de préemption"
+msgstr "dáta plandála"
+
+#: contrat/models.py:138
+#, fuzzy
+#| msgid "téléphone 1"
+msgid "téléphone du bailleur"
+msgstr "guthán 1"
+
+#: contrat/models.py:139
+#, fuzzy
+#| msgid "Nouveau bailleur"
+msgid "email du bailleur"
+msgstr "Léasóir nua"
+
+#: contrat/models.py:145
 msgid "bail"
 msgstr ""
 
-#: contrat/models.py:96
+#: contrat/models.py:146
 msgid "baux"
 msgstr ""
 
-#: contrat/models.py:108 stock/models.py:152
+#: contrat/models.py:207
 #, fuzzy
-#| msgid "Vent"
-msgid "Vente"
-msgstr "Gaoth"
-
-#: contrat/models.py:109 stock/models.py:146
-msgid "Achat"
-msgstr ""
-
-#: contrat/models.py:110
-#, fuzzy
-#| msgid "Location"
-msgid "Donation"
-msgstr "Cíos"
-
-#: contrat/models.py:111
-#, fuzzy
-#| msgid "Sessions"
-msgid "Succession"
-msgstr "Seisiúin"
-
-#: contrat/models.py:112
-msgid "Servitude"
-msgstr ""
-
-#: contrat/models.py:113
-msgid "Hypothèque"
-msgstr ""
-
-#: contrat/models.py:119 mail/models.py:24
-msgid "objet"
-msgstr "ábhar"
-
-#: contrat/models.py:121
-#, fuzzy
-#| msgid "type d'agriculture"
-msgid "type d'acte"
-msgstr "cineál talmhaíochta"
-
-#: contrat/models.py:123
-msgid "notaire / étude"
-msgstr ""
-
-#: contrat/models.py:124
-#, fuzzy
-#| msgid "participants"
-msgid "parties"
-msgstr "rannpháirtithe"
-
-#: contrat/models.py:125
-msgid "référence de l'acte"
-msgstr ""
-
-#: contrat/models.py:126 equipe/models.py:218
-#, fuzzy
-#| msgid "date de fin"
-msgid "date de signature"
-msgstr "dáta deiridh"
-
-#: contrat/models.py:132
-msgid "acte notarié"
-msgstr ""
-
-#: contrat/models.py:133
-msgid "actes notariés"
-msgstr ""
-
-#: contrat/models.py:152
-#, fuzzy
-#| msgid "Caractéristiques agricoles"
-msgid "Multirisque agricole"
-msgstr "Saintréithe talmhaíochta"
-
-#: contrat/models.py:153
-#, fuzzy
-#| msgid "Caractéristiques agricoles"
-msgid "Multirisque climatique (récoltes)"
-msgstr "Saintréithe talmhaíochta"
-
-#: contrat/models.py:154
-msgid "Grêle"
-msgstr ""
-
-#: contrat/models.py:155
-#, fuzzy
-#| msgid "exploitation"
-msgid "Responsabilité civile exploitation"
-msgstr "gabháltas"
-
-#: contrat/models.py:156
-msgid "Responsabilité civile du dirigeant"
-msgstr ""
-
-#: contrat/models.py:157
-msgid "Véhicules et engins"
-msgstr ""
-
-#: contrat/models.py:158
-msgid "Matériel et bris de machine"
-msgstr ""
-
-#: contrat/models.py:159
-msgid "Bâtiments"
-msgstr ""
-
-#: contrat/models.py:160
-msgid "Cheptel et mortalité du bétail"
-msgstr ""
-
-#: contrat/models.py:161
-#, fuzzy
-#| msgid "Mon exploitation"
-msgid "Perte d'exploitation"
-msgstr "M'fheirm"
-
-#: contrat/models.py:162
-#, fuzzy
-#| msgid "forme juridique"
-msgid "Protection juridique"
-msgstr "foirm dhlíthiúil"
-
-#: contrat/models.py:163
-#, fuzzy
-#| msgid "Environnement"
-msgid "Atteinte à l'environnement"
-msgstr "Comhshaol"
-
-#: contrat/models.py:164
-msgid "Santé et prévoyance"
-msgstr ""
-
-#: contrat/models.py:165
-msgid "Emprunteur"
-msgstr ""
-
-#: contrat/models.py:166
-msgid "Construction / dommages-ouvrage"
-msgstr ""
-
-#: contrat/models.py:167
-msgid "Transport de marchandises"
-msgstr ""
-
-#: contrat/models.py:168
-msgid "Cyber"
-msgstr ""
-
-#: contrat/models.py:173 irrigation/models.py:29 parcelles/models.py:35
-msgid "Active"
-msgstr "Gníomhach"
-
-#: contrat/models.py:174 iot/models.py:95
-msgid "Expirée"
-msgstr "Imithe in éag"
-
-#: contrat/models.py:175
-msgid "Résiliée"
-msgstr ""
-
-#: contrat/models.py:184
-msgid "assureur"
-msgstr ""
-
-#: contrat/models.py:185
-msgid "n° de police"
-msgstr ""
-
-#: contrat/models.py:186
-msgid "prime annuelle (€)"
-msgstr ""
-
-#: contrat/models.py:187
-msgid "capital assuré (€)"
-msgstr ""
-
-#: contrat/models.py:189 contrat/models.py:325
-#: equipe/templates/equipe/taches.html:55
-msgid "échéance"
-msgstr ""
-
-#: contrat/models.py:193 contrat/templates/contrat/assurances.html:88
-msgid "résiliée le"
-msgstr ""
-
-#: contrat/models.py:200
-#, fuzzy
-#| msgid "participants"
-msgid "garanties"
-msgstr "rannpháirtithe"
-
-#: contrat/models.py:201
-#, fuzzy
-#| msgid "Sessions"
-msgid "exclusions"
-msgstr "Seisiúin"
-
-#: contrat/models.py:202 contrat/templates/contrat/assurances.html:106
-#, fuzzy
-#| msgid "Assurance"
-msgid "franchise"
-msgstr "Árachas"
-
-#: contrat/models.py:203
-msgid "plafond d'indemnisation (€)"
-msgstr ""
-
-#: contrat/models.py:205
-msgid "délai de déclaration (jours)"
-msgstr ""
-
-#: contrat/models.py:206
-msgid ""
-"Cinq jours ouvrés en général, deux pour le vol, dix après un arrêté de "
-"catastrophe naturelle."
-msgstr ""
+#| msgid "Taille"
+msgid "Bail"
+msgstr "Bearradh"
 
 #: contrat/models.py:208
-msgid "marche à suivre en cas de sinistre"
+msgid "État des lieux"
 msgstr ""
 
-#: contrat/models.py:209
-#, fuzzy
-#| msgid "téléphone"
-msgid "téléphone sinistre"
-msgstr "guthán"
-
-#: contrat/models.py:210
-msgid "email sinistre"
-msgstr ""
-
-#: contrat/models.py:213
-msgid "courtier ou agence"
-msgstr ""
-
-#: contrat/models.py:214
-#, fuzzy
-#| msgid "téléphone 1"
-msgid "téléphone du courtier"
-msgstr "guthán 1"
-
-#: contrat/models.py:215
-#, fuzzy
-#| msgid "membres de conversation"
-msgid "email du courtier"
-msgstr "baill chomhrá"
-
-#: contrat/models.py:216
-#, fuzzy
-#| msgid "intervention"
-msgid "tacite reconduction"
-msgstr "idirghabháil"
-
-#: contrat/models.py:218
-msgid "préavis de résiliation (jours)"
-msgstr ""
-
-#: contrat/models.py:219
-msgid "Deux mois avant l'échéance dans la plupart des contrats."
-msgstr ""
-
-#: contrat/models.py:225
-#, fuzzy
-#| msgid "Assurance"
-msgid "assurance"
-msgstr "Árachas"
-
-#: contrat/models.py:226
-#, fuzzy
-#| msgid "Assurance"
-msgid "assurances"
-msgstr "Árachas"
-
-#: contrat/models.py:267
-#, fuzzy
-#| msgid "Saisonnier"
-msgid "Contrat / police"
-msgstr "Séasúrach"
-
-#: contrat/models.py:268
-#, fuzzy
-#| msgid "Interventions"
-msgid "Conditions générales"
-msgstr "Idirghabhálacha"
-
-#: contrat/models.py:269
+#: contrat/models.py:209 contrat/models.py:397
 #, fuzzy
 #| msgid "revenu"
 msgid "Avenant"
 msgstr "ioncam"
 
-#: contrat/models.py:270
+#: contrat/models.py:210
 #, fuzzy
-#| msgid "Prestation"
-msgid "Attestation"
-msgstr "Seirbhís"
+#| msgid "Joindre des fichiers"
+msgid "Quittance de fermage"
+msgstr "Ceangail comhaid"
 
-#: contrat/models.py:271
+#: contrat/models.py:211
 #, fuzzy
-#| msgid "type de sol"
-msgid "Appel de prime"
-msgstr "cineál ithreach"
+#| msgid "Congé payé"
+msgid "Congé"
+msgstr "Saoire íoctha"
 
-#: contrat/models.py:272
-#, fuzzy
-#| msgid "date de naissance"
-msgid "Déclaration de sinistre"
-msgstr "dáta breithe"
+#: contrat/models.py:212
+msgid "Plan ou extrait cadastral"
+msgstr ""
 
-#: contrat/models.py:277 dti/models.py:378 messagerie/models.py:114
+#: contrat/models.py:216 contrat/models.py:405 dti/models.py:378
+#: messagerie/models.py:114
 msgid "fichier"
 msgstr "comhad"
 
-#: contrat/models.py:283
+#: contrat/models.py:220 contrat/models.py:411
 #, fuzzy
 #| msgid "Prestation"
 msgid "extraction"
 msgstr "Seirbhís"
 
+#: contrat/models.py:224
+#, fuzzy
+#| msgid "document"
+msgid "document de bail"
+msgstr "doiciméad"
+
+#: contrat/models.py:225
+#, fuzzy
+#| msgid "document"
+msgid "documents de bail"
+msgstr "doiciméad"
+
+#: contrat/models.py:236 stock/models.py:152
+#, fuzzy
+#| msgid "Vent"
+msgid "Vente"
+msgstr "Gaoth"
+
+#: contrat/models.py:237 stock/models.py:146
+msgid "Achat"
+msgstr ""
+
+#: contrat/models.py:238
+#, fuzzy
+#| msgid "Location"
+msgid "Donation"
+msgstr "Cíos"
+
+#: contrat/models.py:239
+#, fuzzy
+#| msgid "Sessions"
+msgid "Succession"
+msgstr "Seisiúin"
+
+#: contrat/models.py:240
+msgid "Servitude"
+msgstr ""
+
+#: contrat/models.py:241
+msgid "Hypothèque"
+msgstr ""
+
+#: contrat/models.py:247 mail/models.py:24
+msgid "objet"
+msgstr "ábhar"
+
+#: contrat/models.py:249
+#, fuzzy
+#| msgid "type d'agriculture"
+msgid "type d'acte"
+msgstr "cineál talmhaíochta"
+
+#: contrat/models.py:251
+msgid "notaire / étude"
+msgstr ""
+
+#: contrat/models.py:252
+#, fuzzy
+#| msgid "participants"
+msgid "parties"
+msgstr "rannpháirtithe"
+
+#: contrat/models.py:253
+msgid "référence de l'acte"
+msgstr ""
+
+#: contrat/models.py:254 equipe/models.py:218
+#, fuzzy
+#| msgid "date de fin"
+msgid "date de signature"
+msgstr "dáta deiridh"
+
+#: contrat/models.py:260
+msgid "acte notarié"
+msgstr ""
+
+#: contrat/models.py:261
+msgid "actes notariés"
+msgstr ""
+
+#: contrat/models.py:280
+#, fuzzy
+#| msgid "Caractéristiques agricoles"
+msgid "Multirisque agricole"
+msgstr "Saintréithe talmhaíochta"
+
+#: contrat/models.py:281
+#, fuzzy
+#| msgid "Caractéristiques agricoles"
+msgid "Multirisque climatique (récoltes)"
+msgstr "Saintréithe talmhaíochta"
+
+#: contrat/models.py:282
+msgid "Grêle"
+msgstr ""
+
+#: contrat/models.py:283
+#, fuzzy
+#| msgid "exploitation"
+msgid "Responsabilité civile exploitation"
+msgstr "gabháltas"
+
+#: contrat/models.py:284
+msgid "Responsabilité civile du dirigeant"
+msgstr ""
+
+#: contrat/models.py:285
+msgid "Véhicules et engins"
+msgstr ""
+
+#: contrat/models.py:286
+msgid "Matériel et bris de machine"
+msgstr ""
+
 #: contrat/models.py:287
+msgid "Bâtiments"
+msgstr ""
+
+#: contrat/models.py:288
+msgid "Cheptel et mortalité du bétail"
+msgstr ""
+
+#: contrat/models.py:289
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "Perte d'exploitation"
+msgstr "M'fheirm"
+
+#: contrat/models.py:290
+#, fuzzy
+#| msgid "forme juridique"
+msgid "Protection juridique"
+msgstr "foirm dhlíthiúil"
+
+#: contrat/models.py:291
+#, fuzzy
+#| msgid "Environnement"
+msgid "Atteinte à l'environnement"
+msgstr "Comhshaol"
+
+#: contrat/models.py:292
+msgid "Santé et prévoyance"
+msgstr ""
+
+#: contrat/models.py:293
+msgid "Emprunteur"
+msgstr ""
+
+#: contrat/models.py:294
+msgid "Construction / dommages-ouvrage"
+msgstr ""
+
+#: contrat/models.py:295
+msgid "Transport de marchandises"
+msgstr ""
+
+#: contrat/models.py:296
+msgid "Cyber"
+msgstr ""
+
+#: contrat/models.py:301 irrigation/models.py:29 parcelles/models.py:35
+msgid "Active"
+msgstr "Gníomhach"
+
+#: contrat/models.py:302 iot/models.py:95
+msgid "Expirée"
+msgstr "Imithe in éag"
+
+#: contrat/models.py:303
+msgid "Résiliée"
+msgstr ""
+
+#: contrat/models.py:312
+msgid "assureur"
+msgstr ""
+
+#: contrat/models.py:313
+msgid "n° de police"
+msgstr ""
+
+#: contrat/models.py:314
+msgid "prime annuelle (€)"
+msgstr ""
+
+#: contrat/models.py:315
+msgid "capital assuré (€)"
+msgstr ""
+
+#: contrat/models.py:317 contrat/models.py:453
+#: equipe/templates/equipe/taches.html:55
+msgid "échéance"
+msgstr ""
+
+#: contrat/models.py:321 contrat/templates/contrat/assurances.html:88
+msgid "résiliée le"
+msgstr ""
+
+#: contrat/models.py:328
+#, fuzzy
+#| msgid "participants"
+msgid "garanties"
+msgstr "rannpháirtithe"
+
+#: contrat/models.py:329
+#, fuzzy
+#| msgid "Sessions"
+msgid "exclusions"
+msgstr "Seisiúin"
+
+#: contrat/models.py:330 contrat/templates/contrat/assurances.html:106
+#, fuzzy
+#| msgid "Assurance"
+msgid "franchise"
+msgstr "Árachas"
+
+#: contrat/models.py:331
+msgid "plafond d'indemnisation (€)"
+msgstr ""
+
+#: contrat/models.py:333
+msgid "délai de déclaration (jours)"
+msgstr ""
+
+#: contrat/models.py:334
+msgid ""
+"Cinq jours ouvrés en général, deux pour le vol, dix après un arrêté de "
+"catastrophe naturelle."
+msgstr ""
+
+#: contrat/models.py:336
+msgid "marche à suivre en cas de sinistre"
+msgstr ""
+
+#: contrat/models.py:337
+#, fuzzy
+#| msgid "téléphone"
+msgid "téléphone sinistre"
+msgstr "guthán"
+
+#: contrat/models.py:338
+msgid "email sinistre"
+msgstr ""
+
+#: contrat/models.py:341
+msgid "courtier ou agence"
+msgstr ""
+
+#: contrat/models.py:342
+#, fuzzy
+#| msgid "téléphone 1"
+msgid "téléphone du courtier"
+msgstr "guthán 1"
+
+#: contrat/models.py:343
+#, fuzzy
+#| msgid "membres de conversation"
+msgid "email du courtier"
+msgstr "baill chomhrá"
+
+#: contrat/models.py:344
+#, fuzzy
+#| msgid "intervention"
+msgid "tacite reconduction"
+msgstr "idirghabháil"
+
+#: contrat/models.py:346
+msgid "préavis de résiliation (jours)"
+msgstr ""
+
+#: contrat/models.py:347
+msgid "Deux mois avant l'échéance dans la plupart des contrats."
+msgstr ""
+
+#: contrat/models.py:353
+#, fuzzy
+#| msgid "Assurance"
+msgid "assurance"
+msgstr "Árachas"
+
+#: contrat/models.py:354
+#, fuzzy
+#| msgid "Assurance"
+msgid "assurances"
+msgstr "Árachas"
+
+#: contrat/models.py:395
+#, fuzzy
+#| msgid "Saisonnier"
+msgid "Contrat / police"
+msgstr "Séasúrach"
+
+#: contrat/models.py:396
+#, fuzzy
+#| msgid "Interventions"
+msgid "Conditions générales"
+msgstr "Idirghabhálacha"
+
+#: contrat/models.py:398
+#, fuzzy
+#| msgid "Prestation"
+msgid "Attestation"
+msgstr "Seirbhís"
+
+#: contrat/models.py:399
+#, fuzzy
+#| msgid "type de sol"
+msgid "Appel de prime"
+msgstr "cineál ithreach"
+
+#: contrat/models.py:400
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Déclaration de sinistre"
+msgstr "dáta breithe"
+
+#: contrat/models.py:415
 #, fuzzy
 #| msgid "Document"
 msgid "document d'assurance"
 msgstr "Doiciméad"
 
-#: contrat/models.py:288
+#: contrat/models.py:416
 #, fuzzy
 #| msgid "Document"
 msgid "documents d'assurance"
 msgstr "Doiciméad"
 
-#: contrat/models.py:299
+#: contrat/models.py:427
 msgid "AMEXA — maladie exploitant"
 msgstr ""
 
-#: contrat/models.py:300
+#: contrat/models.py:428
 msgid "Retraite (AVI/AVA/RCO)"
 msgstr ""
 
-#: contrat/models.py:301
+#: contrat/models.py:429
 msgid "ATEXA — accidents du travail"
 msgstr ""
 
-#: contrat/models.py:302
+#: contrat/models.py:430
 #, fuzzy
 #| msgid "productions principales"
 msgid "Allocations familiales"
 msgstr "príomhtháirgí"
 
-#: contrat/models.py:303
+#: contrat/models.py:431
 msgid "CSG / CRDS"
 msgstr ""
 
-#: contrat/models.py:304
+#: contrat/models.py:432
 #, fuzzy
 #| msgid "Formation"
 msgid "Formation (VIVEA)"
 msgstr "Oiliúint"
 
-#: contrat/models.py:305
+#: contrat/models.py:433
 #, fuzzy
 #| msgid "Associés et salariés"
 msgid "Cotisations salariés"
 msgstr "Comhpháirtithe agus fostaithe"
 
-#: contrat/models.py:309 contrat/templates/contrat/msa.html:30
+#: contrat/models.py:437 contrat/templates/contrat/msa.html:30
 msgid "À payer"
 msgstr ""
 
-#: contrat/models.py:310 equipe/models.py:351 finances/models.py:204
+#: contrat/models.py:438 equipe/models.py:351 finances/models.py:204
 msgid "Payée"
 msgstr "Íoctha"
 
-#: contrat/models.py:311 dashboard/templates/dashboard/comptable.html:93
+#: contrat/models.py:439 dashboard/templates/dashboard/comptable.html:93
 #: finances/models.py:205
 msgid "En retard"
 msgstr "Déanach"
 
-#: contrat/models.py:312
+#: contrat/models.py:440
 msgid "Exonérée"
 msgstr ""
 
-#: contrat/models.py:319
+#: contrat/models.py:447
 #, fuzzy
 #| msgid "type de sol"
 msgid "type de cotisation"
 msgstr "cineál ithreach"
 
-#: contrat/models.py:321
+#: contrat/models.py:449
 msgid "n° d'adhérent MSA"
 msgstr ""
 
-#: contrat/models.py:322
+#: contrat/models.py:450
 msgid "caisse MSA"
 msgstr ""
 
-#: contrat/models.py:324
+#: contrat/models.py:452
 msgid "période / année"
 msgstr ""
 
-#: contrat/models.py:331
+#: contrat/models.py:459
 #, fuzzy
 #| msgid "conversation IA"
 msgid "cotisation MSA"
 msgstr "comhrá IS"
 
-#: contrat/models.py:332
+#: contrat/models.py:460
 #, fuzzy
 #| msgid "conversations IA"
 msgid "cotisations MSA"
 msgstr "comhráite IS"
 
-#: contrat/models.py:347 dti/models.py:243
+#: contrat/models.py:475 dti/models.py:243
 #, fuzzy
 #| msgid "Année"
 msgid "année"
 msgstr "Bliain"
 
-#: contrat/models.py:349
+#: contrat/models.py:477
 #, fuzzy
 #| msgid "Irrigation"
 msgid "variation (%)"
 msgstr "Uisciú"
 
-#: contrat/models.py:350
+#: contrat/models.py:478
 msgid "Variation de l'indice par rapport à l'année précédente, ex. 1,62"
 msgstr ""
 
-#: contrat/models.py:353
+#: contrat/models.py:481
 msgid "référence de l'arrêté"
 msgstr ""
 
-#: contrat/models.py:354
+#: contrat/models.py:482
 msgid "ex. arrêté du 15 juillet 2025"
 msgstr ""
 
-#: contrat/models.py:359
+#: contrat/models.py:487
 #, fuzzy
 #| msgid "Joindre des fichiers"
 msgid "indice des fermages"
 msgstr "Ceangail comhaid"
 
-#: contrat/models.py:360
+#: contrat/models.py:488
 #, fuzzy
 #| msgid "Joindre des fichiers"
 msgid "indices des fermages"
@@ -4713,7 +4881,9 @@ msgid ""
 msgstr ""
 
 #: contrat/templates/contrat/_assurance_modal.html:39
+#: contrat/templates/contrat/_bail_modal.html:37
 #: contrat/templates/contrat/assurances.html:6
+#: contrat/templates/contrat/baux.html:6
 #, fuzzy
 #| msgid "document"
 msgid "Lire le document"
@@ -4770,7 +4940,7 @@ msgid "Plafond (€)"
 msgstr "méid (€)"
 
 #: contrat/templates/contrat/_assurance_modal.html:86
-#: contrat/templates/contrat/_bail_modal.html:38
+#: contrat/templates/contrat/_bail_modal.html:94
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
 #, fuzzy
 #| msgid "date de début"
@@ -4858,16 +5028,26 @@ msgstr "Réamhaisnéis 7 lá"
 msgid "Tacite reconduction"
 msgstr "idirghabháil"
 
-#: contrat/templates/contrat/_bail_modal.html:7
-#: contrat/templates/contrat/baux.html:13
-#: contrat/templates/contrat/baux.html:70
+#: contrat/templates/contrat/_bail_modal.html:16
+#: contrat/templates/contrat/baux.html:17
+#: contrat/templates/contrat/baux.html:157
 #, fuzzy
 #| msgid "Nouveau mail"
 msgid "Nouveau bail"
 msgstr "Ríomhphost nua"
 
-#: contrat/templates/contrat/_bail_modal.html:13
-#: contrat/templates/contrat/baux.html:39
+#: contrat/templates/contrat/_bail_modal.html:25
+msgid "Scanner le bail"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:27
+msgid ""
+"Photographiez le bail ou déposez le PDF : l'Agent IA en lit les parties, les "
+"dates, la surface, le fermage et le préavis de congé. Relisez avant "
+"d'enregistrer."
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:45
 #: dashboard/templates/dashboard/bailleur.html:55
 #: finances/templates/finances/devis_signature.html:58
 #: finances/templates/finances/document_editeur.html:156
@@ -4879,30 +5059,36 @@ msgstr "Ríomhphost nua"
 msgid "Désignation"
 msgstr "Uisciú"
 
-#: contrat/templates/contrat/_bail_modal.html:14
+#: contrat/templates/contrat/_bail_modal.html:46
 #, fuzzy
 #| msgid "Retour aux parcelles"
-msgid "ex: bail parcelles nord"
+msgid "ex: parcelles des Coteaux"
 msgstr "Ar ais go dtí na gabháltais"
 
-#: contrat/templates/contrat/_bail_modal.html:19 exploitations/models.py:103
-#: operations/models.py:63
-msgid "propriétaire"
-msgstr "úinéir"
+#: contrat/templates/contrat/_bail_modal.html:50
+#, fuzzy
+#| msgid "Type de sol"
+msgid "Type de bail"
+msgstr "Cineál ithreach"
 
-#: contrat/templates/contrat/_bail_modal.html:22
-#: contrat/templates/contrat/baux.html:40
+#: contrat/templates/contrat/_bail_modal.html:64
 #: dashboard/templates/dashboard/bailleur.html:56
 msgid "Preneur"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:23
+#: contrat/templates/contrat/_bail_modal.html:70
 #, fuzzy
-#| msgid "exploitation"
-msgid "exploitant"
-msgstr "gabháltas"
+#| msgid "téléphone 1"
+msgid "Téléphone du bailleur"
+msgstr "guthán 1"
 
-#: contrat/templates/contrat/_bail_modal.html:28
+#: contrat/templates/contrat/_bail_modal.html:74
+#, fuzzy
+#| msgid "Nouveau bailleur"
+msgid "Email du bailleur"
+msgstr "Léasóir nua"
+
+#: contrat/templates/contrat/_bail_modal.html:80
 #: finances/templates/finances/subvention_pdf.html:49
 #: interventions/templates/interventions/interventions.html:129
 #: irrigation/templates/irrigation/_etc_card.html:33
@@ -4911,20 +5097,102 @@ msgstr "gabháltas"
 msgid "Surface (ha)"
 msgstr "Achar (ha)"
 
-#: contrat/templates/contrat/_bail_modal.html:32
+#: contrat/templates/contrat/_bail_modal.html:84
 msgid "Fermage annuel (€)"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:42
-#: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
-#, fuzzy
-#| msgid "date de fin"
-msgid "Date de fin"
-msgstr "dáta deiridh"
-
-#: contrat/templates/contrat/_bail_modal.html:52
-msgid "clauses, révision du fermage…"
+#: contrat/templates/contrat/_bail_modal.html:88
+#: finances/templates/finances/fermage.html:175
+msgid "Loyer de base (€/ha)"
 msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:98
+#, fuzzy
+#| msgid "Terminer"
+msgid "Terme"
+msgstr "Críochnaigh"
+
+#: contrat/templates/contrat/_bail_modal.html:102
+#, fuzzy
+#| msgid "fréquence"
+msgid "Résilié le"
+msgstr "minicíocht"
+
+#: contrat/templates/contrat/_bail_modal.html:108
+msgid "Congé et renouvellement"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:111
+#, fuzzy
+#| msgid "Prévisions 7 jours"
+msgid "Préavis de congé (mois)"
+msgstr "Réamhaisnéis 7 lá"
+
+#: contrat/templates/contrat/_bail_modal.html:115
+#, fuzzy
+#| msgid "Révision complète"
+msgid "Révision du fermage"
+msgstr "Athbhreithniú iomlán"
+
+#: contrat/templates/contrat/_bail_modal.html:119
+#: finances/templates/finances/fermage.html:179
+msgid "Année de référence"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:126
+#, fuzzy
+#| msgid "Nouvelle culture"
+msgid "Renouvellement tacite"
+msgstr "Barr nua"
+
+#: contrat/templates/contrat/_bail_modal.html:130
+#, fuzzy
+#| msgid "Contact"
+msgid "État des lieux établi"
+msgstr "Teagmháil"
+
+#: contrat/templates/contrat/_bail_modal.html:135
+#: contrat/templates/contrat/baux.html:109
+#, fuzzy
+#| msgid "Parcelles"
+msgid "Parcelles, charges et clauses"
+msgstr "Ceapacha"
+
+#: contrat/templates/contrat/_bail_modal.html:137
+#, fuzzy
+#| msgid "Réf. cadastrale"
+msgid "Références cadastrales"
+msgstr "Tag. cadastrach"
+
+#: contrat/templates/contrat/_bail_modal.html:138
+msgid "ex: ZA 12, ZA 14, ZB 3"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:142
+#: contrat/templates/contrat/baux.html:111
+#, fuzzy
+#| msgid "Parcelle créée."
+msgid "Charges récupérables"
+msgstr "Gabháltas cruthaithe."
+
+#: contrat/templates/contrat/_bail_modal.html:146
+#, python-format
+msgid "Part de taxe foncière au preneur (%%)"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:152
+#: contrat/templates/contrat/baux.html:112
+#, fuzzy
+#| msgid "Environnement"
+msgid "Clauses environnementales"
+msgstr "Comhshaol"
+
+#: contrat/templates/contrat/_bail_modal.html:156
+#: contrat/templates/contrat/baux.html:113
+#, fuzzy
+#| msgid "Capteur de pression"
+msgid "Droit de préemption"
+msgstr "Braiteoir brú"
 
 #: contrat/templates/contrat/_contrat_modal.html:7
 #: contrat/templates/contrat/contrats.html:13
@@ -4948,6 +5216,12 @@ msgstr "Teagmháil"
 #: contrat/templates/contrat/_contrat_modal.html:28
 msgid "nom de la partie contractante"
 msgstr ""
+
+#: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
+#, fuzzy
+#| msgid "date de fin"
+msgid "Date de fin"
+msgstr "dáta deiridh"
 
 #: contrat/templates/contrat/_contrat_modal.html:46
 msgid "conditions particulières, échéances…"
@@ -5041,7 +5315,7 @@ msgstr "Pleanáilte"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/assurances.html:12
-#: contrat/templates/contrat/baux.html:7
+#: contrat/templates/contrat/baux.html:11
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
@@ -5051,7 +5325,7 @@ msgid "Contrat"
 msgstr "Teagmháil"
 
 #: contrat/templates/contrat/actes.html:7
-#: contrat/templates/contrat/actes.html:10 contrat/views.py:148
+#: contrat/templates/contrat/actes.html:10 contrat/views.py:265
 #: core/context_processors.py:138
 msgid "Patrimoine"
 msgstr ""
@@ -5118,23 +5392,26 @@ msgid "Ventes, achats, servitudes et successions au même endroit."
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:5
+#: contrat/templates/contrat/baux.html:5
 #, fuzzy
 #| msgid "Tâches"
 msgid "Lecture en cours…"
 msgstr "Tascanna"
 
 #: contrat/templates/contrat/assurances.html:7
+#: contrat/templates/contrat/baux.html:7
 msgid "Champs pré-remplis. Relisez-les."
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:8
+#: contrat/templates/contrat/baux.html:8
 #, fuzzy
 #| msgid "Aucune notification."
 msgid "Aucun document sélectionné."
 msgstr "Níl aon fhógra."
 
 #: contrat/templates/contrat/assurances.html:12
-#: contrat/templates/contrat/assurances.html:16 contrat/views.py:207
+#: contrat/templates/contrat/assurances.html:16 contrat/views.py:324
 #, fuzzy
 #| msgid "Assurance"
 msgid "Assurances"
@@ -5180,6 +5457,8 @@ msgstr[4] ""
 
 #: contrat/templates/contrat/assurances.html:57
 #: contrat/templates/contrat/assurances.html:85
+#: contrat/templates/contrat/baux.html:47
+#: contrat/templates/contrat/baux.html:73
 #, fuzzy
 #| msgid "Courroies"
 msgid "jours"
@@ -5235,19 +5514,22 @@ msgid "Garanties et exclusions"
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:134
+#: contrat/templates/contrat/baux.html:119
 #, fuzzy
 #| msgid "Document"
 msgid "Documents"
 msgstr "Doiciméad"
 
 #: contrat/templates/contrat/assurances.html:141
+#: contrat/templates/contrat/baux.html:127
 #, fuzzy
 #| msgid "Supprimer cette aide ?"
 msgid "Retirer ce document ?"
 msgstr "An chabhair seo a scriosadh?"
 
 #: contrat/templates/contrat/assurances.html:143
-#: equipe/templates/equipe/paie.html:76 meteo/templates/meteo/index.html:40
+#: contrat/templates/contrat/baux.html:129 equipe/templates/equipe/paie.html:76
+#: meteo/templates/meteo/index.html:40
 #: planning/templates/planning/acces.html:70
 #: reseaux/templates/reseaux/reseaux.html:57
 #: templates/partials/_sous_taches.html:41
@@ -5255,12 +5537,14 @@ msgid "Retirer"
 msgstr "Bain"
 
 #: contrat/templates/contrat/assurances.html:147
+#: contrat/templates/contrat/baux.html:133
 #, fuzzy
 #| msgid "Aucune tâche."
 msgid "Aucune pièce au dossier."
 msgstr "Níl aon tasc."
 
 #: contrat/templates/contrat/assurances.html:155
+#: contrat/templates/contrat/baux.html:141
 msgid "Joindre"
 msgstr ""
 
@@ -5282,54 +5566,130 @@ msgid ""
 "le délai de déclaration."
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:7 contrat/templates/contrat/baux.html:10
-#: contrat/templates/contrat/baux.html:29 contrat/views.py:100
+#: contrat/templates/contrat/baux.html:11
+#: contrat/templates/contrat/baux.html:14
+#: contrat/templates/contrat/baux.html:33 contrat/views.py:108
 #: core/context_processors.py:137
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:25
+#: contrat/templates/contrat/baux.html:29
 #, fuzzy
 #| msgid "Rechercher un lieu…"
 msgid "Rechercher un bail…"
 msgstr "Cuardaigh áit…"
 
-#: contrat/templates/contrat/baux.html:31
+#: contrat/templates/contrat/baux.html:35
 #: dashboard/templates/dashboard/bailleur.html:38
 #, fuzzy
 #| msgid "Surface concernée"
 msgid "Surface louée"
 msgstr "Achar lena mbaineann"
 
-#: contrat/templates/contrat/baux.html:32
+#: contrat/templates/contrat/baux.html:36
 #: dashboard/templates/dashboard/bailleur.html:42
 #: finances/templates/finances/fermage.html:137
 msgid "Fermage annuel"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:42 core/context_processors.py:104
-#: dashboard/templates/dashboard/bailleur.html:58
-#: finances/templates/finances/fermage.html:7
-#: finances/templates/finances/fermage.html:9 finances/views.py:628
-msgid "Fermage"
+#: contrat/templates/contrat/baux.html:44
+#, python-format
+msgid "Un congé est à donner bientôt"
+msgid_plural "%(n)s congés sont à donner bientôt"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+
+#: contrat/templates/contrat/baux.html:47
+#: contrat/templates/contrat/baux.html:84
+#, fuzzy
+#| msgid "Plus tard"
+msgid "au plus tard le"
+msgstr "Níos déanaí"
+
+#: contrat/templates/contrat/baux.html:49
+msgid ""
+"Passée cette date, le bail se renouvelle de plein droit pour une nouvelle "
+"période."
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:57
+#: contrat/templates/contrat/baux.html:73
+#, fuzzy
+#| msgid "Seuil dépassé"
+msgid "terme dépassé"
+msgstr "Tairseach sáraithe"
+
+#: contrat/templates/contrat/baux.html:76
+msgid "sans renouvellement tacite"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:82
+msgid "Pour donner congé"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:85
+#, python-format
+msgid "préavis de %(n)s mois"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:86
+msgid "fenêtre close"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:102
+#, fuzzy
+#| msgid "Marge / ha"
+msgid "Fermage / an"
+msgstr "Lánpháirt / ha"
+
+#: contrat/templates/contrat/baux.html:103
+#, fuzzy
+#| msgid "Émission"
+msgid "Révision"
+msgstr "Eisiúint"
+
+#: contrat/templates/contrat/baux.html:104
+msgid "Taxe foncière"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:110 core/context_processors.py:38
+#: dashboard/templates/dashboard/exploitant.html:74
+#: finances/templates/finances/subvention_pdf.html:47
+#: irrigation/templates/irrigation/irrigation.html:156
+#: irrigation/templates/irrigation/irrigation.html:217
+#: parcelles/templates/parcelles/campagne_form.html:12
+#: parcelles/templates/parcelles/detail.html:13
+#: parcelles/templates/parcelles/form.html:11
+#: parcelles/templates/parcelles/list.html:12
+#: parcelles/templates/parcelles/list.html:48
+#: templates/partials/_parcelles_selecteur.html:14
+msgid "Parcelles"
+msgstr "Ceapacha"
+
+#: contrat/templates/contrat/baux.html:119
+msgid "état des lieux non établi"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:147
 #, fuzzy
 #| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce bail ?"
 msgstr "An chabhair seo a scriosadh?"
 
-#: contrat/templates/contrat/baux.html:68
+#: contrat/templates/contrat/baux.html:155
 #, fuzzy
 #| msgid "Enregistrer le brouillon"
 msgid "Enregistrez votre premier bail"
 msgstr "Sábháil an dréacht"
 
-#: contrat/templates/contrat/baux.html:69
-msgid "Suivez vos fermages, preneurs et échéances au même endroit."
+#: contrat/templates/contrat/baux.html:156
+msgid ""
+"Scannez le bail : l'Agent IA en lit les parties, les dates, la surface et le "
+"fermage."
 msgstr ""
 
 #: contrat/templates/contrat/contrats.html:7
@@ -5378,7 +5738,7 @@ msgstr "Cláraigh an chéad idirghabháil"
 msgid "Baux, prestations, ventes et assurances au même endroit."
 msgstr ""
 
-#: contrat/templates/contrat/msa.html:7 contrat/views.py:388
+#: contrat/templates/contrat/msa.html:7 contrat/views.py:505
 msgid "MSA"
 msgstr ""
 
@@ -5426,41 +5786,46 @@ msgstr "Cláraigh an chéad idirghabháil"
 msgid "Suivez vos appels MSA, montants et échéances au même endroit."
 msgstr ""
 
-#: contrat/views.py:266
-msgid "Une police a besoin d'un intitulé."
+#: contrat/views.py:160
+msgid "Un bail a besoin d'une désignation."
 msgstr ""
 
-#: contrat/views.py:294
+#: contrat/views.py:182 contrat/views.py:411
 msgid "Document non accepté : PDF ou photo seulement."
 msgstr ""
 
-#: contrat/views.py:297 contrat/views.py:351
+#: contrat/views.py:185 contrat/views.py:232 contrat/views.py:414
+#: contrat/views.py:468
 msgid "Le document ne doit pas dépasser 10 Mo."
 msgstr ""
 
-#: contrat/views.py:344
+#: contrat/views.py:228 contrat/views.py:461
 #, fuzzy
 #| msgid "Aucune facture."
 msgid "Aucun document reçu."
 msgstr "Níl aon sonrasc."
 
-#: contrat/views.py:349
+#: contrat/views.py:230 contrat/views.py:466
 msgid "Format non lisible : PDF ou photo."
 msgstr ""
 
-#: contrat/views.py:356
+#: contrat/views.py:237 contrat/views.py:473
 msgid "Lecture impossible : Agent IA non configuré, ou document illisible."
 msgstr ""
 
-#: contrat/views.py:432
+#: contrat/views.py:383
+msgid "Une police a besoin d'un intitulé."
+msgstr ""
+
+#: contrat/views.py:549
 msgid "Indiquez le professionnel à rencontrer."
 msgstr ""
 
-#: contrat/views.py:438
+#: contrat/views.py:555
 msgid "Rendez-vous assurance"
 msgstr ""
 
-#: contrat/views.py:453
+#: contrat/views.py:570
 msgid "Rendez-vous ajouté au planning."
 msgstr ""
 
@@ -5694,20 +6059,6 @@ msgstr "Criosanna"
 msgid "Accueil"
 msgstr "Baile"
 
-#: core/context_processors.py:38
-#: dashboard/templates/dashboard/exploitant.html:74
-#: finances/templates/finances/subvention_pdf.html:47
-#: irrigation/templates/irrigation/irrigation.html:156
-#: irrigation/templates/irrigation/irrigation.html:217
-#: parcelles/templates/parcelles/campagne_form.html:12
-#: parcelles/templates/parcelles/detail.html:13
-#: parcelles/templates/parcelles/form.html:11
-#: parcelles/templates/parcelles/list.html:12
-#: parcelles/templates/parcelles/list.html:48
-#: templates/partials/_parcelles_selecteur.html:14
-msgid "Parcelles"
-msgstr "Ceapacha"
-
 #: core/context_processors.py:39 core/context_processors.py:90
 #: core/context_processors.py:92
 #: finances/templates/finances/subvention_pdf.html:49
@@ -5860,6 +6211,13 @@ msgstr "Cothabháil"
 #: finances/templates/finances/subvention_pdf.html:41 finances/views.py:141
 msgid "Charges"
 msgstr "Costais"
+
+#: core/context_processors.py:104
+#: dashboard/templates/dashboard/bailleur.html:58
+#: finances/templates/finances/fermage.html:7
+#: finances/templates/finances/fermage.html:9 finances/views.py:628
+msgid "Fermage"
+msgstr ""
 
 #: core/context_processors.py:105
 #: dashboard/templates/dashboard/comptable.html:20
@@ -10454,6 +10812,10 @@ msgstr "Líonra comhchoiteann"
 msgid "Retenue / bassin"
 msgstr "Coinneáil / linn"
 
+#: exploitations/models.py:103 operations/models.py:63
+msgid "propriétaire"
+msgstr "úinéir"
+
 #: exploitations/models.py:110 exploitations/models.py:266
 msgid "raison sociale"
 msgstr "ainm cláraithe"
@@ -12038,14 +12400,6 @@ msgstr ""
 
 #: finances/templates/finances/fermage.html:172
 msgid "Paramètres"
-msgstr ""
-
-#: finances/templates/finances/fermage.html:175
-msgid "Loyer de base (€/ha)"
-msgstr ""
-
-#: finances/templates/finances/fermage.html:179
-msgid "Année de référence"
 msgstr ""
 
 #: finances/templates/finances/fermage.html:183

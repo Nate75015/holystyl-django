@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 23:23+0200\n"
+"POT-Creation-Date: 2026-09-02 23:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -298,26 +298,26 @@ msgstr ""
 #: agronomie/models.py:34 analyse_sol/models.py:166 aquaculture/models.py:19
 #: aquaculture/models.py:28 aquaculture/models.py:131 aquaculture/models.py:146
 #: client/models.py:24 client/models.py:132 contrat/models.py:15
-#: contrat/models.py:114 contrat/models.py:169 contrat/models.py:273
-#: contrat/models.py:306 core/adresse.py:73 elevage/models.py:26
-#: elevage/models.py:36 equipe/models.py:168
-#: exploitations/formes_juridiques.py:79 exploitations/models.py:97
-#: finances/models.py:24 finances/models.py:50 interventions/models.py:26
-#: operations/materiel.py:31 operations/materiel.py:127
-#: operations/models.py:135 operations/models.py:167 pac/models.py:18
-#: planning/models.py:111 planning/models.py:151 planning/models.py:258
-#: stock/models.py:44 stock/models.py:86 stock/models.py:155
-#: vente/models.py:159
+#: contrat/models.py:69 contrat/models.py:213 contrat/models.py:242
+#: contrat/models.py:297 contrat/models.py:401 contrat/models.py:434
+#: core/adresse.py:73 elevage/models.py:26 elevage/models.py:36
+#: equipe/models.py:168 exploitations/formes_juridiques.py:79
+#: exploitations/models.py:97 finances/models.py:24 finances/models.py:50
+#: interventions/models.py:26 operations/materiel.py:31
+#: operations/materiel.py:127 operations/models.py:135 operations/models.py:167
+#: pac/models.py:18 planning/models.py:111 planning/models.py:151
+#: planning/models.py:258 stock/models.py:44 stock/models.py:86
+#: stock/models.py:155 vente/models.py:159
 msgid "Autre"
 msgstr ""
 
 #: agronomie/models.py:36 agronomie/models.py:159 agronomie/models.py:208
 #: analyse_sol/models.py:134 aquaculture/models.py:39 aquaculture/models.py:148
-#: contrat/models.py:278 elevage/models.py:38 equipe/models.py:23
-#: equipe/models.py:322 exploitations/models.py:105 iot/models.py:40
-#: messagerie/models.py:115 meteo/models.py:49 operations/models.py:48
-#: parcelles/models.py:44 stock/models.py:49 vente/models.py:189
-#: vente/models.py:339
+#: contrat/models.py:217 contrat/models.py:406 elevage/models.py:38
+#: equipe/models.py:23 equipe/models.py:322 exploitations/models.py:105
+#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:49
+#: operations/models.py:48 parcelles/models.py:44 stock/models.py:49
+#: vente/models.py:189 vente/models.py:339
 msgid "nom"
 msgstr ""
 
@@ -522,10 +522,10 @@ msgid "fertigations"
 msgstr ""
 
 #: agronomie/models.py:209 client/models.py:48 client/models.py:138
-#: contrat/models.py:28 contrat/models.py:182 contrat/models.py:279
-#: dti/models.py:143 dti/models.py:238 dti/models.py:289 equipe/models.py:173
-#: equipe/models.py:206 exploitations/models.py:472 operations/models.py:49
-#: operations/models.py:213 stock/models.py:51
+#: contrat/models.py:28 contrat/models.py:218 contrat/models.py:310
+#: contrat/models.py:407 dti/models.py:143 dti/models.py:238 dti/models.py:289
+#: equipe/models.py:173 equipe/models.py:206 exploitations/models.py:472
+#: operations/models.py:49 operations/models.py:213 stock/models.py:51
 msgid "type"
 msgstr ""
 
@@ -770,7 +770,7 @@ msgstr ""
 #: client/templates/client/partenaires.html:96
 #: contrat/templates/contrat/actes.html:58
 #: contrat/templates/contrat/assurances.html:167
-#: contrat/templates/contrat/baux.html:59
+#: contrat/templates/contrat/baux.html:149
 #: contrat/templates/contrat/contrats.html:59
 #: contrat/templates/contrat/msa.html:58
 #: elevage/templates/elevage/elevage.html:96
@@ -988,7 +988,7 @@ msgstr ""
 #: client/templates/client/partenaires.html:76
 #: contrat/templates/contrat/_acte_modal.html:49
 #: contrat/templates/contrat/_assurance_modal.html:166
-#: contrat/templates/contrat/_bail_modal.html:55
+#: contrat/templates/contrat/_bail_modal.html:166
 #: contrat/templates/contrat/_contrat_modal.html:49
 #: contrat/templates/contrat/_msa_modal.html:55
 #: contrat/templates/contrat/_rendez_vous_modal.html:49
@@ -1130,7 +1130,7 @@ msgstr ""
 #: client/templates/client/partenaires.html:118
 #: contrat/templates/contrat/_acte_modal.html:45
 #: contrat/templates/contrat/_assurance_modal.html:162
-#: contrat/templates/contrat/_bail_modal.html:51
+#: contrat/templates/contrat/_bail_modal.html:162
 #: contrat/templates/contrat/_contrat_modal.html:45
 #: contrat/templates/contrat/_msa_modal.html:51
 #: contrat/templates/contrat/_rendez_vous_modal.html:40
@@ -1159,7 +1159,7 @@ msgstr ""
 #: client/templates/client/_client_modal.html:26
 #: contrat/templates/contrat/_acte_modal.html:50
 #: contrat/templates/contrat/_assurance_modal.html:167
-#: contrat/templates/contrat/_bail_modal.html:56
+#: contrat/templates/contrat/_bail_modal.html:167
 #: contrat/templates/contrat/_contrat_modal.html:50
 #: contrat/templates/contrat/_msa_modal.html:56
 #: elevage/templates/elevage/elevage.html:251
@@ -1956,8 +1956,8 @@ msgid "type d'analyse"
 msgstr ""
 
 #: analyse_sol/models.py:179 aquaculture/models.py:44 aquaculture/models.py:98
-#: client/models.py:51 contrat/models.py:35 contrat/models.py:89
-#: contrat/models.py:191 contrat/models.py:326 dti/models.py:80
+#: client/models.py:51 contrat/models.py:35 contrat/models.py:110
+#: contrat/models.py:319 contrat/models.py:454 dti/models.py:80
 #: equipe/models.py:209 equipe/models.py:273 equipe/models.py:327
 #: equipe/models.py:374 pac/models.py:37 planning/models.py:226
 #: reseaux/models.py:31 vente/models.py:212 vente/models.py:343
@@ -2327,8 +2327,8 @@ msgstr ""
 
 #: aquaculture/models.py:53 aquaculture/models.py:100 aquaculture/models.py:163
 #: client/models.py:75 client/models.py:161 contrat/models.py:37
-#: contrat/models.py:91 contrat/models.py:128 contrat/models.py:221
-#: contrat/models.py:327 dti/models.py:177 dti/models.py:295 dti/models.py:338
+#: contrat/models.py:141 contrat/models.py:256 contrat/models.py:349
+#: contrat/models.py:455 dti/models.py:177 dti/models.py:295 dti/models.py:338
 #: elevage/models.py:43 equipe/models.py:176 equipe/models.py:376
 #: stock/models.py:58 stock/models.py:109 stock/models.py:185
 msgid "notes"
@@ -2530,7 +2530,7 @@ msgstr ""
 #: client/templates/client/clients.html:44
 #: client/templates/client/espace.html:78
 #: contrat/templates/contrat/_assurance_modal.html:56
-#: contrat/templates/contrat/_bail_modal.html:47
+#: contrat/templates/contrat/_bail_modal.html:54
 #: contrat/templates/contrat/_contrat_modal.html:22
 #: contrat/templates/contrat/_msa_modal.html:22
 #: dashboard/templates/dashboard/bailleur.html:60
@@ -2657,7 +2657,7 @@ msgstr ""
 #: client/templates/client/clients.html:13
 #: contrat/templates/contrat/actes.html:12
 #: contrat/templates/contrat/assurances.html:18
-#: contrat/templates/contrat/baux.html:12
+#: contrat/templates/contrat/baux.html:16
 #: contrat/templates/contrat/contrats.html:12
 #: contrat/templates/contrat/msa.html:12
 #: parcelles/templates/parcelles/campagnes.html:12
@@ -3009,7 +3009,7 @@ msgstr ""
 msgid "Prospect"
 msgstr ""
 
-#: client/models.py:28 contrat/models.py:19 contrat/models.py:54
+#: client/models.py:28 contrat/models.py:19 contrat/models.py:73
 #: irrigation/models.py:163 irrigation/templates/irrigation/bassinage.html:174
 msgid "Actif"
 msgstr ""
@@ -3100,7 +3100,7 @@ msgstr ""
 msgid "clients"
 msgstr ""
 
-#: client/models.py:128 contrat/templates/contrat/_bail_modal.html:18
+#: client/models.py:128 contrat/templates/contrat/_bail_modal.html:60
 #: core/context_processors.py:172 core/espaces.py:57
 msgid "Bailleur"
 msgstr ""
@@ -3268,7 +3268,7 @@ msgstr ""
 #: client/templates/client/clients.html:19
 #: contrat/templates/contrat/actes.html:19
 #: contrat/templates/contrat/assurances.html:28
-#: contrat/templates/contrat/baux.html:18
+#: contrat/templates/contrat/baux.html:22
 #: contrat/templates/contrat/contrats.html:18
 #: contrat/templates/contrat/msa.html:18 stock/templates/stock/articles.html:33
 #: stock/templates/stock/mouvements.html:20
@@ -3281,7 +3281,7 @@ msgid "Rechercher un client…"
 msgstr ""
 
 #: client/templates/client/clients.html:31
-#: contrat/templates/contrat/baux.html:30
+#: contrat/templates/contrat/baux.html:34
 #: contrat/templates/contrat/contrats.html:30
 msgid "Actifs"
 msgstr ""
@@ -3395,7 +3395,7 @@ msgid "Signé"
 msgstr ""
 
 #: client/templates/client/espace.html:49 contrat/models.py:20
-#: contrat/models.py:55 finances/models.py:140
+#: contrat/models.py:74 finances/models.py:140
 #: finances/templates/finances/devis.html:47
 msgid "Expiré"
 msgstr ""
@@ -3423,7 +3423,6 @@ msgstr ""
 #: contrat/templates/contrat/_assurance_modal.html:90
 #: contrat/templates/contrat/_msa_modal.html:46
 #: contrat/templates/contrat/assurances.html:84
-#: contrat/templates/contrat/baux.html:41
 #: contrat/templates/contrat/contrats.html:41
 #: contrat/templates/contrat/msa.html:40
 #: dashboard/templates/dashboard/bailleur.html:59 equipe/forms.py:80
@@ -3558,18 +3557,18 @@ msgstr ""
 msgid "Contrat de travail"
 msgstr ""
 
-#: contrat/models.py:18 contrat/models.py:53 contrat/models.py:172
+#: contrat/models.py:18 contrat/models.py:72 contrat/models.py:300
 #: equipe/models.py:195 equipe/models.py:251 equipe/models.py:349
 #: finances/models.py:136 finances/models.py:202 planning/models.py:303
 #: vente/models.py:175
 msgid "Brouillon"
 msgstr ""
 
-#: contrat/models.py:21 contrat/models.py:56
+#: contrat/models.py:21 contrat/models.py:75
 msgid "Résilié"
 msgstr ""
 
-#: contrat/models.py:26 contrat/models.py:180 contrat/models.py:317
+#: contrat/models.py:26 contrat/models.py:308 contrat/models.py:445
 msgid "intitulé"
 msgstr ""
 
@@ -3577,17 +3576,17 @@ msgstr ""
 msgid "contractant"
 msgstr ""
 
-#: contrat/models.py:31 contrat/models.py:86 contrat/models.py:188
+#: contrat/models.py:31 contrat/models.py:107 contrat/models.py:316
 #: equipe/models.py:214 exploitations/models.py:410
 msgid "date de début"
 msgstr ""
 
-#: contrat/models.py:32 contrat/models.py:87 equipe/models.py:215
+#: contrat/models.py:32 contrat/models.py:108 equipe/models.py:215
 #: exploitations/models.py:411
 msgid "date de fin"
 msgstr ""
 
-#: contrat/models.py:33 contrat/models.py:127 contrat/models.py:323
+#: contrat/models.py:33 contrat/models.py:255 contrat/models.py:451
 #: pac/models.py:35
 msgid "montant (€)"
 msgstr ""
@@ -3600,420 +3599,551 @@ msgstr ""
 msgid "contrats"
 msgstr ""
 
-#: contrat/models.py:61 dti/models.py:142 dti/models.py:191 dti/models.py:237
+#: contrat/models.py:59
+msgid "Bail à ferme (9 ans)"
+msgstr ""
+
+#: contrat/models.py:60
+msgid "Bail à long terme (18 ans)"
+msgstr ""
+
+#: contrat/models.py:61
+msgid "Bail à long terme (25 ans et plus)"
+msgstr ""
+
+#: contrat/models.py:62
+msgid "Bail de carrière"
+msgstr ""
+
+#: contrat/models.py:63
+msgid "Bail cessible hors cadre familial"
+msgstr ""
+
+#: contrat/models.py:64
+msgid "Convention pluriannuelle de pâturage"
+msgstr ""
+
+#: contrat/models.py:65
+msgid "Bail à métayage"
+msgstr ""
+
+#: contrat/models.py:66
+msgid "Commodat (prêt à usage)"
+msgstr ""
+
+#: contrat/models.py:67
+msgid "Mise à disposition SAFER"
+msgstr ""
+
+#: contrat/models.py:68
+msgid "Convention précaire"
+msgstr ""
+
+#: contrat/models.py:80 dti/models.py:142 dti/models.py:191 dti/models.py:237
 #: stock/models.py:97 vente/models.py:425
 msgid "désignation"
 msgstr ""
 
-#: contrat/models.py:62 contrat/templates/contrat/baux.html:51
+#: contrat/models.py:81
+msgid "type de bail"
+msgstr ""
+
+#: contrat/models.py:83 contrat/templates/contrat/baux.html:63
 msgid "bailleur"
 msgstr ""
 
-#: contrat/models.py:72
+#: contrat/models.py:93
 msgid "fiche bailleur"
 msgstr ""
 
-#: contrat/models.py:74
+#: contrat/models.py:95
 msgid "preneur"
 msgstr ""
 
-#: contrat/models.py:75 pac/models.py:36 parcelles/models.py:45
+#: contrat/models.py:96 pac/models.py:36 parcelles/models.py:45
 msgid "surface (ha)"
 msgstr ""
 
-#: contrat/models.py:76
+#: contrat/models.py:97
 msgid "fermage annuel (€)"
 msgstr ""
 
-#: contrat/models.py:80
+#: contrat/models.py:101
 msgid "loyer de base (€/ha)"
 msgstr ""
 
-#: contrat/models.py:82
+#: contrat/models.py:103
 msgid "année de référence du loyer de base"
 msgstr ""
 
-#: contrat/models.py:84
+#: contrat/models.py:105
 msgid "minimum préfectoral (€/ha)"
 msgstr ""
 
-#: contrat/models.py:85
+#: contrat/models.py:106
 msgid "maximum préfectoral (€/ha)"
 msgstr ""
 
-#: contrat/models.py:95
-msgid "bail"
+#: contrat/models.py:112 contrat/templates/contrat/baux.html:75
+msgid "résilié le"
 msgstr ""
 
-#: contrat/models.py:96
-msgid "baux"
-msgstr ""
-
-#: contrat/models.py:108 stock/models.py:152
-msgid "Vente"
-msgstr ""
-
-#: contrat/models.py:109 stock/models.py:146
-msgid "Achat"
-msgstr ""
-
-#: contrat/models.py:110
-msgid "Donation"
-msgstr ""
-
-#: contrat/models.py:111
-msgid "Succession"
-msgstr ""
-
-#: contrat/models.py:112
-msgid "Servitude"
-msgstr ""
-
-#: contrat/models.py:113
-msgid "Hypothèque"
-msgstr ""
-
-#: contrat/models.py:119 mail/models.py:24
-msgid "objet"
+#: contrat/models.py:120
+msgid "préavis de congé (mois)"
 msgstr ""
 
 #: contrat/models.py:121
-msgid "type d'acte"
+msgid ""
+"Dix-huit mois avant le terme pour un bail rural : au-delà, le bail se "
+"renouvelle de plein droit."
 msgstr ""
 
 #: contrat/models.py:123
-msgid "notaire / étude"
-msgstr ""
-
-#: contrat/models.py:124
-msgid "parties"
+msgid "renouvellement tacite"
 msgstr ""
 
 #: contrat/models.py:125
-msgid "référence de l'acte"
+msgid "date de révision du fermage"
 msgstr ""
 
-#: contrat/models.py:126 equipe/models.py:218
-msgid "date de signature"
+#: contrat/models.py:126
+msgid "Date anniversaire à laquelle l'indice s'applique."
+msgstr ""
+
+#: contrat/models.py:129
+msgid "charges récupérables"
+msgstr ""
+
+#: contrat/models.py:131
+msgid "part de taxe foncière au preneur (%)"
 msgstr ""
 
 #: contrat/models.py:132
-msgid "acte notarié"
+msgid "état des lieux établi"
 msgstr ""
 
 #: contrat/models.py:133
+msgid "clauses environnementales"
+msgstr ""
+
+#: contrat/models.py:134
+msgid "références cadastrales"
+msgstr ""
+
+#: contrat/models.py:137
+msgid "droit de préemption"
+msgstr ""
+
+#: contrat/models.py:138
+msgid "téléphone du bailleur"
+msgstr ""
+
+#: contrat/models.py:139
+msgid "email du bailleur"
+msgstr ""
+
+#: contrat/models.py:145
+msgid "bail"
+msgstr ""
+
+#: contrat/models.py:146
+msgid "baux"
+msgstr ""
+
+#: contrat/models.py:207
+msgid "Bail"
+msgstr ""
+
+#: contrat/models.py:208
+msgid "État des lieux"
+msgstr ""
+
+#: contrat/models.py:209 contrat/models.py:397
+msgid "Avenant"
+msgstr ""
+
+#: contrat/models.py:210
+msgid "Quittance de fermage"
+msgstr ""
+
+#: contrat/models.py:211
+msgid "Congé"
+msgstr ""
+
+#: contrat/models.py:212
+msgid "Plan ou extrait cadastral"
+msgstr ""
+
+#: contrat/models.py:216 contrat/models.py:405 dti/models.py:378
+#: messagerie/models.py:114
+msgid "fichier"
+msgstr ""
+
+#: contrat/models.py:220 contrat/models.py:411
+msgid "extraction"
+msgstr ""
+
+#: contrat/models.py:224
+msgid "document de bail"
+msgstr ""
+
+#: contrat/models.py:225
+msgid "documents de bail"
+msgstr ""
+
+#: contrat/models.py:236 stock/models.py:152
+msgid "Vente"
+msgstr ""
+
+#: contrat/models.py:237 stock/models.py:146
+msgid "Achat"
+msgstr ""
+
+#: contrat/models.py:238
+msgid "Donation"
+msgstr ""
+
+#: contrat/models.py:239
+msgid "Succession"
+msgstr ""
+
+#: contrat/models.py:240
+msgid "Servitude"
+msgstr ""
+
+#: contrat/models.py:241
+msgid "Hypothèque"
+msgstr ""
+
+#: contrat/models.py:247 mail/models.py:24
+msgid "objet"
+msgstr ""
+
+#: contrat/models.py:249
+msgid "type d'acte"
+msgstr ""
+
+#: contrat/models.py:251
+msgid "notaire / étude"
+msgstr ""
+
+#: contrat/models.py:252
+msgid "parties"
+msgstr ""
+
+#: contrat/models.py:253
+msgid "référence de l'acte"
+msgstr ""
+
+#: contrat/models.py:254 equipe/models.py:218
+msgid "date de signature"
+msgstr ""
+
+#: contrat/models.py:260
+msgid "acte notarié"
+msgstr ""
+
+#: contrat/models.py:261
 msgid "actes notariés"
 msgstr ""
 
-#: contrat/models.py:152
+#: contrat/models.py:280
 msgid "Multirisque agricole"
 msgstr ""
 
-#: contrat/models.py:153
+#: contrat/models.py:281
 msgid "Multirisque climatique (récoltes)"
 msgstr ""
 
-#: contrat/models.py:154
+#: contrat/models.py:282
 msgid "Grêle"
 msgstr ""
 
-#: contrat/models.py:155
+#: contrat/models.py:283
 msgid "Responsabilité civile exploitation"
 msgstr ""
 
-#: contrat/models.py:156
+#: contrat/models.py:284
 msgid "Responsabilité civile du dirigeant"
 msgstr ""
 
-#: contrat/models.py:157
+#: contrat/models.py:285
 msgid "Véhicules et engins"
 msgstr ""
 
-#: contrat/models.py:158
+#: contrat/models.py:286
 msgid "Matériel et bris de machine"
 msgstr ""
 
-#: contrat/models.py:159
+#: contrat/models.py:287
 msgid "Bâtiments"
 msgstr ""
 
-#: contrat/models.py:160
+#: contrat/models.py:288
 msgid "Cheptel et mortalité du bétail"
 msgstr ""
 
-#: contrat/models.py:161
+#: contrat/models.py:289
 msgid "Perte d'exploitation"
 msgstr ""
 
-#: contrat/models.py:162
+#: contrat/models.py:290
 msgid "Protection juridique"
 msgstr ""
 
-#: contrat/models.py:163
+#: contrat/models.py:291
 msgid "Atteinte à l'environnement"
 msgstr ""
 
-#: contrat/models.py:164
+#: contrat/models.py:292
 msgid "Santé et prévoyance"
 msgstr ""
 
-#: contrat/models.py:165
+#: contrat/models.py:293
 msgid "Emprunteur"
 msgstr ""
 
-#: contrat/models.py:166
+#: contrat/models.py:294
 msgid "Construction / dommages-ouvrage"
 msgstr ""
 
-#: contrat/models.py:167
+#: contrat/models.py:295
 msgid "Transport de marchandises"
 msgstr ""
 
-#: contrat/models.py:168
+#: contrat/models.py:296
 msgid "Cyber"
 msgstr ""
 
-#: contrat/models.py:173 irrigation/models.py:29 parcelles/models.py:35
+#: contrat/models.py:301 irrigation/models.py:29 parcelles/models.py:35
 msgid "Active"
 msgstr ""
 
-#: contrat/models.py:174 iot/models.py:95
+#: contrat/models.py:302 iot/models.py:95
 msgid "Expirée"
 msgstr ""
 
-#: contrat/models.py:175
+#: contrat/models.py:303
 msgid "Résiliée"
 msgstr ""
 
-#: contrat/models.py:184
+#: contrat/models.py:312
 msgid "assureur"
 msgstr ""
 
-#: contrat/models.py:185
+#: contrat/models.py:313
 msgid "n° de police"
 msgstr ""
 
-#: contrat/models.py:186
+#: contrat/models.py:314
 msgid "prime annuelle (€)"
 msgstr ""
 
-#: contrat/models.py:187
+#: contrat/models.py:315
 msgid "capital assuré (€)"
 msgstr ""
 
-#: contrat/models.py:189 contrat/models.py:325
+#: contrat/models.py:317 contrat/models.py:453
 #: equipe/templates/equipe/taches.html:55
 msgid "échéance"
 msgstr ""
 
-#: contrat/models.py:193 contrat/templates/contrat/assurances.html:88
+#: contrat/models.py:321 contrat/templates/contrat/assurances.html:88
 msgid "résiliée le"
 msgstr ""
 
-#: contrat/models.py:200
+#: contrat/models.py:328
 msgid "garanties"
 msgstr ""
 
-#: contrat/models.py:201
+#: contrat/models.py:329
 msgid "exclusions"
 msgstr ""
 
-#: contrat/models.py:202 contrat/templates/contrat/assurances.html:106
+#: contrat/models.py:330 contrat/templates/contrat/assurances.html:106
 msgid "franchise"
 msgstr ""
 
-#: contrat/models.py:203
+#: contrat/models.py:331
 msgid "plafond d'indemnisation (€)"
 msgstr ""
 
-#: contrat/models.py:205
+#: contrat/models.py:333
 msgid "délai de déclaration (jours)"
 msgstr ""
 
-#: contrat/models.py:206
+#: contrat/models.py:334
 msgid ""
 "Cinq jours ouvrés en général, deux pour le vol, dix après un arrêté de "
 "catastrophe naturelle."
 msgstr ""
 
-#: contrat/models.py:208
+#: contrat/models.py:336
 msgid "marche à suivre en cas de sinistre"
 msgstr ""
 
-#: contrat/models.py:209
+#: contrat/models.py:337
 msgid "téléphone sinistre"
 msgstr ""
 
-#: contrat/models.py:210
+#: contrat/models.py:338
 msgid "email sinistre"
 msgstr ""
 
-#: contrat/models.py:213
+#: contrat/models.py:341
 msgid "courtier ou agence"
 msgstr ""
 
-#: contrat/models.py:214
+#: contrat/models.py:342
 msgid "téléphone du courtier"
 msgstr ""
 
-#: contrat/models.py:215
+#: contrat/models.py:343
 msgid "email du courtier"
 msgstr ""
 
-#: contrat/models.py:216
+#: contrat/models.py:344
 msgid "tacite reconduction"
 msgstr ""
 
-#: contrat/models.py:218
+#: contrat/models.py:346
 msgid "préavis de résiliation (jours)"
 msgstr ""
 
-#: contrat/models.py:219
+#: contrat/models.py:347
 msgid "Deux mois avant l'échéance dans la plupart des contrats."
 msgstr ""
 
-#: contrat/models.py:225
+#: contrat/models.py:353
 msgid "assurance"
 msgstr ""
 
-#: contrat/models.py:226
+#: contrat/models.py:354
 msgid "assurances"
 msgstr ""
 
-#: contrat/models.py:267
+#: contrat/models.py:395
 msgid "Contrat / police"
 msgstr ""
 
-#: contrat/models.py:268
+#: contrat/models.py:396
 msgid "Conditions générales"
 msgstr ""
 
-#: contrat/models.py:269
-msgid "Avenant"
-msgstr ""
-
-#: contrat/models.py:270
+#: contrat/models.py:398
 msgid "Attestation"
 msgstr ""
 
-#: contrat/models.py:271
+#: contrat/models.py:399
 msgid "Appel de prime"
 msgstr ""
 
-#: contrat/models.py:272
+#: contrat/models.py:400
 msgid "Déclaration de sinistre"
 msgstr ""
 
-#: contrat/models.py:277 dti/models.py:378 messagerie/models.py:114
-msgid "fichier"
-msgstr ""
-
-#: contrat/models.py:283
-msgid "extraction"
-msgstr ""
-
-#: contrat/models.py:287
+#: contrat/models.py:415
 msgid "document d'assurance"
 msgstr ""
 
-#: contrat/models.py:288
+#: contrat/models.py:416
 msgid "documents d'assurance"
 msgstr ""
 
-#: contrat/models.py:299
+#: contrat/models.py:427
 msgid "AMEXA — maladie exploitant"
 msgstr ""
 
-#: contrat/models.py:300
+#: contrat/models.py:428
 msgid "Retraite (AVI/AVA/RCO)"
 msgstr ""
 
-#: contrat/models.py:301
+#: contrat/models.py:429
 msgid "ATEXA — accidents du travail"
 msgstr ""
 
-#: contrat/models.py:302
+#: contrat/models.py:430
 msgid "Allocations familiales"
 msgstr ""
 
-#: contrat/models.py:303
+#: contrat/models.py:431
 msgid "CSG / CRDS"
 msgstr ""
 
-#: contrat/models.py:304
+#: contrat/models.py:432
 msgid "Formation (VIVEA)"
 msgstr ""
 
-#: contrat/models.py:305
+#: contrat/models.py:433
 msgid "Cotisations salariés"
 msgstr ""
 
-#: contrat/models.py:309 contrat/templates/contrat/msa.html:30
+#: contrat/models.py:437 contrat/templates/contrat/msa.html:30
 msgid "À payer"
 msgstr ""
 
-#: contrat/models.py:310 equipe/models.py:351 finances/models.py:204
+#: contrat/models.py:438 equipe/models.py:351 finances/models.py:204
 msgid "Payée"
 msgstr ""
 
-#: contrat/models.py:311 dashboard/templates/dashboard/comptable.html:93
+#: contrat/models.py:439 dashboard/templates/dashboard/comptable.html:93
 #: finances/models.py:205
 msgid "En retard"
 msgstr ""
 
-#: contrat/models.py:312
+#: contrat/models.py:440
 msgid "Exonérée"
 msgstr ""
 
-#: contrat/models.py:319
+#: contrat/models.py:447
 msgid "type de cotisation"
 msgstr ""
 
-#: contrat/models.py:321
+#: contrat/models.py:449
 msgid "n° d'adhérent MSA"
 msgstr ""
 
-#: contrat/models.py:322
+#: contrat/models.py:450
 msgid "caisse MSA"
 msgstr ""
 
-#: contrat/models.py:324
+#: contrat/models.py:452
 msgid "période / année"
 msgstr ""
 
-#: contrat/models.py:331
+#: contrat/models.py:459
 msgid "cotisation MSA"
 msgstr ""
 
-#: contrat/models.py:332
+#: contrat/models.py:460
 msgid "cotisations MSA"
 msgstr ""
 
-#: contrat/models.py:347 dti/models.py:243
+#: contrat/models.py:475 dti/models.py:243
 msgid "année"
 msgstr ""
 
-#: contrat/models.py:349
+#: contrat/models.py:477
 msgid "variation (%)"
 msgstr ""
 
-#: contrat/models.py:350
+#: contrat/models.py:478
 msgid "Variation de l'indice par rapport à l'année précédente, ex. 1,62"
 msgstr ""
 
-#: contrat/models.py:353
+#: contrat/models.py:481
 msgid "référence de l'arrêté"
 msgstr ""
 
-#: contrat/models.py:354
+#: contrat/models.py:482
 msgid "ex. arrêté du 15 juillet 2025"
 msgstr ""
 
-#: contrat/models.py:359
+#: contrat/models.py:487
 msgid "indice des fermages"
 msgstr ""
 
-#: contrat/models.py:360
+#: contrat/models.py:488
 msgid "indices des fermages"
 msgstr ""
 
@@ -4093,7 +4223,9 @@ msgid ""
 msgstr ""
 
 #: contrat/templates/contrat/_assurance_modal.html:39
+#: contrat/templates/contrat/_bail_modal.html:37
 #: contrat/templates/contrat/assurances.html:6
+#: contrat/templates/contrat/baux.html:6
 msgid "Lire le document"
 msgstr ""
 
@@ -4138,7 +4270,7 @@ msgid "Plafond (€)"
 msgstr ""
 
 #: contrat/templates/contrat/_assurance_modal.html:86
-#: contrat/templates/contrat/_bail_modal.html:38
+#: contrat/templates/contrat/_bail_modal.html:94
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
 msgid "Date de début"
 msgstr ""
@@ -4206,14 +4338,24 @@ msgstr ""
 msgid "Tacite reconduction"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:7
-#: contrat/templates/contrat/baux.html:13
-#: contrat/templates/contrat/baux.html:70
+#: contrat/templates/contrat/_bail_modal.html:16
+#: contrat/templates/contrat/baux.html:17
+#: contrat/templates/contrat/baux.html:157
 msgid "Nouveau bail"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:13
-#: contrat/templates/contrat/baux.html:39
+#: contrat/templates/contrat/_bail_modal.html:25
+msgid "Scanner le bail"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:27
+msgid ""
+"Photographiez le bail ou déposez le PDF : l'Agent IA en lit les parties, les "
+"dates, la surface, le fermage et le préavis de congé. Relisez avant "
+"d'enregistrer."
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:45
 #: dashboard/templates/dashboard/bailleur.html:55
 #: finances/templates/finances/devis_signature.html:58
 #: finances/templates/finances/document_editeur.html:156
@@ -4223,26 +4365,28 @@ msgstr ""
 msgid "Désignation"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:14
-msgid "ex: bail parcelles nord"
+#: contrat/templates/contrat/_bail_modal.html:46
+msgid "ex: parcelles des Coteaux"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:19 exploitations/models.py:103
-#: operations/models.py:63
-msgid "propriétaire"
+#: contrat/templates/contrat/_bail_modal.html:50
+msgid "Type de bail"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:22
-#: contrat/templates/contrat/baux.html:40
+#: contrat/templates/contrat/_bail_modal.html:64
 #: dashboard/templates/dashboard/bailleur.html:56
 msgid "Preneur"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:23
-msgid "exploitant"
+#: contrat/templates/contrat/_bail_modal.html:70
+msgid "Téléphone du bailleur"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:28
+#: contrat/templates/contrat/_bail_modal.html:74
+msgid "Email du bailleur"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:80
 #: finances/templates/finances/subvention_pdf.html:49
 #: interventions/templates/interventions/interventions.html:129
 #: irrigation/templates/irrigation/_etc_card.html:33
@@ -4251,17 +4395,79 @@ msgstr ""
 msgid "Surface (ha)"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:32
+#: contrat/templates/contrat/_bail_modal.html:84
 msgid "Fermage annuel (€)"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:42
-#: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
-msgid "Date de fin"
+#: contrat/templates/contrat/_bail_modal.html:88
+#: finances/templates/finances/fermage.html:175
+msgid "Loyer de base (€/ha)"
 msgstr ""
 
-#: contrat/templates/contrat/_bail_modal.html:52
-msgid "clauses, révision du fermage…"
+#: contrat/templates/contrat/_bail_modal.html:98
+msgid "Terme"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:102
+msgid "Résilié le"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:108
+msgid "Congé et renouvellement"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:111
+msgid "Préavis de congé (mois)"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:115
+msgid "Révision du fermage"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:119
+#: finances/templates/finances/fermage.html:179
+msgid "Année de référence"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:126
+msgid "Renouvellement tacite"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:130
+msgid "État des lieux établi"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:135
+#: contrat/templates/contrat/baux.html:109
+msgid "Parcelles, charges et clauses"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:137
+msgid "Références cadastrales"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:138
+msgid "ex: ZA 12, ZA 14, ZB 3"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:142
+#: contrat/templates/contrat/baux.html:111
+msgid "Charges récupérables"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:146
+#, python-format
+msgid "Part de taxe foncière au preneur (%%)"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:152
+#: contrat/templates/contrat/baux.html:112
+msgid "Clauses environnementales"
+msgstr ""
+
+#: contrat/templates/contrat/_bail_modal.html:156
+#: contrat/templates/contrat/baux.html:113
+msgid "Droit de préemption"
 msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:7
@@ -4281,6 +4487,10 @@ msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:28
 msgid "nom de la partie contractante"
+msgstr ""
+
+#: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
+msgid "Date de fin"
 msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:46
@@ -4367,7 +4577,7 @@ msgstr ""
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/assurances.html:12
-#: contrat/templates/contrat/baux.html:7
+#: contrat/templates/contrat/baux.html:11
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
@@ -4375,7 +4585,7 @@ msgid "Contrat"
 msgstr ""
 
 #: contrat/templates/contrat/actes.html:7
-#: contrat/templates/contrat/actes.html:10 contrat/views.py:148
+#: contrat/templates/contrat/actes.html:10 contrat/views.py:265
 #: core/context_processors.py:138
 msgid "Patrimoine"
 msgstr ""
@@ -4428,19 +4638,22 @@ msgid "Ventes, achats, servitudes et successions au même endroit."
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:5
+#: contrat/templates/contrat/baux.html:5
 msgid "Lecture en cours…"
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:7
+#: contrat/templates/contrat/baux.html:7
 msgid "Champs pré-remplis. Relisez-les."
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:8
+#: contrat/templates/contrat/baux.html:8
 msgid "Aucun document sélectionné."
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:12
-#: contrat/templates/contrat/assurances.html:16 contrat/views.py:207
+#: contrat/templates/contrat/assurances.html:16 contrat/views.py:324
 msgid "Assurances"
 msgstr ""
 
@@ -4477,6 +4690,8 @@ msgstr[1] ""
 
 #: contrat/templates/contrat/assurances.html:57
 #: contrat/templates/contrat/assurances.html:85
+#: contrat/templates/contrat/baux.html:47
+#: contrat/templates/contrat/baux.html:73
 msgid "jours"
 msgstr ""
 
@@ -4524,15 +4739,18 @@ msgid "Garanties et exclusions"
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:134
+#: contrat/templates/contrat/baux.html:119
 msgid "Documents"
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:141
+#: contrat/templates/contrat/baux.html:127
 msgid "Retirer ce document ?"
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:143
-#: equipe/templates/equipe/paie.html:76 meteo/templates/meteo/index.html:40
+#: contrat/templates/contrat/baux.html:129 equipe/templates/equipe/paie.html:76
+#: meteo/templates/meteo/index.html:40
 #: planning/templates/planning/acces.html:70
 #: reseaux/templates/reseaux/reseaux.html:57
 #: templates/partials/_sous_taches.html:41
@@ -4540,10 +4758,12 @@ msgid "Retirer"
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:147
+#: contrat/templates/contrat/baux.html:133
 msgid "Aucune pièce au dossier."
 msgstr ""
 
 #: contrat/templates/contrat/assurances.html:155
+#: contrat/templates/contrat/baux.html:141
 msgid "Joindre"
 msgstr ""
 
@@ -4561,46 +4781,111 @@ msgid ""
 "le délai de déclaration."
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:7 contrat/templates/contrat/baux.html:10
-#: contrat/templates/contrat/baux.html:29 contrat/views.py:100
+#: contrat/templates/contrat/baux.html:11
+#: contrat/templates/contrat/baux.html:14
+#: contrat/templates/contrat/baux.html:33 contrat/views.py:108
 #: core/context_processors.py:137
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:25
+#: contrat/templates/contrat/baux.html:29
 msgid "Rechercher un bail…"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:31
+#: contrat/templates/contrat/baux.html:35
 #: dashboard/templates/dashboard/bailleur.html:38
 msgid "Surface louée"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:32
+#: contrat/templates/contrat/baux.html:36
 #: dashboard/templates/dashboard/bailleur.html:42
 #: finances/templates/finances/fermage.html:137
 msgid "Fermage annuel"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:42 core/context_processors.py:104
-#: dashboard/templates/dashboard/bailleur.html:58
-#: finances/templates/finances/fermage.html:7
-#: finances/templates/finances/fermage.html:9 finances/views.py:628
-msgid "Fermage"
+#: contrat/templates/contrat/baux.html:44
+#, python-format
+msgid "Un congé est à donner bientôt"
+msgid_plural "%(n)s congés sont à donner bientôt"
+msgstr[0] ""
+msgstr[1] ""
+
+#: contrat/templates/contrat/baux.html:47
+#: contrat/templates/contrat/baux.html:84
+msgid "au plus tard le"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:57
+#: contrat/templates/contrat/baux.html:49
+msgid ""
+"Passée cette date, le bail se renouvelle de plein droit pour une nouvelle "
+"période."
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:73
+msgid "terme dépassé"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:76
+msgid "sans renouvellement tacite"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:82
+msgid "Pour donner congé"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:85
+#, python-format
+msgid "préavis de %(n)s mois"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:86
+msgid "fenêtre close"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:102
+msgid "Fermage / an"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:103
+msgid "Révision"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:104
+msgid "Taxe foncière"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:110 core/context_processors.py:38
+#: dashboard/templates/dashboard/exploitant.html:74
+#: finances/templates/finances/subvention_pdf.html:47
+#: irrigation/templates/irrigation/irrigation.html:156
+#: irrigation/templates/irrigation/irrigation.html:217
+#: parcelles/templates/parcelles/campagne_form.html:12
+#: parcelles/templates/parcelles/detail.html:13
+#: parcelles/templates/parcelles/form.html:11
+#: parcelles/templates/parcelles/list.html:12
+#: parcelles/templates/parcelles/list.html:48
+#: templates/partials/_parcelles_selecteur.html:14
+msgid "Parcelles"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:119
+msgid "état des lieux non établi"
+msgstr ""
+
+#: contrat/templates/contrat/baux.html:147
 msgid "Supprimer ce bail ?"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:68
+#: contrat/templates/contrat/baux.html:155
 msgid "Enregistrez votre premier bail"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:69
-msgid "Suivez vos fermages, preneurs et échéances au même endroit."
+#: contrat/templates/contrat/baux.html:156
+msgid ""
+"Scannez le bail : l'Agent IA en lit les parties, les dates, la surface et le "
+"fermage."
 msgstr ""
 
 #: contrat/templates/contrat/contrats.html:7
@@ -4639,7 +4924,7 @@ msgstr ""
 msgid "Baux, prestations, ventes et assurances au même endroit."
 msgstr ""
 
-#: contrat/templates/contrat/msa.html:7 contrat/views.py:388
+#: contrat/templates/contrat/msa.html:7 contrat/views.py:505
 msgid "MSA"
 msgstr ""
 
@@ -4675,39 +4960,44 @@ msgstr ""
 msgid "Suivez vos appels MSA, montants et échéances au même endroit."
 msgstr ""
 
-#: contrat/views.py:266
-msgid "Une police a besoin d'un intitulé."
+#: contrat/views.py:160
+msgid "Un bail a besoin d'une désignation."
 msgstr ""
 
-#: contrat/views.py:294
+#: contrat/views.py:182 contrat/views.py:411
 msgid "Document non accepté : PDF ou photo seulement."
 msgstr ""
 
-#: contrat/views.py:297 contrat/views.py:351
+#: contrat/views.py:185 contrat/views.py:232 contrat/views.py:414
+#: contrat/views.py:468
 msgid "Le document ne doit pas dépasser 10 Mo."
 msgstr ""
 
-#: contrat/views.py:344
+#: contrat/views.py:228 contrat/views.py:461
 msgid "Aucun document reçu."
 msgstr ""
 
-#: contrat/views.py:349
+#: contrat/views.py:230 contrat/views.py:466
 msgid "Format non lisible : PDF ou photo."
 msgstr ""
 
-#: contrat/views.py:356
+#: contrat/views.py:237 contrat/views.py:473
 msgid "Lecture impossible : Agent IA non configuré, ou document illisible."
 msgstr ""
 
-#: contrat/views.py:432
+#: contrat/views.py:383
+msgid "Une police a besoin d'un intitulé."
+msgstr ""
+
+#: contrat/views.py:549
 msgid "Indiquez le professionnel à rencontrer."
 msgstr ""
 
-#: contrat/views.py:438
+#: contrat/views.py:555
 msgid "Rendez-vous assurance"
 msgstr ""
 
-#: contrat/views.py:453
+#: contrat/views.py:570
 msgid "Rendez-vous ajouté au planning."
 msgstr ""
 
@@ -4909,20 +5199,6 @@ msgstr ""
 msgid "Accueil"
 msgstr ""
 
-#: core/context_processors.py:38
-#: dashboard/templates/dashboard/exploitant.html:74
-#: finances/templates/finances/subvention_pdf.html:47
-#: irrigation/templates/irrigation/irrigation.html:156
-#: irrigation/templates/irrigation/irrigation.html:217
-#: parcelles/templates/parcelles/campagne_form.html:12
-#: parcelles/templates/parcelles/detail.html:13
-#: parcelles/templates/parcelles/form.html:11
-#: parcelles/templates/parcelles/list.html:12
-#: parcelles/templates/parcelles/list.html:48
-#: templates/partials/_parcelles_selecteur.html:14
-msgid "Parcelles"
-msgstr ""
-
 #: core/context_processors.py:39 core/context_processors.py:90
 #: core/context_processors.py:92
 #: finances/templates/finances/subvention_pdf.html:49
@@ -5060,6 +5336,13 @@ msgstr ""
 #: finances/templates/finances/charges.html:35
 #: finances/templates/finances/subvention_pdf.html:41 finances/views.py:141
 msgid "Charges"
+msgstr ""
+
+#: core/context_processors.py:104
+#: dashboard/templates/dashboard/bailleur.html:58
+#: finances/templates/finances/fermage.html:7
+#: finances/templates/finances/fermage.html:9 finances/views.py:628
+msgid "Fermage"
 msgstr ""
 
 #: core/context_processors.py:105
@@ -9023,6 +9306,10 @@ msgstr ""
 msgid "Retenue / bassin"
 msgstr ""
 
+#: exploitations/models.py:103 operations/models.py:63
+msgid "propriétaire"
+msgstr ""
+
 #: exploitations/models.py:110 exploitations/models.py:266
 msgid "raison sociale"
 msgstr ""
@@ -10381,14 +10668,6 @@ msgstr ""
 
 #: finances/templates/finances/fermage.html:172
 msgid "Paramètres"
-msgstr ""
-
-#: finances/templates/finances/fermage.html:175
-msgid "Loyer de base (€/ha)"
-msgstr ""
-
-#: finances/templates/finances/fermage.html:179
-msgid "Année de référence"
 msgstr ""
 
 #: finances/templates/finances/fermage.html:183
