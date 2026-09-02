@@ -19,7 +19,7 @@ from parcelles.models import Parcelle
 
 from . import invitations
 from .forms import InvitationAccountForm, TaskForm, TeamMemberForm
-from . import contrats as contrats_service
+from . import contrats as contrats_service, services
 from .models import (Candidature, ContratTravail, ModeleContrat, OffreEmploi,
                      Task, TeamMember)
 
@@ -169,6 +169,10 @@ def taches(request):
                 task.exploitation = exploitation
                 task.created_by = request.user
                 task.save()
+                # Parcelles et sous-tâches passent par les mêmes services que la
+                # modale du planning : les deux écrans créent la même tâche.
+                services.enregistrer_parcelles(task, request, exploitation)
+                services.enregistrer_sous_taches(task, request, exploitation)
                 messages.success(request, _("Tâche « %(t)s » ajoutée.") % {"t": task.title})
                 return redirect("equipe:taches")
     # « Mes tâches » : membre lié à mon compte (par user, ou à défaut par email).
@@ -185,9 +189,24 @@ def taches(request):
     for t in tasks:
         t.is_mine = my_member is not None and t.assigned_to_id == my_member.id
     has_mine = any(t.is_mine for t in tasks)
+    # De quoi proposer le même choix que la modale du planning : parcelles à
+    # cocher (avec leur carte) et assignés des sous-tâches.
+    parcelles = list(Parcelle.objects.filter(exploitation=exploitation)) if exploitation else []
     return render(request, "equipe/taches.html", {
         "tasks": tasks, "form": form, "has_mine": has_mine,
         "priorities": Task.Priority.choices, "statuses": Task.Status.choices,
+        "team_members": (TeamMember.objects.filter(exploitation=exploitation)
+                         if exploitation else TeamMember.objects.none()),
+        "parcelles": parcelles,
+        "parcelles_mappables": sum(1 for p in parcelles if p.boundaries),
+        "parcelles_geojson": {
+            "type": "FeatureCollection",
+            "features": [
+                {"type": "Feature", "geometry": p.boundaries,
+                 "properties": {"id": p.pk, "name": p.name, "area": p.area}}
+                for p in parcelles if p.boundaries
+            ],
+        },
         "page_title": _("Tâches"),
     })
 

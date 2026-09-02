@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 22:25+0200\n"
+"POT-Creation-Date: 2026-09-02 22:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -880,8 +880,8 @@ msgstr "Rediger"
 #: petition/templates/petition/detail.html:95
 #: petition/templates/petition/detail.html:106
 #: planning/templates/planning/planning.html:323
-#: planning/templates/planning/planning.html:538
-#: planning/templates/planning/planning.html:565
+#: planning/templates/planning/planning.html:451
+#: planning/templates/planning/planning.html:478
 #: stock/templates/stock/articles.html:90 stock/templates/stock/depots.html:64
 #: vente/templates/vente/produits.html:99
 msgid "Supprimer"
@@ -1101,7 +1101,7 @@ msgstr "Dens underopgaver slettes også:"
 #: equipe/templates/equipe/equipe.html:114
 #: equipe/templates/equipe/offres.html:109
 #: equipe/templates/equipe/taches.html:140
-#: equipe/templates/equipe/taches.html:201
+#: equipe/templates/equipe/taches.html:203
 #: exploitations/templates/exploitations/adresses.html:74
 #: exploitations/templates/exploitations/contact.html:53
 #: exploitations/templates/exploitations/juridique.html:71
@@ -1139,8 +1139,8 @@ msgstr "Dens underopgaver slettes også:"
 #: petition/templates/petition/edit.html:68
 #: planning/templates/planning/planning.html:265
 #: planning/templates/planning/planning.html:324
-#: planning/templates/planning/planning.html:541
-#: planning/templates/planning/planning.html:564
+#: planning/templates/planning/planning.html:454
+#: planning/templates/planning/planning.html:477
 #: reseaux/templates/reseaux/reseaux.html:81
 #: stock/templates/stock/_article_modal.html:81
 #: stock/templates/stock/_depot_modal.html:48
@@ -1266,7 +1266,7 @@ msgstr "Noter"
 #: environnement/templates/environnement/biodiversite.html:167
 #: equipe/templates/equipe/contrats.html:121
 #: equipe/templates/equipe/edit.html:24 equipe/templates/equipe/offres.html:110
-#: equipe/templates/equipe/taches.html:202
+#: equipe/templates/equipe/taches.html:204
 #: finances/templates/finances/document_editeur.html:236
 #: finances/templates/finances/fermage.html:74
 #: finances/templates/finances/fermage.html:193
@@ -1284,7 +1284,7 @@ msgstr "Noter"
 #: parcelles/templates/parcelles/list.html:97
 #: petition/templates/petition/edit.html:69
 #: planning/templates/planning/planning.html:325
-#: planning/templates/planning/planning.html:542
+#: planning/templates/planning/planning.html:455
 #: stock/templates/stock/_article_modal.html:82
 #: stock/templates/stock/_depot_modal.html:49
 #: stock/templates/stock/_mouvement_modal.html:61
@@ -1348,7 +1348,7 @@ msgstr ""
 #: finances/templates/finances/charges.html:220
 #: petition/templates/petition/create.html:46
 #: petition/templates/petition/edit.html:46
-#: planning/templates/planning/planning.html:528
+#: planning/templates/planning/planning.html:441
 #: vente/templates/vente/_produit_modal.html:81
 #, fuzzy
 #| msgid "fertigation"
@@ -1601,7 +1601,7 @@ msgstr "Nyttig vandreserve"
 #: client/templates/client/partenaires.html:78
 #: environnement/templates/environnement/taxonomie.html:173
 #: equipe/templates/equipe/equipe.html:24
-#: equipe/templates/equipe/taches.html:202
+#: equipe/templates/equipe/taches.html:204
 #: exploitations/templates/exploitations/adresses.html:76
 #: exploitations/templates/exploitations/contact.html:22
 #: exploitations/templates/exploitations/contact.html:55
@@ -5265,7 +5265,7 @@ msgstr "Hjem"
 #: parcelles/templates/parcelles/form.html:11
 #: parcelles/templates/parcelles/list.html:12
 #: parcelles/templates/parcelles/list.html:48
-#: planning/templates/planning/planning.html:439
+#: templates/partials/_parcelles_selecteur.html:14
 msgid "Parcelles"
 msgstr "Marker"
 
@@ -5282,8 +5282,8 @@ msgid "Irrigation"
 msgstr "Vanding"
 
 #: core/context_processors.py:40 core/context_processors.py:117
-#: planning/templates/planning/planning.html:18 planning/views.py:310
-#: planning/views.py:332
+#: planning/templates/planning/planning.html:18 planning/views.py:311
+#: planning/views.py:333
 msgid "Planning"
 msgstr "Planlægning"
 
@@ -5507,21 +5507,21 @@ msgid "Équipe"
 msgstr "Team"
 
 #: core/context_processors.py:119 equipe/templates/equipe/taches.html:8
-#: equipe/templates/equipe/taches.html:10 equipe/views.py:191
+#: equipe/templates/equipe/taches.html:10 equipe/views.py:210
 msgid "Tâches"
 msgstr "Opgaver"
 
 #: core/context_processors.py:120 equipe/templates/equipe/contrats.html:7
-#: equipe/templates/equipe/contrats.html:9 equipe/views.py:260
+#: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
 msgstr ""
 
 #: core/context_processors.py:121 equipe/templates/equipe/offres.html:11
-#: equipe/templates/equipe/offres.html:13 equipe/views.py:471
+#: equipe/templates/equipe/offres.html:13 equipe/views.py:490
 msgid "Offres d'emploi"
 msgstr ""
 
-#: core/context_processors.py:122 equipe/views.py:420
+#: core/context_processors.py:122 equipe/views.py:439
 msgid "Paie"
 msgstr ""
 
@@ -7132,7 +7132,7 @@ msgstr "Tilføj først en mark (Mine marker) for at knytte en analyse til den."
 #: equipe/templates/equipe/equipe.html:110
 #: equipe/templates/equipe/taches.html:137
 #: irrigation/templates/irrigation/bassinage.html:280
-#: planning/templates/planning/planning.html:558
+#: planning/templates/planning/planning.html:471
 #, fuzzy
 #| msgid "Cette section sera bientôt disponible."
 msgid "cette action est irréversible."
@@ -8575,7 +8575,7 @@ msgid "Assigné à"
 msgstr "Tilpasset"
 
 #: equipe/templates/equipe/taches.html:136
-#: planning/templates/planning/planning.html:557
+#: planning/templates/planning/planning.html:470
 #, fuzzy
 #| msgid "Supprimer cette fiche ?"
 msgid "Supprimer cette tâche ?"
@@ -8600,8 +8600,8 @@ msgstr "Ny afgrøde"
 msgid "Titre d'une tâche de planning agricole"
 msgstr "Titel på en opgave i markplanen"
 
-#: equipe/templates/equipe/taches.html:198
-#: planning/templates/planning/planning.html:529
+#: equipe/templates/equipe/taches.html:200
+#: planning/templates/planning/planning.html:442
 msgid "Description d'une tâche de planning agricole"
 msgstr "Beskrivelse af en opgave i markplanen"
 
@@ -8660,51 +8660,51 @@ msgstr "Mark slettet."
 msgid "Créez d'abord votre exploitation avant d'ajouter une tâche."
 msgstr "Konfigurer først din bedrift."
 
-#: equipe/views.py:172
+#: equipe/views.py:176
 #, python-format
 msgid "Tâche « %(t)s » ajoutée."
 msgstr ""
 
-#: equipe/views.py:204
+#: equipe/views.py:223
 #, python-format
 msgid "Tâche « %(t)s » modifiée."
 msgstr ""
 
-#: equipe/views.py:206 notifications/views.py:67
+#: equipe/views.py:225 notifications/views.py:67
 msgid "Modification impossible : vérifiez les champs."
 msgstr ""
 
-#: equipe/views.py:216
+#: equipe/views.py:235
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Tâche supprimée."
 msgstr "Mark slettet."
 
-#: equipe/views.py:275 equipe/views.py:295 equipe/views.py:481
+#: equipe/views.py:294 equipe/views.py:314 equipe/views.py:500
 #: stock/views.py:311
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation."
 msgstr "Konfigurer først din bedrift."
 
-#: equipe/views.py:285
+#: equipe/views.py:304
 #, python-format
 msgid "%(n)s modèle(s) ajouté(s)."
 msgstr ""
 
-#: equipe/views.py:303
+#: equipe/views.py:322
 msgid "Un modèle a besoin d'un nom et d'un corps."
 msgstr ""
 
-#: equipe/views.py:351
+#: equipe/views.py:370
 msgid "Choisissez un salarié et un modèle."
 msgstr ""
 
-#: equipe/views.py:359
+#: equipe/views.py:378
 msgid "Contrat établi. Relisez-le avant de le remettre."
 msgstr ""
 
-#: equipe/views.py:488
+#: equipe/views.py:507
 msgid "Une offre a besoin d'un intitulé et d'une description."
 msgstr ""
 
@@ -13857,8 +13857,8 @@ msgstr ""
 
 #: meteo/templates/meteo/index.html:40
 #: planning/templates/planning/acces.html:70
-#: planning/templates/planning/planning.html:511
 #: reseaux/templates/reseaux/reseaux.html:57
+#: templates/partials/_sous_taches.html:41
 msgid "Retirer"
 msgstr "Fjern"
 
@@ -16129,7 +16129,7 @@ msgid "Partage"
 msgstr "Deltagere"
 
 #: planning/templates/planning/acces.html:9
-#: planning/templates/planning/planning.html:21 planning/views.py:668
+#: planning/templates/planning/planning.html:21 planning/views.py:623
 #, fuzzy
 #| msgid "tâche de planning"
 msgid "Partage du planning"
@@ -16209,7 +16209,7 @@ msgstr "Anmodet"
 msgid "Accorder finalement"
 msgstr ""
 
-#: planning/templates/planning/bon_intervention.html:7 planning/views.py:874
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:829
 msgid "Bon d'intervention"
 msgstr "Arbejdsseddel"
 
@@ -16386,51 +16386,11 @@ msgstr "Underopgave til"
 msgid "ex: Traitement parcelle Nord"
 msgstr ""
 
-#: planning/templates/planning/planning.html:441
-msgid "sélectionnée(s)"
-msgstr "valgt"
-
-#: planning/templates/planning/planning.html:443
-msgid "Tout désélectionner"
-msgstr "Fravælg alle"
-
-#: planning/templates/planning/planning.html:467
-msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
-msgstr "Marker uden indtegnet omrids vises ikke på kortet."
-
-#: planning/templates/planning/planning.html:471
-msgid "Aucune parcelle sur cette exploitation."
-msgstr "Ingen marker på denne bedrift."
-
-#: planning/templates/planning/planning.html:472
-msgid "En créer une"
-msgstr "Opret en"
-
-#: planning/templates/planning/planning.html:482
-msgid "Sous-tâches"
-msgstr "Underopgaver"
-
-#: planning/templates/planning/planning.html:500
-msgid "ex: Préparer le matériel"
-msgstr "f.eks. Klargør udstyret"
-
-#: planning/templates/planning/planning.html:505
-msgid "Même assigné"
-msgstr "Samme ansvarlige"
-
-#: planning/templates/planning/planning.html:520
-msgid "Ajouter une sous-tâche"
-msgstr "Tilføj en underopgave"
-
-#: planning/templates/planning/planning.html:522
-msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
-msgstr "En underopgave med dato vises også i den ansvarliges plan."
-
-#: planning/templates/planning/planning.html:547
+#: planning/templates/planning/planning.html:460
 msgid "Ajoutez d'abord un membre d'équipe pour créer une tâche."
 msgstr ""
 
-#: planning/templates/planning/planning.html:559
+#: planning/templates/planning/planning.html:472
 msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr "Dens underopgaver slettes også:"
 
@@ -16490,67 +16450,67 @@ msgstr ""
 msgid "Demander l'accès"
 msgstr "Anmodet"
 
-#: planning/views.py:72
+#: planning/views.py:73
 msgid "Vous n'avez pas le droit de modifier ce planning."
 msgstr ""
 
-#: planning/views.py:78
+#: planning/views.py:79
 msgid "Vous ne gérez pas les accès à ce planning."
 msgstr ""
 
-#: planning/views.py:638
+#: planning/views.py:593
 msgid "Vous n'êtes rattaché à aucune exploitation."
 msgstr ""
 
-#: planning/views.py:647
+#: planning/views.py:602
 msgid "Demande d'accès au planning"
 msgstr ""
 
-#: planning/views.py:648
+#: planning/views.py:603
 #, python-format
 msgid "%(qui)s demande l'accès au planning."
 msgstr ""
 
-#: planning/views.py:651
+#: planning/views.py:606
 #, fuzzy
 #| msgid "Demandé"
 msgid "Votre demande est envoyée."
 msgstr "Anmodet"
 
-#: planning/views.py:690
+#: planning/views.py:645
 #, fuzzy
 #| msgid "tâches de planning"
 msgid "Accès au planning"
 msgstr "planlægningsopgaver"
 
-#: planning/views.py:691
+#: planning/views.py:646
 #, python-format
 msgid "Vous avez désormais l'accès « %(niveau)s » au planning."
 msgstr ""
 
-#: planning/views.py:693
+#: planning/views.py:648
 msgid "Votre demande d'accès au planning n'a pas été retenue."
 msgstr ""
 
-#: planning/views.py:706
+#: planning/views.py:661
 msgid "Vous ne pouvez pas retirer votre propre accès."
 msgstr ""
 
-#: planning/views.py:771
+#: planning/views.py:726
 #, python-format
 msgid "du %(d0)s au %(d1)s"
 msgstr ""
 
-#: planning/views.py:774
+#: planning/views.py:729
 #, python-format
 msgid "« %(engin)s » est déjà réservé %(quand)s (%(operation)s)."
 msgstr ""
 
-#: planning/views.py:786 planning/views.py:807
+#: planning/views.py:741 planning/views.py:762
 msgid "Réservation impossible : choisissez un matériel et une date."
 msgstr ""
 
-#: planning/views.py:868
+#: planning/views.py:823
 msgid "Bon d'intervention enregistré."
 msgstr "Arbejdsseddel gemt."
 
@@ -18077,6 +18037,46 @@ msgstr ""
 #: templates/partials/_ai_text_tools.html:11
 msgid "Dicter"
 msgstr ""
+
+#: templates/partials/_parcelles_selecteur.html:16
+msgid "sélectionnée(s)"
+msgstr "valgt"
+
+#: templates/partials/_parcelles_selecteur.html:18
+msgid "Tout désélectionner"
+msgstr "Fravælg alle"
+
+#: templates/partials/_parcelles_selecteur.html:42
+msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
+msgstr "Marker uden indtegnet omrids vises ikke på kortet."
+
+#: templates/partials/_parcelles_selecteur.html:46
+msgid "Aucune parcelle sur cette exploitation."
+msgstr "Ingen marker på denne bedrift."
+
+#: templates/partials/_parcelles_selecteur.html:47
+msgid "En créer une"
+msgstr "Opret en"
+
+#: templates/partials/_sous_taches.html:12
+msgid "Sous-tâches"
+msgstr "Underopgaver"
+
+#: templates/partials/_sous_taches.html:30
+msgid "ex: Préparer le matériel"
+msgstr "f.eks. Klargør udstyret"
+
+#: templates/partials/_sous_taches.html:35
+msgid "Même assigné"
+msgstr "Samme ansvarlige"
+
+#: templates/partials/_sous_taches.html:50
+msgid "Ajouter une sous-tâche"
+msgstr "Tilføj en underopgave"
+
+#: templates/partials/_sous_taches.html:52
+msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
+msgstr "En underopgave med dato vises også i den ansvarliges plan."
 
 #: templates/partials/cookie_banner.html:6
 msgid ""

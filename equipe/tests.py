@@ -592,3 +592,69 @@ def test_les_communes_du_voisin_ne_sont_pas_proposees(client, ferme_rh):
 
     client.force_login(patron)
     assert client.get("/offres-emploi/").context["communes"] == ["Carpentras"]
+
+
+# ── /taches/ et la modale du planning créent la même tâche ───────────
+
+
+@pytest.mark.django_db
+def test_le_formulaire_taches_propose_parcelles_et_sous_taches(client, ferme_rh):
+    from parcelles.models import Parcelle
+
+    patron, exploitation, _membre = ferme_rh
+    Parcelle.objects.create(exploitation=exploitation, name="Le Clos", commune="Carpentras")
+    client.force_login(patron)
+    html = client.get("/taches/").content.decode()
+
+    # Les deux blocs partagés avec la modale du planning.
+    assert "Parcelles" in html and "Le Clos" in html
+    assert "Sous-tâches" in html and 'name="subtasks"' in html
+    assert "{#" not in html and "{{" not in html
+
+
+@pytest.mark.django_db
+def test_une_tache_creee_depuis_taches_porte_parcelles_et_filles(client, ferme_rh):
+    import json
+
+    from equipe.models import Task, TeamMember
+    from parcelles.models import Parcelle
+
+    patron, exploitation, _membre = ferme_rh
+    membre = TeamMember.objects.create(exploitation=exploitation, name="Paul")
+    clos = Parcelle.objects.create(exploitation=exploitation, name="Le Clos")
+    hauts = Parcelle.objects.create(exploitation=exploitation, name="Les Hauts")
+
+    client.force_login(patron)
+    resp = client.post("/taches/", {
+        "title": "Taille d'hiver", "assigned_to": str(membre.pk),
+        "priority": "normale", "status": "todo",
+        "parcelles": [str(clos.pk), str(hauts.pk)],
+        "subtasks": json.dumps([
+            {"id": None, "title": "Affûter le sécateur", "done": False, "member": "", "date": ""},
+            {"id": None, "title": "Sortir la remorque", "done": True, "member": "", "date": ""},
+        ]),
+    })
+    assert resp.status_code == 302
+
+    tache = Task.objects.get(title="Taille d'hiver")
+    assert set(tache.parcelles.all()) == {clos, hauts}
+    assert tache.parcelle == clos              # la première, pour l'API
+    filles = list(tache.subtasks.order_by("title"))
+    assert [f.title for f in filles] == ["Affûter le sécateur", "Sortir la remorque"]
+    assert filles[1].is_done
+    # Une fille hérite de l'assigné de sa mère quand on n'en désigne pas d'autre.
+    assert filles[0].assigned_to == membre
+
+
+@pytest.mark.django_db
+def test_les_deux_ecrans_partagent_la_meme_logique(client, ferme_rh):
+    """Le planning et /taches/ appellent les mêmes services : pas de dérive."""
+    import inspect
+
+    from equipe import services
+    from planning import views as planning_views
+
+    source = inspect.getsource(planning_views._save_task)
+    assert "enregistrer_parcelles" in source and "enregistrer_sous_taches" in source
+    assert hasattr(services, "enregistrer_parcelles")
+    assert hasattr(services, "enregistrer_sous_taches")

@@ -195,6 +195,8 @@
             <input type="hidden" name="status" :value="stat">
           </div>
 
+          {% include "partials/_parcelles_selecteur.html" %}
+          {% include "partials/_sous_taches.html" %}
           {% include "accounts/_field.html" with field=form.description ai_contexte=_("Description d'une tâche de planning agricole") %}
 
           <div class="flex justify-end gap-2 pt-1">
@@ -220,7 +222,29 @@
       stat: '{{ form.status.value|default:"todo" }}',
       addAction: '{% url "equipe:taches" %}',
       del: { open: false, action: '', name: '' },
+      // Ce que réclament les partials partagés avec la modale du planning.
+      form: { parcelles: [], subtasks: [], description: '' },
       view: { open: false, title: '', assigned: '', prio: '', priolabel: '', statuslabel: '', due: '', created: '', description: '' },
+      init() {
+        // Leaflet vit hors d'Alpine : on le tient au courant de la sélection,
+        // et on le réveille à l'ouverture de la modale.
+        this.$watch('form.parcelles', ids => window.hsParcellesMap && window.hsParcellesMap.select(ids));
+        this.$watch('modal', ouverte => ouverte && window.hsParcellesMap
+                                        && window.hsParcellesMap.show(this.form.parcelles));
+      },
+      toggleParcelle(id) {
+        const i = this.form.parcelles.indexOf(id);
+        i === -1 ? this.form.parcelles.push(id) : this.form.parcelles.splice(i, 1);
+      },
+      surlignerParcelle(id) {
+        if (window.hsParcellesMap) window.hsParcellesMap.highlight(id, this.form.parcelles);
+      },
+      addSub() {
+        this.form.subtasks.push({ id: null, title: '', done: false, member: '', date: '' });
+      },
+      subDone() {
+        return this.form.subtasks.filter(st => st.done).length;
+      },
       _set(id, v) { const el = document.getElementById(id); if (el) el.value = v || ''; },
       openView(btn) {
         const d = btn.dataset;
@@ -232,6 +256,7 @@
         f.setAttribute('action', this.addAction);
         this.prio = 'normale';
         this.stat = 'todo';
+        this.form = { parcelles: [], subtasks: [], description: '' };
         this.editing = false;
         this.modal = true;
       },
@@ -252,4 +277,8 @@
     };
   }
 </script>
+{% endblock %}
+
+{% block extra_js %}
+{% include "partials/_parcelles_carte_js.html" %}
 {% endblock %}

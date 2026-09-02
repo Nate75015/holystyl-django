@@ -17,6 +17,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from client.models import Partenaire
+from equipe import services as equipe_services
 from equipe.models import Task, TeamMember
 from operations.models import AffectationEngin, Machine
 from exploitations.models import Exploitation
@@ -521,47 +522,6 @@ def _aware(d):
     return timezone.make_aware(datetime.combine(d, datetime.min.time())) if d else None
 
 
-def _save_subtasks(task, request, exploitation):
-    """Synchronise les tâches filles depuis le JSON du champ caché `subtasks`.
-
-    Une sous-tâche est une tâche à part entière : elle a son assigné, sa date et
-    son statut. Les lignes retirées côté modale sont supprimées.
-    """
-    try:
-        rows = json.loads(request.POST.get("subtasks") or "[]")
-    except json.JSONDecodeError:
-        return
-    if not isinstance(rows, list):
-        return
-    kept = []
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        title = (row.get("title") or "").strip()
-        if not title:
-            continue
-        try:
-            sub_id = int(row.get("id") or 0)
-        except (TypeError, ValueError):
-            sub_id = 0
-        sub = Task.objects.filter(pk=sub_id, parent=task, exploitation=exploitation).first() if sub_id else None
-        if sub is None:
-            sub = Task(exploitation=exploitation, parent=task, created_by=request.user, priority=task.priority)
-        sub.title = title[:255]
-        if row.get("done"):
-            sub.status = Task.Status.DONE
-        elif sub.is_done:
-            sub.status = Task.Status.TODO
-        sub.assigned_to = (
-            TeamMember.objects.filter(pk=row.get("member") or None, exploitation=exploitation).first() or task.assigned_to
-        )
-        d = parse_date(str(row.get("date") or ""))
-        sub.start_date = sub.due_date = _aware(d)
-        sub.save()
-        kept.append(sub.pk)
-    task.subtasks.exclude(pk__in=kept).delete()
-
-
 def _save_task(task, request, exploitation):
     """Applique les champs POST à une tâche (création ou édition). False si invalide."""
     title = (request.POST.get("title") or "").strip()
@@ -587,14 +547,9 @@ def _save_task(task, request, exploitation):
     task.priority = priority
     task.status = status
     task.description = (request.POST.get("description") or "").strip()
-    # Parcelles : sélection multiple ; `parcelle` garde la première (API, espace employé).
-    choisies = list(
-        Parcelle.objects.filter(pk__in=request.POST.getlist("parcelles"), exploitation=exploitation).order_by("name")
-    )
-    task.parcelle = choisies[0] if choisies else None
     task.save()
-    task.parcelles.set(choisies)
-    _save_subtasks(task, request, exploitation)
+    equipe_services.enregistrer_parcelles(task, request, exploitation)
+    equipe_services.enregistrer_sous_taches(task, request, exploitation)
     return True
 
 
