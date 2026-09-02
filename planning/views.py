@@ -6,6 +6,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, redirect, render
@@ -46,7 +47,33 @@ def _member_colors(team_list):
 
 
 def _exploitation(request):
-    return Exploitation.objects.filter(owner=request.user).first()
+    """L'exploitation de l'espace courant, salariés compris.
+
+    Le planning interrogeait `owner=request.user` : seul le patron avait un
+    agenda, et l'employé — à qui les tâches sont pourtant assignées — tombait
+    sur l'écran vide alors que son menu lui proposait l'entrée. On lit donc ce
+    que pose `CurrentExploitationMiddleware`, qui résout l'exploitation depuis
+    l'espace actif et sait qu'un salarié n'est pas propriétaire de la sienne.
+    """
+    return getattr(request, "exploitation", None)
+
+
+def _refuser_si_non_proprietaire(request):
+    """Coupe court sur une écriture tentée par un salarié."""
+    if not _est_proprietaire(request):
+        raise PermissionDenied(_("Seul le chef d'exploitation modifie le planning."))
+
+
+def _est_proprietaire(request):
+    """Seul le chef d'exploitation écrit dans le planning.
+
+    La lecture s'ouvre à l'équipe, pas l'écriture : `PlanningAccess` porte
+    déjà `can_view_planning` et `can_create_tasks`, mais n'est encore consulté
+    nulle part. Tant que ces droits ne sont pas branchés, on s'en tient au
+    comportement d'avant plutôt que d'ouvrir la création à tout le monde.
+    """
+    exploitation = _exploitation(request)
+    return bool(exploitation) and exploitation.owner_id == request.user.id
 
 
 def _tasks_in_range(exploitation, members, start, end):
@@ -399,6 +426,9 @@ def planning(request):
         ],
     }
     ctx["parcelles_mappables"] = sum(1 for p in parcelles if p.boundaries)
+    # L'équipe lit le planning ; seul le chef d'exploitation y écrit. Le gabarit
+    # n'affiche donc ni les clics de création ni les modales pour les autres.
+    ctx["peut_ecrire"] = _est_proprietaire(request)
     ctx["machines"] = (list(Machine.objects.filter(exploitation=exploitation))
                        if exploitation else [])
     ctx["operations"] = AffectationEngin.Operation.choices
@@ -497,6 +527,7 @@ def _save_task(task, request, exploitation):
 @login_required
 @require_POST
 def task_create(request):
+    _refuser_si_non_proprietaire(request)
     exploitation = _exploitation(request)
     _save_task(Task(exploitation=exploitation, created_by=request.user), request, exploitation)
     return redirect(_planning_url(request))
@@ -505,6 +536,7 @@ def task_create(request):
 @login_required
 @require_POST
 def task_edit(request, pk):
+    _refuser_si_non_proprietaire(request)
     exploitation = _exploitation(request)
     task = get_object_or_404(Task, pk=pk, exploitation=exploitation)
     _save_task(task, request, exploitation)
@@ -514,6 +546,7 @@ def task_edit(request, pk):
 @login_required
 @require_POST
 def task_delete(request, pk):
+    _refuser_si_non_proprietaire(request)
     exploitation = _exploitation(request)
     get_object_or_404(Task, pk=pk, exploitation=exploitation).delete()
     return redirect(_planning_url(request))
@@ -558,6 +591,7 @@ def _reservation_fields(request, exploitation):
 @login_required
 @require_POST
 def reservation_create(request):
+    _refuser_si_non_proprietaire(request)
     exploitation = _exploitation(request)
     champs = _reservation_fields(request, exploitation) if exploitation else None
     if champs:
@@ -571,6 +605,7 @@ def reservation_create(request):
 @login_required
 @require_POST
 def reservation_edit(request, pk):
+    _refuser_si_non_proprietaire(request)
     exploitation = _exploitation(request)
     reservation = get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation)
     champs = _reservation_fields(request, exploitation)
@@ -584,6 +619,7 @@ def reservation_edit(request, pk):
 @login_required
 @require_POST
 def reservation_delete(request, pk):
+    _refuser_si_non_proprietaire(request)
     exploitation = _exploitation(request)
     get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation).delete()
     return redirect(_planning_url(request))

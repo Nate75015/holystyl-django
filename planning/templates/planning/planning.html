@@ -76,7 +76,7 @@
                style="border-bottom: 0.5px solid var(--border); min-height: calc(2.6rem + ({{ week.lanes }} * 23px))">
             {# Fond : une cellule par jour (numéro + clic pour ajouter) #}
             {% for d in week.days %}
-              <div @click="openChoix('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"
+              <div {% if peut_ecrire %}@click="openChoix('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"{% endif %}
                    title="{% trans 'Ajouter une tâche' %}"
                    class="group cursor-pointer p-2 transition hover:bg-[color:var(--surface-alt)] {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if not d.in_month %}background: var(--surface-alt);{% endif %}">
                 <div class="flex items-center justify-between">
@@ -173,7 +173,7 @@
               </div>
               {# Fond : une cellule par jour (clic pour ajouter) #}
               {% for cell in row.cells %}
-                <div @click="openChoix({{ row.member.id }}, '{{ cell.date|date:"Y-m-d" }}')"
+                <div {% if peut_ecrire %}@click="openChoix({{ row.member.id }}, '{{ cell.date|date:"Y-m-d" }}')"{% endif %}
                      title="{% trans 'Ajouter une tâche' %}"
                      class="group cursor-pointer transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}"></div>
               {% endfor %}
@@ -201,7 +201,7 @@
                   <span class="min-w-0 truncate text-sm font-medium">{{ row.machine.name }}</span>
                 </div>
                 {% for cell in row.cells %}
-                  <div @click="openReservation('{{ cell.date|date:"Y-m-d" }}', {{ row.machine.pk }})"
+                  <div {% if peut_ecrire %}@click="openReservation('{{ cell.date|date:"Y-m-d" }}', {{ row.machine.pk }})"{% endif %}
                        title="{% trans 'Réserver ce matériel' %}"
                        class="cursor-pointer transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}"></div>
                 {% endfor %}

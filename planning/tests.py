@@ -221,3 +221,68 @@ def test_les_dates_inversees_sont_remises_dans_l_ordre(client, setup, parc):
     r = AffectationEngin.objects.get()
     assert str(timezone.localdate(r.date_debut)) == "2026-06-24"
     assert str(timezone.localdate(r.date_fin)) == "2026-06-26"
+
+
+# ── Qui voit le planning, et qui y écrit ─────────────────────────────
+
+
+@pytest.fixture
+def ferme_avec_salarie(db):
+    """Un patron, un salarié rattaché, et une tâche assignée à ce salarié."""
+    from equipe.models import Task, TeamMember
+
+    patron = User.objects.create_user(email="patron@ex.com", password="pwd12345")
+    exploitation = Exploitation.objects.create(owner=patron, name="Ferme du Test")
+    salarie = User.objects.create_user(email="salarie@ex.com", password="pwd12345")
+    membre = TeamMember.objects.create(exploitation=exploitation, name="Paul", user=salarie)
+    tache = Task.objects.create(
+        exploitation=exploitation, title="Taille des abricotiers", assigned_to=membre,
+        start_date="2026-06-24T08:00:00Z", due_date="2026-06-24T18:00:00Z")
+    return patron, salarie, exploitation, membre, tache
+
+
+@pytest.mark.django_db
+def test_le_salarie_voit_le_planning_de_sa_ferme(client, ferme_avec_salarie):
+    """Il tombait sur l'écran vide alors que la tâche lui était assignée."""
+    _patron, salarie, _exploitation, _membre, _tache = ferme_avec_salarie
+    client.force_login(salarie)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Taille des abricotiers" in html
+    assert "Ajoutez un membre d'équipe" not in html
+
+
+@pytest.mark.django_db
+def test_le_salarie_lit_mais_n_ecrit_pas(client, ferme_avec_salarie):
+    """La lecture s'ouvre à l'équipe, l'écriture reste au chef d'exploitation."""
+    from equipe.models import Task
+
+    _patron, salarie, _exploitation, membre, tache = ferme_avec_salarie
+    client.force_login(salarie)
+
+    # Rien ne lui propose de créer ni de modifier. On vise les attributs de
+    # clic : les fonctions, elles, restent définies dans le <script> commun.
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert '@click="openChoix(' not in html
+    assert '@click.stop="openEdit(' not in html
+    assert '@click="openReservation(' not in html
+
+    # Et l'URL tapée à la main est refusée, pas seulement masquée.
+    assert client.post("/planning/taches/nouvelle/", {
+        "title": "Tâche en douce", "assigned_to": str(membre.pk),
+        "start_date": "2026-06-25"}).status_code == 403
+    assert client.post(f"/planning/taches/{tache.pk}/supprimer/").status_code == 403
+    assert client.post("/planning/reservations/nouvelle/", {"start": "2026-06-25"}).status_code == 403
+
+    assert Task.objects.filter(title="Tâche en douce").count() == 0
+    assert Task.objects.filter(pk=tache.pk).exists()
+
+
+@pytest.mark.django_db
+def test_le_patron_garde_la_main(client, ferme_avec_salarie):
+    patron, _salarie, _exploitation, membre, _tache = ferme_avec_salarie
+    client.force_login(patron)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert '@click="openChoix(' in html
+    assert client.post("/planning/taches/nouvelle/", {
+        "title": "Semis", "assigned_to": str(membre.pk),
+        "start_date": "2026-06-25", "vue": "semaine"}).status_code == 302

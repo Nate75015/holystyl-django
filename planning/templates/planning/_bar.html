@@ -1,6 +1,6 @@
 {% load i18n %}
 {# Barre de tâche : court du jour de début au jour de fin, coupée en bord de fenêtre. #}
-<div @click.stop="openEdit({{ b.payload }})"
+<div {% if peut_ecrire %}@click.stop="openEdit({{ b.payload }})"{% endif %}
      title="{{ b.item.title }} · {{ b.item.assigned_to.name }} · {{ b.item.get_priority_display }} · {{ b.item.get_status_display }}{% for p in b.item.parcelles.all %}{% if forloop.first %} · {% else %}, {% endif %}{{ p.name }}{% endfor %}"
      class="pointer-events-auto flex cursor-pointer items-center gap-1 overflow-hidden border-l-[3px] px-1.5 text-[11px] leading-none transition hover:brightness-95
             {% if b.opens %}rounded-l-md{% else %}border-l-0 pl-1{% endif %} {% if b.closes %}rounded-r-md{% endif %}

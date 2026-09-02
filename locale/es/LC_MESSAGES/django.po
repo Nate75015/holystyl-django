@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 21:08+0200\n"
+"POT-Creation-Date: 2026-09-02 21:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5271,7 +5271,7 @@ msgid "Irrigation"
 msgstr "Riego"
 
 #: core/context_processors.py:40 core/context_processors.py:117
-#: planning/templates/planning/planning.html:18 planning/views.py:238
+#: planning/templates/planning/planning.html:18 planning/views.py:265
 msgid "Planning"
 msgstr "Planificación"
 
@@ -15250,7 +15250,7 @@ msgstr "partes de intervención"
 msgid "Priorité haute"
 msgstr "Prioridad alta"
 
-#: planning/templates/planning/bon_intervention.html:7 planning/views.py:633
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:669
 msgid "Bon d'intervention"
 msgstr "Parte de intervención"
 
@@ -15476,11 +15476,15 @@ msgstr ""
 msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr "Sus subtareas también se eliminarán:"
 
-#: planning/views.py:567
+#: planning/views.py:64
+msgid "Seul le chef d'exploitation modifie le planning."
+msgstr ""
+
+#: planning/views.py:601
 msgid "Réservation impossible : choisissez un matériel et une date."
 msgstr ""
 
-#: planning/views.py:627
+#: planning/views.py:663
 msgid "Bon d'intervention enregistré."
 msgstr "Parte de intervención registrado."
 
