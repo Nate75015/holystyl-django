@@ -194,14 +194,6 @@ class PlanningCategoryColor(models.Model):
         ordering = ("sort_order",)
 
 
-class PlanningAccess(models.Model):
-    exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="planning_access")
-    technicien = models.ForeignKey("equipe.TeamMember", on_delete=models.CASCADE)
-    can_view_planning = models.BooleanField(default=True)
-    can_create_tasks = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-
 class AccesPlanning(TimeStampedModel):
     """Qui peut ouvrir le planning d'une exploitation, et jusqu'où.
 
@@ -209,10 +201,10 @@ class AccesPlanning(TimeStampedModel):
     par nature. Tous les autres — salariés compris — demandent l'accès, qu'il
     accorde à un niveau donné, comme on partage un agenda.
 
-    `PlanningAccess`, juste au-dessus, visait la même chose mais s'indexait sur
-    TeamMember : il ne pouvait pas représenter un bailleur ni un comptable, qui
-    se rattachent par une fiche Partenaire. L'autorisation porte donc ici sur
-    le compte lui-même, seul dénominateur commun à tous les rôles.
+    Un `PlanningAccess` a précédé celui-ci, indexé sur TeamMember : il ne
+    pouvait représenter ni un bailleur ni un comptable, qui se rattachent par
+    une fiche Partenaire. L'autorisation porte donc sur le compte lui-même,
+    seul dénominateur commun à tous les rôles.
     """
 
     class Niveau(models.TextChoices):
