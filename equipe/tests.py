@@ -348,3 +348,168 @@ def test_la_page_affiche_l_avertissement_et_les_jetons(client, ferme_rh):
     # Les jetons s'affichent en clair, sans être interprétés par Django.
     assert "{{ salarie }}" in html
     assert "Importer les modèles types" in html
+
+
+# ── Offres d'emploi : back-office et espace public ───────────────────
+
+
+@pytest.fixture
+def offre_publiee(ferme_rh):
+    from equipe.models import OffreEmploi
+
+    _patron, exploitation, _membre = ferme_rh
+    return OffreEmploi.objects.create(
+        exploitation=exploitation, titre="Ouvrier arboricole pour la récolte",
+        type_contrat="saisonnier", description="Récolte des abricots, 6 semaines.",
+        lieu="Carpentras", statut=OffreEmploi.Statut.PUBLIEE,
+        publiee_le=timezone.now())
+
+
+@pytest.mark.django_db
+def test_l_offre_recoit_une_adresse_publique_stable(ferme_rh):
+    from equipe.models import OffreEmploi
+
+    _patron, exploitation, _membre = ferme_rh
+    o = OffreEmploi.objects.create(exploitation=exploitation, titre="Tractoriste",
+                                   description="…")
+    assert o.slug == "tractoriste-ferme-des-coteaux"
+
+    # Deux offres du même nom ne se marchent pas dessus.
+    o2 = OffreEmploi.objects.create(exploitation=exploitation, titre="Tractoriste",
+                                    description="…")
+    assert o2.slug == "tractoriste-ferme-des-coteaux-2"
+
+    # Le titre change, l'adresse déjà partagée reste.
+    o.titre = "Tractoriste expérimenté"
+    o.save()
+    assert o.slug == "tractoriste-ferme-des-coteaux"
+
+
+@pytest.mark.django_db
+def test_la_page_publique_est_ouverte_a_tous(client, offre_publiee):
+    """Ni compte ni connexion : c'est le principe de la page emplois."""
+    liste = client.get("/emplois/")
+    assert liste.status_code == 200
+    assert "Ouvrier arboricole pour la récolte" in liste.content.decode()
+
+    detail = client.get(f"/emplois/{offre_publiee.slug}/")
+    assert detail.status_code == 200
+    corps = detail.content.decode()
+    assert "Ferme des Coteaux" in corps and "Postuler" in corps
+    # L'entête public, pas l'ossature de l'application.
+    assert "Emplois à la ferme" in corps and "Tableau de bord" not in corps
+    # Un {# … #} à cheval sur deux lignes s'afficherait en clair.
+    assert "{#" not in corps and "{{" not in corps
+
+
+@pytest.mark.django_db
+def test_une_offre_en_brouillon_ne_fuit_pas(client, ferme_rh):
+    from equipe.models import OffreEmploi
+
+    _patron, exploitation, _membre = ferme_rh
+    brouillon = OffreEmploi.objects.create(
+        exploitation=exploitation, titre="Poste secret", description="…")
+    assert "Poste secret" not in client.get("/emplois/").content.decode()
+    # Le lien direct ne l'ouvre pas davantage.
+    assert client.get(f"/emplois/{brouillon.slug}/").status_code == 410
+
+
+@pytest.mark.django_db
+def test_une_offre_expiree_sort_de_la_liste(client, offre_publiee):
+    from datetime import timedelta
+
+    offre_publiee.expire_le = timezone.localdate() - timedelta(days=1)
+    offre_publiee.save()
+    assert "Ouvrier arboricole" not in client.get("/emplois/").content.decode()
+    assert client.get(f"/emplois/{offre_publiee.slug}/").status_code == 410
+
+
+@pytest.mark.django_db
+def test_candidater_sans_compte(client, offre_publiee):
+    from equipe.models import Candidature
+    from notifications.models import Notification
+
+    resp = client.post(f"/emplois/{offre_publiee.slug}/candidater/", {
+        "nom": "Marie Durand", "email": "marie@exemple.fr",
+        "telephone": "0611223344", "message": "Disponible dès juillet."})
+    assert resp.status_code == 302
+
+    c = Candidature.objects.get(offre=offre_publiee)
+    assert c.nom == "Marie Durand" and c.statut == Candidature.Statut.RECUE
+    # La ferme est prévenue.
+    assert Notification.objects.filter(
+        user=offre_publiee.exploitation.owner, type="candidature").exists()
+
+
+@pytest.mark.django_db
+def test_une_candidature_sans_nom_ou_email_est_refusee(client, offre_publiee):
+    from equipe.models import Candidature
+
+    client.post(f"/emplois/{offre_publiee.slug}/candidater/", {"nom": "Anonyme"})
+    client.post(f"/emplois/{offre_publiee.slug}/candidater/", {"email": "a@b.fr"})
+    assert Candidature.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_le_cv_est_filtre_sur_le_format_et_la_taille(client, offre_publiee):
+    """Seul endroit où un anonyme dépose un fichier : on le tient serré."""
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    from equipe.emplois import TAILLE_MAX_CV
+    from equipe.models import Candidature
+
+    champs = {"nom": "Marie", "email": "marie@exemple.fr"}
+
+    # Extension refusée.
+    client.post(f"/emplois/{offre_publiee.slug}/candidater/", {
+        **champs, "cv": SimpleUploadedFile("cv.exe", b"MZ", content_type="application/octet-stream")})
+    assert Candidature.objects.count() == 0
+
+    # Trop volumineux.
+    client.post(f"/emplois/{offre_publiee.slug}/candidater/", {
+        **champs, "cv": SimpleUploadedFile("cv.pdf", b"x" * (TAILLE_MAX_CV + 1),
+                                           content_type="application/pdf")})
+    assert Candidature.objects.count() == 0
+
+    # Un PDF de taille raisonnable passe.
+    client.post(f"/emplois/{offre_publiee.slug}/candidater/", {
+        **champs, "cv": SimpleUploadedFile("cv.pdf", b"%PDF-1.4 ...", content_type="application/pdf")})
+    assert Candidature.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_publier_pose_la_date_une_seule_fois(client, ferme_rh):
+    from equipe.models import OffreEmploi
+
+    patron, exploitation, _membre = ferme_rh
+    offre = OffreEmploi.objects.create(exploitation=exploitation, titre="Poste", description="…")
+    client.force_login(patron)
+
+    client.post(f"/offres-emploi/{offre.pk}/statut/", {"statut": "publiee"})
+    offre.refresh_from_db()
+    premiere = offre.publiee_le
+    assert premiere is not None
+
+    # On dépublie puis on republie : la date de première mise en ligne tient.
+    client.post(f"/offres-emploi/{offre.pk}/statut/", {"statut": "close"})
+    client.post(f"/offres-emploi/{offre.pk}/statut/", {"statut": "publiee"})
+    offre.refresh_from_db()
+    assert offre.publiee_le == premiere
+
+
+@pytest.mark.django_db
+def test_les_candidatures_du_voisin_sont_hors_de_portee(client, ferme_rh, offre_publiee):
+    from equipe.models import Candidature
+    from exploitations.models import Exploitation
+
+    patron, _exploitation, _membre = ferme_rh
+    candidature = Candidature.objects.create(
+        offre=offre_publiee, nom="Marie", email="marie@exemple.fr")
+
+    voisin = User.objects.create_user(email="voisin-offres@ex.com", password="pwd12345")
+    Exploitation.objects.create(owner=voisin, name="Ferme voisine")
+    client.force_login(voisin)
+    assert client.post(f"/candidatures/{candidature.pk}/statut/",
+                       {"statut": "retenue"}).status_code == 404
+    candidature.refresh_from_db()
+    assert candidature.statut == Candidature.Statut.RECUE

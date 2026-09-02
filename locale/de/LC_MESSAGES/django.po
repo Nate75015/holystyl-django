@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 22:01+0200\n"
+"POT-Creation-Date: 2026-09-02 22:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -327,10 +327,10 @@ msgstr "Sonstige"
 
 #: agronomie/models.py:36 agronomie/models.py:159 agronomie/models.py:208
 #: analyse_sol/models.py:134 aquaculture/models.py:39 aquaculture/models.py:148
-#: elevage/models.py:38 equipe/models.py:23 exploitations/models.py:105
-#: iot/models.py:40 messagerie/models.py:115 meteo/models.py:49
-#: operations/models.py:48 parcelles/models.py:44 stock/models.py:49
-#: vente/models.py:189 vente/models.py:339
+#: elevage/models.py:38 equipe/models.py:23 equipe/models.py:322
+#: exploitations/models.py:105 iot/models.py:40 messagerie/models.py:115
+#: meteo/models.py:49 operations/models.py:48 parcelles/models.py:44
+#: stock/models.py:49 vente/models.py:189 vente/models.py:339
 msgid "nom"
 msgstr "Name"
 
@@ -804,6 +804,7 @@ msgstr "Ansehen"
 #: environnement/templates/environnement/biodiversite.html:75
 #: equipe/templates/equipe/contrats.html:155
 #: equipe/templates/equipe/equipe.html:55
+#: equipe/templates/equipe/offres.html:112
 #: equipe/templates/equipe/taches.html:70
 #: exploitations/templates/exploitations/adresses.html:19
 #: exploitations/templates/exploitations/juridique.html:19
@@ -855,6 +856,7 @@ msgstr "Bearbeiten"
 #: equipe/templates/equipe/contrats.html:204
 #: equipe/templates/equipe/equipe.html:59
 #: equipe/templates/equipe/equipe.html:115
+#: equipe/templates/equipe/offres.html:120
 #: equipe/templates/equipe/taches.html:78
 #: equipe/templates/equipe/taches.html:141
 #: exploitations/templates/exploitations/adresses.html:104
@@ -1095,6 +1097,7 @@ msgstr "Ihre Teilaufgaben werden ebenfalls gelöscht:"
 #: equipe/templates/equipe/contrats.html:120
 #: equipe/templates/equipe/edit.html:22 equipe/templates/equipe/equipe.html:23
 #: equipe/templates/equipe/equipe.html:114
+#: equipe/templates/equipe/offres.html:82
 #: equipe/templates/equipe/taches.html:140
 #: equipe/templates/equipe/taches.html:201
 #: exploitations/templates/exploitations/adresses.html:74
@@ -1260,7 +1263,8 @@ msgstr "Notizen"
 #: elevage/templates/elevage/elevage.html:290
 #: environnement/templates/environnement/biodiversite.html:167
 #: equipe/templates/equipe/contrats.html:121
-#: equipe/templates/equipe/edit.html:24 equipe/templates/equipe/taches.html:202
+#: equipe/templates/equipe/edit.html:24 equipe/templates/equipe/offres.html:83
+#: equipe/templates/equipe/taches.html:202
 #: finances/templates/finances/document_editeur.html:236
 #: finances/templates/finances/fermage.html:74
 #: finances/templates/finances/fermage.html:193
@@ -2049,12 +2053,12 @@ msgid "région"
 msgstr ""
 
 #: analyse_sol/models.py:141 client/models.py:54 client/models.py:152
-#: vente/models.py:340
+#: equipe/models.py:323 vente/models.py:340
 msgid "email"
 msgstr "E-Mail"
 
 #: analyse_sol/models.py:142 client/models.py:55 client/models.py:153
-#: equipe/models.py:25 vente/models.py:341
+#: equipe/models.py:25 equipe/models.py:324 vente/models.py:341
 msgid "téléphone"
 msgstr "Telefon"
 
@@ -2112,7 +2116,8 @@ msgstr "Gesendet"
 msgid "En cours"
 msgstr "In Bearbeitung"
 
-#: analyse_sol/models.py:171 finances/facturation_electronique.py:177
+#: analyse_sol/models.py:171 equipe/models.py:316
+#: finances/facturation_electronique.py:177
 #: finances/facturation_electronique.py:182
 #: vente/templates/vente/commandes.html:37 vente/vitrine.py:240
 msgid "Reçue"
@@ -2132,13 +2137,14 @@ msgstr "Analysebericht"
 #: analyse_sol/models.py:179 aquaculture/models.py:44 aquaculture/models.py:98
 #: client/models.py:51 contrat/models.py:35 contrat/models.py:90
 #: contrat/models.py:175 contrat/models.py:221 dti/models.py:80
-#: equipe/models.py:209 pac/models.py:37 planning/models.py:226
-#: reseaux/models.py:31 vente/models.py:212 vente/models.py:343
+#: equipe/models.py:209 equipe/models.py:273 equipe/models.py:327
+#: pac/models.py:37 planning/models.py:226 reseaux/models.py:31
+#: vente/models.py:212 vente/models.py:343
 msgid "statut"
 msgstr "Status"
 
-#: analyse_sol/models.py:180 mail/models.py:25 messagerie/models.py:99
-#: messagerie/models.py:102 planning/models.py:229
+#: analyse_sol/models.py:180 equipe/models.py:325 mail/models.py:25
+#: messagerie/models.py:99 messagerie/models.py:102 planning/models.py:229
 msgid "message"
 msgstr "Nachricht"
 
@@ -2410,7 +2416,7 @@ msgid "Analyse supprimée."
 msgstr "Parzelle gelöscht."
 
 #: analyses/models.py:15 aquaculture/templates/aquaculture/bassins.html:41
-#: core/context_processors.py:179 exploitations/views.py:43
+#: core/context_processors.py:180 exploitations/views.py:43
 #: finances/models.py:18 finances/templates/finances/bilan_economique.html:38
 #: finances/templates/finances/subvention_pdf.html:31
 #: irrigation/templates/irrigation/bassinage.html:162
@@ -2960,7 +2966,7 @@ msgstr ""
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/detail.html:10
 #: aquaculture/templates/aquaculture/especes.html:33
-#: core/context_processors.py:153
+#: core/context_processors.py:154
 #, fuzzy
 #| msgid "culture"
 msgid "Aquaculture"
@@ -2969,7 +2975,7 @@ msgstr "Kultur"
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/bassins.html:10
 #: aquaculture/templates/aquaculture/detail.html:10 aquaculture/views.py:87
-#: core/context_processors.py:155
+#: core/context_processors.py:156
 #, fuzzy
 #| msgid "Basse"
 msgid "Bassins"
@@ -3368,7 +3374,7 @@ msgstr ""
 msgid "Origine (ex : Bretagne)"
 msgstr ""
 
-#: aquaculture/views.py:208 core/context_processors.py:156
+#: aquaculture/views.py:208 core/context_processors.py:157
 #, fuzzy
 #| msgid "pièces jointes"
 msgid "Espèces aquacoles"
@@ -3519,21 +3525,21 @@ msgid "clients"
 msgstr "Kunden"
 
 #: client/models.py:128 contrat/templates/contrat/_bail_modal.html:18
-#: core/context_processors.py:163 core/espaces.py:57
+#: core/context_processors.py:164 core/espaces.py:57
 #, fuzzy
 #| msgid "Taille"
 msgid "Bailleur"
 msgstr "Schnitt"
 
-#: client/models.py:129 core/context_processors.py:164 core/espaces.py:60
+#: client/models.py:129 core/context_processors.py:165 core/espaces.py:60
 msgid "Comptable"
 msgstr ""
 
-#: client/models.py:130 core/context_processors.py:165
+#: client/models.py:130 core/context_processors.py:166
 msgid "Avocat"
 msgstr ""
 
-#: client/models.py:131 client/views.py:208 core/context_processors.py:166
+#: client/models.py:131 client/views.py:208 core/context_processors.py:167
 #: planning/templates/planning/planning.html:211
 msgid "CUMA"
 msgstr "CUMA"
@@ -3596,6 +3602,7 @@ msgstr ""
 #: client/templates/client/detail.html:76
 #: client/templates/client/partenaires.html:32
 #: contrat/templates/contrat/_rendez_vous_modal.html:22 equipe/forms.py:34
+#: equipe/templates/equipe/_emploi_detail_corps.html:65
 #: equipe/templates/equipe/equipe.html:94 exploitations/models.py:465
 #: exploitations/views.py:61 vente/templates/vente/_commander_corps.html:23
 #: vente/templates/vente/boutique.html:94
@@ -3711,7 +3718,7 @@ msgstr "Neue E-Mail"
 #: client/templates/client/clients.html:11
 #: client/templates/client/clients.html:30
 #: client/templates/client/detail.html:10 client/views.py:94
-#: core/context_processors.py:162
+#: core/context_processors.py:163
 #, fuzzy
 #| msgid "Client"
 msgid "Clients"
@@ -3760,7 +3767,7 @@ msgid "Client"
 msgstr "Kunde"
 
 #: client/templates/client/clients.html:42
-#: client/templates/client/partenaires.html:103 core/context_processors.py:176
+#: client/templates/client/partenaires.html:103 core/context_processors.py:177
 #: exploitations/views.py:225 exploitations/views.py:390
 #: exploitations/views.py:391 public/templates/public/home.html:482
 msgid "Contact"
@@ -3913,7 +3920,7 @@ msgstr ""
 msgid "Aucune facture pour le moment."
 msgstr "Bisher keine Konversation."
 
-#: client/templates/client/partenaires.html:7 core/context_processors.py:160
+#: client/templates/client/partenaires.html:7 core/context_processors.py:161
 #, fuzzy
 #| msgid "exploitations"
 msgid "Relations"
@@ -4043,7 +4050,7 @@ msgstr "Ventilsteuerung"
 msgid "Approvisionnement"
 msgstr "Umwelt"
 
-#: contrat/models.py:13 core/context_processors.py:130 finances/models.py:23
+#: contrat/models.py:13 core/context_processors.py:131 finances/models.py:23
 msgid "Assurance"
 msgstr "Versicherung"
 
@@ -4052,8 +4059,8 @@ msgid "Contrat de travail"
 msgstr ""
 
 #: contrat/models.py:18 contrat/models.py:54 contrat/models.py:156
-#: equipe/models.py:195 finances/models.py:136 finances/models.py:202
-#: planning/models.py:303 vente/models.py:175
+#: equipe/models.py:195 equipe/models.py:251 finances/models.py:136
+#: finances/models.py:202 planning/models.py:303 vente/models.py:175
 msgid "Brouillon"
 msgstr "Entwurf"
 
@@ -4731,7 +4738,7 @@ msgstr "Geplant"
 #: contrat/templates/contrat/assurances.html:8
 #: contrat/templates/contrat/baux.html:7
 #: contrat/templates/contrat/contrats.html:7
-#: contrat/templates/contrat/msa.html:7 core/context_processors.py:125
+#: contrat/templates/contrat/msa.html:7 core/context_processors.py:126
 #, fuzzy
 #| msgid "Contact"
 msgid "Contrat"
@@ -4739,7 +4746,7 @@ msgstr "Kontakt"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:148
-#: core/context_processors.py:129
+#: core/context_processors.py:130
 msgid "Patrimoine"
 msgstr ""
 
@@ -4861,7 +4868,7 @@ msgstr ""
 
 #: contrat/templates/contrat/baux.html:7 contrat/templates/contrat/baux.html:10
 #: contrat/templates/contrat/baux.html:29 contrat/views.py:100
-#: core/context_processors.py:128
+#: core/context_processors.py:129
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
@@ -4914,7 +4921,7 @@ msgstr ""
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/contrats.html:10
 #: contrat/templates/contrat/contrats.html:29 contrat/views.py:49
-#: core/context_processors.py:127
+#: core/context_processors.py:128
 #, fuzzy
 #| msgid "Contact"
 msgid "Contrats"
@@ -5484,37 +5491,42 @@ msgid "Taxonomie EU"
 msgstr "EU-Taxonomie"
 
 #: core/context_processors.py:115 equipe/templates/equipe/contrats.html:7
-#: equipe/templates/equipe/equipe.html:8
+#: equipe/templates/equipe/equipe.html:8 equipe/templates/equipe/offres.html:7
 #: equipe/templates/equipe/placeholder.html:6
 #: equipe/templates/equipe/taches.html:8
 msgid "RH"
 msgstr "Personal"
 
 #: core/context_processors.py:118 equipe/templates/equipe/equipe.html:8
-#: equipe/templates/equipe/equipe.html:10 equipe/views.py:47
+#: equipe/templates/equipe/equipe.html:10 equipe/views.py:48
 #: planning/templates/planning/planning.html:165
 msgid "Équipe"
 msgstr "Team"
 
 #: core/context_processors.py:119 equipe/templates/equipe/taches.html:8
-#: equipe/templates/equipe/taches.html:10 equipe/views.py:189
+#: equipe/templates/equipe/taches.html:10 equipe/views.py:190
 msgid "Tâches"
 msgstr "Aufgaben"
 
 #: core/context_processors.py:120 equipe/templates/equipe/contrats.html:7
-#: equipe/templates/equipe/contrats.html:9 equipe/views.py:258
+#: equipe/templates/equipe/contrats.html:9 equipe/views.py:259
 msgid "Contrats de travail"
 msgstr ""
 
-#: core/context_processors.py:121 equipe/views.py:418
+#: core/context_processors.py:121 equipe/templates/equipe/offres.html:7
+#: equipe/templates/equipe/offres.html:9 equipe/views.py:455
+msgid "Offres d'emploi"
+msgstr ""
+
+#: core/context_processors.py:122 equipe/views.py:419
 msgid "Paie"
 msgstr ""
 
-#: core/context_processors.py:131
+#: core/context_processors.py:132
 msgid "Mutualité Sociale Agricole"
 msgstr ""
 
-#: core/context_processors.py:135 vente/templates/vente/boutique.html:7
+#: core/context_processors.py:136 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/produits.html:16
 #, fuzzy
@@ -5522,7 +5534,7 @@ msgstr ""
 msgid "Vente directe"
 msgstr "Obstverkauf"
 
-#: core/context_processors.py:137 vente/templates/vente/commande_detail.html:7
+#: core/context_processors.py:138 vente/templates/vente/commande_detail.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/commandes.html:10 vente/views.py:257
 #, fuzzy
@@ -5530,7 +5542,7 @@ msgstr "Obstverkauf"
 msgid "Commandes"
 msgstr "Gemeinde"
 
-#: core/context_processors.py:138 vente/templates/vente/boutique.html:12
+#: core/context_processors.py:139 vente/templates/vente/boutique.html:12
 #: vente/templates/vente/commandes.html:13
 #: vente/templates/vente/produits.html:16
 #: vente/templates/vente/produits.html:19 vente/views.py:147
@@ -5539,18 +5551,18 @@ msgstr "Gemeinde"
 msgid "Mes produits"
 msgstr "Produkt"
 
-#: core/context_processors.py:139 vente/templates/vente/boutique.html:7
+#: core/context_processors.py:140 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/boutique.html:10
 #: vente/templates/vente/produits.html:22 vente/views.py:117
 msgid "Ma boutique"
 msgstr ""
 
-#: core/context_processors.py:140 vente/templates/vente/_boutique_corps.html:5
+#: core/context_processors.py:141 vente/templates/vente/_boutique_corps.html:5
 #: vente/templates/vente/_produit_corps.html:6
 msgid "Le marché"
 msgstr ""
 
-#: core/context_processors.py:144 stock/templates/stock/articles.html:20
+#: core/context_processors.py:145 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:23 stock/templates/stock/depots.html:16
 #: stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/recoltes.html:11
@@ -5559,34 +5571,34 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: core/context_processors.py:146 stock/templates/stock/articles.html:20
+#: core/context_processors.py:147 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:47 stock/templates/stock/depots.html:22
 #: stock/templates/stock/depots.html:46
 #: stock/templates/stock/mouvements.html:14
 msgid "Articles"
 msgstr ""
 
-#: core/context_processors.py:147 public/templates/public/home.html:276
+#: core/context_processors.py:148 public/templates/public/home.html:276
 #: stock/templates/stock/recoltes.html:11
 #: stock/templates/stock/recoltes.html:14
 #: stock/templates/stock/recoltes.html:34 stock/views.py:301
 msgid "Récoltes"
 msgstr "Ernten"
 
-#: core/context_processors.py:148 stock/templates/stock/mouvements.html:8
+#: core/context_processors.py:149 stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/mouvements.html:31
 #, fuzzy
 #| msgid "abonnements"
 msgid "Mouvements"
 msgstr "Abonnements"
 
-#: core/context_processors.py:149 stock/templates/stock/depots.html:16
+#: core/context_processors.py:150 stock/templates/stock/depots.html:16
 #: stock/templates/stock/depots.html:19 stock/templates/stock/depots.html:32
 #: stock/views.py:371
 msgid "Dépôts"
 msgstr ""
 
-#: core/context_processors.py:170
+#: core/context_processors.py:171
 #: exploitations/templates/exploitations/adresses.html:7
 #: exploitations/templates/exploitations/contact.html:7
 #: exploitations/templates/exploitations/juridique.html:7
@@ -5600,46 +5612,46 @@ msgstr ""
 msgid "Mon exploitation"
 msgstr "Mein Betrieb"
 
-#: core/context_processors.py:174 exploitations/views.py:33
+#: core/context_processors.py:175 exploitations/views.py:33
 #, fuzzy
 #| msgid "Identité"
 msgid "Identités"
 msgstr "Identität"
 
-#: core/context_processors.py:175 exploitations/views.py:36
+#: core/context_processors.py:176 exploitations/views.py:36
 #: exploitations/views.py:308 exploitations/views.py:309
 msgid "Juridique"
 msgstr "Rechtliches"
 
-#: core/context_processors.py:177 exploitations/views.py:39
+#: core/context_processors.py:178 exploitations/views.py:39
 #: exploitations/views.py:432 exploitations/views.py:433
 #: stock/templates/stock/_depot_modal.html:26
 #: stock/templates/stock/depots.html:44
 msgid "Localisation"
 msgstr "Standort"
 
-#: core/context_processors.py:178 exploitations/views.py:41
+#: core/context_processors.py:179 exploitations/views.py:41
 msgid "Caractéristiques agricoles"
 msgstr "Landwirtschaftliche Merkmale"
 
-#: core/context_processors.py:180 exploitations/views.py:45
+#: core/context_processors.py:181 exploitations/views.py:45
 #, fuzzy
 #| msgid "Certifications & labels"
 msgid "Certificats et labels"
 msgstr "Zertifizierungen & Label"
 
-#: core/context_processors.py:181
+#: core/context_processors.py:182
 #: exploitations/templates/exploitations/societes.html:32
 #: exploitations/views.py:226 exploitations/views.py:739
 #: exploitations/views.py:740
 msgid "Sociétés liées"
 msgstr "Verbundene Unternehmen"
 
-#: core/context_processors.py:182 exploitations/views.py:47
+#: core/context_processors.py:183 exploitations/views.py:47
 msgid "RH et CA"
 msgstr ""
 
-#: core/context_processors.py:183
+#: core/context_processors.py:184
 #: operations/templates/operations/parc_materiel.html:36
 #: operations/templates/operations/parc_materiel.html:38
 #: operations/views.py:104 public/templates/public/home.html:261
@@ -7378,12 +7390,13 @@ msgid "Poste occupé"
 msgstr ""
 
 #: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
+#: equipe/templates/equipe/offres.html:42
 #, fuzzy
 #| msgid "Lieu introuvable."
 msgid "Lieu de travail"
 msgstr "Ort nicht gefunden."
 
-#: equipe/contrats.py:32
+#: equipe/contrats.py:32 equipe/templates/equipe/_emploi_detail_corps.html:26
 #, fuzzy
 #| msgid "Hebdomadaire"
 msgid "Durée hebdomadaire"
@@ -7424,6 +7437,41 @@ msgstr "Ventilsteuerung"
 #| msgid "Conventionnel"
 msgid "Convention de stage"
 msgstr "Konventionell"
+
+#: equipe/emplois.py:49 equipe/templates/equipe/_emplois_corps.html:6
+msgid "Offres d'emploi agricoles"
+msgstr ""
+
+#: equipe/emplois.py:75
+msgid "Le CV ne doit pas dépasser 5 Mo."
+msgstr ""
+
+#: equipe/emplois.py:78
+msgid "Format de CV non accepté : PDF, Word, OpenDocument ou image."
+msgstr ""
+
+#: equipe/emplois.py:92
+#, fuzzy
+#| msgid "Indiquez au moins un destinataire valide."
+msgid "Indiquez au moins votre nom et votre email."
+msgstr "Geben Sie mindestens einen gültigen Empfänger an."
+
+#: equipe/emplois.py:110
+#, fuzzy
+#| msgid "Nouvelle culture"
+msgid "Nouvelle candidature"
+msgstr "Neue Kultur"
+
+#: equipe/emplois.py:111
+#, python-format
+msgid "%(qui)s a répondu à « %(offre)s »."
+msgstr ""
+
+#: equipe/emplois.py:113
+#, fuzzy
+#| msgid "Demandé"
+msgid "Votre candidature est envoyée. Bonne chance !"
+msgstr "Beantragt"
 
 #: equipe/forms.py:69
 #, fuzzy
@@ -7653,13 +7701,13 @@ msgstr "Bewässerungssitzungen"
 msgid "poste"
 msgstr ""
 
-#: equipe/models.py:213
+#: equipe/models.py:213 equipe/models.py:265
 #, fuzzy
 #| msgid "Température"
 msgid "lieu de travail"
 msgstr "Temperatur"
 
-#: equipe/models.py:216
+#: equipe/models.py:216 equipe/models.py:267
 #, fuzzy
 #| msgid "Hebdomadaire"
 msgid "durée hebdomadaire (h)"
@@ -7680,6 +7728,294 @@ msgstr "Ventilsteuerung"
 #| msgid "Contrôleur de vanne"
 msgid "contrats de travail"
 msgstr "Ventilsteuerung"
+
+#: equipe/models.py:252
+msgid "Publiée"
+msgstr ""
+
+#: equipe/models.py:253
+msgid "Pourvue"
+msgstr ""
+
+#: equipe/models.py:254
+msgid "Close"
+msgstr ""
+
+#: equipe/models.py:258
+#, fuzzy
+#| msgid "Identité"
+msgid "intitulé du poste"
+msgstr "Identität"
+
+#: equipe/models.py:259
+#, fuzzy
+#| msgid "adresse email"
+msgid "adresse publique"
+msgstr "E-Mail-Adresse"
+
+#: equipe/models.py:260
+#, fuzzy
+#| msgid "type de sol"
+msgid "type de contrat"
+msgstr "Bodentyp"
+
+#: equipe/models.py:263
+#, fuzzy
+#| msgid "fertigation"
+msgid "description du poste"
+msgstr "Fertigation"
+
+#: equipe/models.py:264
+msgid "profil recherché"
+msgstr ""
+
+#: equipe/models.py:266
+#, fuzzy
+#| msgid "type de sol"
+msgid "prise de poste"
+msgstr "Bodentyp"
+
+#: equipe/models.py:269
+#, fuzzy
+#| msgid "En génération"
+msgid "rémunération"
+msgstr "Wird generiert"
+
+#: equipe/models.py:270 equipe/templates/equipe/_emplois_corps.html:35
+msgid "logement possible"
+msgstr ""
+
+#: equipe/models.py:271
+#, fuzzy
+#| msgid "membres de conversation"
+msgid "email de contact"
+msgstr "Konversationsmitglieder"
+
+#: equipe/models.py:275
+msgid "publiée le"
+msgstr ""
+
+#: equipe/models.py:276
+msgid "visible jusqu'au"
+msgstr ""
+
+#: equipe/models.py:279
+msgid "offre d'emploi"
+msgstr ""
+
+#: equipe/models.py:280
+msgid "offres d'emploi"
+msgstr ""
+
+#: equipe/models.py:317
+#, fuzzy
+#| msgid "Vu"
+msgid "Vue"
+msgstr "Gesehen"
+
+#: equipe/models.py:318
+#, fuzzy
+#| msgid "revenu"
+msgid "Retenue"
+msgstr "Einnahme"
+
+#: equipe/models.py:319 finances/facturation_electronique.py:190
+#: reseaux/models.py:21 vente/models.py:314
+#, fuzzy
+#| msgid "Refusé"
+msgid "Refusée"
+msgstr "Abgelehnt"
+
+#: equipe/models.py:326 equipe/templates/equipe/_emploi_detail_corps.html:69
+#: equipe/templates/equipe/offres.html:143
+msgid "CV"
+msgstr ""
+
+#: equipe/models.py:331
+#, fuzzy
+#| msgid "facture"
+msgid "candidature"
+msgstr "Rechnung"
+
+#: equipe/models.py:332
+#, fuzzy
+#| msgid "factures"
+msgid "candidatures"
+msgstr "Rechnungen"
+
+#: equipe/templates/equipe/_emploi_close_corps.html:6
+#, fuzzy
+#| msgid "Ce lien de partage n'est plus valide."
+msgid "Cette offre n'est plus en ligne"
+msgstr "Dieser Freigabelink ist nicht mehr gültig."
+
+#: equipe/templates/equipe/_emploi_close_corps.html:8
+#, python-format
+msgid ""
+"« %(poste)s » chez %(ferme)s n'est plus proposée. D'autres fermes recrutent "
+"peut-être."
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_close_corps.html:10
+#, fuzzy
+#| msgid "factures"
+msgid "Voir les offres en ligne"
+msgstr "Rechnungen"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:6
+#, fuzzy
+#| msgid "Toutes les heures"
+msgid "Toutes les offres"
+msgstr "Stündlich"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:22
+#: equipe/templates/equipe/_emplois_corps.html:33
+#: equipe/templates/equipe/offres.html:46
+#, fuzzy
+#| msgid "Partage de position"
+msgid "Prise de poste"
+msgstr "Standortfreigabe"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:27
+msgid "heures"
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:30
+#: equipe/templates/equipe/offres.html:58
+#, fuzzy
+#| msgid "En génération"
+msgid "Rémunération"
+msgstr "Wird generiert"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:34
+#, fuzzy
+#| msgid "Avertissement"
+msgid "Logement"
+msgstr "Warnung"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:35
+msgid "Possible sur place"
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:39
+#, fuzzy
+#| msgid "code postal"
+msgid "Le poste"
+msgstr "Postleitzahl"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:43
+#: equipe/templates/equipe/offres.html:67
+msgid "Profil recherché"
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:52
+msgid "Postuler"
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:53
+msgid "Pas besoin de compte : la ferme reçoit votre message directement."
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:57
+#: vente/templates/vente/_commander_corps.html:19
+msgid "Votre nom"
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:61
+#, fuzzy
+#| msgid "adresse email"
+msgid "Votre email"
+msgstr "E-Mail-Adresse"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:69
+#: irrigation/templates/irrigation/dti.html:78
+#: irrigation/templates/irrigation/dti.html:83
+#: messagerie/templates/messagerie/new.html:29
+#: petition/templates/petition/create.html:46
+#: petition/templates/petition/create.html:60
+#: petition/templates/petition/edit.html:46
+#: petition/templates/petition/edit.html:60
+#: planning/templates/planning/planning.html:308
+#: planning/templates/planning/sans_acces.html:38
+msgid "optionnel"
+msgstr "optional"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:72
+msgid "PDF, Word, OpenDocument ou photo — 5 Mo maximum."
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:75
+#, fuzzy
+#| msgid "Dicter le message"
+msgid "Votre message"
+msgstr "Nachricht diktieren"
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:77
+msgid ""
+"Dites en quelques lignes ce qui vous intéresse dans ce poste et ce que vous "
+"savez faire."
+msgstr ""
+
+#: equipe/templates/equipe/_emploi_detail_corps.html:81
+msgid "Envoyer ma candidature"
+msgstr ""
+
+#: equipe/templates/equipe/_emplois_corps.html:8
+msgid "Les postes ouverts dans les fermes, saison après saison."
+msgstr ""
+
+#: equipe/templates/equipe/_emplois_corps.html:14
+#, fuzzy
+#| msgid "Rechercher un type de sol, une texture…"
+msgid "Chercher un poste, une commune, une ferme…"
+msgstr "Einen Bodentyp, eine Textur suchen…"
+
+#: equipe/templates/equipe/_emplois_corps.html:15
+#, fuzzy
+#| msgid "Rechercher une commune"
+msgid "Rechercher une offre"
+msgstr "Eine Gemeinde suchen"
+
+#: equipe/templates/equipe/_emplois_corps.html:16
+#, fuzzy
+#| msgid "Rechercher un lieu…"
+msgid "Chercher"
+msgstr "Einen Ort suchen…"
+
+#: equipe/templates/equipe/_emplois_corps.html:34
+#, fuzzy
+#| msgid "Semaine"
+msgid "semaine"
+msgstr "Woche"
+
+#: equipe/templates/equipe/_emplois_corps.html:41
+#, fuzzy
+#| msgid "Aucune culture ne correspond à la recherche."
+msgid "Aucune offre ne correspond à votre recherche."
+msgstr "Keine Kultur entspricht der Suche."
+
+#: equipe/templates/equipe/_emplois_corps.html:42
+#, fuzzy
+#| msgid "Aucune conversation pour le moment."
+msgid "Aucune offre en ligne pour le moment."
+msgstr "Bisher keine Konversation."
+
+#: equipe/templates/equipe/_emplois_corps.html:44
+msgid "Revenez à l'approche des saisons : c'est là que les fermes recrutent."
+msgstr ""
+
+#: equipe/templates/equipe/_entete_emplois.html:10
+#, fuzzy
+#| msgid "Voir le mois"
+msgid "Emplois à la ferme"
+msgstr "Monat anzeigen"
+
+#: equipe/templates/equipe/_entete_emplois.html:15
+#: vente/templates/vente/_entete_public.html:16
+#, fuzzy
+#| msgid "type d'agriculture"
+msgid "Vous êtes agriculteur ?"
+msgstr "Art der Landwirtschaft"
 
 #: equipe/templates/equipe/_invitation_carte.html:10
 msgid "Lien d'invitation invalide"
@@ -7798,6 +8134,7 @@ msgid "si CDD"
 msgstr ""
 
 #: equipe/templates/equipe/contrats.html:63
+#: equipe/templates/equipe/offres.html:54
 #, fuzzy
 #| msgid "Créer un compte"
 msgid "Heures par semaine"
@@ -7908,7 +8245,7 @@ msgstr "Bisher keine Konversation."
 msgid "Retour"
 msgstr "Zurück"
 
-#: equipe/templates/equipe/edit.html:12 equipe/views.py:63
+#: equipe/templates/equipe/edit.html:12 equipe/views.py:64
 #, fuzzy
 #| msgid "Modifier"
 msgid "Modifier le membre"
@@ -7992,8 +8329,8 @@ msgstr ""
 msgid "Supprimer ce membre ?"
 msgstr "Diese Beihilfe löschen?"
 
-#: equipe/templates/equipe/invitation.html:9 equipe/views.py:97
-#: equipe/views.py:103 equipe/views.py:142
+#: equipe/templates/equipe/invitation.html:9 equipe/views.py:98
+#: equipe/views.py:104 equipe/views.py:143
 #, fuzzy
 #| msgid "Irrigation"
 msgid "Invitation"
@@ -8036,6 +8373,112 @@ msgstr "Fehler beim Teilen."
 #: equipe/templates/equipe/location_share.html:36
 msgid "Accès à la position refusé."
 msgstr "Zugriff auf den Standort verweigert."
+
+#: equipe/templates/equipe/offres.html:12
+msgid "Voir la page publique"
+msgstr ""
+
+#: equipe/templates/equipe/offres.html:15
+#: equipe/templates/equipe/offres.html:26
+#, fuzzy
+#| msgid "Nouvelle parcelle"
+msgid "Nouvelle offre"
+msgstr "Neue Parzelle"
+
+#: equipe/templates/equipe/offres.html:25
+#, fuzzy
+#| msgid "Modifier"
+msgid "Modifier l'offre"
+msgstr "Bearbeiten"
+
+#: equipe/templates/equipe/offres.html:31
+#, fuzzy
+#| msgid "Identité"
+msgid "Intitulé du poste"
+msgstr "Identität"
+
+#: equipe/templates/equipe/offres.html:33
+msgid "ex : ouvrier arboricole pour la récolte"
+msgstr ""
+
+#: equipe/templates/equipe/offres.html:36
+#, fuzzy
+#| msgid "Type de sol"
+msgid "Type de contrat"
+msgstr "Bodentyp"
+
+#: equipe/templates/equipe/offres.html:50
+msgid "Visible jusqu'au"
+msgstr ""
+
+#: equipe/templates/equipe/offres.html:60
+msgid "ex : SMIC agricole, selon profil"
+msgstr ""
+
+#: equipe/templates/equipe/offres.html:63
+#, fuzzy
+#| msgid "fertigation"
+msgid "Description du poste"
+msgstr "Fertigation"
+
+#: equipe/templates/equipe/offres.html:71
+#, fuzzy
+#| msgid "membres de conversation"
+msgid "Email de contact"
+msgstr "Konversationsmitglieder"
+
+#: equipe/templates/equipe/offres.html:77
+msgid "Logement possible sur place"
+msgstr ""
+
+#: equipe/templates/equipe/offres.html:95
+#, fuzzy
+#| msgid "Client"
+msgid "en ligne depuis le"
+msgstr "Kunde"
+
+#: equipe/templates/equipe/offres.html:96
+msgid "jusqu'au"
+msgstr ""
+
+#: equipe/templates/equipe/offres.html:102
+#, fuzzy
+#| msgid "En ligne"
+msgid "Voir en ligne"
+msgstr "Online"
+
+#: equipe/templates/equipe/offres.html:117
+#, fuzzy
+#| msgid "Supprimer cette aide ?"
+msgid "Supprimer cette offre et ses candidatures ?"
+msgstr "Diese Beihilfe löschen?"
+
+#: equipe/templates/equipe/offres.html:128
+#, fuzzy, python-format
+#| msgid "%(n)s vote"
+#| msgid_plural "%(n)s votes"
+msgid "%(n)s candidature"
+msgid_plural "%(n)s candidatures"
+msgstr[0] "%(n)s Stimme"
+msgstr[1] "%(n)s Stimmen"
+
+#: equipe/templates/equipe/offres.html:155
+#, fuzzy
+#| msgid "Aucune facture."
+msgid "Aucune candidature reçue."
+msgstr "Keine Rechnung."
+
+#: equipe/templates/equipe/offres.html:160
+#, fuzzy
+#| msgid "Aucune facture."
+msgid "Aucune offre"
+msgstr "Keine Rechnung."
+
+#: equipe/templates/equipe/offres.html:161
+msgid ""
+"Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page "
+"publique des emplois."
+msgstr ""
 
 #: equipe/templates/equipe/placeholder.html:18
 #, python-format
@@ -8130,102 +8573,107 @@ msgstr "Titel einer Aufgabe im Betriebsplan"
 msgid "Description d'une tâche de planning agricole"
 msgstr "Beschreibung einer Aufgabe im Betriebsplan"
 
-#: equipe/views.py:38
+#: equipe/views.py:39
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation avant d'ajouter un membre."
 msgstr "Konfigurieren Sie zunächst Ihren Betrieb."
 
-#: equipe/views.py:43
+#: equipe/views.py:44
 #, python-format
 msgid "%(name)s a été ajouté à l'équipe."
 msgstr ""
 
-#: equipe/views.py:59
+#: equipe/views.py:60
 #, python-format
 msgid "%(name)s a été mis à jour."
 msgstr ""
 
-#: equipe/views.py:73
+#: equipe/views.py:74
 #, fuzzy, python-format
 #| msgid "Déjà un compte ?"
 msgid "%(name)s a déjà un compte lié."
 msgstr "Bereits ein Konto?"
 
-#: equipe/views.py:75
+#: equipe/views.py:76
 #, python-format
 msgid "Renseignez un email avant d'inviter %(name)s."
 msgstr ""
 
-#: equipe/views.py:81
+#: equipe/views.py:82
 #, python-format
 msgid ""
 "L'invitation n'a pas pu être envoyée à %(email)s. Réessayez dans un instant."
 msgstr ""
 
-#: equipe/views.py:84
+#: equipe/views.py:85
 #, python-format
 msgid "Invitation envoyée à %(email)s."
 msgstr ""
 
-#: equipe/views.py:131
+#: equipe/views.py:132
 #, python-format
 msgid "Bienvenue dans l'équipe de %(expl)s."
 msgstr ""
 
-#: equipe/views.py:152
+#: equipe/views.py:153
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Membre supprimé."
 msgstr "Parzelle gelöscht."
 
-#: equipe/views.py:162
+#: equipe/views.py:163
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation avant d'ajouter une tâche."
 msgstr "Konfigurieren Sie zunächst Ihren Betrieb."
 
-#: equipe/views.py:170
+#: equipe/views.py:171
 #, python-format
 msgid "Tâche « %(t)s » ajoutée."
 msgstr ""
 
-#: equipe/views.py:202
+#: equipe/views.py:203
 #, python-format
 msgid "Tâche « %(t)s » modifiée."
 msgstr ""
 
-#: equipe/views.py:204 notifications/views.py:67
+#: equipe/views.py:205 notifications/views.py:67
 msgid "Modification impossible : vérifiez les champs."
 msgstr ""
 
-#: equipe/views.py:214
+#: equipe/views.py:215
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Tâche supprimée."
 msgstr "Parzelle gelöscht."
 
-#: equipe/views.py:273 equipe/views.py:293 stock/views.py:311
+#: equipe/views.py:274 equipe/views.py:294 equipe/views.py:465
+#: stock/views.py:311
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation."
 msgstr "Konfigurieren Sie zunächst Ihren Betrieb."
 
-#: equipe/views.py:283
+#: equipe/views.py:284
 #, python-format
 msgid "%(n)s modèle(s) ajouté(s)."
 msgstr ""
 
-#: equipe/views.py:301
+#: equipe/views.py:302
 msgid "Un modèle a besoin d'un nom et d'un corps."
 msgstr ""
 
-#: equipe/views.py:349
+#: equipe/views.py:350
 msgid "Choisissez un salarié et un modèle."
 msgstr ""
 
-#: equipe/views.py:357
+#: equipe/views.py:358
 msgid "Contrat établi. Relisez-le avant de le remettre."
+msgstr ""
+
+#: equipe/views.py:472
+msgid "Une offre a besoin d'un intitulé et d'une description."
 msgstr ""
 
 #: exploitations/certifications.py:16
@@ -9874,13 +10322,6 @@ msgstr ""
 #| msgid "Complété"
 msgid "Complétée"
 msgstr "Vervollständigt"
-
-#: finances/facturation_electronique.py:190 reseaux/models.py:21
-#: vente/models.py:314
-#, fuzzy
-#| msgid "Refusé"
-msgid "Refusée"
-msgstr "Abgelehnt"
 
 #: finances/facturation_electronique.py:191
 #, fuzzy
@@ -12401,18 +12842,6 @@ msgstr ""
 #| msgid "Humidité (%%)"
 msgid "Uniformité (%%)"
 msgstr "Luftfeuchtigkeit (%%)"
-
-#: irrigation/templates/irrigation/dti.html:78
-#: irrigation/templates/irrigation/dti.html:83
-#: messagerie/templates/messagerie/new.html:29
-#: petition/templates/petition/create.html:46
-#: petition/templates/petition/create.html:60
-#: petition/templates/petition/edit.html:46
-#: petition/templates/petition/edit.html:60
-#: planning/templates/planning/planning.html:308
-#: planning/templates/planning/sans_acces.html:38
-msgid "optionnel"
-msgstr "optional"
 
 #: irrigation/templates/irrigation/dti.html:82
 #: irrigation/templates/irrigation/irrigation.html:187
@@ -18182,10 +18611,6 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: vente/templates/vente/_commander_corps.html:19
-msgid "Votre nom"
-msgstr ""
-
 #: vente/templates/vente/_commander_corps.html:20
 #, fuzzy
 #| msgid "prénom"
@@ -18250,12 +18675,6 @@ msgstr ""
 #: vente/templates/vente/_entete_public.html:11 vente/vitrine.py:72
 msgid "Le marché des fermes"
 msgstr ""
-
-#: vente/templates/vente/_entete_public.html:16
-#, fuzzy
-#| msgid "type d'agriculture"
-msgid "Vous êtes agriculteur ?"
-msgstr "Art der Landwirtschaft"
 
 #: vente/templates/vente/_marche_corps.html:7
 msgid "Acheter directement à la ferme"

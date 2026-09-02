@@ -1,0 +1,12 @@
+{% load i18n %}
+{# Une offre retirée ne part pas en 404 : le lien a pu circuler, on explique. #}
+<section class="mx-auto max-w-lg px-4 py-16 lg:px-8">
+  <div class="hs-card p-8 text-center">
+    <span class="material-icons-round text-[32px]" style="color: var(--text-muted)">event_busy</span>
+    <h1 class="mt-3 text-[17px] font-medium">{% trans "Cette offre n'est plus en ligne" %}</h1>
+    <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+      {% blocktrans with poste=offre.titre ferme=offre.exploitation.name %}« {{ poste }} » chez {{ ferme }} n'est plus proposée. D'autres fermes recrutent peut-être.{% endblocktrans %}
+    </p>
+    <a href="{% url 'equipe:emplois' %}" class="hs-btn-primary mt-6">{% trans "Voir les offres en ligne" %}</a>
+  </div>
+</section>

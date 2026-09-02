@@ -1,0 +1,19 @@
+{% load i18n %}
+{% comment %}
+  Entête des pages d'emploi pour un visiteur non connecté. Un compte connecté
+  garde l'ossature de l'application : ce bandeau ne sert que la branche publique.
+{% endcomment %}
+<header class="sticky top-0 z-30 w-full" style="background: var(--action); color: var(--on-action)">
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
+    <a href="{% url 'equipe:emplois' %}" class="flex items-center gap-2">
+      {% include "partials/brand_mark.html" with size=30 icon=17 %}
+      <span class="text-lg font-medium tracking-tight">{% trans "Emplois à la ferme" %}</span>
+    </a>
+    <div class="flex items-center gap-2">
+      {% include "partials/lang_switcher.html" %}
+      <a href="{% url 'public:home' %}" class="hidden rounded-full border border-white/40 px-5 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10 sm:inline-block">
+        {% trans "Vous êtes agriculteur ?" %}
+      </a>
+    </div>
+  </div>
+</header>

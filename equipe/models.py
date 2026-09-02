@@ -237,3 +237,100 @@ class ContratTravail(TimeStampedModel):
         if self.statut in (self.Statut.BROUILLON, self.Statut.TERMINE):
             return False
         return self.date_fin is None or self.date_fin >= timezone.localdate()
+
+
+class OffreEmploi(TimeStampedModel):
+    """Une offre d'emploi de l'exploitation, publiable sur l'espace public.
+
+    Le slug sert d'adresse publique et ne change plus une fois l'offre en
+    ligne : un lien partagé ou indexé doit continuer de fonctionner même si le
+    titre est retouché.
+    """
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        PUBLIEE = "publiee", _("Publiée")
+        POURVUE = "pourvue", _("Pourvue")
+        CLOSE = "close", _("Close")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="offres_emploi")
+    titre = models.CharField(_("intitulé du poste"), max_length=255)
+    slug = models.SlugField(_("adresse publique"), max_length=280, unique=True, blank=True)
+    type_contrat = models.CharField(_("type de contrat"), max_length=25,
+                                    choices=ModeleContrat.Type.choices,
+                                    default=ModeleContrat.Type.SAISONNIER)
+    description = models.TextField(_("description du poste"))
+    profil = models.TextField(_("profil recherché"), blank=True)
+    lieu = models.CharField(_("lieu de travail"), max_length=255, blank=True)
+    date_debut = models.DateField(_("prise de poste"), null=True, blank=True)
+    duree_hebdo = models.FloatField(_("durée hebdomadaire (h)"), null=True, blank=True)
+    #: Texte libre : une offre annonce souvent « selon profil » ou une fourchette.
+    remuneration = models.CharField(_("rémunération"), max_length=255, blank=True)
+    logement = models.BooleanField(_("logement possible"), default=False)
+    contact_email = models.EmailField(_("email de contact"), blank=True)
+
+    statut = models.CharField(_("statut"), max_length=10,
+                              choices=Statut.choices, default=Statut.BROUILLON)
+    publiee_le = models.DateTimeField(_("publiée le"), null=True, blank=True)
+    expire_le = models.DateField(_("visible jusqu'au"), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("offre d'emploi")
+        verbose_name_plural = _("offres d'emploi")
+        ordering = ("-publiee_le", "-created_at")
+        indexes = [models.Index(fields=["statut", "publiee_le"])]
+
+    def __str__(self):
+        return self.titre
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._slug_libre()
+        super().save(*args, **kwargs)
+
+    def _slug_libre(self):
+        from django.utils.text import slugify
+
+        base = slugify(f"{self.titre}-{self.exploitation.name}")[:250] or "offre"
+        candidat, n = base, 2
+        while OffreEmploi.objects.filter(slug=candidat).exclude(pk=self.pk).exists():
+            candidat = f"{base}-{n}"
+            n += 1
+        return candidat
+
+    @property
+    def est_visible(self):
+        """Publiée, et pas encore expirée."""
+        from django.utils import timezone
+
+        if self.statut != self.Statut.PUBLIEE:
+            return False
+        return self.expire_le is None or self.expire_le >= timezone.localdate()
+
+
+class Candidature(TimeStampedModel):
+    """Une candidature déposée depuis l'espace public."""
+
+    class Statut(models.TextChoices):
+        RECUE = "recue", _("Reçue")
+        VUE = "vue", _("Vue")
+        RETENUE = "retenue", _("Retenue")
+        REFUSEE = "refusee", _("Refusée")
+
+    offre = models.ForeignKey(OffreEmploi, on_delete=models.CASCADE, related_name="candidatures")
+    nom = models.CharField(_("nom"), max_length=255)
+    email = models.EmailField(_("email"))
+    telephone = models.CharField(_("téléphone"), max_length=30, blank=True)
+    message = models.TextField(_("message"), blank=True)
+    cv = models.FileField(_("CV"), upload_to="candidatures/%Y/%m/", blank=True)
+    statut = models.CharField(_("statut"), max_length=10,
+                              choices=Statut.choices, default=Statut.RECUE)
+
+    class Meta:
+        verbose_name = _("candidature")
+        verbose_name_plural = _("candidatures")
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.nom} — {self.offre.titre}"

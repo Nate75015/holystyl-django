@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<section class="mx-auto max-w-5xl space-y-5 px-4 py-8 lg:px-8">
+  {% include "equipe/_messages_public.html" %}
+  <div>
+    <h1 class="text-[24px]">{% trans "Offres d'emploi agricoles" %}</h1>
+    <p class="mt-1 text-[14px]" style="color: var(--text-secondary)">
+      {% trans "Les postes ouverts dans les fermes, saison après saison." %}
+    </p>
+  </div>
+
+  <form method="get" class="flex items-center gap-2">
+    <input name="q" value="{{ recherche }}" class="w-full"
+           placeholder="{% trans 'Chercher un poste, une commune, une ferme…' %}"
+           aria-label="{% trans 'Rechercher une offre' %}">
+    <button type="submit" class="hs-btn-primary shrink-0">{% trans "Chercher" %}</button>
+  </form>
+
+  {% for offre in offres %}
+    <a href="{% url 'equipe:emploi_detail' offre.slug %}"
+       class="hs-card block p-5 transition hover:brightness-[0.98] sm:p-6">
+      <div class="flex flex-wrap items-start justify-between gap-2">
+        <span class="min-w-0">
+          <span class="block text-[17px] font-medium">{{ offre.titre }}</span>
+          <span class="block text-[13px]" style="color: var(--text-secondary)">
+            {{ offre.exploitation.name }}{% if offre.lieu %} · {{ offre.lieu }}{% elif offre.exploitation.city %} · {{ offre.exploitation.city }}{% endif %}
+          </span>
+        </span>
+        <span class="hs-badge hs-badge-neutral shrink-0">{{ offre.get_type_contrat_display }}</span>
+      </div>
+      <p class="mt-3 line-clamp-3 text-[13px]" style="color: var(--text-secondary)">{{ offre.description|truncatewords:40 }}</p>
+      <p class="mt-3 text-[12px]" style="color: var(--text-muted)">
+        {% if offre.date_debut %}{% trans "Prise de poste" %} {{ offre.date_debut|date:"SHORT_DATE_FORMAT" }}{% endif %}
+        {% if offre.duree_hebdo %} · {{ offre.duree_hebdo|floatformat:"-1" }} h/{% trans "semaine" %}{% endif %}
+        {% if offre.logement %} · {% trans "logement possible" %}{% endif %}
+      </p>
+    </a>
+  {% empty %}
+    <div class="hs-card p-8 text-center">
+      <p class="text-[15px] font-medium">
+        {% if recherche %}{% trans "Aucune offre ne correspond à votre recherche." %}
+        {% else %}{% trans "Aucune offre en ligne pour le moment." %}{% endif %}
+      </p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Revenez à l'approche des saisons : c'est là que les fermes recrutent." %}</p>
+    </div>
+  {% endfor %}
+</section>

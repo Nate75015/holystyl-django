@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import emplois as emplois_public, views
 
 app_name = "equipe"
 
@@ -24,4 +24,17 @@ urlpatterns = [
     path("contrats-travail/<int:pk>/pdf/", views.contrat_pdf, name="contrat_pdf"),
     path("paie/", views.paie, name="paie"),
     path("localisation/<str:token>/", views.location_share, name="location_share"),
+
+    # ── Offres d'emploi : back-office ──
+    path("offres-emploi/", views.offres, name="offres"),
+    path("offres-emploi/enregistrer/", views.offre_save, name="offre_create"),
+    path("offres-emploi/<int:pk>/enregistrer/", views.offre_save, name="offre_edit"),
+    path("offres-emploi/<int:pk>/statut/", views.offre_statut, name="offre_statut"),
+    path("offres-emploi/<int:pk>/supprimer/", views.offre_delete, name="offre_delete"),
+    path("candidatures/<int:pk>/statut/", views.candidature_statut, name="candidature_statut"),
+
+    # ── Espace public : aucun compte requis ──
+    path("emplois/", emplois_public.emplois, name="emplois"),
+    path("emplois/<slug:slug>/", emplois_public.emploi_detail, name="emploi_detail"),
+    path("emplois/<slug:slug>/candidater/", emplois_public.candidater, name="candidater"),
 ]

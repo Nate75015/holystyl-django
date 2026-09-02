@@ -19,7 +19,8 @@ from exploitations.models import Exploitation
 from . import invitations
 from .forms import InvitationAccountForm, TaskForm, TeamMemberForm
 from . import contrats as contrats_service
-from .models import ContratTravail, ModeleContrat, Task, TeamMember
+from .models import (Candidature, ContratTravail, ModeleContrat, OffreEmploi,
+                     Task, TeamMember)
 
 User = get_user_model()
 
@@ -416,3 +417,103 @@ def contrat_pdf(request, pk):
 def paie(request):
     """Paie — module RH en préparation."""
     return _rh_placeholder(request, _("Paie"))
+
+
+# ── Offres d'emploi : back-office ────────────────────────────────────
+
+
+def _champs_offre(request):
+    type_contrat = request.POST.get("type_contrat") or ModeleContrat.Type.SAISONNIER
+    return {
+        "titre": (request.POST.get("titre") or "").strip()[:255],
+        "type_contrat": (type_contrat if type_contrat in ModeleContrat.Type.values
+                         else ModeleContrat.Type.SAISONNIER),
+        "description": (request.POST.get("description") or "").strip(),
+        "profil": (request.POST.get("profil") or "").strip(),
+        "lieu": (request.POST.get("lieu") or "").strip()[:255],
+        "date_debut": _to_date(request.POST.get("date_debut")),
+        "duree_hebdo": _to_float(request.POST.get("duree_hebdo")),
+        "remuneration": (request.POST.get("remuneration") or "").strip()[:255],
+        "logement": request.POST.get("logement") == "on",
+        "contact_email": (request.POST.get("contact_email") or "").strip(),
+        "expire_le": _to_date(request.POST.get("expire_le")),
+    }
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+def offres(request):
+    """Les offres de l'exploitation et les candidatures reçues."""
+    exploitation = _exploitation(request)
+    lot = (OffreEmploi.objects.filter(exploitation=exploitation)
+           .prefetch_related("candidatures") if exploitation else [])
+    return render(request, "equipe/offres.html", {
+        "offres": lot,
+        "types": ModeleContrat.Type.choices,
+        "statuts": OffreEmploi.Statut.choices,
+        "statuts_candidature": Candidature.Statut.choices,
+        "page_title": _("Offres d'emploi"),
+    })
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def offre_save(request, pk=None):
+    exploitation = _exploitation(request)
+    if exploitation is None:
+        messages.error(request, _("Créez d'abord votre exploitation."))
+        return redirect("equipe:offres")
+
+    offre = (get_object_or_404(OffreEmploi, pk=pk, exploitation=exploitation)
+             if pk else OffreEmploi(exploitation=exploitation))
+    champs = _champs_offre(request)
+    if not (champs["titre"] and champs["description"]):
+        messages.error(request, _("Une offre a besoin d'un intitulé et d'une description."))
+        return redirect("equipe:offres")
+
+    for champ, valeur in champs.items():
+        setattr(offre, champ, valeur)
+    offre.save()
+    return redirect("equipe:offres")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def offre_statut(request, pk):
+    """Publie, dépublie, ou clôt une offre."""
+    exploitation = _exploitation(request)
+    offre = get_object_or_404(OffreEmploi, pk=pk, exploitation=exploitation)
+    statut = request.POST.get("statut")
+    if statut in OffreEmploi.Statut.values:
+        offre.statut = statut
+        # La date de publication se pose à la première mise en ligne et ne
+        # bouge plus : elle ordonne la liste publique.
+        if statut == OffreEmploi.Statut.PUBLIEE and offre.publiee_le is None:
+            offre.publiee_le = timezone.now()
+        offre.save(update_fields=["statut", "publiee_le", "updated_at"])
+    return redirect("equipe:offres")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def offre_delete(request, pk):
+    exploitation = _exploitation(request)
+    get_object_or_404(OffreEmploi, pk=pk, exploitation=exploitation).delete()
+    return redirect("equipe:offres")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def candidature_statut(request, pk):
+    exploitation = _exploitation(request)
+    candidature = get_object_or_404(
+        Candidature, pk=pk, offre__exploitation=exploitation)
+    statut = request.POST.get("statut")
+    if statut in Candidature.Statut.values:
+        candidature.statut = statut
+        candidature.save(update_fields=["statut", "updated_at"])
+    return redirect("equipe:offres")

@@ -118,6 +118,7 @@ def layout(request):
                 {"label": _("Équipe"), "url_name": "equipe:equipe", "icon": "groups"},
                 {"label": _("Tâches"), "url_name": "equipe:taches", "icon": "checklist"},
                 {"label": _("Contrats de travail"), "url_name": "equipe:contrats", "icon": "assignment_ind"},
+                {"label": _("Offres d'emploi"), "url_name": "equipe:offres", "icon": "work"},
                 {"label": _("Paie"), "url_name": "equipe:paie", "icon": "payments"},
             ],
         },
