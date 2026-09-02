@@ -46,7 +46,6 @@ class Contrat(models.Model):
     def __str__(self):
         return self.intitule
 
-
 class Bail(models.Model):
     """Un bail rural (fermage) : location de terres agricoles."""
 
@@ -143,13 +142,30 @@ class Assurance(models.Model):
     """Un contrat d'assurance de l'exploitation (multirisque, récolte, RC…)."""
 
     class TypeAssurance(models.TextChoices):
+        """Ce qu'une exploitation assure réellement.
+
+        Une ferme porte rarement une police : la multirisque couvre le socle,
+        la multirisque climatique les récoltes, et s'y ajoutent les véhicules,
+        le matériel, le cheptel, la protection juridique, la prévoyance…
+        """
+
         MULTIRISQUE = "multirisque", _("Multirisque agricole")
-        RECOLTE = "recolte", _("Récolte / climatique")
-        RC = "rc", _("Responsabilité civile")
-        MATERIEL = "materiel", _("Matériel")
-        BATIMENTS = "batiments", _("Bâtiments")
+        RECOLTE = "recolte", _("Multirisque climatique (récoltes)")
         GRELE = "grele", _("Grêle")
-        BETAIL = "betail", _("Mortalité du bétail")
+        RC = "rc", _("Responsabilité civile exploitation")
+        RC_DIRIGEANT = "rc_dirigeant", _("Responsabilité civile du dirigeant")
+        VEHICULES = "vehicules", _("Véhicules et engins")
+        MATERIEL = "materiel", _("Matériel et bris de machine")
+        BATIMENTS = "batiments", _("Bâtiments")
+        BETAIL = "betail", _("Cheptel et mortalité du bétail")
+        PERTE_EXPLOITATION = "perte_exploitation", _("Perte d'exploitation")
+        PROTECTION_JURIDIQUE = "protection_juridique", _("Protection juridique")
+        ENVIRONNEMENT = "environnement", _("Atteinte à l'environnement")
+        SANTE_PREVOYANCE = "sante_prevoyance", _("Santé et prévoyance")
+        EMPRUNTEUR = "emprunteur", _("Emprunteur")
+        CONSTRUCTION = "construction", _("Construction / dommages-ouvrage")
+        TRANSPORT = "transport", _("Transport de marchandises")
+        CYBER = "cyber", _("Cyber")
         AUTRE = "autre", _("Autre")
 
     class Statut(models.TextChoices):
@@ -174,6 +190,34 @@ class Assurance(models.Model):
     statut = models.CharField(
         _("statut"), max_length=12, choices=Statut.choices, default=Statut.BROUILLON
     )
+    date_resiliation = models.DateField(_("résiliée le"), null=True, blank=True)
+
+    # ── Ce qu'il faut savoir pour s'en servir ────────────────────────
+    #
+    # Un contrat d'assurance ne sert que le jour du sinistre, et ce jour-là on
+    # cherche trois choses dans l'urgence : qui appeler, sous quel délai, et ce
+    # qui reste à charge. Elles vivent ici plutôt que noyées dans les notes.
+    garanties = models.TextField(_("garanties"), blank=True)
+    exclusions = models.TextField(_("exclusions"), blank=True)
+    franchise = models.CharField(_("franchise"), max_length=255, blank=True)
+    plafond = models.FloatField(_("plafond d'indemnisation (€)"), null=True, blank=True)
+    delai_declaration_jours = models.PositiveIntegerField(
+        _("délai de déclaration (jours)"), null=True, blank=True,
+        help_text=_("Cinq jours ouvrés en général, deux pour le vol, dix après un "
+                    "arrêté de catastrophe naturelle."))
+    procedure_sinistre = models.TextField(_("marche à suivre en cas de sinistre"), blank=True)
+    telephone_sinistre = models.CharField(_("téléphone sinistre"), max_length=30, blank=True)
+    email_sinistre = models.EmailField(_("email sinistre"), blank=True)
+
+    # ── L'interlocuteur, et comment sortir ───────────────────────────
+    courtier = models.CharField(_("courtier ou agence"), max_length=255, blank=True)
+    telephone_courtier = models.CharField(_("téléphone du courtier"), max_length=30, blank=True)
+    email_courtier = models.EmailField(_("email du courtier"), blank=True)
+    tacite_reconduction = models.BooleanField(_("tacite reconduction"), default=True)
+    preavis_resiliation_jours = models.PositiveIntegerField(
+        _("préavis de résiliation (jours)"), null=True, blank=True,
+        help_text=_("Deux mois avant l'échéance dans la plupart des contrats."))
+
     notes = models.TextField(_("notes"), blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -185,6 +229,67 @@ class Assurance(models.Model):
 
     def __str__(self):
         return self.intitule
+    @property
+    def jours_avant_echeance(self):
+        """Jours restants avant l'échéance ; négatif si elle est passée."""
+        from django.utils import timezone
+
+        if not self.date_fin:
+            return None
+        return (self.date_fin - timezone.localdate()).days
+
+    @property
+    def echeance_proche(self):
+        """Vrai dans les soixante jours qui précèdent l'échéance.
+
+        Le préavis de résiliation courant est de deux mois : au-delà, il est
+        déjà trop tard pour changer d'assureur sans tacite reconduction.
+        """
+        restant = self.jours_avant_echeance
+        return (self.statut == self.Statut.ACTIVE
+                and restant is not None and 0 <= restant <= 60)
+
+    @property
+    def est_en_vigueur(self):
+        """Active et non échue : la police sur laquelle on peut compter."""
+        restant = self.jours_avant_echeance
+        return self.statut == self.Statut.ACTIVE and (restant is None or restant >= 0)
+
+
+class DocumentAssurance(models.Model):
+    """Une pièce du dossier : la police, ses conditions, une attestation.
+
+    Un contrat d'assurance n'est pas un formulaire, c'est une liasse. On garde
+    les pièces telles quelles, et l'IA en tire les champs quand elle le peut.
+    """
+
+    class Type(models.TextChoices):
+        POLICE = "police", _("Contrat / police")
+        CONDITIONS = "conditions", _("Conditions générales")
+        AVENANT = "avenant", _("Avenant")
+        ATTESTATION = "attestation", _("Attestation")
+        APPEL_PRIME = "appel_prime", _("Appel de prime")
+        SINISTRE = "sinistre", _("Déclaration de sinistre")
+        AUTRE = "autre", _("Autre")
+
+    assurance = models.ForeignKey("contrat.Assurance", on_delete=models.CASCADE,
+                                  related_name="documents")
+    fichier = models.FileField(_("fichier"), upload_to="assurances/%Y/%m/")
+    nom = models.CharField(_("nom"), max_length=255, blank=True)
+    type_document = models.CharField(_("type"), max_length=15,
+                                     choices=Type.choices, default=Type.POLICE)
+    #: Ce que l'IA a lu du document, tel quel. Gardé pour qu'on puisse revenir
+    #: sur ce qu'elle a proposé sans redemander une lecture.
+    extraction = models.JSONField(_("extraction"), default=dict, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("document d'assurance")
+        verbose_name_plural = _("documents d'assurance")
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return self.nom or self.fichier.name
 
 
 class Msa(models.Model):

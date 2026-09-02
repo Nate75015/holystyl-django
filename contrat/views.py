@@ -189,38 +189,173 @@ def assurances(request):
     capital = base.aggregate(s=Sum("capital_assure"))["s"] or 0
     nb_actives = base.filter(statut=Assurance.Statut.ACTIVE).count()
 
+    polices = list(base.prefetch_related("documents"))
+    from .models import DocumentAssurance
+
     return render(request, "contrat/assurances.html", {
-        "assurances": base,
-        "kpi_count": base.count(),
+        "assurances": polices,
+        # Ce qui arrive à échéance : c'est là que se joue la renégociation,
+        # le préavis de résiliation courant étant de deux mois.
+        "echeances_proches": [a for a in polices if a.echeance_proche],
+        "kpi_count": len(polices),
         "kpi_actives": nb_actives,
         "kpi_prime": round(prime),
         "kpi_capital": round(capital),
         "types": Assurance.TypeAssurance.choices,
         "statuts": Assurance.Statut.choices,
+        "types_document": DocumentAssurance.Type.choices,
         "page_title": _("Assurances"),
     })
 
 
+def _to_int(valeur):
+    try:
+        return int(str(valeur).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def _champs_assurance(request):
+    """Les champs d'une police lus du POST, ou None sans intitulé."""
+    intitule = (request.POST.get("intitule") or "").strip()
+    if not intitule:
+        return None
+
+    type_assurance = request.POST.get("type_assurance") or Assurance.TypeAssurance.MULTIRISQUE
+    statut = request.POST.get("statut") or Assurance.Statut.BROUILLON
+    return {
+        "intitule": intitule[:255],
+        "type_assurance": (type_assurance if type_assurance in Assurance.TypeAssurance.values
+                           else Assurance.TypeAssurance.AUTRE),
+        "statut": statut if statut in Assurance.Statut.values else Assurance.Statut.BROUILLON,
+        "assureur": (request.POST.get("assureur") or "").strip()[:255],
+        "numero_police": (request.POST.get("numero_police") or "").strip()[:100],
+        "prime_annuelle": _to_float(request.POST.get("prime_annuelle")),
+        "capital_assure": _to_float(request.POST.get("capital_assure")),
+        "plafond": _to_float(request.POST.get("plafond")),
+        "date_debut": _to_date(request.POST.get("date_debut")),
+        "date_fin": _to_date(request.POST.get("date_fin")),
+        "date_resiliation": _to_date(request.POST.get("date_resiliation")),
+        # Ce qui sert le jour du sinistre.
+        "garanties": (request.POST.get("garanties") or "").strip(),
+        "exclusions": (request.POST.get("exclusions") or "").strip(),
+        "franchise": (request.POST.get("franchise") or "").strip()[:255],
+        "delai_declaration_jours": _to_int(request.POST.get("delai_declaration_jours")),
+        "procedure_sinistre": (request.POST.get("procedure_sinistre") or "").strip(),
+        "telephone_sinistre": (request.POST.get("telephone_sinistre") or "").strip()[:30],
+        "email_sinistre": (request.POST.get("email_sinistre") or "").strip(),
+        # L'interlocuteur, et la sortie.
+        "courtier": (request.POST.get("courtier") or "").strip()[:255],
+        "telephone_courtier": (request.POST.get("telephone_courtier") or "").strip()[:30],
+        "email_courtier": (request.POST.get("email_courtier") or "").strip(),
+        "tacite_reconduction": request.POST.get("tacite_reconduction") == "on",
+        "preavis_resiliation_jours": _to_int(request.POST.get("preavis_resiliation_jours")),
+        "notes": (request.POST.get("notes") or "").strip(),
+    }
+
+
 @login_required
 @require_POST
-def assurance_create(request):
+def assurance_create(request, pk=None):
     exploitation = Exploitation.objects.filter(owner=request.user).first()
-    intitule = (request.POST.get("intitule") or "").strip()
-    if exploitation and intitule:
-        Assurance.objects.create(
-            exploitation=exploitation,
-            intitule=intitule,
-            type_assurance=request.POST.get("type_assurance") or Assurance.TypeAssurance.MULTIRISQUE,
-            assureur=(request.POST.get("assureur") or "").strip(),
-            numero_police=(request.POST.get("numero_police") or "").strip(),
-            prime_annuelle=_to_float(request.POST.get("prime_annuelle")),
-            capital_assure=_to_float(request.POST.get("capital_assure")),
-            date_debut=_to_date(request.POST.get("date_debut")),
-            date_fin=_to_date(request.POST.get("date_fin")),
-            statut=request.POST.get("statut") or Assurance.Statut.BROUILLON,
-            notes=(request.POST.get("notes") or "").strip(),
-        )
+    if exploitation is None:
+        return redirect("contrat:assurances")
+
+    champs = _champs_assurance(request)
+    if champs is None:
+        messages.error(request, _("Une police a besoin d'un intitulé."))
+        return redirect("contrat:assurances")
+
+    assurance = (get_object_or_404(Assurance, pk=pk, exploitation=exploitation)
+                 if pk else Assurance(exploitation=exploitation))
+    for champ, valeur in champs.items():
+        setattr(assurance, champ, valeur)
+    assurance.save()
+
+    fichier = request.FILES.get("document")
+    if fichier:
+        _archiver_document(assurance, request, fichier)
     return redirect("contrat:assurances")
+
+
+#: Ce qu'on accepte comme pièce jointe. Une police se scanne au téléphone ou
+#: s'exporte en PDF ; le reste n'a rien à faire ici.
+EXTENSIONS_DOC = {".pdf", ".png", ".jpg", ".jpeg", ".webp", ".heic"}
+TAILLE_MAX_DOC = 10 * 1024 * 1024
+
+
+def _archiver_document(assurance, request, fichier, type_document=None):
+    """Range une pièce au dossier, en gardant ce que l'IA en a lu."""
+    import os
+
+    from .models import DocumentAssurance
+
+    if os.path.splitext(fichier.name)[1].lower() not in EXTENSIONS_DOC:
+        messages.error(request, _("Document non accepté : PDF ou photo seulement."))
+        return None
+    if fichier.size > TAILLE_MAX_DOC:
+        messages.error(request, _("Le document ne doit pas dépasser 10 Mo."))
+        return None
+
+    type_document = type_document or request.POST.get("type_document") or DocumentAssurance.Type.POLICE
+    return DocumentAssurance.objects.create(
+        assurance=assurance, fichier=fichier, nom=fichier.name[:255],
+        type_document=(type_document if type_document in DocumentAssurance.Type.values
+                       else DocumentAssurance.Type.AUTRE))
+
+
+@login_required
+@require_POST
+def assurance_document(request, pk):
+    """Ajoute une pièce au dossier d'une police déjà enregistrée."""
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    assurance = get_object_or_404(Assurance, pk=pk, exploitation=exploitation)
+    fichier = request.FILES.get("document")
+    if fichier:
+        _archiver_document(assurance, request, fichier)
+    return redirect("contrat:assurances")
+
+
+@login_required
+@require_POST
+def assurance_document_delete(request, pk):
+    from .models import DocumentAssurance
+
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    get_object_or_404(DocumentAssurance, pk=pk,
+                      assurance__exploitation=exploitation).delete()
+    return redirect("contrat:assurances")
+
+
+@login_required
+@require_POST
+def assurance_scanner(request):
+    """Lit une police déposée et renvoie les champs, sans rien enregistrer.
+
+    L'exploitant relit et corrige avant de valider : une franchise mal recopiée
+    se découvre le jour du sinistre.
+    """
+    from django.http import JsonResponse
+
+    from . import assurance_ocr
+
+    fichier = request.FILES.get("document")
+    if not fichier:
+        return JsonResponse({"error": _("Aucun document reçu.")}, status=400)
+
+    import os
+
+    if os.path.splitext(fichier.name)[1].lower() not in EXTENSIONS_DOC:
+        return JsonResponse({"error": _("Format non lisible : PDF ou photo.")}, status=400)
+    if fichier.size > TAILLE_MAX_DOC:
+        return JsonResponse({"error": _("Le document ne doit pas dépasser 10 Mo.")}, status=400)
+
+    champs = assurance_ocr.lire(fichier.read(), fichier.name)
+    if champs is None:
+        return JsonResponse(
+            {"error": _("Lecture impossible : Agent IA non configuré, ou document illisible.")},
+            status=503)
+    return JsonResponse({"champs": champs})
 
 
 @login_required
