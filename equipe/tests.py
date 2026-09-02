@@ -533,3 +533,17 @@ def test_la_vitrine_reste_une_vitrine_meme_connecte(client, ferme_rh, offre_publ
     ferme = client.get(f"/emplois/{offre_publiee.slug}/")
     assert ferme.status_code == 410
     assert "Tableau de bord" not in ferme.content.decode()
+
+
+@pytest.mark.django_db
+def test_les_champs_redactionnels_offrent_la_reformulation_ia(client, ferme_rh):
+    """Intitulé, description et profil : les trois champs qu'on rédige."""
+    patron, _exploitation, _membre = ferme_rh
+    client.force_login(patron)
+    html = client.get("/offres-emploi/").content.decode()
+
+    for cible in ("o-titre", "o-desc", "o-profil"):
+        assert f"hsRewrite(this, '{cible}'" in html
+    assert html.count("/assistant/reformuler/") == 3
+    # Le bouton reste inactif tant que le champ est vide.
+    assert ":disabled=\"!(offre.titre || '').trim()\"" in html

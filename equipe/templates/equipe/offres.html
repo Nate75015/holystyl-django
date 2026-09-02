@@ -31,6 +31,9 @@
         <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-titre">{% trans "Intitulé du poste" %} <span style="color: var(--danger)">*</span></label>
         <input id="o-titre" name="titre" required x-model="offre.titre" class="w-full"
                placeholder="{% trans 'ex : ouvrier arboricole pour la récolte' %}">
+        <div class="mt-1.5">
+          {% include "partials/_ai_rewrite.html" with target="o-titre" contexte=_("Intitulé d'une offre d'emploi agricole") x_disabled="!(offre.titre || '').trim()" %}
+        </div>
       </div>
       <div>
         <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-type">{% trans "Type de contrat" %}</label>
@@ -62,10 +65,16 @@
       <div class="sm:col-span-2">
         <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-desc">{% trans "Description du poste" %} <span style="color: var(--danger)">*</span></label>
         <textarea id="o-desc" name="description" rows="5" required x-model="offre.description" class="w-full"></textarea>
+        <div class="mt-1.5">
+          {% include "partials/_ai_rewrite.html" with target="o-desc" contexte=_("Description du poste dans une offre d'emploi agricole") x_disabled="!(offre.description || '').trim()" %}
+        </div>
       </div>
       <div class="sm:col-span-2">
         <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-profil">{% trans "Profil recherché" %}</label>
         <textarea id="o-profil" name="profil" rows="3" x-model="offre.profil" class="w-full"></textarea>
+        <div class="mt-1.5">
+          {% include "partials/_ai_rewrite.html" with target="o-profil" contexte=_("Profil recherché dans une offre d'emploi agricole") x_disabled="!(offre.profil || '').trim()" %}
+        </div>
       </div>
       <div>
         <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-contact">{% trans "Email de contact" %}</label>
