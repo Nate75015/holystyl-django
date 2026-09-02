@@ -382,3 +382,88 @@ def test_le_materiel_en_propre_ne_traverse_pas(client, deux_fermes_une_cuma):
     html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
     assert "Claas Lexion" in html          # le matériel de la CUMA, oui
     assert "Fendt en propre" not in html   # le reste de la ferme A, non
+
+
+# ── Chevauchements : un engin ne se prend pas deux fois ──────────────
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("debut,fin,attendu", [
+    ("2026-06-26", "2026-06-27", True),   # commence pendant
+    ("2026-06-22", "2026-06-25", True),   # finit pendant
+    ("2026-06-20", "2026-06-30", True),   # englobe
+    ("2026-06-25", "2026-06-26", True),   # à l'intérieur
+    ("2026-06-24", "2026-06-24", True),   # accolée au premier jour
+    ("2026-06-28", "2026-06-28", True),   # accolée au dernier jour
+    ("2026-06-29", "2026-06-30", False),  # juste après
+    ("2026-06-22", "2026-06-23", False),  # juste avant
+])
+def test_un_engin_deja_pris_est_refuse(client, setup, parc, debut, fin, attendu):
+    """Une réservation du 24 au 28 : tout ce qui la touche est refusé."""
+    from operations.models import AffectationEngin
+
+    user, exploitation = setup
+    _e, machine = parc
+    client.force_login(user)
+    AffectationEngin.objects.create(
+        exploitation=exploitation, machine=machine, operation="recolte",
+        date_debut="2026-06-24T00:00:00Z", date_fin="2026-06-28T00:00:00Z")
+
+    client.post("/planning/reservations/nouvelle/", {
+        "machine": str(machine.pk), "start": debut, "end": fin, "vue": "semaine"})
+    refusee = AffectationEngin.objects.count() == 1
+    assert refusee is attendu
+
+
+@pytest.mark.django_db
+def test_le_refus_dit_qui_occupe_l_engin(client, setup, parc):
+    from operations.models import AffectationEngin
+
+    user, exploitation = setup
+    _e, machine = parc
+    client.force_login(user)
+    AffectationEngin.objects.create(
+        exploitation=exploitation, machine=machine, operation="recolte",
+        date_debut="2026-06-24T00:00:00Z", date_fin="2026-06-28T00:00:00Z")
+
+    resp = client.post("/planning/reservations/nouvelle/", {
+        "machine": str(machine.pk), "start": "2026-06-25", "vue": "semaine"}, follow=True)
+    messages = [str(m) for m in resp.context["messages"]]
+    assert any("Fendt 313" in m and "Récolte" in m for m in messages)
+
+
+@pytest.mark.django_db
+def test_deplacer_une_reservation_ne_la_heurte_pas_elle_meme(client, setup, parc):
+    """Elle s'exclut du calcul, sinon on ne pourrait jamais la décaler."""
+    from operations.models import AffectationEngin
+
+    user, exploitation = setup
+    _e, machine = parc
+    client.force_login(user)
+    r = AffectationEngin.objects.create(
+        exploitation=exploitation, machine=machine, operation="recolte",
+        date_debut="2026-06-24T00:00:00Z", date_fin="2026-06-28T00:00:00Z")
+
+    assert client.post(f"/planning/reservations/{r.pk}/modifier/", {
+        "machine": str(machine.pk), "operation": "recolte",
+        "start": "2026-06-25", "end": "2026-06-29", "vue": "semaine"}).status_code == 302
+    r.refresh_from_db()
+    assert str(timezone.localdate(r.date_fin)) == "2026-06-29"
+
+
+@pytest.mark.django_db
+def test_deux_engins_differents_ne_se_gênent_pas(client, setup, parc):
+    from operations.models import AffectationEngin, Machine
+
+    user, exploitation = setup
+    _e, machine = parc
+    autre = Machine.objects.create(
+        exploitation=exploitation, name="Claas Lexion", type="moissonneuse_batteuse")
+    client.force_login(user)
+    AffectationEngin.objects.create(
+        exploitation=exploitation, machine=machine, operation="recolte",
+        date_debut="2026-06-24T00:00:00Z", date_fin="2026-06-28T00:00:00Z")
+
+    client.post("/planning/reservations/nouvelle/", {
+        "machine": str(autre.pk), "start": "2026-06-25", "end": "2026-06-26", "vue": "semaine"})
+    assert AffectationEngin.objects.count() == 2

@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import formats, timezone
 from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
@@ -642,17 +642,54 @@ def _reservation_fields(request, exploitation):
     }
 
 
+def _conflit(machine, debut, fin, exclure_pk=None):
+    """La réservation qui occupe déjà cet engin sur la période, s'il en est une.
+
+    Deux réservations se chevauchent dès que l'une commence avant que l'autre
+    ne s'achève. Seule la ferme propriétaire réserve un engin donné — les
+    autres membres de la CUMA le voient sans pouvoir le prendre — si bien que
+    le conflit se cherche sur la machine, sans croiser les exploitations.
+    """
+    lot = (AffectationEngin.objects
+           .filter(machine=machine)
+           .annotate(d_end=Coalesce("date_fin", "date_debut")))
+    if exclure_pk is not None:
+        lot = lot.exclude(pk=exclure_pk)
+    return (lot.filter(date_debut__date__lte=timezone.localdate(fin),
+                       d_end__date__gte=timezone.localdate(debut))
+               .order_by("date_debut").first())
+
+
+def _dire_le_conflit(conflit):
+    """Dire quand l'engin est déjà pris, et pour quoi faire."""
+    debut, fin = conflit.periode
+    d0, d1 = timezone.localdate(debut), timezone.localdate(fin)
+    quand = (formats.date_format(d0, "SHORT_DATE_FORMAT") if d0 == d1 else
+             _("du %(d0)s au %(d1)s") % {
+                 "d0": formats.date_format(d0, "SHORT_DATE_FORMAT"),
+                 "d1": formats.date_format(d1, "SHORT_DATE_FORMAT")})
+    return _("« %(engin)s » est déjà réservé %(quand)s (%(operation)s).") % {
+        "engin": conflit.machine, "quand": quand,
+        "operation": conflit.get_operation_display()}
+
+
 @login_required
 @require_POST
 def reservation_create(request):
     _refuser_si_non_rattache(request)
     exploitation = _exploitation(request)
     champs = _reservation_fields(request, exploitation) if exploitation else None
-    if champs:
-        AffectationEngin.objects.create(
-            exploitation=exploitation, created_by=request.user, **champs)
-    else:
+    if not champs:
         messages.error(request, _("Réservation impossible : choisissez un matériel et une date."))
+        return redirect(_planning_url(request))
+
+    conflit = _conflit(champs["machine"], champs["date_debut"], champs["date_fin"])
+    if conflit:
+        messages.error(request, _dire_le_conflit(conflit))
+        return redirect(_planning_url(request))
+
+    AffectationEngin.objects.create(
+        exploitation=exploitation, created_by=request.user, **champs)
     return redirect(_planning_url(request))
 
 
@@ -663,10 +700,21 @@ def reservation_edit(request, pk):
     exploitation = _exploitation(request)
     reservation = get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation)
     champs = _reservation_fields(request, exploitation)
-    if champs:
-        for champ, valeur in champs.items():
-            setattr(reservation, champ, valeur)
-        reservation.save()
+    if not champs:
+        messages.error(request, _("Réservation impossible : choisissez un matériel et une date."))
+        return redirect(_planning_url(request))
+
+    # On s'exclut du calcul : déplacer une réservation ne doit pas la voir
+    # entrer en conflit avec elle-même.
+    conflit = _conflit(champs["machine"], champs["date_debut"], champs["date_fin"],
+                       exclure_pk=reservation.pk)
+    if conflit:
+        messages.error(request, _dire_le_conflit(conflit))
+        return redirect(_planning_url(request))
+
+    for champ, valeur in champs.items():
+        setattr(reservation, champ, valeur)
+    reservation.save()
     return redirect(_planning_url(request))
 
 

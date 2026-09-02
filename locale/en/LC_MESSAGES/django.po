@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 21:32+0200\n"
+"POT-Creation-Date: 2026-09-02 21:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15233,7 +15233,7 @@ msgstr "High priority"
 msgid "réservé par"
 msgstr "Available Water"
 
-#: planning/templates/planning/bon_intervention.html:7 planning/views.py:723
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:771
 msgid "Bon d'intervention"
 msgstr "Work order"
 
@@ -15462,11 +15462,21 @@ msgstr "Its subtasks will be deleted too:"
 msgid "Vous n'êtes rattaché à aucune exploitation."
 msgstr ""
 
-#: planning/views.py:655
+#: planning/views.py:668
+#, python-format
+msgid "du %(d0)s au %(d1)s"
+msgstr ""
+
+#: planning/views.py:671
+#, python-format
+msgid "« %(engin)s » est déjà réservé %(quand)s (%(operation)s)."
+msgstr ""
+
+#: planning/views.py:683 planning/views.py:704
 msgid "Réservation impossible : choisissez un matériel et une date."
 msgstr ""
 
-#: planning/views.py:717
+#: planning/views.py:765
 msgid "Bon d'intervention enregistré."
 msgstr "Work order saved."
 
