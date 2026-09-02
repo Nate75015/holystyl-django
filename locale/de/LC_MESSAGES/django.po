@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 20:30+0200\n"
+"POT-Creation-Date: 2026-09-02 20:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1104,7 +1104,7 @@ msgstr "Ihre Teilaufgaben werden ebenfalls gelöscht:"
 #: irrigation/templates/irrigation/irrigation.html:192
 #: irrigation/templates/irrigation/irrigation.html:259
 #: irrigation/templates/irrigation/irrigation.html:317
-#: mail/templates/mail/compose.html:76
+#: mail/templates/mail/compose.html:80
 #: messagerie/templates/messagerie/_new_modal.html:57
 #: messagerie/templates/messagerie/detail.html:88
 #: messagerie/templates/messagerie/new.html:36
@@ -10656,7 +10656,7 @@ msgstr "Enter zum Senden · Umschalt+Enter für Zeilenumbruch"
 msgid "Dictée vocale"
 msgstr "Sprachdiktat"
 
-#: ia/templates/ia/assistant.html:124 mail/templates/mail/compose.html:69
+#: ia/templates/ia/assistant.html:124 mail/templates/mail/compose.html:71
 #: messagerie/templates/messagerie/_new_modal.html:58
 msgid "Envoyer"
 msgstr "Senden"
@@ -12487,26 +12487,30 @@ msgstr "Cc"
 msgid "Copie (Cc)"
 msgstr "Niederschlag (mm)"
 
-#: mail/templates/mail/compose.html:56
+#: mail/templates/mail/compose.html:57
 #, fuzzy
 #| msgid "Écrivez votre message…"
 msgid "Rédigez votre message…"
 msgstr "Schreiben Sie Ihre Nachricht…"
 
-#: mail/templates/mail/compose.html:57
+#: mail/templates/mail/compose.html:58
 #: messagerie/templates/messagerie/_new_modal.html:52
 msgid "Message"
 msgstr "Nachricht"
 
-#: mail/templates/mail/compose.html:63
+#: mail/templates/mail/compose.html:65
 #, fuzzy
 #| msgid "pièces jointes"
 msgid "fichier(s) joint(s)"
 msgstr "Anhänge"
 
-#: mail/templates/mail/compose.html:72
+#: mail/templates/mail/compose.html:74
 msgid "Joindre des fichiers"
 msgstr "Dateien anhängen"
+
+#: mail/templates/mail/compose.html:79
+msgid "Corps d'un e-mail professionnel agricole"
+msgstr ""
 
 #: mail/templates/mail/connect.html:16
 msgid "Connectez votre boîte mail"
