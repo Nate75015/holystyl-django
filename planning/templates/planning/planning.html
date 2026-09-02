@@ -197,11 +197,12 @@
             {% for row in machine_rows %}
               <div class="relative grid" style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr)); min-height: {{ row.height }}px; border-bottom: 0.5px solid var(--border);">
                 <div class="flex items-center gap-2 border-r px-3 py-4" style="border-color: var(--border)">
-                  <span class="material-icons-round shrink-0 text-[18px]" style="color: var(--text-muted)">agriculture</span>
+                  <span class="material-icons-round shrink-0 text-[18px]" style="color: var(--text-muted)">{% if row.partagee %}group{% else %}agriculture{% endif %}</span>
                   <span class="min-w-0 truncate text-sm font-medium">{{ row.machine.name }}</span>
+                  {% if row.partagee %}<span class="shrink-0 text-[11px]" style="color: var(--text-muted)">{% trans "CUMA" %}</span>{% endif %}
                 </div>
                 {% for cell in row.cells %}
-                  <div {% if peut_ecrire %}@click="openReservation('{{ cell.date|date:"Y-m-d" }}', {{ row.machine.pk }})"{% endif %}
+                  <div {% if peut_ecrire and not row.partagee %}@click="openReservation('{{ cell.date|date:"Y-m-d" }}', {{ row.machine.pk }})"{% endif %}
                        title="{% trans 'Réserver ce matériel' %}"
                        class="cursor-pointer transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}"></div>
                 {% endfor %}

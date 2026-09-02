@@ -1,14 +1,14 @@
 {% load i18n %}
 {# Réservation : même géométrie qu'une tâche, teinte neutre et bord pointillé. #}
-<div {% if peut_ecrire %}@click.stop="openEditReservation({{ b.payload }})"{% endif %}
-     title="{{ b.item.machine }} · {{ b.item.get_operation_display }}{% if b.item.parcelle %} · {{ b.item.parcelle.name }}{% endif %}"
-     class="pointer-events-auto flex cursor-pointer items-center gap-1 overflow-hidden border-l-[3px] border-dashed px-1.5 text-[11px] leading-none transition hover:brightness-95
+<div {% if peut_ecrire and not b.partagee %}@click.stop="openEditReservation({{ b.payload }})"{% endif %}
+     title="{{ b.item.machine }} · {{ b.item.get_operation_display }}{% if b.item.parcelle %} · {{ b.item.parcelle.name }}{% endif %}{% if b.partagee %} · {% trans "réservé par" %} {{ b.item.exploitation.name }}{% endif %}"
+     class="pointer-events-auto flex items-center {% if b.partagee %}cursor-default opacity-80{% else %}cursor-pointer{% endif %} gap-1 overflow-hidden border-l-[3px] border-dashed px-1.5 text-[11px] leading-none transition hover:brightness-95
             {% if b.opens %}rounded-l-md{% else %}border-l-0 pl-1{% endif %} {% if b.closes %}rounded-r-md{% endif %}"
      style="grid-column: {{ b.col|add:1 }} / span {{ b.span }}; grid-row: {{ b.lane|add:1 }};
             border-color: {{ b.color }}; background: color-mix(in srgb, {{ b.color }} 14%, transparent); color: var(--text);">
   {% if not b.opens %}<span class="material-icons-round shrink-0 text-[12px]" style="color: {{ b.color }}">chevron_left</span>{% endif %}
-  <span class="material-icons-round shrink-0 text-[12px]" style="color: {{ b.color }}">agriculture</span>
+  <span class="material-icons-round shrink-0 text-[12px]" style="color: {{ b.color }}">{% if b.partagee %}group{% else %}agriculture{% endif %}</span>
   <span class="truncate">{{ b.item.machine }}</span>
-  <span class="truncate opacity-70">· {{ b.item.get_operation_display }}</span>
+  <span class="truncate opacity-70">· {% if b.partagee %}{{ b.item.exploitation.name }}{% else %}{{ b.item.get_operation_display }}{% endif %}</span>
   {% if not b.closes %}<span class="material-icons-round ml-auto shrink-0 text-[12px]" style="color: {{ b.color }}">chevron_right</span>{% endif %}
 </div>

@@ -16,6 +16,7 @@ from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from client.models import Partenaire
 from equipe.models import Task, TeamMember
 from operations.models import AffectationEngin, Machine
 from exploitations.models import Exploitation
@@ -58,22 +59,17 @@ def _exploitation(request):
     return getattr(request, "exploitation", None)
 
 
-def _refuser_si_non_proprietaire(request):
-    """Coupe court sur une écriture tentée par un salarié."""
-    if not _est_proprietaire(request):
-        raise PermissionDenied(_("Seul le chef d'exploitation modifie le planning."))
+def _refuser_si_non_rattache(request):
+    """Le planning est celui de la ferme : il faut y être rattaché.
 
-
-def _est_proprietaire(request):
-    """Seul le chef d'exploitation écrit dans le planning.
-
-    La lecture s'ouvre à l'équipe, pas l'écriture : `PlanningAccess` porte
-    déjà `can_view_planning` et `can_create_tasks`, mais n'est encore consulté
-    nulle part. Tant que ces droits ne sont pas branchés, on s'en tient au
-    comportement d'avant plutôt que d'ouvrir la création à tout le monde.
+    Lecture et écriture vont ensemble, quel que soit le rôle. Une tâche
+    assignée se modifie donc par celui qui la pose comme par celui qui la
+    fait — c'est le propre d'un agenda d'équipe. Le seul refus porte sur qui
+    n'appartient à aucune exploitation ; les espaces extérieurs, eux, sont
+    déjà tenus à l'écart par `CurrentExploitationMiddleware`.
     """
-    exploitation = _exploitation(request)
-    return bool(exploitation) and exploitation.owner_id == request.user.id
+    if _exploitation(request) is None:
+        raise PermissionDenied(_("Vous n'êtes rattaché à aucune exploitation."))
 
 
 def _tasks_in_range(exploitation, members, start, end):
@@ -94,6 +90,50 @@ def _tasks_in_range(exploitation, members, start, end):
     )
 
 
+def _siret_normalise(valeur):
+    """Un SIRET réduit à ses chiffres : la saisie l'espace diversement."""
+    return "".join(c for c in (valeur or "") if c.isdigit())
+
+
+def _sirets_cuma(exploitation):
+    """Les SIRET des CUMA où la ferme adhère.
+
+    C'est le seul lien dont on dispose entre exploitations : une CUMA n'existe
+    qu'en fiche partenaire, une par ferme. Deux fermes ayant enregistré le même
+    SIRET sont tenues pour co-adhérentes.
+    """
+    if not exploitation:
+        return set()
+    bruts = (Partenaire.objects
+             .filter(exploitation=exploitation, type_partenaire=Partenaire.Type.CUMA)
+             .exclude(siret="").values_list("siret", flat=True))
+    return {s for s in (_siret_normalise(x) for x in bruts) if s}
+
+
+def _reservations_partagees(exploitation, start, end):
+    """Les réservations des fermes co-adhérentes, sur du matériel de la CUMA.
+
+    Elles ne franchissent la frontière entre exploitations qu'à trois
+    conditions : l'engin est détenu en CUMA, cette CUMA est l'une des nôtres,
+    et la ferme n'est pas la nôtre. Rien d'autre ne traverse.
+    """
+    sirets = _sirets_cuma(exploitation)
+    if not sirets:
+        return []
+    lot = (AffectationEngin.objects
+           .exclude(exploitation=exploitation)
+           .filter(machine__detention=Machine.Detention.CUMA,
+                   machine__proprietaire__isnull=False)
+           .exclude(machine__proprietaire__siret="")
+           .annotate(d_end=Coalesce("date_fin", "date_debut"))
+           .filter(date_debut__date__lte=end, d_end__date__gte=start)
+           .select_related("machine", "machine__proprietaire", "exploitation")
+           .order_by("date_debut", "id"))
+    # L'appariement final se fait en Python : la base garde les SIRET tels que
+    # saisis, avec leurs espaces, et on les compare normalisés.
+    return [r for r in lot if _siret_normalise(r.machine.proprietaire.siret) in sirets]
+
+
 def _reservations_in_range(exploitation, start, end):
     """Réservations de matériel chevauchant la fenêtre [start, end].
 
@@ -107,7 +147,7 @@ def _reservations_in_range(exploitation, start, end):
         .filter(date_debut__date__lte=end, d_end__date__gte=start)
         .select_related("machine", "parcelle")
         .order_by("date_debut", "id")
-    )
+    ) + _reservations_partagees(exploitation, start, end)
 
 
 def _reservation_payload(reservation):
@@ -167,9 +207,20 @@ def _decor_tache(colors):
     return decor
 
 
-def _decor_reservation(r):
-    """Idem pour une réservation de matériel, qui n'a pas de membre assigné."""
-    return {"color": RESERVATION_COLOR, "payload": _reservation_payload(r), "kind": "reservation"}
+def _decor_reservation(exploitation_id):
+    """Idem pour une réservation, qui n'a pas de membre assigné.
+
+    Celle d'une ferme co-adhérente est marquée « partagée » : l'agenda la
+    montre pour qu'on sache l'engin pris, mais ne l'ouvre pas à la modification.
+    """
+    def decor(r):
+        return {
+            "color": RESERVATION_COLOR,
+            "payload": _reservation_payload(r),
+            "kind": "reservation",
+            "partagee": r.exploitation_id != exploitation_id,
+        }
+    return decor
 
 
 def _bars(items, days, colors=None, max_lanes=None, decor=None):
@@ -294,7 +345,8 @@ def planning(request):
         month_reservations = _reservations_in_range(exploitation, weeks[0][0], weeks[-1][-1])
         # Un même calcul de lignes pour les deux : elles ne se chevauchent pas.
         decor_tache = _decor_tache(member_color)
-        decor_mixte = lambda o: (_decor_reservation(o) if isinstance(o, AffectationEngin)
+        decor_res = _decor_reservation(exploitation.pk if exploitation else None)
+        decor_mixte = lambda o: (decor_res(o) if isinstance(o, AffectationEngin)
                                  else decor_tache(o))
         ctx.update(
             month_weeks=[
@@ -394,10 +446,13 @@ def planning(request):
             par_machine[r.machine_id].append(r)
         lignes_machines = []
         for lot in par_machine.values():
-            layout = _bars(lot, days, decor=_decor_reservation)
+            layout = _bars(lot, days,
+                           decor=_decor_reservation(exploitation.pk if exploitation else None))
             lignes_machines.append(
                 {
                     "machine": lot[0].machine,
+                    # Une ligne entière peut appartenir à une ferme co-adhérente.
+                    "partagee": lot[0].machine.exploitation_id != (exploitation.pk if exploitation else None),
                     "cells": [{"date": d} for d in days],
                     "height": max(72, 18 + layout["lanes"] * 28),
                     **layout,
@@ -426,9 +481,8 @@ def planning(request):
         ],
     }
     ctx["parcelles_mappables"] = sum(1 for p in parcelles if p.boundaries)
-    # L'équipe lit le planning ; seul le chef d'exploitation y écrit. Le gabarit
-    # n'affiche donc ni les clics de création ni les modales pour les autres.
-    ctx["peut_ecrire"] = _est_proprietaire(request)
+    # Toute personne rattachée à la ferme lit et écrit : l'agenda est commun.
+    ctx["peut_ecrire"] = exploitation is not None
     ctx["machines"] = (list(Machine.objects.filter(exploitation=exploitation))
                        if exploitation else [])
     ctx["operations"] = AffectationEngin.Operation.choices
@@ -527,7 +581,7 @@ def _save_task(task, request, exploitation):
 @login_required
 @require_POST
 def task_create(request):
-    _refuser_si_non_proprietaire(request)
+    _refuser_si_non_rattache(request)
     exploitation = _exploitation(request)
     _save_task(Task(exploitation=exploitation, created_by=request.user), request, exploitation)
     return redirect(_planning_url(request))
@@ -536,7 +590,7 @@ def task_create(request):
 @login_required
 @require_POST
 def task_edit(request, pk):
-    _refuser_si_non_proprietaire(request)
+    _refuser_si_non_rattache(request)
     exploitation = _exploitation(request)
     task = get_object_or_404(Task, pk=pk, exploitation=exploitation)
     _save_task(task, request, exploitation)
@@ -546,7 +600,7 @@ def task_edit(request, pk):
 @login_required
 @require_POST
 def task_delete(request, pk):
-    _refuser_si_non_proprietaire(request)
+    _refuser_si_non_rattache(request)
     exploitation = _exploitation(request)
     get_object_or_404(Task, pk=pk, exploitation=exploitation).delete()
     return redirect(_planning_url(request))
@@ -591,7 +645,7 @@ def _reservation_fields(request, exploitation):
 @login_required
 @require_POST
 def reservation_create(request):
-    _refuser_si_non_proprietaire(request)
+    _refuser_si_non_rattache(request)
     exploitation = _exploitation(request)
     champs = _reservation_fields(request, exploitation) if exploitation else None
     if champs:
@@ -605,7 +659,7 @@ def reservation_create(request):
 @login_required
 @require_POST
 def reservation_edit(request, pk):
-    _refuser_si_non_proprietaire(request)
+    _refuser_si_non_rattache(request)
     exploitation = _exploitation(request)
     reservation = get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation)
     champs = _reservation_fields(request, exploitation)
@@ -619,7 +673,7 @@ def reservation_edit(request, pk):
 @login_required
 @require_POST
 def reservation_delete(request, pk):
-    _refuser_si_non_proprietaire(request)
+    _refuser_si_non_rattache(request)
     exploitation = _exploitation(request)
     get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation).delete()
     return redirect(_planning_url(request))

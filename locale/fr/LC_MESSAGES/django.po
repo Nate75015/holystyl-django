@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 21:21+0200\n"
+"POT-Creation-Date: 2026-09-02 21:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -797,9 +797,9 @@ msgstr ""
 #: parcelles/templates/parcelles/detail.html:75
 #: petition/templates/petition/detail.html:95
 #: petition/templates/petition/detail.html:106
-#: planning/templates/planning/planning.html:313
-#: planning/templates/planning/planning.html:528
-#: planning/templates/planning/planning.html:555
+#: planning/templates/planning/planning.html:314
+#: planning/templates/planning/planning.html:529
+#: planning/templates/planning/planning.html:556
 #: stock/templates/stock/articles.html:90 stock/templates/stock/depots.html:64
 #: vente/templates/vente/produits.html:99
 msgid "Supprimer"
@@ -945,7 +945,7 @@ msgstr ""
 #: exploitations/templates/exploitations/societes.html:13
 #: mail/templates/mail/compose.html:19
 #: operations/templates/operations/parc_materiel.html:42
-#: planning/templates/planning/planning.html:323
+#: planning/templates/planning/planning.html:324
 msgid "Fermer"
 msgstr ""
 
@@ -1030,10 +1030,10 @@ msgstr ""
 #: petition/templates/petition/create.html:68
 #: petition/templates/petition/detail.html:105
 #: petition/templates/petition/edit.html:68
-#: planning/templates/planning/planning.html:255
-#: planning/templates/planning/planning.html:314
-#: planning/templates/planning/planning.html:531
-#: planning/templates/planning/planning.html:554
+#: planning/templates/planning/planning.html:256
+#: planning/templates/planning/planning.html:315
+#: planning/templates/planning/planning.html:532
+#: planning/templates/planning/planning.html:555
 #: reseaux/templates/reseaux/reseaux.html:81
 #: stock/templates/stock/_article_modal.html:81
 #: stock/templates/stock/_depot_modal.html:48
@@ -1079,7 +1079,7 @@ msgstr ""
 #: agronomie/templates/agronomie/cultures.html:314
 #: agronomie/templates/agronomie/cultures.html:315 equipe/forms.py:79
 #: parcelles/templates/parcelles/detail.html:172
-#: planning/templates/planning/planning.html:387
+#: planning/templates/planning/planning.html:388
 msgid "Début"
 msgstr ""
 
@@ -1091,7 +1091,7 @@ msgstr ""
 #: agronomie/templates/agronomie/cultures.html:314
 #: agronomie/templates/agronomie/cultures.html:315
 #: parcelles/templates/parcelles/detail.html:173 planning/models.py:130
-#: planning/templates/planning/planning.html:392
+#: planning/templates/planning/planning.html:393
 msgid "Fin"
 msgstr ""
 
@@ -1124,7 +1124,7 @@ msgstr ""
 #: interventions/templates/interventions/interventions.html:146
 #: irrigation/templates/irrigation/bassinage.html:264
 #: operations/templates/operations/parc_materiel.html:144
-#: planning/templates/planning/planning.html:305
+#: planning/templates/planning/planning.html:306
 #: stock/templates/stock/_article_modal.html:77
 #: stock/templates/stock/_depot_modal.html:44
 #: stock/templates/stock/_mouvement_modal.html:56
@@ -1166,8 +1166,8 @@ msgstr ""
 #: parcelles/templates/parcelles/form.html:137
 #: parcelles/templates/parcelles/list.html:97
 #: petition/templates/petition/edit.html:69
-#: planning/templates/planning/planning.html:315
-#: planning/templates/planning/planning.html:532
+#: planning/templates/planning/planning.html:316
+#: planning/templates/planning/planning.html:533
 #: stock/templates/stock/_article_modal.html:82
 #: stock/templates/stock/_depot_modal.html:49
 #: stock/templates/stock/_mouvement_modal.html:61
@@ -1223,7 +1223,7 @@ msgstr ""
 #: finances/templates/finances/charges.html:220
 #: petition/templates/petition/create.html:46
 #: petition/templates/petition/edit.html:46
-#: planning/templates/planning/planning.html:518
+#: planning/templates/planning/planning.html:519
 #: vente/templates/vente/_produit_modal.html:81
 msgid "Description"
 msgstr ""
@@ -1400,7 +1400,7 @@ msgstr ""
 #: parcelles/templates/parcelles/campagnes.html:46
 #: parcelles/templates/parcelles/list.html:110
 #: parcelles/templates/parcelles/list.html:157
-#: planning/templates/planning/planning.html:298
+#: planning/templates/planning/planning.html:299
 #: stock/templates/stock/mouvements.html:45
 #: stock/templates/stock/recoltes.html:45
 msgid "Parcelle"
@@ -2524,7 +2524,7 @@ msgstr ""
 #: irrigation/templates/irrigation/bassinage.html:212
 #: irrigation/templates/irrigation/bassinage.html:257
 #: pac/templates/pac/pac.html:50 pac/templates/pac/pac.html:127
-#: planning/templates/planning/planning.html:416
+#: planning/templates/planning/planning.html:417
 #: vente/templates/vente/commandes.html:40
 #: vente/templates/vente/produits.html:63
 msgid "Statut"
@@ -3091,6 +3091,7 @@ msgid "Avocat"
 msgstr ""
 
 #: client/models.py:131 client/views.py:208 core/context_processors.py:166
+#: planning/templates/planning/planning.html:202
 msgid "CUMA"
 msgstr ""
 
@@ -3690,7 +3691,7 @@ msgstr ""
 
 #: contrat/models.py:149 finances/models.py:21 ia/models.py:35
 #: planning/templates/planning/planning.html:193
-#: planning/templates/planning/planning.html:277
+#: planning/templates/planning/planning.html:278
 msgid "Matériel"
 msgstr ""
 
@@ -4553,7 +4554,7 @@ msgstr ""
 #: parcelles/templates/parcelles/form.html:11
 #: parcelles/templates/parcelles/list.html:12
 #: parcelles/templates/parcelles/list.html:48
-#: planning/templates/planning/planning.html:429
+#: planning/templates/planning/planning.html:430
 msgid "Parcelles"
 msgstr ""
 
@@ -4570,7 +4571,7 @@ msgid "Irrigation"
 msgstr ""
 
 #: core/context_processors.py:40 core/context_processors.py:117
-#: planning/templates/planning/planning.html:18 planning/views.py:265
+#: planning/templates/planning/planning.html:18 planning/views.py:316
 msgid "Planning"
 msgstr ""
 
@@ -6146,7 +6147,7 @@ msgstr ""
 #: equipe/templates/equipe/equipe.html:110
 #: equipe/templates/equipe/taches.html:137
 #: irrigation/templates/irrigation/bassinage.html:280
-#: planning/templates/planning/planning.html:548
+#: planning/templates/planning/planning.html:549
 msgid "cette action est irréversible."
 msgstr ""
 
@@ -6350,7 +6351,7 @@ msgstr ""
 
 #: equipe/forms.py:75 petition/templates/petition/create.html:32
 #: petition/templates/petition/edit.html:32
-#: planning/templates/planning/planning.html:371
+#: planning/templates/planning/planning.html:372
 msgid "Titre"
 msgstr ""
 
@@ -6359,7 +6360,7 @@ msgid "Assignée à"
 msgstr ""
 
 #: equipe/forms.py:77 equipe/templates/equipe/taches.html:172
-#: planning/templates/planning/planning.html:401
+#: planning/templates/planning/planning.html:402
 msgid "Priorité"
 msgstr ""
 
@@ -6548,7 +6549,7 @@ msgstr ""
 #: petition/templates/petition/create.html:12
 #: petition/templates/petition/detail.html:10
 #: petition/templates/petition/edit.html:12
-#: planning/templates/planning/planning.html:340
+#: planning/templates/planning/planning.html:341
 msgid "Retour"
 msgstr ""
 
@@ -6601,7 +6602,7 @@ msgstr ""
 #: equipe/templates/equipe/equipe.html:12
 #: equipe/templates/equipe/equipe.html:18
 #: equipe/templates/equipe/equipe.html:73
-#: planning/templates/planning/planning.html:221
+#: planning/templates/planning/planning.html:222
 msgid "Ajouter un membre"
 msgstr ""
 
@@ -6717,32 +6718,32 @@ msgstr ""
 
 #: equipe/templates/equipe/taches.html:115
 #: interventions/templates/interventions/interventions.html:103
-#: planning/templates/planning/planning.html:379
+#: planning/templates/planning/planning.html:380
 msgid "Assigné à"
 msgstr ""
 
 #: equipe/templates/equipe/taches.html:136
-#: planning/templates/planning/planning.html:547
+#: planning/templates/planning/planning.html:548
 msgid "Supprimer cette tâche ?"
 msgstr ""
 
 #: equipe/templates/equipe/taches.html:152
-#: planning/templates/planning/planning.html:353
+#: planning/templates/planning/planning.html:354
 msgid "Modifier la tâche"
 msgstr ""
 
 #: equipe/templates/equipe/taches.html:152
-#: planning/templates/planning/planning.html:353
+#: planning/templates/planning/planning.html:354
 msgid "Nouvelle tâche"
 msgstr ""
 
 #: equipe/templates/equipe/taches.html:163
-#: planning/templates/planning/planning.html:372
+#: planning/templates/planning/planning.html:373
 msgid "Titre d'une tâche de planning agricole"
 msgstr ""
 
 #: equipe/templates/equipe/taches.html:198
-#: planning/templates/planning/planning.html:519
+#: planning/templates/planning/planning.html:520
 msgid "Description d'une tâche de planning agricole"
 msgstr ""
 
@@ -10528,7 +10529,7 @@ msgstr ""
 #: petition/templates/petition/create.html:60
 #: petition/templates/petition/edit.html:46
 #: petition/templates/petition/edit.html:60
-#: planning/templates/planning/planning.html:298
+#: planning/templates/planning/planning.html:299
 msgid "optionnel"
 msgstr ""
 
@@ -11377,7 +11378,7 @@ msgid "Masquer le lieu de l’exploitation"
 msgstr ""
 
 #: meteo/templates/meteo/index.html:40
-#: planning/templates/planning/planning.html:501
+#: planning/templates/planning/planning.html:502
 #: reseaux/templates/reseaux/reseaux.html:57
 msgid "Retirer"
 msgstr ""
@@ -13261,7 +13262,11 @@ msgstr ""
 msgid "Priorité haute"
 msgstr ""
 
-#: planning/templates/planning/bon_intervention.html:7 planning/views.py:669
+#: planning/templates/planning/_bar_reservation.html:4
+msgid "réservé par"
+msgstr ""
+
+#: planning/templates/planning/bon_intervention.html:7 planning/views.py:723
 msgid "Bon d'intervention"
 msgstr ""
 
@@ -13326,147 +13331,147 @@ msgstr ""
 msgid "Voir le mois"
 msgstr ""
 
-#: planning/templates/planning/planning.html:205
+#: planning/templates/planning/planning.html:206
 msgid "Réserver ce matériel"
 msgstr ""
 
-#: planning/templates/planning/planning.html:219
+#: planning/templates/planning/planning.html:220
 msgid "Ajoutez un membre d'équipe"
 msgstr ""
 
-#: planning/templates/planning/planning.html:220
+#: planning/templates/planning/planning.html:221
 msgid "Ajoutez des salariés dans la section Équipe pour commencer à planifier."
 msgstr ""
 
-#: planning/templates/planning/planning.html:232
+#: planning/templates/planning/planning.html:233
 msgid "Que planifier ?"
 msgstr ""
 
-#: planning/templates/planning/planning.html:233
+#: planning/templates/planning/planning.html:234
 msgid "Choisissez ce que vous posez sur ce créneau."
 msgstr ""
 
-#: planning/templates/planning/planning.html:240
+#: planning/templates/planning/planning.html:241
 msgid "Créer une tâche"
 msgstr ""
 
-#: planning/templates/planning/planning.html:241
+#: planning/templates/planning/planning.html:242
 msgid "Un travail confié à un membre de l'équipe."
 msgstr ""
 
-#: planning/templates/planning/planning.html:249
-#: planning/templates/planning/planning.html:270
+#: planning/templates/planning/planning.html:250
+#: planning/templates/planning/planning.html:271
 msgid "Réserver du matériel"
 msgstr ""
 
-#: planning/templates/planning/planning.html:250
+#: planning/templates/planning/planning.html:251
 msgid "Un engin du parc, bloqué sur ces dates."
 msgstr ""
 
-#: planning/templates/planning/planning.html:270
+#: planning/templates/planning/planning.html:271
 msgid "Modifier la réservation"
 msgstr ""
 
-#: planning/templates/planning/planning.html:279
+#: planning/templates/planning/planning.html:280
 msgid "— Choisir un engin —"
 msgstr ""
 
-#: planning/templates/planning/planning.html:284
+#: planning/templates/planning/planning.html:285
 msgid "Du"
 msgstr ""
 
-#: planning/templates/planning/planning.html:288
+#: planning/templates/planning/planning.html:289
 msgid "Au"
 msgstr ""
 
-#: planning/templates/planning/planning.html:292
+#: planning/templates/planning/planning.html:293
 msgid "Opération"
 msgstr ""
 
-#: planning/templates/planning/planning.html:315
+#: planning/templates/planning/planning.html:316
 msgid "Réserver"
 msgstr ""
 
-#: planning/templates/planning/planning.html:320
+#: planning/templates/planning/planning.html:321
 #, python-format
 msgid ""
 "Votre parc est vide. <a href=\"%(url_parc)s\" class=\"underline\">Ajoutez un "
 "matériel</a> avant de pouvoir le réserver."
 msgstr ""
 
-#: planning/templates/planning/planning.html:334
+#: planning/templates/planning/planning.html:335
 msgid "Annuler cette réservation ?"
 msgstr ""
 
-#: planning/templates/planning/planning.html:341
+#: planning/templates/planning/planning.html:342
 msgid "Annuler la réservation"
 msgstr ""
 
-#: planning/templates/planning/planning.html:356
+#: planning/templates/planning/planning.html:357
 msgid "Sous-tâche de"
 msgstr ""
 
-#: planning/templates/planning/planning.html:374
+#: planning/templates/planning/planning.html:375
 msgid "ex: Traitement parcelle Nord"
 msgstr ""
 
-#: planning/templates/planning/planning.html:431
+#: planning/templates/planning/planning.html:432
 msgid "sélectionnée(s)"
 msgstr ""
 
-#: planning/templates/planning/planning.html:433
+#: planning/templates/planning/planning.html:434
 msgid "Tout désélectionner"
 msgstr ""
 
-#: planning/templates/planning/planning.html:457
+#: planning/templates/planning/planning.html:458
 msgid "Les parcelles sans contour tracé n'apparaissent pas sur la carte."
 msgstr ""
 
-#: planning/templates/planning/planning.html:461
+#: planning/templates/planning/planning.html:462
 msgid "Aucune parcelle sur cette exploitation."
 msgstr ""
 
-#: planning/templates/planning/planning.html:462
+#: planning/templates/planning/planning.html:463
 msgid "En créer une"
 msgstr ""
 
-#: planning/templates/planning/planning.html:472
+#: planning/templates/planning/planning.html:473
 msgid "Sous-tâches"
 msgstr ""
 
-#: planning/templates/planning/planning.html:490
+#: planning/templates/planning/planning.html:491
 msgid "ex: Préparer le matériel"
 msgstr ""
 
-#: planning/templates/planning/planning.html:495
+#: planning/templates/planning/planning.html:496
 msgid "Même assigné"
 msgstr ""
 
-#: planning/templates/planning/planning.html:510
+#: planning/templates/planning/planning.html:511
 msgid "Ajouter une sous-tâche"
 msgstr ""
 
-#: planning/templates/planning/planning.html:512
+#: planning/templates/planning/planning.html:513
 msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
 msgstr ""
 
-#: planning/templates/planning/planning.html:537
+#: planning/templates/planning/planning.html:538
 msgid "Ajoutez d'abord un membre d'équipe pour créer une tâche."
 msgstr ""
 
-#: planning/templates/planning/planning.html:549
+#: planning/templates/planning/planning.html:550
 msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr ""
 
-#: planning/views.py:64
-msgid "Seul le chef d'exploitation modifie le planning."
+#: planning/views.py:72
+msgid "Vous n'êtes rattaché à aucune exploitation."
 msgstr ""
 
-#: planning/views.py:601
+#: planning/views.py:655
 msgid "Réservation impossible : choisissez un matériel et une date."
 msgstr ""
 
-#: planning/views.py:663
+#: planning/views.py:717
 msgid "Bon d'intervention enregistré."
 msgstr ""
 

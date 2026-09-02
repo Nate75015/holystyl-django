@@ -252,29 +252,39 @@ def test_le_salarie_voit_le_planning_de_sa_ferme(client, ferme_avec_salarie):
 
 
 @pytest.mark.django_db
-def test_le_salarie_lit_mais_n_ecrit_pas(client, ferme_avec_salarie):
-    """La lecture s'ouvre à l'équipe, l'écriture reste au chef d'exploitation."""
+def test_le_salarie_ecrit_aussi(client, ferme_avec_salarie):
+    """L'agenda est commun : qui le lit le modifie, quel que soit son rôle."""
     from equipe.models import Task
 
-    _patron, salarie, _exploitation, membre, tache = ferme_avec_salarie
+    _patron, salarie, exploitation, membre, tache = ferme_avec_salarie
     client.force_login(salarie)
 
-    # Rien ne lui propose de créer ni de modifier. On vise les attributs de
-    # clic : les fonctions, elles, restent définies dans le <script> commun.
     html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
-    assert '@click="openChoix(' not in html
-    assert '@click.stop="openEdit(' not in html
-    assert '@click="openReservation(' not in html
+    assert '@click="openChoix(' in html
 
-    # Et l'URL tapée à la main est refusée, pas seulement masquée.
     assert client.post("/planning/taches/nouvelle/", {
-        "title": "Tâche en douce", "assigned_to": str(membre.pk),
-        "start_date": "2026-06-25"}).status_code == 403
-    assert client.post(f"/planning/taches/{tache.pk}/supprimer/").status_code == 403
-    assert client.post("/planning/reservations/nouvelle/", {"start": "2026-06-25"}).status_code == 403
+        "title": "Binage rang 4", "assigned_to": str(membre.pk),
+        "start_date": "2026-06-25", "vue": "semaine"}).status_code == 302
+    assert Task.objects.filter(exploitation=exploitation, title="Binage rang 4").exists()
 
-    assert Task.objects.filter(title="Tâche en douce").count() == 0
-    assert Task.objects.filter(pk=tache.pk).exists()
+    # La tâche qu'on lui a assignée, il la modifie aussi.
+    assert client.post(f"/planning/taches/{tache.pk}/modifier/", {
+        "title": "Taille des abricotiers — reportée", "assigned_to": str(membre.pk),
+        "start_date": "2026-06-26", "vue": "semaine"}).status_code == 302
+    tache.refresh_from_db()
+    assert tache.title == "Taille des abricotiers — reportée"
+
+
+@pytest.mark.django_db
+def test_sans_rattachement_on_n_ecrit_pas(client, db):
+    """Le seul refus : qui n'appartient à aucune exploitation."""
+    from equipe.models import Task
+
+    isole = User.objects.create_user(email="isole@ex.com", password="pwd12345")
+    client.force_login(isole)
+    assert client.post("/planning/taches/nouvelle/", {"title": "Rien"}).status_code == 403
+    assert client.post("/planning/reservations/nouvelle/", {"start": "2026-06-25"}).status_code == 403
+    assert Task.objects.count() == 0
 
 
 @pytest.mark.django_db
@@ -286,3 +296,89 @@ def test_le_patron_garde_la_main(client, ferme_avec_salarie):
     assert client.post("/planning/taches/nouvelle/", {
         "title": "Semis", "assigned_to": str(membre.pk),
         "start_date": "2026-06-25", "vue": "semaine"}).status_code == 302
+
+
+# ── CUMA : ce que voient les fermes co-adhérentes ────────────────────
+
+
+@pytest.fixture
+def deux_fermes_une_cuma(db):
+    """Deux exploitations ayant enregistré la même CUMA, au même SIRET.
+
+    L'une possède une moissonneuse détenue en CUMA et la réserve.
+    """
+    from client.models import Partenaire
+    from equipe.models import TeamMember
+    from operations.models import AffectationEngin, Machine
+
+    SIRET = "84219876500017"
+    fermes = {}
+    for cle, email, nom, siret in (
+        ("a", "a@ex.com", "Ferme A", SIRET),
+        ("b", "b@ex.com", "Ferme B", "842 198 765 00017"),   # même SIRET, autrement écrit
+        ("c", "c@ex.com", "Ferme C", "39876543200011"),      # une autre CUMA
+    ):
+        u = User.objects.create_user(email=email, password="pwd12345")
+        e = Exploitation.objects.create(owner=u, name=nom)
+        TeamMember.objects.create(exploitation=e, name=nom, user=u)
+        Partenaire.objects.create(exploitation=e, type_partenaire=Partenaire.Type.CUMA,
+                                  nom="CUMA des Dentelles", siret=siret)
+        fermes[cle] = (u, e)
+
+    _ua, ferme_a = fermes["a"]
+    cuma_a = Partenaire.objects.get(exploitation=ferme_a)
+    moissonneuse = Machine.objects.create(
+        exploitation=ferme_a, name="Claas Lexion", type="moissonneuse_batteuse",
+        detention=Machine.Detention.CUMA, proprietaire=cuma_a)
+    AffectationEngin.objects.create(
+        exploitation=ferme_a, machine=moissonneuse, operation="recolte",
+        date_debut="2026-06-24T00:00:00Z", date_fin="2026-06-25T00:00:00Z")
+    return fermes
+
+
+@pytest.mark.django_db
+def test_un_co_adherent_voit_la_reservation_de_la_cuma(client, deux_fermes_une_cuma):
+    """Le SIRET, même écrit avec des espaces, relie les deux fermes."""
+    ub, _ferme_b = deux_fermes_une_cuma["b"]
+    client.force_login(ub)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Claas Lexion" in html
+    assert "Ferme A" in html          # on sait qui l'a prise…
+    # …mais on ne la modifie pas : elle n'est pas à nous.
+    assert '@click.stop="openEditReservation(' not in html
+
+
+@pytest.mark.django_db
+def test_une_ferme_d_une_autre_cuma_ne_voit_rien(client, deux_fermes_une_cuma):
+    uc, _ferme_c = deux_fermes_une_cuma["c"]
+    client.force_login(uc)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Claas Lexion" not in html and "Ferme A" not in html
+
+
+@pytest.mark.django_db
+def test_le_proprietaire_modifie_toujours_la_sienne(client, deux_fermes_une_cuma):
+    ua, _ferme_a = deux_fermes_une_cuma["a"]
+    client.force_login(ua)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Claas Lexion" in html
+    assert '@click.stop="openEditReservation(' in html
+
+
+@pytest.mark.django_db
+def test_le_materiel_en_propre_ne_traverse_pas(client, deux_fermes_une_cuma):
+    """Seul ce qui est détenu en CUMA franchit la frontière entre fermes."""
+    from operations.models import AffectationEngin, Machine
+
+    _ua, ferme_a = deux_fermes_une_cuma["a"]
+    tracteur = Machine.objects.create(
+        exploitation=ferme_a, name="Fendt en propre", type="tracteur_standard")
+    AffectationEngin.objects.create(
+        exploitation=ferme_a, machine=tracteur, operation="labour",
+        date_debut="2026-06-24T00:00:00Z")
+
+    ub, _ferme_b = deux_fermes_une_cuma["b"]
+    client.force_login(ub)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Claas Lexion" in html          # le matériel de la CUMA, oui
+    assert "Fendt en propre" not in html   # le reste de la ferme A, non
