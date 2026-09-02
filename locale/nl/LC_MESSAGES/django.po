@@ -3622,10 +3622,8 @@ msgstr ""
 #: exploitations/views.py:61 vente/templates/vente/_commander_corps.html:23
 #: vente/templates/vente/boutique.html:94
 #: vente/templates/vente/commande_detail.html:87
-#, fuzzy
-#| msgid "téléphone"
 msgid "Téléphone"
-msgstr "telefoon"
+msgstr "Telefoon"
 
 #: client/templates/client/_client_fields.html:60
 msgid "N° voie"
@@ -4939,10 +4937,8 @@ msgstr "bedrag (€)"
 #: contrat/templates/contrat/_assurance_modal.html:86
 #: contrat/templates/contrat/_bail_modal.html:94
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
-#, fuzzy
-#| msgid "date de début"
 msgid "Date de début"
-msgstr "begindatum"
+msgstr "Begindatum"
 
 #: contrat/templates/contrat/_assurance_modal.html:94
 #, fuzzy
@@ -5215,10 +5211,8 @@ msgid "nom de la partie contractante"
 msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
-#, fuzzy
-#| msgid "date de fin"
 msgid "Date de fin"
-msgstr "einddatum"
+msgstr "Einddatum"
 
 #: contrat/templates/contrat/_contrat_modal.html:46
 msgid "conditions particulières, échéances…"
@@ -5316,10 +5310,8 @@ msgstr "Gepland"
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrat"
-msgstr "Contact"
+msgstr "Contract"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
@@ -5714,10 +5706,8 @@ msgstr "Bedrag"
 
 #: contrat/templates/contrat/contrats.html:57
 #: equipe/templates/equipe/contrats.html:201
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce contrat ?"
-msgstr "Deze steun verwijderen?"
+msgstr "Dit contract verwijderen?"
 
 #: contrat/templates/contrat/contrats.html:68
 #, fuzzy
@@ -5960,7 +5950,7 @@ msgstr "Week"
 
 #: core/adresse.py:54 operations/materiel.py:85
 msgid "Plateau"
-msgstr ""
+msgstr "Platte wagen"
 
 #: core/adresse.py:55
 msgid "Pont"
@@ -6154,10 +6144,8 @@ msgstr "Weer"
 #: core/context_processors.py:81 core/context_processors.py:83
 #: elevage/templates/elevage/elevage.html:33 elevage/views.py:61
 #: operations/materiel.py:29
-#, fuzzy
-#| msgid "Élevé"
 msgid "Élevage"
-msgstr "Hoog"
+msgstr "Veehouderij"
 
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
@@ -6295,17 +6283,17 @@ msgstr "Taken"
 #: core/context_processors.py:128 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
-msgstr ""
+msgstr "Arbeidsovereenkomsten"
 
 #: core/context_processors.py:129 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
-msgstr ""
+msgstr "Vacatures"
 
 #: core/context_processors.py:130 equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
-msgstr ""
+msgstr "Loonadministratie"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
@@ -8067,132 +8055,102 @@ msgstr ""
 "indicatoren van behandelingsfrequentie (IFT)."
 
 #: equipe/contrats.py:21
-#, fuzzy
-#| msgid "Déclassé"
 msgid "Nom du salarié"
-msgstr "Gedeclasseerd"
+msgstr "Naam van de werknemer"
 
 #: equipe/contrats.py:22
 msgid "Email du salarié"
-msgstr ""
+msgstr "E-mail van de werknemer"
 
 #: equipe/contrats.py:23
-#, fuzzy
-#| msgid "téléphone 1"
 msgid "Téléphone du salarié"
-msgstr "telefoon 1"
+msgstr "Telefoon van de werknemer"
 
 #: equipe/contrats.py:24
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom de l'exploitation"
-msgstr "Mijn bedrijf"
+msgstr "Naam van het bedrijf"
 
 #: equipe/contrats.py:25
-#, fuzzy
-#| msgid "adresse email"
 msgid "Adresse de l'exploitation"
-msgstr "e-mailadres"
+msgstr "Adres van het bedrijf"
 
 #: equipe/contrats.py:26
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "SIRET de l'exploitation"
-msgstr "Mijn bedrijf"
+msgstr "SIRET van het bedrijf"
 
 #: equipe/contrats.py:27
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom du chef d'exploitation"
-msgstr "Mijn bedrijf"
+msgstr "Naam van de bedrijfsleider"
 
 #: equipe/contrats.py:28
 msgid "Poste occupé"
-msgstr ""
+msgstr "Beklede functie"
 
 #: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
 #: equipe/templates/equipe/offres.html:50
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Lieu de travail"
-msgstr "Plaats niet gevonden."
+msgstr "Werkplek"
 
 #: equipe/contrats.py:32 equipe/templates/equipe/_emploi_detail_corps.html:26
-#, fuzzy
-#| msgid "Hebdomadaire"
 msgid "Durée hebdomadaire"
-msgstr "Wekelijks"
+msgstr "Wekelijkse arbeidsduur"
 
 #: equipe/contrats.py:33
 msgid "Rémunération brute mensuelle"
-msgstr ""
+msgstr "Bruto maandloon"
 
 #: equipe/contrats.py:34
-#, fuzzy
-#| msgid "date d'acquisition"
 msgid "Date d'établissement"
-msgstr "verwervingsdatum"
+msgstr "Datum van opstelling"
 
 #: equipe/contrats.py:126
 msgid "CDI — contrat à durée indéterminée"
-msgstr ""
+msgstr "Vast contract"
 
 #: equipe/contrats.py:148
 msgid "CDD — contrat à durée déterminée"
-msgstr ""
+msgstr "Tijdelijk contract"
 
 #: equipe/contrats.py:174 equipe/models.py:163
-#, fuzzy
-#| msgid "Saisonnier"
 msgid "Contrat saisonnier"
-msgstr "Seizoenarbeider"
+msgstr "Seizoencontract"
 
 #: equipe/contrats.py:200 equipe/models.py:164
-#, fuzzy
-#| msgid "Contrôleur de vanne"
 msgid "Contrat d'apprentissage"
-msgstr "Klepregelaar"
+msgstr "Leerovereenkomst"
 
 #: equipe/contrats.py:225 equipe/models.py:166
-#, fuzzy
-#| msgid "Interventions"
 msgid "Convention de stage"
-msgstr "Interventies"
+msgstr "Stageovereenkomst"
 
 #: equipe/emplois.py:54 equipe/templates/equipe/_emplois_corps.html:6
 msgid "Offres d'emploi agricoles"
-msgstr ""
+msgstr "Agrarische vacatures"
 
 #: equipe/emplois.py:82
 msgid "Le CV ne doit pas dépasser 5 Mo."
-msgstr ""
+msgstr "Het cv mag niet groter zijn dan 5 MB."
 
 #: equipe/emplois.py:85
 msgid "Format de CV non accepté : PDF, Word, OpenDocument ou image."
-msgstr ""
+msgstr "Cv-formaat niet toegestaan: pdf, Word, OpenDocument of afbeelding."
 
 #: equipe/emplois.py:99
-#, fuzzy
-#| msgid "Indiquez au moins un destinataire valide."
 msgid "Indiquez au moins votre nom et votre email."
-msgstr "Geef minstens één geldige ontvanger op."
+msgstr "Geef ten minste uw naam en e-mailadres op."
 
 #: equipe/emplois.py:117
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle candidature"
-msgstr "Nieuw gewas"
+msgstr "Nieuwe sollicitatie"
 
 #: equipe/emplois.py:118
 #, python-format
 msgid "%(qui)s a répondu à « %(offre)s »."
-msgstr ""
+msgstr "%(qui)s heeft gereageerd op ‘%(offre)s’."
 
 #: equipe/emplois.py:120
-#, fuzzy
-#| msgid "Demandé"
 msgid "Votre candidature est envoyée. Bonne chance !"
-msgstr "Aangevraagd"
+msgstr "Uw sollicitatie is verzonden. Veel succes!"
 
 #: equipe/forms.py:69
 #, fuzzy
@@ -8408,10 +8366,8 @@ msgstr "Voltooid"
 
 #: equipe/models.py:203 equipe/models.py:356
 #: equipe/templates/equipe/paie.html:74
-#, fuzzy
-#| msgid "participants"
 msgid "salarié"
-msgstr "deelnemers"
+msgstr "werknemer"
 
 #: equipe/models.py:205
 #, fuzzy
@@ -8505,7 +8461,7 @@ msgstr "Wordt gegenereerd"
 
 #: equipe/models.py:270 equipe/templates/equipe/_emplois_corps.html:35
 msgid "logement possible"
-msgstr ""
+msgstr "huisvesting mogelijk"
 
 #: equipe/models.py:271
 #, fuzzy
@@ -8551,7 +8507,7 @@ msgstr "Geweigerd"
 #: equipe/models.py:326 equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/offres.html:170
 msgid "CV"
-msgstr ""
+msgstr "cv"
 
 #: equipe/models.py:331
 #, fuzzy
@@ -8587,7 +8543,7 @@ msgstr "Plaats niet gevonden."
 
 #: equipe/models.py:364 equipe/templates/equipe/fiche_paie_pdf.html:51
 msgid "heures supplémentaires"
-msgstr ""
+msgstr "overuren"
 
 #: equipe/models.py:366
 msgid "salaire brut"
@@ -8642,7 +8598,7 @@ msgstr "benaming"
 
 #: equipe/models.py:422 equipe/templates/equipe/paie.html:72
 msgid "base"
-msgstr ""
+msgstr "grondslag"
 
 #: equipe/models.py:423
 msgid "taux (%)"
@@ -8676,89 +8632,73 @@ msgid "lignes de paie"
 msgstr "Klant"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:6
-#, fuzzy
-#| msgid "Ce lien de partage n'est plus valide."
 msgid "Cette offre n'est plus en ligne"
-msgstr "Deze deellink is niet langer geldig."
+msgstr "Deze vacature staat niet meer online"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:8
 #, python-format
 msgid ""
 "« %(poste)s » chez %(ferme)s n'est plus proposée. D'autres fermes recrutent "
 "peut-être."
-msgstr ""
+msgstr "‘%(poste)s’ bij %(ferme)s wordt niet meer aangeboden. Andere boerderijen nemen misschien aan."
 
 #: equipe/templates/equipe/_emploi_close_corps.html:10
-#, fuzzy
-#| msgid "factures"
 msgid "Voir les offres en ligne"
-msgstr "facturen"
+msgstr "Bekijk de vacatures online"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:6
-#, fuzzy
-#| msgid "Toutes les heures"
 msgid "Toutes les offres"
-msgstr "Elk uur"
+msgstr "Alle vacatures"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:22
 #: equipe/templates/equipe/_emplois_corps.html:33
 #: equipe/templates/equipe/offres.html:67
-#, fuzzy
-#| msgid "Partage de position"
 msgid "Prise de poste"
-msgstr "Locatie delen"
+msgstr "Startdatum"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:27
 #: equipe/templates/equipe/fiche_paie_pdf.html:50
 msgid "heures"
-msgstr ""
+msgstr "uur"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:30
 #: equipe/templates/equipe/offres.html:79
-#, fuzzy
-#| msgid "En génération"
 msgid "Rémunération"
-msgstr "Wordt gegenereerd"
+msgstr "Beloning"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:34
-#, fuzzy
-#| msgid "Avertissement"
 msgid "Logement"
-msgstr "Waarschuwing"
+msgstr "Huisvesting"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:35
 msgid "Possible sur place"
-msgstr ""
+msgstr "Ter plaatse mogelijk"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:39
-#, fuzzy
-#| msgid "code postal"
 msgid "Le poste"
-msgstr "postcode"
+msgstr "De functie"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:43
 #: equipe/templates/equipe/offres.html:91
 msgid "Profil recherché"
-msgstr ""
+msgstr "Gezocht profiel"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:52
 msgid "Postuler"
-msgstr ""
+msgstr "Solliciteren"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:53
 msgid "Pas besoin de compte : la ferme reçoit votre message directement."
-msgstr ""
+msgstr "Geen account nodig: de boerderij ontvangt uw bericht rechtstreeks."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:57
 #: vente/templates/vente/_commander_corps.html:19
 msgid "Votre nom"
-msgstr ""
+msgstr "Uw naam"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:61
-#, fuzzy
-#| msgid "adresse email"
 msgid "Votre email"
-msgstr "e-mailadres"
+msgstr "Uw e-mailadres"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/paie.html:49
@@ -8776,80 +8716,62 @@ msgstr "optioneel"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:72
 msgid "PDF, Word, OpenDocument ou photo — 5 Mo maximum."
-msgstr ""
+msgstr "Pdf, Word, OpenDocument of foto — maximaal 5 MB."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:75
-#, fuzzy
-#| msgid "Dicter le message"
 msgid "Votre message"
-msgstr "Het bericht dicteren"
+msgstr "Uw bericht"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:77
 msgid ""
 "Dites en quelques lignes ce qui vous intéresse dans ce poste et ce que vous "
 "savez faire."
-msgstr ""
+msgstr "Vertel in enkele regels wat u aanspreekt in deze functie en wat u kunt."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:81
 msgid "Envoyer ma candidature"
-msgstr ""
+msgstr "Mijn sollicitatie versturen"
 
 #: equipe/templates/equipe/_emplois_corps.html:8
 msgid "Les postes ouverts dans les fermes, saison après saison."
-msgstr ""
+msgstr "Openstaande functies op boerderijen, seizoen na seizoen."
 
 #: equipe/templates/equipe/_emplois_corps.html:14
-#, fuzzy
-#| msgid "Rechercher un type de sol, une texture…"
 msgid "Chercher un poste, une commune, une ferme…"
-msgstr "Zoek een bodemtype, een textuur…"
+msgstr "Zoek een functie, een gemeente, een boerderij…"
 
 #: equipe/templates/equipe/_emplois_corps.html:15
-#, fuzzy
-#| msgid "Rechercher une commune"
 msgid "Rechercher une offre"
-msgstr "Een gemeente zoeken"
+msgstr "Een vacature zoeken"
 
 #: equipe/templates/equipe/_emplois_corps.html:16
-#, fuzzy
-#| msgid "Rechercher un lieu…"
 msgid "Chercher"
-msgstr "Een plaats zoeken…"
+msgstr "Zoeken"
 
 #: equipe/templates/equipe/_emplois_corps.html:34
-#, fuzzy
-#| msgid "Semaine"
 msgid "semaine"
-msgstr "Week"
+msgstr "week"
 
 #: equipe/templates/equipe/_emplois_corps.html:41
-#, fuzzy
-#| msgid "Aucune culture ne correspond à la recherche."
 msgid "Aucune offre ne correspond à votre recherche."
-msgstr "Geen gewas komt overeen met de zoekopdracht."
+msgstr "Geen vacature komt overeen met uw zoekopdracht."
 
 #: equipe/templates/equipe/_emplois_corps.html:42
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune offre en ligne pour le moment."
-msgstr "Nog geen gesprek."
+msgstr "Momenteel geen vacatures online."
 
 #: equipe/templates/equipe/_emplois_corps.html:44
 msgid "Revenez à l'approche des saisons : c'est là que les fermes recrutent."
-msgstr ""
+msgstr "Kom terug tegen het seizoen: dan nemen boerderijen aan."
 
 #: equipe/templates/equipe/_entete_emplois.html:10
-#, fuzzy
-#| msgid "Voir le mois"
 msgid "Emplois à la ferme"
-msgstr "Bekijk de maand"
+msgstr "Werken op de boerderij"
 
 #: equipe/templates/equipe/_entete_emplois.html:15
 #: vente/templates/vente/_entete_public.html:16
-#, fuzzy
-#| msgid "type d'agriculture"
 msgid "Vous êtes agriculteur ?"
-msgstr "type landbouw"
+msgstr "Bent u boer?"
 
 #: equipe/templates/equipe/_invitation_carte.html:10
 msgid "Lien d'invitation invalide"
@@ -8910,79 +8832,71 @@ msgstr "Account aanmaken"
 #: equipe/templates/equipe/contrat_pdf.html:5
 #, python-format
 msgid "Contrat — %(qui)s"
-msgstr ""
+msgstr "Contract — %(qui)s"
 
 #: equipe/templates/equipe/contrat_pdf.html:16
 #, python-format
 msgid "%(ferme)s — document établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — document opgesteld via Isidor."
 
 #: equipe/templates/equipe/contrat_pdf.html:17
 msgid ""
 "À faire relire avant signature : les clauses obligatoires dépendent de la "
 "convention collective applicable."
-msgstr ""
+msgstr "Laat nakijken vóór ondertekening: verplichte clausules hangen af van de geldende cao."
 
 #: equipe/templates/equipe/contrats.html:12
 #: equipe/templates/equipe/contrats.html:89
-#, fuzzy
-#| msgid "Nouveau mail"
 msgid "Nouveau modèle"
-msgstr "Nieuwe e-mail"
+msgstr "Nieuw sjabloon"
 
 #: equipe/templates/equipe/contrats.html:15
 #: equipe/templates/equipe/contrats.html:29
 msgid "Établir un contrat"
-msgstr ""
+msgstr "Een contract opstellen"
 
 #: equipe/templates/equipe/contrats.html:22
 msgid ""
 "Ces modèles sont des points de départ : les clauses obligatoires, la période "
 "d'essai et la rémunération dépendent de la convention collective applicable. "
 "Faites relire un contrat avant de le remettre."
-msgstr ""
+msgstr "Deze sjablonen zijn vertrekpunten: verplichte clausules, proeftijd en beloning hangen af van de geldende cao. Laat een contract nakijken voordat u het overhandigt."
 
 #: equipe/templates/equipe/contrats.html:33
 #: equipe/templates/equipe/fiche_paie_pdf.html:39
 #: equipe/templates/equipe/paie.html:34
-#, fuzzy
-#| msgid "participants"
 msgid "Salarié"
-msgstr "deelnemers"
+msgstr "Werknemer"
 
 #: equipe/templates/equipe/contrats.html:40
 #: operations/templates/operations/parc_materiel.html:87
 msgid "Modèle"
-msgstr ""
+msgstr "Sjabloon"
 
 #: equipe/templates/equipe/contrats.html:47
 msgid "Poste"
-msgstr ""
+msgstr "Functie"
 
 #: equipe/templates/equipe/contrats.html:48
 msgid "ex : ouvrier arboricole"
-msgstr ""
+msgstr "bv. fruitteeltmedewerker"
 
 #: equipe/templates/equipe/contrats.html:59
 msgid "si CDD"
-msgstr ""
+msgstr "bij tijdelijk contract"
 
 #: equipe/templates/equipe/contrats.html:63
 #: equipe/templates/equipe/offres.html:75
-#, fuzzy
-#| msgid "Créer un compte"
 msgid "Heures par semaine"
-msgstr "Account aanmaken"
+msgstr "Uren per week"
 
 #: equipe/templates/equipe/contrats.html:67
-#, fuzzy
-#| msgid "CA (€)"
 msgid "Brut mensuel (€)"
-msgstr "Omzet (€)"
+msgstr "Bruto per maand (€)"
 
 #: equipe/templates/equipe/contrats.html:73
 msgid "Établir"
-msgstr ""
+msgstr "Opstellen"
 
 #: equipe/templates/equipe/contrats.html:77
 #: equipe/templates/equipe/paie.html:144
@@ -8990,29 +8904,23 @@ msgstr ""
 msgid ""
 "Ajoutez d'abord un <a href=\"%(url_equipe)s\" class=\"underline\">membre "
 "d'équipe</a>."
-msgstr ""
+msgstr "Voeg eerst een <a href=\"%(url_equipe)s\" class=\"underline\">teamlid</a> toe."
 
 #: equipe/templates/equipe/contrats.html:78
 msgid "Créez ou importez d'abord un modèle de contrat."
-msgstr ""
+msgstr "Maak of importeer eerst een contractsjabloon."
 
 #: equipe/templates/equipe/contrats.html:88
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier le modèle"
-msgstr "Bewerken"
+msgstr "Sjabloon bewerken"
 
 #: equipe/templates/equipe/contrats.html:93
-#, fuzzy
-#| msgid "Nom du signataire"
 msgid "Nom du modèle"
-msgstr "Naam van de ondertekenaar"
+msgstr "Naam van het sjabloon"
 
 #: equipe/templates/equipe/contrats.html:103
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Corps du contrat"
-msgstr "gespreksleden"
+msgstr "Contracttekst"
 
 #: equipe/templates/equipe/contrats.html:107
 #, fuzzy
@@ -9024,51 +8932,41 @@ msgstr "%(n)s stem"
 #: equipe/templates/equipe/contrats.html:115
 msgid ""
 "Un jeton laissé vide devient une ligne de pointillés à compléter à la main."
-msgstr ""
+msgstr "Een leeg gelaten veld wordt een stippellijn om met de hand in te vullen."
 
 #: equipe/templates/equipe/contrats.html:128
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes modèles"
-msgstr "IoT-commando's"
+msgstr "Mijn sjablonen"
 
 #: equipe/templates/equipe/contrats.html:132
 msgid "Importer les modèles types"
-msgstr ""
+msgstr "Standaardsjablonen importeren"
 
 #: equipe/templates/equipe/contrats.html:143
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce modèle ?"
-msgstr "Deze steun verwijderen?"
+msgstr "Dit sjabloon verwijderen?"
 
 #: equipe/templates/equipe/contrats.html:162
 msgid ""
 "Aucun modèle. Importez les modèles types (CDI, CDD, saisonnier, "
 "apprentissage, stage) puis adaptez-les à votre exploitation."
-msgstr ""
+msgstr "Geen sjablonen. Importeer de standaardsjablonen (vast, tijdelijk, seizoen, leerovereenkomst, stage) en pas ze aan uw bedrijf aan."
 
 #: equipe/templates/equipe/contrats.html:169
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats établis"
-msgstr "Contact"
+msgstr "Opgestelde contracten"
 
 #: equipe/templates/equipe/contrats.html:178
 msgid "depuis le"
-msgstr ""
+msgstr "sinds"
 
 #: equipe/templates/equipe/contrats.html:197
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Ouvrir le contrat"
-msgstr "Deze steun verwijderen?"
+msgstr "Contract openen"
 
 #: equipe/templates/equipe/contrats.html:212
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun contrat établi pour le moment."
-msgstr "Nog geen gesprek."
+msgstr "Nog geen contracten opgesteld."
 
 #: equipe/templates/equipe/edit.html:8
 #: finances/templates/finances/devis_signature.html:18
@@ -9167,98 +9065,84 @@ msgstr "Deze steun verwijderen?"
 #: equipe/templates/equipe/fiche_paie_pdf.html:5
 #, python-format
 msgid "Bulletin — %(qui)s"
-msgstr ""
+msgstr "Loonstrook — %(qui)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:24
-#, fuzzy
-#| msgid "Température"
 msgid "Bulletin de paie"
-msgstr "Temperatuur"
+msgstr "Loonstrook"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:26
 #, python-format
 msgid "Période du %(d)s au %(f)s"
-msgstr ""
+msgstr "Periode van %(d)s tot %(f)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:31
 msgid "Employeur"
-msgstr ""
+msgstr "Werkgever"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:48
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Temps de travail"
-msgstr "Plaats niet gevonden."
+msgstr "Arbeidstijd"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
-#, fuzzy
-#| msgid "Juridique"
 msgid "Rubrique"
-msgstr "Juridisch"
+msgstr "Regel"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Base"
-msgstr ""
+msgstr "Grondslag"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Taux"
-msgstr ""
+msgstr "Percentage"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part salariale"
-msgstr ""
+msgstr "Werknemersdeel"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part employeur"
-msgstr ""
+msgstr "Werkgeversdeel"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:78
 msgid "Salaire brut"
-msgstr ""
+msgstr "Brutoloon"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:79
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales"
-msgstr "Vennoten en werknemers"
+msgstr "Werknemersbijdragen"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:81
-#, fuzzy
-#| msgid "Nouveau comptable"
 msgid "Net imposable"
-msgstr "Nieuwe boekhouder"
+msgstr "Belastbaar nettoloon"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:83
 msgid "Net à payer"
-msgstr ""
+msgstr "Netto uit te betalen"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:84
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales"
-msgstr "Vennoten en werknemers"
+msgstr "Werkgeversbijdragen"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:85
-#, fuzzy
-#| msgid "Coût eau"
 msgid "Coût employeur"
-msgstr "Waterkosten"
+msgstr "Werkgeverslast"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:90
 #, python-format
 msgid "Payée le %(d)s"
-msgstr ""
+msgstr "Betaald op %(d)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:96
 #, python-format
 msgid "%(ferme)s — bulletin établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — loonstrook opgesteld via Isidor."
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:97
 msgid ""
 "Les montants sont ceux saisis par l'employeur : Isidor ne calcule pas la "
 "paie. Conservez ce bulletin sans limitation de durée."
-msgstr ""
+msgstr "De bedragen zijn ingevoerd door de werkgever: Isidor berekent geen loon. Bewaar deze loonstrook onbeperkt."
 
 #: equipe/templates/equipe/invitation.html:9 equipe/views.py:99
 #: equipe/views.py:105 equipe/views.py:144
@@ -9307,42 +9191,32 @@ msgstr "Toegang tot locatie geweigerd."
 
 #: equipe/templates/equipe/offres.html:16
 msgid "Voir la page publique"
-msgstr ""
+msgstr "Openbare pagina bekijken"
 
 #: equipe/templates/equipe/offres.html:19
 #: equipe/templates/equipe/offres.html:31
-#, fuzzy
-#| msgid "Nouvelle parcelle"
 msgid "Nouvelle offre"
-msgstr "Nieuw perceel"
+msgstr "Nieuwe vacature"
 
 #: equipe/templates/equipe/offres.html:30
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier l'offre"
-msgstr "Bewerken"
+msgstr "Vacature bewerken"
 
 #: equipe/templates/equipe/offres.html:36
-#, fuzzy
-#| msgid "Identité"
 msgid "Intitulé du poste"
-msgstr "Identiteit"
+msgstr "Functietitel"
 
 #: equipe/templates/equipe/offres.html:38
 msgid "ex : ouvrier arboricole pour la récolte"
-msgstr ""
+msgstr "bv. fruitteeltmedewerker voor de oogst"
 
 #: equipe/templates/equipe/offres.html:40
-#, fuzzy
-#| msgid "Titre d'une tâche de planning agricole"
 msgid "Intitulé d'une offre d'emploi agricole"
-msgstr "Titel van een taak in de teeltplanning"
+msgstr "Titel van een agrarische vacature"
 
 #: equipe/templates/equipe/offres.html:44
-#, fuzzy
-#| msgid "Type de sol"
 msgid "Type de contrat"
-msgstr "Bodemtype"
+msgstr "Contracttype"
 
 #: equipe/templates/equipe/offres.html:62
 #, python-format
@@ -9350,63 +9224,51 @@ msgid ""
 "Aucune commune renseignée sur vos <a href=\"%(url_parcelles)s\" "
 "class=\"underline\">parcelles</a>. L'offre indiquera la commune de "
 "l'exploitation."
-msgstr ""
+msgstr "Geen gemeente ingevuld op uw <a href=\"%(url_parcelles)s\" class=\"underline\">percelen</a>. De vacature toont de gemeente van het bedrijf."
 
 #: equipe/templates/equipe/offres.html:71
 msgid "Visible jusqu'au"
-msgstr ""
+msgstr "Zichtbaar tot"
 
 #: equipe/templates/equipe/offres.html:81
 msgid "ex : SMIC agricole, selon profil"
-msgstr ""
+msgstr "bv. agrarisch minimumloon, afhankelijk van profiel"
 
 #: equipe/templates/equipe/offres.html:84
-#, fuzzy
-#| msgid "fertigation"
 msgid "Description du poste"
-msgstr "fertigatie"
+msgstr "Functieomschrijving"
 
 #: equipe/templates/equipe/offres.html:87
-#, fuzzy
-#| msgid "Description d'une tâche de planning agricole"
 msgid "Description du poste dans une offre d'emploi agricole"
-msgstr "Omschrijving van een taak in de teeltplanning"
+msgstr "Functieomschrijving in een agrarische vacature"
 
 #: equipe/templates/equipe/offres.html:94
 msgid "Profil recherché dans une offre d'emploi agricole"
-msgstr ""
+msgstr "Gezocht profiel in een agrarische vacature"
 
 #: equipe/templates/equipe/offres.html:98
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Email de contact"
-msgstr "gespreksleden"
+msgstr "Contact-e-mail"
 
 #: equipe/templates/equipe/offres.html:104
 msgid "Logement possible sur place"
-msgstr ""
+msgstr "Huisvesting ter plaatse mogelijk"
 
 #: equipe/templates/equipe/offres.html:122
-#, fuzzy
-#| msgid "Client"
 msgid "en ligne depuis le"
-msgstr "Klant"
+msgstr "online sinds"
 
 #: equipe/templates/equipe/offres.html:123
 msgid "jusqu'au"
-msgstr ""
+msgstr "tot"
 
 #: equipe/templates/equipe/offres.html:129
-#, fuzzy
-#| msgid "En ligne"
 msgid "Voir en ligne"
-msgstr "Online"
+msgstr "Online bekijken"
 
 #: equipe/templates/equipe/offres.html:144
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer cette offre et ses candidatures ?"
-msgstr "Deze steun verwijderen?"
+msgstr "Deze vacature en de sollicitaties verwijderen?"
 
 #: equipe/templates/equipe/offres.html:155
 #, fuzzy, python-format
@@ -9418,34 +9280,26 @@ msgstr[0] "%(n)s stem"
 msgstr[1] "%(n)s stemmen"
 
 #: equipe/templates/equipe/offres.html:182
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune candidature reçue."
-msgstr "Geen factuur."
+msgstr "Geen sollicitaties ontvangen."
 
 #: equipe/templates/equipe/offres.html:187
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune offre"
-msgstr "Geen factuur."
+msgstr "Geen vacature"
 
 #: equipe/templates/equipe/offres.html:188
 msgid ""
 "Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page "
 "publique des emplois."
-msgstr ""
+msgstr "Stel een vacature op en publiceer die zodat ze op de openbare vacaturepagina verschijnt."
 
 #: equipe/templates/equipe/paie.html:10
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques :"
-msgstr "Banden"
+msgstr "Regels:"
 
 #: equipe/templates/equipe/paie.html:13
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une fiche de paie"
-msgstr "Een code activeren"
+msgstr "Loonstrook toevoegen"
 
 #: equipe/templates/equipe/paie.html:19
 msgid ""
@@ -9453,152 +9307,120 @@ msgid ""
 "taux MSA, la convention collective et les exonérations relèvent de votre "
 "comptable ou du service TESA. Saisissez ici les montants qu'ils vous "
 "fournissent — l'addition des rubriques est vérifiée."
-msgstr ""
+msgstr "Isidor registreert en drukt uw loonstroken af, maar berekent geen loon: MSA-tarieven, cao en vrijstellingen zijn voor uw boekhouder of de TESA-dienst. Voer hier de opgegeven bedragen in — de optelling van de regels wordt gecontroleerd."
 
 #: equipe/templates/equipe/paie.html:27
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier la fiche de paie"
-msgstr "Bewerken"
+msgstr "Loonstrook bewerken"
 
 #: equipe/templates/equipe/paie.html:28
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle fiche de paie"
-msgstr "Nieuw gewas"
+msgstr "Nieuwe loonstrook"
 
 #: equipe/templates/equipe/paie.html:41
 msgid "Période du"
-msgstr ""
+msgstr "Periode van"
 
 #: equipe/templates/equipe/paie.html:45
-#, fuzzy
-#| msgid "Eau"
 msgid "au"
-msgstr "Water"
+msgstr "tot"
 
 #: equipe/templates/equipe/paie.html:56
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Heures travaillées"
-msgstr "Plaats niet gevonden."
+msgstr "Gewerkte uren"
 
 #: equipe/templates/equipe/paie.html:60
 msgid "Heures supplémentaires"
-msgstr ""
+msgstr "Overuren"
 
 #: equipe/templates/equipe/paie.html:66
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques"
-msgstr "Banden"
+msgstr "Regels"
 
 #: equipe/templates/equipe/paie.html:70
 msgid "ex : Retraite complémentaire"
-msgstr ""
+msgstr "bv. aanvullend pensioen"
 
 #: equipe/templates/equipe/paie.html:73
 #, python-format
 msgid "taux %%"
-msgstr ""
+msgstr "percentage %%"
 
 #: equipe/templates/equipe/paie.html:75
 msgid "employeur"
-msgstr ""
+msgstr "werkgever"
 
 #: equipe/templates/equipe/paie.html:86
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une rubrique"
-msgstr "Een code activeren"
+msgstr "Regel toevoegen"
 
 #: equipe/templates/equipe/paie.html:91
 msgid "Totaux"
-msgstr ""
+msgstr "Totalen"
 
 #: equipe/templates/equipe/paie.html:94
-#, fuzzy
-#| msgid "surface totale (ha)"
 msgid "Salaire brut (€)"
-msgstr "totale oppervlakte (ha)"
+msgstr "Brutoloon (€)"
 
 #: equipe/templates/equipe/paie.html:98
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales (€)"
-msgstr "Vennoten en werknemers"
+msgstr "Werknemersbijdragen (€)"
 
 #: equipe/templates/equipe/paie.html:104
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales (€)"
-msgstr "Vennoten en werknemers"
+msgstr "Werkgeversbijdragen (€)"
 
 #: equipe/templates/equipe/paie.html:110
-#, fuzzy
-#| msgid "montant (€)"
 msgid "Net imposable (€)"
-msgstr "bedrag (€)"
+msgstr "Belastbaar nettoloon (€)"
 
 #: equipe/templates/equipe/paie.html:114
 msgid "Net à payer (€)"
-msgstr ""
+msgstr "Netto uit te betalen (€)"
 
 #: equipe/templates/equipe/paie.html:124
-#, fuzzy
-#| msgid "Payée"
 msgid "Payée le"
-msgstr "Betaald"
+msgstr "Betaald op"
 
 #: equipe/templates/equipe/paie.html:128
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Mode de paiement"
-msgstr "geboortedatum"
+msgstr "Betaalwijze"
 
 #: equipe/templates/equipe/paie.html:129
-#, fuzzy
-#| msgid "Environnement"
 msgid "ex : virement"
-msgstr "Milieu"
+msgstr "bv. overboeking"
 
 #: equipe/templates/equipe/paie.html:151
 msgid "Bulletins"
-msgstr ""
+msgstr "Loonstroken"
 
 #: equipe/templates/equipe/paie.html:161
 msgid "brut"
-msgstr ""
+msgstr "bruto"
 
 #: equipe/templates/equipe/paie.html:162
 msgid "net"
-msgstr ""
+msgstr "netto"
 
 #: equipe/templates/equipe/paie.html:163
 msgid "coût employeur"
-msgstr ""
+msgstr "werkgeverslast"
 
 #: equipe/templates/equipe/paie.html:167
 msgid "Les rubriques ne totalisent pas les montants annoncés."
-msgstr ""
+msgstr "De regels tellen niet op tot de vermelde bedragen."
 
 #: equipe/templates/equipe/paie.html:186
-#, fuzzy
-#| msgid "Supprimer la culture ?"
 msgid "Ouvrir le bulletin"
-msgstr "Gewas verwijderen?"
+msgstr "Loonstrook openen"
 
 #: equipe/templates/equipe/paie.html:190
-#, fuzzy
-#| msgid "Supprimer cette fiche ?"
 msgid "Supprimer cette fiche de paie ?"
-msgstr "Deze fiche verwijderen?"
+msgstr "Deze loonstrook verwijderen?"
 
 #: equipe/templates/equipe/paie.html:201
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun bulletin pour le moment."
-msgstr "Nog geen gesprek."
+msgstr "Nog geen loonstroken."
 
 #: equipe/templates/equipe/placeholder.html:18
 #, python-format
@@ -13417,8 +13239,6 @@ msgid "Bonne teneur en eau (ou présence d'eau libre)."
 msgstr ""
 
 #: irrigation/templates/irrigation/_bilan_eau.html:8
-#, fuzzy
-#| msgid "Bilan eau"
 msgid "Bilan d'eau"
 msgstr "Waterbalans"
 
@@ -13429,16 +13249,12 @@ msgid "Irrigation totale"
 msgstr "Irrigatie"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:18
-#, fuzzy
-#| msgid "sessions enregistrées"
 msgid "Sessions enregistrées"
-msgstr "geregistreerde sessies"
+msgstr "Geregistreerde sessies"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:22
-#, fuzzy
-#| msgid "Quota eau"
 msgid "Quota"
-msgstr "Waterquotum"
+msgstr "Quotum"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:29
 msgid "estimé"
@@ -13455,7 +13271,7 @@ msgstr "Geen irrigatiesessie geregistreerd"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:43
 msgid "Les données apparaîtront dès la première session."
-msgstr ""
+msgstr "Gegevens verschijnen na de eerste sessie."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:50
 msgid "Consommation par parcelle (m³/jour)"
@@ -13466,30 +13282,16 @@ msgid "Aucune session d'irrigation"
 msgstr "Geen irrigatiesessie"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:71
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Enregistrez une session pour voir la consommation par parcelle."
-msgstr ""
-"Geen perceel geregistreerd. Maak uw percelen aan om het verbruik per perceel "
-"te zien."
+msgstr "Registreer een sessie om het verbruik per perceel te zien."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:75
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune parcelle enregistrée"
-msgstr "Geen kost geregistreerd."
+msgstr "Geen percelen geregistreerd"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:76
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Créez vos parcelles pour voir la consommation par parcelle."
-msgstr ""
-"Geen perceel geregistreerd. Maak uw percelen aan om het verbruik per perceel "
-"te zien."
+msgstr "Maak percelen aan om het verbruik per perceel te zien."
 
 #: irrigation/templates/irrigation/_etc_card.html:9
 #, fuzzy
@@ -15380,96 +15182,76 @@ msgid "Règle « %(r)s » supprimée."
 msgstr ""
 
 #: operations/materiel.py:21
-#, fuzzy
-#| msgid "Auto"
 msgid "Automoteurs"
-msgstr "Auto"
+msgstr "Zelfrijdende machines"
 
 #: operations/materiel.py:23
-#, fuzzy
-#| msgid "date de plantation"
 msgid "Semis et plantation"
-msgstr "plantdatum"
+msgstr "Zaaien en planten"
 
 #: operations/materiel.py:24
-#, fuzzy
-#| msgid "Fertilisation"
 msgid "Fertilisation et protection"
-msgstr "Bemesting"
+msgstr "Bemesting en gewasbescherming"
 
 #: operations/materiel.py:25
-#, fuzzy
-#| msgid "Récolte"
 msgid "Récolte et fourrage"
-msgstr "Oogst"
+msgstr "Oogst en voederwinning"
 
 #: operations/materiel.py:26
 msgid "Transport et manutention"
-msgstr ""
+msgstr "Transport en overslag"
 
 #: operations/materiel.py:28
-#, fuzzy
-#| msgid "Redessiner une parcelle"
 msgid "Bâtiment et post-récolte"
-msgstr "Perceel opnieuw tekenen"
+msgstr "Gebouwen en naoogst"
 
 #: operations/materiel.py:30
-#, fuzzy
-#| msgid "Générique"
 msgid "Numérique"
-msgstr "Generiek"
+msgstr "Digitaal"
 
 #: operations/materiel.py:36
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur standard"
-msgstr "Tractor"
+msgstr "Standaardtrekker"
 
 #: operations/materiel.py:37
 msgid "Tracteur vigneron (étroit)"
-msgstr ""
+msgstr "Smalspoortrekker"
 
 #: operations/materiel.py:38
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur chenillé"
-msgstr "Tractor"
+msgstr "Rupstrekker"
 
 #: operations/materiel.py:39
 msgid "Télescopique ou chargeur"
-msgstr ""
+msgstr "Verreiker of shovel"
 
 #: operations/materiel.py:40
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Moissonneuse-batteuse"
 msgstr "Maaidorser"
 
 #: operations/materiel.py:41
 msgid "Ensileuse"
-msgstr ""
+msgstr "Hakselaar"
 
 #: operations/materiel.py:42
 msgid "Machine à vendanger"
-msgstr ""
+msgstr "Druivenpluk­machine"
 
 #: operations/materiel.py:43
-#, fuzzy
-#| msgid "Ajouter une parcelle"
 msgid "Automoteur de pulvérisation"
-msgstr "Perceel toevoegen"
+msgstr "Zelfrijdende spuit"
 
 #: operations/materiel.py:44
 msgid "Quad ou UTV"
-msgstr ""
+msgstr "Quad of UTV"
 
 #: operations/materiel.py:45
 msgid "Camion"
-msgstr ""
+msgstr "Vrachtwagen"
 
 #: operations/materiel.py:46
 msgid "Chariot élévateur"
-msgstr ""
+msgstr "Vorkheftruck"
 
 #: operations/materiel.py:49
 msgid "Charrue"
@@ -15477,135 +15259,107 @@ msgstr "Ploeg"
 
 #: operations/materiel.py:50
 msgid "Déchaumeur"
-msgstr ""
+msgstr "Stoppelbewerker"
 
 #: operations/materiel.py:51
 msgid "Cultivateur"
 msgstr "Cultivator"
 
 #: operations/materiel.py:52
-#, fuzzy
-#| msgid "culture"
 msgid "Vibroculteur"
-msgstr "gewas"
+msgstr "Vaste-tandcultivator"
 
 #: operations/materiel.py:53
-#, fuzzy
-#| msgid "Alertes actives"
 msgid "Herse rotative"
-msgstr "Actieve waarschuwingen"
+msgstr "Rotorkopeg"
 
 #: operations/materiel.py:54
 msgid "Herse étrille"
-msgstr ""
+msgstr "Wiedeg"
 
 #: operations/materiel.py:55
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Rouleau"
-msgstr "Haspel"
+msgstr "Rol"
 
 #: operations/materiel.py:56
-#, fuzzy
-#| msgid "Se connecter"
 msgid "Décompacteur"
-msgstr "Aanmelden"
+msgstr "Woeler"
 
 #: operations/materiel.py:57
 msgid "Broyeur"
-msgstr ""
+msgstr "Klepelmaaier"
 
 #: operations/materiel.py:60
-#, fuzzy
-#| msgid "En ligne"
 msgid "Semoir en ligne"
-msgstr "Online"
+msgstr "Zaaimachine"
 
 #: operations/materiel.py:61
 msgid "Semoir monograine"
-msgstr ""
+msgstr "Precisiezaaimachine"
 
 #: operations/materiel.py:62
-#, fuzzy
-#| msgid "Semoir"
 msgid "Semoir direct"
-msgstr "Zaaimachine"
+msgstr "Directzaaimachine"
 
 #: operations/materiel.py:63
-#, fuzzy
-#| msgid "Plante"
 msgid "Planteuse"
-msgstr "Plant"
+msgstr "Plantmachine"
 
 #: operations/materiel.py:64
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Bineuse"
-msgstr "Maaidorser"
+msgstr "Schoffelmachine"
 
 #: operations/materiel.py:67
 msgid "Épandeur d'engrais centrifuge"
-msgstr ""
+msgstr "Kunstmeststrooier"
 
 #: operations/materiel.py:68
-#, fuzzy
-#| msgid "Épandeur"
 msgid "Épandeur à fumier"
-msgstr "Strooier"
+msgstr "Mestverspreider"
 
 #: operations/materiel.py:69
 msgid "Tonne à lisier"
-msgstr ""
+msgstr "Mesttank"
 
 #: operations/materiel.py:70
 msgid "Pulvérisateur porté ou traîné"
-msgstr ""
+msgstr "Getrokken of gedragen spuit"
 
 #: operations/materiel.py:71
 msgid "Atomiseur (arboriculture, viticulture)"
-msgstr ""
+msgstr "Vernevelaar (fruit- en wijnbouw)"
 
 #: operations/materiel.py:74
-#, fuzzy
-#| msgid "Sous-tâches"
 msgid "Faucheuse"
-msgstr "Subtaken"
+msgstr "Maaier"
 
 #: operations/materiel.py:75
 msgid "Faneuse"
-msgstr ""
+msgstr "Schudder"
 
 #: operations/materiel.py:76
 msgid "Andaineur"
-msgstr ""
+msgstr "Hark"
 
 #: operations/materiel.py:77
-#, fuzzy
-#| msgid "Pression basse"
 msgid "Presse à balles"
-msgstr "Lage druk"
+msgstr "Balenpers"
 
 #: operations/materiel.py:78
-#, fuzzy
-#| msgid "En panne"
 msgid "Enrubanneuse"
-msgstr "Defect"
+msgstr "Balenwikkelaar"
 
 #: operations/materiel.py:79
-#, fuzzy
-#| msgid "charges"
 msgid "Autochargeuse"
-msgstr "kosten"
+msgstr "Opraapwagen"
 
 #: operations/materiel.py:80
 msgid "Arracheuse"
-msgstr ""
+msgstr "Rooier"
 
 #: operations/materiel.py:83
-#, fuzzy
-#| msgid "Marque"
 msgid "Remorque"
-msgstr "Merk"
+msgstr "Aanhangwagen"
 
 #: operations/materiel.py:84
 msgid "Benne"
@@ -15613,131 +15367,111 @@ msgstr "Kipper"
 
 #: operations/materiel.py:86
 msgid "Godet"
-msgstr ""
+msgstr "Bak"
 
 #: operations/materiel.py:87
-#, fuzzy
-#| msgid "Source"
 msgid "Fourche"
-msgstr "Bron"
+msgstr "Vork"
 
 #: operations/materiel.py:88
 msgid "Pince à balles"
-msgstr ""
+msgstr "Balenklem"
 
 #: operations/materiel.py:91
 msgid "Pompe"
 msgstr "Pomp"
 
 #: operations/materiel.py:92
-#, fuzzy
-#| msgid "station de pompage"
 msgid "Station de pompage"
-msgstr "pompstation"
+msgstr "Pompstation"
 
 #: operations/materiel.py:95
 msgid "Rampe"
-msgstr ""
+msgstr "Beregeningsboom"
 
 #: operations/materiel.py:96
-#, fuzzy
-#| msgid "Goutte à goutte"
 msgid "Goutte-à-goutte"
 msgstr "Druppelirrigatie"
 
 #: operations/materiel.py:97
-#, fuzzy
-#| msgid "Facturation"
 msgid "Filtration"
-msgstr "Facturatie"
+msgstr "Filtratie"
 
 #: operations/materiel.py:98
 msgid "Borne"
-msgstr ""
+msgstr "Hydrant"
 
 #: operations/materiel.py:101
 msgid "Séchoir"
-msgstr ""
+msgstr "Droger"
 
 #: operations/materiel.py:102
 msgid "Trieuse"
-msgstr ""
+msgstr "Sorteerder"
 
 #: operations/materiel.py:103
 msgid "Calibreuse"
-msgstr ""
+msgstr "Sorteermachine"
 
 #: operations/materiel.py:104 stock/models.py:40
 msgid "Chambre froide"
-msgstr ""
+msgstr "Koelcel"
 
 #: operations/materiel.py:105
 msgid "Groupe électrogène"
-msgstr ""
+msgstr "Aggregaat"
 
 #: operations/materiel.py:106
-#, fuzzy
-#| msgid "Capteur de pression"
 msgid "Nettoyeur haute pression"
-msgstr "Druksensor"
+msgstr "Hogedrukreiniger"
 
 #: operations/materiel.py:107 stock/models.py:39
 msgid "Cuve"
-msgstr ""
+msgstr "Tank"
 
 #: operations/materiel.py:108
-#, fuzzy
-#| msgid "Pression"
 msgid "Pressoir"
-msgstr "Druk"
+msgstr "Pers"
 
 #: operations/materiel.py:111
 msgid "Mélangeuse"
-msgstr ""
+msgstr "Voermengwagen"
 
 #: operations/materiel.py:112
 msgid "Désileuse"
-msgstr ""
+msgstr "Kuilvoersnijder"
 
 #: operations/materiel.py:113
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Robot de traite"
-msgstr "geboortedatum"
+msgstr "Melkrobot"
 
 #: operations/materiel.py:114
-#, fuzzy
-#| msgid "Température"
 msgid "Salle de traite"
-msgstr "Temperatuur"
+msgstr "Melkstal"
 
 #: operations/materiel.py:115
 msgid "Tank à lait"
-msgstr ""
+msgstr "Melktank"
 
 #: operations/materiel.py:116
-#, fuzzy
-#| msgid "Taille"
 msgid "Pailleuse"
-msgstr "Snoei"
+msgstr "Strooiselverdeler"
 
 #: operations/materiel.py:117
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Racleur"
-msgstr "Haspel"
+msgstr "Mestschuif"
 
 #: operations/materiel.py:120
 msgid "Console GPS"
-msgstr ""
+msgstr "Gps-terminal"
 
 #: operations/materiel.py:121
 msgid "Autoguidage RTK"
-msgstr ""
+msgstr "RTK-stuurautomaat"
 
 #: operations/materiel.py:123
 msgid "Drone"
-msgstr ""
+msgstr "Drone"
 
 #: operations/models.py:35
 msgid "En propre"
@@ -17275,105 +17009,79 @@ msgid "Priorité haute"
 msgstr "Hoge prioriteit"
 
 #: planning/templates/planning/_bar_reservation.html:4
-#, fuzzy
-#| msgid "Réserve Utile"
 msgid "réservé par"
-msgstr "Beschikbare reserve"
+msgstr "gereserveerd door"
 
 #: planning/templates/planning/acces.html:7
 #: planning/templates/planning/planning.html:16
 #: planning/templates/planning/sans_acces.html:6
-#, fuzzy
-#| msgid "Planning"
 msgid "RH · Planning"
-msgstr "Planning"
+msgstr "HR · Planning"
 
 #: planning/templates/planning/acces.html:7
-#, fuzzy
-#| msgid "Participants"
 msgid "Partage"
-msgstr "Deelnemers"
+msgstr "Delen"
 
 #: planning/templates/planning/acces.html:9
 #: planning/templates/planning/planning.html:21 planning/views.py:623
-#, fuzzy
-#| msgid "tâche de planning"
 msgid "Partage du planning"
-msgstr "planningstaak"
+msgstr "Planning delen"
 
 #: planning/templates/planning/acces.html:10
-#, fuzzy
-#| msgid "Retour aux parcelles"
 msgid "Retour au planning"
-msgstr "Terug naar de percelen"
+msgstr "Terug naar de planning"
 
 #: planning/templates/planning/acces.html:15
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Demandes en attente"
-msgstr "Geen kost geregistreerd."
+msgstr "Openstaande verzoeken"
 
 #: planning/templates/planning/acces.html:23
 #, python-format
 msgid "demandé le %(quand)s"
-msgstr ""
+msgstr "aangevraagd op %(quand)s"
 
 #: planning/templates/planning/acces.html:28
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder en"
-msgstr "Toegekend"
+msgstr "Toekennen als"
 
 #: planning/templates/planning/acces.html:32
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder"
-msgstr "Toegekend"
+msgstr "Toekennen"
 
 #: planning/templates/planning/acces.html:35
 #: reseaux/templates/reseaux/reseaux.html:32
 #: vente/templates/vente/commande_detail.html:24
-#, fuzzy
-#| msgid "Refusé"
 msgid "Refuser"
-msgstr "Geweigerd"
+msgstr "Weigeren"
 
 #: planning/templates/planning/acces.html:41
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune demande pour le moment."
-msgstr "Nog geen gesprek."
+msgstr "Momenteel geen verzoeken."
 
 #: planning/templates/planning/acces.html:47
-#, fuzzy
-#| msgid "Accès"
 msgid "Ont accès"
-msgstr "Toegang"
+msgstr "Hebben toegang"
 
 #: planning/templates/planning/acces.html:49
 #, python-format
 msgid "%(chef)s est propriétaire du planning : son accès ne se retire pas."
-msgstr ""
+msgstr "%(chef)s is eigenaar van de planning: die toegang kan niet worden ingetrokken."
 
 #: planning/templates/planning/acces.html:67
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Retirer cet accès ?"
-msgstr "Deze steun verwijderen?"
+msgstr "Deze toegang intrekken?"
 
 #: planning/templates/planning/acces.html:78
 msgid "Personne d'autre n'a encore accès."
-msgstr ""
+msgstr "Niemand anders heeft nog toegang."
 
 #: planning/templates/planning/acces.html:85
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demandes refusées"
-msgstr "Aangevraagd"
+msgstr "Geweigerde verzoeken"
 
 #: planning/templates/planning/acces.html:95
 msgid "Accorder finalement"
-msgstr ""
+msgstr "Alsnog toekennen"
 
 #: planning/templates/planning/bon_intervention.html:7 planning/views.py:829
 msgid "Bon d'intervention"
@@ -17561,60 +17269,54 @@ msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr "De bijbehorende subtaken worden ook verwijderd:"
 
 #: planning/templates/planning/sans_acces.html:13
-#, fuzzy
-#| msgid "Planning"
 msgid "Aucun planning"
-msgstr "Planning"
+msgstr "Geen planning"
 
 #: planning/templates/planning/sans_acces.html:15
 msgid ""
 "Vous n'êtes rattaché à aucune exploitation. Un planning appartient à une "
 "ferme."
-msgstr ""
+msgstr "U bent aan geen enkel bedrijf gekoppeld. Een planning hoort bij een bedrijf."
 
 #: planning/templates/planning/sans_acces.html:19
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demande envoyée"
-msgstr "Aangevraagd"
+msgstr "Verzoek verzonden"
 
 #: planning/templates/planning/sans_acces.html:21
 #, python-format
 msgid ""
 "Le responsable de %(ferme)s a été prévenu. Vous verrez le planning dès qu'il "
 "aura accordé l'accès."
-msgstr ""
+msgstr "De beheerder van %(ferme)s is op de hoogte gebracht. U ziet de planning zodra toegang is verleend."
 
 #: planning/templates/planning/sans_acces.html:25
 msgid "Vous n'avez pas accès à ce planning"
-msgstr ""
+msgstr "U hebt geen toegang tot deze planning"
 
 #: planning/templates/planning/sans_acces.html:28
 msgid ""
 "Votre demande précédente n'a pas été retenue. Vous pouvez en formuler une "
 "nouvelle."
-msgstr ""
+msgstr "Uw vorige verzoek is niet ingewilligd. U kunt een nieuw verzoek indienen."
 
 #: planning/templates/planning/sans_acces.html:30
 #, python-format
 msgid ""
 "Demandez l'accès au responsable de %(ferme)s. Il choisira ce que vous pouvez "
 "y faire."
-msgstr ""
+msgstr "Vraag toegang aan de beheerder van %(ferme)s. Die bepaalt wat u er mag doen."
 
 #: planning/templates/planning/sans_acces.html:38
 msgid "Un mot pour accompagner la demande"
-msgstr ""
+msgstr "Een bericht bij het verzoek"
 
 #: planning/templates/planning/sans_acces.html:41
 msgid "ex : je gère la comptabilité et je voudrais suivre la charge de travail"
-msgstr ""
+msgstr "bv. ik doe de boekhouding en wil de werklast volgen"
 
 #: planning/templates/planning/sans_acces.html:44
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demander l'accès"
-msgstr "Aangevraagd"
+msgstr "Toegang aanvragen"
 
 #: planning/views.py:73
 msgid "Vous n'avez pas le droit de modifier ce planning."
@@ -19242,8 +18944,7 @@ msgstr "Subtaak toevoegen"
 
 #: templates/partials/_sous_taches.html:52
 msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
-msgstr ""
-"Een subtaak met datum verschijnt ook in de planning van de toegewezene."
+msgstr "Een gedateerde subtaak verschijnt ook in de planning van de toegewezene."
 
 #: templates/partials/cookie_banner.html:6
 msgid ""

@@ -3627,10 +3627,8 @@ msgstr ""
 #: exploitations/views.py:61 vente/templates/vente/_commander_corps.html:23
 #: vente/templates/vente/boutique.html:94
 #: vente/templates/vente/commande_detail.html:87
-#, fuzzy
-#| msgid "téléphone"
 msgid "Téléphone"
-msgstr "teléfono"
+msgstr "Teléfono"
 
 #: client/templates/client/_client_fields.html:60
 msgid "N° voie"
@@ -4945,10 +4943,8 @@ msgstr "importe (€)"
 #: contrat/templates/contrat/_assurance_modal.html:86
 #: contrat/templates/contrat/_bail_modal.html:94
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
-#, fuzzy
-#| msgid "date de début"
 msgid "Date de début"
-msgstr "fecha de inicio"
+msgstr "Fecha de inicio"
 
 #: contrat/templates/contrat/_assurance_modal.html:94
 #, fuzzy
@@ -5221,10 +5217,8 @@ msgid "nom de la partie contractante"
 msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
-#, fuzzy
-#| msgid "date de fin"
 msgid "Date de fin"
-msgstr "fecha de fin"
+msgstr "Fecha de fin"
 
 #: contrat/templates/contrat/_contrat_modal.html:46
 msgid "conditions particulières, échéances…"
@@ -5322,10 +5316,8 @@ msgstr "Planificada"
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrat"
-msgstr "Contacto"
+msgstr "Contrato"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
@@ -5722,10 +5714,8 @@ msgstr "Importe"
 
 #: contrat/templates/contrat/contrats.html:57
 #: equipe/templates/equipe/contrats.html:201
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce contrat ?"
-msgstr "¿Eliminar esta ayuda?"
+msgstr "¿Eliminar este contrato?"
 
 #: contrat/templates/contrat/contrats.html:68
 #, fuzzy
@@ -5968,7 +5958,7 @@ msgstr "Semana"
 
 #: core/adresse.py:54 operations/materiel.py:85
 msgid "Plateau"
-msgstr ""
+msgstr "Remolque plataforma"
 
 #: core/adresse.py:55
 msgid "Pont"
@@ -6162,10 +6152,8 @@ msgstr "Meteorología"
 #: core/context_processors.py:81 core/context_processors.py:83
 #: elevage/templates/elevage/elevage.html:33 elevage/views.py:61
 #: operations/materiel.py:29
-#, fuzzy
-#| msgid "Élevé"
 msgid "Élevage"
-msgstr "Alto"
+msgstr "Ganadería"
 
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
@@ -6301,17 +6289,17 @@ msgstr "Tareas"
 #: core/context_processors.py:128 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
-msgstr ""
+msgstr "Contratos de trabajo"
 
 #: core/context_processors.py:129 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
-msgstr ""
+msgstr "Ofertas de empleo"
 
 #: core/context_processors.py:130 equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
-msgstr ""
+msgstr "Nóminas"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
@@ -8071,132 +8059,102 @@ msgstr ""
 "indicadores de frecuencia de tratamiento (IFT)."
 
 #: equipe/contrats.py:21
-#, fuzzy
-#| msgid "Déclassé"
 msgid "Nom du salarié"
-msgstr "Desclasificado"
+msgstr "Nombre del trabajador"
 
 #: equipe/contrats.py:22
 msgid "Email du salarié"
-msgstr ""
+msgstr "Correo del trabajador"
 
 #: equipe/contrats.py:23
-#, fuzzy
-#| msgid "téléphone 1"
 msgid "Téléphone du salarié"
-msgstr "teléfono 1"
+msgstr "Teléfono del trabajador"
 
 #: equipe/contrats.py:24
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom de l'exploitation"
-msgstr "Mi explotación"
+msgstr "Nombre de la explotación"
 
 #: equipe/contrats.py:25
-#, fuzzy
-#| msgid "adresse email"
 msgid "Adresse de l'exploitation"
-msgstr "dirección de email"
+msgstr "Dirección de la explotación"
 
 #: equipe/contrats.py:26
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "SIRET de l'exploitation"
-msgstr "Mi explotación"
+msgstr "SIRET de la explotación"
 
 #: equipe/contrats.py:27
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom du chef d'exploitation"
-msgstr "Mi explotación"
+msgstr "Nombre del jefe de explotación"
 
 #: equipe/contrats.py:28
 msgid "Poste occupé"
-msgstr ""
+msgstr "Puesto ocupado"
 
 #: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
 #: equipe/templates/equipe/offres.html:50
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Lieu de travail"
-msgstr "Lugar no encontrado."
+msgstr "Lugar de trabajo"
 
 #: equipe/contrats.py:32 equipe/templates/equipe/_emploi_detail_corps.html:26
-#, fuzzy
-#| msgid "Hebdomadaire"
 msgid "Durée hebdomadaire"
-msgstr "Semanal"
+msgstr "Jornada semanal"
 
 #: equipe/contrats.py:33
 msgid "Rémunération brute mensuelle"
-msgstr ""
+msgstr "Remuneración bruta mensual"
 
 #: equipe/contrats.py:34
-#, fuzzy
-#| msgid "date d'acquisition"
 msgid "Date d'établissement"
-msgstr "fecha de adquisición"
+msgstr "Fecha de emisión"
 
 #: equipe/contrats.py:126
 msgid "CDI — contrat à durée indéterminée"
-msgstr ""
+msgstr "Contrato indefinido"
 
 #: equipe/contrats.py:148
 msgid "CDD — contrat à durée déterminée"
-msgstr ""
+msgstr "Contrato temporal"
 
 #: equipe/contrats.py:174 equipe/models.py:163
-#, fuzzy
-#| msgid "Saisonnier"
 msgid "Contrat saisonnier"
-msgstr "Temporero"
+msgstr "Contrato de temporada"
 
 #: equipe/contrats.py:200 equipe/models.py:164
-#, fuzzy
-#| msgid "Contrôleur de vanne"
 msgid "Contrat d'apprentissage"
-msgstr "Controlador de válvula"
+msgstr "Contrato de aprendizaje"
 
 #: equipe/contrats.py:225 equipe/models.py:166
-#, fuzzy
-#| msgid "Connexion"
 msgid "Convention de stage"
-msgstr "Iniciar sesión"
+msgstr "Convenio de prácticas"
 
 #: equipe/emplois.py:54 equipe/templates/equipe/_emplois_corps.html:6
 msgid "Offres d'emploi agricoles"
-msgstr ""
+msgstr "Ofertas de empleo agrícola"
 
 #: equipe/emplois.py:82
 msgid "Le CV ne doit pas dépasser 5 Mo."
-msgstr ""
+msgstr "El CV no debe superar 5 MB."
 
 #: equipe/emplois.py:85
 msgid "Format de CV non accepté : PDF, Word, OpenDocument ou image."
-msgstr ""
+msgstr "Formato de CV no admitido: PDF, Word, OpenDocument o imagen."
 
 #: equipe/emplois.py:99
-#, fuzzy
-#| msgid "Indiquez au moins un destinataire valide."
 msgid "Indiquez au moins votre nom et votre email."
-msgstr "Indique al menos un destinatario válido."
+msgstr "Indique al menos su nombre y su correo."
 
 #: equipe/emplois.py:117
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle candidature"
-msgstr "Nuevo cultivo"
+msgstr "Nueva candidatura"
 
 #: equipe/emplois.py:118
 #, python-format
 msgid "%(qui)s a répondu à « %(offre)s »."
-msgstr ""
+msgstr "%(qui)s ha respondido a «%(offre)s»."
 
 #: equipe/emplois.py:120
-#, fuzzy
-#| msgid "Demandé"
 msgid "Votre candidature est envoyée. Bonne chance !"
-msgstr "Solicitado"
+msgstr "Su candidatura ha sido enviada. ¡Suerte!"
 
 #: equipe/forms.py:69
 #, fuzzy
@@ -8412,10 +8370,8 @@ msgstr "Terminado"
 
 #: equipe/models.py:203 equipe/models.py:356
 #: equipe/templates/equipe/paie.html:74
-#, fuzzy
-#| msgid "participants"
 msgid "salarié"
-msgstr "participantes"
+msgstr "trabajador"
 
 #: equipe/models.py:205
 #, fuzzy
@@ -8509,7 +8465,7 @@ msgstr "En generación"
 
 #: equipe/models.py:270 equipe/templates/equipe/_emplois_corps.html:35
 msgid "logement possible"
-msgstr ""
+msgstr "alojamiento posible"
 
 #: equipe/models.py:271
 #, fuzzy
@@ -8555,7 +8511,7 @@ msgstr "Rechazado"
 #: equipe/models.py:326 equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/offres.html:170
 msgid "CV"
-msgstr ""
+msgstr "CV"
 
 #: equipe/models.py:331
 #, fuzzy
@@ -8591,7 +8547,7 @@ msgstr "Lugar no encontrado."
 
 #: equipe/models.py:364 equipe/templates/equipe/fiche_paie_pdf.html:51
 msgid "heures supplémentaires"
-msgstr ""
+msgstr "horas extraordinarias"
 
 #: equipe/models.py:366
 msgid "salaire brut"
@@ -8646,7 +8602,7 @@ msgstr "etiqueta"
 
 #: equipe/models.py:422 equipe/templates/equipe/paie.html:72
 msgid "base"
-msgstr ""
+msgstr "base"
 
 #: equipe/models.py:423
 msgid "taux (%)"
@@ -8680,89 +8636,73 @@ msgid "lignes de paie"
 msgstr "Cliente"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:6
-#, fuzzy
-#| msgid "Ce lien de partage n'est plus valide."
 msgid "Cette offre n'est plus en ligne"
-msgstr "Este enlace de uso compartido ya no es válido."
+msgstr "Esta oferta ya no está publicada"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:8
 #, python-format
 msgid ""
 "« %(poste)s » chez %(ferme)s n'est plus proposée. D'autres fermes recrutent "
 "peut-être."
-msgstr ""
+msgstr "«%(poste)s» en %(ferme)s ya no se ofrece. Puede que otras granjas contraten."
 
 #: equipe/templates/equipe/_emploi_close_corps.html:10
-#, fuzzy
-#| msgid "factures"
 msgid "Voir les offres en ligne"
-msgstr "facturas"
+msgstr "Ver las ofertas publicadas"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:6
-#, fuzzy
-#| msgid "Toutes les heures"
 msgid "Toutes les offres"
-msgstr "Cada hora"
+msgstr "Todas las ofertas"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:22
 #: equipe/templates/equipe/_emplois_corps.html:33
 #: equipe/templates/equipe/offres.html:67
-#, fuzzy
-#| msgid "Partage de position"
 msgid "Prise de poste"
-msgstr "Compartir ubicación"
+msgstr "Incorporación"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:27
 #: equipe/templates/equipe/fiche_paie_pdf.html:50
 msgid "heures"
-msgstr ""
+msgstr "horas"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:30
 #: equipe/templates/equipe/offres.html:79
-#, fuzzy
-#| msgid "En génération"
 msgid "Rémunération"
-msgstr "En generación"
+msgstr "Remuneración"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:34
-#, fuzzy
-#| msgid "Avertissement"
 msgid "Logement"
-msgstr "Advertencia"
+msgstr "Alojamiento"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:35
 msgid "Possible sur place"
-msgstr ""
+msgstr "Posible en el lugar"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:39
-#, fuzzy
-#| msgid "code postal"
 msgid "Le poste"
-msgstr "código postal"
+msgstr "El puesto"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:43
 #: equipe/templates/equipe/offres.html:91
 msgid "Profil recherché"
-msgstr ""
+msgstr "Perfil buscado"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:52
 msgid "Postuler"
-msgstr ""
+msgstr "Postular"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:53
 msgid "Pas besoin de compte : la ferme reçoit votre message directement."
-msgstr ""
+msgstr "No hace falta cuenta: la granja recibe su mensaje directamente."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:57
 #: vente/templates/vente/_commander_corps.html:19
 msgid "Votre nom"
-msgstr ""
+msgstr "Su nombre"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:61
-#, fuzzy
-#| msgid "adresse email"
 msgid "Votre email"
-msgstr "dirección de email"
+msgstr "Su correo"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/paie.html:49
@@ -8780,80 +8720,62 @@ msgstr "opcional"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:72
 msgid "PDF, Word, OpenDocument ou photo — 5 Mo maximum."
-msgstr ""
+msgstr "PDF, Word, OpenDocument o foto: 5 MB como máximo."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:75
-#, fuzzy
-#| msgid "Dicter le message"
 msgid "Votre message"
-msgstr "Dictar el mensaje"
+msgstr "Su mensaje"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:77
 msgid ""
 "Dites en quelques lignes ce qui vous intéresse dans ce poste et ce que vous "
 "savez faire."
-msgstr ""
+msgstr "Cuente en pocas líneas qué le interesa del puesto y qué sabe hacer."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:81
 msgid "Envoyer ma candidature"
-msgstr ""
+msgstr "Enviar mi candidatura"
 
 #: equipe/templates/equipe/_emplois_corps.html:8
 msgid "Les postes ouverts dans les fermes, saison après saison."
-msgstr ""
+msgstr "Los puestos abiertos en las granjas, temporada tras temporada."
 
 #: equipe/templates/equipe/_emplois_corps.html:14
-#, fuzzy
-#| msgid "Rechercher un type de sol, une texture…"
 msgid "Chercher un poste, une commune, une ferme…"
-msgstr "Buscar un tipo de suelo, una textura…"
+msgstr "Buscar un puesto, un municipio, una granja…"
 
 #: equipe/templates/equipe/_emplois_corps.html:15
-#, fuzzy
-#| msgid "Rechercher une commune"
 msgid "Rechercher une offre"
-msgstr "Buscar un municipio"
+msgstr "Buscar una oferta"
 
 #: equipe/templates/equipe/_emplois_corps.html:16
-#, fuzzy
-#| msgid "Rechercher un lieu…"
 msgid "Chercher"
-msgstr "Buscar un lugar…"
+msgstr "Buscar"
 
 #: equipe/templates/equipe/_emplois_corps.html:34
-#, fuzzy
-#| msgid "Semaine"
 msgid "semaine"
-msgstr "Semana"
+msgstr "semana"
 
 #: equipe/templates/equipe/_emplois_corps.html:41
-#, fuzzy
-#| msgid "Aucune culture ne correspond à la recherche."
 msgid "Aucune offre ne correspond à votre recherche."
-msgstr "Ningún cultivo coincide con la búsqueda."
+msgstr "Ninguna oferta coincide con su búsqueda."
 
 #: equipe/templates/equipe/_emplois_corps.html:42
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune offre en ligne pour le moment."
-msgstr "Ninguna conversación por el momento."
+msgstr "Ninguna oferta publicada por ahora."
 
 #: equipe/templates/equipe/_emplois_corps.html:44
 msgid "Revenez à l'approche des saisons : c'est là que les fermes recrutent."
-msgstr ""
+msgstr "Vuelva al acercarse las temporadas: es cuando las granjas contratan."
 
 #: equipe/templates/equipe/_entete_emplois.html:10
-#, fuzzy
-#| msgid "Voir le mois"
 msgid "Emplois à la ferme"
-msgstr "Ver el mes"
+msgstr "Empleos en la granja"
 
 #: equipe/templates/equipe/_entete_emplois.html:15
 #: vente/templates/vente/_entete_public.html:16
-#, fuzzy
-#| msgid "type d'agriculture"
 msgid "Vous êtes agriculteur ?"
-msgstr "tipo de agricultura"
+msgstr "¿Es usted agricultor?"
 
 #: equipe/templates/equipe/_invitation_carte.html:10
 msgid "Lien d'invitation invalide"
@@ -8914,79 +8836,71 @@ msgstr "Crear una cuenta"
 #: equipe/templates/equipe/contrat_pdf.html:5
 #, python-format
 msgid "Contrat — %(qui)s"
-msgstr ""
+msgstr "Contrato — %(qui)s"
 
 #: equipe/templates/equipe/contrat_pdf.html:16
 #, python-format
 msgid "%(ferme)s — document établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — documento emitido desde Isidor."
 
 #: equipe/templates/equipe/contrat_pdf.html:17
 msgid ""
 "À faire relire avant signature : les clauses obligatoires dépendent de la "
 "convention collective applicable."
-msgstr ""
+msgstr "Debe revisarse antes de firmar: las cláusulas obligatorias dependen del convenio colectivo aplicable."
 
 #: equipe/templates/equipe/contrats.html:12
 #: equipe/templates/equipe/contrats.html:89
-#, fuzzy
-#| msgid "Nouveau mail"
 msgid "Nouveau modèle"
-msgstr "Nuevo correo"
+msgstr "Nueva plantilla"
 
 #: equipe/templates/equipe/contrats.html:15
 #: equipe/templates/equipe/contrats.html:29
 msgid "Établir un contrat"
-msgstr ""
+msgstr "Emitir un contrato"
 
 #: equipe/templates/equipe/contrats.html:22
 msgid ""
 "Ces modèles sont des points de départ : les clauses obligatoires, la période "
 "d'essai et la rémunération dépendent de la convention collective applicable. "
 "Faites relire un contrat avant de le remettre."
-msgstr ""
+msgstr "Estas plantillas son puntos de partida: las cláusulas obligatorias, el período de prueba y la remuneración dependen del convenio colectivo aplicable. Haga revisar el contrato antes de entregarlo."
 
 #: equipe/templates/equipe/contrats.html:33
 #: equipe/templates/equipe/fiche_paie_pdf.html:39
 #: equipe/templates/equipe/paie.html:34
-#, fuzzy
-#| msgid "participants"
 msgid "Salarié"
-msgstr "participantes"
+msgstr "Trabajador"
 
 #: equipe/templates/equipe/contrats.html:40
 #: operations/templates/operations/parc_materiel.html:87
 msgid "Modèle"
-msgstr ""
+msgstr "Plantilla"
 
 #: equipe/templates/equipe/contrats.html:47
 msgid "Poste"
-msgstr ""
+msgstr "Puesto"
 
 #: equipe/templates/equipe/contrats.html:48
 msgid "ex : ouvrier arboricole"
-msgstr ""
+msgstr "p. ej. peón frutícola"
 
 #: equipe/templates/equipe/contrats.html:59
 msgid "si CDD"
-msgstr ""
+msgstr "si es temporal"
 
 #: equipe/templates/equipe/contrats.html:63
 #: equipe/templates/equipe/offres.html:75
-#, fuzzy
-#| msgid "Créer un compte"
 msgid "Heures par semaine"
-msgstr "Crear una cuenta"
+msgstr "Horas por semana"
 
 #: equipe/templates/equipe/contrats.html:67
-#, fuzzy
-#| msgid "CA (€)"
 msgid "Brut mensuel (€)"
-msgstr "CN (€)"
+msgstr "Bruto mensual (€)"
 
 #: equipe/templates/equipe/contrats.html:73
 msgid "Établir"
-msgstr ""
+msgstr "Emitir"
 
 #: equipe/templates/equipe/contrats.html:77
 #: equipe/templates/equipe/paie.html:144
@@ -8994,29 +8908,23 @@ msgstr ""
 msgid ""
 "Ajoutez d'abord un <a href=\"%(url_equipe)s\" class=\"underline\">membre "
 "d'équipe</a>."
-msgstr ""
+msgstr "Añada primero un <a href=\"%(url_equipe)s\" class=\"underline\">miembro del equipo</a>."
 
 #: equipe/templates/equipe/contrats.html:78
 msgid "Créez ou importez d'abord un modèle de contrat."
-msgstr ""
+msgstr "Cree o importe primero una plantilla de contrato."
 
 #: equipe/templates/equipe/contrats.html:88
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier le modèle"
-msgstr "Editar"
+msgstr "Modificar la plantilla"
 
 #: equipe/templates/equipe/contrats.html:93
-#, fuzzy
-#| msgid "Nom du signataire"
 msgid "Nom du modèle"
-msgstr "Nombre del firmante"
+msgstr "Nombre de la plantilla"
 
 #: equipe/templates/equipe/contrats.html:103
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Corps du contrat"
-msgstr "miembros de la conversación"
+msgstr "Cuerpo del contrato"
 
 #: equipe/templates/equipe/contrats.html:107
 #, fuzzy
@@ -9028,51 +8936,41 @@ msgstr "%(n)s voto"
 #: equipe/templates/equipe/contrats.html:115
 msgid ""
 "Un jeton laissé vide devient une ligne de pointillés à compléter à la main."
-msgstr ""
+msgstr "Un marcador vacío se convierte en una línea de puntos para rellenar a mano."
 
 #: equipe/templates/equipe/contrats.html:128
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes modèles"
-msgstr "comandos IoT"
+msgstr "Mis plantillas"
 
 #: equipe/templates/equipe/contrats.html:132
 msgid "Importer les modèles types"
-msgstr ""
+msgstr "Importar las plantillas tipo"
 
 #: equipe/templates/equipe/contrats.html:143
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce modèle ?"
-msgstr "¿Eliminar esta ayuda?"
+msgstr "¿Eliminar esta plantilla?"
 
 #: equipe/templates/equipe/contrats.html:162
 msgid ""
 "Aucun modèle. Importez les modèles types (CDI, CDD, saisonnier, "
 "apprentissage, stage) puis adaptez-les à votre exploitation."
-msgstr ""
+msgstr "Ninguna plantilla. Importe las plantillas tipo (indefinido, temporal, temporada, aprendizaje, prácticas) y adáptelas a su explotación."
 
 #: equipe/templates/equipe/contrats.html:169
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats établis"
-msgstr "Contacto"
+msgstr "Contratos emitidos"
 
 #: equipe/templates/equipe/contrats.html:178
 msgid "depuis le"
-msgstr ""
+msgstr "desde el"
 
 #: equipe/templates/equipe/contrats.html:197
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Ouvrir le contrat"
-msgstr "¿Eliminar esta ayuda?"
+msgstr "Abrir el contrato"
 
 #: equipe/templates/equipe/contrats.html:212
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun contrat établi pour le moment."
-msgstr "Ninguna conversación por el momento."
+msgstr "Ningún contrato emitido por ahora."
 
 #: equipe/templates/equipe/edit.html:8
 #: finances/templates/finances/devis_signature.html:18
@@ -9171,98 +9069,84 @@ msgstr "¿Eliminar esta ayuda?"
 #: equipe/templates/equipe/fiche_paie_pdf.html:5
 #, python-format
 msgid "Bulletin — %(qui)s"
-msgstr ""
+msgstr "Nómina — %(qui)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:24
-#, fuzzy
-#| msgid "Température"
 msgid "Bulletin de paie"
-msgstr "Temperatura"
+msgstr "Nómina"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:26
 #, python-format
 msgid "Période du %(d)s au %(f)s"
-msgstr ""
+msgstr "Período del %(d)s al %(f)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:31
 msgid "Employeur"
-msgstr ""
+msgstr "Empleador"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:48
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Temps de travail"
-msgstr "Lugar no encontrado."
+msgstr "Tiempo de trabajo"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
-#, fuzzy
-#| msgid "Juridique"
 msgid "Rubrique"
-msgstr "Jurídico"
+msgstr "Partida"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Taux"
-msgstr ""
+msgstr "Tipo"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part salariale"
-msgstr ""
+msgstr "Parte del trabajador"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part employeur"
-msgstr ""
+msgstr "Parte del empleador"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:78
 msgid "Salaire brut"
-msgstr ""
+msgstr "Salario bruto"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:79
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales"
-msgstr "Socios y asalariados"
+msgstr "Cotizaciones del trabajador"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:81
-#, fuzzy
-#| msgid "Nouveau comptable"
 msgid "Net imposable"
-msgstr "Nuevo contable"
+msgstr "Neto imponible"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:83
 msgid "Net à payer"
-msgstr ""
+msgstr "Neto a pagar"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:84
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales"
-msgstr "Socios y asalariados"
+msgstr "Cotizaciones patronales"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:85
-#, fuzzy
-#| msgid "Coût eau"
 msgid "Coût employeur"
-msgstr "Coste del agua"
+msgstr "Coste para el empleador"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:90
 #, python-format
 msgid "Payée le %(d)s"
-msgstr ""
+msgstr "Pagada el %(d)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:96
 #, python-format
 msgid "%(ferme)s — bulletin établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — nómina emitida desde Isidor."
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:97
 msgid ""
 "Les montants sont ceux saisis par l'employeur : Isidor ne calcule pas la "
 "paie. Conservez ce bulletin sans limitation de durée."
-msgstr ""
+msgstr "Los importes son los introducidos por el empleador: Isidor no calcula la paga. Conserve esta nómina sin límite de tiempo."
 
 #: equipe/templates/equipe/invitation.html:9 equipe/views.py:99
 #: equipe/views.py:105 equipe/views.py:144
@@ -9311,42 +9195,32 @@ msgstr "Acceso a la ubicación denegado."
 
 #: equipe/templates/equipe/offres.html:16
 msgid "Voir la page publique"
-msgstr ""
+msgstr "Ver la página pública"
 
 #: equipe/templates/equipe/offres.html:19
 #: equipe/templates/equipe/offres.html:31
-#, fuzzy
-#| msgid "Nouvelle parcelle"
 msgid "Nouvelle offre"
-msgstr "Nueva parcela"
+msgstr "Nueva oferta"
 
 #: equipe/templates/equipe/offres.html:30
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier l'offre"
-msgstr "Editar"
+msgstr "Modificar la oferta"
 
 #: equipe/templates/equipe/offres.html:36
-#, fuzzy
-#| msgid "Identité"
 msgid "Intitulé du poste"
-msgstr "Identidad"
+msgstr "Título del puesto"
 
 #: equipe/templates/equipe/offres.html:38
 msgid "ex : ouvrier arboricole pour la récolte"
-msgstr ""
+msgstr "p. ej. peón frutícola para la cosecha"
 
 #: equipe/templates/equipe/offres.html:40
-#, fuzzy
-#| msgid "Titre d'une tâche de planning agricole"
 msgid "Intitulé d'une offre d'emploi agricole"
-msgstr "Título de una tarea de planificación agrícola"
+msgstr "Título de una oferta de empleo agrícola"
 
 #: equipe/templates/equipe/offres.html:44
-#, fuzzy
-#| msgid "Type de sol"
 msgid "Type de contrat"
-msgstr "Tipo de suelo"
+msgstr "Tipo de contrato"
 
 #: equipe/templates/equipe/offres.html:62
 #, python-format
@@ -9354,63 +9228,51 @@ msgid ""
 "Aucune commune renseignée sur vos <a href=\"%(url_parcelles)s\" "
 "class=\"underline\">parcelles</a>. L'offre indiquera la commune de "
 "l'exploitation."
-msgstr ""
+msgstr "Ningún municipio indicado en sus <a href=\"%(url_parcelles)s\" class=\"underline\">parcelas</a>. La oferta mostrará el municipio de la explotación."
 
 #: equipe/templates/equipe/offres.html:71
 msgid "Visible jusqu'au"
-msgstr ""
+msgstr "Visible hasta el"
 
 #: equipe/templates/equipe/offres.html:81
 msgid "ex : SMIC agricole, selon profil"
-msgstr ""
+msgstr "p. ej. salario mínimo agrícola, según perfil"
 
 #: equipe/templates/equipe/offres.html:84
-#, fuzzy
-#| msgid "fertigation"
 msgid "Description du poste"
-msgstr "fertirrigación"
+msgstr "Descripción del puesto"
 
 #: equipe/templates/equipe/offres.html:87
-#, fuzzy
-#| msgid "Description d'une tâche de planning agricole"
 msgid "Description du poste dans une offre d'emploi agricole"
-msgstr "Descripción de una tarea de planificación agrícola"
+msgstr "Descripción del puesto en una oferta de empleo agrícola"
 
 #: equipe/templates/equipe/offres.html:94
 msgid "Profil recherché dans une offre d'emploi agricole"
-msgstr ""
+msgstr "Perfil buscado en una oferta de empleo agrícola"
 
 #: equipe/templates/equipe/offres.html:98
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Email de contact"
-msgstr "miembros de la conversación"
+msgstr "Correo de contacto"
 
 #: equipe/templates/equipe/offres.html:104
 msgid "Logement possible sur place"
-msgstr ""
+msgstr "Alojamiento posible en el lugar"
 
 #: equipe/templates/equipe/offres.html:122
-#, fuzzy
-#| msgid "Client"
 msgid "en ligne depuis le"
-msgstr "Cliente"
+msgstr "publicada desde el"
 
 #: equipe/templates/equipe/offres.html:123
 msgid "jusqu'au"
-msgstr ""
+msgstr "hasta el"
 
 #: equipe/templates/equipe/offres.html:129
-#, fuzzy
-#| msgid "En ligne"
 msgid "Voir en ligne"
-msgstr "En línea"
+msgstr "Ver en línea"
 
 #: equipe/templates/equipe/offres.html:144
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer cette offre et ses candidatures ?"
-msgstr "¿Eliminar esta ayuda?"
+msgstr "¿Eliminar esta oferta y sus candidaturas?"
 
 #: equipe/templates/equipe/offres.html:155
 #, fuzzy, python-format
@@ -9423,34 +9285,26 @@ msgstr[1] "%(n)s votos"
 msgstr[2] "%(n)s votos"
 
 #: equipe/templates/equipe/offres.html:182
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune candidature reçue."
-msgstr "Ninguna factura."
+msgstr "No se han recibido candidaturas."
 
 #: equipe/templates/equipe/offres.html:187
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune offre"
-msgstr "Ninguna factura."
+msgstr "Ninguna oferta"
 
 #: equipe/templates/equipe/offres.html:188
 msgid ""
 "Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page "
 "publique des emplois."
-msgstr ""
+msgstr "Redacte una oferta y publíquela para que aparezca en la página pública de empleos."
 
 #: equipe/templates/equipe/paie.html:10
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques :"
-msgstr "Neumáticos"
+msgstr "Partidas:"
 
 #: equipe/templates/equipe/paie.html:13
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une fiche de paie"
-msgstr "Activar un código"
+msgstr "Añadir una nómina"
 
 #: equipe/templates/equipe/paie.html:19
 msgid ""
@@ -9458,152 +9312,120 @@ msgid ""
 "taux MSA, la convention collective et les exonérations relèvent de votre "
 "comptable ou du service TESA. Saisissez ici les montants qu'ils vous "
 "fournissent — l'addition des rubriques est vérifiée."
-msgstr ""
+msgstr "Isidor registra y edita sus nóminas, no calcula la paga: los tipos de la MSA, el convenio colectivo y las exenciones competen a su asesor o al servicio TESA. Introduzca aquí los importes que le faciliten: se comprueba la suma de las partidas."
 
 #: equipe/templates/equipe/paie.html:27
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier la fiche de paie"
-msgstr "Editar"
+msgstr "Modificar la nómina"
 
 #: equipe/templates/equipe/paie.html:28
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle fiche de paie"
-msgstr "Nuevo cultivo"
+msgstr "Nueva nómina"
 
 #: equipe/templates/equipe/paie.html:41
 msgid "Période du"
-msgstr ""
+msgstr "Período del"
 
 #: equipe/templates/equipe/paie.html:45
-#, fuzzy
-#| msgid "Eau"
 msgid "au"
-msgstr "Agua"
+msgstr "al"
 
 #: equipe/templates/equipe/paie.html:56
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Heures travaillées"
-msgstr "Lugar no encontrado."
+msgstr "Horas trabajadas"
 
 #: equipe/templates/equipe/paie.html:60
 msgid "Heures supplémentaires"
-msgstr ""
+msgstr "Horas extraordinarias"
 
 #: equipe/templates/equipe/paie.html:66
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques"
-msgstr "Neumáticos"
+msgstr "Partidas"
 
 #: equipe/templates/equipe/paie.html:70
 msgid "ex : Retraite complémentaire"
-msgstr ""
+msgstr "p. ej. jubilación complementaria"
 
 #: equipe/templates/equipe/paie.html:73
 #, python-format
 msgid "taux %%"
-msgstr ""
+msgstr "tipo %%"
 
 #: equipe/templates/equipe/paie.html:75
 msgid "employeur"
-msgstr ""
+msgstr "empleador"
 
 #: equipe/templates/equipe/paie.html:86
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une rubrique"
-msgstr "Activar un código"
+msgstr "Añadir una partida"
 
 #: equipe/templates/equipe/paie.html:91
 msgid "Totaux"
-msgstr ""
+msgstr "Totales"
 
 #: equipe/templates/equipe/paie.html:94
-#, fuzzy
-#| msgid "surface totale (ha)"
 msgid "Salaire brut (€)"
-msgstr "superficie total (ha)"
+msgstr "Salario bruto (€)"
 
 #: equipe/templates/equipe/paie.html:98
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales (€)"
-msgstr "Socios y asalariados"
+msgstr "Cotizaciones del trabajador (€)"
 
 #: equipe/templates/equipe/paie.html:104
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales (€)"
-msgstr "Socios y asalariados"
+msgstr "Cotizaciones patronales (€)"
 
 #: equipe/templates/equipe/paie.html:110
-#, fuzzy
-#| msgid "montant (€)"
 msgid "Net imposable (€)"
-msgstr "importe (€)"
+msgstr "Neto imponible (€)"
 
 #: equipe/templates/equipe/paie.html:114
 msgid "Net à payer (€)"
-msgstr ""
+msgstr "Neto a pagar (€)"
 
 #: equipe/templates/equipe/paie.html:124
-#, fuzzy
-#| msgid "Payée"
 msgid "Payée le"
-msgstr "Pagada"
+msgstr "Pagada el"
 
 #: equipe/templates/equipe/paie.html:128
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Mode de paiement"
-msgstr "fecha de nacimiento"
+msgstr "Forma de pago"
 
 #: equipe/templates/equipe/paie.html:129
-#, fuzzy
-#| msgid "Environnement"
 msgid "ex : virement"
-msgstr "Medio ambiente"
+msgstr "p. ej. transferencia"
 
 #: equipe/templates/equipe/paie.html:151
 msgid "Bulletins"
-msgstr ""
+msgstr "Nóminas"
 
 #: equipe/templates/equipe/paie.html:161
 msgid "brut"
-msgstr ""
+msgstr "bruto"
 
 #: equipe/templates/equipe/paie.html:162
 msgid "net"
-msgstr ""
+msgstr "neto"
 
 #: equipe/templates/equipe/paie.html:163
 msgid "coût employeur"
-msgstr ""
+msgstr "coste empleador"
 
 #: equipe/templates/equipe/paie.html:167
 msgid "Les rubriques ne totalisent pas les montants annoncés."
-msgstr ""
+msgstr "Las partidas no suman los importes indicados."
 
 #: equipe/templates/equipe/paie.html:186
-#, fuzzy
-#| msgid "Supprimer la culture ?"
 msgid "Ouvrir le bulletin"
-msgstr "¿Eliminar el cultivo?"
+msgstr "Abrir la nómina"
 
 #: equipe/templates/equipe/paie.html:190
-#, fuzzy
-#| msgid "Supprimer cette fiche ?"
 msgid "Supprimer cette fiche de paie ?"
-msgstr "¿Eliminar esta ficha?"
+msgstr "¿Eliminar esta nómina?"
 
 #: equipe/templates/equipe/paie.html:201
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun bulletin pour le moment."
-msgstr "Ninguna conversación por el momento."
+msgstr "Ninguna nómina por ahora."
 
 #: equipe/templates/equipe/placeholder.html:18
 #, python-format
@@ -13424,10 +13246,8 @@ msgid "Bonne teneur en eau (ou présence d'eau libre)."
 msgstr ""
 
 #: irrigation/templates/irrigation/_bilan_eau.html:8
-#, fuzzy
-#| msgid "Bilan eau"
 msgid "Bilan d'eau"
-msgstr "Balance hídrico"
+msgstr "Balance de agua"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:14
 #, fuzzy
@@ -13436,16 +13256,12 @@ msgid "Irrigation totale"
 msgstr "Riego"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:18
-#, fuzzy
-#| msgid "sessions enregistrées"
 msgid "Sessions enregistrées"
-msgstr "sesiones registradas"
+msgstr "Sesiones registradas"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:22
-#, fuzzy
-#| msgid "Quota eau"
 msgid "Quota"
-msgstr "Cuota de agua"
+msgstr "Cupo"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:29
 msgid "estimé"
@@ -13462,7 +13278,7 @@ msgstr "Ninguna sesión de riego registrada"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:43
 msgid "Les données apparaîtront dès la première session."
-msgstr ""
+msgstr "Los datos aparecerán tras la primera sesión."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:50
 msgid "Consommation par parcelle (m³/jour)"
@@ -13473,30 +13289,16 @@ msgid "Aucune session d'irrigation"
 msgstr "Ninguna sesión de riego"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:71
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Enregistrez une session pour voir la consommation par parcelle."
-msgstr ""
-"Ninguna parcela registrada. Cree sus parcelas para ver el consumo por "
-"parcela."
+msgstr "Registre una sesión para ver el consumo por parcela."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:75
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune parcelle enregistrée"
-msgstr "Ningún gasto registrado."
+msgstr "Ninguna parcela registrada"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:76
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Créez vos parcelles pour voir la consommation par parcelle."
-msgstr ""
-"Ninguna parcela registrada. Cree sus parcelas para ver el consumo por "
-"parcela."
+msgstr "Cree sus parcelas para ver el consumo por parcela."
 
 #: irrigation/templates/irrigation/_etc_card.html:9
 #, fuzzy
@@ -15384,96 +15186,76 @@ msgid "Règle « %(r)s » supprimée."
 msgstr ""
 
 #: operations/materiel.py:21
-#, fuzzy
-#| msgid "Auto"
 msgid "Automoteurs"
-msgstr "Auto"
+msgstr "Automotores"
 
 #: operations/materiel.py:23
-#, fuzzy
-#| msgid "date de plantation"
 msgid "Semis et plantation"
-msgstr "fecha de plantación"
+msgstr "Siembra y plantación"
 
 #: operations/materiel.py:24
-#, fuzzy
-#| msgid "Fertilisation"
 msgid "Fertilisation et protection"
-msgstr "Fertilización"
+msgstr "Fertilización y protección"
 
 #: operations/materiel.py:25
-#, fuzzy
-#| msgid "Récolte"
 msgid "Récolte et fourrage"
-msgstr "Cosecha"
+msgstr "Cosecha y forraje"
 
 #: operations/materiel.py:26
 msgid "Transport et manutention"
-msgstr ""
+msgstr "Transporte y manipulación"
 
 #: operations/materiel.py:28
-#, fuzzy
-#| msgid "Redessiner une parcelle"
 msgid "Bâtiment et post-récolte"
-msgstr "Redibujar parcela"
+msgstr "Edificios y poscosecha"
 
 #: operations/materiel.py:30
-#, fuzzy
-#| msgid "Générique"
 msgid "Numérique"
-msgstr "Genérico"
+msgstr "Digital"
 
 #: operations/materiel.py:36
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur standard"
-msgstr "Tractor"
+msgstr "Tractor estándar"
 
 #: operations/materiel.py:37
 msgid "Tracteur vigneron (étroit)"
-msgstr ""
+msgstr "Tractor viñedo (estrecho)"
 
 #: operations/materiel.py:38
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur chenillé"
-msgstr "Tractor"
+msgstr "Tractor de orugas"
 
 #: operations/materiel.py:39
 msgid "Télescopique ou chargeur"
-msgstr ""
+msgstr "Telescópica o cargadora"
 
 #: operations/materiel.py:40
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Moissonneuse-batteuse"
 msgstr "Cosechadora"
 
 #: operations/materiel.py:41
 msgid "Ensileuse"
-msgstr ""
+msgstr "Ensiladora"
 
 #: operations/materiel.py:42
 msgid "Machine à vendanger"
-msgstr ""
+msgstr "Vendimiadora"
 
 #: operations/materiel.py:43
-#, fuzzy
-#| msgid "Ajouter une parcelle"
 msgid "Automoteur de pulvérisation"
-msgstr "Añadir parcela"
+msgstr "Pulverizador autopropulsado"
 
 #: operations/materiel.py:44
 msgid "Quad ou UTV"
-msgstr ""
+msgstr "Quad o UTV"
 
 #: operations/materiel.py:45
 msgid "Camion"
-msgstr ""
+msgstr "Camión"
 
 #: operations/materiel.py:46
 msgid "Chariot élévateur"
-msgstr ""
+msgstr "Carretilla elevadora"
 
 #: operations/materiel.py:49
 msgid "Charrue"
@@ -15481,135 +15263,107 @@ msgstr "Arado de vertedera"
 
 #: operations/materiel.py:50
 msgid "Déchaumeur"
-msgstr ""
+msgstr "Cultivador de rastrojo"
 
 #: operations/materiel.py:51
 msgid "Cultivateur"
 msgstr "Cultivador"
 
 #: operations/materiel.py:52
-#, fuzzy
-#| msgid "culture"
 msgid "Vibroculteur"
-msgstr "cultivo"
+msgstr "Cultivador vibrante"
 
 #: operations/materiel.py:53
-#, fuzzy
-#| msgid "Alertes actives"
 msgid "Herse rotative"
-msgstr "Alertas activas"
+msgstr "Grada rotativa"
 
 #: operations/materiel.py:54
 msgid "Herse étrille"
-msgstr ""
+msgstr "Grada de púas flexibles"
 
 #: operations/materiel.py:55
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Rouleau"
-msgstr "Enrollador"
+msgstr "Rodillo"
 
 #: operations/materiel.py:56
-#, fuzzy
-#| msgid "Se connecter"
 msgid "Décompacteur"
-msgstr "Conectarse"
+msgstr "Subsolador"
 
 #: operations/materiel.py:57
 msgid "Broyeur"
-msgstr ""
+msgstr "Trituradora"
 
 #: operations/materiel.py:60
-#, fuzzy
-#| msgid "En ligne"
 msgid "Semoir en ligne"
-msgstr "En línea"
+msgstr "Sembradora en línea"
 
 #: operations/materiel.py:61
 msgid "Semoir monograine"
-msgstr ""
+msgstr "Sembradora monograno"
 
 #: operations/materiel.py:62
-#, fuzzy
-#| msgid "Semoir"
 msgid "Semoir direct"
-msgstr "Sembradora"
+msgstr "Sembradora directa"
 
 #: operations/materiel.py:63
-#, fuzzy
-#| msgid "Plante"
 msgid "Planteuse"
-msgstr "Planta"
+msgstr "Plantadora"
 
 #: operations/materiel.py:64
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Bineuse"
-msgstr "Cosechadora"
+msgstr "Escardadora"
 
 #: operations/materiel.py:67
 msgid "Épandeur d'engrais centrifuge"
-msgstr ""
+msgstr "Abonadora centrífuga"
 
 #: operations/materiel.py:68
-#, fuzzy
-#| msgid "Épandeur"
 msgid "Épandeur à fumier"
-msgstr "Esparcidora"
+msgstr "Esparcidor de estiércol"
 
 #: operations/materiel.py:69
 msgid "Tonne à lisier"
-msgstr ""
+msgstr "Cuba de purín"
 
 #: operations/materiel.py:70
 msgid "Pulvérisateur porté ou traîné"
-msgstr ""
+msgstr "Pulverizador suspendido o arrastrado"
 
 #: operations/materiel.py:71
 msgid "Atomiseur (arboriculture, viticulture)"
-msgstr ""
+msgstr "Atomizador (fruticultura, viticultura)"
 
 #: operations/materiel.py:74
-#, fuzzy
-#| msgid "Sous-tâches"
 msgid "Faucheuse"
-msgstr "Subtareas"
+msgstr "Segadora"
 
 #: operations/materiel.py:75
 msgid "Faneuse"
-msgstr ""
+msgstr "Henificadora"
 
 #: operations/materiel.py:76
 msgid "Andaineur"
-msgstr ""
+msgstr "Hilerador"
 
 #: operations/materiel.py:77
-#, fuzzy
-#| msgid "Pression basse"
 msgid "Presse à balles"
-msgstr "Presión baja"
+msgstr "Empacadora"
 
 #: operations/materiel.py:78
-#, fuzzy
-#| msgid "En panne"
 msgid "Enrubanneuse"
-msgstr "Averiada"
+msgstr "Encintadora"
 
 #: operations/materiel.py:79
-#, fuzzy
-#| msgid "charges"
 msgid "Autochargeuse"
-msgstr "gastos"
+msgstr "Remolque autocargador"
 
 #: operations/materiel.py:80
 msgid "Arracheuse"
-msgstr ""
+msgstr "Arrancadora"
 
 #: operations/materiel.py:83
-#, fuzzy
-#| msgid "Marque"
 msgid "Remorque"
-msgstr "Marca"
+msgstr "Remolque"
 
 #: operations/materiel.py:84
 msgid "Benne"
@@ -15617,131 +15371,111 @@ msgstr "Remolque"
 
 #: operations/materiel.py:86
 msgid "Godet"
-msgstr ""
+msgstr "Cazo"
 
 #: operations/materiel.py:87
-#, fuzzy
-#| msgid "Source"
 msgid "Fourche"
-msgstr "Fuente"
+msgstr "Horquilla"
 
 #: operations/materiel.py:88
 msgid "Pince à balles"
-msgstr ""
+msgstr "Pinza para pacas"
 
 #: operations/materiel.py:91
 msgid "Pompe"
 msgstr "Bomba"
 
 #: operations/materiel.py:92
-#, fuzzy
-#| msgid "station de pompage"
 msgid "Station de pompage"
-msgstr "estación de bombeo"
+msgstr "Estación de bombeo"
 
 #: operations/materiel.py:95
 msgid "Rampe"
-msgstr ""
+msgstr "Rampa de riego"
 
 #: operations/materiel.py:96
-#, fuzzy
-#| msgid "Goutte à goutte"
 msgid "Goutte-à-goutte"
-msgstr "Goteo"
+msgstr "Riego por goteo"
 
 #: operations/materiel.py:97
-#, fuzzy
-#| msgid "Facturation"
 msgid "Filtration"
-msgstr "Facturación"
+msgstr "Filtración"
 
 #: operations/materiel.py:98
 msgid "Borne"
-msgstr ""
+msgstr "Boca de riego"
 
 #: operations/materiel.py:101
 msgid "Séchoir"
-msgstr ""
+msgstr "Secadero"
 
 #: operations/materiel.py:102
 msgid "Trieuse"
-msgstr ""
+msgstr "Clasificadora"
 
 #: operations/materiel.py:103
 msgid "Calibreuse"
-msgstr ""
+msgstr "Calibradora"
 
 #: operations/materiel.py:104 stock/models.py:40
 msgid "Chambre froide"
-msgstr ""
+msgstr "Cámara frigorífica"
 
 #: operations/materiel.py:105
 msgid "Groupe électrogène"
-msgstr ""
+msgstr "Grupo electrógeno"
 
 #: operations/materiel.py:106
-#, fuzzy
-#| msgid "Capteur de pression"
 msgid "Nettoyeur haute pression"
-msgstr "Sensor de presión"
+msgstr "Hidrolimpiadora"
 
 #: operations/materiel.py:107 stock/models.py:39
 msgid "Cuve"
-msgstr ""
+msgstr "Cuba"
 
 #: operations/materiel.py:108
-#, fuzzy
-#| msgid "Pression"
 msgid "Pressoir"
-msgstr "Presión"
+msgstr "Prensa"
 
 #: operations/materiel.py:111
 msgid "Mélangeuse"
-msgstr ""
+msgstr "Mezcladora"
 
 #: operations/materiel.py:112
 msgid "Désileuse"
-msgstr ""
+msgstr "Desensiladora"
 
 #: operations/materiel.py:113
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Robot de traite"
-msgstr "fecha de nacimiento"
+msgstr "Robot de ordeño"
 
 #: operations/materiel.py:114
-#, fuzzy
-#| msgid "Température"
 msgid "Salle de traite"
-msgstr "Temperatura"
+msgstr "Sala de ordeño"
 
 #: operations/materiel.py:115
 msgid "Tank à lait"
-msgstr ""
+msgstr "Tanque de leche"
 
 #: operations/materiel.py:116
-#, fuzzy
-#| msgid "Taille"
 msgid "Pailleuse"
-msgstr "Poda"
+msgstr "Empajadora"
 
 #: operations/materiel.py:117
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Racleur"
-msgstr "Enrollador"
+msgstr "Rasqueta"
 
 #: operations/materiel.py:120
 msgid "Console GPS"
-msgstr ""
+msgstr "Consola GPS"
 
 #: operations/materiel.py:121
 msgid "Autoguidage RTK"
-msgstr ""
+msgstr "Autoguiado RTK"
 
 #: operations/materiel.py:123
 msgid "Drone"
-msgstr ""
+msgstr "Dron"
 
 #: operations/models.py:35
 msgid "En propre"
@@ -17284,105 +17018,79 @@ msgid "Priorité haute"
 msgstr "Prioridad alta"
 
 #: planning/templates/planning/_bar_reservation.html:4
-#, fuzzy
-#| msgid "Réserve Utile"
 msgid "réservé par"
-msgstr "Reserva Útil"
+msgstr "reservado por"
 
 #: planning/templates/planning/acces.html:7
 #: planning/templates/planning/planning.html:16
 #: planning/templates/planning/sans_acces.html:6
-#, fuzzy
-#| msgid "Planning"
 msgid "RH · Planning"
-msgstr "Planificación"
+msgstr "RR. HH. · Agenda"
 
 #: planning/templates/planning/acces.html:7
-#, fuzzy
-#| msgid "Participants"
 msgid "Partage"
-msgstr "Participantes"
+msgstr "Uso compartido"
 
 #: planning/templates/planning/acces.html:9
 #: planning/templates/planning/planning.html:21 planning/views.py:623
-#, fuzzy
-#| msgid "tâche de planning"
 msgid "Partage du planning"
-msgstr "tarea de planificación"
+msgstr "Uso compartido de la agenda"
 
 #: planning/templates/planning/acces.html:10
-#, fuzzy
-#| msgid "Retour aux parcelles"
 msgid "Retour au planning"
-msgstr "Volver a las parcelas"
+msgstr "Volver a la agenda"
 
 #: planning/templates/planning/acces.html:15
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Demandes en attente"
-msgstr "Ningún gasto registrado."
+msgstr "Solicitudes pendientes"
 
 #: planning/templates/planning/acces.html:23
 #, python-format
 msgid "demandé le %(quand)s"
-msgstr ""
+msgstr "solicitado el %(quand)s"
 
 #: planning/templates/planning/acces.html:28
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder en"
-msgstr "Concedido"
+msgstr "Conceder como"
 
 #: planning/templates/planning/acces.html:32
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder"
-msgstr "Concedido"
+msgstr "Conceder"
 
 #: planning/templates/planning/acces.html:35
 #: reseaux/templates/reseaux/reseaux.html:32
 #: vente/templates/vente/commande_detail.html:24
-#, fuzzy
-#| msgid "Refusé"
 msgid "Refuser"
-msgstr "Rechazado"
+msgstr "Rechazar"
 
 #: planning/templates/planning/acces.html:41
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune demande pour le moment."
-msgstr "Ninguna conversación por el momento."
+msgstr "Ninguna solicitud por ahora."
 
 #: planning/templates/planning/acces.html:47
-#, fuzzy
-#| msgid "Accès"
 msgid "Ont accès"
-msgstr "Acceso"
+msgstr "Tienen acceso"
 
 #: planning/templates/planning/acces.html:49
 #, python-format
 msgid "%(chef)s est propriétaire du planning : son accès ne se retire pas."
-msgstr ""
+msgstr "%(chef)s es propietario de la agenda: su acceso no se puede retirar."
 
 #: planning/templates/planning/acces.html:67
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Retirer cet accès ?"
-msgstr "¿Eliminar esta ayuda?"
+msgstr "¿Retirar este acceso?"
 
 #: planning/templates/planning/acces.html:78
 msgid "Personne d'autre n'a encore accès."
-msgstr ""
+msgstr "Nadie más tiene acceso todavía."
 
 #: planning/templates/planning/acces.html:85
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demandes refusées"
-msgstr "Solicitado"
+msgstr "Solicitudes rechazadas"
 
 #: planning/templates/planning/acces.html:95
 msgid "Accorder finalement"
-msgstr ""
+msgstr "Conceder finalmente"
 
 #: planning/templates/planning/bon_intervention.html:7 planning/views.py:829
 msgid "Bon d'intervention"
@@ -17570,60 +17278,54 @@ msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr "Sus subtareas también se eliminarán:"
 
 #: planning/templates/planning/sans_acces.html:13
-#, fuzzy
-#| msgid "Planning"
 msgid "Aucun planning"
-msgstr "Planificación"
+msgstr "Sin agenda"
 
 #: planning/templates/planning/sans_acces.html:15
 msgid ""
 "Vous n'êtes rattaché à aucune exploitation. Un planning appartient à une "
 "ferme."
-msgstr ""
+msgstr "No está vinculado a ninguna explotación. Una agenda pertenece a una granja."
 
 #: planning/templates/planning/sans_acces.html:19
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demande envoyée"
-msgstr "Solicitado"
+msgstr "Solicitud enviada"
 
 #: planning/templates/planning/sans_acces.html:21
 #, python-format
 msgid ""
 "Le responsable de %(ferme)s a été prévenu. Vous verrez le planning dès qu'il "
 "aura accordé l'accès."
-msgstr ""
+msgstr "Se ha avisado al responsable de %(ferme)s. Verá la agenda en cuanto conceda el acceso."
 
 #: planning/templates/planning/sans_acces.html:25
 msgid "Vous n'avez pas accès à ce planning"
-msgstr ""
+msgstr "No tiene acceso a esta agenda"
 
 #: planning/templates/planning/sans_acces.html:28
 msgid ""
 "Votre demande précédente n'a pas été retenue. Vous pouvez en formuler une "
 "nouvelle."
-msgstr ""
+msgstr "Su solicitud anterior no fue aceptada. Puede presentar una nueva."
 
 #: planning/templates/planning/sans_acces.html:30
 #, python-format
 msgid ""
 "Demandez l'accès au responsable de %(ferme)s. Il choisira ce que vous pouvez "
 "y faire."
-msgstr ""
+msgstr "Solicite el acceso al responsable de %(ferme)s. Decidirá qué puede hacer allí."
 
 #: planning/templates/planning/sans_acces.html:38
 msgid "Un mot pour accompagner la demande"
-msgstr ""
+msgstr "Unas palabras para acompañar la solicitud"
 
 #: planning/templates/planning/sans_acces.html:41
 msgid "ex : je gère la comptabilité et je voudrais suivre la charge de travail"
-msgstr ""
+msgstr "p. ej. llevo la contabilidad y quisiera seguir la carga de trabajo"
 
 #: planning/templates/planning/sans_acces.html:44
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demander l'accès"
-msgstr "Solicitado"
+msgstr "Solicitar acceso"
 
 #: planning/views.py:73
 msgid "Vous n'avez pas le droit de modifier ce planning."
@@ -19253,8 +18955,7 @@ msgstr "Añadir una subtarea"
 
 #: templates/partials/_sous_taches.html:52
 msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
-msgstr ""
-"Una subtarea con fecha también aparece en la planificación de su asignado."
+msgstr "Una subtarea con fecha aparece también en la agenda de su responsable."
 
 #: templates/partials/cookie_banner.html:6
 msgid ""

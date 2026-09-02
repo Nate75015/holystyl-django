@@ -3621,10 +3621,8 @@ msgstr ""
 #: exploitations/views.py:61 vente/templates/vente/_commander_corps.html:23
 #: vente/templates/vente/boutique.html:94
 #: vente/templates/vente/commande_detail.html:87
-#, fuzzy
-#| msgid "téléphone"
 msgid "Téléphone"
-msgstr "telefon"
+msgstr "Telefon"
 
 #: client/templates/client/_client_fields.html:60
 msgid "N° voie"
@@ -4939,10 +4937,8 @@ msgstr "összeg (€)"
 #: contrat/templates/contrat/_assurance_modal.html:86
 #: contrat/templates/contrat/_bail_modal.html:94
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
-#, fuzzy
-#| msgid "date de début"
 msgid "Date de début"
-msgstr "kezdő dátum"
+msgstr "Kezdés dátuma"
 
 #: contrat/templates/contrat/_assurance_modal.html:94
 #, fuzzy
@@ -5215,10 +5211,8 @@ msgid "nom de la partie contractante"
 msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
-#, fuzzy
-#| msgid "date de fin"
 msgid "Date de fin"
-msgstr "záró dátum"
+msgstr "Befejezés dátuma"
 
 #: contrat/templates/contrat/_contrat_modal.html:46
 msgid "conditions particulières, échéances…"
@@ -5316,10 +5310,8 @@ msgstr "Ütemezve"
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrat"
-msgstr "Kapcsolat"
+msgstr "Szerződés"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
@@ -5714,10 +5706,8 @@ msgstr "Összeg"
 
 #: contrat/templates/contrat/contrats.html:57
 #: equipe/templates/equipe/contrats.html:201
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce contrat ?"
-msgstr "Törli ezt a támogatást?"
+msgstr "Törli ezt a szerződést?"
 
 #: contrat/templates/contrat/contrats.html:68
 #, fuzzy
@@ -5960,7 +5950,7 @@ msgstr "Hét"
 
 #: core/adresse.py:54 operations/materiel.py:85
 msgid "Plateau"
-msgstr ""
+msgstr "Platós pótkocsi"
 
 #: core/adresse.py:55
 msgid "Pont"
@@ -6154,10 +6144,8 @@ msgstr "Időjárás"
 #: core/context_processors.py:81 core/context_processors.py:83
 #: elevage/templates/elevage/elevage.html:33 elevage/views.py:61
 #: operations/materiel.py:29
-#, fuzzy
-#| msgid "Élevé"
 msgid "Élevage"
-msgstr "Magas"
+msgstr "Állattartás"
 
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
@@ -6295,17 +6283,17 @@ msgstr "Feladatok"
 #: core/context_processors.py:128 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
-msgstr ""
+msgstr "Munkaszerződések"
 
 #: core/context_processors.py:129 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
-msgstr ""
+msgstr "Álláshirdetések"
 
 #: core/context_processors.py:130 equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
-msgstr ""
+msgstr "Bérszámfejtés"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
@@ -8063,132 +8051,102 @@ msgstr ""
 "és kezelési gyakorisági mutatók (IFT)."
 
 #: equipe/contrats.py:21
-#, fuzzy
-#| msgid "Déclassé"
 msgid "Nom du salarié"
-msgstr "Leértékelt"
+msgstr "Munkavállaló neve"
 
 #: equipe/contrats.py:22
 msgid "Email du salarié"
-msgstr ""
+msgstr "Munkavállaló e-mail-címe"
 
 #: equipe/contrats.py:23
-#, fuzzy
-#| msgid "téléphone 1"
 msgid "Téléphone du salarié"
-msgstr "telefon 1"
+msgstr "Munkavállaló telefonszáma"
 
 #: equipe/contrats.py:24
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom de l'exploitation"
-msgstr "Gazdaságom"
+msgstr "A gazdaság neve"
 
 #: equipe/contrats.py:25
-#, fuzzy
-#| msgid "adresse email"
 msgid "Adresse de l'exploitation"
-msgstr "e-mail-cím"
+msgstr "A gazdaság címe"
 
 #: equipe/contrats.py:26
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "SIRET de l'exploitation"
-msgstr "Gazdaságom"
+msgstr "A gazdaság SIRET-száma"
 
 #: equipe/contrats.py:27
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom du chef d'exploitation"
-msgstr "Gazdaságom"
+msgstr "A gazdaságvezető neve"
 
 #: equipe/contrats.py:28
 msgid "Poste occupé"
-msgstr ""
+msgstr "Betöltött munkakör"
 
 #: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
 #: equipe/templates/equipe/offres.html:50
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Lieu de travail"
-msgstr "A hely nem található."
+msgstr "Munkavégzés helye"
 
 #: equipe/contrats.py:32 equipe/templates/equipe/_emploi_detail_corps.html:26
-#, fuzzy
-#| msgid "Hebdomadaire"
 msgid "Durée hebdomadaire"
-msgstr "Hetente"
+msgstr "Heti munkaidő"
 
 #: equipe/contrats.py:33
 msgid "Rémunération brute mensuelle"
-msgstr ""
+msgstr "Havi bruttó bér"
 
 #: equipe/contrats.py:34
-#, fuzzy
-#| msgid "date d'acquisition"
 msgid "Date d'établissement"
-msgstr "szerzés dátuma"
+msgstr "Kiállítás dátuma"
 
 #: equipe/contrats.py:126
 msgid "CDI — contrat à durée indéterminée"
-msgstr ""
+msgstr "Határozatlan idejű szerződés"
 
 #: equipe/contrats.py:148
 msgid "CDD — contrat à durée déterminée"
-msgstr ""
+msgstr "Határozott idejű szerződés"
 
 #: equipe/contrats.py:174 equipe/models.py:163
-#, fuzzy
-#| msgid "Saisonnier"
 msgid "Contrat saisonnier"
-msgstr "Idénymunkás"
+msgstr "Idénymunka-szerződés"
 
 #: equipe/contrats.py:200 equipe/models.py:164
-#, fuzzy
-#| msgid "Contrôleur de vanne"
 msgid "Contrat d'apprentissage"
-msgstr "Szelepvezérlő"
+msgstr "Tanulószerződés"
 
 #: equipe/contrats.py:225 equipe/models.py:166
-#, fuzzy
-#| msgid "Interventions"
 msgid "Convention de stage"
-msgstr "Beavatkozások"
+msgstr "Gyakornoki megállapodás"
 
 #: equipe/emplois.py:54 equipe/templates/equipe/_emplois_corps.html:6
 msgid "Offres d'emploi agricoles"
-msgstr ""
+msgstr "Mezőgazdasági álláshirdetések"
 
 #: equipe/emplois.py:82
 msgid "Le CV ne doit pas dépasser 5 Mo."
-msgstr ""
+msgstr "Az önéletrajz nem lehet nagyobb 5 MB-nál."
 
 #: equipe/emplois.py:85
 msgid "Format de CV non accepté : PDF, Word, OpenDocument ou image."
-msgstr ""
+msgstr "Nem elfogadott önéletrajz-formátum: PDF, Word, OpenDocument vagy kép."
 
 #: equipe/emplois.py:99
-#, fuzzy
-#| msgid "Indiquez au moins un destinataire valide."
 msgid "Indiquez au moins votre nom et votre email."
-msgstr "Adjon meg legalább egy érvényes címzettet."
+msgstr "Adja meg legalább a nevét és e-mail-címét."
 
 #: equipe/emplois.py:117
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle candidature"
-msgstr "Új növény"
+msgstr "Új jelentkezés"
 
 #: equipe/emplois.py:118
 #, python-format
 msgid "%(qui)s a répondu à « %(offre)s »."
-msgstr ""
+msgstr "%(qui)s jelentkezett a következőre: „%(offre)s”."
 
 #: equipe/emplois.py:120
-#, fuzzy
-#| msgid "Demandé"
 msgid "Votre candidature est envoyée. Bonne chance !"
-msgstr "Igényelt"
+msgstr "Jelentkezését elküldtük. Sok sikert!"
 
 #: equipe/forms.py:69
 #, fuzzy
@@ -8404,10 +8362,8 @@ msgstr "Befejezve"
 
 #: equipe/models.py:203 equipe/models.py:356
 #: equipe/templates/equipe/paie.html:74
-#, fuzzy
-#| msgid "participants"
 msgid "salarié"
-msgstr "résztvevők"
+msgstr "munkavállaló"
 
 #: equipe/models.py:205
 #, fuzzy
@@ -8501,7 +8457,7 @@ msgstr "Generálás alatt"
 
 #: equipe/models.py:270 equipe/templates/equipe/_emplois_corps.html:35
 msgid "logement possible"
-msgstr ""
+msgstr "szállás lehetséges"
 
 #: equipe/models.py:271
 #, fuzzy
@@ -8547,7 +8503,7 @@ msgstr "Elutasítva"
 #: equipe/models.py:326 equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/offres.html:170
 msgid "CV"
-msgstr ""
+msgstr "Önéletrajz"
 
 #: equipe/models.py:331
 #, fuzzy
@@ -8583,7 +8539,7 @@ msgstr "A hely nem található."
 
 #: equipe/models.py:364 equipe/templates/equipe/fiche_paie_pdf.html:51
 msgid "heures supplémentaires"
-msgstr ""
+msgstr "túlóra"
 
 #: equipe/models.py:366
 msgid "salaire brut"
@@ -8638,7 +8594,7 @@ msgstr "megnevezés"
 
 #: equipe/models.py:422 equipe/templates/equipe/paie.html:72
 msgid "base"
-msgstr ""
+msgstr "alap"
 
 #: equipe/models.py:423
 msgid "taux (%)"
@@ -8672,89 +8628,73 @@ msgid "lignes de paie"
 msgstr "Ügyfél"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:6
-#, fuzzy
-#| msgid "Ce lien de partage n'est plus valide."
 msgid "Cette offre n'est plus en ligne"
-msgstr "Ez a megosztási hivatkozás már nem érvényes."
+msgstr "Ez a hirdetés már nem elérhető"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:8
 #, python-format
 msgid ""
 "« %(poste)s » chez %(ferme)s n'est plus proposée. D'autres fermes recrutent "
 "peut-être."
-msgstr ""
+msgstr "A(z) „%(poste)s” a(z) %(ferme)s gazdaságnál már nem elérhető. Más gazdaságok talán felvesznek."
 
 #: equipe/templates/equipe/_emploi_close_corps.html:10
-#, fuzzy
-#| msgid "factures"
 msgid "Voir les offres en ligne"
-msgstr "számlák"
+msgstr "Online hirdetések megtekintése"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:6
-#, fuzzy
-#| msgid "Toutes les heures"
 msgid "Toutes les offres"
-msgstr "Óránként"
+msgstr "Összes hirdetés"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:22
 #: equipe/templates/equipe/_emplois_corps.html:33
 #: equipe/templates/equipe/offres.html:67
-#, fuzzy
-#| msgid "Partage de position"
 msgid "Prise de poste"
-msgstr "Helymegosztás"
+msgstr "Munkába állás"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:27
 #: equipe/templates/equipe/fiche_paie_pdf.html:50
 msgid "heures"
-msgstr ""
+msgstr "óra"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:30
 #: equipe/templates/equipe/offres.html:79
-#, fuzzy
-#| msgid "En génération"
 msgid "Rémunération"
-msgstr "Generálás alatt"
+msgstr "Javadalmazás"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:34
-#, fuzzy
-#| msgid "Avertissement"
 msgid "Logement"
-msgstr "Figyelmeztetés"
+msgstr "Szállás"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:35
 msgid "Possible sur place"
-msgstr ""
+msgstr "Helyben lehetséges"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:39
-#, fuzzy
-#| msgid "code postal"
 msgid "Le poste"
-msgstr "irányítószám"
+msgstr "A munkakör"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:43
 #: equipe/templates/equipe/offres.html:91
 msgid "Profil recherché"
-msgstr ""
+msgstr "Keresett profil"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:52
 msgid "Postuler"
-msgstr ""
+msgstr "Jelentkezés"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:53
 msgid "Pas besoin de compte : la ferme reçoit votre message directement."
-msgstr ""
+msgstr "Nem kell fiók: a gazdaság közvetlenül megkapja üzenetét."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:57
 #: vente/templates/vente/_commander_corps.html:19
 msgid "Votre nom"
-msgstr ""
+msgstr "Az Ön neve"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:61
-#, fuzzy
-#| msgid "adresse email"
 msgid "Votre email"
-msgstr "e-mail-cím"
+msgstr "Az Ön e-mail-címe"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/paie.html:49
@@ -8772,80 +8712,62 @@ msgstr "opcionális"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:72
 msgid "PDF, Word, OpenDocument ou photo — 5 Mo maximum."
-msgstr ""
+msgstr "PDF, Word, OpenDocument vagy fénykép — legfeljebb 5 MB."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:75
-#, fuzzy
-#| msgid "Dicter le message"
 msgid "Votre message"
-msgstr "Üzenet diktálása"
+msgstr "Az Ön üzenete"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:77
 msgid ""
 "Dites en quelques lignes ce qui vous intéresse dans ce poste et ce que vous "
 "savez faire."
-msgstr ""
+msgstr "Írja le néhány sorban, mi érdekli ebben a munkakörben, és mihez ért."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:81
 msgid "Envoyer ma candidature"
-msgstr ""
+msgstr "Jelentkezésem elküldése"
 
 #: equipe/templates/equipe/_emplois_corps.html:8
 msgid "Les postes ouverts dans les fermes, saison après saison."
-msgstr ""
+msgstr "A gazdaságokban nyitott állások, idényről idényre."
 
 #: equipe/templates/equipe/_emplois_corps.html:14
-#, fuzzy
-#| msgid "Rechercher un type de sol, une texture…"
 msgid "Chercher un poste, une commune, une ferme…"
-msgstr "Talajtípus vagy textúra keresése…"
+msgstr "Munkakör, település vagy gazdaság keresése…"
 
 #: equipe/templates/equipe/_emplois_corps.html:15
-#, fuzzy
-#| msgid "Rechercher une commune"
 msgid "Rechercher une offre"
-msgstr "Település keresése"
+msgstr "Hirdetés keresése"
 
 #: equipe/templates/equipe/_emplois_corps.html:16
-#, fuzzy
-#| msgid "Rechercher un lieu…"
 msgid "Chercher"
-msgstr "Hely keresése…"
+msgstr "Keresés"
 
 #: equipe/templates/equipe/_emplois_corps.html:34
-#, fuzzy
-#| msgid "Semaine"
 msgid "semaine"
-msgstr "Hét"
+msgstr "hét"
 
 #: equipe/templates/equipe/_emplois_corps.html:41
-#, fuzzy
-#| msgid "Aucune culture ne correspond à la recherche."
 msgid "Aucune offre ne correspond à votre recherche."
-msgstr "Egyetlen növény sem felel meg a keresésnek."
+msgstr "Nincs a keresésnek megfelelő hirdetés."
 
 #: equipe/templates/equipe/_emplois_corps.html:42
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune offre en ligne pour le moment."
-msgstr "Egyelőre nincs beszélgetés."
+msgstr "Jelenleg nincs online hirdetés."
 
 #: equipe/templates/equipe/_emplois_corps.html:44
 msgid "Revenez à l'approche des saisons : c'est là que les fermes recrutent."
-msgstr ""
+msgstr "Térjen vissza az idény közeledtével: olyankor vesznek fel munkaerőt."
 
 #: equipe/templates/equipe/_entete_emplois.html:10
-#, fuzzy
-#| msgid "Voir le mois"
 msgid "Emplois à la ferme"
-msgstr "Hónap megtekintése"
+msgstr "Munka a gazdaságban"
 
 #: equipe/templates/equipe/_entete_emplois.html:15
 #: vente/templates/vente/_entete_public.html:16
-#, fuzzy
-#| msgid "type d'agriculture"
 msgid "Vous êtes agriculteur ?"
-msgstr "gazdálkodás típusa"
+msgstr "Ön gazdálkodó?"
 
 #: equipe/templates/equipe/_invitation_carte.html:10
 msgid "Lien d'invitation invalide"
@@ -8906,79 +8828,71 @@ msgstr "Fiók létrehozása"
 #: equipe/templates/equipe/contrat_pdf.html:5
 #, python-format
 msgid "Contrat — %(qui)s"
-msgstr ""
+msgstr "Szerződés — %(qui)s"
 
 #: equipe/templates/equipe/contrat_pdf.html:16
 #, python-format
 msgid "%(ferme)s — document établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — dokumentum az Isidor rendszerből."
 
 #: equipe/templates/equipe/contrat_pdf.html:17
 msgid ""
 "À faire relire avant signature : les clauses obligatoires dépendent de la "
 "convention collective applicable."
-msgstr ""
+msgstr "Aláírás előtt ellenőriztetendő: a kötelező kikötések az alkalmazandó kollektív szerződéstől függenek."
 
 #: equipe/templates/equipe/contrats.html:12
 #: equipe/templates/equipe/contrats.html:89
-#, fuzzy
-#| msgid "Nouveau mail"
 msgid "Nouveau modèle"
-msgstr "Új levél"
+msgstr "Új sablon"
 
 #: equipe/templates/equipe/contrats.html:15
 #: equipe/templates/equipe/contrats.html:29
 msgid "Établir un contrat"
-msgstr ""
+msgstr "Szerződés kiállítása"
 
 #: equipe/templates/equipe/contrats.html:22
 msgid ""
 "Ces modèles sont des points de départ : les clauses obligatoires, la période "
 "d'essai et la rémunération dépendent de la convention collective applicable. "
 "Faites relire un contrat avant de le remettre."
-msgstr ""
+msgstr "Ezek a sablonok kiindulópontok: a kötelező kikötések, a próbaidő és a bér az alkalmazandó kollektív szerződéstől függenek. Ellenőriztesse a szerződést az átadás előtt."
 
 #: equipe/templates/equipe/contrats.html:33
 #: equipe/templates/equipe/fiche_paie_pdf.html:39
 #: equipe/templates/equipe/paie.html:34
-#, fuzzy
-#| msgid "participants"
 msgid "Salarié"
-msgstr "résztvevők"
+msgstr "Munkavállaló"
 
 #: equipe/templates/equipe/contrats.html:40
 #: operations/templates/operations/parc_materiel.html:87
 msgid "Modèle"
-msgstr ""
+msgstr "Sablon"
 
 #: equipe/templates/equipe/contrats.html:47
 msgid "Poste"
-msgstr ""
+msgstr "Munkakör"
 
 #: equipe/templates/equipe/contrats.html:48
 msgid "ex : ouvrier arboricole"
-msgstr ""
+msgstr "pl. gyümölcsészeti munkás"
 
 #: equipe/templates/equipe/contrats.html:59
 msgid "si CDD"
-msgstr ""
+msgstr "határozott idő esetén"
 
 #: equipe/templates/equipe/contrats.html:63
 #: equipe/templates/equipe/offres.html:75
-#, fuzzy
-#| msgid "Créer un compte"
 msgid "Heures par semaine"
-msgstr "Fiók létrehozása"
+msgstr "Heti óraszám"
 
 #: equipe/templates/equipe/contrats.html:67
-#, fuzzy
-#| msgid "CA (€)"
 msgid "Brut mensuel (€)"
-msgstr "Árbevétel (€)"
+msgstr "Havi bruttó (€)"
 
 #: equipe/templates/equipe/contrats.html:73
 msgid "Établir"
-msgstr ""
+msgstr "Kiállítás"
 
 #: equipe/templates/equipe/contrats.html:77
 #: equipe/templates/equipe/paie.html:144
@@ -8986,29 +8900,23 @@ msgstr ""
 msgid ""
 "Ajoutez d'abord un <a href=\"%(url_equipe)s\" class=\"underline\">membre "
 "d'équipe</a>."
-msgstr ""
+msgstr "Először adjon hozzá egy <a href=\"%(url_equipe)s\" class=\"underline\">csapattagot</a>."
 
 #: equipe/templates/equipe/contrats.html:78
 msgid "Créez ou importez d'abord un modèle de contrat."
-msgstr ""
+msgstr "Előbb hozzon létre vagy importáljon szerződésmintát."
 
 #: equipe/templates/equipe/contrats.html:88
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier le modèle"
-msgstr "Szerkesztés"
+msgstr "Sablon szerkesztése"
 
 #: equipe/templates/equipe/contrats.html:93
-#, fuzzy
-#| msgid "Nom du signataire"
 msgid "Nom du modèle"
-msgstr "Az aláíró neve"
+msgstr "Sablon neve"
 
 #: equipe/templates/equipe/contrats.html:103
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Corps du contrat"
-msgstr "beszélgetés résztvevői"
+msgstr "A szerződés szövege"
 
 #: equipe/templates/equipe/contrats.html:107
 #, fuzzy
@@ -9020,51 +8928,41 @@ msgstr "%(n)s szavazat"
 #: equipe/templates/equipe/contrats.html:115
 msgid ""
 "Un jeton laissé vide devient une ligne de pointillés à compléter à la main."
-msgstr ""
+msgstr "Az üresen hagyott helyőrzőből kézzel kitöltendő pontozott vonal lesz."
 
 #: equipe/templates/equipe/contrats.html:128
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes modèles"
-msgstr "IoT-parancsok"
+msgstr "Sablonjaim"
 
 #: equipe/templates/equipe/contrats.html:132
 msgid "Importer les modèles types"
-msgstr ""
+msgstr "Mintasablonok importálása"
 
 #: equipe/templates/equipe/contrats.html:143
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce modèle ?"
-msgstr "Törli ezt a támogatást?"
+msgstr "Törli ezt a sablont?"
 
 #: equipe/templates/equipe/contrats.html:162
 msgid ""
 "Aucun modèle. Importez les modèles types (CDI, CDD, saisonnier, "
 "apprentissage, stage) puis adaptez-les à votre exploitation."
-msgstr ""
+msgstr "Nincs sablon. Importálja a mintasablonokat (határozatlan, határozott, idénymunka, tanuló, gyakornoki), majd igazítsa őket a gazdaságához."
 
 #: equipe/templates/equipe/contrats.html:169
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats établis"
-msgstr "Kapcsolat"
+msgstr "Elkészített szerződések"
 
 #: equipe/templates/equipe/contrats.html:178
 msgid "depuis le"
-msgstr ""
+msgstr "ettől"
 
 #: equipe/templates/equipe/contrats.html:197
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Ouvrir le contrat"
-msgstr "Törli ezt a támogatást?"
+msgstr "Szerződés megnyitása"
 
 #: equipe/templates/equipe/contrats.html:212
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun contrat établi pour le moment."
-msgstr "Egyelőre nincs beszélgetés."
+msgstr "Még nincs elkészített szerződés."
 
 #: equipe/templates/equipe/edit.html:8
 #: finances/templates/finances/devis_signature.html:18
@@ -9163,98 +9061,84 @@ msgstr "Törli ezt a támogatást?"
 #: equipe/templates/equipe/fiche_paie_pdf.html:5
 #, python-format
 msgid "Bulletin — %(qui)s"
-msgstr ""
+msgstr "Bérjegyzék — %(qui)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:24
-#, fuzzy
-#| msgid "Température"
 msgid "Bulletin de paie"
-msgstr "Hőmérséklet"
+msgstr "Bérjegyzék"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:26
 #, python-format
 msgid "Période du %(d)s au %(f)s"
-msgstr ""
+msgstr "Időszak: %(d)s – %(f)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:31
 msgid "Employeur"
-msgstr ""
+msgstr "Munkáltató"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:48
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Temps de travail"
-msgstr "A hely nem található."
+msgstr "Munkaidő"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
-#, fuzzy
-#| msgid "Juridique"
 msgid "Rubrique"
-msgstr "Jogi"
+msgstr "Tétel"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Base"
-msgstr ""
+msgstr "Alap"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Taux"
-msgstr ""
+msgstr "Kulcs"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part salariale"
-msgstr ""
+msgstr "Munkavállalói rész"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part employeur"
-msgstr ""
+msgstr "Munkáltatói rész"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:78
 msgid "Salaire brut"
-msgstr ""
+msgstr "Bruttó bér"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:79
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales"
-msgstr "Társak és alkalmazottak"
+msgstr "Munkavállalói járulékok"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:81
-#, fuzzy
-#| msgid "Nouveau comptable"
 msgid "Net imposable"
-msgstr "Új könyvelő"
+msgstr "Adóköteles nettó"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:83
 msgid "Net à payer"
-msgstr ""
+msgstr "Kifizetendő nettó"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:84
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales"
-msgstr "Társak és alkalmazottak"
+msgstr "Munkáltatói járulékok"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:85
-#, fuzzy
-#| msgid "Coût eau"
 msgid "Coût employeur"
-msgstr "Vízköltség"
+msgstr "Munkáltatói költség"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:90
 #, python-format
 msgid "Payée le %(d)s"
-msgstr ""
+msgstr "Kifizetve: %(d)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:96
 #, python-format
 msgid "%(ferme)s — bulletin établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — bérjegyzék az Isidor rendszerből."
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:97
 msgid ""
 "Les montants sont ceux saisis par l'employeur : Isidor ne calcule pas la "
 "paie. Conservez ce bulletin sans limitation de durée."
-msgstr ""
+msgstr "Az összegeket a munkáltató adta meg: az Isidor nem számol bért. Őrizze meg ezt a bérjegyzéket időbeli korlátozás nélkül."
 
 #: equipe/templates/equipe/invitation.html:9 equipe/views.py:99
 #: equipe/views.py:105 equipe/views.py:144
@@ -9303,42 +9187,32 @@ msgstr "A helyzethez való hozzáférés megtagadva."
 
 #: equipe/templates/equipe/offres.html:16
 msgid "Voir la page publique"
-msgstr ""
+msgstr "Nyilvános oldal megtekintése"
 
 #: equipe/templates/equipe/offres.html:19
 #: equipe/templates/equipe/offres.html:31
-#, fuzzy
-#| msgid "Nouvelle parcelle"
 msgid "Nouvelle offre"
-msgstr "Új tábla"
+msgstr "Új hirdetés"
 
 #: equipe/templates/equipe/offres.html:30
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier l'offre"
-msgstr "Szerkesztés"
+msgstr "Hirdetés szerkesztése"
 
 #: equipe/templates/equipe/offres.html:36
-#, fuzzy
-#| msgid "Identité"
 msgid "Intitulé du poste"
-msgstr "Azonosítás"
+msgstr "Munkakör megnevezése"
 
 #: equipe/templates/equipe/offres.html:38
 msgid "ex : ouvrier arboricole pour la récolte"
-msgstr ""
+msgstr "pl. gyümölcsészeti munkás a betakarításra"
 
 #: equipe/templates/equipe/offres.html:40
-#, fuzzy
-#| msgid "Titre d'une tâche de planning agricole"
 msgid "Intitulé d'une offre d'emploi agricole"
-msgstr "Mezőgazdasági ütemterv feladatának címe"
+msgstr "Mezőgazdasági álláshirdetés címe"
 
 #: equipe/templates/equipe/offres.html:44
-#, fuzzy
-#| msgid "Type de sol"
 msgid "Type de contrat"
-msgstr "Talajtípus"
+msgstr "Szerződés típusa"
 
 #: equipe/templates/equipe/offres.html:62
 #, python-format
@@ -9346,63 +9220,51 @@ msgid ""
 "Aucune commune renseignée sur vos <a href=\"%(url_parcelles)s\" "
 "class=\"underline\">parcelles</a>. L'offre indiquera la commune de "
 "l'exploitation."
-msgstr ""
+msgstr "Nincs település megadva a <a href=\"%(url_parcelles)s\" class=\"underline\">parcelláin</a>. A hirdetés a gazdaság települését jeleníti meg."
 
 #: equipe/templates/equipe/offres.html:71
 msgid "Visible jusqu'au"
-msgstr ""
+msgstr "Látható eddig"
 
 #: equipe/templates/equipe/offres.html:81
 msgid "ex : SMIC agricole, selon profil"
-msgstr ""
+msgstr "pl. mezőgazdasági minimálbér, profiltól függően"
 
 #: equipe/templates/equipe/offres.html:84
-#, fuzzy
-#| msgid "fertigation"
 msgid "Description du poste"
-msgstr "tápoldatozás"
+msgstr "Munkakör leírása"
 
 #: equipe/templates/equipe/offres.html:87
-#, fuzzy
-#| msgid "Description d'une tâche de planning agricole"
 msgid "Description du poste dans une offre d'emploi agricole"
-msgstr "Mezőgazdasági ütemterv feladatának leírása"
+msgstr "Munkakör leírása mezőgazdasági hirdetésben"
 
 #: equipe/templates/equipe/offres.html:94
 msgid "Profil recherché dans une offre d'emploi agricole"
-msgstr ""
+msgstr "Keresett profil mezőgazdasági hirdetésben"
 
 #: equipe/templates/equipe/offres.html:98
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Email de contact"
-msgstr "beszélgetés résztvevői"
+msgstr "Kapcsolattartó e-mail"
 
 #: equipe/templates/equipe/offres.html:104
 msgid "Logement possible sur place"
-msgstr ""
+msgstr "Helyben szállás lehetséges"
 
 #: equipe/templates/equipe/offres.html:122
-#, fuzzy
-#| msgid "Client"
 msgid "en ligne depuis le"
-msgstr "Ügyfél"
+msgstr "online ettől"
 
 #: equipe/templates/equipe/offres.html:123
 msgid "jusqu'au"
-msgstr ""
+msgstr "eddig"
 
 #: equipe/templates/equipe/offres.html:129
-#, fuzzy
-#| msgid "En ligne"
 msgid "Voir en ligne"
-msgstr "Online"
+msgstr "Megtekintés online"
 
 #: equipe/templates/equipe/offres.html:144
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer cette offre et ses candidatures ?"
-msgstr "Törli ezt a támogatást?"
+msgstr "Törli ezt a hirdetést és a jelentkezéseket?"
 
 #: equipe/templates/equipe/offres.html:155
 #, fuzzy, python-format
@@ -9414,34 +9276,26 @@ msgstr[0] "%(n)s szavazat"
 msgstr[1] "%(n)s szavazat"
 
 #: equipe/templates/equipe/offres.html:182
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune candidature reçue."
-msgstr "Nincs számla."
+msgstr "Nem érkezett jelentkezés."
 
 #: equipe/templates/equipe/offres.html:187
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune offre"
-msgstr "Nincs számla."
+msgstr "Nincs hirdetés"
 
 #: equipe/templates/equipe/offres.html:188
 msgid ""
 "Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page "
 "publique des emplois."
-msgstr ""
+msgstr "Írjon hirdetést, majd tegye közzé, hogy megjelenjen a nyilvános álláshirdetési oldalon."
 
 #: equipe/templates/equipe/paie.html:10
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques :"
-msgstr "Gumiabroncsok"
+msgstr "Tételek:"
 
 #: equipe/templates/equipe/paie.html:13
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une fiche de paie"
-msgstr "Kód aktiválása"
+msgstr "Bérjegyzék hozzáadása"
 
 #: equipe/templates/equipe/paie.html:19
 msgid ""
@@ -9449,152 +9303,120 @@ msgid ""
 "taux MSA, la convention collective et les exonérations relèvent de votre "
 "comptable ou du service TESA. Saisissez ici les montants qu'ils vous "
 "fournissent — l'addition des rubriques est vérifiée."
-msgstr ""
+msgstr "Az Isidor rögzíti és kinyomtatja a bérjegyzékeket, de nem számol bért: az MSA-kulcsok, a kollektív szerződés és a mentességek a könyvelőjére vagy a TESA szolgálatra tartoznak. Írja be az általuk megadott összegeket — a tételek összegzését ellenőrizzük."
 
 #: equipe/templates/equipe/paie.html:27
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier la fiche de paie"
-msgstr "Szerkesztés"
+msgstr "Bérjegyzék szerkesztése"
 
 #: equipe/templates/equipe/paie.html:28
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle fiche de paie"
-msgstr "Új növény"
+msgstr "Új bérjegyzék"
 
 #: equipe/templates/equipe/paie.html:41
 msgid "Période du"
-msgstr ""
+msgstr "Időszak"
 
 #: equipe/templates/equipe/paie.html:45
-#, fuzzy
-#| msgid "Eau"
 msgid "au"
-msgstr "Víz"
+msgstr "–"
 
 #: equipe/templates/equipe/paie.html:56
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Heures travaillées"
-msgstr "A hely nem található."
+msgstr "Ledolgozott órák"
 
 #: equipe/templates/equipe/paie.html:60
 msgid "Heures supplémentaires"
-msgstr ""
+msgstr "Túlórák"
 
 #: equipe/templates/equipe/paie.html:66
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques"
-msgstr "Gumiabroncsok"
+msgstr "Tételek"
 
 #: equipe/templates/equipe/paie.html:70
 msgid "ex : Retraite complémentaire"
-msgstr ""
+msgstr "pl. kiegészítő nyugdíj"
 
 #: equipe/templates/equipe/paie.html:73
 #, python-format
 msgid "taux %%"
-msgstr ""
+msgstr "kulcs %%"
 
 #: equipe/templates/equipe/paie.html:75
 msgid "employeur"
-msgstr ""
+msgstr "munkáltató"
 
 #: equipe/templates/equipe/paie.html:86
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une rubrique"
-msgstr "Kód aktiválása"
+msgstr "Tétel hozzáadása"
 
 #: equipe/templates/equipe/paie.html:91
 msgid "Totaux"
-msgstr ""
+msgstr "Összesítés"
 
 #: equipe/templates/equipe/paie.html:94
-#, fuzzy
-#| msgid "surface totale (ha)"
 msgid "Salaire brut (€)"
-msgstr "összterület (ha)"
+msgstr "Bruttó bér (€)"
 
 #: equipe/templates/equipe/paie.html:98
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales (€)"
-msgstr "Társak és alkalmazottak"
+msgstr "Munkavállalói járulékok (€)"
 
 #: equipe/templates/equipe/paie.html:104
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales (€)"
-msgstr "Társak és alkalmazottak"
+msgstr "Munkáltatói járulékok (€)"
 
 #: equipe/templates/equipe/paie.html:110
-#, fuzzy
-#| msgid "montant (€)"
 msgid "Net imposable (€)"
-msgstr "összeg (€)"
+msgstr "Adóköteles nettó (€)"
 
 #: equipe/templates/equipe/paie.html:114
 msgid "Net à payer (€)"
-msgstr ""
+msgstr "Kifizetendő nettó (€)"
 
 #: equipe/templates/equipe/paie.html:124
-#, fuzzy
-#| msgid "Payée"
 msgid "Payée le"
 msgstr "Kifizetve"
 
 #: equipe/templates/equipe/paie.html:128
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Mode de paiement"
-msgstr "születési dátum"
+msgstr "Fizetési mód"
 
 #: equipe/templates/equipe/paie.html:129
-#, fuzzy
-#| msgid "Environnement"
 msgid "ex : virement"
-msgstr "Környezet"
+msgstr "pl. banki átutalás"
 
 #: equipe/templates/equipe/paie.html:151
 msgid "Bulletins"
-msgstr ""
+msgstr "Bérjegyzékek"
 
 #: equipe/templates/equipe/paie.html:161
 msgid "brut"
-msgstr ""
+msgstr "bruttó"
 
 #: equipe/templates/equipe/paie.html:162
 msgid "net"
-msgstr ""
+msgstr "nettó"
 
 #: equipe/templates/equipe/paie.html:163
 msgid "coût employeur"
-msgstr ""
+msgstr "munkáltatói költség"
 
 #: equipe/templates/equipe/paie.html:167
 msgid "Les rubriques ne totalisent pas les montants annoncés."
-msgstr ""
+msgstr "A tételek nem adják ki a megadott összegeket."
 
 #: equipe/templates/equipe/paie.html:186
-#, fuzzy
-#| msgid "Supprimer la culture ?"
 msgid "Ouvrir le bulletin"
-msgstr "Törli a növényt?"
+msgstr "Bérjegyzék megnyitása"
 
 #: equipe/templates/equipe/paie.html:190
-#, fuzzy
-#| msgid "Supprimer cette fiche ?"
 msgid "Supprimer cette fiche de paie ?"
-msgstr "Törli ezt az adatlapot?"
+msgstr "Törli ezt a bérjegyzéket?"
 
 #: equipe/templates/equipe/paie.html:201
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun bulletin pour le moment."
-msgstr "Egyelőre nincs beszélgetés."
+msgstr "Még nincs bérjegyzék."
 
 #: equipe/templates/equipe/placeholder.html:18
 #, python-format
@@ -13412,8 +13234,6 @@ msgid "Bonne teneur en eau (ou présence d'eau libre)."
 msgstr ""
 
 #: irrigation/templates/irrigation/_bilan_eau.html:8
-#, fuzzy
-#| msgid "Bilan eau"
 msgid "Bilan d'eau"
 msgstr "Vízmérleg"
 
@@ -13424,16 +13244,12 @@ msgid "Irrigation totale"
 msgstr "Öntözés"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:18
-#, fuzzy
-#| msgid "sessions enregistrées"
 msgid "Sessions enregistrées"
-msgstr "rögzített menetek"
+msgstr "Rögzített öntözések"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:22
-#, fuzzy
-#| msgid "Quota eau"
 msgid "Quota"
-msgstr "Vízkvóta"
+msgstr "Kvóta"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:29
 msgid "estimé"
@@ -13450,7 +13266,7 @@ msgstr "Nincs rögzített öntözési menet"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:43
 msgid "Les données apparaîtront dès la première session."
-msgstr ""
+msgstr "Az adatok az első öntözés után jelennek meg."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:50
 msgid "Consommation par parcelle (m³/jour)"
@@ -13461,30 +13277,16 @@ msgid "Aucune session d'irrigation"
 msgstr "Nincs öntözési menet"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:71
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Enregistrez une session pour voir la consommation par parcelle."
-msgstr ""
-"Nincs rögzített tábla. Hozza létre a tábláit a táblánkénti fogyasztás "
-"megtekintéséhez."
+msgstr "Rögzítsen egy öntözést a parcellánkénti fogyasztás megtekintéséhez."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:75
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune parcelle enregistrée"
-msgstr "Nincs rögzített költség."
+msgstr "Nincs rögzített parcella"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:76
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Créez vos parcelles pour voir la consommation par parcelle."
-msgstr ""
-"Nincs rögzített tábla. Hozza létre a tábláit a táblánkénti fogyasztás "
-"megtekintéséhez."
+msgstr "Hozzon létre parcellákat a parcellánkénti fogyasztás megtekintéséhez."
 
 #: irrigation/templates/irrigation/_etc_card.html:9
 #, fuzzy
@@ -15373,96 +15175,76 @@ msgid "Règle « %(r)s » supprimée."
 msgstr ""
 
 #: operations/materiel.py:21
-#, fuzzy
-#| msgid "Auto"
 msgid "Automoteurs"
-msgstr "Auto"
+msgstr "Önjáró gépek"
 
 #: operations/materiel.py:23
-#, fuzzy
-#| msgid "date de plantation"
 msgid "Semis et plantation"
-msgstr "telepítés dátuma"
+msgstr "Vetés és ültetés"
 
 #: operations/materiel.py:24
-#, fuzzy
-#| msgid "Fertilisation"
 msgid "Fertilisation et protection"
-msgstr "Tápanyag-utánpótlás"
+msgstr "Trágyázás és növényvédelem"
 
 #: operations/materiel.py:25
-#, fuzzy
-#| msgid "Récolte"
 msgid "Récolte et fourrage"
-msgstr "Betakarítás"
+msgstr "Betakarítás és takarmány"
 
 #: operations/materiel.py:26
 msgid "Transport et manutention"
-msgstr ""
+msgstr "Szállítás és anyagmozgatás"
 
 #: operations/materiel.py:28
-#, fuzzy
-#| msgid "Redessiner une parcelle"
 msgid "Bâtiment et post-récolte"
-msgstr "Parcella újrarajzolása"
+msgstr "Épületek és betakarítás utáni gépek"
 
 #: operations/materiel.py:30
-#, fuzzy
-#| msgid "Générique"
 msgid "Numérique"
-msgstr "Általános"
+msgstr "Digitális eszközök"
 
 #: operations/materiel.py:36
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur standard"
-msgstr "Traktor"
+msgstr "Normál traktor"
 
 #: operations/materiel.py:37
 msgid "Tracteur vigneron (étroit)"
-msgstr ""
+msgstr "Szőlészeti (keskeny) traktor"
 
 #: operations/materiel.py:38
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur chenillé"
-msgstr "Traktor"
+msgstr "Lánctalpas traktor"
 
 #: operations/materiel.py:39
 msgid "Télescopique ou chargeur"
-msgstr ""
+msgstr "Teleszkópos rakodó vagy homlokrakodó"
 
 #: operations/materiel.py:40
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Moissonneuse-batteuse"
-msgstr "Aratógép"
+msgstr "Kombájn"
 
 #: operations/materiel.py:41
 msgid "Ensileuse"
-msgstr ""
+msgstr "Silózó"
 
 #: operations/materiel.py:42
 msgid "Machine à vendanger"
-msgstr ""
+msgstr "Szüretelőgép"
 
 #: operations/materiel.py:43
-#, fuzzy
-#| msgid "Ajouter une parcelle"
 msgid "Automoteur de pulvérisation"
-msgstr "Parcella hozzáadása"
+msgstr "Önjáró permetező"
 
 #: operations/materiel.py:44
 msgid "Quad ou UTV"
-msgstr ""
+msgstr "Quad vagy UTV"
 
 #: operations/materiel.py:45
 msgid "Camion"
-msgstr ""
+msgstr "Teherautó"
 
 #: operations/materiel.py:46
 msgid "Chariot élévateur"
-msgstr ""
+msgstr "Targonca"
 
 #: operations/materiel.py:49
 msgid "Charrue"
@@ -15470,135 +15252,107 @@ msgstr "Eke"
 
 #: operations/materiel.py:50
 msgid "Déchaumeur"
-msgstr ""
+msgstr "Tarlóhántó"
 
 #: operations/materiel.py:51
 msgid "Cultivateur"
 msgstr "Kultivátor"
 
 #: operations/materiel.py:52
-#, fuzzy
-#| msgid "culture"
 msgid "Vibroculteur"
-msgstr "növény"
+msgstr "Rugós kultivátor"
 
 #: operations/materiel.py:53
-#, fuzzy
-#| msgid "Alertes actives"
 msgid "Herse rotative"
-msgstr "Aktív riasztások"
+msgstr "Rotációs borona"
 
 #: operations/materiel.py:54
 msgid "Herse étrille"
-msgstr ""
+msgstr "Gyomfésű"
 
 #: operations/materiel.py:55
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Rouleau"
-msgstr "Öntöződob"
+msgstr "Henger"
 
 #: operations/materiel.py:56
-#, fuzzy
-#| msgid "Se connecter"
 msgid "Décompacteur"
-msgstr "Bejelentkezés"
+msgstr "Mélylazító"
 
 #: operations/materiel.py:57
 msgid "Broyeur"
-msgstr ""
+msgstr "Szárzúzó"
 
 #: operations/materiel.py:60
-#, fuzzy
-#| msgid "En ligne"
 msgid "Semoir en ligne"
-msgstr "Online"
+msgstr "Sorvetőgép"
 
 #: operations/materiel.py:61
 msgid "Semoir monograine"
-msgstr ""
+msgstr "Szemenkénti vetőgép"
 
 #: operations/materiel.py:62
-#, fuzzy
-#| msgid "Semoir"
 msgid "Semoir direct"
-msgstr "Vetőgép"
+msgstr "Direktvető gép"
 
 #: operations/materiel.py:63
-#, fuzzy
-#| msgid "Plante"
 msgid "Planteuse"
-msgstr "Növény"
+msgstr "Ültetőgép"
 
 #: operations/materiel.py:64
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Bineuse"
-msgstr "Aratógép"
+msgstr "Kultivátor"
 
 #: operations/materiel.py:67
 msgid "Épandeur d'engrais centrifuge"
-msgstr ""
+msgstr "Röpítőtárcsás műtrágyaszóró"
 
 #: operations/materiel.py:68
-#, fuzzy
-#| msgid "Épandeur"
 msgid "Épandeur à fumier"
-msgstr "Szórógép"
+msgstr "Trágyaszóró"
 
 #: operations/materiel.py:69
 msgid "Tonne à lisier"
-msgstr ""
+msgstr "Hígtrágya-szállító"
 
 #: operations/materiel.py:70
 msgid "Pulvérisateur porté ou traîné"
-msgstr ""
+msgstr "Függesztett vagy vontatott permetező"
 
 #: operations/materiel.py:71
 msgid "Atomiseur (arboriculture, viticulture)"
-msgstr ""
+msgstr "Ködpermetező (gyümölcs, szőlő)"
 
 #: operations/materiel.py:74
-#, fuzzy
-#| msgid "Sous-tâches"
 msgid "Faucheuse"
-msgstr "Részfeladatok"
+msgstr "Fűkasza"
 
 #: operations/materiel.py:75
 msgid "Faneuse"
-msgstr ""
+msgstr "Rendterítő"
 
 #: operations/materiel.py:76
 msgid "Andaineur"
-msgstr ""
+msgstr "Rendsodró"
 
 #: operations/materiel.py:77
-#, fuzzy
-#| msgid "Pression basse"
 msgid "Presse à balles"
-msgstr "Alacsony nyomás"
+msgstr "Bálázó"
 
 #: operations/materiel.py:78
-#, fuzzy
-#| msgid "En panne"
 msgid "Enrubanneuse"
-msgstr "Meghibásodott"
+msgstr "Bálacsomagoló"
 
 #: operations/materiel.py:79
-#, fuzzy
-#| msgid "charges"
 msgid "Autochargeuse"
-msgstr "költségek"
+msgstr "Önrakodó pótkocsi"
 
 #: operations/materiel.py:80
 msgid "Arracheuse"
-msgstr ""
+msgstr "Kiszedőgép"
 
 #: operations/materiel.py:83
-#, fuzzy
-#| msgid "Marque"
 msgid "Remorque"
-msgstr "Márka"
+msgstr "Pótkocsi"
 
 #: operations/materiel.py:84
 msgid "Benne"
@@ -15606,131 +15360,111 @@ msgstr "Billenőkocsi"
 
 #: operations/materiel.py:86
 msgid "Godet"
-msgstr ""
+msgstr "Kanál"
 
 #: operations/materiel.py:87
-#, fuzzy
-#| msgid "Source"
 msgid "Fourche"
-msgstr "Forrás"
+msgstr "Villa"
 
 #: operations/materiel.py:88
 msgid "Pince à balles"
-msgstr ""
+msgstr "Bálafogó"
 
 #: operations/materiel.py:91
 msgid "Pompe"
 msgstr "Szivattyú"
 
 #: operations/materiel.py:92
-#, fuzzy
-#| msgid "station de pompage"
 msgid "Station de pompage"
-msgstr "szivattyúállomás"
+msgstr "Szivattyúállomás"
 
 #: operations/materiel.py:95
 msgid "Rampe"
-msgstr ""
+msgstr "Szórókeret"
 
 #: operations/materiel.py:96
-#, fuzzy
-#| msgid "Goutte à goutte"
 msgid "Goutte-à-goutte"
-msgstr "Csepegtető"
+msgstr "Csepegtető öntözés"
 
 #: operations/materiel.py:97
-#, fuzzy
-#| msgid "Facturation"
 msgid "Filtration"
-msgstr "Számlázás"
+msgstr "Szűrés"
 
 #: operations/materiel.py:98
 msgid "Borne"
-msgstr ""
+msgstr "Vízvételi hely"
 
 #: operations/materiel.py:101
 msgid "Séchoir"
-msgstr ""
+msgstr "Szárító"
 
 #: operations/materiel.py:102
 msgid "Trieuse"
-msgstr ""
+msgstr "Válogatógép"
 
 #: operations/materiel.py:103
 msgid "Calibreuse"
-msgstr ""
+msgstr "Osztályozógép"
 
 #: operations/materiel.py:104 stock/models.py:40
 msgid "Chambre froide"
-msgstr ""
+msgstr "Hűtőkamra"
 
 #: operations/materiel.py:105
 msgid "Groupe électrogène"
-msgstr ""
+msgstr "Áramfejlesztő"
 
 #: operations/materiel.py:106
-#, fuzzy
-#| msgid "Capteur de pression"
 msgid "Nettoyeur haute pression"
-msgstr "Nyomásérzékelő"
+msgstr "Magasnyomású mosó"
 
 #: operations/materiel.py:107 stock/models.py:39
 msgid "Cuve"
-msgstr ""
+msgstr "Tartály"
 
 #: operations/materiel.py:108
-#, fuzzy
-#| msgid "Pression"
 msgid "Pressoir"
-msgstr "Nyomás"
+msgstr "Prés"
 
 #: operations/materiel.py:111
 msgid "Mélangeuse"
-msgstr ""
+msgstr "Takarmánykeverő"
 
 #: operations/materiel.py:112
 msgid "Désileuse"
-msgstr ""
+msgstr "Silókitároló"
 
 #: operations/materiel.py:113
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Robot de traite"
-msgstr "születési dátum"
+msgstr "Fejőrobot"
 
 #: operations/materiel.py:114
-#, fuzzy
-#| msgid "Température"
 msgid "Salle de traite"
-msgstr "Hőmérséklet"
+msgstr "Fejőház"
 
 #: operations/materiel.py:115
 msgid "Tank à lait"
-msgstr ""
+msgstr "Tejtartály"
 
 #: operations/materiel.py:116
-#, fuzzy
-#| msgid "Taille"
 msgid "Pailleuse"
-msgstr "Metszés"
+msgstr "Almozó"
 
 #: operations/materiel.py:117
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Racleur"
-msgstr "Öntöződob"
+msgstr "Trágyakotró"
 
 #: operations/materiel.py:120
 msgid "Console GPS"
-msgstr ""
+msgstr "GPS-kijelző"
 
 #: operations/materiel.py:121
 msgid "Autoguidage RTK"
-msgstr ""
+msgstr "RTK automata kormányzás"
 
 #: operations/materiel.py:123
 msgid "Drone"
-msgstr ""
+msgstr "Drón"
 
 #: operations/models.py:35
 msgid "En propre"
@@ -17270,105 +17004,79 @@ msgid "Priorité haute"
 msgstr "Magas prioritás"
 
 #: planning/templates/planning/_bar_reservation.html:4
-#, fuzzy
-#| msgid "Réserve Utile"
 msgid "réservé par"
-msgstr "Hasznosítható vízkészlet"
+msgstr "lefoglalta"
 
 #: planning/templates/planning/acces.html:7
 #: planning/templates/planning/planning.html:16
 #: planning/templates/planning/sans_acces.html:6
-#, fuzzy
-#| msgid "Planning"
 msgid "RH · Planning"
-msgstr "Tervezés"
+msgstr "HR · Munkaterv"
 
 #: planning/templates/planning/acces.html:7
-#, fuzzy
-#| msgid "Participants"
 msgid "Partage"
-msgstr "Résztvevők"
+msgstr "Megosztás"
 
 #: planning/templates/planning/acces.html:9
 #: planning/templates/planning/planning.html:21 planning/views.py:623
-#, fuzzy
-#| msgid "tâche de planning"
 msgid "Partage du planning"
-msgstr "ütemezési feladat"
+msgstr "A munkaterv megosztása"
 
 #: planning/templates/planning/acces.html:10
-#, fuzzy
-#| msgid "Retour aux parcelles"
 msgid "Retour au planning"
-msgstr "Vissza a táblákhoz"
+msgstr "Vissza a munkatervhez"
 
 #: planning/templates/planning/acces.html:15
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Demandes en attente"
-msgstr "Nincs rögzített költség."
+msgstr "Függő kérelmek"
 
 #: planning/templates/planning/acces.html:23
 #, python-format
 msgid "demandé le %(quand)s"
-msgstr ""
+msgstr "kérelmezve: %(quand)s"
 
 #: planning/templates/planning/acces.html:28
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder en"
-msgstr "Megítélt"
+msgstr "Megadás mint"
 
 #: planning/templates/planning/acces.html:32
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder"
-msgstr "Megítélt"
+msgstr "Megadás"
 
 #: planning/templates/planning/acces.html:35
 #: reseaux/templates/reseaux/reseaux.html:32
 #: vente/templates/vente/commande_detail.html:24
-#, fuzzy
-#| msgid "Refusé"
 msgid "Refuser"
-msgstr "Elutasítva"
+msgstr "Elutasítás"
 
 #: planning/templates/planning/acces.html:41
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune demande pour le moment."
-msgstr "Egyelőre nincs beszélgetés."
+msgstr "Jelenleg nincs kérelem."
 
 #: planning/templates/planning/acces.html:47
-#, fuzzy
-#| msgid "Accès"
 msgid "Ont accès"
-msgstr "Hozzáférés"
+msgstr "Hozzáféréssel rendelkezik"
 
 #: planning/templates/planning/acces.html:49
 #, python-format
 msgid "%(chef)s est propriétaire du planning : son accès ne se retire pas."
-msgstr ""
+msgstr "%(chef)s a munkaterv tulajdonosa: a hozzáférése nem vonható vissza."
 
 #: planning/templates/planning/acces.html:67
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Retirer cet accès ?"
-msgstr "Törli ezt a támogatást?"
+msgstr "Visszavonja ezt a hozzáférést?"
 
 #: planning/templates/planning/acces.html:78
 msgid "Personne d'autre n'a encore accès."
-msgstr ""
+msgstr "Rajta kívül még senkinek nincs hozzáférése."
 
 #: planning/templates/planning/acces.html:85
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demandes refusées"
-msgstr "Igényelt"
+msgstr "Elutasított kérelmek"
 
 #: planning/templates/planning/acces.html:95
 msgid "Accorder finalement"
-msgstr ""
+msgstr "Mégis megadás"
 
 #: planning/templates/planning/bon_intervention.html:7 planning/views.py:829
 msgid "Bon d'intervention"
@@ -17556,60 +17264,54 @@ msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr "A részfeladatai is törlődnek:"
 
 #: planning/templates/planning/sans_acces.html:13
-#, fuzzy
-#| msgid "Planning"
 msgid "Aucun planning"
-msgstr "Tervezés"
+msgstr "Nincs munkaterv"
 
 #: planning/templates/planning/sans_acces.html:15
 msgid ""
 "Vous n'êtes rattaché à aucune exploitation. Un planning appartient à une "
 "ferme."
-msgstr ""
+msgstr "Ön nem tartozik egyetlen gazdasághoz sem. A munkaterv egy gazdasághoz tartozik."
 
 #: planning/templates/planning/sans_acces.html:19
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demande envoyée"
-msgstr "Igényelt"
+msgstr "Kérelem elküldve"
 
 #: planning/templates/planning/sans_acces.html:21
 #, python-format
 msgid ""
 "Le responsable de %(ferme)s a été prévenu. Vous verrez le planning dès qu'il "
 "aura accordé l'accès."
-msgstr ""
+msgstr "A(z) %(ferme)s felelőse értesítést kapott. A munkatervet a hozzáférés megadása után látja majd."
 
 #: planning/templates/planning/sans_acces.html:25
 msgid "Vous n'avez pas accès à ce planning"
-msgstr ""
+msgstr "Nincs hozzáférése ehhez a munkatervhez"
 
 #: planning/templates/planning/sans_acces.html:28
 msgid ""
 "Votre demande précédente n'a pas été retenue. Vous pouvez en formuler une "
 "nouvelle."
-msgstr ""
+msgstr "Korábbi kérelmét nem fogadták el. Újat is benyújthat."
 
 #: planning/templates/planning/sans_acces.html:30
 #, python-format
 msgid ""
 "Demandez l'accès au responsable de %(ferme)s. Il choisira ce que vous pouvez "
 "y faire."
-msgstr ""
+msgstr "Kérjen hozzáférést a(z) %(ferme)s felelősétől. Ő dönti el, mit tehet ott."
 
 #: planning/templates/planning/sans_acces.html:38
 msgid "Un mot pour accompagner la demande"
-msgstr ""
+msgstr "Néhány szó a kérelemhez"
 
 #: planning/templates/planning/sans_acces.html:41
 msgid "ex : je gère la comptabilité et je voudrais suivre la charge de travail"
-msgstr ""
+msgstr "pl. én vezetem a könyvelést, és követni szeretném a munkaterhelést"
 
 #: planning/templates/planning/sans_acces.html:44
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demander l'accès"
-msgstr "Igényelt"
+msgstr "Hozzáférés kérése"
 
 #: planning/views.py:73
 msgid "Vous n'avez pas le droit de modifier ce planning."
@@ -19238,7 +18940,7 @@ msgstr "Részfeladat hozzáadása"
 
 #: templates/partials/_sous_taches.html:52
 msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
-msgstr "A dátummal ellátott részfeladat a felelős beosztásában is megjelenik."
+msgstr "A dátummal ellátott részfeladat a felelős munkatervében is megjelenik."
 
 #: templates/partials/cookie_banner.html:6
 msgid ""

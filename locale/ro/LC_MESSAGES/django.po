@@ -3626,10 +3626,8 @@ msgstr ""
 #: exploitations/views.py:61 vente/templates/vente/_commander_corps.html:23
 #: vente/templates/vente/boutique.html:94
 #: vente/templates/vente/commande_detail.html:87
-#, fuzzy
-#| msgid "téléphone"
 msgid "Téléphone"
-msgstr "telefon"
+msgstr "Telefon"
 
 #: client/templates/client/_client_fields.html:60
 msgid "N° voie"
@@ -4944,10 +4942,8 @@ msgstr "sumă (€)"
 #: contrat/templates/contrat/_assurance_modal.html:86
 #: contrat/templates/contrat/_bail_modal.html:94
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
-#, fuzzy
-#| msgid "date de début"
 msgid "Date de début"
-msgstr "dată de început"
+msgstr "Data de început"
 
 #: contrat/templates/contrat/_assurance_modal.html:94
 #, fuzzy
@@ -5220,10 +5216,8 @@ msgid "nom de la partie contractante"
 msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
-#, fuzzy
-#| msgid "date de fin"
 msgid "Date de fin"
-msgstr "dată de sfârșit"
+msgstr "Data de sfârșit"
 
 #: contrat/templates/contrat/_contrat_modal.html:46
 msgid "conditions particulières, échéances…"
@@ -5321,10 +5315,8 @@ msgstr "Planificată"
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrat"
-msgstr "Contact"
+msgstr "Contract"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
@@ -5721,10 +5713,8 @@ msgstr "Sumă"
 
 #: contrat/templates/contrat/contrats.html:57
 #: equipe/templates/equipe/contrats.html:201
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce contrat ?"
-msgstr "Ștergi acest ajutor?"
+msgstr "Ștergeți acest contract?"
 
 #: contrat/templates/contrat/contrats.html:68
 #, fuzzy
@@ -5967,7 +5957,7 @@ msgstr "Săptămână"
 
 #: core/adresse.py:54 operations/materiel.py:85
 msgid "Plateau"
-msgstr ""
+msgstr "Remorcă platformă"
 
 #: core/adresse.py:55
 msgid "Pont"
@@ -6161,10 +6151,8 @@ msgstr "Vremea"
 #: core/context_processors.py:81 core/context_processors.py:83
 #: elevage/templates/elevage/elevage.html:33 elevage/views.py:61
 #: operations/materiel.py:29
-#, fuzzy
-#| msgid "Élevé"
 msgid "Élevage"
-msgstr "Ridicat"
+msgstr "Zootehnie"
 
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
@@ -6302,17 +6290,17 @@ msgstr "Sarcini"
 #: core/context_processors.py:128 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
-msgstr ""
+msgstr "Contracte de muncă"
 
 #: core/context_processors.py:129 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
-msgstr ""
+msgstr "Oferte de muncă"
 
 #: core/context_processors.py:130 equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
-msgstr ""
+msgstr "Salarizare"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
@@ -8074,132 +8062,102 @@ msgstr ""
 "indicatori de frecvență a tratamentelor (IFT)."
 
 #: equipe/contrats.py:21
-#, fuzzy
-#| msgid "Déclassé"
 msgid "Nom du salarié"
-msgstr "Declasat"
+msgstr "Numele angajatului"
 
 #: equipe/contrats.py:22
 msgid "Email du salarié"
-msgstr ""
+msgstr "Emailul angajatului"
 
 #: equipe/contrats.py:23
-#, fuzzy
-#| msgid "téléphone 1"
 msgid "Téléphone du salarié"
-msgstr "telefon 1"
+msgstr "Telefonul angajatului"
 
 #: equipe/contrats.py:24
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom de l'exploitation"
-msgstr "Exploatația mea"
+msgstr "Numele exploatației"
 
 #: equipe/contrats.py:25
-#, fuzzy
-#| msgid "adresse email"
 msgid "Adresse de l'exploitation"
-msgstr "adresă de email"
+msgstr "Adresa exploatației"
 
 #: equipe/contrats.py:26
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "SIRET de l'exploitation"
-msgstr "Exploatația mea"
+msgstr "SIRET-ul exploatației"
 
 #: equipe/contrats.py:27
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom du chef d'exploitation"
-msgstr "Exploatația mea"
+msgstr "Numele șefului de exploatație"
 
 #: equipe/contrats.py:28
 msgid "Poste occupé"
-msgstr ""
+msgstr "Postul ocupat"
 
 #: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
 #: equipe/templates/equipe/offres.html:50
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Lieu de travail"
-msgstr "Loc negăsit."
+msgstr "Locul de muncă"
 
 #: equipe/contrats.py:32 equipe/templates/equipe/_emploi_detail_corps.html:26
-#, fuzzy
-#| msgid "Hebdomadaire"
 msgid "Durée hebdomadaire"
-msgstr "Săptămânal"
+msgstr "Durata săptămânală"
 
 #: equipe/contrats.py:33
 msgid "Rémunération brute mensuelle"
-msgstr ""
+msgstr "Remunerație brută lunară"
 
 #: equipe/contrats.py:34
-#, fuzzy
-#| msgid "date d'acquisition"
 msgid "Date d'établissement"
-msgstr "dată de achiziție"
+msgstr "Data întocmirii"
 
 #: equipe/contrats.py:126
 msgid "CDI — contrat à durée indéterminée"
-msgstr ""
+msgstr "Contract pe durată nedeterminată"
 
 #: equipe/contrats.py:148
 msgid "CDD — contrat à durée déterminée"
-msgstr ""
+msgstr "Contract pe durată determinată"
 
 #: equipe/contrats.py:174 equipe/models.py:163
-#, fuzzy
-#| msgid "Saisonnier"
 msgid "Contrat saisonnier"
-msgstr "Sezonier"
+msgstr "Contract sezonier"
 
 #: equipe/contrats.py:200 equipe/models.py:164
-#, fuzzy
-#| msgid "Contrôleur de vanne"
 msgid "Contrat d'apprentissage"
-msgstr "Controler de vană"
+msgstr "Contract de ucenicie"
 
 #: equipe/contrats.py:225 equipe/models.py:166
-#, fuzzy
-#| msgid "Interventions"
 msgid "Convention de stage"
-msgstr "Intervenții"
+msgstr "Convenție de stagiu"
 
 #: equipe/emplois.py:54 equipe/templates/equipe/_emplois_corps.html:6
 msgid "Offres d'emploi agricoles"
-msgstr ""
+msgstr "Oferte de muncă agricolă"
 
 #: equipe/emplois.py:82
 msgid "Le CV ne doit pas dépasser 5 Mo."
-msgstr ""
+msgstr "CV-ul nu trebuie să depășească 5 Mo."
 
 #: equipe/emplois.py:85
 msgid "Format de CV non accepté : PDF, Word, OpenDocument ou image."
-msgstr ""
+msgstr "Format de CV neacceptat: PDF, Word, OpenDocument sau imagine."
 
 #: equipe/emplois.py:99
-#, fuzzy
-#| msgid "Indiquez au moins un destinataire valide."
 msgid "Indiquez au moins votre nom et votre email."
-msgstr "Indicați cel puțin un destinatar valid."
+msgstr "Indicați cel puțin numele și emailul."
 
 #: equipe/emplois.py:117
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle candidature"
-msgstr "Cultură nouă"
+msgstr "Candidatură nouă"
 
 #: equipe/emplois.py:118
 #, python-format
 msgid "%(qui)s a répondu à « %(offre)s »."
-msgstr ""
+msgstr "%(qui)s a răspuns la „%(offre)s”."
 
 #: equipe/emplois.py:120
-#, fuzzy
-#| msgid "Demandé"
 msgid "Votre candidature est envoyée. Bonne chance !"
-msgstr "Solicitat"
+msgstr "Candidatura a fost trimisă. Mult succes!"
 
 #: equipe/forms.py:69
 #, fuzzy
@@ -8415,10 +8373,8 @@ msgstr "Finalizat"
 
 #: equipe/models.py:203 equipe/models.py:356
 #: equipe/templates/equipe/paie.html:74
-#, fuzzy
-#| msgid "participants"
 msgid "salarié"
-msgstr "participanți"
+msgstr "angajat"
 
 #: equipe/models.py:205
 #, fuzzy
@@ -8512,7 +8468,7 @@ msgstr "În generare"
 
 #: equipe/models.py:270 equipe/templates/equipe/_emplois_corps.html:35
 msgid "logement possible"
-msgstr ""
+msgstr "cazare posibilă"
 
 #: equipe/models.py:271
 #, fuzzy
@@ -8558,7 +8514,7 @@ msgstr "Refuzat"
 #: equipe/models.py:326 equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/offres.html:170
 msgid "CV"
-msgstr ""
+msgstr "CV"
 
 #: equipe/models.py:331
 #, fuzzy
@@ -8594,7 +8550,7 @@ msgstr "Loc negăsit."
 
 #: equipe/models.py:364 equipe/templates/equipe/fiche_paie_pdf.html:51
 msgid "heures supplémentaires"
-msgstr ""
+msgstr "ore suplimentare"
 
 #: equipe/models.py:366
 msgid "salaire brut"
@@ -8649,7 +8605,7 @@ msgstr "etichetă"
 
 #: equipe/models.py:422 equipe/templates/equipe/paie.html:72
 msgid "base"
-msgstr ""
+msgstr "bază"
 
 #: equipe/models.py:423
 msgid "taux (%)"
@@ -8683,89 +8639,73 @@ msgid "lignes de paie"
 msgstr "Client"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:6
-#, fuzzy
-#| msgid "Ce lien de partage n'est plus valide."
 msgid "Cette offre n'est plus en ligne"
-msgstr "Acest link de partajare nu mai este valabil."
+msgstr "Această ofertă nu mai este online"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:8
 #, python-format
 msgid ""
 "« %(poste)s » chez %(ferme)s n'est plus proposée. D'autres fermes recrutent "
 "peut-être."
-msgstr ""
+msgstr "„%(poste)s” la %(ferme)s nu mai este oferit. Alte ferme poate angajează."
 
 #: equipe/templates/equipe/_emploi_close_corps.html:10
-#, fuzzy
-#| msgid "factures"
 msgid "Voir les offres en ligne"
-msgstr "facturi"
+msgstr "Vezi ofertele online"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:6
-#, fuzzy
-#| msgid "Toutes les heures"
 msgid "Toutes les offres"
-msgstr "În fiecare oră"
+msgstr "Toate ofertele"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:22
 #: equipe/templates/equipe/_emplois_corps.html:33
 #: equipe/templates/equipe/offres.html:67
-#, fuzzy
-#| msgid "Partage de position"
 msgid "Prise de poste"
-msgstr "Partajare poziție"
+msgstr "Începerea activității"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:27
 #: equipe/templates/equipe/fiche_paie_pdf.html:50
 msgid "heures"
-msgstr ""
+msgstr "ore"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:30
 #: equipe/templates/equipe/offres.html:79
-#, fuzzy
-#| msgid "En génération"
 msgid "Rémunération"
-msgstr "În generare"
+msgstr "Remunerație"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:34
-#, fuzzy
-#| msgid "Avertissement"
 msgid "Logement"
-msgstr "Avertizare"
+msgstr "Cazare"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:35
 msgid "Possible sur place"
-msgstr ""
+msgstr "Posibil la fața locului"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:39
-#, fuzzy
-#| msgid "code postal"
 msgid "Le poste"
-msgstr "cod poștal"
+msgstr "Postul"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:43
 #: equipe/templates/equipe/offres.html:91
 msgid "Profil recherché"
-msgstr ""
+msgstr "Profilul căutat"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:52
 msgid "Postuler"
-msgstr ""
+msgstr "Candidează"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:53
 msgid "Pas besoin de compte : la ferme reçoit votre message directement."
-msgstr ""
+msgstr "Fără cont: ferma primește mesajul direct."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:57
 #: vente/templates/vente/_commander_corps.html:19
 msgid "Votre nom"
-msgstr ""
+msgstr "Numele dumneavoastră"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:61
-#, fuzzy
-#| msgid "adresse email"
 msgid "Votre email"
-msgstr "adresă de email"
+msgstr "Emailul dumneavoastră"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/paie.html:49
@@ -8783,80 +8723,62 @@ msgstr "opțional"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:72
 msgid "PDF, Word, OpenDocument ou photo — 5 Mo maximum."
-msgstr ""
+msgstr "PDF, Word, OpenDocument sau fotografie — maximum 5 Mo."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:75
-#, fuzzy
-#| msgid "Dicter le message"
 msgid "Votre message"
-msgstr "Dictează mesajul"
+msgstr "Mesajul dumneavoastră"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:77
 msgid ""
 "Dites en quelques lignes ce qui vous intéresse dans ce poste et ce que vous "
 "savez faire."
-msgstr ""
+msgstr "Spuneți în câteva rânduri ce vă interesează la acest post și ce știți să faceți."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:81
 msgid "Envoyer ma candidature"
-msgstr ""
+msgstr "Trimite candidatura mea"
 
 #: equipe/templates/equipe/_emplois_corps.html:8
 msgid "Les postes ouverts dans les fermes, saison après saison."
-msgstr ""
+msgstr "Posturile deschise în ferme, sezon după sezon."
 
 #: equipe/templates/equipe/_emplois_corps.html:14
-#, fuzzy
-#| msgid "Rechercher un type de sol, une texture…"
 msgid "Chercher un poste, une commune, une ferme…"
-msgstr "Caută un tip de sol, o textură…"
+msgstr "Caută un post, o comună, o fermă…"
 
 #: equipe/templates/equipe/_emplois_corps.html:15
-#, fuzzy
-#| msgid "Rechercher une commune"
 msgid "Rechercher une offre"
-msgstr "Caută o localitate"
+msgstr "Caută o ofertă"
 
 #: equipe/templates/equipe/_emplois_corps.html:16
-#, fuzzy
-#| msgid "Rechercher un lieu…"
 msgid "Chercher"
-msgstr "Caută un loc…"
+msgstr "Caută"
 
 #: equipe/templates/equipe/_emplois_corps.html:34
-#, fuzzy
-#| msgid "Semaine"
 msgid "semaine"
-msgstr "Săptămână"
+msgstr "săptămână"
 
 #: equipe/templates/equipe/_emplois_corps.html:41
-#, fuzzy
-#| msgid "Aucune culture ne correspond à la recherche."
 msgid "Aucune offre ne correspond à votre recherche."
-msgstr "Nicio cultură nu corespunde căutării."
+msgstr "Nicio ofertă nu corespunde căutării."
 
 #: equipe/templates/equipe/_emplois_corps.html:42
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune offre en ligne pour le moment."
-msgstr "Nicio conversație deocamdată."
+msgstr "Nicio ofertă online deocamdată."
 
 #: equipe/templates/equipe/_emplois_corps.html:44
 msgid "Revenez à l'approche des saisons : c'est là que les fermes recrutent."
-msgstr ""
+msgstr "Reveniți la apropierea sezoanelor: atunci angajează fermele."
 
 #: equipe/templates/equipe/_entete_emplois.html:10
-#, fuzzy
-#| msgid "Voir le mois"
 msgid "Emplois à la ferme"
-msgstr "Vezi luna"
+msgstr "Locuri de muncă la fermă"
 
 #: equipe/templates/equipe/_entete_emplois.html:15
 #: vente/templates/vente/_entete_public.html:16
-#, fuzzy
-#| msgid "type d'agriculture"
 msgid "Vous êtes agriculteur ?"
-msgstr "tip de agricultură"
+msgstr "Sunteți fermier?"
 
 #: equipe/templates/equipe/_invitation_carte.html:10
 msgid "Lien d'invitation invalide"
@@ -8917,79 +8839,71 @@ msgstr "Creează un cont"
 #: equipe/templates/equipe/contrat_pdf.html:5
 #, python-format
 msgid "Contrat — %(qui)s"
-msgstr ""
+msgstr "Contract — %(qui)s"
 
 #: equipe/templates/equipe/contrat_pdf.html:16
 #, python-format
 msgid "%(ferme)s — document établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — document emis din Isidor."
 
 #: equipe/templates/equipe/contrat_pdf.html:17
 msgid ""
 "À faire relire avant signature : les clauses obligatoires dépendent de la "
 "convention collective applicable."
-msgstr ""
+msgstr "De verificat înainte de semnare: clauzele obligatorii depind de contractul colectiv aplicabil."
 
 #: equipe/templates/equipe/contrats.html:12
 #: equipe/templates/equipe/contrats.html:89
-#, fuzzy
-#| msgid "Nouveau mail"
 msgid "Nouveau modèle"
-msgstr "Mail nou"
+msgstr "Model nou"
 
 #: equipe/templates/equipe/contrats.html:15
 #: equipe/templates/equipe/contrats.html:29
 msgid "Établir un contrat"
-msgstr ""
+msgstr "Întocmește un contract"
 
 #: equipe/templates/equipe/contrats.html:22
 msgid ""
 "Ces modèles sont des points de départ : les clauses obligatoires, la période "
 "d'essai et la rémunération dépendent de la convention collective applicable. "
 "Faites relire un contrat avant de le remettre."
-msgstr ""
+msgstr "Aceste modele sunt puncte de plecare: clauzele obligatorii, perioada de probă și remunerația depind de contractul colectiv aplicabil. Cereți verificarea contractului înainte de a-l înmâna."
 
 #: equipe/templates/equipe/contrats.html:33
 #: equipe/templates/equipe/fiche_paie_pdf.html:39
 #: equipe/templates/equipe/paie.html:34
-#, fuzzy
-#| msgid "participants"
 msgid "Salarié"
-msgstr "participanți"
+msgstr "Angajat"
 
 #: equipe/templates/equipe/contrats.html:40
 #: operations/templates/operations/parc_materiel.html:87
 msgid "Modèle"
-msgstr ""
+msgstr "Model"
 
 #: equipe/templates/equipe/contrats.html:47
 msgid "Poste"
-msgstr ""
+msgstr "Post"
 
 #: equipe/templates/equipe/contrats.html:48
 msgid "ex : ouvrier arboricole"
-msgstr ""
+msgstr "ex.: muncitor pomicol"
 
 #: equipe/templates/equipe/contrats.html:59
 msgid "si CDD"
-msgstr ""
+msgstr "dacă pe durată determinată"
 
 #: equipe/templates/equipe/contrats.html:63
 #: equipe/templates/equipe/offres.html:75
-#, fuzzy
-#| msgid "Créer un compte"
 msgid "Heures par semaine"
-msgstr "Creează un cont"
+msgstr "Ore pe săptămână"
 
 #: equipe/templates/equipe/contrats.html:67
-#, fuzzy
-#| msgid "CA (€)"
 msgid "Brut mensuel (€)"
-msgstr "CA (€)"
+msgstr "Brut lunar (€)"
 
 #: equipe/templates/equipe/contrats.html:73
 msgid "Établir"
-msgstr ""
+msgstr "Întocmește"
 
 #: equipe/templates/equipe/contrats.html:77
 #: equipe/templates/equipe/paie.html:144
@@ -8997,29 +8911,23 @@ msgstr ""
 msgid ""
 "Ajoutez d'abord un <a href=\"%(url_equipe)s\" class=\"underline\">membre "
 "d'équipe</a>."
-msgstr ""
+msgstr "Adăugați mai întâi un <a href=\"%(url_equipe)s\" class=\"underline\">membru al echipei</a>."
 
 #: equipe/templates/equipe/contrats.html:78
 msgid "Créez ou importez d'abord un modèle de contrat."
-msgstr ""
+msgstr "Creați sau importați mai întâi un model de contract."
 
 #: equipe/templates/equipe/contrats.html:88
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier le modèle"
-msgstr "Modifică"
+msgstr "Modifică modelul"
 
 #: equipe/templates/equipe/contrats.html:93
-#, fuzzy
-#| msgid "Nom du signataire"
 msgid "Nom du modèle"
-msgstr "Numele semnatarului"
+msgstr "Numele modelului"
 
 #: equipe/templates/equipe/contrats.html:103
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Corps du contrat"
-msgstr "membri ai conversației"
+msgstr "Corpul contractului"
 
 #: equipe/templates/equipe/contrats.html:107
 #, fuzzy
@@ -9031,51 +8939,41 @@ msgstr "%(n)s vot"
 #: equipe/templates/equipe/contrats.html:115
 msgid ""
 "Un jeton laissé vide devient une ligne de pointillés à compléter à la main."
-msgstr ""
+msgstr "Un marcaj lăsat gol devine o linie punctată de completat de mână."
 
 #: equipe/templates/equipe/contrats.html:128
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes modèles"
-msgstr "comenzi IoT"
+msgstr "Modelele mele"
 
 #: equipe/templates/equipe/contrats.html:132
 msgid "Importer les modèles types"
-msgstr ""
+msgstr "Importă modelele standard"
 
 #: equipe/templates/equipe/contrats.html:143
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce modèle ?"
-msgstr "Ștergi acest ajutor?"
+msgstr "Ștergeți acest model?"
 
 #: equipe/templates/equipe/contrats.html:162
 msgid ""
 "Aucun modèle. Importez les modèles types (CDI, CDD, saisonnier, "
 "apprentissage, stage) puis adaptez-les à votre exploitation."
-msgstr ""
+msgstr "Niciun model. Importați modelele standard (nedeterminat, determinat, sezonier, ucenicie, stagiu) și adaptați-le la exploatația dumneavoastră."
 
 #: equipe/templates/equipe/contrats.html:169
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats établis"
-msgstr "Contact"
+msgstr "Contracte întocmite"
 
 #: equipe/templates/equipe/contrats.html:178
 msgid "depuis le"
-msgstr ""
+msgstr "de la"
 
 #: equipe/templates/equipe/contrats.html:197
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Ouvrir le contrat"
-msgstr "Ștergi acest ajutor?"
+msgstr "Deschide contractul"
 
 #: equipe/templates/equipe/contrats.html:212
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun contrat établi pour le moment."
-msgstr "Nicio conversație deocamdată."
+msgstr "Niciun contract întocmit deocamdată."
 
 #: equipe/templates/equipe/edit.html:8
 #: finances/templates/finances/devis_signature.html:18
@@ -9174,98 +9072,84 @@ msgstr "Ștergi acest ajutor?"
 #: equipe/templates/equipe/fiche_paie_pdf.html:5
 #, python-format
 msgid "Bulletin — %(qui)s"
-msgstr ""
+msgstr "Fluturaș — %(qui)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:24
-#, fuzzy
-#| msgid "Température"
 msgid "Bulletin de paie"
-msgstr "Temperatură"
+msgstr "Fluturaș de salariu"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:26
 #, python-format
 msgid "Période du %(d)s au %(f)s"
-msgstr ""
+msgstr "Perioada de la %(d)s la %(f)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:31
 msgid "Employeur"
-msgstr ""
+msgstr "Angajator"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:48
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Temps de travail"
-msgstr "Loc negăsit."
+msgstr "Timp de lucru"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
-#, fuzzy
-#| msgid "Juridique"
 msgid "Rubrique"
-msgstr "Juridic"
+msgstr "Rubrică"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Base"
-msgstr ""
+msgstr "Bază"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Taux"
-msgstr ""
+msgstr "Cotă"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part salariale"
-msgstr ""
+msgstr "Cota salariatului"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part employeur"
-msgstr ""
+msgstr "Cota angajatorului"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:78
 msgid "Salaire brut"
-msgstr ""
+msgstr "Salariu brut"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:79
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales"
-msgstr "Asociați și salariați"
+msgstr "Contribuții salariale"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:81
-#, fuzzy
-#| msgid "Nouveau comptable"
 msgid "Net imposable"
-msgstr "Contabil nou"
+msgstr "Net impozabil"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:83
 msgid "Net à payer"
-msgstr ""
+msgstr "Net de plată"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:84
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales"
-msgstr "Asociați și salariați"
+msgstr "Contribuții patronale"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:85
-#, fuzzy
-#| msgid "Coût eau"
 msgid "Coût employeur"
-msgstr "Cost apă"
+msgstr "Cost angajator"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:90
 #, python-format
 msgid "Payée le %(d)s"
-msgstr ""
+msgstr "Plătit la %(d)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:96
 #, python-format
 msgid "%(ferme)s — bulletin établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — fluturaș emis din Isidor."
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:97
 msgid ""
 "Les montants sont ceux saisis par l'employeur : Isidor ne calcule pas la "
 "paie. Conservez ce bulletin sans limitation de durée."
-msgstr ""
+msgstr "Sumele sunt cele introduse de angajator: Isidor nu calculează salariile. Păstrați acest fluturaș fără limită de timp."
 
 #: equipe/templates/equipe/invitation.html:9 equipe/views.py:99
 #: equipe/views.py:105 equipe/views.py:144
@@ -9314,42 +9198,32 @@ msgstr "Acces la poziție refuzat."
 
 #: equipe/templates/equipe/offres.html:16
 msgid "Voir la page publique"
-msgstr ""
+msgstr "Vezi pagina publică"
 
 #: equipe/templates/equipe/offres.html:19
 #: equipe/templates/equipe/offres.html:31
-#, fuzzy
-#| msgid "Nouvelle parcelle"
 msgid "Nouvelle offre"
-msgstr "Parcelă nouă"
+msgstr "Ofertă nouă"
 
 #: equipe/templates/equipe/offres.html:30
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier l'offre"
-msgstr "Modifică"
+msgstr "Modifică oferta"
 
 #: equipe/templates/equipe/offres.html:36
-#, fuzzy
-#| msgid "Identité"
 msgid "Intitulé du poste"
-msgstr "Identitate"
+msgstr "Titlul postului"
 
 #: equipe/templates/equipe/offres.html:38
 msgid "ex : ouvrier arboricole pour la récolte"
-msgstr ""
+msgstr "ex.: muncitor pomicol pentru recoltare"
 
 #: equipe/templates/equipe/offres.html:40
-#, fuzzy
-#| msgid "Titre d'une tâche de planning agricole"
 msgid "Intitulé d'une offre d'emploi agricole"
-msgstr "Titlul unei sarcini din planificarea agricolă"
+msgstr "Titlul unei oferte de muncă agricolă"
 
 #: equipe/templates/equipe/offres.html:44
-#, fuzzy
-#| msgid "Type de sol"
 msgid "Type de contrat"
-msgstr "Tip de sol"
+msgstr "Tipul contractului"
 
 #: equipe/templates/equipe/offres.html:62
 #, python-format
@@ -9357,63 +9231,51 @@ msgid ""
 "Aucune commune renseignée sur vos <a href=\"%(url_parcelles)s\" "
 "class=\"underline\">parcelles</a>. L'offre indiquera la commune de "
 "l'exploitation."
-msgstr ""
+msgstr "Nicio comună indicată pe <a href=\"%(url_parcelles)s\" class=\"underline\">parcelele</a> dumneavoastră. Oferta va indica comuna exploatației."
 
 #: equipe/templates/equipe/offres.html:71
 msgid "Visible jusqu'au"
-msgstr ""
+msgstr "Vizibilă până la"
 
 #: equipe/templates/equipe/offres.html:81
 msgid "ex : SMIC agricole, selon profil"
-msgstr ""
+msgstr "ex.: salariul minim agricol, în funcție de profil"
 
 #: equipe/templates/equipe/offres.html:84
-#, fuzzy
-#| msgid "fertigation"
 msgid "Description du poste"
-msgstr "fertirigare"
+msgstr "Descrierea postului"
 
 #: equipe/templates/equipe/offres.html:87
-#, fuzzy
-#| msgid "Description d'une tâche de planning agricole"
 msgid "Description du poste dans une offre d'emploi agricole"
-msgstr "Descrierea unei sarcini din planificarea agricolă"
+msgstr "Descrierea postului într-o ofertă agricolă"
 
 #: equipe/templates/equipe/offres.html:94
 msgid "Profil recherché dans une offre d'emploi agricole"
-msgstr ""
+msgstr "Profilul căutat într-o ofertă agricolă"
 
 #: equipe/templates/equipe/offres.html:98
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Email de contact"
-msgstr "membri ai conversației"
+msgstr "Email de contact"
 
 #: equipe/templates/equipe/offres.html:104
 msgid "Logement possible sur place"
-msgstr ""
+msgstr "Cazare posibilă la fața locului"
 
 #: equipe/templates/equipe/offres.html:122
-#, fuzzy
-#| msgid "Client"
 msgid "en ligne depuis le"
-msgstr "Client"
+msgstr "online de la"
 
 #: equipe/templates/equipe/offres.html:123
 msgid "jusqu'au"
-msgstr ""
+msgstr "până la"
 
 #: equipe/templates/equipe/offres.html:129
-#, fuzzy
-#| msgid "En ligne"
 msgid "Voir en ligne"
-msgstr "Online"
+msgstr "Vezi online"
 
 #: equipe/templates/equipe/offres.html:144
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer cette offre et ses candidatures ?"
-msgstr "Ștergi acest ajutor?"
+msgstr "Ștergeți această ofertă și candidaturile ei?"
 
 #: equipe/templates/equipe/offres.html:155
 #, fuzzy, python-format
@@ -9426,34 +9288,26 @@ msgstr[1] "%(n)s voturi"
 msgstr[2] "%(n)s de voturi"
 
 #: equipe/templates/equipe/offres.html:182
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune candidature reçue."
-msgstr "Nicio factură."
+msgstr "Nicio candidatură primită."
 
 #: equipe/templates/equipe/offres.html:187
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune offre"
-msgstr "Nicio factură."
+msgstr "Nicio ofertă"
 
 #: equipe/templates/equipe/offres.html:188
 msgid ""
 "Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page "
 "publique des emplois."
-msgstr ""
+msgstr "Redactați o ofertă, apoi publicați-o pentru a apărea pe pagina publică de locuri de muncă."
 
 #: equipe/templates/equipe/paie.html:10
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques :"
-msgstr "Anvelope"
+msgstr "Rubrici:"
 
 #: equipe/templates/equipe/paie.html:13
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une fiche de paie"
-msgstr "Activează un cod"
+msgstr "Adaugă un fluturaș"
 
 #: equipe/templates/equipe/paie.html:19
 msgid ""
@@ -9461,152 +9315,120 @@ msgid ""
 "taux MSA, la convention collective et les exonérations relèvent de votre "
 "comptable ou du service TESA. Saisissez ici les montants qu'ils vous "
 "fournissent — l'addition des rubriques est vérifiée."
-msgstr ""
+msgstr "Isidor înregistrează și tipărește fluturașii, nu calculează salariile: cotele MSA, contractul colectiv și scutirile țin de contabilul dumneavoastră sau de serviciul TESA. Introduceți aici sumele primite — adunarea rubricilor este verificată."
 
 #: equipe/templates/equipe/paie.html:27
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier la fiche de paie"
-msgstr "Modifică"
+msgstr "Modifică fluturașul"
 
 #: equipe/templates/equipe/paie.html:28
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle fiche de paie"
-msgstr "Cultură nouă"
+msgstr "Fluturaș nou"
 
 #: equipe/templates/equipe/paie.html:41
 msgid "Période du"
-msgstr ""
+msgstr "Perioada de la"
 
 #: equipe/templates/equipe/paie.html:45
-#, fuzzy
-#| msgid "Eau"
 msgid "au"
-msgstr "Apă"
+msgstr "la"
 
 #: equipe/templates/equipe/paie.html:56
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Heures travaillées"
-msgstr "Loc negăsit."
+msgstr "Ore lucrate"
 
 #: equipe/templates/equipe/paie.html:60
 msgid "Heures supplémentaires"
-msgstr ""
+msgstr "Ore suplimentare"
 
 #: equipe/templates/equipe/paie.html:66
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques"
-msgstr "Anvelope"
+msgstr "Rubrici"
 
 #: equipe/templates/equipe/paie.html:70
 msgid "ex : Retraite complémentaire"
-msgstr ""
+msgstr "ex.: pensie complementară"
 
 #: equipe/templates/equipe/paie.html:73
 #, python-format
 msgid "taux %%"
-msgstr ""
+msgstr "cotă %%"
 
 #: equipe/templates/equipe/paie.html:75
 msgid "employeur"
-msgstr ""
+msgstr "angajator"
 
 #: equipe/templates/equipe/paie.html:86
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une rubrique"
-msgstr "Activează un cod"
+msgstr "Adaugă o rubrică"
 
 #: equipe/templates/equipe/paie.html:91
 msgid "Totaux"
-msgstr ""
+msgstr "Totaluri"
 
 #: equipe/templates/equipe/paie.html:94
-#, fuzzy
-#| msgid "surface totale (ha)"
 msgid "Salaire brut (€)"
-msgstr "suprafață totală (ha)"
+msgstr "Salariu brut (€)"
 
 #: equipe/templates/equipe/paie.html:98
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales (€)"
-msgstr "Asociați și salariați"
+msgstr "Contribuții salariale (€)"
 
 #: equipe/templates/equipe/paie.html:104
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales (€)"
-msgstr "Asociați și salariați"
+msgstr "Contribuții patronale (€)"
 
 #: equipe/templates/equipe/paie.html:110
-#, fuzzy
-#| msgid "montant (€)"
 msgid "Net imposable (€)"
-msgstr "sumă (€)"
+msgstr "Net impozabil (€)"
 
 #: equipe/templates/equipe/paie.html:114
 msgid "Net à payer (€)"
-msgstr ""
+msgstr "Net de plată (€)"
 
 #: equipe/templates/equipe/paie.html:124
-#, fuzzy
-#| msgid "Payée"
 msgid "Payée le"
-msgstr "Plătită"
+msgstr "Plătit la"
 
 #: equipe/templates/equipe/paie.html:128
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Mode de paiement"
-msgstr "dată de naștere"
+msgstr "Modalitate de plată"
 
 #: equipe/templates/equipe/paie.html:129
-#, fuzzy
-#| msgid "Environnement"
 msgid "ex : virement"
-msgstr "Mediu"
+msgstr "ex.: virament"
 
 #: equipe/templates/equipe/paie.html:151
 msgid "Bulletins"
-msgstr ""
+msgstr "Fluturași"
 
 #: equipe/templates/equipe/paie.html:161
 msgid "brut"
-msgstr ""
+msgstr "brut"
 
 #: equipe/templates/equipe/paie.html:162
 msgid "net"
-msgstr ""
+msgstr "net"
 
 #: equipe/templates/equipe/paie.html:163
 msgid "coût employeur"
-msgstr ""
+msgstr "cost angajator"
 
 #: equipe/templates/equipe/paie.html:167
 msgid "Les rubriques ne totalisent pas les montants annoncés."
-msgstr ""
+msgstr "Rubricile nu însumează sumele indicate."
 
 #: equipe/templates/equipe/paie.html:186
-#, fuzzy
-#| msgid "Supprimer la culture ?"
 msgid "Ouvrir le bulletin"
-msgstr "Ștergi cultura?"
+msgstr "Deschide fluturașul"
 
 #: equipe/templates/equipe/paie.html:190
-#, fuzzy
-#| msgid "Supprimer cette fiche ?"
 msgid "Supprimer cette fiche de paie ?"
-msgstr "Ștergi această fișă?"
+msgstr "Ștergeți acest fluturaș?"
 
 #: equipe/templates/equipe/paie.html:201
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun bulletin pour le moment."
-msgstr "Nicio conversație deocamdată."
+msgstr "Niciun fluturaș deocamdată."
 
 #: equipe/templates/equipe/placeholder.html:18
 #, python-format
@@ -13424,10 +13246,8 @@ msgid "Bonne teneur en eau (ou présence d'eau libre)."
 msgstr ""
 
 #: irrigation/templates/irrigation/_bilan_eau.html:8
-#, fuzzy
-#| msgid "Bilan eau"
 msgid "Bilan d'eau"
-msgstr "Bilanț apă"
+msgstr "Bilanț hidric"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:14
 #, fuzzy
@@ -13436,16 +13256,12 @@ msgid "Irrigation totale"
 msgstr "Irigare"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:18
-#, fuzzy
-#| msgid "sessions enregistrées"
 msgid "Sessions enregistrées"
-msgstr "sesiuni înregistrate"
+msgstr "Sesiuni înregistrate"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:22
-#, fuzzy
-#| msgid "Quota eau"
 msgid "Quota"
-msgstr "Cotă apă"
+msgstr "Cotă"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:29
 msgid "estimé"
@@ -13462,7 +13278,7 @@ msgstr "Nicio sesiune de irigare înregistrată"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:43
 msgid "Les données apparaîtront dès la première session."
-msgstr ""
+msgstr "Datele vor apărea după prima sesiune."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:50
 msgid "Consommation par parcelle (m³/jour)"
@@ -13473,30 +13289,16 @@ msgid "Aucune session d'irrigation"
 msgstr "Nicio sesiune de irigare"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:71
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Enregistrez une session pour voir la consommation par parcelle."
-msgstr ""
-"Nicio parcelă înregistrată. Creați-vă parcelele pentru a vedea consumul pe "
-"parcelă."
+msgstr "Înregistrați o sesiune pentru a vedea consumul pe parcelă."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:75
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune parcelle enregistrée"
-msgstr "Nicio cheltuială înregistrată."
+msgstr "Nicio parcelă înregistrată"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:76
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Créez vos parcelles pour voir la consommation par parcelle."
-msgstr ""
-"Nicio parcelă înregistrată. Creați-vă parcelele pentru a vedea consumul pe "
-"parcelă."
+msgstr "Creați parcelele pentru a vedea consumul pe parcelă."
 
 #: irrigation/templates/irrigation/_etc_card.html:9
 #, fuzzy
@@ -15386,96 +15188,76 @@ msgid "Règle « %(r)s » supprimée."
 msgstr ""
 
 #: operations/materiel.py:21
-#, fuzzy
-#| msgid "Auto"
 msgid "Automoteurs"
-msgstr "Auto"
+msgstr "Automotoare"
 
 #: operations/materiel.py:23
-#, fuzzy
-#| msgid "date de plantation"
 msgid "Semis et plantation"
-msgstr "dată de plantare"
+msgstr "Semănat și plantat"
 
 #: operations/materiel.py:24
-#, fuzzy
-#| msgid "Fertilisation"
 msgid "Fertilisation et protection"
-msgstr "Fertilizare"
+msgstr "Fertilizare și protecție"
 
 #: operations/materiel.py:25
-#, fuzzy
-#| msgid "Récolte"
 msgid "Récolte et fourrage"
-msgstr "Recoltare"
+msgstr "Recoltare și furaje"
 
 #: operations/materiel.py:26
 msgid "Transport et manutention"
-msgstr ""
+msgstr "Transport și manipulare"
 
 #: operations/materiel.py:28
-#, fuzzy
-#| msgid "Redessiner une parcelle"
 msgid "Bâtiment et post-récolte"
-msgstr "Redesenează parcela"
+msgstr "Clădiri și post-recoltare"
 
 #: operations/materiel.py:30
-#, fuzzy
-#| msgid "Générique"
 msgid "Numérique"
-msgstr "Generic"
+msgstr "Digital"
 
 #: operations/materiel.py:36
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur standard"
-msgstr "Tractor"
+msgstr "Tractor standard"
 
 #: operations/materiel.py:37
 msgid "Tracteur vigneron (étroit)"
-msgstr ""
+msgstr "Tractor viticol (îngust)"
 
 #: operations/materiel.py:38
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur chenillé"
-msgstr "Tractor"
+msgstr "Tractor pe șenile"
 
 #: operations/materiel.py:39
 msgid "Télescopique ou chargeur"
-msgstr ""
+msgstr "Telescopic sau încărcător"
 
 #: operations/materiel.py:40
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Moissonneuse-batteuse"
-msgstr "Combină"
+msgstr "Combină de recoltat"
 
 #: operations/materiel.py:41
 msgid "Ensileuse"
-msgstr ""
+msgstr "Combină de siloz"
 
 #: operations/materiel.py:42
 msgid "Machine à vendanger"
-msgstr ""
+msgstr "Mașină de recoltat struguri"
 
 #: operations/materiel.py:43
-#, fuzzy
-#| msgid "Ajouter une parcelle"
 msgid "Automoteur de pulvérisation"
-msgstr "Adaugă parcelă"
+msgstr "Mașină de stropit autopropulsată"
 
 #: operations/materiel.py:44
 msgid "Quad ou UTV"
-msgstr ""
+msgstr "ATV sau UTV"
 
 #: operations/materiel.py:45
 msgid "Camion"
-msgstr ""
+msgstr "Camion"
 
 #: operations/materiel.py:46
 msgid "Chariot élévateur"
-msgstr ""
+msgstr "Motostivuitor"
 
 #: operations/materiel.py:49
 msgid "Charrue"
@@ -15483,135 +15265,107 @@ msgstr "Plug"
 
 #: operations/materiel.py:50
 msgid "Déchaumeur"
-msgstr ""
+msgstr "Cultivator de miriște"
 
 #: operations/materiel.py:51
 msgid "Cultivateur"
 msgstr "Cultivator"
 
 #: operations/materiel.py:52
-#, fuzzy
-#| msgid "culture"
 msgid "Vibroculteur"
-msgstr "cultură"
+msgstr "Cultivator cu vibrodinți"
 
 #: operations/materiel.py:53
-#, fuzzy
-#| msgid "Alertes actives"
 msgid "Herse rotative"
-msgstr "Alerte active"
+msgstr "Grapă rotativă"
 
 #: operations/materiel.py:54
 msgid "Herse étrille"
-msgstr ""
+msgstr "Grapă cu dinți flexibili"
 
 #: operations/materiel.py:55
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Rouleau"
-msgstr "Tambur"
+msgstr "Tăvălug"
 
 #: operations/materiel.py:56
-#, fuzzy
-#| msgid "Se connecter"
 msgid "Décompacteur"
-msgstr "Conectează-te"
+msgstr "Scarificator"
 
 #: operations/materiel.py:57
 msgid "Broyeur"
-msgstr ""
+msgstr "Tocător"
 
 #: operations/materiel.py:60
-#, fuzzy
-#| msgid "En ligne"
 msgid "Semoir en ligne"
-msgstr "Online"
+msgstr "Semănătoare în rânduri"
 
 #: operations/materiel.py:61
 msgid "Semoir monograine"
-msgstr ""
+msgstr "Semănătoare de precizie"
 
 #: operations/materiel.py:62
-#, fuzzy
-#| msgid "Semoir"
 msgid "Semoir direct"
-msgstr "Semănătoare"
+msgstr "Semănătoare directă"
 
 #: operations/materiel.py:63
-#, fuzzy
-#| msgid "Plante"
 msgid "Planteuse"
-msgstr "Plantă"
+msgstr "Mașină de plantat"
 
 #: operations/materiel.py:64
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Bineuse"
-msgstr "Combină"
+msgstr "Prășitoare"
 
 #: operations/materiel.py:67
 msgid "Épandeur d'engrais centrifuge"
-msgstr ""
+msgstr "Mașină centrifugă de împrăștiat îngrășăminte"
 
 #: operations/materiel.py:68
-#, fuzzy
-#| msgid "Épandeur"
 msgid "Épandeur à fumier"
-msgstr "Mașină de împrăștiat"
+msgstr "Mașină de împrăștiat gunoi"
 
 #: operations/materiel.py:69
 msgid "Tonne à lisier"
-msgstr ""
+msgstr "Cisternă de dejecții"
 
 #: operations/materiel.py:70
 msgid "Pulvérisateur porté ou traîné"
-msgstr ""
+msgstr "Mașină de stropit purtată sau tractată"
 
 #: operations/materiel.py:71
 msgid "Atomiseur (arboriculture, viticulture)"
-msgstr ""
+msgstr "Atomizor (pomicultură, viticultură)"
 
 #: operations/materiel.py:74
-#, fuzzy
-#| msgid "Sous-tâches"
 msgid "Faucheuse"
-msgstr "Subsarcini"
+msgstr "Cositoare"
 
 #: operations/materiel.py:75
 msgid "Faneuse"
-msgstr ""
+msgstr "Întorcător de fân"
 
 #: operations/materiel.py:76
 msgid "Andaineur"
-msgstr ""
+msgstr "Greblă"
 
 #: operations/materiel.py:77
-#, fuzzy
-#| msgid "Pression basse"
 msgid "Presse à balles"
-msgstr "Presiune scăzută"
+msgstr "Presă de baloți"
 
 #: operations/materiel.py:78
-#, fuzzy
-#| msgid "En panne"
 msgid "Enrubanneuse"
-msgstr "Defectă"
+msgstr "Înfoliator de baloți"
 
 #: operations/materiel.py:79
-#, fuzzy
-#| msgid "charges"
 msgid "Autochargeuse"
-msgstr "cheltuieli"
+msgstr "Remorcă autoîncărcătoare"
 
 #: operations/materiel.py:80
 msgid "Arracheuse"
-msgstr ""
+msgstr "Mașină de recoltat rădăcinoase"
 
 #: operations/materiel.py:83
-#, fuzzy
-#| msgid "Marque"
 msgid "Remorque"
-msgstr "Marcă"
+msgstr "Remorcă"
 
 #: operations/materiel.py:84
 msgid "Benne"
@@ -15619,131 +15373,111 @@ msgstr "Remorcă basculantă"
 
 #: operations/materiel.py:86
 msgid "Godet"
-msgstr ""
+msgstr "Cupă"
 
 #: operations/materiel.py:87
-#, fuzzy
-#| msgid "Source"
 msgid "Fourche"
-msgstr "Sursă"
+msgstr "Furcă"
 
 #: operations/materiel.py:88
 msgid "Pince à balles"
-msgstr ""
+msgstr "Clește pentru baloți"
 
 #: operations/materiel.py:91
 msgid "Pompe"
 msgstr "Pompă"
 
 #: operations/materiel.py:92
-#, fuzzy
-#| msgid "station de pompage"
 msgid "Station de pompage"
-msgstr "stație de pompare"
+msgstr "Stație de pompare"
 
 #: operations/materiel.py:95
 msgid "Rampe"
-msgstr ""
+msgstr "Rampă"
 
 #: operations/materiel.py:96
-#, fuzzy
-#| msgid "Goutte à goutte"
 msgid "Goutte-à-goutte"
-msgstr "Picurare"
+msgstr "Irigare prin picurare"
 
 #: operations/materiel.py:97
-#, fuzzy
-#| msgid "Facturation"
 msgid "Filtration"
-msgstr "Facturare"
+msgstr "Filtrare"
 
 #: operations/materiel.py:98
 msgid "Borne"
-msgstr ""
+msgstr "Hidrant"
 
 #: operations/materiel.py:101
 msgid "Séchoir"
-msgstr ""
+msgstr "Uscător"
 
 #: operations/materiel.py:102
 msgid "Trieuse"
-msgstr ""
+msgstr "Sortator"
 
 #: operations/materiel.py:103
 msgid "Calibreuse"
-msgstr ""
+msgstr "Calibror"
 
 #: operations/materiel.py:104 stock/models.py:40
 msgid "Chambre froide"
-msgstr ""
+msgstr "Cameră frigorifică"
 
 #: operations/materiel.py:105
 msgid "Groupe électrogène"
-msgstr ""
+msgstr "Generator electric"
 
 #: operations/materiel.py:106
-#, fuzzy
-#| msgid "Capteur de pression"
 msgid "Nettoyeur haute pression"
-msgstr "Senzor de presiune"
+msgstr "Aparat de spălat cu presiune"
 
 #: operations/materiel.py:107 stock/models.py:39
 msgid "Cuve"
-msgstr ""
+msgstr "Cuvă"
 
 #: operations/materiel.py:108
-#, fuzzy
-#| msgid "Pression"
 msgid "Pressoir"
-msgstr "Presiune"
+msgstr "Teasc"
 
 #: operations/materiel.py:111
 msgid "Mélangeuse"
-msgstr ""
+msgstr "Remorcă tehnologică"
 
 #: operations/materiel.py:112
 msgid "Désileuse"
-msgstr ""
+msgstr "Dezinsilator"
 
 #: operations/materiel.py:113
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Robot de traite"
-msgstr "dată de naștere"
+msgstr "Robot de muls"
 
 #: operations/materiel.py:114
-#, fuzzy
-#| msgid "Température"
 msgid "Salle de traite"
-msgstr "Temperatură"
+msgstr "Sală de muls"
 
 #: operations/materiel.py:115
 msgid "Tank à lait"
-msgstr ""
+msgstr "Tanc de lapte"
 
 #: operations/materiel.py:116
-#, fuzzy
-#| msgid "Taille"
 msgid "Pailleuse"
-msgstr "Tăiere"
+msgstr "Distribuitor de paie"
 
 #: operations/materiel.py:117
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Racleur"
-msgstr "Tambur"
+msgstr "Racletă"
 
 #: operations/materiel.py:120
 msgid "Console GPS"
-msgstr ""
+msgstr "Consolă GPS"
 
 #: operations/materiel.py:121
 msgid "Autoguidage RTK"
-msgstr ""
+msgstr "Autoghidare RTK"
 
 #: operations/materiel.py:123
 msgid "Drone"
-msgstr ""
+msgstr "Dronă"
 
 #: operations/models.py:35
 msgid "En propre"
@@ -17282,105 +17016,79 @@ msgid "Priorité haute"
 msgstr "Prioritate ridicată"
 
 #: planning/templates/planning/_bar_reservation.html:4
-#, fuzzy
-#| msgid "Réserve Utile"
 msgid "réservé par"
-msgstr "Rezervă Utilă"
+msgstr "rezervat de"
 
 #: planning/templates/planning/acces.html:7
 #: planning/templates/planning/planning.html:16
 #: planning/templates/planning/sans_acces.html:6
-#, fuzzy
-#| msgid "Planning"
 msgid "RH · Planning"
-msgstr "Planificare"
+msgstr "Resurse umane · Planificare"
 
 #: planning/templates/planning/acces.html:7
-#, fuzzy
-#| msgid "Participants"
 msgid "Partage"
-msgstr "Participanți"
+msgstr "Partajare"
 
 #: planning/templates/planning/acces.html:9
 #: planning/templates/planning/planning.html:21 planning/views.py:623
-#, fuzzy
-#| msgid "tâche de planning"
 msgid "Partage du planning"
-msgstr "sarcină de planificare"
+msgstr "Partajarea planificării"
 
 #: planning/templates/planning/acces.html:10
-#, fuzzy
-#| msgid "Retour aux parcelles"
 msgid "Retour au planning"
-msgstr "Înapoi la parcele"
+msgstr "Înapoi la planificare"
 
 #: planning/templates/planning/acces.html:15
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Demandes en attente"
-msgstr "Nicio cheltuială înregistrată."
+msgstr "Cereri în așteptare"
 
 #: planning/templates/planning/acces.html:23
 #, python-format
 msgid "demandé le %(quand)s"
-msgstr ""
+msgstr "solicitat la %(quand)s"
 
 #: planning/templates/planning/acces.html:28
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder en"
-msgstr "Acordat"
+msgstr "Acordă ca"
 
 #: planning/templates/planning/acces.html:32
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder"
-msgstr "Acordat"
+msgstr "Acordă"
 
 #: planning/templates/planning/acces.html:35
 #: reseaux/templates/reseaux/reseaux.html:32
 #: vente/templates/vente/commande_detail.html:24
-#, fuzzy
-#| msgid "Refusé"
 msgid "Refuser"
-msgstr "Refuzat"
+msgstr "Refuză"
 
 #: planning/templates/planning/acces.html:41
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune demande pour le moment."
-msgstr "Nicio conversație deocamdată."
+msgstr "Nicio cerere deocamdată."
 
 #: planning/templates/planning/acces.html:47
-#, fuzzy
-#| msgid "Accès"
 msgid "Ont accès"
-msgstr "Acces"
+msgstr "Au acces"
 
 #: planning/templates/planning/acces.html:49
 #, python-format
 msgid "%(chef)s est propriétaire du planning : son accès ne se retire pas."
-msgstr ""
+msgstr "%(chef)s este proprietarul planificării: accesul său nu poate fi retras."
 
 #: planning/templates/planning/acces.html:67
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Retirer cet accès ?"
-msgstr "Ștergi acest ajutor?"
+msgstr "Retrageți acest acces?"
 
 #: planning/templates/planning/acces.html:78
 msgid "Personne d'autre n'a encore accès."
-msgstr ""
+msgstr "Nimeni altcineva nu are încă acces."
 
 #: planning/templates/planning/acces.html:85
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demandes refusées"
-msgstr "Solicitat"
+msgstr "Cereri refuzate"
 
 #: planning/templates/planning/acces.html:95
 msgid "Accorder finalement"
-msgstr ""
+msgstr "Acordă totuși"
 
 #: planning/templates/planning/bon_intervention.html:7 planning/views.py:829
 msgid "Bon d'intervention"
@@ -17568,60 +17276,54 @@ msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr "Subsarcinile sale vor fi șterse și ele:"
 
 #: planning/templates/planning/sans_acces.html:13
-#, fuzzy
-#| msgid "Planning"
 msgid "Aucun planning"
-msgstr "Planificare"
+msgstr "Nicio planificare"
 
 #: planning/templates/planning/sans_acces.html:15
 msgid ""
 "Vous n'êtes rattaché à aucune exploitation. Un planning appartient à une "
 "ferme."
-msgstr ""
+msgstr "Nu sunteți asociat niciunei exploatații. O planificare aparține unei ferme."
 
 #: planning/templates/planning/sans_acces.html:19
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demande envoyée"
-msgstr "Solicitat"
+msgstr "Cerere trimisă"
 
 #: planning/templates/planning/sans_acces.html:21
 #, python-format
 msgid ""
 "Le responsable de %(ferme)s a été prévenu. Vous verrez le planning dès qu'il "
 "aura accordé l'accès."
-msgstr ""
+msgstr "Responsabilul de la %(ferme)s a fost anunțat. Veți vedea planificarea de îndată ce acordă accesul."
 
 #: planning/templates/planning/sans_acces.html:25
 msgid "Vous n'avez pas accès à ce planning"
-msgstr ""
+msgstr "Nu aveți acces la această planificare"
 
 #: planning/templates/planning/sans_acces.html:28
 msgid ""
 "Votre demande précédente n'a pas été retenue. Vous pouvez en formuler une "
 "nouvelle."
-msgstr ""
+msgstr "Cererea dumneavoastră anterioară nu a fost acceptată. Puteți formula una nouă."
 
 #: planning/templates/planning/sans_acces.html:30
 #, python-format
 msgid ""
 "Demandez l'accès au responsable de %(ferme)s. Il choisira ce que vous pouvez "
 "y faire."
-msgstr ""
+msgstr "Solicitați acces responsabilului de la %(ferme)s. El va decide ce puteți face."
 
 #: planning/templates/planning/sans_acces.html:38
 msgid "Un mot pour accompagner la demande"
-msgstr ""
+msgstr "Un mesaj care însoțește cererea"
 
 #: planning/templates/planning/sans_acces.html:41
 msgid "ex : je gère la comptabilité et je voudrais suivre la charge de travail"
-msgstr ""
+msgstr "ex.: mă ocup de contabilitate și aș vrea să urmăresc volumul de muncă"
 
 #: planning/templates/planning/sans_acces.html:44
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demander l'accès"
-msgstr "Solicitat"
+msgstr "Solicită acces"
 
 #: planning/views.py:73
 msgid "Vous n'avez pas le droit de modifier ce planning."

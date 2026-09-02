@@ -3628,10 +3628,8 @@ msgstr ""
 #: exploitations/views.py:61 vente/templates/vente/_commander_corps.html:23
 #: vente/templates/vente/boutique.html:94
 #: vente/templates/vente/commande_detail.html:87
-#, fuzzy
-#| msgid "téléphone"
 msgid "Téléphone"
-msgstr "τηλέφωνο"
+msgstr "Τηλέφωνο"
 
 #: client/templates/client/_client_fields.html:60
 msgid "N° voie"
@@ -4947,10 +4945,8 @@ msgstr "ποσό (€)"
 #: contrat/templates/contrat/_assurance_modal.html:86
 #: contrat/templates/contrat/_bail_modal.html:94
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
-#, fuzzy
-#| msgid "date de début"
 msgid "Date de début"
-msgstr "ημερομηνία έναρξης"
+msgstr "Ημερομηνία έναρξης"
 
 #: contrat/templates/contrat/_assurance_modal.html:94
 #, fuzzy
@@ -5223,10 +5219,8 @@ msgid "nom de la partie contractante"
 msgstr ""
 
 #: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
-#, fuzzy
-#| msgid "date de fin"
 msgid "Date de fin"
-msgstr "ημερομηνία λήξης"
+msgstr "Ημερομηνία λήξης"
 
 #: contrat/templates/contrat/_contrat_modal.html:46
 msgid "conditions particulières, échéances…"
@@ -5324,10 +5318,8 @@ msgstr "Προγραμματισμένη"
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:134
 #: equipe/templates/equipe/paie.html:49
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrat"
-msgstr "Επικοινωνία"
+msgstr "Σύμβαση"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
@@ -5722,10 +5714,8 @@ msgstr "Ποσό"
 
 #: contrat/templates/contrat/contrats.html:57
 #: equipe/templates/equipe/contrats.html:201
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce contrat ?"
-msgstr "Διαγραφή αυτής της ενίσχυσης;"
+msgstr "Διαγραφή αυτής της σύμβασης;"
 
 #: contrat/templates/contrat/contrats.html:68
 #, fuzzy
@@ -5968,7 +5958,7 @@ msgstr "Εβδομάδα"
 
 #: core/adresse.py:54 operations/materiel.py:85
 msgid "Plateau"
-msgstr ""
+msgstr "Πλατφόρμα"
 
 #: core/adresse.py:55
 msgid "Pont"
@@ -6162,10 +6152,8 @@ msgstr "Καιρός"
 #: core/context_processors.py:81 core/context_processors.py:83
 #: elevage/templates/elevage/elevage.html:33 elevage/views.py:61
 #: operations/materiel.py:29
-#, fuzzy
-#| msgid "Élevé"
 msgid "Élevage"
-msgstr "Υψηλό"
+msgstr "Κτηνοτροφία"
 
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
@@ -6303,17 +6291,17 @@ msgstr "Εργασίες"
 #: core/context_processors.py:128 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
-msgstr ""
+msgstr "Συμβάσεις εργασίας"
 
 #: core/context_processors.py:129 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
-msgstr ""
+msgstr "Αγγελίες εργασίας"
 
 #: core/context_processors.py:130 equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
-msgstr ""
+msgstr "Μισθοδοσία"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
@@ -8076,132 +8064,102 @@ msgstr ""
 "οργανισμοί, παρατηρήσεις και δείκτες συχνότητας επεμβάσεων (IFT)."
 
 #: equipe/contrats.py:21
-#, fuzzy
-#| msgid "Déclassé"
 msgid "Nom du salarié"
-msgstr "Υποβαθμισμένο"
+msgstr "Όνομα εργαζομένου"
 
 #: equipe/contrats.py:22
 msgid "Email du salarié"
-msgstr ""
+msgstr "Email εργαζομένου"
 
 #: equipe/contrats.py:23
-#, fuzzy
-#| msgid "téléphone 1"
 msgid "Téléphone du salarié"
-msgstr "τηλέφωνο 1"
+msgstr "Τηλέφωνο εργαζομένου"
 
 #: equipe/contrats.py:24
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom de l'exploitation"
-msgstr "Η εκμετάλλευσή μου"
+msgstr "Όνομα εκμετάλλευσης"
 
 #: equipe/contrats.py:25
-#, fuzzy
-#| msgid "adresse email"
 msgid "Adresse de l'exploitation"
-msgstr "διεύθυνση email"
+msgstr "Διεύθυνση εκμετάλλευσης"
 
 #: equipe/contrats.py:26
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "SIRET de l'exploitation"
-msgstr "Η εκμετάλλευσή μου"
+msgstr "SIRET της εκμετάλλευσης"
 
 #: equipe/contrats.py:27
-#, fuzzy
-#| msgid "Mon exploitation"
 msgid "Nom du chef d'exploitation"
-msgstr "Η εκμετάλλευσή μου"
+msgstr "Όνομα υπεύθυνου εκμετάλλευσης"
 
 #: equipe/contrats.py:28
 msgid "Poste occupé"
-msgstr ""
+msgstr "Θέση που κατέχει"
 
 #: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
 #: equipe/templates/equipe/offres.html:50
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Lieu de travail"
-msgstr "Η τοποθεσία δεν βρέθηκε."
+msgstr "Τόπος εργασίας"
 
 #: equipe/contrats.py:32 equipe/templates/equipe/_emploi_detail_corps.html:26
-#, fuzzy
-#| msgid "Hebdomadaire"
 msgid "Durée hebdomadaire"
-msgstr "Εβδομαδιαίο"
+msgstr "Εβδομαδιαία διάρκεια"
 
 #: equipe/contrats.py:33
 msgid "Rémunération brute mensuelle"
-msgstr ""
+msgstr "Μηνιαίες μεικτές αποδοχές"
 
 #: equipe/contrats.py:34
-#, fuzzy
-#| msgid "date d'acquisition"
 msgid "Date d'établissement"
-msgstr "ημερομηνία απόκτησης"
+msgstr "Ημερομηνία έκδοσης"
 
 #: equipe/contrats.py:126
 msgid "CDI — contrat à durée indéterminée"
-msgstr ""
+msgstr "Σύμβαση αορίστου χρόνου"
 
 #: equipe/contrats.py:148
 msgid "CDD — contrat à durée déterminée"
-msgstr ""
+msgstr "Σύμβαση ορισμένου χρόνου"
 
 #: equipe/contrats.py:174 equipe/models.py:163
-#, fuzzy
-#| msgid "Saisonnier"
 msgid "Contrat saisonnier"
-msgstr "Εποχικός"
+msgstr "Εποχική σύμβαση"
 
 #: equipe/contrats.py:200 equipe/models.py:164
-#, fuzzy
-#| msgid "Contrôleur de vanne"
 msgid "Contrat d'apprentissage"
-msgstr "Ελεγκτής βαλβίδας"
+msgstr "Σύμβαση μαθητείας"
 
 #: equipe/contrats.py:225 equipe/models.py:166
-#, fuzzy
-#| msgid "Interventions"
 msgid "Convention de stage"
-msgstr "Παρεμβάσεις"
+msgstr "Σύμβαση πρακτικής άσκησης"
 
 #: equipe/emplois.py:54 equipe/templates/equipe/_emplois_corps.html:6
 msgid "Offres d'emploi agricoles"
-msgstr ""
+msgstr "Αγροτικές αγγελίες εργασίας"
 
 #: equipe/emplois.py:82
 msgid "Le CV ne doit pas dépasser 5 Mo."
-msgstr ""
+msgstr "Το βιογραφικό δεν πρέπει να ξεπερνά τα 5 MB."
 
 #: equipe/emplois.py:85
 msgid "Format de CV non accepté : PDF, Word, OpenDocument ou image."
-msgstr ""
+msgstr "Μη αποδεκτή μορφή βιογραφικού: PDF, Word, OpenDocument ή εικόνα."
 
 #: equipe/emplois.py:99
-#, fuzzy
-#| msgid "Indiquez au moins un destinataire valide."
 msgid "Indiquez au moins votre nom et votre email."
-msgstr "Καθορίστε τουλάχιστον έναν έγκυρο παραλήπτη."
+msgstr "Δηλώστε τουλάχιστον το όνομα και το email σας."
 
 #: equipe/emplois.py:117
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle candidature"
-msgstr "Νέα καλλιέργεια"
+msgstr "Νέα αίτηση"
 
 #: equipe/emplois.py:118
 #, python-format
 msgid "%(qui)s a répondu à « %(offre)s »."
-msgstr ""
+msgstr "Ο/Η %(qui)s απάντησε στην «%(offre)s»."
 
 #: equipe/emplois.py:120
-#, fuzzy
-#| msgid "Demandé"
 msgid "Votre candidature est envoyée. Bonne chance !"
-msgstr "Αιτηθέν"
+msgstr "Η αίτησή σας στάλθηκε. Καλή επιτυχία!"
 
 #: equipe/forms.py:69
 #, fuzzy
@@ -8417,10 +8375,8 @@ msgstr "Ολοκληρωμένο"
 
 #: equipe/models.py:203 equipe/models.py:356
 #: equipe/templates/equipe/paie.html:74
-#, fuzzy
-#| msgid "participants"
 msgid "salarié"
-msgstr "συμμετέχοντες"
+msgstr "εργαζόμενος"
 
 #: equipe/models.py:205
 #, fuzzy
@@ -8514,7 +8470,7 @@ msgstr "Σε δημιουργία"
 
 #: equipe/models.py:270 equipe/templates/equipe/_emplois_corps.html:35
 msgid "logement possible"
-msgstr ""
+msgstr "δυνατότητα στέγασης"
 
 #: equipe/models.py:271
 #, fuzzy
@@ -8560,7 +8516,7 @@ msgstr "Απορριφθέν"
 #: equipe/models.py:326 equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/offres.html:170
 msgid "CV"
-msgstr ""
+msgstr "Βιογραφικό"
 
 #: equipe/models.py:331
 #, fuzzy
@@ -8596,7 +8552,7 @@ msgstr "Η τοποθεσία δεν βρέθηκε."
 
 #: equipe/models.py:364 equipe/templates/equipe/fiche_paie_pdf.html:51
 msgid "heures supplémentaires"
-msgstr ""
+msgstr "υπερωρίες"
 
 #: equipe/models.py:366
 msgid "salaire brut"
@@ -8651,7 +8607,7 @@ msgstr "ετικέτα"
 
 #: equipe/models.py:422 equipe/templates/equipe/paie.html:72
 msgid "base"
-msgstr ""
+msgstr "βάση"
 
 #: equipe/models.py:423
 msgid "taux (%)"
@@ -8685,89 +8641,73 @@ msgid "lignes de paie"
 msgstr "Πελάτης"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:6
-#, fuzzy
-#| msgid "Ce lien de partage n'est plus valide."
 msgid "Cette offre n'est plus en ligne"
-msgstr "Αυτός ο σύνδεσμος κοινοποίησης δεν είναι πλέον έγκυρος."
+msgstr "Αυτή η αγγελία δεν είναι πλέον διαθέσιμη"
 
 #: equipe/templates/equipe/_emploi_close_corps.html:8
 #, python-format
 msgid ""
 "« %(poste)s » chez %(ferme)s n'est plus proposée. D'autres fermes recrutent "
 "peut-être."
-msgstr ""
+msgstr "Η θέση «%(poste)s» στο %(ferme)s δεν προσφέρεται πλέον. Άλλα αγροκτήματα ίσως προσλαμβάνουν."
 
 #: equipe/templates/equipe/_emploi_close_corps.html:10
-#, fuzzy
-#| msgid "factures"
 msgid "Voir les offres en ligne"
-msgstr "τιμολόγια"
+msgstr "Δείτε τις αγγελίες"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:6
-#, fuzzy
-#| msgid "Toutes les heures"
 msgid "Toutes les offres"
-msgstr "Κάθε ώρα"
+msgstr "Όλες οι αγγελίες"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:22
 #: equipe/templates/equipe/_emplois_corps.html:33
 #: equipe/templates/equipe/offres.html:67
-#, fuzzy
-#| msgid "Partage de position"
 msgid "Prise de poste"
-msgstr "Κοινοποίηση θέσης"
+msgstr "Ανάληψη καθηκόντων"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:27
 #: equipe/templates/equipe/fiche_paie_pdf.html:50
 msgid "heures"
-msgstr ""
+msgstr "ώρες"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:30
 #: equipe/templates/equipe/offres.html:79
-#, fuzzy
-#| msgid "En génération"
 msgid "Rémunération"
-msgstr "Σε δημιουργία"
+msgstr "Αμοιβή"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:34
-#, fuzzy
-#| msgid "Avertissement"
 msgid "Logement"
-msgstr "Προειδοποίηση"
+msgstr "Στέγαση"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:35
 msgid "Possible sur place"
-msgstr ""
+msgstr "Δυνατόν επί τόπου"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:39
-#, fuzzy
-#| msgid "code postal"
 msgid "Le poste"
-msgstr "ταχυδρομικός κώδικας"
+msgstr "Η θέση"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:43
 #: equipe/templates/equipe/offres.html:91
 msgid "Profil recherché"
-msgstr ""
+msgstr "Ζητούμενο προφίλ"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:52
 msgid "Postuler"
-msgstr ""
+msgstr "Υποβολή αίτησης"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:53
 msgid "Pas besoin de compte : la ferme reçoit votre message directement."
-msgstr ""
+msgstr "Δεν χρειάζεται λογαριασμός: το αγρόκτημα λαμβάνει απευθείας το μήνυμά σας."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:57
 #: vente/templates/vente/_commander_corps.html:19
 msgid "Votre nom"
-msgstr ""
+msgstr "Το όνομά σας"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:61
-#, fuzzy
-#| msgid "adresse email"
 msgid "Votre email"
-msgstr "διεύθυνση email"
+msgstr "Το email σας"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:69
 #: equipe/templates/equipe/paie.html:49
@@ -8785,80 +8725,62 @@ msgstr "προαιρετικό"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:72
 msgid "PDF, Word, OpenDocument ou photo — 5 Mo maximum."
-msgstr ""
+msgstr "PDF, Word, OpenDocument ή φωτογραφία — έως 5 MB."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:75
-#, fuzzy
-#| msgid "Dicter le message"
 msgid "Votre message"
-msgstr "Υπαγόρευση μηνύματος"
+msgstr "Το μήνυμά σας"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:77
 msgid ""
 "Dites en quelques lignes ce qui vous intéresse dans ce poste et ce que vous "
 "savez faire."
-msgstr ""
+msgstr "Πείτε σε λίγες γραμμές τι σας ενδιαφέρει σε αυτή τη θέση και τι ξέρετε να κάνετε."
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:81
 msgid "Envoyer ma candidature"
-msgstr ""
+msgstr "Αποστολή της αίτησής μου"
 
 #: equipe/templates/equipe/_emplois_corps.html:8
 msgid "Les postes ouverts dans les fermes, saison après saison."
-msgstr ""
+msgstr "Οι ανοιχτές θέσεις στα αγροκτήματα, εποχή με εποχή."
 
 #: equipe/templates/equipe/_emplois_corps.html:14
-#, fuzzy
-#| msgid "Rechercher un type de sol, une texture…"
 msgid "Chercher un poste, une commune, une ferme…"
-msgstr "Αναζήτηση τύπου εδάφους, υφής…"
+msgstr "Αναζήτηση θέσης, δήμου, αγροκτήματος…"
 
 #: equipe/templates/equipe/_emplois_corps.html:15
-#, fuzzy
-#| msgid "Rechercher une commune"
 msgid "Rechercher une offre"
-msgstr "Αναζήτηση δήμου"
+msgstr "Αναζήτηση αγγελίας"
 
 #: equipe/templates/equipe/_emplois_corps.html:16
-#, fuzzy
-#| msgid "Rechercher un lieu…"
 msgid "Chercher"
-msgstr "Αναζήτηση τοποθεσίας…"
+msgstr "Αναζήτηση"
 
 #: equipe/templates/equipe/_emplois_corps.html:34
-#, fuzzy
-#| msgid "Semaine"
 msgid "semaine"
-msgstr "Εβδομάδα"
+msgstr "εβδομάδα"
 
 #: equipe/templates/equipe/_emplois_corps.html:41
-#, fuzzy
-#| msgid "Aucune culture ne correspond à la recherche."
 msgid "Aucune offre ne correspond à votre recherche."
-msgstr "Καμία καλλιέργεια δεν αντιστοιχεί στην αναζήτηση."
+msgstr "Καμία αγγελία δεν ταιριάζει στην αναζήτησή σας."
 
 #: equipe/templates/equipe/_emplois_corps.html:42
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune offre en ligne pour le moment."
-msgstr "Καμία συνομιλία προς το παρόν."
+msgstr "Καμία αγγελία στο διαδίκτυο προς το παρόν."
 
 #: equipe/templates/equipe/_emplois_corps.html:44
 msgid "Revenez à l'approche des saisons : c'est là que les fermes recrutent."
-msgstr ""
+msgstr "Επιστρέψτε κοντά στις εποχές: τότε προσλαμβάνουν τα αγροκτήματα."
 
 #: equipe/templates/equipe/_entete_emplois.html:10
-#, fuzzy
-#| msgid "Voir le mois"
 msgid "Emplois à la ferme"
-msgstr "Προβολή του μήνα"
+msgstr "Θέσεις εργασίας στο αγρόκτημα"
 
 #: equipe/templates/equipe/_entete_emplois.html:15
 #: vente/templates/vente/_entete_public.html:16
-#, fuzzy
-#| msgid "type d'agriculture"
 msgid "Vous êtes agriculteur ?"
-msgstr "τύπος γεωργίας"
+msgstr "Είστε αγρότης;"
 
 #: equipe/templates/equipe/_invitation_carte.html:10
 msgid "Lien d'invitation invalide"
@@ -8919,79 +8841,71 @@ msgstr "Δημιουργία λογαριασμού"
 #: equipe/templates/equipe/contrat_pdf.html:5
 #, python-format
 msgid "Contrat — %(qui)s"
-msgstr ""
+msgstr "Σύμβαση — %(qui)s"
 
 #: equipe/templates/equipe/contrat_pdf.html:16
 #, python-format
 msgid "%(ferme)s — document établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — έγγραφο από το Isidor."
 
 #: equipe/templates/equipe/contrat_pdf.html:17
 msgid ""
 "À faire relire avant signature : les clauses obligatoires dépendent de la "
 "convention collective applicable."
-msgstr ""
+msgstr "Προς έλεγχο πριν την υπογραφή: οι υποχρεωτικές ρήτρες εξαρτώνται από την ισχύουσα συλλογική σύμβαση."
 
 #: equipe/templates/equipe/contrats.html:12
 #: equipe/templates/equipe/contrats.html:89
-#, fuzzy
-#| msgid "Nouveau mail"
 msgid "Nouveau modèle"
-msgstr "Νέο email"
+msgstr "Νέο πρότυπο"
 
 #: equipe/templates/equipe/contrats.html:15
 #: equipe/templates/equipe/contrats.html:29
 msgid "Établir un contrat"
-msgstr ""
+msgstr "Έκδοση σύμβασης"
 
 #: equipe/templates/equipe/contrats.html:22
 msgid ""
 "Ces modèles sont des points de départ : les clauses obligatoires, la période "
 "d'essai et la rémunération dépendent de la convention collective applicable. "
 "Faites relire un contrat avant de le remettre."
-msgstr ""
+msgstr "Αυτά τα πρότυπα είναι αφετηρία: οι υποχρεωτικές ρήτρες, η δοκιμαστική περίοδος και η αμοιβή εξαρτώνται από την ισχύουσα συλλογική σύμβαση. Ζητήστε έλεγχο πριν παραδώσετε τη σύμβαση."
 
 #: equipe/templates/equipe/contrats.html:33
 #: equipe/templates/equipe/fiche_paie_pdf.html:39
 #: equipe/templates/equipe/paie.html:34
-#, fuzzy
-#| msgid "participants"
 msgid "Salarié"
-msgstr "συμμετέχοντες"
+msgstr "Εργαζόμενος"
 
 #: equipe/templates/equipe/contrats.html:40
 #: operations/templates/operations/parc_materiel.html:87
 msgid "Modèle"
-msgstr ""
+msgstr "Πρότυπο"
 
 #: equipe/templates/equipe/contrats.html:47
 msgid "Poste"
-msgstr ""
+msgstr "Θέση"
 
 #: equipe/templates/equipe/contrats.html:48
 msgid "ex : ouvrier arboricole"
-msgstr ""
+msgstr "π.χ. εργάτης δενδροκομίας"
 
 #: equipe/templates/equipe/contrats.html:59
 msgid "si CDD"
-msgstr ""
+msgstr "εάν ορισμένου χρόνου"
 
 #: equipe/templates/equipe/contrats.html:63
 #: equipe/templates/equipe/offres.html:75
-#, fuzzy
-#| msgid "Créer un compte"
 msgid "Heures par semaine"
-msgstr "Δημιουργία λογαριασμού"
+msgstr "Ώρες την εβδομάδα"
 
 #: equipe/templates/equipe/contrats.html:67
-#, fuzzy
-#| msgid "CA (€)"
 msgid "Brut mensuel (€)"
-msgstr "Κύκλος εργασιών (€)"
+msgstr "Μηνιαίες μεικτές (€)"
 
 #: equipe/templates/equipe/contrats.html:73
 msgid "Établir"
-msgstr ""
+msgstr "Έκδοση"
 
 #: equipe/templates/equipe/contrats.html:77
 #: equipe/templates/equipe/paie.html:144
@@ -8999,29 +8913,23 @@ msgstr ""
 msgid ""
 "Ajoutez d'abord un <a href=\"%(url_equipe)s\" class=\"underline\">membre "
 "d'équipe</a>."
-msgstr ""
+msgstr "Προσθέστε πρώτα ένα <a href=\"%(url_equipe)s\" class=\"underline\">μέλος ομάδας</a>."
 
 #: equipe/templates/equipe/contrats.html:78
 msgid "Créez ou importez d'abord un modèle de contrat."
-msgstr ""
+msgstr "Δημιουργήστε ή εισαγάγετε πρώτα ένα πρότυπο σύμβασης."
 
 #: equipe/templates/equipe/contrats.html:88
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier le modèle"
-msgstr "Επεξεργασία"
+msgstr "Επεξεργασία προτύπου"
 
 #: equipe/templates/equipe/contrats.html:93
-#, fuzzy
-#| msgid "Nom du signataire"
 msgid "Nom du modèle"
-msgstr "Όνομα υπογράφοντος"
+msgstr "Όνομα προτύπου"
 
 #: equipe/templates/equipe/contrats.html:103
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Corps du contrat"
-msgstr "μέλη συνομιλίας"
+msgstr "Σώμα της σύμβασης"
 
 #: equipe/templates/equipe/contrats.html:107
 #, fuzzy
@@ -9033,51 +8941,41 @@ msgstr "%(n)s ψήφος"
 #: equipe/templates/equipe/contrats.html:115
 msgid ""
 "Un jeton laissé vide devient une ligne de pointillés à compléter à la main."
-msgstr ""
+msgstr "Ένα κενό πεδίο γίνεται διακεκομμένη γραμμή προς συμπλήρωση με το χέρι."
 
 #: equipe/templates/equipe/contrats.html:128
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes modèles"
-msgstr "εντολές IoT"
+msgstr "Τα πρότυπά μου"
 
 #: equipe/templates/equipe/contrats.html:132
 msgid "Importer les modèles types"
-msgstr ""
+msgstr "Εισαγωγή των πρότυπων υποδειγμάτων"
 
 #: equipe/templates/equipe/contrats.html:143
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce modèle ?"
-msgstr "Διαγραφή αυτής της ενίσχυσης;"
+msgstr "Διαγραφή αυτού του προτύπου;"
 
 #: equipe/templates/equipe/contrats.html:162
 msgid ""
 "Aucun modèle. Importez les modèles types (CDI, CDD, saisonnier, "
 "apprentissage, stage) puis adaptez-les à votre exploitation."
-msgstr ""
+msgstr "Κανένα πρότυπο. Εισαγάγετε τα πρότυπα υποδείγματα (αορίστου, ορισμένου, εποχικό, μαθητείας, πρακτικής) και προσαρμόστε τα στην εκμετάλλευσή σας."
 
 #: equipe/templates/equipe/contrats.html:169
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats établis"
-msgstr "Επικοινωνία"
+msgstr "Συμβάσεις που εκδόθηκαν"
 
 #: equipe/templates/equipe/contrats.html:178
 msgid "depuis le"
-msgstr ""
+msgstr "από"
 
 #: equipe/templates/equipe/contrats.html:197
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Ouvrir le contrat"
-msgstr "Διαγραφή αυτής της ενίσχυσης;"
+msgstr "Άνοιγμα σύμβασης"
 
 #: equipe/templates/equipe/contrats.html:212
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun contrat établi pour le moment."
-msgstr "Καμία συνομιλία προς το παρόν."
+msgstr "Κανένα συμβόλαιο προς το παρόν."
 
 #: equipe/templates/equipe/edit.html:8
 #: finances/templates/finances/devis_signature.html:18
@@ -9176,98 +9074,84 @@ msgstr "Διαγραφή αυτής της ενίσχυσης;"
 #: equipe/templates/equipe/fiche_paie_pdf.html:5
 #, python-format
 msgid "Bulletin — %(qui)s"
-msgstr ""
+msgstr "Εκκαθαριστικό — %(qui)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:24
-#, fuzzy
-#| msgid "Température"
 msgid "Bulletin de paie"
-msgstr "Θερμοκρασία"
+msgstr "Εκκαθαριστικό μισθοδοσίας"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:26
 #, python-format
 msgid "Période du %(d)s au %(f)s"
-msgstr ""
+msgstr "Περίοδος από %(d)s έως %(f)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:31
 msgid "Employeur"
-msgstr ""
+msgstr "Εργοδότης"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:48
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Temps de travail"
-msgstr "Η τοποθεσία δεν βρέθηκε."
+msgstr "Χρόνος εργασίας"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
-#, fuzzy
-#| msgid "Juridique"
 msgid "Rubrique"
-msgstr "Νομικά"
+msgstr "Γραμμή"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Base"
-msgstr ""
+msgstr "Βάση"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:59
 msgid "Taux"
-msgstr ""
+msgstr "Συντελεστής"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part salariale"
-msgstr ""
+msgstr "Μερίδιο εργαζομένου"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:60
 msgid "Part employeur"
-msgstr ""
+msgstr "Μερίδιο εργοδότη"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:78
 msgid "Salaire brut"
-msgstr ""
+msgstr "Μεικτός μισθός"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:79
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales"
-msgstr "Εταίροι και μισθωτοί"
+msgstr "Εισφορές εργαζομένου"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:81
-#, fuzzy
-#| msgid "Nouveau comptable"
 msgid "Net imposable"
-msgstr "Νέος λογιστής"
+msgstr "Φορολογητέο καθαρό"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:83
 msgid "Net à payer"
-msgstr ""
+msgstr "Καθαρό πληρωτέο"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:84
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales"
-msgstr "Εταίροι και μισθωτοί"
+msgstr "Εργοδοτικές εισφορές"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:85
-#, fuzzy
-#| msgid "Coût eau"
 msgid "Coût employeur"
-msgstr "Κόστος νερού"
+msgstr "Κόστος εργοδότη"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:90
 #, python-format
 msgid "Payée le %(d)s"
-msgstr ""
+msgstr "Πληρώθηκε στις %(d)s"
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:96
 #, python-format
 msgid "%(ferme)s — bulletin établi depuis Isidor."
-msgstr ""
+msgstr "%(ferme)s — εκκαθαριστικό από το Isidor."
 
 #: equipe/templates/equipe/fiche_paie_pdf.html:97
 msgid ""
 "Les montants sont ceux saisis par l'employeur : Isidor ne calcule pas la "
 "paie. Conservez ce bulletin sans limitation de durée."
-msgstr ""
+msgstr "Τα ποσά έχουν καταχωριστεί από τον εργοδότη: το Isidor δεν υπολογίζει μισθοδοσία. Φυλάξτε αυτό το εκκαθαριστικό χωρίς χρονικό όριο."
 
 #: equipe/templates/equipe/invitation.html:9 equipe/views.py:99
 #: equipe/views.py:105 equipe/views.py:144
@@ -9316,42 +9200,32 @@ msgstr "Η πρόσβαση στη θέση απορρίφθηκε."
 
 #: equipe/templates/equipe/offres.html:16
 msgid "Voir la page publique"
-msgstr ""
+msgstr "Προβολή δημόσιας σελίδας"
 
 #: equipe/templates/equipe/offres.html:19
 #: equipe/templates/equipe/offres.html:31
-#, fuzzy
-#| msgid "Nouvelle parcelle"
 msgid "Nouvelle offre"
-msgstr "Νέο αγροτεμάχιο"
+msgstr "Νέα αγγελία"
 
 #: equipe/templates/equipe/offres.html:30
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier l'offre"
-msgstr "Επεξεργασία"
+msgstr "Επεξεργασία αγγελίας"
 
 #: equipe/templates/equipe/offres.html:36
-#, fuzzy
-#| msgid "Identité"
 msgid "Intitulé du poste"
-msgstr "Ταυτότητα"
+msgstr "Τίτλος θέσης"
 
 #: equipe/templates/equipe/offres.html:38
 msgid "ex : ouvrier arboricole pour la récolte"
-msgstr ""
+msgstr "π.χ. εργάτης δενδροκομίας για τη συγκομιδή"
 
 #: equipe/templates/equipe/offres.html:40
-#, fuzzy
-#| msgid "Titre d'une tâche de planning agricole"
 msgid "Intitulé d'une offre d'emploi agricole"
-msgstr "Τίτλος εργασίας γεωργικού προγραμματισμού"
+msgstr "Τίτλος αγροτικής αγγελίας εργασίας"
 
 #: equipe/templates/equipe/offres.html:44
-#, fuzzy
-#| msgid "Type de sol"
 msgid "Type de contrat"
-msgstr "Τύπος εδάφους"
+msgstr "Τύπος σύμβασης"
 
 #: equipe/templates/equipe/offres.html:62
 #, python-format
@@ -9359,63 +9233,51 @@ msgid ""
 "Aucune commune renseignée sur vos <a href=\"%(url_parcelles)s\" "
 "class=\"underline\">parcelles</a>. L'offre indiquera la commune de "
 "l'exploitation."
-msgstr ""
+msgstr "Δεν έχει δηλωθεί δήμος στα <a href=\"%(url_parcelles)s\" class=\"underline\">αγροτεμάχιά</a> σας. Η αγγελία θα δείξει τον δήμο της εκμετάλλευσης."
 
 #: equipe/templates/equipe/offres.html:71
 msgid "Visible jusqu'au"
-msgstr ""
+msgstr "Ορατή έως"
 
 #: equipe/templates/equipe/offres.html:81
 msgid "ex : SMIC agricole, selon profil"
-msgstr ""
+msgstr "π.χ. αγροτικός κατώτατος μισθός, ανάλογα με το προφίλ"
 
 #: equipe/templates/equipe/offres.html:84
-#, fuzzy
-#| msgid "fertigation"
 msgid "Description du poste"
-msgstr "υδρολίπανση"
+msgstr "Περιγραφή θέσης"
 
 #: equipe/templates/equipe/offres.html:87
-#, fuzzy
-#| msgid "Description d'une tâche de planning agricole"
 msgid "Description du poste dans une offre d'emploi agricole"
-msgstr "Περιγραφή εργασίας γεωργικού προγραμματισμού"
+msgstr "Περιγραφή θέσης σε αγροτική αγγελία"
 
 #: equipe/templates/equipe/offres.html:94
 msgid "Profil recherché dans une offre d'emploi agricole"
-msgstr ""
+msgstr "Ζητούμενο προφίλ σε αγροτική αγγελία"
 
 #: equipe/templates/equipe/offres.html:98
-#, fuzzy
-#| msgid "membres de conversation"
 msgid "Email de contact"
-msgstr "μέλη συνομιλίας"
+msgstr "Email επικοινωνίας"
 
 #: equipe/templates/equipe/offres.html:104
 msgid "Logement possible sur place"
-msgstr ""
+msgstr "Δυνατότητα στέγασης επί τόπου"
 
 #: equipe/templates/equipe/offres.html:122
-#, fuzzy
-#| msgid "Client"
 msgid "en ligne depuis le"
-msgstr "Πελάτης"
+msgstr "στο διαδίκτυο από"
 
 #: equipe/templates/equipe/offres.html:123
 msgid "jusqu'au"
-msgstr ""
+msgstr "έως"
 
 #: equipe/templates/equipe/offres.html:129
-#, fuzzy
-#| msgid "En ligne"
 msgid "Voir en ligne"
-msgstr "Συνδεδεμένο"
+msgstr "Προβολή στο διαδίκτυο"
 
 #: equipe/templates/equipe/offres.html:144
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Supprimer cette offre et ses candidatures ?"
-msgstr "Διαγραφή αυτής της ενίσχυσης;"
+msgstr "Διαγραφή της αγγελίας και των αιτήσεών της;"
 
 #: equipe/templates/equipe/offres.html:155
 #, fuzzy, python-format
@@ -9427,34 +9289,26 @@ msgstr[0] "%(n)s ψήφος"
 msgstr[1] "%(n)s ψήφοι"
 
 #: equipe/templates/equipe/offres.html:182
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune candidature reçue."
-msgstr "Κανένα τιμολόγιο."
+msgstr "Δεν ελήφθησαν αιτήσεις."
 
 #: equipe/templates/equipe/offres.html:187
-#, fuzzy
-#| msgid "Aucune facture."
 msgid "Aucune offre"
-msgstr "Κανένα τιμολόγιο."
+msgstr "Καμία αγγελία"
 
 #: equipe/templates/equipe/offres.html:188
 msgid ""
 "Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page "
 "publique des emplois."
-msgstr ""
+msgstr "Συντάξτε μια αγγελία και δημοσιεύστε την ώστε να εμφανιστεί στη δημόσια σελίδα εργασίας."
 
 #: equipe/templates/equipe/paie.html:10
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques :"
-msgstr "Ελαστικά"
+msgstr "Γραμμές:"
 
 #: equipe/templates/equipe/paie.html:13
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une fiche de paie"
-msgstr "Ενεργοποίηση κωδικού"
+msgstr "Προσθήκη εκκαθαριστικού"
 
 #: equipe/templates/equipe/paie.html:19
 msgid ""
@@ -9462,152 +9316,120 @@ msgid ""
 "taux MSA, la convention collective et les exonérations relèvent de votre "
 "comptable ou du service TESA. Saisissez ici les montants qu'ils vous "
 "fournissent — l'addition des rubriques est vérifiée."
-msgstr ""
+msgstr "Το Isidor καταγράφει και εκτυπώνει τα εκκαθαριστικά, δεν υπολογίζει τη μισθοδοσία: οι συντελεστές MSA, η συλλογική σύμβαση και οι απαλλαγές αφορούν τον λογιστή σας ή την υπηρεσία TESA. Καταχωρίστε εδώ τα ποσά που σας δίνουν — το άθροισμα των γραμμών ελέγχεται."
 
 #: equipe/templates/equipe/paie.html:27
-#, fuzzy
-#| msgid "Modifier"
 msgid "Modifier la fiche de paie"
-msgstr "Επεξεργασία"
+msgstr "Επεξεργασία εκκαθαριστικού"
 
 #: equipe/templates/equipe/paie.html:28
-#, fuzzy
-#| msgid "Nouvelle culture"
 msgid "Nouvelle fiche de paie"
-msgstr "Νέα καλλιέργεια"
+msgstr "Νέο εκκαθαριστικό"
 
 #: equipe/templates/equipe/paie.html:41
 msgid "Période du"
-msgstr ""
+msgstr "Περίοδος από"
 
 #: equipe/templates/equipe/paie.html:45
-#, fuzzy
-#| msgid "Eau"
 msgid "au"
-msgstr "Νερό"
+msgstr "έως"
 
 #: equipe/templates/equipe/paie.html:56
-#, fuzzy
-#| msgid "Lieu introuvable."
 msgid "Heures travaillées"
-msgstr "Η τοποθεσία δεν βρέθηκε."
+msgstr "Ώρες εργασίας"
 
 #: equipe/templates/equipe/paie.html:60
 msgid "Heures supplémentaires"
-msgstr ""
+msgstr "Υπερωρίες"
 
 #: equipe/templates/equipe/paie.html:66
-#, fuzzy
-#| msgid "Pneumatiques"
 msgid "Rubriques"
-msgstr "Ελαστικά"
+msgstr "Γραμμές"
 
 #: equipe/templates/equipe/paie.html:70
 msgid "ex : Retraite complémentaire"
-msgstr ""
+msgstr "π.χ. επικουρική σύνταξη"
 
 #: equipe/templates/equipe/paie.html:73
 #, python-format
 msgid "taux %%"
-msgstr ""
+msgstr "συντελεστής %%"
 
 #: equipe/templates/equipe/paie.html:75
 msgid "employeur"
-msgstr ""
+msgstr "εργοδότης"
 
 #: equipe/templates/equipe/paie.html:86
-#, fuzzy
-#| msgid "Activer un code"
 msgid "Ajouter une rubrique"
-msgstr "Ενεργοποίηση κωδικού"
+msgstr "Προσθήκη γραμμής"
 
 #: equipe/templates/equipe/paie.html:91
 msgid "Totaux"
-msgstr ""
+msgstr "Σύνολα"
 
 #: equipe/templates/equipe/paie.html:94
-#, fuzzy
-#| msgid "surface totale (ha)"
 msgid "Salaire brut (€)"
-msgstr "συνολική έκταση (ha)"
+msgstr "Μεικτός μισθός (€)"
 
 #: equipe/templates/equipe/paie.html:98
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations salariales (€)"
-msgstr "Εταίροι και μισθωτοί"
+msgstr "Εισφορές εργαζομένου (€)"
 
 #: equipe/templates/equipe/paie.html:104
-#, fuzzy
-#| msgid "Associés et salariés"
 msgid "Cotisations patronales (€)"
-msgstr "Εταίροι και μισθωτοί"
+msgstr "Εργοδοτικές εισφορές (€)"
 
 #: equipe/templates/equipe/paie.html:110
-#, fuzzy
-#| msgid "montant (€)"
 msgid "Net imposable (€)"
-msgstr "ποσό (€)"
+msgstr "Φορολογητέο καθαρό (€)"
 
 #: equipe/templates/equipe/paie.html:114
 msgid "Net à payer (€)"
-msgstr ""
+msgstr "Καθαρό πληρωτέο (€)"
 
 #: equipe/templates/equipe/paie.html:124
-#, fuzzy
-#| msgid "Payée"
 msgid "Payée le"
-msgstr "Πληρωμένο"
+msgstr "Πληρώθηκε στις"
 
 #: equipe/templates/equipe/paie.html:128
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Mode de paiement"
-msgstr "ημερομηνία γέννησης"
+msgstr "Τρόπος πληρωμής"
 
 #: equipe/templates/equipe/paie.html:129
-#, fuzzy
-#| msgid "Environnement"
 msgid "ex : virement"
-msgstr "Περιβάλλον"
+msgstr "π.χ. τραπεζικό έμβασμα"
 
 #: equipe/templates/equipe/paie.html:151
 msgid "Bulletins"
-msgstr ""
+msgstr "Εκκαθαριστικά"
 
 #: equipe/templates/equipe/paie.html:161
 msgid "brut"
-msgstr ""
+msgstr "μεικτά"
 
 #: equipe/templates/equipe/paie.html:162
 msgid "net"
-msgstr ""
+msgstr "καθαρά"
 
 #: equipe/templates/equipe/paie.html:163
 msgid "coût employeur"
-msgstr ""
+msgstr "κόστος εργοδότη"
 
 #: equipe/templates/equipe/paie.html:167
 msgid "Les rubriques ne totalisent pas les montants annoncés."
-msgstr ""
+msgstr "Οι γραμμές δεν αθροίζουν στα δηλωμένα ποσά."
 
 #: equipe/templates/equipe/paie.html:186
-#, fuzzy
-#| msgid "Supprimer la culture ?"
 msgid "Ouvrir le bulletin"
-msgstr "Διαγραφή καλλιέργειας;"
+msgstr "Άνοιγμα εκκαθαριστικού"
 
 #: equipe/templates/equipe/paie.html:190
-#, fuzzy
-#| msgid "Supprimer cette fiche ?"
 msgid "Supprimer cette fiche de paie ?"
-msgstr "Διαγραφή αυτού του δελτίου;"
+msgstr "Διαγραφή αυτού του εκκαθαριστικού;"
 
 #: equipe/templates/equipe/paie.html:201
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucun bulletin pour le moment."
-msgstr "Καμία συνομιλία προς το παρόν."
+msgstr "Κανένα εκκαθαριστικό προς το παρόν."
 
 #: equipe/templates/equipe/placeholder.html:18
 #, python-format
@@ -13427,8 +13249,6 @@ msgid "Bonne teneur en eau (ou présence d'eau libre)."
 msgstr ""
 
 #: irrigation/templates/irrigation/_bilan_eau.html:8
-#, fuzzy
-#| msgid "Bilan eau"
 msgid "Bilan d'eau"
 msgstr "Ισοζύγιο νερού"
 
@@ -13439,16 +13259,12 @@ msgid "Irrigation totale"
 msgstr "Άρδευση"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:18
-#, fuzzy
-#| msgid "sessions enregistrées"
 msgid "Sessions enregistrées"
-msgstr "καταχωρημένες συνεδρίες"
+msgstr "Καταγεγραμμένες αρδεύσεις"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:22
-#, fuzzy
-#| msgid "Quota eau"
 msgid "Quota"
-msgstr "Ποσόστωση νερού"
+msgstr "Ποσόστωση"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:29
 msgid "estimé"
@@ -13465,7 +13281,7 @@ msgstr "Καμία καταχωρημένη συνεδρία άρδευσης"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:43
 msgid "Les données apparaîtront dès la première session."
-msgstr ""
+msgstr "Τα δεδομένα θα εμφανιστούν μετά την πρώτη άρδευση."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:50
 msgid "Consommation par parcelle (m³/jour)"
@@ -13476,30 +13292,16 @@ msgid "Aucune session d'irrigation"
 msgstr "Καμία συνεδρία άρδευσης"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:71
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Enregistrez une session pour voir la consommation par parcelle."
-msgstr ""
-"Κανένα καταχωρημένο αγροτεμάχιο. Δημιουργήστε τα αγροτεμάχιά σας για να "
-"δείτε την κατανάλωση ανά αγροτεμάχιο."
+msgstr "Καταχωρίστε μια άρδευση για να δείτε την κατανάλωση ανά αγροτεμάχιο."
 
 #: irrigation/templates/irrigation/_bilan_eau.html:75
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune parcelle enregistrée"
-msgstr "Καμία καταχωρημένη δαπάνη."
+msgstr "Δεν έχουν καταχωριστεί αγροτεμάχια"
 
 #: irrigation/templates/irrigation/_bilan_eau.html:76
-#, fuzzy
-#| msgid ""
-#| "Aucune parcelle enregistrée. Créez vos parcelles pour voir la "
-#| "consommation par parcelle."
 msgid "Créez vos parcelles pour voir la consommation par parcelle."
-msgstr ""
-"Κανένα καταχωρημένο αγροτεμάχιο. Δημιουργήστε τα αγροτεμάχιά σας για να "
-"δείτε την κατανάλωση ανά αγροτεμάχιο."
+msgstr "Δημιουργήστε αγροτεμάχια για να δείτε την κατανάλωση ανά αγροτεμάχιο."
 
 #: irrigation/templates/irrigation/_etc_card.html:9
 #, fuzzy
@@ -15395,96 +15197,76 @@ msgid "Règle « %(r)s » supprimée."
 msgstr ""
 
 #: operations/materiel.py:21
-#, fuzzy
-#| msgid "Auto"
 msgid "Automoteurs"
-msgstr "Αυτόματο"
+msgstr "Αυτοκινούμενα"
 
 #: operations/materiel.py:23
-#, fuzzy
-#| msgid "date de plantation"
 msgid "Semis et plantation"
-msgstr "ημερομηνία φύτευσης"
+msgstr "Σπορά και φύτευση"
 
 #: operations/materiel.py:24
-#, fuzzy
-#| msgid "Fertilisation"
 msgid "Fertilisation et protection"
-msgstr "Λίπανση"
+msgstr "Λίπανση και φυτοπροστασία"
 
 #: operations/materiel.py:25
-#, fuzzy
-#| msgid "Récolte"
 msgid "Récolte et fourrage"
-msgstr "Συγκομιδή"
+msgstr "Συγκομιδή και χορτονομή"
 
 #: operations/materiel.py:26
 msgid "Transport et manutention"
-msgstr ""
+msgstr "Μεταφορά και διακίνηση"
 
 #: operations/materiel.py:28
-#, fuzzy
-#| msgid "Redessiner une parcelle"
 msgid "Bâtiment et post-récolte"
-msgstr "Επανασχεδίαση αγροτεμαχίου"
+msgstr "Κτίρια και μετασυλλεκτικά"
 
 #: operations/materiel.py:30
-#, fuzzy
-#| msgid "Générique"
 msgid "Numérique"
-msgstr "Γενικό"
+msgstr "Ψηφιακά"
 
 #: operations/materiel.py:36
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur standard"
-msgstr "Τρακτέρ"
+msgstr "Τυπικό τρακτέρ"
 
 #: operations/materiel.py:37
 msgid "Tracteur vigneron (étroit)"
-msgstr ""
+msgstr "Αμπελουργικό τρακτέρ (στενό)"
 
 #: operations/materiel.py:38
-#, fuzzy
-#| msgid "Tracteur"
 msgid "Tracteur chenillé"
-msgstr "Τρακτέρ"
+msgstr "Ερπυστριοφόρο τρακτέρ"
 
 #: operations/materiel.py:39
 msgid "Télescopique ou chargeur"
-msgstr ""
+msgstr "Τηλεσκοπικός ή φορτωτής"
 
 #: operations/materiel.py:40
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Moissonneuse-batteuse"
 msgstr "Θεριζοαλωνιστική"
 
 #: operations/materiel.py:41
 msgid "Ensileuse"
-msgstr ""
+msgstr "Χορτοκοπτική συλλεκτική"
 
 #: operations/materiel.py:42
 msgid "Machine à vendanger"
-msgstr ""
+msgstr "Τρυγητική μηχανή"
 
 #: operations/materiel.py:43
-#, fuzzy
-#| msgid "Ajouter une parcelle"
 msgid "Automoteur de pulvérisation"
-msgstr "Προσθήκη αγροτεμαχίου"
+msgstr "Αυτοκινούμενο ψεκαστικό"
 
 #: operations/materiel.py:44
 msgid "Quad ou UTV"
-msgstr ""
+msgstr "Γουρούνα ή UTV"
 
 #: operations/materiel.py:45
 msgid "Camion"
-msgstr ""
+msgstr "Φορτηγό"
 
 #: operations/materiel.py:46
 msgid "Chariot élévateur"
-msgstr ""
+msgstr "Περονοφόρο"
 
 #: operations/materiel.py:49
 msgid "Charrue"
@@ -15492,135 +15274,107 @@ msgstr "Άροτρο"
 
 #: operations/materiel.py:50
 msgid "Déchaumeur"
-msgstr ""
+msgstr "Καλλιεργητής καλαμιάς"
 
 #: operations/materiel.py:51
 msgid "Cultivateur"
 msgstr "Καλλιεργητής"
 
 #: operations/materiel.py:52
-#, fuzzy
-#| msgid "culture"
 msgid "Vibroculteur"
-msgstr "καλλιέργεια"
+msgstr "Ελατηριωτός καλλιεργητής"
 
 #: operations/materiel.py:53
-#, fuzzy
-#| msgid "Alertes actives"
 msgid "Herse rotative"
-msgstr "Ενεργές ειδοποιήσεις"
+msgstr "Περιστροφική σβάρνα"
 
 #: operations/materiel.py:54
 msgid "Herse étrille"
-msgstr ""
+msgstr "Σβάρνα ελατηριωτή"
 
 #: operations/materiel.py:55
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Rouleau"
-msgstr "Καρούλι"
+msgstr "Κύλινδρος"
 
 #: operations/materiel.py:56
-#, fuzzy
-#| msgid "Se connecter"
 msgid "Décompacteur"
-msgstr "Σύνδεση"
+msgstr "Υπεδαφοκαλλιεργητής"
 
 #: operations/materiel.py:57
 msgid "Broyeur"
-msgstr ""
+msgstr "Καταστροφέας"
 
 #: operations/materiel.py:60
-#, fuzzy
-#| msgid "En ligne"
 msgid "Semoir en ligne"
-msgstr "Συνδεδεμένο"
+msgstr "Σπαρτική γραμμική"
 
 #: operations/materiel.py:61
 msgid "Semoir monograine"
-msgstr ""
+msgstr "Σπαρτική ακριβείας"
 
 #: operations/materiel.py:62
-#, fuzzy
-#| msgid "Semoir"
 msgid "Semoir direct"
-msgstr "Σπαρτική μηχανή"
+msgstr "Σπαρτική απευθείας σποράς"
 
 #: operations/materiel.py:63
-#, fuzzy
-#| msgid "Plante"
 msgid "Planteuse"
-msgstr "Φυτό"
+msgstr "Φυτευτική μηχανή"
 
 #: operations/materiel.py:64
-#, fuzzy
-#| msgid "Moissonneuse"
 msgid "Bineuse"
-msgstr "Θεριζοαλωνιστική"
+msgstr "Σκαλιστήρι"
 
 #: operations/materiel.py:67
 msgid "Épandeur d'engrais centrifuge"
-msgstr ""
+msgstr "Φυγοκεντρικός λιπασματοδιανομέας"
 
 #: operations/materiel.py:68
-#, fuzzy
-#| msgid "Épandeur"
 msgid "Épandeur à fumier"
-msgstr "Λιπασματοδιανομέας"
+msgstr "Διανομέας κοπριάς"
 
 #: operations/materiel.py:69
 msgid "Tonne à lisier"
-msgstr ""
+msgstr "Βυτίο υγρών λυμάτων"
 
 #: operations/materiel.py:70
 msgid "Pulvérisateur porté ou traîné"
-msgstr ""
+msgstr "Ψεκαστικό αναρτώμενο ή συρόμενο"
 
 #: operations/materiel.py:71
 msgid "Atomiseur (arboriculture, viticulture)"
-msgstr ""
+msgstr "Ψεκαστήρας (δενδροκομία, αμπελουργία)"
 
 #: operations/materiel.py:74
-#, fuzzy
-#| msgid "Sous-tâches"
 msgid "Faucheuse"
-msgstr "Υποεργασίες"
+msgstr "Χορτοκοπτικό"
 
 #: operations/materiel.py:75
 msgid "Faneuse"
-msgstr ""
+msgstr "Χορτοαναστροφέας"
 
 #: operations/materiel.py:76
 msgid "Andaineur"
-msgstr ""
+msgstr "Χορτοσυλλέκτης"
 
 #: operations/materiel.py:77
-#, fuzzy
-#| msgid "Pression basse"
 msgid "Presse à balles"
-msgstr "Χαμηλή πίεση"
+msgstr "Δεματοποιητής"
 
 #: operations/materiel.py:78
-#, fuzzy
-#| msgid "En panne"
 msgid "Enrubanneuse"
-msgstr "Σε βλάβη"
+msgstr "Περιτυλικτική μηχανή"
 
 #: operations/materiel.py:79
-#, fuzzy
-#| msgid "charges"
 msgid "Autochargeuse"
-msgstr "δαπάνες"
+msgstr "Αυτοφορτωνόμενο ρυμουλκούμενο"
 
 #: operations/materiel.py:80
 msgid "Arracheuse"
-msgstr ""
+msgstr "Εκριζωτής"
 
 #: operations/materiel.py:83
-#, fuzzy
-#| msgid "Marque"
 msgid "Remorque"
-msgstr "Μάρκα"
+msgstr "Ρυμουλκούμενο"
 
 #: operations/materiel.py:84
 msgid "Benne"
@@ -15628,131 +15382,111 @@ msgstr "Καρότσα"
 
 #: operations/materiel.py:86
 msgid "Godet"
-msgstr ""
+msgstr "Κουβάς"
 
 #: operations/materiel.py:87
-#, fuzzy
-#| msgid "Source"
 msgid "Fourche"
-msgstr "Πηγή"
+msgstr "Πιρούνα"
 
 #: operations/materiel.py:88
 msgid "Pince à balles"
-msgstr ""
+msgstr "Αρπάγη δεμάτων"
 
 #: operations/materiel.py:91
 msgid "Pompe"
 msgstr "Αντλία"
 
 #: operations/materiel.py:92
-#, fuzzy
-#| msgid "station de pompage"
 msgid "Station de pompage"
-msgstr "αντλιοστάσιο"
+msgstr "Αντλιοστάσιο"
 
 #: operations/materiel.py:95
 msgid "Rampe"
-msgstr ""
+msgstr "Ράμπα"
 
 #: operations/materiel.py:96
-#, fuzzy
-#| msgid "Goutte à goutte"
 msgid "Goutte-à-goutte"
-msgstr "Στάγδην"
+msgstr "Στάγδην άρδευση"
 
 #: operations/materiel.py:97
-#, fuzzy
-#| msgid "Facturation"
 msgid "Filtration"
-msgstr "Τιμολόγηση"
+msgstr "Φίλτρανση"
 
 #: operations/materiel.py:98
 msgid "Borne"
-msgstr ""
+msgstr "Υδροστόμιο"
 
 #: operations/materiel.py:101
 msgid "Séchoir"
-msgstr ""
+msgstr "Ξηραντήριο"
 
 #: operations/materiel.py:102
 msgid "Trieuse"
-msgstr ""
+msgstr "Διαλογέας"
 
 #: operations/materiel.py:103
 msgid "Calibreuse"
-msgstr ""
+msgstr "Διαλογέας"
 
 #: operations/materiel.py:104 stock/models.py:40
 msgid "Chambre froide"
-msgstr ""
+msgstr "Ψυκτικός θάλαμος"
 
 #: operations/materiel.py:105
 msgid "Groupe électrogène"
-msgstr ""
+msgstr "Ηλεκτροπαραγωγό ζεύγος"
 
 #: operations/materiel.py:106
-#, fuzzy
-#| msgid "Capteur de pression"
 msgid "Nettoyeur haute pression"
-msgstr "Αισθητήρας πίεσης"
+msgstr "Πλυστικό υψηλής πίεσης"
 
 #: operations/materiel.py:107 stock/models.py:39
 msgid "Cuve"
-msgstr ""
+msgstr "Δεξαμενή"
 
 #: operations/materiel.py:108
-#, fuzzy
-#| msgid "Pression"
 msgid "Pressoir"
-msgstr "Πίεση"
+msgstr "Πιεστήριο"
 
 #: operations/materiel.py:111
 msgid "Mélangeuse"
-msgstr ""
+msgstr "Αναμικτήρας ζωοτροφών"
 
 #: operations/materiel.py:112
 msgid "Désileuse"
-msgstr ""
+msgstr "Κόπτης ενσιρώματος"
 
 #: operations/materiel.py:113
-#, fuzzy
-#| msgid "date de naissance"
 msgid "Robot de traite"
-msgstr "ημερομηνία γέννησης"
+msgstr "Ρομπότ αρμέγματος"
 
 #: operations/materiel.py:114
-#, fuzzy
-#| msgid "Température"
 msgid "Salle de traite"
-msgstr "Θερμοκρασία"
+msgstr "Αίθουσα αρμέγματος"
 
 #: operations/materiel.py:115
 msgid "Tank à lait"
-msgstr ""
+msgstr "Παγολεκάνη γάλακτος"
 
 #: operations/materiel.py:116
-#, fuzzy
-#| msgid "Taille"
 msgid "Pailleuse"
-msgstr "Κλάδεμα"
+msgstr "Αχυροδιανομέας"
 
 #: operations/materiel.py:117
-#, fuzzy
-#| msgid "Enrouleur"
 msgid "Racleur"
-msgstr "Καρούλι"
+msgstr "Ξέστρο"
 
 #: operations/materiel.py:120
 msgid "Console GPS"
-msgstr ""
+msgstr "Κονσόλα GPS"
 
 #: operations/materiel.py:121
 msgid "Autoguidage RTK"
-msgstr ""
+msgstr "Αυτόματη οδήγηση RTK"
 
 #: operations/materiel.py:123
 msgid "Drone"
-msgstr ""
+msgstr "Δρόνος"
 
 #: operations/models.py:35
 msgid "En propre"
@@ -17296,105 +17030,79 @@ msgid "Priorité haute"
 msgstr "Υψηλή προτεραιότητα"
 
 #: planning/templates/planning/_bar_reservation.html:4
-#, fuzzy
-#| msgid "Réserve Utile"
 msgid "réservé par"
-msgstr "Διαθέσιμη Υδατοϊκανότητα"
+msgstr "δεσμευμένο από"
 
 #: planning/templates/planning/acces.html:7
 #: planning/templates/planning/planning.html:16
 #: planning/templates/planning/sans_acces.html:6
-#, fuzzy
-#| msgid "Planning"
 msgid "RH · Planning"
-msgstr "Προγραμματισμός"
+msgstr "Ανθρώπινο δυναμικό · Πρόγραμμα"
 
 #: planning/templates/planning/acces.html:7
-#, fuzzy
-#| msgid "Participants"
 msgid "Partage"
-msgstr "Συμμετέχοντες"
+msgstr "Κοινή χρήση"
 
 #: planning/templates/planning/acces.html:9
 #: planning/templates/planning/planning.html:21 planning/views.py:623
-#, fuzzy
-#| msgid "tâche de planning"
 msgid "Partage du planning"
-msgstr "εργασία προγραμματισμού"
+msgstr "Κοινή χρήση προγράμματος"
 
 #: planning/templates/planning/acces.html:10
-#, fuzzy
-#| msgid "Retour aux parcelles"
 msgid "Retour au planning"
-msgstr "Επιστροφή στα αγροτεμάχια"
+msgstr "Επιστροφή στο πρόγραμμα"
 
 #: planning/templates/planning/acces.html:15
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Demandes en attente"
-msgstr "Καμία καταχωρημένη δαπάνη."
+msgstr "Εκκρεμείς αιτήσεις"
 
 #: planning/templates/planning/acces.html:23
 #, python-format
 msgid "demandé le %(quand)s"
-msgstr ""
+msgstr "αιτήθηκε στις %(quand)s"
 
 #: planning/templates/planning/acces.html:28
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder en"
-msgstr "Εγκεκριμένο"
+msgstr "Παραχώρηση ως"
 
 #: planning/templates/planning/acces.html:32
-#, fuzzy
-#| msgid "Accordé"
 msgid "Accorder"
-msgstr "Εγκεκριμένο"
+msgstr "Παραχώρηση"
 
 #: planning/templates/planning/acces.html:35
 #: reseaux/templates/reseaux/reseaux.html:32
 #: vente/templates/vente/commande_detail.html:24
-#, fuzzy
-#| msgid "Refusé"
 msgid "Refuser"
-msgstr "Απορριφθέν"
+msgstr "Απόρριψη"
 
 #: planning/templates/planning/acces.html:41
-#, fuzzy
-#| msgid "Aucune conversation pour le moment."
 msgid "Aucune demande pour le moment."
-msgstr "Καμία συνομιλία προς το παρόν."
+msgstr "Καμία αίτηση προς το παρόν."
 
 #: planning/templates/planning/acces.html:47
-#, fuzzy
-#| msgid "Accès"
 msgid "Ont accès"
-msgstr "Πρόσβαση"
+msgstr "Έχουν πρόσβαση"
 
 #: planning/templates/planning/acces.html:49
 #, python-format
 msgid "%(chef)s est propriétaire du planning : son accès ne se retire pas."
-msgstr ""
+msgstr "Ο/Η %(chef)s είναι ιδιοκτήτης του προγράμματος: η πρόσβασή του δεν αφαιρείται."
 
 #: planning/templates/planning/acces.html:67
-#, fuzzy
-#| msgid "Supprimer cette aide ?"
 msgid "Retirer cet accès ?"
-msgstr "Διαγραφή αυτής της ενίσχυσης;"
+msgstr "Αφαίρεση αυτής της πρόσβασης;"
 
 #: planning/templates/planning/acces.html:78
 msgid "Personne d'autre n'a encore accès."
-msgstr ""
+msgstr "Κανείς άλλος δεν έχει ακόμη πρόσβαση."
 
 #: planning/templates/planning/acces.html:85
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demandes refusées"
-msgstr "Αιτηθέν"
+msgstr "Απορριφθείσες αιτήσεις"
 
 #: planning/templates/planning/acces.html:95
 msgid "Accorder finalement"
-msgstr ""
+msgstr "Τελική παραχώρηση"
 
 #: planning/templates/planning/bon_intervention.html:7 planning/views.py:829
 msgid "Bon d'intervention"
@@ -17582,60 +17290,54 @@ msgid "Ses sous-tâches seront supprimées aussi :"
 msgstr "Οι υποεργασίες της θα διαγραφούν επίσης:"
 
 #: planning/templates/planning/sans_acces.html:13
-#, fuzzy
-#| msgid "Planning"
 msgid "Aucun planning"
-msgstr "Προγραμματισμός"
+msgstr "Κανένα πρόγραμμα"
 
 #: planning/templates/planning/sans_acces.html:15
 msgid ""
 "Vous n'êtes rattaché à aucune exploitation. Un planning appartient à une "
 "ferme."
-msgstr ""
+msgstr "Δεν είστε συνδεδεμένος με καμία εκμετάλλευση. Ένα πρόγραμμα ανήκει σε αγρόκτημα."
 
 #: planning/templates/planning/sans_acces.html:19
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demande envoyée"
-msgstr "Αιτηθέν"
+msgstr "Το αίτημα στάλθηκε"
 
 #: planning/templates/planning/sans_acces.html:21
 #, python-format
 msgid ""
 "Le responsable de %(ferme)s a été prévenu. Vous verrez le planning dès qu'il "
 "aura accordé l'accès."
-msgstr ""
+msgstr "Ο υπεύθυνος της %(ferme)s ειδοποιήθηκε. Θα δείτε το πρόγραμμα μόλις δοθεί η πρόσβαση."
 
 #: planning/templates/planning/sans_acces.html:25
 msgid "Vous n'avez pas accès à ce planning"
-msgstr ""
+msgstr "Δεν έχετε πρόσβαση σε αυτό το πρόγραμμα"
 
 #: planning/templates/planning/sans_acces.html:28
 msgid ""
 "Votre demande précédente n'a pas été retenue. Vous pouvez en formuler une "
 "nouvelle."
-msgstr ""
+msgstr "Το προηγούμενο αίτημά σας δεν έγινε δεκτό. Μπορείτε να υποβάλετε νέο."
 
 #: planning/templates/planning/sans_acces.html:30
 #, python-format
 msgid ""
 "Demandez l'accès au responsable de %(ferme)s. Il choisira ce que vous pouvez "
 "y faire."
-msgstr ""
+msgstr "Ζητήστε πρόσβαση από τον υπεύθυνο της %(ferme)s. Θα αποφασίσει τι μπορείτε να κάνετε."
 
 #: planning/templates/planning/sans_acces.html:38
 msgid "Un mot pour accompagner la demande"
-msgstr ""
+msgstr "Ένα μήνυμα μαζί με το αίτημα"
 
 #: planning/templates/planning/sans_acces.html:41
 msgid "ex : je gère la comptabilité et je voudrais suivre la charge de travail"
-msgstr ""
+msgstr "π.χ. τηρώ τα λογιστικά και θέλω να παρακολουθώ τον φόρτο εργασίας"
 
 #: planning/templates/planning/sans_acces.html:44
-#, fuzzy
-#| msgid "Demandé"
 msgid "Demander l'accès"
-msgstr "Αιτηθέν"
+msgstr "Αίτημα πρόσβασης"
 
 #: planning/views.py:73
 msgid "Vous n'avez pas le droit de modifier ce planning."
@@ -19270,8 +18972,7 @@ msgstr "Προσθήκη υποεργασίας"
 
 #: templates/partials/_sous_taches.html:52
 msgid "Une sous-tâche datée apparaît aussi dans le planning de son assigné."
-msgstr ""
-"Μια υποεργασία με ημερομηνία εμφανίζεται και στο πρόγραμμα του υπευθύνου."
+msgstr "Μια υποεργασία με ημερομηνία εμφανίζεται και στο πρόγραμμα του αναδόχου."
 
 #: templates/partials/cookie_banner.html:6
 msgid ""
