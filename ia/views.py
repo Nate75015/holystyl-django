@@ -105,7 +105,7 @@ def stream(request):
 
         ctx = services.build_context(exploitation)
         messages = [
-            {"role": "system", "content": f"Tu es Eric, le conseiller agronome de Holystyl (irrigation de précision). Réponds en français, de façon concise et pratique. Contexte parcelles : {ctx['parcelles']}."},
+            {"role": "system", "content": f"Tu es Eric, le conseiller agronome d'Isidor (irrigation de précision). Réponds en français, de façon concise et pratique. Contexte parcelles : {ctx['parcelles']}."},
             {"role": "user", "content": message},
         ]
         full = []

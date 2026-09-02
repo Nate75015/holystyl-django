@@ -24,7 +24,7 @@ def _courbe(objets, champ_date, champ_valeur, format_date, token, repli, label):
     """Met une série d'objets à la forme attendue par `partials/area_chart.html`.
 
     `token` est un token CSS : la courbe suit alors le thème (le canvas ne sait
-    pas résoudre `var(...)`, c'est `holystyl-viz.js` qui le lit). `repli` est la
+    pas résoudre `var(...)`, c'est `isidor-viz.js` qui le lit). `repli` est la
     couleur utilisée si le token est introuvable.
     """
     if not objets:

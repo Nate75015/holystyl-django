@@ -1,4 +1,4 @@
-"""Correspondance entre le schéma Cultiveau et les modèles Holystyl.
+"""Correspondance entre le schéma Cultiveau et les modèles Isidor.
 
 Ce fichier est le seul endroit à modifier quand le DTI évolue. L'importeur,
 lui, ne connaît aucune table : il lit cette table de correspondance et
@@ -7,7 +7,7 @@ et une migration — pas réécrire du code d'import.
 
 Chaque entrée répond à trois questions :
 
-1. **Où va cette table ?** Un modèle Holystyl existant qu'on alimente
+1. **Où va cette table ?** Un modèle Isidor existant qu'on alimente
    (`exploitations.Exploitation`, `parcelles.Parcelle`…), un modèle de l'app
    `dti` créé pour l'occasion, ou nulle part — auquel cas la donnée reste
    consultable dans `DtiImport.payload` et rien n'est perdu.
@@ -19,7 +19,7 @@ Chaque entrée répond à trois questions :
    d'une parcelle, la date d'une analyse. Il départage deux régimes, et c'est
    la distinction la plus importante de tout l'échange :
 
-   * les modèles **partagés** de Holystyl (exploitation, parcelle, campagne,
+   * les modèles **partagés** d'Isidor (exploitation, parcelle, campagne,
      NDVI) portent une `cle` et sont **mis à jour** : une exploitation a un
      parcellaire, qui évolue. Sans cela, chaque nouvelle version d'un
      diagnostic recréerait quinze parcelles de plus ;
@@ -27,7 +27,7 @@ Chaque entrée répond à trois questions :
      réception** : ils constituent l'instantané daté du diagnostic, et deux
      passages successifs doivent pouvoir se comparer.
 
-Le principe directeur est de **ne jamais dupliquer ce que Holystyl sait déjà**.
+Le principe directeur est de **ne jamais dupliquer ce qu'Isidor sait déjà**.
 Une exploitation, une parcelle, une campagne culturale, une analyse NDVI et un
 score DTI ont leurs modèles ici depuis longtemps : l'import les alimente. Seul
 ce qui n'existait pas arrive dans l'app `dti`.
@@ -44,7 +44,7 @@ ARCHIVE_SEULE = "archive_seule"
 class Cible:
     """Destination d'une table du payload.
 
-    `champs` va du nom **source** vers le nom **Holystyl**. Un champ absent de
+    `champs` va du nom **source** vers le nom **Isidor**. Un champ absent de
     ce dictionnaire n'est pas importé : il reste dans le payload archivé.
 
     `reste_dans` nomme, le cas échéant, le `JSONField` qui recueille tous les
@@ -69,7 +69,7 @@ class Cible:
 #: cycle : l'importeur le résout en second passage.
 CORRESPONDANCE = {
 
-    # ── Ce que Holystyl connaît déjà : on alimente, on ne duplique pas ──
+    # ── Ce qu'Isidor connaît déjà : on alimente, on ne duplique pas ──
 
     "exploitation": Cible(
         "exploitations.Exploitation",
@@ -133,7 +133,7 @@ CORRESPONDANCE = {
         "irrigation.NdviData",
         parent="parcelles",
         cle="acquisition_date",
-        note="Holystyl stocke déjà l'historique NDVI ; un modèle de plus "
+        note="Isidor stocke déjà l'historique NDVI ; un modèle de plus "
              "ferait deux sources pour la même courbe. Les deux schémas "
              "nomment identiquement les indices, seuls la date et le taux de "
              "nuages diffèrent.",
@@ -233,7 +233,7 @@ CORRESPONDANCE = {
 
     "organisation": Cible(ARCHIVE_SEULE, note="Conduite de l'irrigation : "
                           "tour d'eau, pilotage, pertes déclarées. À promouvoir "
-                          "le jour où Holystyl en fait quelque chose."),
+                          "le jour où Isidor en fait quelque chose."),
     "couts": Cible(ARCHIVE_SEULE, note="Poste de coûts du diagnostic ; "
                    "finances a son propre modèle, la fusion demande un arbitrage."),
     "cultures_irriguees": Cible(ARCHIVE_SEULE, note="Doublonne en partie "

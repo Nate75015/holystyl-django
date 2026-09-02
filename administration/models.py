@@ -20,7 +20,7 @@ class SmtpConfig(TimeStampedModel):
     secure = models.BooleanField(default=False)  # True = SSL/465, False = TLS/STARTTLS
     user = models.CharField(max_length=320)
     password = models.TextField()
-    from_name = models.CharField(max_length=255, default="Holystyl")
+    from_name = models.CharField(max_length=255, default="Isidor")
     from_email = models.EmailField()
     enabled = models.BooleanField(default=True)
     last_tested_at = models.DateTimeField(null=True, blank=True)

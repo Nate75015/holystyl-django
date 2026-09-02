@@ -1,4 +1,4 @@
-/* Holystyl — brique data-viz réutilisable.
+/* Isidor — brique data-viz réutilisable.
  * - Jauge DTI (compte-tours SVG 270°, A→D)
  * - Graphiques d'aires avec dégradé/glow (Chart.js)
  * Auto-initialisation : tout `.dti-gauge` et tout `[data-chart]` du DOM.
@@ -136,7 +136,7 @@
     document.querySelectorAll('canvas[data-chart]').forEach(renderChart);
   }
 
-  window.Holystyl = { renderGauge, renderChart, init };
+  window.Isidor = { renderGauge, renderChart, init };
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
 })();

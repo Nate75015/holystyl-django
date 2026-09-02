@@ -1,5 +1,5 @@
 """
-Réglages communs Holystyl (tous environnements).
+Réglages communs Isidor (tous environnements).
 
 Sélection de l'environnement via la variable DJANGO_ENV (dev|prod),
 résolue dans config/settings/__init__.py.
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "channels",
     "satkaar_agenda",  # moteur de calendrier (Event/RRULE) — backend du planning
-    # Apps métier Holystyl (ajoutées au fil des tranches)
+    # Apps métier Isidor (ajoutées au fil des tranches)
     "core",
     "dashboard",
     "accounts",
@@ -213,7 +213,7 @@ CELERY_TASK_EAGER_PROPAGATES = True
 
 # ── Email ───────────────────────────────────────────────────────────
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = env("SMTP_FROM", "noreply@holystyl.com")
+DEFAULT_FROM_EMAIL = env("SMTP_FROM", "noreply@isidor.com")
 ADMIN_EMAIL = env("ADMIN_EMAIL", "")
 
 # ── IA — fournisseur commutable (gemini | mistral) ──────────────────
@@ -257,7 +257,7 @@ GOOGLE_OAUTH_CLIENT_ID = env("GOOGLE_OAUTH_CLIENT_ID", "")
 GOOGLE_OAUTH_CLIENT_SECRET = env("GOOGLE_OAUTH_CLIENT_SECRET", "")
 
 # ── Divers ──────────────────────────────────────────────────────────
-APP_NAME = "Holystyl"
+APP_NAME = "Isidor"
 APP_URL = env("APP_URL", "http://localhost:8000")
 
 # Réception des diagnostics techniques d'irrigation émis par Cultiveau.

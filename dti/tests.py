@@ -65,7 +65,7 @@ class CorrespondanceTests(TestCase):
                     self.fail(f"« {chemin} » vise « {cible.modele} », qui n'existe pas.")
 
     def test_champs_cibles_existent(self):
-        """Le garde-fou décisif : un champ renommé côté Holystyl casse ici, et
+        """Le garde-fou décisif : un champ renommé côté Isidor casse ici, et
         non à l'import du prochain diagnostic."""
         for chemin, cible in corr.entrees_ordonnees():
             modele = apps.get_model(cible.modele)
@@ -158,7 +158,7 @@ class CouvertureDuPayloadTests(TestCase):
             non_declares, set(),
             f"Chemin(s) émis par la source mais non déclaré(s) : "
             f"{sorted(non_declares)}. Ajoutez-les à CORRESPONDANCE — avec "
-            f"ARCHIVE_SEULE et une raison si Holystyl ne les exploite pas.")
+            f"ARCHIVE_SEULE et une raison si Isidor ne les exploite pas.")
 
     def test_version_majeure_inconnue_serait_rejetee(self):
         env = charger_reference()

@@ -52,7 +52,7 @@ def build_context(exploitation) -> dict:
 
 
 def _intent_system_prompt(ctx: dict) -> str:
-    return f"""Tu es l'assistant IA de Holystyl, copilote agricole intelligent pour l'exploitation.
+    return f"""Tu es l'assistant IA d'Isidor, copilote agricole intelligent pour l'exploitation.
 Ton rôle : comprendre les demandes de l'agriculteur et créer directement les enregistrements.
 
 CONTEXTE (données réelles, utilise les IDs exacts) :
@@ -93,7 +93,7 @@ def chat(exploitation, user, message: str, history: list[dict] | None = None) ->
         return ASSISTANT_NOT_CONFIGURED
 
     ctx = build_context(exploitation)
-    messages = [{"role": "system", "content": f"Tu es l'assistant Holystyl. Parcelles : {ctx['parcelles']}."}]
+    messages = [{"role": "system", "content": f"Tu es l'assistant Isidor. Parcelles : {ctx['parcelles']}."}]
     messages += history or []
     messages.append({"role": "user", "content": message})
     answer = llm.generate_text(messages)

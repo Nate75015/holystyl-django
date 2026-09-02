@@ -1,4 +1,4 @@
-# MIGRATION_PLAN.md — Holystyl (Elance Auxilium V2)
+# MIGRATION_PLAN.md — Isidor (alors Holystyl, Elance Auxilium V2)
 
 > **Phase 0 — Cartographie.** Document de référence pour la réécriture intégrale
 > de l'application React/Express/tRPC vers Django. **Aucun code applicatif n'a
@@ -11,7 +11,7 @@
 
 ## 0. Résumé exécutif
 
-**Holystyl** (nom interne `elance-auxilium-v2`) est une plateforme **agtech d'irrigation
+**Isidor** (alors **Holystyl**, nom interne `elance-auxilium-v2`) est une plateforme **agtech d'irrigation
 de précision** destinée aux exploitants agricoles. Elle pilote l'irrigation via IoT,
 calcule un score d'efficience énergétique (**DTI**, kWh/m³), gère parcelles, équipes,
 planning d'interventions, finances/facturation, conformité (subventions PAC / Taxonomie

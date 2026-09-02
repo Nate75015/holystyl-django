@@ -1,5 +1,5 @@
 """
-ASGI Holystyl — HTTP + WebSocket (Channels).
+ASGI Isidor — HTTP + WebSocket (Channels).
 """
 
 import os

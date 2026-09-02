@@ -1,11 +1,11 @@
-# MIGRATION_REPORT.md — Holystyl React → Django
+# MIGRATION_REPORT.md — Isidor (alors Holystyl) React → Django
 
 > Rapport de fin de migration. Complète `../holystyl/MIGRATION_PLAN.md` (cartographie + décisions).
 > Date : 2026-06-23 · Cible : `holystyl-django/` · Source conservée : `holystyl/` (React, non supprimée).
 
 ## 1. Synthèse
 
-Migration **complète** de la plateforme agtech Holystyl (ex-`elance-auxilium-v2`) de
+Migration **complète** de la plateforme agtech Isidor (alors Holystyl, ex-`elance-auxilium-v2`) de
 **React 19 + Express + tRPC + Drizzle/MySQL** vers **Django 5.2 LTS + DRF + PostgreSQL**,
 en **7 tranches incrémentales** livrées et testées.
 

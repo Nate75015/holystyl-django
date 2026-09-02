@@ -11,7 +11,7 @@ Le déroulé tient en quatre temps.
    majeure de schéma inconnue l'est aussi — mieux vaut un refus lisible qu'un
    diagnostic relu au jugé.
 2. **Enregistrer.** Le payload est archivé tel quel dans `DtiImport`, y compris
-   ce que Holystyl n'exploite pas. Une empreinte déjà reçue n'est pas rejouée.
+   ce qu'Isidor n'exploite pas. Une empreinte déjà reçue n'est pas rejouée.
 3. **Rattacher.** L'exploitation est retrouvée par son SIRET. Si personne ne
    correspond, l'import passe en quarantaine : `Exploitation.owner` est
    obligatoire et nul ne peut deviner à quel utilisateur revient un
@@ -117,7 +117,7 @@ def enregistrer(enveloppe):
 # ── 3. Rattachement ───────────────────────────────────────────────────────
 
 def trouver_exploitation(dti_import):
-    """L'exploitation Holystyl correspondante, par SIRET.
+    """L'exploitation Isidor correspondante, par SIRET.
 
     Le SIRET est le seul identifiant fiable partagé par les deux systèmes ;
     rapprocher sur le nom produirait des faux positifs entre deux exploitations
@@ -192,7 +192,7 @@ def _appliquer(cible, source, extra=None):
 
 
 def _enregistrer_partage(cible, source, extra, rapport, chemin):
-    """Crée ou met à jour un objet d'un modèle partagé de Holystyl.
+    """Crée ou met à jour un objet d'un modèle partagé d'Isidor.
 
     Ces modèles ne sont pas historisés : une exploitation a UN parcellaire, qui
     évolue. Les recréer à chaque réception ferait quinze parcelles de plus par
@@ -255,7 +255,7 @@ def importer(dti_import):
     source_exp = d.get("exploitation") or {}
     if source_exp:
         valeurs = _appliquer(cible_exp, source_exp)
-        # Le nom et le SIRET identifient l'exploitation côté Holystyl : les
+        # Le nom et le SIRET identifient l'exploitation côté Isidor : les
         # écraser depuis un diagnostic reviendrait à laisser la source
         # renommer une fiche qui ne lui appartient pas.
         for protege in ("name", "siret"):

@@ -15,7 +15,7 @@ def home(request):
     """Landing publique (SEO). Redirige vers le cockpit si déjà connecté."""
     if request.user.is_authenticated:
         return redirect("core:dashboard")
-    return render(request, "public/home.html", {"page_title": "Holystyl — Irrigation de précision"})
+    return render(request, "public/home.html", {"page_title": "Isidor — Irrigation de précision"})
 
 
 @require_POST

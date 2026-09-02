@@ -128,9 +128,9 @@ msgstr "usuarios"
 #: accounts/templates/accounts/choix_profil.html:14
 #: dashboard/templates/dashboard/exploitant.html:9
 #, fuzzy
-#| msgid "Bienvenue sur Holystyl 👋"
-msgid "Bienvenue sur Holystyl"
-msgstr "Bienvenido a Holystyl 👋"
+#| msgid "Bienvenue sur Isidor 👋"
+msgid "Bienvenue sur Isidor"
+msgstr "Bienvenido a Isidor 👋"
 
 #: accounts/templates/accounts/choix_profil.html:16
 msgid "Pour vous conduire au bon endroit, dites-nous qui vous êtes."
@@ -247,11 +247,11 @@ msgid "En créant un compte, vous acceptez nos conditions d'utilisation."
 msgstr ""
 
 #: accounts/views.py:29
-msgid "Je dirige une exploitation et je la gère sur Holystyl."
+msgid "Je dirige une exploitation et je la gère sur Isidor."
 msgstr ""
 
 #: accounts/views.py:30
-msgid "Je travaille pour une exploitation qui utilise Holystyl."
+msgid "Je travaille pour une exploitation qui utilise Isidor."
 msgstr ""
 
 #: accounts/views.py:31
@@ -5950,7 +5950,7 @@ msgstr ""
 
 #: dti/models.py:65
 msgid ""
-"Archive intégrale telle que reçue, y compris ce que Holystyl n'exploite pas "
+"Archive intégrale telle que reçue, y compris ce qu'Isidor n'exploite pas "
 "encore."
 msgstr ""
 
@@ -10431,8 +10431,8 @@ msgid "Score DTI"
 msgstr "Puntaje DTI"
 
 #: finances/templates/finances/subvention_pdf.html:56
-msgid "Document généré par Holystyl."
-msgstr "Documento generado por Holystyl."
+msgid "Document généré par Isidor."
+msgstr "Documento generado por Isidor."
 
 #: finances/ubl.py:175
 msgid "La facture n'a pas de client : impossible de désigner le destinataire."
@@ -12494,7 +12494,7 @@ msgstr ""
 
 #: mail/templates/mail/connect.html:18
 msgid ""
-"Importez votre boîte Gmail dans Holystyl : réception, messages suivis, "
+"Importez votre boîte Gmail dans Isidor : réception, messages suivis, "
 "envoyés, brouillons, catégories, et l'envoi depuis votre propre adresse."
 msgstr ""
 
@@ -12506,7 +12506,7 @@ msgstr "Conectarse"
 
 #: mail/templates/mail/connect.html:27
 msgid ""
-"Accès en lecture/écriture de libellés — Holystyl ne supprime jamais vos e-"
+"Accès en lecture/écriture de libellés — Isidor ne supprime jamais vos e-"
 "mails."
 msgstr ""
 
@@ -15050,11 +15050,11 @@ msgstr "Su explotación merece un asistente que nunca duerme."
 
 #: public/templates/public/home.html:207
 msgid ""
-"Holystyl répond aux 5 grandes préoccupations des agriculteurs français : "
+"Isidor répond aux 5 grandes préoccupations des agriculteurs français : "
 "temps de travail, charges, adaptation climatique, gestion d'équipe et "
 "accompagnement. Disponible à la voix, sur le tracteur, à 22h."
 msgstr ""
-"Holystyl responde a las 5 grandes preocupaciones de los agricultores "
+"Isidor responde a las 5 grandes preocupaciones de los agricultores "
 "franceses: tiempo de trabajo, gastos, adaptación climática, gestión de "
 "equipos y acompañamiento. Disponible por voz, en el tractor, a las 22 h."
 
@@ -15263,18 +15263,18 @@ msgid "Questions fréquentes"
 msgstr "Preguntas frecuentes"
 
 #: public/templates/public/home.html:396
-msgid "Holystyl peut-il vraiment m'aider à travailler moins ?"
-msgstr "¿Puede Holystyl ayudarme realmente a trabajar menos?"
+msgid "Isidor peut-il vraiment m'aider à travailler moins ?"
+msgstr "¿Puede Isidor ayudarme realmente a trabajar menos?"
 
 #: public/templates/public/home.html:400
 #, python-format
 msgid ""
 "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi "
-"de vos parcelles, Holystyl vous fait gagner les heures passées le soir sur "
+"de vos parcelles, Isidor vous fait gagner les heures passées le soir sur "
 "l'administratif — la priorité n°1 de 48 %% des agriculteurs."
 msgstr ""
 "Sí. Al automatizar la trazabilidad, los informes normativos y el seguimiento "
-"de sus parcelas, Holystyl le ahorra las horas que pasa por la noche con la "
+"de sus parcelas, Isidor le ahorra las horas que pasa por la noche con la "
 "administración — la prioridad n.º 1 del 48 %% de los agricultores."
 
 #: public/templates/public/home.html:405
@@ -15292,24 +15292,24 @@ msgstr ""
 "como por voz, 24 h al día."
 
 #: public/templates/public/home.html:414
-msgid "Comment démarrer avec Holystyl ?"
-msgstr "¿Cómo empezar con Holystyl?"
+msgid "Comment démarrer avec Isidor ?"
+msgstr "¿Cómo empezar con Isidor?"
 
 #: public/templates/public/home.html:418
 msgid ""
 "Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à "
 "pas vous accompagne pour ajouter vos parcelles, vos cultures et votre "
-"équipe. Holystyl se connecte à votre système d'irrigation (Vyrsa, capteurs "
+"équipe. Isidor se connecte à votre système d'irrigation (Vyrsa, capteurs "
 "IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur."
 msgstr ""
 "Cree su cuenta en línea en 2 minutos. Una guía de configuración paso a paso "
-"le acompaña para añadir sus parcelas, sus cultivos y su equipo. Holystyl se "
+"le acompaña para añadir sus parcelas, sus cultivos y su equipo. Isidor se "
 "conecta a su sistema de riego (Vyrsa, sensores IoT) y está operativo el "
 "mismo día, desde su smartphone u ordenador."
 
 #: public/templates/public/home.html:423
-msgid "Holystyl m'aide-t-il à réduire mes charges ?"
-msgstr "¿Me ayuda Holystyl a reducir mis gastos?"
+msgid "Isidor m'aide-t-il à réduire mes charges ?"
+msgstr "¿Me ayuda Isidor a reducir mis gastos?"
 
 #: public/templates/public/home.html:427
 msgid ""
@@ -15352,10 +15352,10 @@ msgstr ""
 #: public/templates/public/home.html:463
 msgid ""
 "Assistant intelligent pour exploitations agricoles. Conçu avec le réseau "
-"Holystyl."
+"Isidor."
 msgstr ""
 "Asistente inteligente para explotaciones agrícolas. Diseñado con la red "
-"Holystyl."
+"Isidor."
 
 #: public/templates/public/home.html:478
 msgid "Accès"
@@ -15366,8 +15366,8 @@ msgid "S'abonner"
 msgstr "Suscribirse"
 
 #: public/templates/public/home.html:488
-msgid "© 2026 Holystyl · Tous droits réservés"
-msgstr "© 2026 Holystyl · Todos los derechos reservados"
+msgid "© 2026 Isidor · Tous droits réservés"
+msgstr "© 2026 Isidor · Todos los derechos reservados"
 
 #: public/templates/public/home.html:490
 msgid "Mentions légales"
@@ -16406,9 +16406,9 @@ msgstr ""
 
 #: templates/partials/cookie_banner.html:6
 msgid ""
-"Nous utilisons des cookies essentiels au fonctionnement de Holystyl (RGPD)."
+"Nous utilisons des cookies essentiels au fonctionnement d'Isidor (RGPD)."
 msgstr ""
-"Utilizamos cookies esenciales para el funcionamiento de Holystyl (RGPD)."
+"Utilizamos cookies esenciales para el funcionamiento de Isidor (RGPD)."
 
 #: templates/partials/cookie_banner.html:8
 msgid "J'ai compris"
@@ -16445,8 +16445,8 @@ msgid "Déconnexion"
 msgstr "Cerrar sesión"
 
 #: templates/partials/install_banner.html:13
-msgid "Installer Holystyl"
-msgstr "Instalar Holystyl"
+msgid "Installer Isidor"
+msgstr "Instalar Isidor"
 
 #: templates/partials/install_banner.html:15
 msgid "Partager puis « Sur l’écran d’accueil »."

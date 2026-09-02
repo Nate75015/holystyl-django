@@ -9,7 +9,7 @@ Apparaît si l'app est installable (beforeinstallprompt / Android) ou iOS.{% end
     </svg>
   </span>
   <div class="min-w-0 flex-1 leading-tight">
-    <p class="font-medium">{% trans "Installer Holystyl" %}</p>
+    <p class="font-medium">{% trans "Installer Isidor" %}</p>
     <p class="text-sm" style="color: var(--text-secondary)" x-text="ios
       ? '{% trans "Partager puis « Sur l’écran d’accueil »." %}'
       : '{% trans "Accédez plus vite depuis votre écran d’accueil." %}'"></p>
@@ -31,7 +31,7 @@ Apparaît si l'app est installable (beforeinstallprompt / Android) ou iOS.{% end
       visible: false, deferred: null, ios: false,
       init() {
         var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-        if (standalone || localStorage.getItem('holystyl-install') === 'no') return;
+        if (standalone || localStorage.getItem('isidor-install') === 'no') return;
         this.ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !/crios|fxios/i.test(navigator.userAgent);
         if (this.ios) { this.visible = true; return; }
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -47,7 +47,7 @@ Apparaît si l'app est installable (beforeinstallprompt / Android) ou iOS.{% end
         await this.deferred.userChoice;
         this.deferred = null; this.visible = false;
       },
-      dismiss() { this.visible = false; localStorage.setItem('holystyl-install', 'no'); },
+      dismiss() { this.visible = false; localStorage.setItem('isidor-install', 'no'); },
     };
   }
 </script>

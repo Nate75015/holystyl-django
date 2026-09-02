@@ -8,7 +8,7 @@ import logging
 
 from django.conf import settings
 
-logger = logging.getLogger("holystyl.sms")
+logger = logging.getLogger("isidor.sms")
 
 
 def is_configured() -> bool:

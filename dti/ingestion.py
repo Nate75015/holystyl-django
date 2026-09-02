@@ -1,6 +1,6 @@
 """Relève de la boîte de réception : les diagnostics arrivent par courriel.
 
-Holystyl dispose déjà d'une intégration Gmail (OAuth, `GmailClient`) : on s'y
+Isidor dispose déjà d'une intégration Gmail (OAuth, `GmailClient`) : on s'y
 branche plutôt que d'ouvrir un second canal. Le message porte l'enveloppe JSON
 signée en pièce jointe, et éventuellement l'archive des photos.
 

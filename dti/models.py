@@ -1,18 +1,18 @@
 """Diagnostics Techniques d'Irrigation reçus de Cultiveau.
 
-Cultiveau produit le DTI ; Holystyl le reçoit et l'exploite. Le contrat
+Cultiveau produit le DTI ; Isidor le reçoit et l'exploite. Le contrat
 d'échange est décrit dans `docs/schema-donnees.md` du dépôt Cultiveau : un
 JSON hiérarchique signé, un objet par DTI, accompagné d'une archive de photos.
 
 Trois partis pris structurent ces modèles.
 
 **Le payload brut est conservé intégralement** dans `DtiImport.payload`. Les
-modèles ci-dessous n'en extraient que ce que Holystyl exploite réellement ;
+modèles ci-dessous n'en extraient que ce qu'Isidor exploite réellement ;
 tout le reste reste lisible dans l'archive. On peut donc « promouvoir » plus
 tard un morceau du payload en vrai modèle sans avoir à redemander l'export, et
 sans avoir créé aujourd'hui vingt tables dont certaines ne serviraient jamais.
 
-**Rien n'est dupliqué de ce que Holystyl sait déjà.** L'exploitation, les
+**Rien n'est dupliqué de ce qu'Isidor sait déjà.** L'exploitation, les
 parcelles, leurs campagnes, les analyses NDVI et le score DTI ont leurs modèles
 ici depuis longtemps : l'import les alimente au lieu d'en créer des jumeaux.
 Seul ce qui n'existait pas — ressources en eau, canalisations, matériel
@@ -62,8 +62,8 @@ class DtiImport(TimeStampedModel):
     # ── Contenu ──
     payload = models.JSONField(
         _("payload"), default=dict,
-        help_text=_("Archive intégrale telle que reçue, y compris ce que "
-                    "Holystyl n'exploite pas encore."))
+        help_text=_("Archive intégrale telle que reçue, y compris ce "
+                    "qu'Isidor n'exploite pas encore."))
 
     # ── Rattachement ──
     exploitation = models.ForeignKey(

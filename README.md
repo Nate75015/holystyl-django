@@ -1,7 +1,7 @@
-# Holystyl — version Django
+# Isidor — version Django
 
 Réécriture en Django de la plateforme agtech d'irrigation de précision
-**Holystyl** (anciennement `elance-auxilium-v2`, stack React/Express/tRPC).
+**Isidor** (anciennement `Holystyl`, à l'origine `elance-auxilium-v2`, stack React/Express/tRPC).
 
 Voir la cartographie complète et le plan de migration dans
 `../holystyl/MIGRATION_PLAN.md`.

@@ -5,7 +5,7 @@ sémantique normalisé (EN16931). Parmi les représentations concrètes possible
 — UBL, CII, Factur-X — on retient UBL : c'est du XML lisible, et SUPER PDP se
 charge de la conversion si le destinataire attend autre chose.
 
-Le vendeur n'est pas décrit d'après l'exploitation Holystyl mais d'après
+Le vendeur n'est pas décrit d'après l'exploitation Isidor mais d'après
 l'entreprise renvoyée par SUPER PDP (`/companies/me`) et son adresse d'annuaire :
 c'est la plateforme qui fait foi sur l'immatriculation et le routage, et une
 divergence ici ferait rejeter la facture par le réseau.

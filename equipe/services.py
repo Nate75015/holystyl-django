@@ -14,7 +14,7 @@ def notify_task_assignment(task) -> bool:
     if member is None or not member.phone:
         return False
     due = f" (échéance {task.due_date:%d/%m %H:%M})" if task.due_date else ""
-    body = f"Holystyl — Nouvelle tâche : « {task.title} »{due}."
+    body = f"Isidor — Nouvelle tâche : « {task.title} »{due}."
     return send_sms(member.phone, body)
 
 

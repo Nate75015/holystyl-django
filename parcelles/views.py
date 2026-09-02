@@ -70,7 +70,7 @@ def parcelle_cadastre(request):
     geom = json.dumps({"type": "Point", "coordinates": [lon, lat]})
     url = "https://apicarto.ign.fr/api/cadastre/parcelle?geom=" + urllib.parse.quote(geom) + "&source_ign=PCI"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Holystyl/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": "Isidor/1.0"})
         with urllib.request.urlopen(req, timeout=15) as resp:
             return HttpResponse(resp.read(), content_type="application/json")
     except Exception as exc:  # noqa: BLE001 — toute erreur réseau/API renvoyée au front

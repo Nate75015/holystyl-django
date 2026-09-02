@@ -63,7 +63,7 @@ def envoyer(membre: TeamMember, request) -> str:
     """
     url = lien(membre, request)
     exploitation = membre.exploitation.name
-    app = getattr(settings, "APP_NAME", "Holystyl")
+    app = getattr(settings, "APP_NAME", "Isidor")
     send_mail(
         _("%(app)s — rejoignez l'équipe de %(expl)s") % {"app": app, "expl": exploitation},
         _(

@@ -304,7 +304,7 @@ def layout(request):
         espaces.append(entree)
 
     return {
-        "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
+        "APP_NAME": getattr(settings, "APP_NAME", "Isidor"),
         "espaces": espaces,
         # Le sélecteur marque l'espace où l'on se trouve. Sans rattachement,
         # c'est le profil déclaré qui fait foi : on est bien sur son tableau de

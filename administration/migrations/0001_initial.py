@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('secure', models.BooleanField(default=False)),
                 ('user', models.CharField(max_length=320)),
                 ('password', models.TextField()),
-                ('from_name', models.CharField(default='Holystyl', max_length=255)),
+                ('from_name', models.CharField(default='Isidor', max_length=255)),
                 ('from_email', models.EmailField(max_length=254)),
                 ('enabled', models.BooleanField(default=True)),
                 ('last_tested_at', models.DateTimeField(blank=True, null=True)),

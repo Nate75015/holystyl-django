@@ -9,7 +9,7 @@ vient de la DB. On reste donc 100 % statique (marque en dur, lien « / »).
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Erreur{% endblock %} · Holystyl</title>
+  <title>{% block title %}Erreur{% endblock %} · Isidor</title>
   <link rel="icon" href="{% static 'icons/icon.svg' %}" type="image/svg+xml">
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
@@ -19,7 +19,7 @@ vient de la DB. On reste donc 100 % statique (marque en dur, lien « / »).
 
       <a href="/" class="mb-10 inline-flex items-center gap-2">
         {% include "partials/brand_mark.html" with size=40 %}
-        <span class="text-xl font-medium tracking-tight">Holystyl</span>
+        <span class="text-xl font-medium tracking-tight">Isidor</span>
       </a>
 
       <p class="text-[6rem] font-medium leading-none tracking-tight" style="color: var(--action)">{% block code %}{% endblock %}</p>
