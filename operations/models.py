@@ -168,7 +168,12 @@ class AffectationEngin(models.Model):
 
     exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="affectations")
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, related_name="affectations")
-    parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.CASCADE)
+    # Facultative : on réserve un engin pour une journée sans toujours savoir
+    # sur quelle parcelle il ira, et une benne ou un télescopique n'en vise
+    # parfois aucune.
+    parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.CASCADE,
+                                 null=True, blank=True,
+                                 verbose_name=_("parcelle"))
     operation = models.CharField(max_length=15, choices=Operation.choices)
     date_debut = models.DateTimeField()
     date_fin = models.DateTimeField(null=True, blank=True)
@@ -182,6 +187,18 @@ class AffectationEngin(models.Model):
         verbose_name = _("affectation d'engin")
         verbose_name_plural = _("affectations d'engins")
         ordering = ("-date_debut",)
+        indexes = [models.Index(fields=["exploitation", "date_debut"])]
+
+    def __str__(self):
+        return f"{self.machine} — {self.get_operation_display()}"
+
+    @property
+    def periode(self):
+        """(début, fin) comme une tâche, pour que l'agenda les pose côte à côte.
+
+        Une réservation sans date de fin tient sur la seule journée de début.
+        """
+        return self.date_debut, self.date_fin or self.date_debut
 
 
 class CatalogueEngin(models.Model):
