@@ -1,0 +1,100 @@
+{% load i18n %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>{% blocktrans with qui=fiche.membre.name %}Bulletin — {{ qui }}{% endblocktrans %}</title>
+  <style>
+    @page { size: A4; margin: 18mm 16mm; }
+    body { font-family: Helvetica, Arial, sans-serif; font-size: 9.5pt; line-height: 1.45; color: #111; }
+    h1 { font-size: 14pt; margin: 0 0 2mm; }
+    .parties { display: flex; justify-content: space-between; gap: 10mm; margin-bottom: 6mm; }
+    .parties div { flex: 1; }
+    .etiquette { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: #666; }
+    table { width: 100%; border-collapse: collapse; margin-top: 3mm; }
+    th, td { padding: 1.6mm 2mm; border-bottom: 0.4pt solid #ddd; text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    th { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: #666; border-bottom: 0.8pt solid #999; }
+    .totaux { margin-top: 6mm; }
+    .totaux td { border: 0; padding: 1mm 2mm; }
+    .net { font-size: 12pt; font-weight: bold; border-top: 0.8pt solid #111; }
+    .pied { margin-top: 10mm; border-top: 0.4pt solid #999; padding-top: 3mm; font-size: 7.5pt; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>{% trans "Bulletin de paie" %}</h1>
+  <p class="etiquette">
+    {% blocktrans with d=fiche.periode_debut|date:"DATE_FORMAT" f=fiche.periode_fin|date:"DATE_FORMAT" %}Période du {{ d }} au {{ f }}{% endblocktrans %}
+  </p>
+
+  <div class="parties">
+    <div>
+      <p class="etiquette">{% trans "Employeur" %}</p>
+      <p>{{ exploitation.name }}<br>
+        {% if exploitation.address %}{{ exploitation.address }}<br>{% endif %}
+        {% if exploitation.postal_code %}{{ exploitation.postal_code }} {% endif %}{{ exploitation.city|default:"" }}<br>
+        {% if exploitation.siret %}{% trans "SIRET" %} {{ exploitation.siret }}{% endif %}
+      </p>
+    </div>
+    <div>
+      <p class="etiquette">{% trans "Salarié" %}</p>
+      <p>{{ fiche.membre.name }}<br>
+        {% if fiche.membre.email %}{{ fiche.membre.email }}<br>{% endif %}
+        {% if fiche.contrat %}{{ fiche.contrat.get_type_contrat_display }}{% if fiche.contrat.poste %} — {{ fiche.contrat.poste }}{% endif %}{% endif %}
+      </p>
+    </div>
+  </div>
+
+  {% if fiche.heures_travaillees or fiche.heures_supplementaires %}
+    <p class="etiquette">{% trans "Temps de travail" %}</p>
+    <p>
+      {% if fiche.heures_travaillees %}{{ fiche.heures_travaillees|floatformat:"-2" }} {% trans "heures" %}{% endif %}
+      {% if fiche.heures_supplementaires %} · {{ fiche.heures_supplementaires|floatformat:"-2" }} {% trans "heures supplémentaires" %}{% endif %}
+    </p>
+  {% endif %}
+
+  {% if fiche.lignes.all %}
+    <table>
+      <thead>
+        <tr>
+          <th>{% trans "Rubrique" %}</th><th>{% trans "Base" %}</th><th>{% trans "Taux" %}</th>
+          <th>{% trans "Part salariale" %}</th><th>{% trans "Part employeur" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for l in fiche.lignes.all %}
+          <tr>
+            <td>{{ l.libelle }}</td>
+            <td>{% if l.base %}{{ l.base|floatformat:2 }}{% endif %}</td>
+            <td>{% if l.taux %}{{ l.taux|floatformat:"-3" }} %{% endif %}</td>
+            <td>{% if l.part_salariale %}{{ l.part_salariale|floatformat:2 }}{% endif %}</td>
+            <td>{% if l.part_patronale %}{{ l.part_patronale|floatformat:2 }}{% endif %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  <table class="totaux">
+    <tr><td>{% trans "Salaire brut" %}</td><td>{{ fiche.salaire_brut|floatformat:2 }} €</td></tr>
+    <tr><td>{% trans "Cotisations salariales" %}</td><td>− {{ fiche.cotisations_salariales|floatformat:2 }} €</td></tr>
+    {% if fiche.net_imposable %}
+      <tr><td>{% trans "Net imposable" %}</td><td>{{ fiche.net_imposable|floatformat:2 }} €</td></tr>
+    {% endif %}
+    <tr class="net"><td>{% trans "Net à payer" %}</td><td>{{ fiche.net_a_payer|floatformat:2 }} €</td></tr>
+    <tr><td>{% trans "Cotisations patronales" %}</td><td>{{ fiche.cotisations_patronales|floatformat:2 }} €</td></tr>
+    <tr><td>{% trans "Coût employeur" %}</td><td>{{ fiche.cout_employeur|floatformat:2 }} €</td></tr>
+  </table>
+
+  {% if fiche.date_paiement %}
+    <p style="margin-top: 5mm">
+      {% blocktrans with d=fiche.date_paiement|date:"DATE_FORMAT" %}Payée le {{ d }}{% endblocktrans %}{% if fiche.mode_paiement %} — {{ fiche.mode_paiement }}{% endif %}
+    </p>
+  {% endif %}
+  {% if fiche.notes %}<p style="margin-top: 3mm">{{ fiche.notes|linebreaksbr }}</p>{% endif %}
+
+  <p class="pied">
+    {% blocktrans with ferme=exploitation.name %}{{ ferme }} — bulletin établi depuis Isidor.{% endblocktrans %}
+    {% trans "Les montants sont ceux saisis par l'employeur : Isidor ne calcule pas la paie. Conservez ce bulletin sans limitation de durée." %}
+  </p>
+</body>
+</html>

@@ -334,3 +334,101 @@ class Candidature(TimeStampedModel):
 
     def __str__(self):
         return f"{self.nom} — {self.offre.titre}"
+
+
+class FichePaie(TimeStampedModel):
+    """Le bulletin de paie d'un salarié pour une période.
+
+    L'application ne calcule pas la paie : les taux MSA, la convention
+    collective et les exonérations relèvent du droit et changent. Elle
+    enregistre ce que l'employeur ou son comptable a établi, le présente, et
+    vérifie que les lignes s'additionnent bien aux totaux annoncés.
+    """
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        EMISE = "emise", _("Émise")
+        PAYEE = "payee", _("Payée")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="fiches_paie")
+    membre = models.ForeignKey(TeamMember, on_delete=models.CASCADE,
+                               related_name="fiches_paie", verbose_name=_("salarié"))
+    contrat = models.ForeignKey(ContratTravail, on_delete=models.SET_NULL, null=True, blank=True,
+                                related_name="fiches_paie", verbose_name=_("contrat"))
+
+    periode_debut = models.DateField(_("période du"))
+    periode_fin = models.DateField(_("période au"))
+
+    heures_travaillees = models.FloatField(_("heures travaillées"), null=True, blank=True)
+    heures_supplementaires = models.FloatField(_("heures supplémentaires"), null=True, blank=True)
+
+    salaire_brut = models.FloatField(_("salaire brut"), default=0)
+    cotisations_salariales = models.FloatField(_("cotisations salariales"), default=0)
+    cotisations_patronales = models.FloatField(_("cotisations patronales"), default=0)
+    net_imposable = models.FloatField(_("net imposable"), null=True, blank=True)
+    net_a_payer = models.FloatField(_("net à payer"), default=0)
+
+    date_paiement = models.DateField(_("payée le"), null=True, blank=True)
+    mode_paiement = models.CharField(_("mode de paiement"), max_length=60, blank=True)
+    statut = models.CharField(_("statut"), max_length=10,
+                              choices=Statut.choices, default=Statut.BROUILLON)
+    notes = models.TextField(_("notes"), blank=True)
+
+    class Meta:
+        verbose_name = _("fiche de paie")
+        verbose_name_plural = _("fiches de paie")
+        ordering = ("-periode_debut", "membre__name")
+        indexes = [models.Index(fields=["exploitation", "periode_debut"])]
+        constraints = [
+            models.UniqueConstraint(fields=["membre", "periode_debut", "periode_fin"],
+                                    name="une_fiche_par_salarie_et_periode"),
+        ]
+
+    def __str__(self):
+        return f"{self.membre.name} — {self.periode_debut:%m/%Y}"
+
+    @property
+    def total_lignes_salariales(self):
+        return round(sum(l.part_salariale or 0 for l in self.lignes.all()), 2)
+
+    @property
+    def total_lignes_patronales(self):
+        return round(sum(l.part_patronale or 0 for l in self.lignes.all()), 2)
+
+    @property
+    def addition_coherente(self):
+        """Les lignes s'additionnent-elles aux totaux annoncés ?
+
+        Vrai quand il n'y a pas de ligne : on ne reproche rien à une fiche
+        saisie en totaux. Un centime d'écart est toléré, les arrondis existent.
+        """
+        if not self.lignes.exists():
+            return True
+        return (abs(self.total_lignes_salariales - (self.cotisations_salariales or 0)) <= 0.01
+                and abs(self.total_lignes_patronales - (self.cotisations_patronales or 0)) <= 0.01)
+
+    @property
+    def cout_employeur(self):
+        """Brut plus charges patronales : ce que la paie coûte à la ferme."""
+        return round((self.salaire_brut or 0) + (self.cotisations_patronales or 0), 2)
+
+
+class LignePaie(models.Model):
+    """Une rubrique du bulletin : cotisation, retenue ou complément."""
+
+    fiche = models.ForeignKey(FichePaie, on_delete=models.CASCADE, related_name="lignes")
+    libelle = models.CharField(_("libellé"), max_length=255)
+    base = models.FloatField(_("base"), null=True, blank=True)
+    taux = models.FloatField(_("taux (%)"), null=True, blank=True)
+    part_salariale = models.FloatField(_("part salariale"), null=True, blank=True)
+    part_patronale = models.FloatField(_("part patronale"), null=True, blank=True)
+    ordre = models.PositiveIntegerField(_("ordre"), default=0)
+
+    class Meta:
+        verbose_name = _("ligne de paie")
+        verbose_name_plural = _("lignes de paie")
+        ordering = ("ordre", "id")
+
+    def __str__(self):
+        return self.libelle

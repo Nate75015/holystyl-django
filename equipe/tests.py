@@ -658,3 +658,147 @@ def test_les_deux_ecrans_partagent_la_meme_logique(client, ferme_rh):
     assert "enregistrer_parcelles" in source and "enregistrer_sous_taches" in source
     assert hasattr(services, "enregistrer_parcelles")
     assert hasattr(services, "enregistrer_sous_taches")
+
+
+# ── Fiches de paie ───────────────────────────────────────────────────
+
+
+def _fiche_valide(salarie, **surcharges):
+    import json
+
+    champs = {
+        "membre": str(salarie.pk),
+        "periode_debut": "2026-06-01", "periode_fin": "2026-06-30",
+        "heures_travaillees": "151,67",
+        "salaire_brut": "1 850,50", "cotisations_salariales": "425,60",
+        "cotisations_patronales": "610,00", "net_imposable": "1 500,00",
+        "net_a_payer": "1 424,90", "statut": "emise",
+        "lignes": json.dumps([
+            {"libelle": "Maladie", "base": "1850.50", "taux": "0.75", "part_salariale": "13.88", "part_patronale": "240.00"},
+            {"libelle": "Retraite", "base": "1850.50", "taux": "6.90", "part_salariale": "411.72", "part_patronale": "370.00"},
+        ]),
+    }
+    champs.update(surcharges)
+    return champs
+
+
+@pytest.mark.django_db
+def test_ajouter_une_fiche_de_paie(client, ferme_rh):
+    from equipe.models import FichePaie
+
+    patron, exploitation, membre = ferme_rh
+    client.force_login(patron)
+    assert client.post("/paie/enregistrer/", _fiche_valide(membre)).status_code == 302
+
+    fiche = FichePaie.objects.get(membre=membre)
+    assert fiche.exploitation == exploitation
+    assert fiche.salaire_brut == 1850.50 and fiche.net_a_payer == 1424.90
+    assert fiche.heures_travaillees == 151.67
+    assert [l.libelle for l in fiche.lignes.all()] == ["Maladie", "Retraite"]
+    # Le coût employeur, c'est de l'addition : brut + charges patronales.
+    assert fiche.cout_employeur == 2460.50
+
+
+@pytest.mark.django_db
+def test_l_addition_des_rubriques_est_verifiee(client, ferme_rh):
+    """Isidor ne calcule pas la paie, mais il sait additionner."""
+    from equipe.models import FichePaie
+
+    patron, _exploitation, membre = ferme_rh
+    client.force_login(patron)
+
+    # 13,88 + 411,72 = 425,60 : cohérent.
+    client.post("/paie/enregistrer/", _fiche_valide(membre))
+    assert FichePaie.objects.get(membre=membre).addition_coherente
+
+    # On annonce un total qui ne correspond plus aux rubriques.
+    fiche = FichePaie.objects.get(membre=membre)
+    resp = client.post(f"/paie/{fiche.pk}/enregistrer/",
+                       _fiche_valide(membre, cotisations_salariales="999,00"), follow=True)
+    fiche.refresh_from_db()
+    assert not fiche.addition_coherente
+    assert any("ne totalisent pas" in str(m) for m in resp.context["messages"])
+
+
+@pytest.mark.django_db
+def test_une_fiche_sans_rubrique_reste_coherente(client, ferme_rh):
+    """On ne reproche rien à une fiche saisie en totaux seuls."""
+    from equipe.models import FichePaie
+
+    patron, _exploitation, membre = ferme_rh
+    client.force_login(patron)
+    client.post("/paie/enregistrer/", _fiche_valide(membre, lignes="[]"))
+    fiche = FichePaie.objects.get(membre=membre)
+    assert fiche.lignes.count() == 0 and fiche.addition_coherente
+
+
+@pytest.mark.django_db
+def test_pas_deux_fiches_pour_la_meme_periode(client, ferme_rh):
+    from equipe.models import FichePaie
+
+    patron, _exploitation, membre = ferme_rh
+    client.force_login(patron)
+    client.post("/paie/enregistrer/", _fiche_valide(membre))
+    resp = client.post("/paie/enregistrer/", _fiche_valide(membre), follow=True)
+    assert FichePaie.objects.count() == 1
+    assert any("déjà une fiche" in str(m) for m in resp.context["messages"])
+
+
+@pytest.mark.django_db
+def test_une_fiche_sans_salarie_ou_sans_periode_est_refusee(client, ferme_rh):
+    from equipe.models import FichePaie
+
+    patron, _exploitation, membre = ferme_rh
+    client.force_login(patron)
+    client.post("/paie/enregistrer/", _fiche_valide(membre, membre=""))
+    client.post("/paie/enregistrer/", _fiche_valide(membre, periode_debut=""))
+    assert FichePaie.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_le_bulletin_sort_en_pdf(client, ferme_rh):
+    from equipe.models import FichePaie
+
+    patron, _exploitation, membre = ferme_rh
+    client.force_login(patron)
+    client.post("/paie/enregistrer/", _fiche_valide(membre))
+    fiche = FichePaie.objects.get(membre=membre)
+
+    resp = client.get(f"/paie/{fiche.pk}/pdf/")
+    assert resp.status_code == 200
+    if resp["Content-Type"] == "application/pdf":
+        assert resp.content[:5] == b"%PDF-"
+    else:  # WeasyPrint absent : on rend la page imprimable
+        corps = resp.content.decode()
+        assert "Bulletin de paie" in corps and "Net à payer" in corps
+
+
+@pytest.mark.django_db
+def test_la_fiche_du_voisin_est_hors_de_portee(client, ferme_rh):
+    from equipe.models import FichePaie, TeamMember
+    from exploitations.models import Exploitation
+
+    patron, _exploitation, _membre = ferme_rh
+    voisin = User.objects.create_user(email="voisin-paie@ex.com", password="pwd12345")
+    ferme_voisine = Exploitation.objects.create(owner=voisin, name="Ferme voisine")
+    son_salarie = TeamMember.objects.create(exploitation=ferme_voisine, name="Luc")
+    sa_fiche = FichePaie.objects.create(
+        exploitation=ferme_voisine, membre=son_salarie,
+        periode_debut="2026-06-01", periode_fin="2026-06-30", salaire_brut=2000)
+
+    client.force_login(patron)
+    assert client.get(f"/paie/{sa_fiche.pk}/pdf/").status_code == 404
+    assert client.post(f"/paie/{sa_fiche.pk}/supprimer/").status_code == 404
+    # Et on ne lui fabrique pas une fiche non plus.
+    client.post("/paie/enregistrer/", _fiche_valide(son_salarie))
+    assert FichePaie.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_la_page_dit_qu_elle_ne_calcule_pas(client, ferme_rh):
+    patron, _exploitation, _membre = ferme_rh
+    client.force_login(patron)
+    html = client.get("/paie/").content.decode()
+    assert "il ne calcule pas la paie" in html
+    assert "Ajouter une fiche de paie" in html
+    assert "{#" not in html and "{{" not in html

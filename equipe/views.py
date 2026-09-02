@@ -20,8 +20,8 @@ from parcelles.models import Parcelle
 from . import invitations
 from .forms import InvitationAccountForm, TaskForm, TeamMemberForm
 from . import contrats as contrats_service, services
-from .models import (Candidature, ContratTravail, ModeleContrat, OffreEmploi,
-                     Task, TeamMember)
+from .models import (Candidature, ContratTravail, FichePaie, LignePaie, ModeleContrat,
+                     OffreEmploi, Task, TeamMember)
 
 User = get_user_model()
 
@@ -432,11 +432,177 @@ def contrat_pdf(request, pk):
     return reponse
 
 
+# ── Fiches de paie ───────────────────────────────────────────────────
+
+
 @login_required
 @espace_requis(EXPLOITANT)
 def paie(request):
-    """Paie — module RH en préparation."""
-    return _rh_placeholder(request, _("Paie"))
+    """Les bulletins de paie établis, du plus récent au plus ancien."""
+    exploitation = _exploitation(request)
+    fiches = list(
+        FichePaie.objects.filter(exploitation=exploitation)
+        .select_related("membre", "contrat").prefetch_related("lignes")
+    ) if exploitation else []
+    return render(request, "equipe/paie.html", {
+        "fiches": fiches,
+        # Les rubriques de chaque fiche, pour rouvrir une fiche à la modifier.
+        "lignes_par_fiche": {
+            str(f.pk): [
+                {"libelle": l.libelle, "base": l.base, "taux": l.taux,
+                 "part_salariale": l.part_salariale, "part_patronale": l.part_patronale}
+                for l in f.lignes.all()
+            ] for f in fiches
+        },
+        "membres": TeamMember.objects.filter(exploitation=exploitation) if exploitation else [],
+        "contrats": (ContratTravail.objects.filter(exploitation=exploitation)
+                     .select_related("membre") if exploitation else []),
+        "statuts": FichePaie.Statut.choices,
+        "page_title": _("Paie"),
+    })
+
+
+def _champs_fiche(request, exploitation):
+    """Les champs d'une fiche lus du POST, ou None si l'essentiel manque."""
+    membre = TeamMember.objects.filter(
+        pk=request.POST.get("membre") or 0, exploitation=exploitation).first()
+    debut = _to_date(request.POST.get("periode_debut"))
+    fin = _to_date(request.POST.get("periode_fin"))
+    if not (membre and debut and fin):
+        return None
+    if fin < debut:
+        debut, fin = fin, debut
+    return {
+        "membre": membre,
+        "contrat": ContratTravail.objects.filter(
+            pk=request.POST.get("contrat") or 0, exploitation=exploitation).first(),
+        "periode_debut": debut,
+        "periode_fin": fin,
+        "heures_travaillees": _to_float(request.POST.get("heures_travaillees")),
+        "heures_supplementaires": _to_float(request.POST.get("heures_supplementaires")),
+        "salaire_brut": _to_float(request.POST.get("salaire_brut"), 0) or 0,
+        "cotisations_salariales": _to_float(request.POST.get("cotisations_salariales"), 0) or 0,
+        "cotisations_patronales": _to_float(request.POST.get("cotisations_patronales"), 0) or 0,
+        "net_imposable": _to_float(request.POST.get("net_imposable")),
+        "net_a_payer": _to_float(request.POST.get("net_a_payer"), 0) or 0,
+        "date_paiement": _to_date(request.POST.get("date_paiement")),
+        "mode_paiement": (request.POST.get("mode_paiement") or "").strip()[:60],
+        "notes": (request.POST.get("notes") or "").strip(),
+    }
+
+
+def _enregistrer_lignes(fiche, request):
+    """Synchronise les rubriques depuis le JSON du champ caché `lignes`."""
+    import json
+
+    try:
+        rows = json.loads(request.POST.get("lignes") or "[]")
+    except json.JSONDecodeError:
+        return
+    if not isinstance(rows, list):
+        return
+
+    fiche.lignes.all().delete()
+    LignePaie.objects.bulk_create([
+        LignePaie(fiche=fiche, ordre=i,
+                  libelle=str(row.get("libelle") or "").strip()[:255],
+                  base=_to_float(row.get("base")),
+                  taux=_to_float(row.get("taux")),
+                  part_salariale=_to_float(row.get("part_salariale")),
+                  part_patronale=_to_float(row.get("part_patronale")))
+        for i, row in enumerate(rows)
+        if isinstance(row, dict) and str(row.get("libelle") or "").strip()
+    ])
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def fiche_save(request, pk=None):
+    exploitation = _exploitation(request)
+    if exploitation is None:
+        messages.error(request, _("Créez d'abord votre exploitation."))
+        return redirect("equipe:paie")
+
+    champs = _champs_fiche(request, exploitation)
+    if champs is None:
+        messages.error(request, _("Une fiche de paie a besoin d'un salarié et d'une période."))
+        return redirect("equipe:paie")
+
+    fiche = (get_object_or_404(FichePaie, pk=pk, exploitation=exploitation)
+             if pk else FichePaie(exploitation=exploitation))
+    for champ, valeur in champs.items():
+        setattr(fiche, champ, valeur)
+    statut = request.POST.get("statut")
+    if statut in FichePaie.Statut.values:
+        fiche.statut = statut
+
+    from django.db import IntegrityError, transaction
+
+    # Le point de reprise est indispensable : une IntegrityError non isolée
+    # laisse la transaction cassée, et plus aucune requête ne passe ensuite.
+    try:
+        with transaction.atomic():
+            fiche.save()
+    except IntegrityError:
+        messages.error(request, _("Ce salarié a déjà une fiche pour cette période."))
+        return redirect("equipe:paie")
+
+    _enregistrer_lignes(fiche, request)
+    if not fiche.addition_coherente:
+        messages.warning(request, _(
+            "Les rubriques ne totalisent pas les montants annoncés : %(lig_s)s € "
+            "et %(lig_p)s € contre %(fic_s)s € et %(fic_p)s €.") % {
+                "lig_s": fiche.total_lignes_salariales, "lig_p": fiche.total_lignes_patronales,
+                "fic_s": fiche.cotisations_salariales, "fic_p": fiche.cotisations_patronales})
+    return redirect("equipe:paie")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def fiche_statut(request, pk):
+    exploitation = _exploitation(request)
+    fiche = get_object_or_404(FichePaie, pk=pk, exploitation=exploitation)
+    statut = request.POST.get("statut")
+    if statut in FichePaie.Statut.values:
+        fiche.statut = statut
+        fiche.save(update_fields=["statut", "updated_at"])
+    return redirect("equipe:paie")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def fiche_delete(request, pk):
+    exploitation = _exploitation(request)
+    get_object_or_404(FichePaie, pk=pk, exploitation=exploitation).delete()
+    return redirect("equipe:paie")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+def fiche_pdf(request, pk):
+    """Le bulletin en PDF, ou en page imprimable si WeasyPrint n'est pas là."""
+    exploitation = _exploitation(request)
+    fiche = get_object_or_404(
+        FichePaie.objects.select_related("membre", "contrat").prefetch_related("lignes"),
+        pk=pk, exploitation=exploitation)
+    contexte = {"fiche": fiche, "exploitation": exploitation}
+    html = render(request, "equipe/fiche_paie_pdf.html", contexte).content.decode()
+
+    try:
+        from weasyprint import HTML
+    except Exception:  # noqa: BLE001 — libs système absentes : on rend la page
+        return render(request, "equipe/fiche_paie_pdf.html", contexte)
+
+    from django.http import HttpResponse
+
+    pdf = HTML(string=html, base_url=request.build_absolute_uri("/")).write_pdf()
+    reponse = HttpResponse(pdf, content_type="application/pdf")
+    nom = f"paie-{fiche.membre.name}-{fiche.periode_debut:%Y-%m}.pdf".replace(" ", "-").lower()
+    reponse["Content-Disposition"] = f'inline; filename="{nom}"'
+    return reponse
 
 
 # ── Offres d'emploi : back-office ────────────────────────────────────

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 22:35+0200\n"
+"POT-Creation-Date: 2026-09-02 22:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -808,7 +808,7 @@ msgstr "Féach"
 #: equipe/templates/equipe/contrats.html:155
 #: equipe/templates/equipe/equipe.html:55
 #: equipe/templates/equipe/offres.html:139
-#: equipe/templates/equipe/taches.html:70
+#: equipe/templates/equipe/paie.html:178 equipe/templates/equipe/taches.html:70
 #: exploitations/templates/exploitations/adresses.html:19
 #: exploitations/templates/exploitations/juridique.html:19
 #: exploitations/templates/exploitations/section.html:14
@@ -860,7 +860,7 @@ msgstr "Cuir in eagar"
 #: equipe/templates/equipe/equipe.html:59
 #: equipe/templates/equipe/equipe.html:115
 #: equipe/templates/equipe/offres.html:147
-#: equipe/templates/equipe/taches.html:78
+#: equipe/templates/equipe/paie.html:193 equipe/templates/equipe/taches.html:78
 #: equipe/templates/equipe/taches.html:141
 #: exploitations/templates/exploitations/adresses.html:104
 #: exploitations/templates/exploitations/contact.html:36
@@ -1101,6 +1101,7 @@ msgstr "Scriosfar a cuid fothascanna freisin:"
 #: equipe/templates/equipe/edit.html:22 equipe/templates/equipe/equipe.html:23
 #: equipe/templates/equipe/equipe.html:114
 #: equipe/templates/equipe/offres.html:109
+#: equipe/templates/equipe/paie.html:138
 #: equipe/templates/equipe/taches.html:140
 #: equipe/templates/equipe/taches.html:203
 #: exploitations/templates/exploitations/adresses.html:74
@@ -1236,6 +1237,7 @@ msgstr "fómhar"
 #: contrat/templates/contrat/_msa_modal.html:51
 #: contrat/templates/contrat/_rendez_vous_modal.html:40
 #: elevage/templates/elevage/elevage.html:250
+#: equipe/templates/equipe/paie.html:132
 #: finances/templates/finances/document_editeur.html:222
 #: interventions/templates/interventions/interventions.html:146
 #: irrigation/templates/irrigation/bassinage.html:264
@@ -1267,6 +1269,7 @@ msgstr "Nótaí"
 #: environnement/templates/environnement/biodiversite.html:167
 #: equipe/templates/equipe/contrats.html:121
 #: equipe/templates/equipe/edit.html:24 equipe/templates/equipe/offres.html:110
+#: equipe/templates/equipe/paie.html:139
 #: equipe/templates/equipe/taches.html:204
 #: finances/templates/finances/document_editeur.html:236
 #: finances/templates/finances/fermage.html:74
@@ -2143,8 +2146,8 @@ msgstr "tuarascáil anailíse"
 #: client/models.py:51 contrat/models.py:35 contrat/models.py:90
 #: contrat/models.py:175 contrat/models.py:221 dti/models.py:80
 #: equipe/models.py:209 equipe/models.py:273 equipe/models.py:327
-#: pac/models.py:37 planning/models.py:226 reseaux/models.py:31
-#: vente/models.py:212 vente/models.py:343
+#: equipe/models.py:374 pac/models.py:37 planning/models.py:226
+#: reseaux/models.py:31 vente/models.py:212 vente/models.py:343
 msgid "statut"
 msgstr "stádas"
 
@@ -2597,8 +2600,8 @@ msgstr "teocht (°C)"
 #: client/models.py:75 client/models.py:161 contrat/models.py:37
 #: contrat/models.py:92 contrat/models.py:129 contrat/models.py:177
 #: contrat/models.py:222 dti/models.py:177 dti/models.py:295 dti/models.py:338
-#: elevage/models.py:43 equipe/models.py:176 stock/models.py:58
-#: stock/models.py:109 stock/models.py:185
+#: elevage/models.py:43 equipe/models.py:176 equipe/models.py:376
+#: stock/models.py:58 stock/models.py:109 stock/models.py:185
 #, fuzzy
 #| msgid "Notes"
 msgid "notes"
@@ -2849,6 +2852,7 @@ msgstr ""
 #: dashboard/templates/dashboard/comptable.html:157
 #: dti/templates/dti/liste.html:52
 #: environnement/templates/environnement/taxonomie.html:56 equipe/forms.py:78
+#: equipe/templates/equipe/paie.html:118
 #: equipe/templates/equipe/taches.html:187
 #: finances/templates/finances/devis.html:24
 #: finances/templates/finances/facturation.html:61
@@ -3496,7 +3500,8 @@ msgstr ""
 #: client/models.py:63 client/models.py:160
 #: client/templates/client/_client_fields.html:94
 #: client/templates/client/detail.html:62 dti/templates/dti/liste.html:31
-#: exploitations/models.py:117 exploitations/models.py:273
+#: equipe/templates/equipe/fiche_paie_pdf.html:35 exploitations/models.py:117
+#: exploitations/models.py:273
 msgid "SIRET"
 msgstr "SIRET"
 
@@ -4069,8 +4074,9 @@ msgid "Contrat de travail"
 msgstr ""
 
 #: contrat/models.py:18 contrat/models.py:54 contrat/models.py:156
-#: equipe/models.py:195 equipe/models.py:251 finances/models.py:136
-#: finances/models.py:202 planning/models.py:303 vente/models.py:175
+#: equipe/models.py:195 equipe/models.py:251 equipe/models.py:349
+#: finances/models.py:136 finances/models.py:202 planning/models.py:303
+#: vente/models.py:175
 msgid "Brouillon"
 msgstr "Dréacht"
 
@@ -4105,7 +4111,7 @@ msgstr "dáta deiridh"
 msgid "montant (€)"
 msgstr "méid (€)"
 
-#: contrat/models.py:41
+#: contrat/models.py:41 equipe/models.py:358
 msgid "contrat"
 msgstr ""
 
@@ -4351,7 +4357,7 @@ msgstr "Comhpháirtithe agus fostaithe"
 msgid "À payer"
 msgstr ""
 
-#: contrat/models.py:205 finances/models.py:204
+#: contrat/models.py:205 equipe/models.py:351 finances/models.py:204
 msgid "Payée"
 msgstr "Íoctha"
 
@@ -4747,6 +4753,7 @@ msgstr "Pleanáilte"
 #: contrat/templates/contrat/baux.html:7
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/msa.html:7 core/context_processors.py:126
+#: equipe/templates/equipe/paie.html:49
 #, fuzzy
 #| msgid "Contact"
 msgid "Contrat"
@@ -5500,6 +5507,7 @@ msgstr "Tacsanomaíocht AE"
 
 #: core/context_processors.py:115 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/equipe.html:8 equipe/templates/equipe/offres.html:11
+#: equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/placeholder.html:6
 #: equipe/templates/equipe/taches.html:8
 msgid "RH"
@@ -5522,11 +5530,12 @@ msgid "Contrats de travail"
 msgstr ""
 
 #: core/context_processors.py:121 equipe/templates/equipe/offres.html:11
-#: equipe/templates/equipe/offres.html:13 equipe/views.py:490
+#: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
 msgstr ""
 
-#: core/context_processors.py:122 equipe/views.py:439
+#: core/context_processors.py:122 equipe/templates/equipe/paie.html:8
+#: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
 msgstr ""
 
@@ -7711,7 +7720,8 @@ msgstr "Gainmheach"
 msgid "Terminé"
 msgstr "Críochnaithe"
 
-#: equipe/models.py:203
+#: equipe/models.py:203 equipe/models.py:356
+#: equipe/templates/equipe/paie.html:74
 #, fuzzy
 #| msgid "participants"
 msgid "salarié"
@@ -7869,6 +7879,116 @@ msgstr "sonrasc"
 msgid "candidatures"
 msgstr "sonraisc"
 
+#: equipe/models.py:350 finances/facturation_electronique.py:181
+#, fuzzy
+#| msgid "Émission"
+msgid "Émise"
+msgstr "Eisiúint"
+
+#: equipe/models.py:360
+msgid "période du"
+msgstr ""
+
+#: equipe/models.py:361
+msgid "période au"
+msgstr ""
+
+#: equipe/models.py:363
+#, fuzzy
+#| msgid "Lieu introuvable."
+msgid "heures travaillées"
+msgstr "Áit nach bhfuarthas."
+
+#: equipe/models.py:364 equipe/templates/equipe/fiche_paie_pdf.html:51
+msgid "heures supplémentaires"
+msgstr ""
+
+#: equipe/models.py:366
+msgid "salaire brut"
+msgstr ""
+
+#: equipe/models.py:367
+#, fuzzy
+#| msgid "Associés et salariés"
+msgid "cotisations salariales"
+msgstr "Comhpháirtithe agus fostaithe"
+
+#: equipe/models.py:368
+#, fuzzy
+#| msgid "Associés et salariés"
+msgid "cotisations patronales"
+msgstr "Comhpháirtithe agus fostaithe"
+
+#: equipe/models.py:369
+msgid "net imposable"
+msgstr ""
+
+#: equipe/models.py:370
+msgid "net à payer"
+msgstr ""
+
+#: equipe/models.py:372
+#, fuzzy
+#| msgid "Envoyée"
+msgid "payée le"
+msgstr "Seolta"
+
+#: equipe/models.py:373
+msgid "mode de paiement"
+msgstr ""
+
+#: equipe/models.py:379
+#, fuzzy
+#| msgid "fichier"
+msgid "fiche de paie"
+msgstr "comhad"
+
+#: equipe/models.py:380
+#, fuzzy
+#| msgid "tâches de planning"
+msgid "fiches de paie"
+msgstr "tascanna pleanála"
+
+#: equipe/models.py:421 exploitations/models.py:398 exploitations/models.py:473
+#: pac/models.py:34
+msgid "libellé"
+msgstr "lipéad"
+
+#: equipe/models.py:422 equipe/templates/equipe/paie.html:72
+msgid "base"
+msgstr ""
+
+#: equipe/models.py:423
+msgid "taux (%)"
+msgstr ""
+
+#: equipe/models.py:424
+msgid "part salariale"
+msgstr ""
+
+#: equipe/models.py:425
+#, fuzzy
+#| msgid "participants"
+msgid "part patronale"
+msgstr "rannpháirtithe"
+
+#: equipe/models.py:426 exploitations/models.py:280 exploitations/models.py:417
+#: exploitations/models.py:475
+msgid "ordre"
+msgstr ""
+
+#: equipe/models.py:429
+#, fuzzy
+#| msgid "Client"
+msgid "ligne de paie"
+msgstr "Cliant"
+
+#: equipe/models.py:430
+#, fuzzy
+#| msgid "Client"
+msgid "lignes de paie"
+msgstr "Cliant"
+
 #: equipe/templates/equipe/_emploi_close_corps.html:6
 #, fuzzy
 #| msgid "Ce lien de partage n'est plus valide."
@@ -7903,6 +8023,7 @@ msgid "Prise de poste"
 msgstr "Roinnt suímh"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:27
+#: equipe/templates/equipe/fiche_paie_pdf.html:50
 msgid "heures"
 msgstr ""
 
@@ -7954,6 +8075,7 @@ msgid "Votre email"
 msgstr "seoladh ríomhphoist"
 
 #: equipe/templates/equipe/_emploi_detail_corps.html:69
+#: equipe/templates/equipe/paie.html:49
 #: irrigation/templates/irrigation/dti.html:78
 #: irrigation/templates/irrigation/dti.html:83
 #: messagerie/templates/messagerie/new.html:29
@@ -8135,6 +8257,8 @@ msgid ""
 msgstr ""
 
 #: equipe/templates/equipe/contrats.html:33
+#: equipe/templates/equipe/fiche_paie_pdf.html:39
+#: equipe/templates/equipe/paie.html:34
 #, fuzzy
 #| msgid "participants"
 msgid "Salarié"
@@ -8175,6 +8299,7 @@ msgid "Établir"
 msgstr ""
 
 #: equipe/templates/equipe/contrats.html:77
+#: equipe/templates/equipe/paie.html:144
 #, python-format
 msgid ""
 "Ajoutez d'abord un <a href=\"%(url_equipe)s\" class=\"underline\">membre "
@@ -8352,6 +8477,102 @@ msgstr ""
 #| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce membre ?"
 msgstr "An chabhair seo a scriosadh?"
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:5
+#, python-format
+msgid "Bulletin — %(qui)s"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:24
+#, fuzzy
+#| msgid "Température"
+msgid "Bulletin de paie"
+msgstr "Teocht"
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:26
+#, python-format
+msgid "Période du %(d)s au %(f)s"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:31
+msgid "Employeur"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:48
+#, fuzzy
+#| msgid "Lieu introuvable."
+msgid "Temps de travail"
+msgstr "Áit nach bhfuarthas."
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:59
+#, fuzzy
+#| msgid "Juridique"
+msgid "Rubrique"
+msgstr "Dlíthiúil"
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:59
+msgid "Base"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:59
+msgid "Taux"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:60
+msgid "Part salariale"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:60
+msgid "Part employeur"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:78
+msgid "Salaire brut"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:79
+#, fuzzy
+#| msgid "Associés et salariés"
+msgid "Cotisations salariales"
+msgstr "Comhpháirtithe agus fostaithe"
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:81
+#, fuzzy
+#| msgid "Nouveau comptable"
+msgid "Net imposable"
+msgstr "Cuntasóir nua"
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:83
+msgid "Net à payer"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:84
+#, fuzzy
+#| msgid "Associés et salariés"
+msgid "Cotisations patronales"
+msgstr "Comhpháirtithe agus fostaithe"
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:85
+#, fuzzy
+#| msgid "Coût eau"
+msgid "Coût employeur"
+msgstr "Costas uisce"
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:90
+#, python-format
+msgid "Payée le %(d)s"
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:96
+#, python-format
+msgid "%(ferme)s — bulletin établi depuis Isidor."
+msgstr ""
+
+#: equipe/templates/equipe/fiche_paie_pdf.html:97
+msgid ""
+"Les montants sont ceux saisis par l'employeur : Isidor ne calcule pas la "
+"paie. Conservez ce bulletin sans limitation de durée."
+msgstr ""
 
 #: equipe/templates/equipe/invitation.html:9 equipe/views.py:99
 #: equipe/views.py:105 equipe/views.py:144
@@ -8531,6 +8752,178 @@ msgid ""
 "publique des emplois."
 msgstr ""
 
+#: equipe/templates/equipe/paie.html:10
+#, fuzzy
+#| msgid "Pneumatiques"
+msgid "Rubriques :"
+msgstr "Boinn"
+
+#: equipe/templates/equipe/paie.html:13
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une fiche de paie"
+msgstr "Gníomhachtaigh cód"
+
+#: equipe/templates/equipe/paie.html:19
+msgid ""
+"Isidor enregistre et édite vos bulletins, il ne calcule pas la paie : les "
+"taux MSA, la convention collective et les exonérations relèvent de votre "
+"comptable ou du service TESA. Saisissez ici les montants qu'ils vous "
+"fournissent — l'addition des rubriques est vérifiée."
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:27
+#, fuzzy
+#| msgid "Modifier"
+msgid "Modifier la fiche de paie"
+msgstr "Cuir in eagar"
+
+#: equipe/templates/equipe/paie.html:28
+#, fuzzy
+#| msgid "Nouvelle culture"
+msgid "Nouvelle fiche de paie"
+msgstr "Barr nua"
+
+#: equipe/templates/equipe/paie.html:41
+msgid "Période du"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:45
+#, fuzzy
+#| msgid "Eau"
+msgid "au"
+msgstr "Uisce"
+
+#: equipe/templates/equipe/paie.html:56
+#, fuzzy
+#| msgid "Lieu introuvable."
+msgid "Heures travaillées"
+msgstr "Áit nach bhfuarthas."
+
+#: equipe/templates/equipe/paie.html:60
+msgid "Heures supplémentaires"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:66
+#, fuzzy
+#| msgid "Pneumatiques"
+msgid "Rubriques"
+msgstr "Boinn"
+
+#: equipe/templates/equipe/paie.html:70
+msgid "ex : Retraite complémentaire"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:73
+#, python-format
+msgid "taux %%"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:75
+msgid "employeur"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:76 meteo/templates/meteo/index.html:40
+#: planning/templates/planning/acces.html:70
+#: reseaux/templates/reseaux/reseaux.html:57
+#: templates/partials/_sous_taches.html:41
+msgid "Retirer"
+msgstr "Bain"
+
+#: equipe/templates/equipe/paie.html:86
+#, fuzzy
+#| msgid "Activer un code"
+msgid "Ajouter une rubrique"
+msgstr "Gníomhachtaigh cód"
+
+#: equipe/templates/equipe/paie.html:91
+msgid "Totaux"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:94
+#, fuzzy
+#| msgid "surface totale (ha)"
+msgid "Salaire brut (€)"
+msgstr "achar iomlán (ha)"
+
+#: equipe/templates/equipe/paie.html:98
+#, fuzzy
+#| msgid "Associés et salariés"
+msgid "Cotisations salariales (€)"
+msgstr "Comhpháirtithe agus fostaithe"
+
+#: equipe/templates/equipe/paie.html:104
+#, fuzzy
+#| msgid "Associés et salariés"
+msgid "Cotisations patronales (€)"
+msgstr "Comhpháirtithe agus fostaithe"
+
+#: equipe/templates/equipe/paie.html:110
+#, fuzzy
+#| msgid "montant (€)"
+msgid "Net imposable (€)"
+msgstr "méid (€)"
+
+#: equipe/templates/equipe/paie.html:114
+msgid "Net à payer (€)"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:124
+#, fuzzy
+#| msgid "Payée"
+msgid "Payée le"
+msgstr "Íoctha"
+
+#: equipe/templates/equipe/paie.html:128
+#, fuzzy
+#| msgid "date de naissance"
+msgid "Mode de paiement"
+msgstr "dáta breithe"
+
+#: equipe/templates/equipe/paie.html:129
+#, fuzzy
+#| msgid "Environnement"
+msgid "ex : virement"
+msgstr "Comhshaol"
+
+#: equipe/templates/equipe/paie.html:151
+msgid "Bulletins"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:161
+msgid "brut"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:162
+msgid "net"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:163
+msgid "coût employeur"
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:167
+msgid "Les rubriques ne totalisent pas les montants annoncés."
+msgstr ""
+
+#: equipe/templates/equipe/paie.html:186
+#, fuzzy
+#| msgid "Supprimer la culture ?"
+msgid "Ouvrir le bulletin"
+msgstr "An bharr a scriosadh?"
+
+#: equipe/templates/equipe/paie.html:190
+#, fuzzy
+#| msgid "Supprimer cette fiche ?"
+msgid "Supprimer cette fiche de paie ?"
+msgstr "An bhileog seo a scriosadh?"
+
+#: equipe/templates/equipe/paie.html:201
+#, fuzzy
+#| msgid "Aucune conversation pour le moment."
+msgid "Aucun bulletin pour le moment."
+msgstr "Níl aon chomhrá go fóill."
+
 #: equipe/templates/equipe/placeholder.html:18
 #, python-format
 msgid "La section « %(title)s » arrive prochainement."
@@ -8699,8 +9092,8 @@ msgstr ""
 msgid "Tâche supprimée."
 msgstr "Gabháltas scriosta."
 
-#: equipe/views.py:294 equipe/views.py:314 equipe/views.py:500
-#: stock/views.py:311
+#: equipe/views.py:294 equipe/views.py:314 equipe/views.py:524
+#: equipe/views.py:666 stock/views.py:311
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation."
@@ -8723,7 +9116,22 @@ msgstr ""
 msgid "Contrat établi. Relisez-le avant de le remettre."
 msgstr ""
 
-#: equipe/views.py:507
+#: equipe/views.py:529
+msgid "Une fiche de paie a besoin d'un salarié et d'une période."
+msgstr ""
+
+#: equipe/views.py:548
+msgid "Ce salarié a déjà une fiche pour cette période."
+msgstr ""
+
+#: equipe/views.py:554
+#, python-format
+msgid ""
+"Les rubriques ne totalisent pas les montants annoncés : %(lig_s)s € et "
+"%(lig_p)s € contre %(fic_s)s € et %(fic_p)s €."
+msgstr ""
+
+#: equipe/views.py:673
 msgid "Une offre a besoin d'un intitulé et d'une description."
 msgstr ""
 
@@ -9825,11 +10233,6 @@ msgstr "ról / lipéad"
 msgid "société principale"
 msgstr "cuideachta ghaolmhar"
 
-#: exploitations/models.py:280 exploitations/models.py:417
-#: exploitations/models.py:475
-msgid "ordre"
-msgstr ""
-
 #: exploitations/models.py:284
 msgid "société liée"
 msgstr "cuideachta ghaolmhar"
@@ -9881,10 +10284,6 @@ msgstr ""
 #: exploitations/models.py:358
 msgid "Une société ne peut pas se détenir elle-même."
 msgstr ""
-
-#: exploitations/models.py:398 exploitations/models.py:473 pac/models.py:34
-msgid "libellé"
-msgstr "lipéad"
 
 #: exploitations/models.py:399
 msgid "ex : Siège, Hangar nord, Second site"
@@ -10335,12 +10734,6 @@ msgstr "toilleadh coinneála (mm)"
 #: finances/facturation_electronique.py:179 reseaux/models.py:20
 msgid "Acceptée"
 msgstr ""
-
-#: finances/facturation_electronique.py:181
-#, fuzzy
-#| msgid "Émission"
-msgid "Émise"
-msgstr "Eisiúint"
 
 #: finances/facturation_electronique.py:183
 msgid "Mise à disposition"
@@ -13878,13 +14271,6 @@ msgstr "Cuir cathair leis"
 #: meteo/templates/meteo/index.html:23
 msgid "Masquer le lieu de l’exploitation"
 msgstr ""
-
-#: meteo/templates/meteo/index.html:40
-#: planning/templates/planning/acces.html:70
-#: reseaux/templates/reseaux/reseaux.html:57
-#: templates/partials/_sous_taches.html:41
-msgid "Retirer"
-msgstr "Bain"
 
 #: meteo/templates/meteo/index.html:54
 msgid "Ajoutez une ville pour suivre sa météo."

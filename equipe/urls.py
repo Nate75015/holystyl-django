@@ -23,6 +23,11 @@ urlpatterns = [
     path("contrats-travail/<int:pk>/supprimer/", views.contrat_delete, name="contrat_delete"),
     path("contrats-travail/<int:pk>/pdf/", views.contrat_pdf, name="contrat_pdf"),
     path("paie/", views.paie, name="paie"),
+    path("paie/enregistrer/", views.fiche_save, name="fiche_create"),
+    path("paie/<int:pk>/enregistrer/", views.fiche_save, name="fiche_edit"),
+    path("paie/<int:pk>/statut/", views.fiche_statut, name="fiche_statut"),
+    path("paie/<int:pk>/supprimer/", views.fiche_delete, name="fiche_delete"),
+    path("paie/<int:pk>/pdf/", views.fiche_pdf, name="fiche_pdf"),
     path("localisation/<str:token>/", views.location_share, name="location_share"),
 
     # ── Offres d'emploi : back-office ──
