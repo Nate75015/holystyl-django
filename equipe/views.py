@@ -18,7 +18,8 @@ from exploitations.models import Exploitation
 
 from . import invitations
 from .forms import InvitationAccountForm, TaskForm, TeamMemberForm
-from .models import Task, TeamMember
+from . import contrats as contrats_service
+from .models import ContratTravail, ModeleContrat, Task, TeamMember
 
 User = get_user_model()
 
@@ -227,11 +228,187 @@ def _rh_placeholder(request, title):
     return render(request, "equipe/placeholder.html", {"title": title, "page_title": title})
 
 
+def _to_float(valeur, defaut=None):
+    try:
+        return float(str(valeur).replace(",", ".").replace(" ", "").strip())
+    except (TypeError, ValueError):
+        return defaut
+
+
+def _to_date(valeur):
+    from django.utils.dateparse import parse_date
+
+    return parse_date((valeur or "").strip()) or None
+
+
 @login_required
 @espace_requis(EXPLOITANT)
 def contrats(request):
-    """Contrats de travail — module RH en préparation."""
-    return _rh_placeholder(request, _("Contrats de travail"))
+    """Modèles de contrat et contrats établis."""
+    exploitation = _exploitation(request)
+    return render(request, "equipe/contrats.html", {
+        "modeles": ModeleContrat.objects.filter(exploitation=exploitation) if exploitation else [],
+        "contrats": (ContratTravail.objects.filter(exploitation=exploitation)
+                     .select_related("membre", "modele") if exploitation else []),
+        "membres": TeamMember.objects.filter(exploitation=exploitation) if exploitation else [],
+        "types": ModeleContrat.Type.choices,
+        "statuts": ContratTravail.Statut.choices,
+        "jetons": contrats_service.JETONS,
+        "squelettes": contrats_service.SQUELETTES,
+        "page_title": _("Contrats de travail"),
+    })
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def modeles_importer(request):
+    """Copie les squelettes fournis dans les modèles de l'exploitation.
+
+    Ce sont des points de départ : une fois copiés, ils appartiennent à la
+    ferme et s'adaptent sans que la mise à jour de l'application les écrase.
+    """
+    exploitation = _exploitation(request)
+    if exploitation is None:
+        messages.error(request, _("Créez d'abord votre exploitation."))
+        return redirect("equipe:contrats")
+
+    ajoutes = 0
+    for squelette in contrats_service.SQUELETTES:
+        _modele, cree = ModeleContrat.objects.get_or_create(
+            exploitation=exploitation, nom=str(squelette["nom"]),
+            defaults={"type_contrat": squelette["type_contrat"],
+                      "corps": str(squelette["corps"])})
+        ajoutes += 1 if cree else 0
+    messages.success(request, _("%(n)s modèle(s) ajouté(s).") % {"n": ajoutes})
+    return redirect("equipe:contrats")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def modele_save(request, pk=None):
+    exploitation = _exploitation(request)
+    if exploitation is None:
+        messages.error(request, _("Créez d'abord votre exploitation."))
+        return redirect("equipe:contrats")
+
+    modele = (get_object_or_404(ModeleContrat, pk=pk, exploitation=exploitation)
+              if pk else ModeleContrat(exploitation=exploitation))
+    nom = (request.POST.get("nom") or "").strip()
+    corps = (request.POST.get("corps") or "").strip()
+    if not (nom and corps):
+        messages.error(request, _("Un modèle a besoin d'un nom et d'un corps."))
+        return redirect("equipe:contrats")
+
+    type_contrat = request.POST.get("type_contrat") or ModeleContrat.Type.CDI
+    modele.nom = nom[:255]
+    modele.corps = corps
+    modele.type_contrat = (type_contrat if type_contrat in ModeleContrat.Type.values
+                           else ModeleContrat.Type.CDI)
+    modele.notes = (request.POST.get("notes") or "").strip()
+    modele.save()
+    return redirect("equipe:contrats")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def modele_delete(request, pk):
+    exploitation = _exploitation(request)
+    get_object_or_404(ModeleContrat, pk=pk, exploitation=exploitation).delete()
+    return redirect("equipe:contrats")
+
+
+def _champs_contrat(request):
+    return {
+        "poste": (request.POST.get("poste") or "").strip()[:255],
+        "lieu": (request.POST.get("lieu") or "").strip()[:255],
+        "date_debut": _to_date(request.POST.get("date_debut")),
+        "date_fin": _to_date(request.POST.get("date_fin")),
+        "duree_hebdo": _to_float(request.POST.get("duree_hebdo")),
+        "remuneration": _to_float(request.POST.get("remuneration")),
+    }
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def contrat_create(request):
+    """Établit le contrat d'un salarié à partir d'un modèle.
+
+    Le corps est rendu maintenant et figé : retoucher le modèle ensuite ne
+    réécrit pas un contrat déjà remis.
+    """
+    exploitation = _exploitation(request)
+    membre = TeamMember.objects.filter(
+        pk=request.POST.get("membre") or 0, exploitation=exploitation).first()
+    modele = ModeleContrat.objects.filter(
+        pk=request.POST.get("modele") or 0, exploitation=exploitation).first()
+    if not (exploitation and membre and modele):
+        messages.error(request, _("Choisissez un salarié et un modèle."))
+        return redirect("equipe:contrats")
+
+    contrat = ContratTravail(exploitation=exploitation, membre=membre, modele=modele,
+                             type_contrat=modele.type_contrat, **_champs_contrat(request))
+    contrat.corps = contrats_service.remplir(
+        modele.corps, contrats_service.valeurs_pour(contrat))
+    contrat.save()
+    messages.success(request, _("Contrat établi. Relisez-le avant de le remettre."))
+    return redirect("equipe:contrats")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def contrat_edit(request, pk):
+    exploitation = _exploitation(request)
+    contrat = get_object_or_404(ContratTravail, pk=pk, exploitation=exploitation)
+    for champ, valeur in _champs_contrat(request).items():
+        setattr(contrat, champ, valeur)
+
+    statut = request.POST.get("statut") or contrat.statut
+    if statut in ContratTravail.Statut.values:
+        contrat.statut = statut
+    contrat.date_signature = _to_date(request.POST.get("date_signature"))
+    if request.POST.get("corps") is not None:
+        contrat.corps = request.POST.get("corps")
+    contrat.save()
+    return redirect("equipe:contrats")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+@require_POST
+def contrat_delete(request, pk):
+    exploitation = _exploitation(request)
+    get_object_or_404(ContratTravail, pk=pk, exploitation=exploitation).delete()
+    return redirect("equipe:contrats")
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+def contrat_pdf(request, pk):
+    """Le contrat en PDF, ou en page imprimable si WeasyPrint n'est pas là."""
+    exploitation = _exploitation(request)
+    contrat = get_object_or_404(
+        ContratTravail.objects.select_related("membre"), pk=pk, exploitation=exploitation)
+    html = render(request, "equipe/contrat_pdf.html", {
+        "contrat": contrat, "exploitation": exploitation}).content.decode()
+
+    try:
+        from weasyprint import HTML
+    except Exception:  # noqa: BLE001 — libs système absentes : on rend la page
+        return render(request, "equipe/contrat_pdf.html",
+                      {"contrat": contrat, "exploitation": exploitation})
+
+    from django.http import HttpResponse
+
+    pdf = HTML(string=html, base_url=request.build_absolute_uri("/")).write_pdf()
+    reponse = HttpResponse(pdf, content_type="application/pdf")
+    nom = f"contrat-{contrat.membre.name}-{contrat.pk}.pdf".replace(" ", "-").lower()
+    reponse["Content-Disposition"] = f'inline; filename="{nom}"'
+    return reponse
 
 
 @login_required

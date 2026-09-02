@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 21:49+0200\n"
+"POT-Creation-Date: 2026-09-02 22:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -318,13 +318,13 @@ msgstr "Horticultura"
 #: client/models.py:24 client/models.py:132 contrat/models.py:15
 #: contrat/models.py:115 contrat/models.py:153 contrat/models.py:201
 #: core/adresse.py:73 elevage/models.py:26 elevage/models.py:36
-#: exploitations/formes_juridiques.py:79 exploitations/models.py:97
-#: finances/models.py:24 finances/models.py:50 interventions/models.py:26
-#: operations/materiel.py:31 operations/materiel.py:127
-#: operations/models.py:135 operations/models.py:167 pac/models.py:18
-#: planning/models.py:111 planning/models.py:151 planning/models.py:266
-#: stock/models.py:44 stock/models.py:86 stock/models.py:155
-#: vente/models.py:159
+#: equipe/models.py:168 exploitations/formes_juridiques.py:79
+#: exploitations/models.py:97 finances/models.py:24 finances/models.py:50
+#: interventions/models.py:26 operations/materiel.py:31
+#: operations/materiel.py:127 operations/models.py:135 operations/models.py:167
+#: pac/models.py:18 planning/models.py:111 planning/models.py:151
+#: planning/models.py:258 stock/models.py:44 stock/models.py:86
+#: stock/models.py:155 vente/models.py:159
 msgid "Autre"
 msgstr "Otro"
 
@@ -391,7 +391,7 @@ msgstr "Bajo"
 
 #: agronomie/models.py:85
 #: environnement/templates/environnement/biodiversite.html:254
-#: irrigation/models.py:288 planning/models.py:270 planning/models.py:306
+#: irrigation/models.py:288 planning/models.py:262 planning/models.py:298
 msgid "Moyen"
 msgstr "Medio"
 
@@ -577,8 +577,9 @@ msgstr "fertirrigaciones"
 
 #: agronomie/models.py:209 client/models.py:48 client/models.py:138
 #: contrat/models.py:28 contrat/models.py:166 dti/models.py:143
-#: dti/models.py:238 dti/models.py:289 exploitations/models.py:472
-#: operations/models.py:49 operations/models.py:213 stock/models.py:51
+#: dti/models.py:238 dti/models.py:289 equipe/models.py:173
+#: equipe/models.py:206 exploitations/models.py:472 operations/models.py:49
+#: operations/models.py:213 stock/models.py:51
 msgid "type"
 msgstr "tipo"
 
@@ -804,6 +805,7 @@ msgstr "Ver"
 #: elevage/templates/elevage/elevage.html:160
 #: elevage/templates/elevage/elevage.html:202
 #: environnement/templates/environnement/biodiversite.html:75
+#: equipe/templates/equipe/contrats.html:155
 #: equipe/templates/equipe/equipe.html:55
 #: equipe/templates/equipe/taches.html:70
 #: exploitations/templates/exploitations/adresses.html:19
@@ -852,6 +854,8 @@ msgstr "Editar"
 #: environnement/templates/environnement/biodiversite.html:188
 #: environnement/templates/environnement/taxonomie.html:77
 #: environnement/templates/environnement/taxonomie.html:189
+#: equipe/templates/equipe/contrats.html:146
+#: equipe/templates/equipe/contrats.html:204
 #: equipe/templates/equipe/equipe.html:59
 #: equipe/templates/equipe/equipe.html:115
 #: equipe/templates/equipe/taches.html:78
@@ -935,7 +939,7 @@ msgid "Exposition"
 msgstr "explotación"
 
 #: agronomie/templates/agronomie/cultures.html:245
-#: agronomie/templates/agronomie/cultures.html:356 planning/models.py:263
+#: agronomie/templates/agronomie/cultures.html:356 planning/models.py:255
 msgid "Arrosage"
 msgstr "Riego"
 
@@ -1090,6 +1094,8 @@ msgstr "Sus subtareas también se eliminarán:"
 #: environnement/templates/environnement/biodiversite.html:187
 #: environnement/templates/environnement/taxonomie.html:172
 #: environnement/templates/environnement/taxonomie.html:188
+#: equipe/templates/equipe/contrats.html:72
+#: equipe/templates/equipe/contrats.html:120
 #: equipe/templates/equipe/edit.html:22 equipe/templates/equipe/equipe.html:23
 #: equipe/templates/equipe/equipe.html:114
 #: equipe/templates/equipe/taches.html:140
@@ -1181,6 +1187,7 @@ msgstr ""
 
 #: agronomie/templates/agronomie/cultures.html:314
 #: agronomie/templates/agronomie/cultures.html:315 equipe/forms.py:79
+#: equipe/templates/equipe/contrats.html:55
 #: parcelles/templates/parcelles/detail.html:172
 #: planning/templates/planning/planning.html:397
 msgid "Début"
@@ -1193,6 +1200,7 @@ msgstr ""
 
 #: agronomie/templates/agronomie/cultures.html:314
 #: agronomie/templates/agronomie/cultures.html:315
+#: equipe/templates/equipe/contrats.html:59
 #: parcelles/templates/parcelles/detail.html:173 planning/models.py:130
 #: planning/templates/planning/planning.html:402
 msgid "Fin"
@@ -1254,6 +1262,7 @@ msgstr "Notas"
 #: elevage/templates/elevage/elevage.html:251
 #: elevage/templates/elevage/elevage.html:290
 #: environnement/templates/environnement/biodiversite.html:167
+#: equipe/templates/equipe/contrats.html:121
 #: equipe/templates/equipe/edit.html:24 equipe/templates/equipe/taches.html:202
 #: finances/templates/finances/document_editeur.html:236
 #: finances/templates/finances/fermage.html:74
@@ -1436,8 +1445,8 @@ msgstr "Fertilizante"
 #: client/templates/client/clients.html:40
 #: contrat/templates/contrat/_assurance_modal.html:18
 #: contrat/templates/contrat/_contrat_modal.html:18
-#: iot/templates/iot/capteurs.html:23 iot/templates/iot/regie.html:60
-#: notifications/forms.py:26
+#: equipe/templates/equipe/contrats.html:97 iot/templates/iot/capteurs.html:23
+#: iot/templates/iot/regie.html:60 notifications/forms.py:26
 #: operations/templates/operations/parc_materiel.html:57
 #: parcelles/templates/parcelles/detail.html:120
 #: planning/templates/planning/bon_intervention.html:16
@@ -2132,13 +2141,13 @@ msgstr "informe de análisis"
 #: analyse_sol/models.py:179 aquaculture/models.py:44 aquaculture/models.py:98
 #: client/models.py:51 contrat/models.py:35 contrat/models.py:90
 #: contrat/models.py:175 contrat/models.py:221 dti/models.py:80
-#: pac/models.py:37 planning/models.py:234 reseaux/models.py:31
-#: vente/models.py:212 vente/models.py:343
+#: equipe/models.py:209 pac/models.py:37 planning/models.py:226
+#: reseaux/models.py:31 vente/models.py:212 vente/models.py:343
 msgid "statut"
 msgstr "estado"
 
 #: analyse_sol/models.py:180 mail/models.py:25 messagerie/models.py:99
-#: messagerie/models.py:102 planning/models.py:237
+#: messagerie/models.py:102 planning/models.py:229
 #, fuzzy
 #| msgid "Messagerie"
 msgid "message"
@@ -2438,7 +2447,7 @@ msgstr "OCR pendiente"
 msgid "OCR effectué"
 msgstr "OCR realizado"
 
-#: analyses/models.py:22 planning/models.py:313
+#: analyses/models.py:22 planning/models.py:305
 msgid "Validé"
 msgstr "Validado"
 
@@ -2542,7 +2551,7 @@ msgstr "Baja"
 msgid "En maintenance"
 msgstr "Mantenimiento"
 
-#: aquaculture/models.py:34 planning/models.py:272
+#: aquaculture/models.py:34 planning/models.py:264
 msgid "Hors service"
 msgstr "Fuera de servicio"
 
@@ -2584,8 +2593,8 @@ msgstr "temperatura (°C)"
 #: client/models.py:75 client/models.py:161 contrat/models.py:37
 #: contrat/models.py:92 contrat/models.py:129 contrat/models.py:177
 #: contrat/models.py:222 dti/models.py:177 dti/models.py:295 dti/models.py:338
-#: elevage/models.py:43 stock/models.py:58 stock/models.py:109
-#: stock/models.py:185
+#: elevage/models.py:43 equipe/models.py:176 stock/models.py:58
+#: stock/models.py:109 stock/models.py:185
 #, fuzzy
 #| msgid "Notes"
 msgid "notes"
@@ -3431,7 +3440,7 @@ msgstr "Activo"
 msgid "Inactif"
 msgstr "inactivo"
 
-#: client/models.py:30 planning/models.py:314
+#: client/models.py:30 planning/models.py:306
 msgid "Archivé"
 msgstr "Archivado"
 
@@ -3860,7 +3869,7 @@ msgstr ""
 msgid "Facturé"
 msgstr "Facturado"
 
-#: client/templates/client/espace.html:47
+#: client/templates/client/espace.html:47 equipe/models.py:197
 #: finances/templates/finances/devis.html:45
 #, fuzzy
 #| msgid "Aligné"
@@ -4056,8 +4065,8 @@ msgid "Contrat de travail"
 msgstr ""
 
 #: contrat/models.py:18 contrat/models.py:54 contrat/models.py:156
-#: finances/models.py:136 finances/models.py:202 planning/models.py:311
-#: vente/models.py:175
+#: equipe/models.py:195 finances/models.py:136 finances/models.py:202
+#: planning/models.py:303 vente/models.py:175
 msgid "Brouillon"
 msgstr "Borrador"
 
@@ -4078,11 +4087,12 @@ msgid "contractant"
 msgstr "Importe"
 
 #: contrat/models.py:31 contrat/models.py:87 contrat/models.py:172
-#: exploitations/models.py:410
+#: equipe/models.py:214 exploitations/models.py:410
 msgid "date de début"
 msgstr "fecha de inicio"
 
-#: contrat/models.py:32 contrat/models.py:88 exploitations/models.py:411
+#: contrat/models.py:32 contrat/models.py:88 equipe/models.py:215
+#: exploitations/models.py:411
 msgid "date de fin"
 msgstr "fecha de fin"
 
@@ -4208,7 +4218,7 @@ msgstr "participantes"
 msgid "référence de l'acte"
 msgstr ""
 
-#: contrat/models.py:127
+#: contrat/models.py:127 equipe/models.py:218
 #, fuzzy
 #| msgid "date de fin"
 msgid "date de signature"
@@ -4537,7 +4547,7 @@ msgstr ""
 
 #: contrat/templates/contrat/_assurance_modal.html:48
 #: contrat/templates/contrat/_bail_modal.html:38
-#: contrat/templates/contrat/_contrat_modal.html:32
+#: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
 #, fuzzy
 #| msgid "date de début"
 msgid "Date de début"
@@ -4605,7 +4615,7 @@ msgid "Fermage annuel (€)"
 msgstr ""
 
 #: contrat/templates/contrat/_bail_modal.html:42
-#: contrat/templates/contrat/_contrat_modal.html:36
+#: contrat/templates/contrat/_contrat_modal.html:36 equipe/contrats.py:31
 #, fuzzy
 #| msgid "date de fin"
 msgid "Date de fin"
@@ -4940,6 +4950,7 @@ msgid "Montant"
 msgstr "Importe"
 
 #: contrat/templates/contrat/contrats.html:57
+#: equipe/templates/equipe/contrats.html:201
 #, fuzzy
 #| msgid "Supprimer cette aide ?"
 msgid "Supprimer ce contrat ?"
@@ -5380,7 +5391,7 @@ msgid "Capteurs"
 msgstr "Sensores"
 
 #: core/context_processors.py:85 irrigation/templates/irrigation/antigel.html:8
-#: irrigation/templates/irrigation/bassinage.html:17 planning/models.py:262
+#: irrigation/templates/irrigation/bassinage.html:17 planning/models.py:254
 msgid "Protection"
 msgstr "Protección"
 
@@ -5481,28 +5492,30 @@ msgstr "Salud vegetal"
 msgid "Taxonomie EU"
 msgstr "Taxonomía UE"
 
-#: core/context_processors.py:115 equipe/templates/equipe/equipe.html:8
+#: core/context_processors.py:115 equipe/templates/equipe/contrats.html:7
+#: equipe/templates/equipe/equipe.html:8
 #: equipe/templates/equipe/placeholder.html:6
 #: equipe/templates/equipe/taches.html:8
 msgid "RH"
 msgstr "RR. HH."
 
 #: core/context_processors.py:118 equipe/templates/equipe/equipe.html:8
-#: equipe/templates/equipe/equipe.html:10 equipe/views.py:46
+#: equipe/templates/equipe/equipe.html:10 equipe/views.py:47
 #: planning/templates/planning/planning.html:165
 msgid "Équipe"
 msgstr "Equipo"
 
 #: core/context_processors.py:119 equipe/templates/equipe/taches.html:8
-#: equipe/templates/equipe/taches.html:10 equipe/views.py:188
+#: equipe/templates/equipe/taches.html:10 equipe/views.py:189
 msgid "Tâches"
 msgstr "Tareas"
 
-#: core/context_processors.py:120 equipe/views.py:234
+#: core/context_processors.py:120 equipe/templates/equipe/contrats.html:7
+#: equipe/templates/equipe/contrats.html:9 equipe/views.py:258
 msgid "Contrats de travail"
 msgstr ""
 
-#: core/context_processors.py:121 equipe/views.py:241
+#: core/context_processors.py:121 equipe/views.py:418
 msgid "Paie"
 msgstr ""
 
@@ -5785,7 +5798,7 @@ msgid "Encaissé"
 msgstr ""
 
 #: dashboard/templates/dashboard/comptable.html:88 equipe/models.py:135
-#: finances/models.py:203 iot/models.py:90 planning/models.py:224
+#: finances/models.py:203 iot/models.py:90 planning/models.py:216
 #: reseaux/models.py:19
 msgid "En attente"
 msgstr "Pendiente"
@@ -7131,7 +7144,7 @@ msgid "Très faible"
 msgstr "Por hacer"
 
 #: environnement/templates/environnement/biodiversite.html:254
-#: irrigation/views.py:137 planning/models.py:269 planning/models.py:305
+#: irrigation/views.py:137 planning/models.py:261 planning/models.py:297
 msgid "Bon"
 msgstr "Bueno"
 
@@ -7340,6 +7353,98 @@ msgstr ""
 "Seguimiento sanitario de los cultivos: enfermedades, plagas, observaciones e "
 "indicadores de frecuencia de tratamiento (IFT)."
 
+#: equipe/contrats.py:21
+#, fuzzy
+#| msgid "Déclassé"
+msgid "Nom du salarié"
+msgstr "Desclasificado"
+
+#: equipe/contrats.py:22
+msgid "Email du salarié"
+msgstr ""
+
+#: equipe/contrats.py:23
+#, fuzzy
+#| msgid "téléphone 1"
+msgid "Téléphone du salarié"
+msgstr "teléfono 1"
+
+#: equipe/contrats.py:24
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "Nom de l'exploitation"
+msgstr "Mi explotación"
+
+#: equipe/contrats.py:25
+#, fuzzy
+#| msgid "adresse email"
+msgid "Adresse de l'exploitation"
+msgstr "dirección de email"
+
+#: equipe/contrats.py:26
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "SIRET de l'exploitation"
+msgstr "Mi explotación"
+
+#: equipe/contrats.py:27
+#, fuzzy
+#| msgid "Mon exploitation"
+msgid "Nom du chef d'exploitation"
+msgstr "Mi explotación"
+
+#: equipe/contrats.py:28
+msgid "Poste occupé"
+msgstr ""
+
+#: equipe/contrats.py:29 equipe/templates/equipe/contrats.html:51
+#, fuzzy
+#| msgid "Lieu introuvable."
+msgid "Lieu de travail"
+msgstr "Lugar no encontrado."
+
+#: equipe/contrats.py:32
+#, fuzzy
+#| msgid "Hebdomadaire"
+msgid "Durée hebdomadaire"
+msgstr "Semanal"
+
+#: equipe/contrats.py:33
+msgid "Rémunération brute mensuelle"
+msgstr ""
+
+#: equipe/contrats.py:34
+#, fuzzy
+#| msgid "date d'acquisition"
+msgid "Date d'établissement"
+msgstr "fecha de adquisición"
+
+#: equipe/contrats.py:126
+msgid "CDI — contrat à durée indéterminée"
+msgstr ""
+
+#: equipe/contrats.py:148
+msgid "CDD — contrat à durée déterminée"
+msgstr ""
+
+#: equipe/contrats.py:174 equipe/models.py:163
+#, fuzzy
+#| msgid "Saisonnier"
+msgid "Contrat saisonnier"
+msgstr "Temporero"
+
+#: equipe/contrats.py:200 equipe/models.py:164
+#, fuzzy
+#| msgid "Contrôleur de vanne"
+msgid "Contrat d'apprentissage"
+msgstr "Controlador de válvula"
+
+#: equipe/contrats.py:225 equipe/models.py:166
+#, fuzzy
+#| msgid "Connexion"
+msgid "Convention de stage"
+msgstr "Iniciar sesión"
+
 #: equipe/forms.py:69
 #, fuzzy
 #| msgid "Supprimer la parcelle ?"
@@ -7500,6 +7605,102 @@ msgstr "recordatorio de tarea"
 msgid "rappels de tâche"
 msgstr "recordatorios de tarea"
 
+#: equipe/models.py:161
+msgid "CDI"
+msgstr ""
+
+#: equipe/models.py:162
+msgid "CDD"
+msgstr ""
+
+#: equipe/models.py:165
+#, fuzzy
+#| msgid "Capteur de pression"
+msgid "Contrat de professionnalisation"
+msgstr "Sensor de presión"
+
+#: equipe/models.py:167
+msgid "TESA — titre emploi simplifié agricole"
+msgstr ""
+
+#: equipe/models.py:172
+#, fuzzy
+#| msgid "nom du groupe"
+msgid "nom du modèle"
+msgstr "nombre del grupo"
+
+#: equipe/models.py:175 equipe/models.py:221
+#, fuzzy
+#| msgid "membres de conversation"
+msgid "corps du contrat"
+msgstr "miembros de la conversación"
+
+#: equipe/models.py:179
+#, fuzzy
+#| msgid "membres de conversation"
+msgid "modèle de contrat"
+msgstr "miembros de la conversación"
+
+#: equipe/models.py:180
+#, fuzzy
+#| msgid "membres de conversation"
+msgid "modèles de contrat"
+msgstr "miembros de la conversación"
+
+#: equipe/models.py:196
+#, fuzzy
+#| msgid "Sableux"
+msgid "Établi"
+msgstr "Arenoso"
+
+#: equipe/models.py:198 irrigation/models.py:164 planning/models.py:33
+msgid "Terminé"
+msgstr "Terminado"
+
+#: equipe/models.py:203
+#, fuzzy
+#| msgid "participants"
+msgid "salarié"
+msgstr "participantes"
+
+#: equipe/models.py:205
+#, fuzzy
+#| msgid "sessions d'irrigation"
+msgid "modèle d'origine"
+msgstr "sesiones de riego"
+
+#: equipe/models.py:212
+msgid "poste"
+msgstr ""
+
+#: equipe/models.py:213
+#, fuzzy
+#| msgid "Température"
+msgid "lieu de travail"
+msgstr "Temperatura"
+
+#: equipe/models.py:216
+#, fuzzy
+#| msgid "Hebdomadaire"
+msgid "durée hebdomadaire (h)"
+msgstr "Semanal"
+
+#: equipe/models.py:217
+msgid "rémunération brute mensuelle"
+msgstr ""
+
+#: equipe/models.py:224
+#, fuzzy
+#| msgid "Contrôleur de vanne"
+msgid "contrat de travail"
+msgstr "Controlador de válvula"
+
+#: equipe/models.py:225
+#, fuzzy
+#| msgid "Contrôleur de vanne"
+msgid "contrats de travail"
+msgstr "Controlador de válvula"
+
 #: equipe/templates/equipe/_invitation_carte.html:10
 msgid "Lien d'invitation invalide"
 msgstr ""
@@ -7556,6 +7757,165 @@ msgstr "miembro del equipo"
 msgid "Créer mon compte"
 msgstr "Crear una cuenta"
 
+#: equipe/templates/equipe/contrat_pdf.html:5
+#, python-format
+msgid "Contrat — %(qui)s"
+msgstr ""
+
+#: equipe/templates/equipe/contrat_pdf.html:16
+#, python-format
+msgid "%(ferme)s — document établi depuis Isidor."
+msgstr ""
+
+#: equipe/templates/equipe/contrat_pdf.html:17
+msgid ""
+"À faire relire avant signature : les clauses obligatoires dépendent de la "
+"convention collective applicable."
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:12
+#: equipe/templates/equipe/contrats.html:89
+#, fuzzy
+#| msgid "Nouveau mail"
+msgid "Nouveau modèle"
+msgstr "Nuevo correo"
+
+#: equipe/templates/equipe/contrats.html:15
+#: equipe/templates/equipe/contrats.html:29
+msgid "Établir un contrat"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:22
+msgid ""
+"Ces modèles sont des points de départ : les clauses obligatoires, la période "
+"d'essai et la rémunération dépendent de la convention collective applicable. "
+"Faites relire un contrat avant de le remettre."
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:33
+#, fuzzy
+#| msgid "participants"
+msgid "Salarié"
+msgstr "participantes"
+
+#: equipe/templates/equipe/contrats.html:40
+#: operations/templates/operations/parc_materiel.html:87
+msgid "Modèle"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:47
+msgid "Poste"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:48
+msgid "ex : ouvrier arboricole"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:59
+msgid "si CDD"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:63
+#, fuzzy
+#| msgid "Créer un compte"
+msgid "Heures par semaine"
+msgstr "Crear una cuenta"
+
+#: equipe/templates/equipe/contrats.html:67
+#, fuzzy
+#| msgid "CA (€)"
+msgid "Brut mensuel (€)"
+msgstr "CN (€)"
+
+#: equipe/templates/equipe/contrats.html:73
+msgid "Établir"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:77
+#, python-format
+msgid ""
+"Ajoutez d'abord un <a href=\"%(url_equipe)s\" class=\"underline\">membre "
+"d'équipe</a>."
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:78
+msgid "Créez ou importez d'abord un modèle de contrat."
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:88
+#, fuzzy
+#| msgid "Modifier"
+msgid "Modifier le modèle"
+msgstr "Editar"
+
+#: equipe/templates/equipe/contrats.html:93
+#, fuzzy
+#| msgid "Nom du signataire"
+msgid "Nom du modèle"
+msgstr "Nombre del firmante"
+
+#: equipe/templates/equipe/contrats.html:103
+#, fuzzy
+#| msgid "membres de conversation"
+msgid "Corps du contrat"
+msgstr "miembros de la conversación"
+
+#: equipe/templates/equipe/contrats.html:107
+#, fuzzy
+#| msgid "%(n)s vote"
+#| msgid_plural "%(n)s votes"
+msgid "Jetons disponibles"
+msgstr "%(n)s voto"
+
+#: equipe/templates/equipe/contrats.html:115
+msgid ""
+"Un jeton laissé vide devient une ligne de pointillés à compléter à la main."
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:128
+#, fuzzy
+#| msgid "commandes IoT"
+msgid "Mes modèles"
+msgstr "comandos IoT"
+
+#: equipe/templates/equipe/contrats.html:132
+msgid "Importer les modèles types"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:143
+#, fuzzy
+#| msgid "Supprimer cette aide ?"
+msgid "Supprimer ce modèle ?"
+msgstr "¿Eliminar esta ayuda?"
+
+#: equipe/templates/equipe/contrats.html:162
+msgid ""
+"Aucun modèle. Importez les modèles types (CDI, CDD, saisonnier, "
+"apprentissage, stage) puis adaptez-les à votre exploitation."
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:169
+#, fuzzy
+#| msgid "Contact"
+msgid "Contrats établis"
+msgstr "Contacto"
+
+#: equipe/templates/equipe/contrats.html:178
+msgid "depuis le"
+msgstr ""
+
+#: equipe/templates/equipe/contrats.html:197
+#, fuzzy
+#| msgid "Supprimer cette aide ?"
+msgid "Ouvrir le contrat"
+msgstr "¿Eliminar esta ayuda?"
+
+#: equipe/templates/equipe/contrats.html:212
+#, fuzzy
+#| msgid "Aucune conversation pour le moment."
+msgid "Aucun contrat établi pour le moment."
+msgstr "Ninguna conversación por el momento."
+
 #: equipe/templates/equipe/edit.html:8
 #: finances/templates/finances/devis_signature.html:18
 #: mail/templates/mail/gmail_message.html:15
@@ -7566,7 +7926,7 @@ msgstr "Crear una cuenta"
 msgid "Retour"
 msgstr "Volver"
 
-#: equipe/templates/equipe/edit.html:12 equipe/views.py:62
+#: equipe/templates/equipe/edit.html:12 equipe/views.py:63
 #, fuzzy
 #| msgid "Modifier"
 msgid "Modifier le membre"
@@ -7650,8 +8010,8 @@ msgstr ""
 msgid "Supprimer ce membre ?"
 msgstr "¿Eliminar esta ayuda?"
 
-#: equipe/templates/equipe/invitation.html:9 equipe/views.py:96
-#: equipe/views.py:102 equipe/views.py:141
+#: equipe/templates/equipe/invitation.html:9 equipe/views.py:97
+#: equipe/views.py:103 equipe/views.py:142
 #, fuzzy
 #| msgid "Irrigation"
 msgid "Invitation"
@@ -7788,80 +8148,103 @@ msgstr "Título de una tarea de planificación agrícola"
 msgid "Description d'une tâche de planning agricole"
 msgstr "Descripción de una tarea de planificación agrícola"
 
-#: equipe/views.py:37
+#: equipe/views.py:38
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation avant d'ajouter un membre."
 msgstr "Configure primero su explotación."
 
-#: equipe/views.py:42
+#: equipe/views.py:43
 #, python-format
 msgid "%(name)s a été ajouté à l'équipe."
 msgstr ""
 
-#: equipe/views.py:58
+#: equipe/views.py:59
 #, python-format
 msgid "%(name)s a été mis à jour."
 msgstr ""
 
-#: equipe/views.py:72
+#: equipe/views.py:73
 #, fuzzy, python-format
 #| msgid "Déjà un compte ?"
 msgid "%(name)s a déjà un compte lié."
 msgstr "¿Ya tienes cuenta?"
 
-#: equipe/views.py:74
+#: equipe/views.py:75
 #, python-format
 msgid "Renseignez un email avant d'inviter %(name)s."
 msgstr ""
 
-#: equipe/views.py:80
+#: equipe/views.py:81
 #, python-format
 msgid ""
 "L'invitation n'a pas pu être envoyée à %(email)s. Réessayez dans un instant."
 msgstr ""
 
-#: equipe/views.py:83
+#: equipe/views.py:84
 #, python-format
 msgid "Invitation envoyée à %(email)s."
 msgstr ""
 
-#: equipe/views.py:130
+#: equipe/views.py:131
 #, python-format
 msgid "Bienvenue dans l'équipe de %(expl)s."
 msgstr ""
 
-#: equipe/views.py:151
+#: equipe/views.py:152
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Membre supprimé."
 msgstr "Parcela eliminada."
 
-#: equipe/views.py:161
+#: equipe/views.py:162
 #, fuzzy
 #| msgid "Configurez d'abord votre exploitation."
 msgid "Créez d'abord votre exploitation avant d'ajouter une tâche."
 msgstr "Configure primero su explotación."
 
-#: equipe/views.py:169
+#: equipe/views.py:170
 #, python-format
 msgid "Tâche « %(t)s » ajoutée."
 msgstr ""
 
-#: equipe/views.py:201
+#: equipe/views.py:202
 #, python-format
 msgid "Tâche « %(t)s » modifiée."
 msgstr ""
 
-#: equipe/views.py:203 notifications/views.py:67
+#: equipe/views.py:204 notifications/views.py:67
 msgid "Modification impossible : vérifiez les champs."
 msgstr ""
 
-#: equipe/views.py:213
+#: equipe/views.py:214
 #, fuzzy
 #| msgid "Parcelle supprimée."
 msgid "Tâche supprimée."
 msgstr "Parcela eliminada."
+
+#: equipe/views.py:273 equipe/views.py:293 stock/views.py:311
+#, fuzzy
+#| msgid "Configurez d'abord votre exploitation."
+msgid "Créez d'abord votre exploitation."
+msgstr "Configure primero su explotación."
+
+#: equipe/views.py:283
+#, python-format
+msgid "%(n)s modèle(s) ajouté(s)."
+msgstr ""
+
+#: equipe/views.py:301
+msgid "Un modèle a besoin d'un nom et d'un corps."
+msgstr ""
+
+#: equipe/views.py:349
+msgid "Choisissez un salarié et un modèle."
+msgstr ""
+
+#: equipe/views.py:357
+msgid "Contrat établi. Relisez-le avant de le remettre."
+msgstr ""
 
 #: exploitations/certifications.py:16
 msgid "Cadre européen officiel"
@@ -9555,7 +9938,7 @@ msgstr "Energía"
 msgid "Main d'œuvre"
 msgstr "Mano de obra"
 
-#: finances/models.py:22 operations/models.py:166 planning/models.py:265
+#: finances/models.py:22 operations/models.py:166 planning/models.py:257
 msgid "Transport"
 msgstr "Transporte"
 
@@ -9631,7 +10014,7 @@ msgstr "cosechas"
 msgid "Accepté"
 msgstr ""
 
-#: finances/models.py:139 planning/models.py:161 planning/models.py:226
+#: finances/models.py:139 planning/models.py:161 planning/models.py:218
 msgid "Refusé"
 msgstr "Rechazado"
 
@@ -11312,10 +11695,6 @@ msgstr "estaciones de bombeo"
 msgid "Capteur"
 msgstr "Sensor"
 
-#: irrigation/models.py:164 planning/models.py:33
-msgid "Terminé"
-msgstr "Terminado"
-
 #: irrigation/models.py:165 planning/models.py:34
 msgid "Annulé"
 msgstr "Anulado"
@@ -11369,7 +11748,7 @@ msgid "scores DTI"
 msgstr "puntajes DTI"
 
 #: irrigation/models.py:290 irrigation/views.py:137 irrigation/views.py:457
-#: planning/models.py:308
+#: planning/models.py:300
 msgid "Critique"
 msgstr "Crítico"
 
@@ -13913,10 +14292,6 @@ msgstr ""
 msgid "Revenir à la liste"
 msgstr ""
 
-#: operations/templates/operations/parc_materiel.html:87
-msgid "Modèle"
-msgstr ""
-
 #: operations/templates/operations/parc_materiel.html:91
 msgid "N° de série"
 msgstr ""
@@ -14040,7 +14415,7 @@ msgstr "Seguro de cosecha"
 msgid "Prévu"
 msgstr "Previsto"
 
-#: pac/models.py:22 planning/models.py:225
+#: pac/models.py:22 planning/models.py:217
 msgid "Accordé"
 msgstr "Concedido"
 
@@ -15203,97 +15578,97 @@ msgstr "ausencia"
 msgid "absences"
 msgstr "ausencias"
 
-#: planning/models.py:219
+#: planning/models.py:211
 #, fuzzy
 #| msgid "facture"
 msgid "Lecture"
 msgstr "factura"
 
-#: planning/models.py:220
+#: planning/models.py:212
 #, fuzzy
 #| msgid "facture"
 msgid "Écriture"
 msgstr "factura"
 
-#: planning/models.py:221
+#: planning/models.py:213
 msgid "Gestion des accès"
 msgstr ""
 
-#: planning/models.py:231
+#: planning/models.py:223
 #, fuzzy
 #| msgid "campagne"
 msgid "compte"
 msgstr "campaña"
 
-#: planning/models.py:232
+#: planning/models.py:224
 #, fuzzy
 #| msgid "niveau HVE"
 msgid "niveau"
 msgstr "nivel HVE"
 
-#: planning/models.py:240
+#: planning/models.py:232
 #, fuzzy
 #| msgid "Réserve Utile"
 msgid "décidé par"
 msgstr "Reserva Útil"
 
-#: planning/models.py:241
+#: planning/models.py:233
 #, fuzzy
 #| msgid "Élevé"
 msgid "décidé le"
 msgstr "Alto"
 
-#: planning/models.py:244 planning/models.py:245
+#: planning/models.py:236 planning/models.py:237
 #, fuzzy
 #| msgid "tâches de planning"
 msgid "accès au planning"
 msgstr "tareas de planificación"
 
-#: planning/models.py:258
+#: planning/models.py:250
 msgid "Outil à main"
 msgstr "Herramienta manual"
 
-#: planning/models.py:259
+#: planning/models.py:251
 msgid "Outil de coupe"
 msgstr "Herramienta de corte"
 
-#: planning/models.py:260
+#: planning/models.py:252
 msgid "Outil motorisé"
 msgstr "Herramienta motorizada"
 
-#: planning/models.py:261
+#: planning/models.py:253
 msgid "Engin"
 msgstr "Maquinaria"
 
-#: planning/models.py:264
+#: planning/models.py:256
 msgid "Mesure"
 msgstr "Medición"
 
-#: planning/models.py:271
+#: planning/models.py:263
 msgid "À réparer"
 msgstr "A reparar"
 
-#: planning/models.py:283
+#: planning/models.py:275
 msgid "matériel"
 msgstr "material"
 
-#: planning/models.py:284
+#: planning/models.py:276
 msgid "catalogue matériel"
 msgstr "catálogo de material"
 
-#: planning/models.py:307
+#: planning/models.py:299
 msgid "Mauvais"
 msgstr "Malo"
 
-#: planning/models.py:312
+#: planning/models.py:304
 msgid "Complété"
 msgstr "Completado"
 
-#: planning/models.py:347
+#: planning/models.py:339
 msgid "bon d'intervention"
 msgstr "parte de intervención"
 
-#: planning/models.py:348
+#: planning/models.py:340
 msgid "bons d'intervention"
 msgstr "partes de intervención"
 
@@ -17198,12 +17573,6 @@ msgstr ""
 #| msgid "Aucun apport enregistré."
 msgid "Mouvement enregistré."
 msgstr "Ningún aporte registrado."
-
-#: stock/views.py:311
-#, fuzzy
-#| msgid "Configurez d'abord votre exploitation."
-msgid "Créez d'abord votre exploitation."
-msgstr "Configure primero su explotación."
 
 #: stock/views.py:338
 #, python-format

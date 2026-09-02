@@ -234,3 +234,117 @@ def test_invitation_deja_utilisee(client, setup):
     member.user = User.objects.create_user(email="deja@ex.com", password="pwd12345")
     member.save(update_fields=["user"])
     assert client.get(f"/equipe/invitation/{token}/").status_code == 410
+
+
+# ── Contrats de travail : modèles et contrats nominatifs ─────────────
+
+
+@pytest.fixture
+def ferme_rh(db):
+    from equipe.models import TeamMember
+    from exploitations.models import Exploitation
+
+    patron = User.objects.create_user(email="rh@ex.com", password="pwd12345", full_name="Jean Dupont")
+    exploitation = Exploitation.objects.create(owner=patron, name="Ferme des Coteaux",
+                                               siret="12345678900012")
+    membre = TeamMember.objects.create(exploitation=exploitation, name="Paul Martin",
+                                       email="paul@ex.com", phone="0600000000")
+    return patron, exploitation, membre
+
+
+@pytest.mark.django_db
+def test_importer_les_modeles_types(client, ferme_rh):
+    from equipe.contrats import SQUELETTES
+    from equipe.models import ModeleContrat
+
+    patron, exploitation, _membre = ferme_rh
+    client.force_login(patron)
+    assert client.post("/contrats-travail/modeles/importer/").status_code == 302
+    assert ModeleContrat.objects.filter(exploitation=exploitation).count() == len(SQUELETTES)
+
+    # Réimporter n'ajoute pas de doublon.
+    client.post("/contrats-travail/modeles/importer/")
+    assert ModeleContrat.objects.filter(exploitation=exploitation).count() == len(SQUELETTES)
+
+
+@pytest.mark.django_db
+def test_etablir_un_contrat_remplit_les_jetons(client, ferme_rh):
+    from equipe.models import ContratTravail, ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    modele = ModeleContrat.objects.create(
+        exploitation=exploitation, nom="CDI maison", type_contrat="cdi",
+        corps="{{ salarie }} est engagé par {{ exploitation }} (SIRET {{ exploitation_siret }}) "
+              "au poste de {{ poste }} à compter du {{ date_debut }}. "
+              "Employeur : {{ employeur }}. Fin : {{ date_fin }}.")
+
+    client.force_login(patron)
+    assert client.post("/contrats-travail/etablir/", {
+        "membre": str(membre.pk), "modele": str(modele.pk), "poste": "Ouvrier arboricole",
+        "date_debut": "2026-09-01", "duree_hebdo": "35", "remuneration": "1 850,50",
+    }).status_code == 302
+
+    contrat = ContratTravail.objects.get(membre=membre)
+    assert contrat.type_contrat == "cdi" and contrat.remuneration == 1850.50
+    assert "Paul Martin est engagé par Ferme des Coteaux" in contrat.corps
+    assert "SIRET 12345678900012" in contrat.corps
+    assert "au poste de Ouvrier arboricole" in contrat.corps
+    assert "Jean Dupont" in contrat.corps
+    # La date de fin n'est pas renseignée : le contrat montre où compléter.
+    assert "Fin : ……………………" in contrat.corps
+    # Aucun jeton ne subsiste.
+    assert "{{" not in contrat.corps
+
+
+@pytest.mark.django_db
+def test_le_contrat_est_fige_a_l_etablissement(client, ferme_rh):
+    """Retoucher le modèle ne réécrit pas un contrat déjà remis."""
+    from equipe.models import ContratTravail, ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    modele = ModeleContrat.objects.create(
+        exploitation=exploitation, nom="CDI", corps="Version initiale pour {{ salarie }}.")
+    client.force_login(patron)
+    client.post("/contrats-travail/etablir/", {
+        "membre": str(membre.pk), "modele": str(modele.pk), "date_debut": "2026-09-01"})
+
+    client.post(f"/contrats-travail/modeles/{modele.pk}/enregistrer/", {
+        "nom": "CDI", "corps": "Version refondue pour {{ salarie }}."})
+
+    contrat = ContratTravail.objects.get(membre=membre)
+    assert "Version initiale" in contrat.corps
+
+
+@pytest.mark.django_db
+def test_le_contrat_d_une_autre_ferme_est_hors_de_portee(client, ferme_rh):
+    from equipe.models import ContratTravail, ModeleContrat, TeamMember
+    from exploitations.models import Exploitation
+
+    patron, _exploitation, _membre = ferme_rh
+    voisin = User.objects.create_user(email="voisin-rh@ex.com", password="pwd12345")
+    ferme_voisine = Exploitation.objects.create(owner=voisin, name="Ferme voisine")
+    son_membre = TeamMember.objects.create(exploitation=ferme_voisine, name="Luc")
+    son_modele = ModeleContrat.objects.create(
+        exploitation=ferme_voisine, nom="CDI", corps="…")
+    son_contrat = ContratTravail.objects.create(
+        exploitation=ferme_voisine, membre=son_membre, corps="Confidentiel")
+
+    client.force_login(patron)
+    # Ni établir avec ses éléments…
+    client.post("/contrats-travail/etablir/", {
+        "membre": str(son_membre.pk), "modele": str(son_modele.pk)})
+    assert ContratTravail.objects.filter(membre=son_membre).count() == 1
+    # …ni ouvrir ou supprimer le sien.
+    assert client.get(f"/contrats-travail/{son_contrat.pk}/pdf/").status_code == 404
+    assert client.post(f"/contrats-travail/{son_contrat.pk}/supprimer/").status_code == 404
+
+
+@pytest.mark.django_db
+def test_la_page_affiche_l_avertissement_et_les_jetons(client, ferme_rh):
+    patron, _exploitation, _membre = ferme_rh
+    client.force_login(patron)
+    html = client.get("/contrats-travail/").content.decode()
+    assert "Faites relire un contrat avant de le remettre." in html
+    # Les jetons s'affichent en clair, sans être interprétés par Django.
+    assert "{{ salarie }}" in html
+    assert "Importer les modèles types" in html

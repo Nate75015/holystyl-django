@@ -147,3 +147,93 @@ class TaskReminder(models.Model):
     class Meta:
         verbose_name = _("rappel de tâche")
         verbose_name_plural = _("rappels de tâche")
+
+
+class ModeleContrat(TimeStampedModel):
+    """Un modèle de contrat de travail, adapté une fois puis réutilisé.
+
+    Le corps est du texte libre semé de jetons — `{{ salarie }}`, `{{ poste }}` —
+    que la génération remplace par les données du salarié. C'est ce qui évite
+    de retaper le même contrat à chaque embauche.
+    """
+
+    class Type(models.TextChoices):
+        CDI = "cdi", _("CDI")
+        CDD = "cdd", _("CDD")
+        SAISONNIER = "saisonnier", _("Contrat saisonnier")
+        APPRENTISSAGE = "apprentissage", _("Contrat d'apprentissage")
+        PROFESSIONNALISATION = "professionnalisation", _("Contrat de professionnalisation")
+        STAGE = "stage", _("Convention de stage")
+        TESA = "tesa", _("TESA — titre emploi simplifié agricole")
+        AUTRE = "autre", _("Autre")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="modeles_contrat")
+    nom = models.CharField(_("nom du modèle"), max_length=255)
+    type_contrat = models.CharField(_("type"), max_length=25,
+                                    choices=Type.choices, default=Type.CDI)
+    corps = models.TextField(_("corps du contrat"))
+    notes = models.TextField(_("notes"), blank=True)
+
+    class Meta:
+        verbose_name = _("modèle de contrat")
+        verbose_name_plural = _("modèles de contrat")
+        ordering = ("nom",)
+
+    def __str__(self):
+        return self.nom
+
+
+class ContratTravail(TimeStampedModel):
+    """Le contrat d'un salarié, établi à partir d'un modèle.
+
+    Son corps est figé à l'établissement : retoucher le modèle plus tard ne
+    doit pas réécrire un contrat déjà remis, encore moins signé.
+    """
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        ETABLI = "etabli", _("Établi")
+        SIGNE = "signe", _("Signé")
+        TERMINE = "termine", _("Terminé")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="contrats_travail")
+    membre = models.ForeignKey(TeamMember, on_delete=models.CASCADE,
+                               related_name="contrats", verbose_name=_("salarié"))
+    modele = models.ForeignKey(ModeleContrat, on_delete=models.SET_NULL, null=True, blank=True,
+                               verbose_name=_("modèle d'origine"))
+    type_contrat = models.CharField(_("type"), max_length=25,
+                                    choices=ModeleContrat.Type.choices,
+                                    default=ModeleContrat.Type.CDI)
+    statut = models.CharField(_("statut"), max_length=12,
+                              choices=Statut.choices, default=Statut.BROUILLON)
+
+    poste = models.CharField(_("poste"), max_length=255, blank=True)
+    lieu = models.CharField(_("lieu de travail"), max_length=255, blank=True)
+    date_debut = models.DateField(_("date de début"), null=True, blank=True)
+    date_fin = models.DateField(_("date de fin"), null=True, blank=True)
+    duree_hebdo = models.FloatField(_("durée hebdomadaire (h)"), null=True, blank=True)
+    remuneration = models.FloatField(_("rémunération brute mensuelle"), null=True, blank=True)
+    date_signature = models.DateField(_("date de signature"), null=True, blank=True)
+
+    #: Texte figé au moment de l'établissement, jetons déjà remplacés.
+    corps = models.TextField(_("corps du contrat"), blank=True)
+
+    class Meta:
+        verbose_name = _("contrat de travail")
+        verbose_name_plural = _("contrats de travail")
+        ordering = ("-date_debut", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "statut"])]
+
+    def __str__(self):
+        return f"{self.membre.name} — {self.get_type_contrat_display()}"
+
+    @property
+    def est_en_cours(self):
+        """Un contrat court tant qu'il n'a pas de terme, ou que le terme est à venir."""
+        from django.utils import timezone
+
+        if self.statut in (self.Statut.BROUILLON, self.Statut.TERMINE):
+            return False
+        return self.date_fin is None or self.date_fin >= timezone.localdate()

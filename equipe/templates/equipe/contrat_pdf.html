@@ -1,0 +1,20 @@
+{% load i18n %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>{% blocktrans with qui=contrat.membre.name %}Contrat — {{ qui }}{% endblocktrans %}</title>
+  <style>
+    @page { size: A4; margin: 22mm 20mm; }
+    body { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.55; color: #111; }
+    .corps { white-space: pre-wrap; }
+    .pied { margin-top: 14mm; border-top: 0.5pt solid #999; padding-top: 4mm; font-size: 8pt; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="corps">{{ contrat.corps }}</div>
+  <p class="pied">
+    {% blocktrans with ferme=exploitation.name %}{{ ferme }} — document établi depuis Isidor.{% endblocktrans %}
+    {% trans "À faire relire avant signature : les clauses obligatoires dépendent de la convention collective applicable." %}
+  </p>
+</body>
+</html>
