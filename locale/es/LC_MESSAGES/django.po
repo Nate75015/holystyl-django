@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 23:15+0200\n"
+"POT-Creation-Date: 2026-09-02 23:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr "Fechas"
 #: accounts/forms.py:15 client/templates/client/_client_fields.html:49
 #: client/templates/client/detail.html:75
 #: client/templates/client/partenaires.html:36
-#: contrat/templates/contrat/_assurance_modal.html:141 equipe/forms.py:33
+#: contrat/templates/contrat/_assurance_modal.html:146 equipe/forms.py:33
 #: equipe/templates/equipe/_invitation_carte.html:54
 #: exploitations/models.py:466 exploitations/views.py:63
 #: vente/templates/vente/_commander_corps.html:28
@@ -1086,7 +1086,7 @@ msgstr "Sus subtareas también se eliminarán:"
 #: client/templates/client/_client_modal.html:25
 #: client/templates/client/partenaires.html:76
 #: contrat/templates/contrat/_acte_modal.html:49
-#: contrat/templates/contrat/_assurance_modal.html:161
+#: contrat/templates/contrat/_assurance_modal.html:166
 #: contrat/templates/contrat/_bail_modal.html:55
 #: contrat/templates/contrat/_contrat_modal.html:49
 #: contrat/templates/contrat/_msa_modal.html:55
@@ -1234,7 +1234,7 @@ msgstr "cosecha"
 #: client/templates/client/partenaires.html:71
 #: client/templates/client/partenaires.html:118
 #: contrat/templates/contrat/_acte_modal.html:45
-#: contrat/templates/contrat/_assurance_modal.html:157
+#: contrat/templates/contrat/_assurance_modal.html:162
 #: contrat/templates/contrat/_bail_modal.html:51
 #: contrat/templates/contrat/_contrat_modal.html:45
 #: contrat/templates/contrat/_msa_modal.html:51
@@ -1263,7 +1263,7 @@ msgstr "Notas"
 #: aquaculture/templates/aquaculture/especes.html:296
 #: client/templates/client/_client_modal.html:26
 #: contrat/templates/contrat/_acte_modal.html:50
-#: contrat/templates/contrat/_assurance_modal.html:162
+#: contrat/templates/contrat/_assurance_modal.html:167
 #: contrat/templates/contrat/_bail_modal.html:56
 #: contrat/templates/contrat/_contrat_modal.html:50
 #: contrat/templates/contrat/_msa_modal.html:56
@@ -1453,7 +1453,7 @@ msgstr "Fertilizante"
 #: aquaculture/templates/aquaculture/bassins.html:39
 #: aquaculture/templates/aquaculture/detail.html:61
 #: client/templates/client/clients.html:40
-#: contrat/templates/contrat/_assurance_modal.html:47
+#: contrat/templates/contrat/_assurance_modal.html:52
 #: contrat/templates/contrat/_contrat_modal.html:18
 #: equipe/templates/equipe/contrats.html:97 iot/templates/iot/capteurs.html:23
 #: iot/templates/iot/regie.html:60 notifications/forms.py:26
@@ -2849,7 +2849,7 @@ msgstr ""
 #: client/templates/client/_client_fields.html:37
 #: client/templates/client/clients.html:44
 #: client/templates/client/espace.html:78
-#: contrat/templates/contrat/_assurance_modal.html:51
+#: contrat/templates/contrat/_assurance_modal.html:56
 #: contrat/templates/contrat/_bail_modal.html:47
 #: contrat/templates/contrat/_contrat_modal.html:22
 #: contrat/templates/contrat/_msa_modal.html:22
@@ -3620,7 +3620,7 @@ msgstr ""
 #: client/templates/client/detail.html:41
 #: client/templates/client/detail.html:76
 #: client/templates/client/partenaires.html:32
-#: contrat/templates/contrat/_assurance_modal.html:137
+#: contrat/templates/contrat/_assurance_modal.html:142
 #: contrat/templates/contrat/_rendez_vous_modal.html:22 equipe/forms.py:34
 #: equipe/templates/equipe/_emploi_detail_corps.html:65
 #: equipe/templates/equipe/equipe.html:94 exploitations/models.py:465
@@ -3925,7 +3925,7 @@ msgid "Émission"
 msgstr "Emisión"
 
 #: client/templates/client/espace.html:76
-#: contrat/templates/contrat/_assurance_modal.html:85
+#: contrat/templates/contrat/_assurance_modal.html:90
 #: contrat/templates/contrat/_msa_modal.html:46
 #: contrat/templates/contrat/assurances.html:84
 #: contrat/templates/contrat/baux.html:41
@@ -4696,7 +4696,7 @@ msgstr "Importe (€)"
 msgid "conditions suspensives, servitudes…"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:13
+#: contrat/templates/contrat/_assurance_modal.html:18
 #: contrat/templates/contrat/assurances.html:22
 #: contrat/templates/contrat/assurances.html:175
 #, fuzzy
@@ -4704,25 +4704,25 @@ msgstr ""
 msgid "Nouvelle assurance"
 msgstr "Nueva parcela"
 
-#: contrat/templates/contrat/_assurance_modal.html:22
+#: contrat/templates/contrat/_assurance_modal.html:27
 msgid "Scanner la police"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:24
+#: contrat/templates/contrat/_assurance_modal.html:29
 msgid ""
 "Photographiez le contrat ou déposez le PDF : l'Agent IA en lit l'assureur, "
 "le numéro, les dates, la franchise et le délai de déclaration. Relisez avant "
 "d'enregistrer."
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:34
+#: contrat/templates/contrat/_assurance_modal.html:39
 #: contrat/templates/contrat/assurances.html:6
 #, fuzzy
 #| msgid "document"
 msgid "Lire le document"
 msgstr "documento"
 
-#: contrat/templates/contrat/_assurance_modal.html:42
+#: contrat/templates/contrat/_assurance_modal.html:47
 #: contrat/templates/contrat/_contrat_modal.html:13
 #: contrat/templates/contrat/_msa_modal.html:13
 #: contrat/templates/contrat/contrats.html:39
@@ -4732,47 +4732,47 @@ msgstr "documento"
 msgid "Intitulé"
 msgstr "Identidad"
 
-#: contrat/templates/contrat/_assurance_modal.html:43
+#: contrat/templates/contrat/_assurance_modal.html:48
 #, fuzzy
 #| msgid "Mon exploitation"
 msgid "ex: multirisque exploitation"
 msgstr "Mi explotación"
 
-#: contrat/templates/contrat/_assurance_modal.html:57
+#: contrat/templates/contrat/_assurance_modal.html:62
 #, fuzzy
 #| msgid "Assurance"
 msgid "Assureur"
 msgstr "Seguro"
 
-#: contrat/templates/contrat/_assurance_modal.html:58
+#: contrat/templates/contrat/_assurance_modal.html:63
 #, fuzzy
 #| msgid "campagne"
 msgid "compagnie"
 msgstr "campaña"
 
-#: contrat/templates/contrat/_assurance_modal.html:61
+#: contrat/templates/contrat/_assurance_modal.html:66
 msgid "N° de police"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:62
+#: contrat/templates/contrat/_assurance_modal.html:67
 msgid "n° du contrat"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:67
+#: contrat/templates/contrat/_assurance_modal.html:72
 msgid "Prime annuelle (€)"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:71
+#: contrat/templates/contrat/_assurance_modal.html:76
 msgid "Capital assuré (€)"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:75
+#: contrat/templates/contrat/_assurance_modal.html:80
 #, fuzzy
 #| msgid "montant (€)"
 msgid "Plafond (€)"
 msgstr "importe (€)"
 
-#: contrat/templates/contrat/_assurance_modal.html:81
+#: contrat/templates/contrat/_assurance_modal.html:86
 #: contrat/templates/contrat/_bail_modal.html:38
 #: contrat/templates/contrat/_contrat_modal.html:32 equipe/contrats.py:30
 #, fuzzy
@@ -4780,82 +4780,82 @@ msgstr "importe (€)"
 msgid "Date de début"
 msgstr "fecha de inicio"
 
-#: contrat/templates/contrat/_assurance_modal.html:89
+#: contrat/templates/contrat/_assurance_modal.html:94
 #, fuzzy
 #| msgid "fréquence"
 msgid "Résiliée le"
 msgstr "frecuencia"
 
-#: contrat/templates/contrat/_assurance_modal.html:95
+#: contrat/templates/contrat/_assurance_modal.html:100
 #: contrat/templates/contrat/assurances.html:96
 #, fuzzy
 #| msgid "date de fin"
 msgid "En cas de sinistre"
 msgstr "fecha de fin"
 
-#: contrat/templates/contrat/_assurance_modal.html:98
+#: contrat/templates/contrat/_assurance_modal.html:103
 #, fuzzy
 #| msgid "téléphone"
 msgid "Téléphone sinistre"
 msgstr "teléfono"
 
-#: contrat/templates/contrat/_assurance_modal.html:102
+#: contrat/templates/contrat/_assurance_modal.html:107
 msgid "Email sinistre"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:106
+#: contrat/templates/contrat/_assurance_modal.html:111
 msgid "Délai de déclaration (jours)"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:111
+#: contrat/templates/contrat/_assurance_modal.html:116
 #, fuzzy
 #| msgid "Assurance"
 msgid "Franchise"
 msgstr "Seguro"
 
-#: contrat/templates/contrat/_assurance_modal.html:112
+#: contrat/templates/contrat/_assurance_modal.html:117
 #, python-format
 msgid "ex: 10 %% avec un minimum de 500 €"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:115
+#: contrat/templates/contrat/_assurance_modal.html:120
 #, fuzzy
 #| msgid "Goutte à goutte"
 msgid "Marche à suivre"
 msgstr "Goteo"
 
-#: contrat/templates/contrat/_assurance_modal.html:116
+#: contrat/templates/contrat/_assurance_modal.html:121
 msgid "qui prévenir, quelles pièces réunir, dans quel ordre"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:120
+#: contrat/templates/contrat/_assurance_modal.html:125
 #, fuzzy
 #| msgid "participants"
 msgid "Garanties"
 msgstr "participantes"
 
-#: contrat/templates/contrat/_assurance_modal.html:124
+#: contrat/templates/contrat/_assurance_modal.html:129
 #: contrat/templates/contrat/assurances.html:126
 #, fuzzy
 #| msgid "Localisation"
 msgid "Exclusions"
 msgstr "Ubicación"
 
-#: contrat/templates/contrat/_assurance_modal.html:130
+#: contrat/templates/contrat/_assurance_modal.html:135
 msgid "Interlocuteur et résiliation"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:133
+#: contrat/templates/contrat/_assurance_modal.html:138
 msgid "Courtier ou agence"
 msgstr ""
 
-#: contrat/templates/contrat/_assurance_modal.html:147
+#: contrat/templates/contrat/_assurance_modal.html:152
 #, fuzzy
 #| msgid "Prévisions 7 jours"
 msgid "Préavis de résiliation (jours)"
 msgstr "Pronóstico de 7 días"
 
-#: contrat/templates/contrat/_assurance_modal.html:152
+#: contrat/templates/contrat/_assurance_modal.html:157
 #, fuzzy
 #| msgid "intervention"
 msgid "Tacite reconduction"
