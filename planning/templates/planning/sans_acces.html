@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-lg space-y-5">
+  <p class="hs-crumb">{% trans "RH · Planning" %}</p>
+
+  <div class="hs-card p-8 text-center">
+    <span class="material-icons-round text-[32px]" style="color: var(--text-muted)">lock</span>
+
+    {% if not exploitation %}
+      {# Aucun rattachement : il n'y a pas de planning à demander. #}
+      <h1 class="mt-3 text-[17px] font-medium">{% trans "Aucun planning" %}</h1>
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Vous n'êtes rattaché à aucune exploitation. Un planning appartient à une ferme." %}
+      </p>
+
+    {% elif demande and demande.statut == "en_attente" %}
+      <h1 class="mt-3 text-[17px] font-medium">{% trans "Demande envoyée" %}</h1>
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+        {% blocktrans with ferme=exploitation.name %}Le responsable de {{ ferme }} a été prévenu. Vous verrez le planning dès qu'il aura accordé l'accès.{% endblocktrans %}
+      </p>
+
+    {% else %}
+      <h1 class="mt-3 text-[17px] font-medium">{% trans "Vous n'avez pas accès à ce planning" %}</h1>
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+        {% if demande and demande.statut == "refuse" %}
+          {% trans "Votre demande précédente n'a pas été retenue. Vous pouvez en formuler une nouvelle." %}
+        {% else %}
+          {% blocktrans with ferme=exploitation.name %}Demandez l'accès au responsable de {{ ferme }}. Il choisira ce que vous pouvez y faire.{% endblocktrans %}
+        {% endif %}
+      </p>
+
+      <form method="post" action="{% url 'planning:acces_demander' %}" class="mt-6 space-y-3 text-left">
+        {% csrf_token %}
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="acces-message">
+            {% trans "Un mot pour accompagner la demande" %} <span class="font-normal" style="color: var(--text-muted)">({% trans "optionnel" %})</span>
+          </label>
+          <textarea id="acces-message" name="message" rows="2" class="w-full"
+                    placeholder="{% trans 'ex : je gère la comptabilité et je voudrais suivre la charge de travail' %}"></textarea>
+        </div>
+        <div class="flex justify-center">
+          <button type="submit" class="hs-btn-primary">{% trans "Demander l'accès" %}</button>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

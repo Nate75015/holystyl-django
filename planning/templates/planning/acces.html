@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl space-y-5">
+
+  <p class="hs-crumb">{% trans "RH · Planning" %} · {% trans "Partage" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Partage du planning" %}</h1>
+    <a href="{% url 'planning:planning' %}" class="hs-btn-outline">{% trans "Retour au planning" %}</a>
+  </div>
+
+  {# ── Demandes en attente ── #}
+  <div class="hs-card p-5 sm:p-6">
+    <h2 class="text-[15px] font-medium">{% trans "Demandes en attente" %}</h2>
+    {% if en_attente %}
+      <div class="mt-4 space-y-3">
+        {% for a in en_attente %}
+          <form method="post" action="{% url 'planning:acces_decider' a.pk %}"
+                class="rounded-[10px] border p-4" style="border-color: var(--border)">
+            {% csrf_token %}
+            <p class="text-sm font-medium">{{ a.user.display_name }}</p>
+            <p class="text-[12px]" style="color: var(--text-muted)">{{ a.user.email }} · {% blocktrans with quand=a.created_at|date:"SHORT_DATE_FORMAT" %}demandé le {{ quand }}{% endblocktrans %}</p>
+            {% if a.message %}
+              <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">« {{ a.message }} »</p>
+            {% endif %}
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <label class="text-[13px]" style="color: var(--text-secondary)" for="niveau-{{ a.pk }}">{% trans "Accorder en" %}</label>
+              <select id="niveau-{{ a.pk }}" name="niveau" class="w-auto">
+                {% for code, libelle in niveaux %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+              </select>
+              <button type="submit" name="decision" value="accorder" class="hs-btn-primary">{% trans "Accorder" %}</button>
+              <button type="submit" name="decision" value="refuser"
+                      class="ml-auto rounded-full px-4 py-2 text-sm transition hover:bg-black/5 dark:hover:bg-white/5"
+                      style="color: var(--danger)">{% trans "Refuser" %}</button>
+            </div>
+          </form>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune demande pour le moment." %}</p>
+    {% endif %}
+  </div>
+
+  {# ── Accès accordés ── #}
+  <div class="hs-card p-5 sm:p-6">
+    <h2 class="text-[15px] font-medium">{% trans "Ont accès" %}</h2>
+    <p class="mt-1 text-[12px]" style="color: var(--text-muted)">
+      {% blocktrans with chef=exploitation.owner.display_name %}{{ chef }} est propriétaire du planning : son accès ne se retire pas.{% endblocktrans %}
+    </p>
+    {% if accordes %}
+      <div class="mt-4 space-y-2">
+        {% for a in accordes %}
+          <div class="flex flex-wrap items-center gap-3 rounded-[10px] border px-4 py-3" style="border-color: var(--border)">
+            <span class="min-w-0 flex-1">
+              <span class="block truncate text-sm font-medium">{{ a.user.display_name }}</span>
+              <span class="block truncate text-[12px]" style="color: var(--text-muted)">{{ a.user.email }}</span>
+            </span>
+            <form method="post" action="{% url 'planning:acces_decider' a.pk %}" class="flex items-center gap-2">
+              {% csrf_token %}
+              <input type="hidden" name="decision" value="accorder">
+              <select name="niveau" class="w-auto" onchange="this.form.submit()">
+                {% for code, libelle in niveaux %}<option value="{{ code }}" {% if code == a.niveau %}selected{% endif %}>{{ libelle }}</option>{% endfor %}
+              </select>
+            </form>
+            <form method="post" action="{% url 'planning:acces_revoquer' a.pk %}"
+                  onsubmit="return confirm('{% trans "Retirer cet accès ?" %}')">
+              {% csrf_token %}
+              <button type="submit" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                      style="color: var(--text-muted)" title="{% trans 'Retirer' %}">
+                <span class="material-icons-round text-[18px]">person_remove</span>
+              </button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">{% trans "Personne d'autre n'a encore accès." %}</p>
+    {% endif %}
+  </div>
+
+  {# ── Refusés : gardés pour pouvoir revenir sur la décision ── #}
+  {% if refuses %}
+    <div class="hs-card p-5 sm:p-6">
+      <h2 class="text-[15px] font-medium">{% trans "Demandes refusées" %}</h2>
+      <div class="mt-4 space-y-2">
+        {% for a in refuses %}
+          <div class="flex flex-wrap items-center gap-3 rounded-[10px] border px-4 py-3" style="border-color: var(--border)">
+            <span class="min-w-0 flex-1 truncate text-sm">{{ a.user.display_name }}</span>
+            <form method="post" action="{% url 'planning:acces_decider' a.pk %}" class="flex items-center gap-2">
+              {% csrf_token %}
+              <select name="niveau" class="w-auto">
+                {% for code, libelle in niveaux %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+              </select>
+              <button type="submit" name="decision" value="accorder" class="hs-btn-outline">{% trans "Accorder finalement" %}</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

@@ -241,50 +241,151 @@ def ferme_avec_salarie(db):
     return patron, salarie, exploitation, membre, tache
 
 
+def _accorder(exploitation, user, niveau, par):
+    """Raccourci : accorder un accès comme le ferait l'écran de partage."""
+    from planning import acces as acces_service
+    from planning.models import AccesPlanning
+
+    demande = acces_service.demander(exploitation, user)
+    return acces_service.decider(demande, statut=AccesPlanning.Statut.ACCORDE,
+                                 niveau=niveau, par=par)
+
+
 @pytest.mark.django_db
-def test_le_salarie_voit_le_planning_de_sa_ferme(client, ferme_avec_salarie):
-    """Il tombait sur l'écran vide alors que la tâche lui était assignée."""
+def test_sans_acces_on_propose_de_demander(client, ferme_avec_salarie):
+    """Le salarié ne voit plus un agenda vide, mais la porte et la sonnette."""
     _patron, salarie, _exploitation, _membre, _tache = ferme_avec_salarie
     client.force_login(salarie)
     html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
-    assert "Taille des abricotiers" in html
-    assert "Ajoutez un membre d'équipe" not in html
+    assert "Vous n'avez pas accès à ce planning" in html
+    assert "Taille des abricotiers" not in html
+    assert "Demander l'accès" in html
 
 
 @pytest.mark.django_db
-def test_le_salarie_ecrit_aussi(client, ferme_avec_salarie):
-    """L'agenda est commun : qui le lit le modifie, quel que soit son rôle."""
-    from equipe.models import Task
+def test_la_demande_previent_le_chef_et_attend(client, ferme_avec_salarie):
+    from notifications.models import Notification
+    from planning.models import AccesPlanning
 
-    _patron, salarie, exploitation, membre, tache = ferme_avec_salarie
+    patron, salarie, exploitation, _membre, _tache = ferme_avec_salarie
     client.force_login(salarie)
+    assert client.post("/planning/partage/demander/",
+                       {"message": "Je voudrais voir mes chantiers."}).status_code == 302
 
+    demande = AccesPlanning.objects.get(exploitation=exploitation, user=salarie)
+    assert demande.statut == AccesPlanning.Statut.EN_ATTENTE
+    assert demande.message == "Je voudrais voir mes chantiers."
+    assert Notification.objects.filter(user=patron, type="planning_acces").exists()
+
+    # En attendant, il patiente — et on le lui dit.
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Demande envoyée" in html
+
+
+@pytest.mark.django_db
+def test_la_lecture_accordee_montre_sans_laisser_ecrire(client, ferme_avec_salarie):
+    from planning.models import AccesPlanning
+
+    patron, salarie, exploitation, membre, _tache = ferme_avec_salarie
+    _accorder(exploitation, salarie, AccesPlanning.Niveau.LECTURE, patron)
+
+    client.force_login(salarie)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Taille des abricotiers" in html          # il voit…
+    assert '@click="openChoix(' not in html          # …sans qu'on lui propose d'écrire
+    # …et l'URL tapée à la main ne contourne pas le partage.
+    assert client.post("/planning/taches/nouvelle/", {
+        "title": "En douce", "assigned_to": str(membre.pk),
+        "start_date": "2026-06-25"}).status_code == 403
+
+
+@pytest.mark.django_db
+def test_l_ecriture_accordee_laisse_modifier(client, ferme_avec_salarie):
+    from equipe.models import Task
+    from planning.models import AccesPlanning
+
+    patron, salarie, exploitation, membre, tache = ferme_avec_salarie
+    _accorder(exploitation, salarie, AccesPlanning.Niveau.ECRITURE, patron)
+
+    client.force_login(salarie)
     html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
     assert '@click="openChoix(' in html
-
-    assert client.post("/planning/taches/nouvelle/", {
-        "title": "Binage rang 4", "assigned_to": str(membre.pk),
-        "start_date": "2026-06-25", "vue": "semaine"}).status_code == 302
-    assert Task.objects.filter(exploitation=exploitation, title="Binage rang 4").exists()
-
-    # La tâche qu'on lui a assignée, il la modifie aussi.
     assert client.post(f"/planning/taches/{tache.pk}/modifier/", {
-        "title": "Taille des abricotiers — reportée", "assigned_to": str(membre.pk),
+        "title": "Taille — reportée", "assigned_to": str(membre.pk),
         "start_date": "2026-06-26", "vue": "semaine"}).status_code == 302
     tache.refresh_from_db()
-    assert tache.title == "Taille des abricotiers — reportée"
+    assert tache.title == "Taille — reportée"
+
+    # Écrire n'est pas gérer : l'écran de partage lui reste fermé, et le
+    # bouton qui y mène ne lui est pas proposé.
+    assert client.get("/planning/partage/").status_code == 403
+    assert '/planning/partage/' not in html
 
 
 @pytest.mark.django_db
-def test_sans_rattachement_on_n_ecrit_pas(client, db):
-    """Le seul refus : qui n'appartient à aucune exploitation."""
-    from equipe.models import Task
+def test_la_gestion_permet_d_accorder_a_son_tour(client, ferme_avec_salarie):
+    from planning.models import AccesPlanning
 
-    isole = User.objects.create_user(email="isole@ex.com", password="pwd12345")
-    client.force_login(isole)
-    assert client.post("/planning/taches/nouvelle/", {"title": "Rien"}).status_code == 403
-    assert client.post("/planning/reservations/nouvelle/", {"start": "2026-06-25"}).status_code == 403
-    assert Task.objects.count() == 0
+    patron, salarie, exploitation, _membre, _tache = ferme_avec_salarie
+    _accorder(exploitation, salarie, AccesPlanning.Niveau.GESTION, patron)
+
+    tiers = User.objects.create_user(email="tiers@ex.com", password="pwd12345")
+    demande = AccesPlanning.objects.create(exploitation=exploitation, user=tiers)
+
+    client.force_login(salarie)
+    assert client.get("/planning/partage/").status_code == 200
+    assert client.post(f"/planning/partage/{demande.pk}/decider/",
+                       {"decision": "accorder", "niveau": "lecture"}).status_code == 302
+    demande.refresh_from_db()
+    assert demande.statut == AccesPlanning.Statut.ACCORDE
+    assert demande.niveau == AccesPlanning.Niveau.LECTURE
+    assert demande.decide_par == salarie
+
+
+@pytest.mark.django_db
+def test_un_acces_retire_ferme_la_porte(client, ferme_avec_salarie):
+    from planning.models import AccesPlanning
+
+    patron, salarie, exploitation, _membre, _tache = ferme_avec_salarie
+    acces = _accorder(exploitation, salarie, AccesPlanning.Niveau.ECRITURE, patron)
+
+    client.force_login(patron)
+    assert client.post(f"/planning/partage/{acces.pk}/retirer/").status_code == 302
+
+    client.force_login(salarie)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "Vous n'avez pas accès à ce planning" in html
+
+
+@pytest.mark.django_db
+def test_le_chef_ne_peut_pas_retirer_son_propre_acces(client, ferme_avec_salarie):
+    """Il n'a pas de ligne d'accès, mais on couvre le cas d'un gestionnaire."""
+    from planning.models import AccesPlanning
+
+    patron, salarie, exploitation, _membre, _tache = ferme_avec_salarie
+    acces = _accorder(exploitation, salarie, AccesPlanning.Niveau.GESTION, patron)
+
+    client.force_login(salarie)
+    client.post(f"/planning/partage/{acces.pk}/retirer/")
+    assert AccesPlanning.objects.filter(pk=acces.pk).exists()
+
+
+@pytest.mark.django_db
+def test_un_refus_peut_etre_repose(client, ferme_avec_salarie):
+    from planning import acces as acces_service
+    from planning.models import AccesPlanning
+
+    patron, salarie, exploitation, _membre, _tache = ferme_avec_salarie
+    demande = acces_service.demander(exploitation, salarie)
+    acces_service.decider(demande, statut=AccesPlanning.Statut.REFUSE,
+                          niveau=AccesPlanning.Niveau.LECTURE, par=patron)
+
+    client.force_login(salarie)
+    html = client.get("/planning/?vue=semaine&date=2026-06-24").content.decode()
+    assert "n'a pas été retenue" in html
+    client.post("/planning/partage/demander/", {"message": "J'insiste."})
+    demande.refresh_from_db()
+    assert demande.statut == AccesPlanning.Statut.EN_ATTENTE
 
 
 @pytest.mark.django_db

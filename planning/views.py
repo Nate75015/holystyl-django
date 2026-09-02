@@ -20,9 +20,11 @@ from client.models import Partenaire
 from equipe.models import Task, TeamMember
 from operations.models import AffectationEngin, Machine
 from exploitations.models import Exploitation
+from notifications.services import notify
 from parcelles.models import Parcelle
 
-from .models import InterventionReport, PlanningTask
+from . import acces as acces_service
+from .models import AccesPlanning, InterventionReport, PlanningTask
 
 
 PALETTE = ["#335E8A", "#3B6D11", "#BA7517", "#3C3489", "#A32D2D", "#0E7490", "#7C3AED", "#B45309"]
@@ -59,17 +61,21 @@ def _exploitation(request):
     return getattr(request, "exploitation", None)
 
 
-def _refuser_si_non_rattache(request):
-    """Le planning est celui de la ferme : il faut y être rattaché.
+def _refuser_si_lecture_seule(request):
+    """Écrire dans le planning demande le niveau écriture, au moins.
 
-    Lecture et écriture vont ensemble, quel que soit le rôle. Une tâche
-    assignée se modifie donc par celui qui la pose comme par celui qui la
-    fait — c'est le propre d'un agenda d'équipe. Le seul refus porte sur qui
-    n'appartient à aucune exploitation ; les espaces extérieurs, eux, sont
-    déjà tenus à l'écart par `CurrentExploitationMiddleware`.
+    Le chef d'exploitation l'a d'office ; les autres l'obtiennent en demandant
+    l'accès. Refuser ici, et pas seulement masquer les boutons : une URL tapée
+    à la main ne doit pas contourner le partage.
     """
-    if _exploitation(request) is None:
-        raise PermissionDenied(_("Vous n'êtes rattaché à aucune exploitation."))
+    if not acces_service.peut_ecrire(_exploitation(request), request.user):
+        raise PermissionDenied(_("Vous n'avez pas le droit de modifier ce planning."))
+
+
+def _refuser_si_ne_gere_pas(request):
+    """Accorder ou retirer un accès demande le niveau gestion."""
+    if not acces_service.peut_gerer(_exploitation(request), request.user):
+        raise PermissionDenied(_("Vous ne gérez pas les accès à ce planning."))
 
 
 def _tasks_in_range(exploitation, members, start, end):
@@ -294,6 +300,16 @@ def _bars(items, days, colors=None, max_lanes=None, decor=None):
 @login_required
 def planning(request):
     exploitation = _exploitation(request)
+
+    # Sans droit de lecture, on ne montre pas un agenda vide : on dit qu'il
+    # faut demander l'accès, et où en est la demande le cas échéant.
+    if not acces_service.peut_lire(exploitation, request.user):
+        return render(request, "planning/sans_acces.html", {
+            "exploitation": exploitation,
+            "demande": acces_service.demande_en_cours(exploitation, request.user),
+            "page_title": _("Planning"),
+        })
+
     team_members = TeamMember.objects.filter(exploitation=exploitation) if exploitation else TeamMember.objects.none()
 
     today = timezone.localdate()
@@ -481,8 +497,12 @@ def planning(request):
         ],
     }
     ctx["parcelles_mappables"] = sum(1 for p in parcelles if p.boundaries)
-    # Toute personne rattachée à la ferme lit et écrit : l'agenda est commun.
-    ctx["peut_ecrire"] = exploitation is not None
+    ctx["peut_ecrire"] = acces_service.peut_ecrire(exploitation, request.user)
+    ctx["peut_gerer"] = acces_service.peut_gerer(exploitation, request.user)
+    ctx["demandes_en_attente"] = (
+        AccesPlanning.objects.filter(exploitation=exploitation,
+                                     statut=AccesPlanning.Statut.EN_ATTENTE).count()
+        if ctx["peut_gerer"] else 0)
     ctx["machines"] = (list(Machine.objects.filter(exploitation=exploitation))
                        if exploitation else [])
     ctx["operations"] = AffectationEngin.Operation.choices
@@ -581,7 +601,7 @@ def _save_task(task, request, exploitation):
 @login_required
 @require_POST
 def task_create(request):
-    _refuser_si_non_rattache(request)
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     _save_task(Task(exploitation=exploitation, created_by=request.user), request, exploitation)
     return redirect(_planning_url(request))
@@ -590,7 +610,7 @@ def task_create(request):
 @login_required
 @require_POST
 def task_edit(request, pk):
-    _refuser_si_non_rattache(request)
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     task = get_object_or_404(Task, pk=pk, exploitation=exploitation)
     _save_task(task, request, exploitation)
@@ -600,10 +620,93 @@ def task_edit(request, pk):
 @login_required
 @require_POST
 def task_delete(request, pk):
-    _refuser_si_non_rattache(request)
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     get_object_or_404(Task, pk=pk, exploitation=exploitation).delete()
     return redirect(_planning_url(request))
+
+
+# ── Partage du planning ──────────────────────────────────────────────
+
+
+@login_required
+@require_POST
+def acces_demander(request):
+    """Le compte demande l'accès au planning de la ferme où il est rattaché."""
+    exploitation = _exploitation(request)
+    if exploitation is None:
+        raise PermissionDenied(_("Vous n'êtes rattaché à aucune exploitation."))
+    if acces_service.peut_lire(exploitation, request.user):
+        return redirect("planning:planning")
+
+    acces_service.demander(exploitation, request.user,
+                           (request.POST.get("message") or "").strip())
+    lien = reverse("planning:acces")
+    for destinataire in acces_service.gestionnaires(exploitation):
+        notify(destinataire, type="planning_acces",
+               title=_("Demande d'accès au planning"),
+               message=_("%(qui)s demande l'accès au planning.") % {
+                   "qui": request.user.display_name},
+               action_url=lien)
+    messages.success(request, _("Votre demande est envoyée."))
+    return redirect("planning:planning")
+
+
+@login_required
+def acces(request):
+    """L'écran de partage : qui a accès, à quel niveau, et qui attend."""
+    exploitation = _exploitation(request)
+    _refuser_si_ne_gere_pas(request)
+    lot = (AccesPlanning.objects.filter(exploitation=exploitation)
+           .select_related("user", "decide_par"))
+    return render(request, "planning/acces.html", {
+        "exploitation": exploitation,
+        "en_attente": [a for a in lot if a.statut == AccesPlanning.Statut.EN_ATTENTE],
+        "accordes": [a for a in lot if a.statut == AccesPlanning.Statut.ACCORDE],
+        "refuses": [a for a in lot if a.statut == AccesPlanning.Statut.REFUSE],
+        "niveaux": AccesPlanning.Niveau.choices,
+        "page_title": _("Partage du planning"),
+    })
+
+
+@login_required
+@require_POST
+def acces_decider(request, pk):
+    """Accorde à un niveau, ou refuse."""
+    exploitation = _exploitation(request)
+    _refuser_si_ne_gere_pas(request)
+    demande = get_object_or_404(AccesPlanning, pk=pk, exploitation=exploitation)
+
+    accorde = request.POST.get("decision") == "accorder"
+    niveau = request.POST.get("niveau") or AccesPlanning.Niveau.LECTURE
+    if niveau not in AccesPlanning.Niveau.values:
+        niveau = AccesPlanning.Niveau.LECTURE
+
+    acces_service.decider(
+        demande, par=request.user, niveau=niveau,
+        statut=AccesPlanning.Statut.ACCORDE if accorde else AccesPlanning.Statut.REFUSE)
+
+    notify(demande.user, type="planning_acces",
+           title=_("Accès au planning"),
+           message=(_("Vous avez désormais l'accès « %(niveau)s » au planning.")
+                    % {"niveau": demande.get_niveau_display()} if accorde
+                    else _("Votre demande d'accès au planning n'a pas été retenue.")),
+           action_url=reverse("planning:planning") if accorde else "")
+    return redirect("planning:acces")
+
+
+@login_required
+@require_POST
+def acces_revoquer(request, pk):
+    """Retire un accès accordé. Le compte pourra en redemander un."""
+    exploitation = _exploitation(request)
+    _refuser_si_ne_gere_pas(request)
+    demande = get_object_or_404(AccesPlanning, pk=pk, exploitation=exploitation)
+    if demande.user_id == request.user.id:
+        messages.error(request, _("Vous ne pouvez pas retirer votre propre accès."))
+        return redirect("planning:acces")
+    demande.delete()
+    return redirect("planning:acces")
 
 
 # ── Réservations de matériel ─────────────────────────────────────────
@@ -676,7 +779,7 @@ def _dire_le_conflit(conflit):
 @login_required
 @require_POST
 def reservation_create(request):
-    _refuser_si_non_rattache(request)
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     champs = _reservation_fields(request, exploitation) if exploitation else None
     if not champs:
@@ -696,7 +799,7 @@ def reservation_create(request):
 @login_required
 @require_POST
 def reservation_edit(request, pk):
-    _refuser_si_non_rattache(request)
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     reservation = get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation)
     champs = _reservation_fields(request, exploitation)
@@ -721,7 +824,7 @@ def reservation_edit(request, pk):
 @login_required
 @require_POST
 def reservation_delete(request, pk):
-    _refuser_si_non_rattache(request)
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation).delete()
     return redirect(_planning_url(request))

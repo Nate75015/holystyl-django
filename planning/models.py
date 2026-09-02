@@ -202,6 +202,57 @@ class PlanningAccess(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class AccesPlanning(TimeStampedModel):
+    """Qui peut ouvrir le planning d'une exploitation, et jusqu'où.
+
+    Le chef d'exploitation n'y figure pas : le planning est le sien, il a tout
+    par nature. Tous les autres — salariés compris — demandent l'accès, qu'il
+    accorde à un niveau donné, comme on partage un agenda.
+
+    `PlanningAccess`, juste au-dessus, visait la même chose mais s'indexait sur
+    TeamMember : il ne pouvait pas représenter un bailleur ni un comptable, qui
+    se rattachent par une fiche Partenaire. L'autorisation porte donc ici sur
+    le compte lui-même, seul dénominateur commun à tous les rôles.
+    """
+
+    class Niveau(models.TextChoices):
+        LECTURE = "lecture", _("Lecture")
+        ECRITURE = "ecriture", _("Écriture")
+        GESTION = "gestion", _("Gestion des accès")
+
+    class Statut(models.TextChoices):
+        EN_ATTENTE = "en_attente", _("En attente")
+        ACCORDE = "accorde", _("Accordé")
+        REFUSE = "refuse", _("Refusé")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="acces_planning")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                             related_name="acces_planning", verbose_name=_("compte"))
+    niveau = models.CharField(_("niveau"), max_length=10,
+                              choices=Niveau.choices, default=Niveau.LECTURE)
+    statut = models.CharField(_("statut"), max_length=10,
+                              choices=Statut.choices, default=Statut.EN_ATTENTE)
+    #: Le mot que le demandeur joint à sa demande, s'il en met un.
+    message = models.TextField(_("message"), blank=True)
+    decide_par = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="acces_planning_decides", verbose_name=_("décidé par"))
+    decide_le = models.DateTimeField(_("décidé le"), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("accès au planning")
+        verbose_name_plural = _("accès au planning")
+        ordering = ("statut", "user_id")
+        constraints = [
+            models.UniqueConstraint(fields=["exploitation", "user"],
+                                    name="un_seul_acces_planning_par_compte"),
+        ]
+
+    def __str__(self):
+        return f"{self.user} — {self.get_niveau_display()} ({self.get_statut_display()})"
+
+
 class EquipmentCatalog(TimeStampedModel):
     class Categorie(models.TextChoices):
         OUTIL_MAIN = "outil_main", _("Outil à main")

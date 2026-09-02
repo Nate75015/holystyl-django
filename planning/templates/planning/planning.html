@@ -17,6 +17,15 @@
   <div class="flex flex-wrap items-center justify-between gap-3">
     <h1 class="text-[20px]">{% trans "Planning" %}</h1>
     <div class="flex items-center gap-2">
+      {% if peut_gerer %}
+        <a href="{% url 'planning:acces' %}" class="hs-btn-outline" title="{% trans 'Partage du planning' %}">
+          <span class="material-icons-round text-[18px]">person_add</span>{% trans "Partager" %}
+          {% if demandes_en_attente %}
+            <span class="ml-1 rounded-full px-1.5 py-[1px] text-[11px] tabular-nums"
+                  style="background: var(--danger); color: white">{{ demandes_en_attente }}</span>
+          {% endif %}
+        </a>
+      {% endif %}
       <a href="?vue=jour&date={{ anchor|date:'Y-m-d' }}"
          class="{% if vue == 'jour' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Jour" %}</a>
       <a href="?vue=semaine&date={{ anchor|date:'Y-m-d' }}"
