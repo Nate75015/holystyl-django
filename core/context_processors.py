@@ -64,28 +64,37 @@ def layout(request):
             ],
         },
         {
-            "label": _("Cultures & Élevage"), "key": "cultures",
+            # Ce qui pousse : la terre, ce qu'on y met, ce qu'on y fait.
+            "label": _("Cultures"), "key": "cultures",
             "items": [
                 {"label": _("Mes Parcelles"), "url_name": "parcelles:list", "icon": "map"},
                 {"label": _("Campagnes"), "url_name": "parcelles:campagnes", "icon": "event_repeat"},
-                {"label": _("Météo"), "url_name": "meteo:index", "icon": "wb_sunny"},
                 {"label": _("Cultures"), "url_name": "agronomie:cultures", "icon": "grass"},
                 {"label": _("Types de sol"), "url_name": "agronomie:types_sol", "icon": "terrain"},
+                {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
                 {"label": _("Fertigation"), "url_name": "agronomie:fertigation", "icon": "opacity"},
                 {"label": _("Interventions"), "url_name": "interventions:interventions", "icon": "build"},
-                {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
-                {"label": _("Élevage"), "url_name": "elevage:elevage", "icon": "pets"},
-                {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
-                {"label": _("DTI"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
-                {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
-                {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "sensors"},
+                {"label": _("Météo"), "url_name": "meteo:index", "icon": "wb_sunny"},
             ],
         },
         {
-            "label": _("Protection"), "key": "protection",
+            "label": _("Élevage"), "key": "elevage",
             "items": [
+                {"label": _("Élevage"), "url_name": "elevage:elevage", "icon": "pets"},
+            ],
+        },
+        {
+            # L'eau et son pilotage, d'un bout à l'autre : ce qu'on distribue,
+            # ce qui protège la culture, et ce qui mesure. Bassinage et anti-gel
+            # sont des usages de l'irrigation, ils n'avaient pas à vivre ailleurs.
+            "label": _("Irrigation"), "key": "irrigation",
+            "items": [
+                {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
                 {"label": _("Bassinage"), "url_name": "irrigation:bassinage", "icon": "shower"},
                 {"label": _("Anti-gel"), "url_name": "irrigation:antigel", "icon": "ac_unit"},
+                {"label": _("DTI"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
+                {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
+                {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "sensors"},
             ],
         },
         {
@@ -217,7 +226,8 @@ def layout(request):
     # Icône de section (présentation ; navigation de la sidebar)
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
-        "protection": "lock", "economie": "payments", "environnement": "park",
+        "elevage": "pets", "irrigation": "water_drop",
+        "economie": "payments", "environnement": "park",
         "rh": "groups", "contrat": "gavel", "relations": "handshake",
         "stock": "inventory_2", "vente": "storefront",
         "aquaculture": "waves", "compte": "person",

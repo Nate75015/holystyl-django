@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 22:44+0200\n"
+"POT-Creation-Date: 2026-09-02 22:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -644,7 +644,7 @@ msgstr ""
 #: agronomie/templates/agronomie/cultures.html:44
 #: agronomie/templates/agronomie/fertigation.html:17
 #: agronomie/templates/agronomie/types_sol.html:42
-#: core/context_processors.py:67 elevage/templates/elevage/elevage.html:33
+#: elevage/templates/elevage/elevage.html:33
 #: interventions/templates/interventions/interventions.html:24
 #: iot/templates/iot/capteurs.html:6
 #: irrigation/templates/irrigation/irrigation.html:7
@@ -657,7 +657,7 @@ msgid "Cultures & Élevage"
 msgstr "Barra & Talamh"
 
 #: agronomie/templates/agronomie/cultures.html:44 agronomie/views.py:101
-#: core/context_processors.py:72
+#: core/context_processors.py:68 core/context_processors.py:72
 #: exploitations/templates/exploitations/section.html:85
 #: parcelles/templates/parcelles/campagnes.html:38
 #: reseaux/templates/reseaux/reseaux.html:139
@@ -1403,7 +1403,7 @@ msgstr ""
 
 #: agronomie/templates/agronomie/fertigation.html:17
 #: agronomie/templates/agronomie/fertigation.html:19 agronomie/views.py:301
-#: core/context_processors.py:74
+#: core/context_processors.py:75
 #, fuzzy
 #| msgid "Irrigation"
 msgid "Fertigation"
@@ -2189,7 +2189,7 @@ msgid "Cultures & Élevage · Analyses de sol"
 msgstr "Anailísí ithreach"
 
 #: analyse_sol/templates/analyse_sol/analyses_sol.html:9
-#: analyse_sol/views.py:53 core/context_processors.py:76
+#: analyse_sol/views.py:53 core/context_processors.py:74
 #: parcelles/templates/parcelles/detail.html:199
 #: public/templates/public/home.html:271
 msgid "Analyses de sol"
@@ -2430,7 +2430,7 @@ msgid "Analyse supprimée."
 msgstr "Gabháltas scriosta."
 
 #: analyses/models.py:15 aquaculture/templates/aquaculture/bassins.html:41
-#: core/context_processors.py:180 exploitations/views.py:43
+#: core/context_processors.py:189 exploitations/views.py:43
 #: finances/models.py:18 finances/templates/finances/bilan_economique.html:38
 #: finances/templates/finances/subvention_pdf.html:31
 #: irrigation/templates/irrigation/bassinage.html:162
@@ -2979,7 +2979,7 @@ msgstr ""
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/detail.html:10
 #: aquaculture/templates/aquaculture/especes.html:33
-#: core/context_processors.py:154
+#: core/context_processors.py:163
 #, fuzzy
 #| msgid "culture"
 msgid "Aquaculture"
@@ -2988,7 +2988,7 @@ msgstr "barr"
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/bassins.html:10
 #: aquaculture/templates/aquaculture/detail.html:10 aquaculture/views.py:87
-#: core/context_processors.py:156
+#: core/context_processors.py:165
 #, fuzzy
 #| msgid "Basse"
 msgid "Bassins"
@@ -3386,7 +3386,7 @@ msgstr ""
 msgid "Origine (ex : Bretagne)"
 msgstr ""
 
-#: aquaculture/views.py:208 core/context_processors.py:157
+#: aquaculture/views.py:208 core/context_processors.py:166
 #, fuzzy
 #| msgid "pièces jointes"
 msgid "Espèces aquacoles"
@@ -3538,21 +3538,21 @@ msgid "clients"
 msgstr "cliaint"
 
 #: client/models.py:128 contrat/templates/contrat/_bail_modal.html:18
-#: core/context_processors.py:164 core/espaces.py:57
+#: core/context_processors.py:173 core/espaces.py:57
 #, fuzzy
 #| msgid "Taille"
 msgid "Bailleur"
 msgstr "Bearradh"
 
-#: client/models.py:129 core/context_processors.py:165 core/espaces.py:60
+#: client/models.py:129 core/context_processors.py:174 core/espaces.py:60
 msgid "Comptable"
 msgstr ""
 
-#: client/models.py:130 core/context_processors.py:166
+#: client/models.py:130 core/context_processors.py:175
 msgid "Avocat"
 msgstr ""
 
-#: client/models.py:131 client/views.py:208 core/context_processors.py:167
+#: client/models.py:131 client/views.py:208 core/context_processors.py:176
 #: planning/templates/planning/planning.html:211
 msgid "CUMA"
 msgstr "CUMA"
@@ -3731,7 +3731,7 @@ msgstr "Ríomhphost nua"
 #: client/templates/client/clients.html:11
 #: client/templates/client/clients.html:30
 #: client/templates/client/detail.html:10 client/views.py:94
-#: core/context_processors.py:163
+#: core/context_processors.py:172
 #, fuzzy
 #| msgid "Client"
 msgid "Clients"
@@ -3780,7 +3780,7 @@ msgid "Client"
 msgstr "Cliant"
 
 #: client/templates/client/clients.html:42
-#: client/templates/client/partenaires.html:103 core/context_processors.py:177
+#: client/templates/client/partenaires.html:103 core/context_processors.py:186
 #: exploitations/views.py:225 exploitations/views.py:390
 #: exploitations/views.py:391 public/templates/public/home.html:482
 msgid "Contact"
@@ -3852,7 +3852,7 @@ msgstr "doiciméad"
 msgid "Fournisseur : %(fournisseur)s"
 msgstr ""
 
-#: client/templates/client/espace.html:23 core/context_processors.py:98
+#: client/templates/client/espace.html:23 core/context_processors.py:107
 #: finances/templates/finances/devis.html:7
 #: finances/templates/finances/devis.html:9
 #: finances/templates/finances/devis_signature.html:15
@@ -3935,7 +3935,7 @@ msgstr ""
 msgid "Aucune facture pour le moment."
 msgstr "Níl aon chomhrá go fóill."
 
-#: client/templates/client/partenaires.html:7 core/context_processors.py:161
+#: client/templates/client/partenaires.html:7 core/context_processors.py:170
 #, fuzzy
 #| msgid "exploitations"
 msgid "Relations"
@@ -4065,7 +4065,7 @@ msgstr "Rialaitheoir comhla"
 msgid "Approvisionnement"
 msgstr "Comhshaol"
 
-#: contrat/models.py:13 core/context_processors.py:131 finances/models.py:23
+#: contrat/models.py:13 core/context_processors.py:140 finances/models.py:23
 msgid "Assurance"
 msgstr "Árachas"
 
@@ -4752,7 +4752,7 @@ msgstr "Pleanáilte"
 #: contrat/templates/contrat/assurances.html:8
 #: contrat/templates/contrat/baux.html:7
 #: contrat/templates/contrat/contrats.html:7
-#: contrat/templates/contrat/msa.html:7 core/context_processors.py:126
+#: contrat/templates/contrat/msa.html:7 core/context_processors.py:135
 #: equipe/templates/equipe/paie.html:49
 #, fuzzy
 #| msgid "Contact"
@@ -4761,7 +4761,7 @@ msgstr "Teagmháil"
 
 #: contrat/templates/contrat/actes.html:7
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:148
-#: core/context_processors.py:130
+#: core/context_processors.py:139
 msgid "Patrimoine"
 msgstr ""
 
@@ -4883,7 +4883,7 @@ msgstr ""
 
 #: contrat/templates/contrat/baux.html:7 contrat/templates/contrat/baux.html:10
 #: contrat/templates/contrat/baux.html:29 contrat/views.py:100
-#: core/context_processors.py:129
+#: core/context_processors.py:138
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
@@ -4908,7 +4908,7 @@ msgstr "Achar lena mbaineann"
 msgid "Fermage annuel"
 msgstr ""
 
-#: contrat/templates/contrat/baux.html:42 core/context_processors.py:95
+#: contrat/templates/contrat/baux.html:42 core/context_processors.py:104
 #: dashboard/templates/dashboard/bailleur.html:58
 #: finances/templates/finances/fermage.html:7
 #: finances/templates/finances/fermage.html:9 finances/views.py:628
@@ -4934,7 +4934,7 @@ msgstr ""
 #: contrat/templates/contrat/contrats.html:7
 #: contrat/templates/contrat/contrats.html:10
 #: contrat/templates/contrat/contrats.html:29 contrat/views.py:49
-#: core/context_processors.py:128
+#: core/context_processors.py:137
 #, fuzzy
 #| msgid "Contact"
 msgid "Contrats"
@@ -5281,7 +5281,8 @@ msgstr "Baile"
 msgid "Parcelles"
 msgstr "Ceapacha"
 
-#: core/context_processors.py:39 core/context_processors.py:78
+#: core/context_processors.py:39 core/context_processors.py:90
+#: core/context_processors.py:92
 #: finances/templates/finances/subvention_pdf.html:49
 #: interventions/models.py:12 irrigation/templates/irrigation/irrigation.html:7
 #: irrigation/views.py:84 notifications/models.py:42 operations/materiel.py:27
@@ -5293,7 +5294,7 @@ msgstr "Ceapacha"
 msgid "Irrigation"
 msgstr "Uisciú"
 
-#: core/context_processors.py:40 core/context_processors.py:117
+#: core/context_processors.py:40 core/context_processors.py:126
 #: planning/templates/planning/planning.html:18 planning/views.py:311
 #: planning/views.py:333
 msgid "Planning"
@@ -5349,14 +5350,14 @@ msgstr "Ríomhphost"
 msgid "Pétition"
 msgstr "Coinneáil"
 
-#: core/context_processors.py:69 parcelles/templates/parcelles/list.html:14
+#: core/context_processors.py:70 parcelles/templates/parcelles/list.html:14
 #: parcelles/views.py:59
 #, fuzzy
 #| msgid "Parcelles"
 msgid "Mes Parcelles"
 msgstr "Ceapacha"
 
-#: core/context_processors.py:70
+#: core/context_processors.py:71
 #: parcelles/templates/parcelles/campagne_form.html:15
 #: parcelles/templates/parcelles/campagnes.html:7
 #: parcelles/templates/parcelles/campagnes.html:10
@@ -5366,47 +5367,29 @@ msgstr "Ceapacha"
 msgid "Campagnes"
 msgstr "Feachtas"
 
-#: core/context_processors.py:71
-#: dashboard/templates/dashboard/exploitant.html:47
-#: meteo/templates/meteo/index.html:7 meteo/templates/meteo/index.html:9
-#: meteo/views.py:77 notifications/models.py:43
-msgid "Météo"
-msgstr "Aimsir"
-
-#: core/context_processors.py:75
+#: core/context_processors.py:76
 #: interventions/templates/interventions/interventions.html:24
 #: interventions/templates/interventions/interventions.html:26
 #: interventions/views.py:75 public/templates/public/home.html:266
 msgid "Interventions"
 msgstr "Idirghabhálacha"
 
-#: core/context_processors.py:77 elevage/templates/elevage/elevage.html:33
-#: elevage/views.py:61 operations/materiel.py:29
+#: core/context_processors.py:77
+#: dashboard/templates/dashboard/exploitant.html:47
+#: meteo/templates/meteo/index.html:7 meteo/templates/meteo/index.html:9
+#: meteo/views.py:77 notifications/models.py:43
+msgid "Météo"
+msgstr "Aimsir"
+
+#: core/context_processors.py:81 core/context_processors.py:83
+#: elevage/templates/elevage/elevage.html:33 elevage/views.py:61
+#: operations/materiel.py:29
 #, fuzzy
 #| msgid "Élevé"
 msgid "Élevage"
 msgstr "Ard"
 
-#: core/context_processors.py:79 irrigation/views.py:170
-msgid "DTI"
-msgstr ""
-
-#: core/context_processors.py:80 iot/templates/iot/regie.html:10
-#: iot/views.py:66
-msgid "Régie SCADA"
-msgstr "Rialú SCADA"
-
-#: core/context_processors.py:81 iot/templates/iot/capteurs.html:6
-#: iot/templates/iot/capteurs.html:8
-msgid "Capteurs"
-msgstr "Braiteoirí"
-
-#: core/context_processors.py:85 irrigation/templates/irrigation/antigel.html:8
-#: irrigation/templates/irrigation/bassinage.html:17 planning/models.py:254
-msgid "Protection"
-msgstr "Cosaint"
-
-#: core/context_processors.py:87
+#: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
 #: irrigation/templates/irrigation/bassinage.html:19 irrigation/views.py:308
 #, fuzzy
@@ -5414,18 +5397,32 @@ msgstr "Cosaint"
 msgid "Bassinage"
 msgstr "Íseal"
 
-#: core/context_processors.py:88 irrigation/templates/irrigation/antigel.html:8
+#: core/context_processors.py:94 irrigation/templates/irrigation/antigel.html:8
 #: irrigation/templates/irrigation/antigel.html:9 irrigation/views.py:512
 msgid "Anti-gel"
 msgstr ""
 
-#: core/context_processors.py:92 finances/templates/finances/fermage.html:7
+#: core/context_processors.py:95 irrigation/views.py:170
+msgid "DTI"
+msgstr ""
+
+#: core/context_processors.py:96 iot/templates/iot/regie.html:10
+#: iot/views.py:66
+msgid "Régie SCADA"
+msgstr "Rialú SCADA"
+
+#: core/context_processors.py:97 iot/templates/iot/capteurs.html:6
+#: iot/templates/iot/capteurs.html:8
+msgid "Capteurs"
+msgstr "Braiteoirí"
+
+#: core/context_processors.py:101 finances/templates/finances/fermage.html:7
 #, fuzzy
 #| msgid "Maintenance"
 msgid "Finance"
 msgstr "Cothabháil"
 
-#: core/context_processors.py:94
+#: core/context_processors.py:103
 #: dashboard/templates/dashboard/comptable.html:56
 #: finances/templates/finances/bilan_economique.html:19
 #: finances/templates/finances/charges.html:7
@@ -5435,7 +5432,7 @@ msgstr "Cothabháil"
 msgid "Charges"
 msgstr "Costais"
 
-#: core/context_processors.py:96
+#: core/context_processors.py:105
 #: dashboard/templates/dashboard/comptable.html:20
 #: finances/templates/finances/bilan_economique.html:7
 #: finances/templates/finances/bilan_economique.html:9
@@ -5443,7 +5440,7 @@ msgstr "Costais"
 msgid "Bilan économique"
 msgstr "Achoimre eacnamaíoch"
 
-#: core/context_processors.py:97
+#: core/context_processors.py:106
 #: finances/templates/finances/document_editeur.html:17
 #: finances/templates/finances/document_editeur.html:112
 #: finances/templates/finances/facturation.html:7
@@ -5455,12 +5452,12 @@ msgstr "Achoimre eacnamaíoch"
 msgid "Facture"
 msgstr "sonrasc"
 
-#: core/context_processors.py:99 pac/templates/pac/pac.html:7
+#: core/context_processors.py:108 pac/templates/pac/pac.html:7
 #: pac/templates/pac/pac.html:9 pac/views.py:71
 msgid "PAC"
 msgstr "PAC"
 
-#: core/context_processors.py:103
+#: core/context_processors.py:112
 #: environnement/templates/environnement/bilan_eau.html:7
 #: environnement/templates/environnement/biodiversite.html:8
 #: environnement/templates/environnement/placeholder.html:6
@@ -5468,44 +5465,44 @@ msgstr "PAC"
 msgid "Environnement"
 msgstr "Comhshaol"
 
-#: core/context_processors.py:105
+#: core/context_processors.py:114
 #: environnement/templates/environnement/biodiversite.html:8
 #: environnement/templates/environnement/biodiversite.html:10
 #: environnement/views.py:73
 msgid "Biodiversité"
 msgstr "Bithéagsúlacht"
 
-#: core/context_processors.py:106
+#: core/context_processors.py:115
 #: environnement/templates/environnement/bilan_eau.html:7
 #: environnement/templates/environnement/bilan_eau.html:9
 msgid "Bilan eau"
 msgstr "Iarmhéid uisce"
 
-#: core/context_processors.py:107 environnement/views.py:205
+#: core/context_processors.py:116 environnement/views.py:205
 msgid "Bilan azoté"
 msgstr "Iarmhéid nítrigine"
 
-#: core/context_processors.py:108 environnement/views.py:212
+#: core/context_processors.py:117 environnement/views.py:212
 msgid "Empreinte carbone"
 msgstr "Lorg carbóin"
 
-#: core/context_processors.py:109 environnement/views.py:219
+#: core/context_processors.py:118 environnement/views.py:219
 #, fuzzy
 #| msgid "Environnement"
 msgid "Rapport environnemental"
 msgstr "Comhshaol"
 
-#: core/context_processors.py:110 environnement/views.py:226
+#: core/context_processors.py:119 environnement/views.py:226
 msgid "Santé végétale"
 msgstr "Sláinte plandaí"
 
-#: core/context_processors.py:111
+#: core/context_processors.py:120
 #: environnement/templates/environnement/taxonomie.html:9
 #: environnement/views.py:264 public/templates/public/home.html:102
 msgid "Taxonomie EU"
 msgstr "Tacsanomaíocht AE"
 
-#: core/context_processors.py:115 equipe/templates/equipe/contrats.html:7
+#: core/context_processors.py:124 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/equipe.html:8 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/placeholder.html:6
@@ -5513,37 +5510,37 @@ msgstr "Tacsanomaíocht AE"
 msgid "RH"
 msgstr "AD"
 
-#: core/context_processors.py:118 equipe/templates/equipe/equipe.html:8
+#: core/context_processors.py:127 equipe/templates/equipe/equipe.html:8
 #: equipe/templates/equipe/equipe.html:10 equipe/views.py:49
 #: planning/templates/planning/planning.html:165
 msgid "Équipe"
 msgstr "Foireann"
 
-#: core/context_processors.py:119 equipe/templates/equipe/taches.html:8
+#: core/context_processors.py:128 equipe/templates/equipe/taches.html:8
 #: equipe/templates/equipe/taches.html:10 equipe/views.py:210
 msgid "Tâches"
 msgstr "Tascanna"
 
-#: core/context_processors.py:120 equipe/templates/equipe/contrats.html:7
+#: core/context_processors.py:129 equipe/templates/equipe/contrats.html:7
 #: equipe/templates/equipe/contrats.html:9 equipe/views.py:279
 msgid "Contrats de travail"
 msgstr ""
 
-#: core/context_processors.py:121 equipe/templates/equipe/offres.html:11
+#: core/context_processors.py:130 equipe/templates/equipe/offres.html:11
 #: equipe/templates/equipe/offres.html:13 equipe/views.py:656
 msgid "Offres d'emploi"
 msgstr ""
 
-#: core/context_processors.py:122 equipe/templates/equipe/paie.html:8
+#: core/context_processors.py:131 equipe/templates/equipe/paie.html:8
 #: equipe/templates/equipe/paie.html:11 equipe/views.py:461
 msgid "Paie"
 msgstr ""
 
-#: core/context_processors.py:132
+#: core/context_processors.py:141
 msgid "Mutualité Sociale Agricole"
 msgstr ""
 
-#: core/context_processors.py:136 vente/templates/vente/boutique.html:7
+#: core/context_processors.py:145 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/produits.html:16
 #, fuzzy
@@ -5551,7 +5548,7 @@ msgstr ""
 msgid "Vente directe"
 msgstr "Díol torthaí"
 
-#: core/context_processors.py:138 vente/templates/vente/commande_detail.html:7
+#: core/context_processors.py:147 vente/templates/vente/commande_detail.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/commandes.html:10 vente/views.py:257
 #, fuzzy
@@ -5559,7 +5556,7 @@ msgstr "Díol torthaí"
 msgid "Commandes"
 msgstr "Baile"
 
-#: core/context_processors.py:139 vente/templates/vente/boutique.html:12
+#: core/context_processors.py:148 vente/templates/vente/boutique.html:12
 #: vente/templates/vente/commandes.html:13
 #: vente/templates/vente/produits.html:16
 #: vente/templates/vente/produits.html:19 vente/views.py:147
@@ -5568,18 +5565,18 @@ msgstr "Baile"
 msgid "Mes produits"
 msgstr "Táirge"
 
-#: core/context_processors.py:140 vente/templates/vente/boutique.html:7
+#: core/context_processors.py:149 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/boutique.html:10
 #: vente/templates/vente/produits.html:22 vente/views.py:117
 msgid "Ma boutique"
 msgstr ""
 
-#: core/context_processors.py:141 vente/templates/vente/_boutique_corps.html:5
+#: core/context_processors.py:150 vente/templates/vente/_boutique_corps.html:5
 #: vente/templates/vente/_produit_corps.html:6
 msgid "Le marché"
 msgstr ""
 
-#: core/context_processors.py:145 stock/templates/stock/articles.html:20
+#: core/context_processors.py:154 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:23 stock/templates/stock/depots.html:16
 #: stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/recoltes.html:11
@@ -5588,34 +5585,34 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: core/context_processors.py:147 stock/templates/stock/articles.html:20
+#: core/context_processors.py:156 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:47 stock/templates/stock/depots.html:22
 #: stock/templates/stock/depots.html:46
 #: stock/templates/stock/mouvements.html:14
 msgid "Articles"
 msgstr ""
 
-#: core/context_processors.py:148 public/templates/public/home.html:276
+#: core/context_processors.py:157 public/templates/public/home.html:276
 #: stock/templates/stock/recoltes.html:11
 #: stock/templates/stock/recoltes.html:14
 #: stock/templates/stock/recoltes.html:34 stock/views.py:301
 msgid "Récoltes"
 msgstr "Fómhair"
 
-#: core/context_processors.py:149 stock/templates/stock/mouvements.html:8
+#: core/context_processors.py:158 stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/mouvements.html:31
 #, fuzzy
 #| msgid "document"
 msgid "Mouvements"
 msgstr "doiciméad"
 
-#: core/context_processors.py:150 stock/templates/stock/depots.html:16
+#: core/context_processors.py:159 stock/templates/stock/depots.html:16
 #: stock/templates/stock/depots.html:19 stock/templates/stock/depots.html:32
 #: stock/views.py:371
 msgid "Dépôts"
 msgstr ""
 
-#: core/context_processors.py:171
+#: core/context_processors.py:180
 #: exploitations/templates/exploitations/adresses.html:7
 #: exploitations/templates/exploitations/contact.html:7
 #: exploitations/templates/exploitations/juridique.html:7
@@ -5629,46 +5626,46 @@ msgstr ""
 msgid "Mon exploitation"
 msgstr "M'fheirm"
 
-#: core/context_processors.py:175 exploitations/views.py:33
+#: core/context_processors.py:184 exploitations/views.py:33
 #, fuzzy
 #| msgid "Identité"
 msgid "Identités"
 msgstr "Aitheantas"
 
-#: core/context_processors.py:176 exploitations/views.py:36
+#: core/context_processors.py:185 exploitations/views.py:36
 #: exploitations/views.py:308 exploitations/views.py:309
 msgid "Juridique"
 msgstr "Dlíthiúil"
 
-#: core/context_processors.py:178 exploitations/views.py:39
+#: core/context_processors.py:187 exploitations/views.py:39
 #: exploitations/views.py:432 exploitations/views.py:433
 #: stock/templates/stock/_depot_modal.html:26
 #: stock/templates/stock/depots.html:44
 msgid "Localisation"
 msgstr "Suíomh"
 
-#: core/context_processors.py:179 exploitations/views.py:41
+#: core/context_processors.py:188 exploitations/views.py:41
 msgid "Caractéristiques agricoles"
 msgstr "Saintréithe talmhaíochta"
 
-#: core/context_processors.py:181 exploitations/views.py:45
+#: core/context_processors.py:190 exploitations/views.py:45
 #, fuzzy
 #| msgid "Notifications"
 msgid "Certificats et labels"
 msgstr "Fógraí"
 
-#: core/context_processors.py:182
+#: core/context_processors.py:191
 #: exploitations/templates/exploitations/societes.html:32
 #: exploitations/views.py:226 exploitations/views.py:739
 #: exploitations/views.py:740
 msgid "Sociétés liées"
 msgstr "Cuideachtaí gaolmhara"
 
-#: core/context_processors.py:183 exploitations/views.py:47
+#: core/context_processors.py:192 exploitations/views.py:47
 msgid "RH et CA"
 msgstr ""
 
-#: core/context_processors.py:184
+#: core/context_processors.py:193
 #: operations/templates/operations/parc_materiel.html:36
 #: operations/templates/operations/parc_materiel.html:38
 #: operations/views.py:104 public/templates/public/home.html:261
@@ -12926,6 +12923,11 @@ msgstr "Costas uisce"
 #| msgid "Coût eau"
 msgid "Coût total"
 msgstr "Costas uisce"
+
+#: irrigation/templates/irrigation/antigel.html:8
+#: irrigation/templates/irrigation/bassinage.html:17 planning/models.py:254
+msgid "Protection"
+msgstr "Cosaint"
 
 #: irrigation/templates/irrigation/antigel.html:14
 msgid "Risque de gel détecté dans les 5 prochains jours"
