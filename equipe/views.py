@@ -414,14 +414,18 @@ def contrat_pdf(request, pk):
     exploitation = _exploitation(request)
     contrat = get_object_or_404(
         ContratTravail.objects.select_related("membre"), pk=pk, exploitation=exploitation)
-    html = render(request, "equipe/contrat_pdf.html", {
-        "contrat": contrat, "exploitation": exploitation}).content.decode()
+    # La signature de l'employeur vient de la section Identité : définie une
+    # fois, elle s'appose sur les documents qu'il émet.
+    from identite.models import Piece
+
+    contexte = {"contrat": contrat, "exploitation": exploitation,
+                "signature": Piece.signature_active(exploitation)}
+    html = render(request, "equipe/contrat_pdf.html", contexte).content.decode()
 
     try:
         from weasyprint import HTML
     except Exception:  # noqa: BLE001 — libs système absentes : on rend la page
-        return render(request, "equipe/contrat_pdf.html",
-                      {"contrat": contrat, "exploitation": exploitation})
+        return render(request, "equipe/contrat_pdf.html", contexte)
 
     from django.http import HttpResponse
 

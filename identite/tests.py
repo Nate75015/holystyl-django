@@ -114,8 +114,16 @@ def test_les_pieces_du_voisin_sont_hors_de_portee(client, setup):
 
     client.force_login(user)
     assert "Le voisin" not in client.get("/identite/").content.decode()
-    assert client.post(f"/identite/{piece.pk}/supprimer/").status_code == 404
+    # La pièce survit : c'est la propriété qui compte.
+    reponse = client.post(f"/identite/{piece.pk}/supprimer/")
+    assert reponse.status_code == 302
     assert Piece.objects.filter(pk=piece.pk).exists()
+
+    # Et la réponse est la même que pour une pièce inexistante : distinguer
+    # les deux dirait quels identifiants sont pris.
+    inexistante = client.post(f"/identite/{piece.pk + 999}/supprimer/")
+    assert inexistante.status_code == reponse.status_code
+    assert inexistante["Location"] == reponse["Location"]
 
 
 @pytest.mark.django_db
@@ -127,3 +135,236 @@ def test_la_section_est_a_part_et_non_dans_finance(client, setup):
     assert 'href="/identite/carte/"' in page
     assert 'href="/identite/passeport/"' in page
     assert 'href="/identite/signature/"' in page
+
+
+@pytest.mark.django_db
+def test_la_prolongation_deplace_l_echeance_sans_effacer_la_date_imprimee(setup):
+    """Deux dates qui ne servent pas au même endroit.
+
+    Les cartes délivrées à un majeur entre 2004 et 2013 valent cinq ans de
+    plus en France, sans que la date imprimée change — et plusieurs pays s'en
+    tiennent à celle qui est imprimée.
+    """
+    from datetime import date
+
+    _user, exploitation = setup
+    carte = Piece.objects.create(
+        exploitation=exploitation, type_piece="carte", fichier=_fichier(),
+        expire_le=date(2024, 5, 12), prolongee=True)
+
+    assert carte.expire_le == date(2024, 5, 12)      # ce qui est imprimé
+    assert carte.expiration_reelle == date(2029, 5, 12)  # ce qui fait foi
+    assert carte.prolongation_douteuse is True
+    # L'alerte se règle sur la date réelle : prévenir cinq ans trop tôt
+    # serait du bruit.
+    assert carte.perimee is False
+
+    sans = Piece.objects.create(exploitation=exploitation, type_piece="carte",
+                                fichier=_fichier(), expire_le=date(2024, 5, 12))
+    assert sans.expiration_reelle == date(2024, 5, 12)
+    assert sans.prolongation_douteuse is False
+    assert sans.perimee is True
+
+
+@pytest.mark.django_db
+def test_un_29_fevrier_prolonge_ne_casse_pas(setup):
+    """2028 est bissextile, 2033 ne l'est pas."""
+    from datetime import date
+
+    _user, exploitation = setup
+    carte = Piece.objects.create(exploitation=exploitation, type_piece="carte",
+                                 fichier=_fichier(), expire_le=date(2028, 2, 29),
+                                 prolongee=True)
+    assert carte.expiration_reelle == date(2033, 3, 1)
+
+
+@pytest.mark.django_db
+def test_l_autorite_et_le_nom_d_usage_s_enregistrent(client, setup):
+    """La préfecture figure sur la carte : elle se retrouve sur la fiche."""
+    user, exploitation = setup
+    client.force_login(user)
+    client.post("/identite/ajouter/", {
+        "type_piece": "carte", "titulaire": "Damien Marque",
+        "nom_usage": "Marque-Dupont",
+        "autorite": "Préfecture des Alpes-de-Haute-Provence",
+        "numero": "D1X4T5R9K", "expire_le": "2031-04-02",
+        "fichier": _fichier(),
+    })
+    piece = Piece.objects.get(exploitation=exploitation)
+    assert piece.autorite.startswith("Préfecture")
+    assert piece.nom_usage == "Marque-Dupont"
+
+    page = client.get("/identite/carte/").content.decode()
+    assert "Préfecture des Alpes-de-Haute-Provence" in page
+    assert "Marque-Dupont" in page
+
+
+@pytest.mark.django_db
+def test_la_mise_en_garde_sur_la_prolongation_s_affiche(client, setup):
+    user, exploitation = setup
+    Piece.objects.create(exploitation=exploitation, type_piece="carte",
+                         fichier=_fichier(), expire_le=timezone.localdate(),
+                         prolongee=True)
+    client.force_login(user)
+    page = client.get("/identite/").content.decode()
+    assert "refusent cette prolongation" in page
+
+
+@pytest.mark.django_db
+def test_la_lecture_ia_prefixe_sans_rien_enregistrer(client, setup, monkeypatch):
+    """Le scan pré-remplit : il ne crée rien tant que la personne n'a pas relu."""
+    from identite import ocr
+
+    user, _exploitation = setup
+    monkeypatch.setattr(ocr.llm, "is_configured", lambda: True)
+    monkeypatch.setattr(ocr.llm, "extract_json_from_document",
+                        lambda *a, **k: {"type_piece": "carte",
+                                         "titulaire": "Damien Marque",
+                                         "numero": "D1X4T5R9K",
+                                         "autorite": "Préfecture des Alpes-de-Haute-Provence",
+                                         "expire_le": "2031-04-02"})
+
+    client.force_login(user)
+    reponse = client.post("/identite/scanner/", {"fichier": _fichier()})
+    assert reponse.status_code == 200
+    champs = reponse.json()["champs"]
+    assert champs["titulaire"] == "Damien Marque"
+    assert champs["autorite"].startswith("Préfecture")
+    # Les clés absentes de la réponse du modèle sont présentes, à None.
+    assert champs["nom_usage"] is None and champs["delivre_le"] is None
+    assert Piece.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_la_lecture_ne_rend_rien_sans_ia(client, setup, monkeypatch):
+    from identite import ocr
+
+    user, _exploitation = setup
+    monkeypatch.setattr(ocr.llm, "is_configured", lambda: False)
+    client.force_login(user)
+    assert client.post("/identite/scanner/", {"fichier": _fichier()}).status_code == 503
+
+
+@pytest.mark.django_db
+def test_un_type_hors_referentiel_n_est_pas_retenu(client, setup, monkeypatch):
+    """Le modèle ne décide pas seul de la nature de la pièce."""
+    from identite import ocr
+
+    user, _exploitation = setup
+    monkeypatch.setattr(ocr.llm, "is_configured", lambda: True)
+    monkeypatch.setattr(ocr.llm, "extract_json_from_document",
+                        lambda *a, **k: {"type_piece": "permis de conduire",
+                                         "titulaire": "Damien Marque"})
+    client.force_login(user)
+    champs = client.post("/identite/scanner/", {"fichier": _fichier()}).json()["champs"]
+    assert champs["type_piece"] is None
+    assert champs["titulaire"] == "Damien Marque"
+
+
+def test_la_lecture_ne_demande_que_ce_qui_est_range():
+    """Une pièce d'identité en dit bien plus que ce qu'on en garde.
+
+    Chaque champ extrait est une donnée personnelle de plus à protéger : on
+    ne demande ni date de naissance, ni adresse, ni taille, ni sexe.
+    """
+    from identite import ocr
+
+    assert set(ocr.CHAMPS) == {"type_piece", "titulaire", "nom_usage", "numero",
+                               "autorite", "delivre_le", "expire_le"}
+    for interdit in ("date_naissance", "lieu_naissance", "adresse", "taille", "sexe"):
+        assert interdit not in ocr.CHAMPS
+    # Le prompt le dit au modèle, pas seulement le filtre de sortie.
+    assert "ignore la date et le lieu" in ocr._PROMPT
+
+
+@pytest.mark.django_db
+def test_la_signature_se_trace_a_l_ecran_et_devient_active(client, setup):
+    """Un trait au doigt vaut signature : on le range en image, pas en base64."""
+    import base64
+
+    from PIL import Image
+
+    user, exploitation = setup
+    client.force_login(user)
+
+    import io
+
+    buf = io.BytesIO()
+    Image.new("RGBA", (240, 80), (0, 0, 0, 0)).save(buf, "PNG")
+    trace = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+
+    assert client.post("/identite/signature/definir/",
+                       {"trace": trace, "titulaire": "Damien Marque"}).status_code == 302
+
+    piece = Piece.objects.get(exploitation=exploitation)
+    assert piece.type_piece == "signature" and piece.par_defaut is True
+    assert piece.fichier.name.endswith(".png")
+    assert Piece.signature_active(exploitation) == piece
+
+
+@pytest.mark.django_db
+def test_un_trace_illisible_est_refuse(client, setup):
+    user, _exploitation = setup
+    client.force_login(user)
+    for mauvais in ("", "pas une data url", "data:image/png;base64,@@@"):
+        client.post("/identite/signature/definir/", {"trace": mauvais})
+    assert Piece.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_une_seule_signature_active_a_la_fois(client, setup):
+    user, exploitation = setup
+    ancienne = Piece.objects.create(exploitation=exploitation, type_piece="signature",
+                                    fichier=_fichier("une.png"), par_defaut=True)
+    nouvelle = Piece.objects.create(exploitation=exploitation, type_piece="signature",
+                                    fichier=_fichier("deux.png"))
+
+    client.force_login(user)
+    client.post(f"/identite/signature/{nouvelle.pk}/activer/")
+    ancienne.refresh_from_db(); nouvelle.refresh_from_db()
+    assert nouvelle.par_defaut is True and ancienne.par_defaut is False
+    assert Piece.signature_active(exploitation) == nouvelle
+
+
+@pytest.mark.django_db
+def test_sans_signature_designee_la_plus_recente_sert(setup):
+    """Mieux vaut une signature que rien sur un contrat qui part au salarié."""
+    _user, exploitation = setup
+    Piece.objects.create(exploitation=exploitation, type_piece="signature",
+                         fichier=_fichier("vieille.png"))
+    recente = Piece.objects.create(exploitation=exploitation, type_piece="signature",
+                                   fichier=_fichier("recente.png"))
+    assert Piece.signature_active(exploitation) == recente
+    # Une carte d'identité n'est jamais prise pour une signature.
+    Piece.objects.create(exploitation=exploitation, type_piece="carte", fichier=_fichier())
+    assert Piece.signature_active(exploitation).est_signature is True
+
+
+@pytest.mark.django_db
+def test_le_pave_n_apparait_que_sur_l_onglet_signature(client, setup):
+    user, _exploitation = setup
+    client.force_login(user)
+    assert 'x-ref="toile"' in client.get("/identite/signature/").content.decode()
+    for autre in ("/identite/", "/identite/carte/", "/identite/passeport/"):
+        assert 'x-ref="toile"' not in client.get(autre).content.decode(), autre
+
+
+@pytest.mark.django_db
+def test_une_page_perimee_ne_montre_pas_un_ecran_d_erreur(client, setup):
+    """Deux onglets, un retour arrière : la pièce a pu disparaître entre-temps.
+
+    C'est une situation ordinaire, pas une anomalie — elle mérite un message
+    et un retour à la liste, pas une page 404 de débogage.
+    """
+    user, exploitation = setup
+    piece = Piece.objects.create(exploitation=exploitation, type_piece="carte",
+                                 fichier=_fichier())
+    client.force_login(user)
+    piece_pk = piece.pk
+    piece.delete()
+
+    for url in (f"/identite/{piece_pk}/supprimer/", f"/identite/{piece_pk}/modifier/",
+                f"/identite/signature/{piece_pk}/activer/"):
+        reponse = client.post(url, follow=True)
+        assert reponse.status_code == 200, url
+        assert "n&#x27;existe plus" in reponse.content.decode(), url
