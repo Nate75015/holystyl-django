@@ -46,10 +46,18 @@
     padding: 13px var(--nt-gutter);
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
+  /* Deux destinations distinctes : la goutte ramène au produit, le nom à la
+     vitrine du marché. `center` et non `baseline` — la goutte est une image,
+     elle se cale sur la hauteur du texte, pas sur sa ligne de base. */
   .nt-wordmark {
-    display: inline-flex; align-items: baseline; gap: 7px;
+    display: inline-flex; align-items: center; gap: 9px;
     font-size: 1.125rem; font-weight: 600; letter-spacing: -.02em; color: var(--nt-noir);
   }
+  .nt-goutte-lien { display: inline-grid; place-items: center; border-radius: 999px;
+                    transition: transform .2s var(--nt-ease); }
+  .nt-goutte-lien:hover { transform: scale(1.08); }
+  .nt-goutte-lien:focus-visible { outline: 2px solid var(--nt-noir); outline-offset: 3px; }
+  .nt-wordmark-texte { display: inline-flex; align-items: baseline; gap: 7px; color: var(--nt-noir); }
   .nt-wordmark small { font-size: .625rem; letter-spacing: .16em; text-transform: uppercase; opacity: .62; }
   .nt-actions { display: flex; align-items: center; gap: 8px; }
   .nt-pill {
@@ -166,7 +174,14 @@
 <header class="nt-bandeau" x-data="{ colle: false }"
         @scroll.window="colle = window.scrollY > 8" :class="colle && 'is-colle'">
   <div class="nt-bandeau-inner">
-    <a href="{% url 'public:terroirs' %}" class="nt-wordmark">Nos terroirs <small>by Isidor</small></a>
+    {% trans "Accueil Isidor" as libelle_accueil %}
+    <div class="nt-wordmark">
+      <a href="{% url 'public:home' %}" class="nt-goutte-lien"
+         title="{{ libelle_accueil|escapejs }}" aria-label="{{ libelle_accueil|escapejs }}">
+        {% include "partials/brand_mark.html" with size=28 icon=16 %}
+      </a>
+      <a href="{% url 'public:terroirs' %}" class="nt-wordmark-texte">Nos terroirs <small>by Isidor</small></a>
+    </div>
     <div class="nt-actions">
       {% include "partials/lang_switcher.html" %}
       {% include "partials/theme_toggle.html" %}

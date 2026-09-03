@@ -4,3 +4,5 @@
 {# La vitrine se visite connecté comme anonyme : le corps sert les deux branches de base.html. #}
 {% block content %}{% include "vente/_marche_corps.html" %}{% endblock %}
 {% block auth_content %}{% include "vente/_marche_corps.html" %}{% endblock %}
+
+{% block auth_footer %}{% include "partials/pied_terroirs.html" %}{% endblock %}

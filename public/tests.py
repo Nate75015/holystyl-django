@@ -316,3 +316,72 @@ def test_la_grille_respire_sous_les_filtres(client):
     assert "margin-top: clamp(28px, 3.5vw, 44px);" in page
     # La page ne remet pas la grille à zéro par un style en ligne.
     assert 'class="nt-grille" style="margin-top: 0' not in page
+
+
+@pytest.mark.django_db
+def test_le_pied_de_page_ferme_les_pages_du_marche(client):
+    """Il rappelle la promesse et rouvre les deux chemins : acheter, produire."""
+    for url in ("/nos-terroirs/", "/marche/"):
+        page = client.get(url).content.decode()
+        assert 'class="nt-pied"' in page, url
+        assert "0 %" in page and "de commission" in page, url
+        # Les deux publics : le marché pour qui achète, Isidor pour qui produit.
+        for lien in ('href="/marche/"', 'href="/emplois/"', 'href="/"'):
+            assert lien in page, f"{url} : {lien}"
+        assert "{#" not in page and "{{" not in page, url
+
+
+@pytest.mark.django_db
+def test_le_bandeau_du_marche_porte_la_goutte(client):
+    """La marque du marché s'écrit avec le logo, comme celle du produit."""
+    import re
+
+    for url in ("/nos-terroirs/", "/marche/"):
+        corps = client.get(url).content.decode()
+        m = re.search(r'<div class="nt-wordmark">.*?</div>', corps, re.S)
+        assert m, f"pas de marque sur {url}"
+        marque = m.group(0)
+        # La goutte ramène au produit, le nom à la vitrine du marché.
+        assert re.search(r'<a href="/" class="nt-goutte-lien".*?<svg', marque, re.S), url
+        assert 'href="/nos-terroirs/" class="nt-wordmark-texte"' in marque, url
+        assert "Nos terroirs" in marque and "by Isidor" in marque
+
+    # Les pages Isidor gardent leur propre bandeau.
+    assert 'class="nt-wordmark"' not in client.get("/emplois/").content.decode()
+
+
+@pytest.mark.django_db
+def test_l_ananas_est_decoratif_et_se_tait_si_on_le_demande(client):
+    """Un ornement ne doit ni parler aux lecteurs d'écran ni imposer son mouvement."""
+    page = client.get("/nos-terroirs/").content.decode()
+    assert 'id="nt-ananas"' in page and 'aria-hidden="true"' in page
+    # Le mouvement se coupe des deux côtés : en CSS et dans le script.
+    assert "@media (prefers-reduced-motion: reduce)" in page
+    assert "matchMedia('(prefers-reduced-motion: reduce)')" in page
+    assert "if (doux.matches) return;" in page
+    # Trois plans à des profondeurs distinctes : c'est ce qui fait le volume.
+    assert "transform-style: preserve-3d" in page
+    assert "translateZ(-70px)" in page and "translateZ(48px)" in page
+
+
+@pytest.mark.django_db
+def test_l_accueil_defend_la_souverainete_numerique(client):
+    """La promesse de données n'est pas qu'une case à cocher : elle a sa bande."""
+    page = client.get("/").content.decode()
+    assert "souveraineté alimentaire" in page and "souveraineté numérique" in page
+    assert "Hébergement en France" in page and "Jamais revendues" in page
+    # Couleur explicite : une règle globale sur les titres bat l'héritage, et
+    # la question ressortait sombre sur sombre.
+    assert ".lp-souv-q {\n    color: var(--page);" in page
+
+
+@pytest.mark.django_db
+def test_l_accueil_occupe_toute_la_largeur(client):
+    """Pleine largeur pour les grilles, lignes bornées pour le texte."""
+    page = client.get("/").content.decode()
+    assert ".lp-wrap { padding-inline: var(--lp-gutter); }" in page
+    # Ni le conteneur ni le bandeau ne sont plus bornés — sinon la marque
+    # resterait en retrait pendant que les sections partent au bord.
+    assert "--lp-max" not in page
+    # Le héros garde une colonne lisible malgré la largeur disponible.
+    assert ".lp-hero-texte { max-width: 40rem; }" in page

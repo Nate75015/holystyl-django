@@ -19,12 +19,73 @@
 
 {% block auth_content %}
 <style>
+  /* ── L'ananas ───────────────────────────────────────────────────
+     Trois plans à des profondeurs différentes dans une même scène : au
+     basculement, ils ne bougent pas de la même façon et l'objet prend du
+     volume. Un fruit plat qui pivote ne ferait qu'onduler.
+
+     Tout est en transformations — rien qui déclenche un recalcul de mise en
+     page — et l'ensemble est gelé si le système demande moins d'animations. */
+  /* Centré dans sa colonne, et large : c'est lui qui occupe le vide. La
+     perspective grandit avec l'objet — à distance égale, une pièce plus
+     grande se déformerait jusqu'à l'anamorphose. */
+  .nt-ananas {
+    perspective: 1200px; width: clamp(190px, 24vw, 430px);
+    margin-inline: auto; cursor: pointer; touch-action: manipulation;
+  }
+  .nt-ananas-scene {
+    position: relative; transform-style: preserve-3d;
+    transition: transform .5s var(--nt-ease);
+    will-change: transform;
+  }
+  .nt-ananas-halo {
+    position: absolute; inset: 12% 6% 4%; border-radius: 50%;
+    background: radial-gradient(circle at 50% 45%, var(--nt-jaune), transparent 68%);
+    opacity: .34; filter: blur(16px); transform: translateZ(-70px);
+  }
+  .nt-ananas svg { position: relative; display: block; width: 100%; height: auto; }
+  .nt-ananas-lueur {
+    position: absolute; left: 26%; top: 40%; width: 26%; aspect-ratio: 1;
+    border-radius: 50%; background: rgba(255,255,255,.5); filter: blur(10px);
+    transform: translateZ(48px); opacity: .55; pointer-events: none;
+  }
+  /* Respiration au repos, suspendue pendant qu'on le manipule. */
+  @keyframes nt-flotte {
+    0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+    50%      { transform: translateY(-7px) rotate(1.2deg); }
+  }
+  .nt-ananas-scene:not(.is-tenu) { animation: nt-flotte 5.5s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .nt-ananas-scene, .nt-ananas-scene:not(.is-tenu) {
+      animation: none; transition: none; transform: none !important;
+    }
+  }
+
   /* Rythme propre à cette page ; les atomes viennent du partiel partagé. */
   .nt-corps { padding: clamp(34px, 4vw, 54px) var(--nt-gutter) 72px; }
 
   /* ── Bandeau de marque ──────────────────────────────────────────── */
   .nt-hero { background: var(--nt-noir); color: #FFFFFF; }
-  .nt-hero-inner { padding: clamp(46px, 6vw, 78px) var(--nt-gutter); }
+  .nt-hero-inner {
+    padding: clamp(46px, 6vw, 78px) var(--nt-gutter);
+    display: grid; gap: clamp(30px, 5vw, 64px); align-items: center;
+  }
+  /* Deux colonnes seulement quand il y a la place : en dessous, le fruit
+     passe sous le texte plutôt que de l'écraser. */
+  /* Texte et fruit forment un seul groupe, centré d'un bloc : chaque colonne
+     ne fait que la largeur de son contenu et `justify-content` répartit le
+     reste également de part et d'autre. Les marges extérieures sont donc
+     toujours égales, quelle que soit la fenêtre — rien à ajuster à la main. */
+  @media (min-width: 900px) {
+    .nt-hero-inner {
+      grid-template-columns: auto auto;
+      justify-content: center;
+      column-gap: clamp(40px, 6vw, 120px);
+    }
+  }
+  /* `fit-content` réduit le bloc à la largeur de son propre texte : sans cela
+     il occupait toute la colonne pour un contenu deux fois plus étroit. */
+  .nt-hero-texte { width: fit-content; max-width: 100%; margin-inline: auto; }
   /* Couleur explicite : une règle globale sur `h1` impose `--text` et bat
      l'héritage du bandeau — le titre ressortait noir sur noir. */
   .nt-marque {
@@ -89,6 +150,7 @@
 <div class="nt-page">
   <section class="nt-hero">
     <div class="nt-hero-inner">
+      <div class="nt-hero-texte">
       <h1 class="nt-marque">Nos <em>terroirs</em>
         <span class="nt-by">
           by Isidor
@@ -109,6 +171,51 @@
       <p class="nt-promesse">
         {% trans "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur." %}
       </p>
+      </div>
+
+      {% comment %}
+        Décoratif : `aria-hidden`, pour qu'un lecteur d'écran ne lise pas
+        « ananas » au milieu du nom de la marque.
+      {% endcomment %}
+      <div class="nt-ananas" id="nt-ananas" aria-hidden="true">
+        <div class="nt-ananas-scene">
+          <span class="nt-ananas-halo"></span>
+          <svg viewBox="0 0 200 300" role="presentation">
+            <defs>
+              <linearGradient id="nt-chair" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#FFD84D"/>
+                <stop offset="55%" stop-color="#FFC800"/>
+                <stop offset="100%" stop-color="#D89A00"/>
+              </linearGradient>
+              <linearGradient id="nt-feuille" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#1E6B4F"/>
+                <stop offset="100%" stop-color="#4FBF7F"/>
+              </linearGradient>
+              <clipPath id="nt-corps">
+                <ellipse cx="100" cy="196" rx="66" ry="92"/>
+              </clipPath>
+            </defs>
+
+            <g fill="url(#nt-feuille)">
+              <path d="M100 108C96 74 86 44 66 22c4 34 12 62 26 88Z"/>
+              <path d="M100 108c4-34 14-64 34-86-4 34-12 62-26 88Z"/>
+              <path d="M100 110C88 84 68 62 40 50c14 28 32 50 54 66Z"/>
+              <path d="M100 110c12-26 32-48 60-60-14 28-32 50-54 66Z"/>
+              <path d="M100 112c-2-30-2-58 0-84 2 26 2 54 0 84Z" opacity=".85"/>
+            </g>
+
+            <ellipse cx="100" cy="196" rx="66" ry="92" fill="url(#nt-chair)"/>
+            <g clip-path="url(#nt-corps)" stroke="#A97400" stroke-width="3.4" opacity=".55">
+              <path d="M-20 60 L240 220 M-20 110 L240 270 M-20 160 L240 320 M-20 210 L240 370 M-20 10 L240 170"/>
+              <path d="M240 60 L-20 220 M240 110 L-20 270 M240 160 L-20 320 M240 210 L-20 370 M240 10 L-20 170"/>
+            </g>
+            <ellipse cx="100" cy="196" rx="66" ry="92" fill="none"
+                     stroke="#8A5E00" stroke-width="3" opacity=".5"/>
+          </svg>
+          <span class="nt-ananas-lueur"></span>
+        </div>
+      </div>
+    </div>
     </div>
   </section>
 
@@ -216,6 +323,46 @@
 </div>
 
 <script>
+  // L'ananas suit le curseur : l'écart au centre devient une rotation, et les
+  // trois plans de la scène ne la subissent pas également — c'est ce décalage
+  // qui donne le volume. La transformation est posée dans l'événement même :
+  // `requestAnimationFrame` ajouterait une trame de latence pour rien, le
+  // navigateur cadence déjà `pointermove`.
+  (function () {
+    const zone = document.getElementById('nt-ananas');
+    if (!zone) return;
+    const scene = zone.querySelector('.nt-ananas-scene');
+    const doux = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (doux.matches) return;
+
+    const ANGLE = 26;   // degrés au bord
+    const LEVE = 14;    // rapprochement, en pixels
+
+    const suivre = (e) => {
+      const b = zone.getBoundingClientRect();
+      const x = (e.clientX - b.left) / b.width - 0.5;
+      const y = (e.clientY - b.top) / b.height - 0.5;
+      scene.style.transition = 'transform .12s linear';
+      scene.style.transform =
+        `rotateY(${(x * ANGLE).toFixed(2)}deg) rotateX(${(-y * ANGLE).toFixed(2)}deg) ` +
+        `translateZ(${LEVE}px) scale(1.06)`;
+    };
+
+    const prendre = () => { scene.classList.add('is-tenu'); };
+    const lacher = () => {
+      scene.classList.remove('is-tenu');
+      scene.style.transition = 'transform .55s var(--nt-ease)';
+      scene.style.transform = '';
+    };
+
+    zone.addEventListener('pointerenter', prendre);
+    zone.addEventListener('pointermove', suivre);
+    zone.addEventListener('pointerleave', lacher);
+    // Au doigt, le survol n'existe pas : on relâche à la fin du contact.
+    zone.addEventListener('pointercancel', lacher);
+    doux.addEventListener('change', (ev) => { if (ev.matches) lacher(); });
+  })();
+
   function terroirs() {
     const plat = (s) => (s || '').toString().normalize('NFD')
       .replace(/[̀-ͯ]/g, '').toLowerCase().trim();
@@ -267,3 +414,5 @@
   }
 </script>
 {% endblock %}
+
+{% block auth_footer %}{% include "partials/pied_terroirs.html" %}{% endblock %}

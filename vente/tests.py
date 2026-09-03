@@ -625,11 +625,22 @@ def test_le_marche_suit_la_convention_nos_terroirs(client):
 
 
 @pytest.mark.django_db
-def test_la_vitrine_des_producteurs_n_a_pas_de_panier(client):
-    """Elle présente les fermes ; on achète sur le marché."""
-    page = client.get("/nos-terroirs/").content.decode()
-    assert 'class="nt-bandeau"' in page
-    assert 'href="/panier/"' not in page
+def test_le_bandeau_ne_porte_le_panier_que_sur_les_pages_d_achat(client):
+    """La vitrine des producteurs présente les fermes ; on achète sur le marché.
+
+    Le pied de page, lui, sert de sommaire et peut mener au panier depuis
+    n'importe où : c'est le bandeau qui est contextuel.
+    """
+    import re
+
+    def bandeau(url):
+        corps = client.get(url).content.decode()
+        m = re.search(r'<header class="nt-bandeau".*?</header>', corps, re.S)
+        assert m, f"pas de bandeau sur {url}"
+        return m.group(0)
+
+    assert 'href="/panier/"' not in bandeau("/nos-terroirs/")
+    assert 'href="/panier/"' in bandeau("/marche/")
 
 
 @pytest.mark.django_db

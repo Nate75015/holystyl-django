@@ -1,0 +1,87 @@
+{% load i18n %}
+{% comment %}
+  Pied de page de « Nos terroirs ». Il ferme la page sur la promesse qui la
+  fonde — rien de prélevé sur les ventes — et rouvre les deux chemins : le
+  marché pour qui achète, Isidor pour qui produit.
+
+  Fond noir dans les deux thèmes, comme le bandeau est jaune dans les deux :
+  c'est une marque, elle ne change pas de couleur avec le réglage d'écran.
+{% endcomment %}
+<style>
+  .nt-pied { background: var(--nt-noir); color: #FFFFFF; }
+  .nt-pied-inner { padding: clamp(44px, 5vw, 66px) var(--nt-gutter) clamp(28px, 3vw, 40px); }
+  .nt-pied-grille { display: grid; gap: 36px; }
+  @media (min-width: 760px) { .nt-pied-grille { grid-template-columns: 2fr 1fr 1fr; } }
+  .nt-pied-marque {
+    display: inline-flex; align-items: baseline; gap: 8px;
+    font-size: 1.375rem; font-weight: 600; letter-spacing: -.025em; color: #FFFFFF;
+  }
+  .nt-pied-marque em { font-style: normal; color: var(--nt-jaune); }
+  .nt-pied-marque small { font-size: .625rem; letter-spacing: .16em;
+                          text-transform: uppercase; color: rgba(255,255,255,.55); }
+  .nt-pied-promesse { margin-top: 14px; max-width: 42ch; font-size: .9375rem;
+                      line-height: 1.6; color: rgba(255,255,255,.72); }
+  .nt-pied-zero {
+    display: inline-flex; align-items: baseline; gap: 8px; margin-top: 18px;
+    background: var(--nt-jaune); color: var(--nt-noir);
+    padding: 9px 16px; border-radius: 999px; font-weight: 600; font-size: .875rem;
+  }
+  .nt-pied-titre { font-size: .6875rem; font-weight: 600; letter-spacing: .13em;
+                   text-transform: uppercase; color: rgba(255,255,255,.5); }
+  .nt-pied-liens { margin-top: 14px; display: grid; gap: 10px; font-size: .875rem; }
+  .nt-pied-liens a { color: rgba(255,255,255,.82); transition: color .18s; }
+  .nt-pied-liens a:hover { color: var(--nt-jaune); }
+  .nt-pied-bas {
+    margin-top: clamp(34px, 4vw, 48px); padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,.16);
+    display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between;
+    font-size: .8125rem; color: rgba(255,255,255,.55);
+  }
+  .nt-pied-bas a { color: rgba(255,255,255,.55); transition: color .18s; }
+  .nt-pied-bas a:hover { color: rgba(255,255,255,.85); }
+  .nt-pied-legal { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+</style>
+
+<footer class="nt-pied">
+  <div class="nt-pied-inner">
+    <div class="nt-pied-grille">
+      <div>
+        <a href="{% url 'public:terroirs' %}" class="nt-pied-marque">
+          Nos <em>terroirs</em><small>by Isidor</small>
+        </a>
+        <p class="nt-pied-promesse">
+          {% trans "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur." %}
+        </p>
+        <span class="nt-pied-zero"><b>0 %</b> {% trans "de commission" %}</span>
+      </div>
+
+      <div>
+        <h2 class="nt-pied-titre">{% trans "Le marché" %}</h2>
+        <ul class="nt-pied-liens">
+          <li><a href="{% url 'vente:marche' %}">{% trans "Voir les produits" %}</a></li>
+          <li><a href="{% url 'public:terroirs' %}">{% trans "Nos producteurs" %}</a></li>
+          <li><a href="{% url 'vente:panier' %}">{% trans "Panier" %}</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="nt-pied-titre">Isidor</h2>
+        <ul class="nt-pied-liens">
+          <li><a href="{% url 'public:home' %}">{% trans "Accueil Isidor" %}</a></li>
+          <li><a href="{% url 'public:home' %}#tarif">{% trans "Tarif" %}</a></li>
+          <li><a href="{% url 'equipe:emplois' %}">{% trans "Offres d'emploi" %}</a></li>
+          <li><a href="{% url 'accounts:login' %}">{% trans "Connexion" %}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nt-pied-bas">
+      <p>{% trans "© 2026 Isidor · Tous droits réservés" %}</p>
+      <div class="nt-pied-legal">
+        <a href="#">{% trans "Mentions légales" %}</a>
+        <a href="#">RGPD</a>
+        <a href="#">{% trans "Confidentialité" %}</a>
+      </div>
+    </div>
+  </div>
+</footer>
