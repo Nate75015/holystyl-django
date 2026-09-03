@@ -20678,3 +20678,111 @@ msgstr "Oscail"
 #: identite/models.py
 msgid "Coordonnées et mentions"
 msgstr "Sonraí agus fógraí"
+
+#: identite/models.py
+msgid "Autorité de délivrance"
+msgstr "Údarás eisiúna"
+
+#: identite/models.py
+msgid "autorité de délivrance"
+msgstr "údarás eisiúna"
+
+#: identite/models.py
+msgid "Préfecture, sous-préfecture, mairie ou consulat."
+msgstr "Préifeachtúireacht, fo-phréifeachtúireacht, halla baile nó consalacht."
+
+#: identite/models.py
+msgid "ex: Préfecture des Alpes-de-Haute-Provence"
+msgstr "e.g. Prefecture of Alpes-de-Haute-Provence"
+
+#: identite/models.py
+msgid "Nom d'usage"
+msgstr "Ainm úsáide"
+
+#: identite/models.py
+msgid "nom d'usage"
+msgstr "ainm úsáide"
+
+#: identite/models.py
+msgid "S'il diffère du nom de famille : c'est souvent lui qui figure sur les contrats."
+msgstr "Má tá sé difriúil ón sloinne: is minic é a bhíonn ar na conarthaí."
+
+#: identite/models.py
+msgid "seulement s'il diffère du nom de famille"
+msgstr "only if it differs from the family name"
+
+#: identite/models.py
+msgid "Validité prolongée de 5 ans"
+msgstr "Bailíocht sínte 5 bliana"
+
+#: identite/models.py
+msgid "validité prolongée de 5 ans"
+msgstr "validity extended by 5 years"
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : la date imprimée n'est plus la bonne."
+msgstr "Card issued to an adult between 2004 and 2013: the printed date is no longer correct."
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : valable cinq ans de plus en France, mais refusée par certains pays à l'étranger."
+msgstr "Issued to an adult between 2004 and 2013: valid five years longer in France, but refused by some countries abroad."
+
+#: identite/models.py
+msgid "La date imprimée sur la pièce."
+msgstr "An dáta atá priontáilte ar an gcáipéis."
+
+#: identite/templates/identite/pieces.html
+msgid "Lire la pièce"
+msgstr "Léigh an cháipéis"
+
+#: identite/templates/identite/pieces.html
+msgid "Photographiez la pièce ou déposez le PDF : l'Agent IA en lit le titulaire, le numéro, l'autorité et les dates. Il ignore la date de naissance, l'adresse et la taille. Relisez avant d'enregistrer."
+msgstr "Glac grianghraf den cháipéis nó cuir an PDF suas: léann an tOibrí IS an sealbhóir, an uimhir, an t-údarás agus na dátaí. Déanann sé neamhaird ar dháta breithe, seoladh agus airde. Seiceáil sula sábhálann tú."
+
+#: identite/templates/identite/pieces.html
+msgid "Votre signature"
+msgstr "Do shíniú"
+
+#: identite/templates/identite/pieces.html
+msgid "Elle s'apposera sur les documents que vous émettez — contrats de travail, attestations."
+msgstr "Cuirfear é ar na cáipéisí a eisíonn tú — conarthaí fostaíochta, teastais."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active"
+msgstr "Síniú gníomhach"
+
+#: identite/templates/identite/pieces.html
+msgid "signature active"
+msgstr "síniú gníomhach"
+
+#: identite/templates/identite/pieces.html
+msgid "Rendre active"
+msgstr "Déan gníomhach"
+
+#: identite/templates/identite/pieces.html
+msgid "Enregistrer la signature"
+msgstr "Sábháil an síniú"
+
+#: identite/templates/identite/pieces.html
+msgid "Signature enregistrée."
+msgstr "Síniú sábháilte."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active mise à jour."
+msgstr "Síniú gníomhach nuashonraithe."
+
+#: identite/templates/identite/pieces.html
+msgid "Tracé illisible : recommencez la signature."
+msgstr "Stríoc doléite: sínigh arís."
+
+#: identite/templates/identite/pieces.html
+msgid "L'employeur"
+msgstr "An fostóir"
+
+#: identite/templates/identite/pieces.html
+msgid "Le salarié"
+msgstr "An fostaí"
+
+#: identite/views.py
+msgid "Cette pièce n'existe plus."
+msgstr "Níl an cháipéis seo ann a thuilleadh."

@@ -20627,3 +20627,111 @@ msgstr "Åbn"
 #: identite/models.py
 msgid "Coordonnées et mentions"
 msgstr "Oplysninger og angivelser"
+
+#: identite/models.py
+msgid "Autorité de délivrance"
+msgstr "Udstedende myndighed"
+
+#: identite/models.py
+msgid "autorité de délivrance"
+msgstr "udstedende myndighed"
+
+#: identite/models.py
+msgid "Préfecture, sous-préfecture, mairie ou consulat."
+msgstr "Præfektur, underpræfektur, rådhus eller konsulat."
+
+#: identite/models.py
+msgid "ex: Préfecture des Alpes-de-Haute-Provence"
+msgstr "e.g. Prefecture of Alpes-de-Haute-Provence"
+
+#: identite/models.py
+msgid "Nom d'usage"
+msgstr "Brugsnavn"
+
+#: identite/models.py
+msgid "nom d'usage"
+msgstr "brugsnavn"
+
+#: identite/models.py
+msgid "S'il diffère du nom de famille : c'est souvent lui qui figure sur les contrats."
+msgstr "Hvis det afviger fra efternavnet: det står ofte på kontrakterne."
+
+#: identite/models.py
+msgid "seulement s'il diffère du nom de famille"
+msgstr "only if it differs from the family name"
+
+#: identite/models.py
+msgid "Validité prolongée de 5 ans"
+msgstr "Gyldighed forlænget med 5 år"
+
+#: identite/models.py
+msgid "validité prolongée de 5 ans"
+msgstr "validity extended by 5 years"
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : la date imprimée n'est plus la bonne."
+msgstr "Card issued to an adult between 2004 and 2013: the printed date is no longer correct."
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : valable cinq ans de plus en France, mais refusée par certains pays à l'étranger."
+msgstr "Issued to an adult between 2004 and 2013: valid five years longer in France, but refused by some countries abroad."
+
+#: identite/models.py
+msgid "La date imprimée sur la pièce."
+msgstr "Datoen trykt på dokumentet."
+
+#: identite/templates/identite/pieces.html
+msgid "Lire la pièce"
+msgstr "Læs dokumentet"
+
+#: identite/templates/identite/pieces.html
+msgid "Photographiez la pièce ou déposez le PDF : l'Agent IA en lit le titulaire, le numéro, l'autorité et les dates. Il ignore la date de naissance, l'adresse et la taille. Relisez avant d'enregistrer."
+msgstr "Fotografér dokumentet eller upload PDF'en: AI-agenten læser indehaver, nummer, myndighed og datoer. Fødselsdato, adresse og højde ignoreres. Tjek før du gemmer."
+
+#: identite/templates/identite/pieces.html
+msgid "Votre signature"
+msgstr "Din underskrift"
+
+#: identite/templates/identite/pieces.html
+msgid "Elle s'apposera sur les documents que vous émettez — contrats de travail, attestations."
+msgstr "Den påføres de dokumenter, du udsteder — ansættelseskontrakter, attester."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active"
+msgstr "Aktiv underskrift"
+
+#: identite/templates/identite/pieces.html
+msgid "signature active"
+msgstr "aktiv underskrift"
+
+#: identite/templates/identite/pieces.html
+msgid "Rendre active"
+msgstr "Gør aktiv"
+
+#: identite/templates/identite/pieces.html
+msgid "Enregistrer la signature"
+msgstr "Gem underskriften"
+
+#: identite/templates/identite/pieces.html
+msgid "Signature enregistrée."
+msgstr "Underskrift gemt."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active mise à jour."
+msgstr "Aktiv underskrift opdateret."
+
+#: identite/templates/identite/pieces.html
+msgid "Tracé illisible : recommencez la signature."
+msgstr "Ulæseligt streg: underskriv igen."
+
+#: identite/templates/identite/pieces.html
+msgid "L'employeur"
+msgstr "Arbejdsgiveren"
+
+#: identite/templates/identite/pieces.html
+msgid "Le salarié"
+msgstr "Medarbejderen"
+
+#: identite/views.py
+msgid "Cette pièce n'existe plus."
+msgstr "Dette dokument findes ikke længere."

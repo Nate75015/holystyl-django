@@ -20651,3 +20651,111 @@ msgstr "Deschide"
 #: identite/models.py
 msgid "Coordonnées et mentions"
 msgstr "Date și mențiuni"
+
+#: identite/models.py
+msgid "Autorité de délivrance"
+msgstr "Autoritatea emitentă"
+
+#: identite/models.py
+msgid "autorité de délivrance"
+msgstr "autoritatea emitentă"
+
+#: identite/models.py
+msgid "Préfecture, sous-préfecture, mairie ou consulat."
+msgstr "Prefectură, subprefectură, primărie sau consulat."
+
+#: identite/models.py
+msgid "ex: Préfecture des Alpes-de-Haute-Provence"
+msgstr "e.g. Prefecture of Alpes-de-Haute-Provence"
+
+#: identite/models.py
+msgid "Nom d'usage"
+msgstr "Nume de folosință"
+
+#: identite/models.py
+msgid "nom d'usage"
+msgstr "nume de folosință"
+
+#: identite/models.py
+msgid "S'il diffère du nom de famille : c'est souvent lui qui figure sur les contrats."
+msgstr "Dacă diferă de numele de familie: adesea el apare pe contracte."
+
+#: identite/models.py
+msgid "seulement s'il diffère du nom de famille"
+msgstr "only if it differs from the family name"
+
+#: identite/models.py
+msgid "Validité prolongée de 5 ans"
+msgstr "Valabilitate prelungită cu 5 ani"
+
+#: identite/models.py
+msgid "validité prolongée de 5 ans"
+msgstr "validity extended by 5 years"
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : la date imprimée n'est plus la bonne."
+msgstr "Card issued to an adult between 2004 and 2013: the printed date is no longer correct."
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : valable cinq ans de plus en France, mais refusée par certains pays à l'étranger."
+msgstr "Issued to an adult between 2004 and 2013: valid five years longer in France, but refused by some countries abroad."
+
+#: identite/models.py
+msgid "La date imprimée sur la pièce."
+msgstr "Data tipărită pe document."
+
+#: identite/templates/identite/pieces.html
+msgid "Lire la pièce"
+msgstr "Citiți documentul"
+
+#: identite/templates/identite/pieces.html
+msgid "Photographiez la pièce ou déposez le PDF : l'Agent IA en lit le titulaire, le numéro, l'autorité et les dates. Il ignore la date de naissance, l'adresse et la taille. Relisez avant d'enregistrer."
+msgstr "Fotografiați documentul sau încărcați PDF-ul: Agentul IA citește titularul, numărul, autoritatea și datele. Ignoră data nașterii, adresa și înălțimea. Verificați înainte de salvare."
+
+#: identite/templates/identite/pieces.html
+msgid "Votre signature"
+msgstr "Semnătura dumneavoastră"
+
+#: identite/templates/identite/pieces.html
+msgid "Elle s'apposera sur les documents que vous émettez — contrats de travail, attestations."
+msgstr "Va fi aplicată pe documentele pe care le emiteți — contracte de muncă, adeverințe."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active"
+msgstr "Semnătură activă"
+
+#: identite/templates/identite/pieces.html
+msgid "signature active"
+msgstr "semnătură activă"
+
+#: identite/templates/identite/pieces.html
+msgid "Rendre active"
+msgstr "Activează"
+
+#: identite/templates/identite/pieces.html
+msgid "Enregistrer la signature"
+msgstr "Salvați semnătura"
+
+#: identite/templates/identite/pieces.html
+msgid "Signature enregistrée."
+msgstr "Semnătură salvată."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active mise à jour."
+msgstr "Semnătura activă a fost actualizată."
+
+#: identite/templates/identite/pieces.html
+msgid "Tracé illisible : recommencez la signature."
+msgstr "Traseu ilizibil: semnați din nou."
+
+#: identite/templates/identite/pieces.html
+msgid "L'employeur"
+msgstr "Angajatorul"
+
+#: identite/templates/identite/pieces.html
+msgid "Le salarié"
+msgstr "Salariatul"
+
+#: identite/views.py
+msgid "Cette pièce n'existe plus."
+msgstr "Acest document nu mai există."

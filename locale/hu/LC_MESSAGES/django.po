@@ -20636,3 +20636,111 @@ msgstr "Megnyitás"
 #: identite/models.py
 msgid "Coordonnées et mentions"
 msgstr "Adatok és közlemények"
+
+#: identite/models.py
+msgid "Autorité de délivrance"
+msgstr "Kiállító hatóság"
+
+#: identite/models.py
+msgid "autorité de délivrance"
+msgstr "kiállító hatóság"
+
+#: identite/models.py
+msgid "Préfecture, sous-préfecture, mairie ou consulat."
+msgstr "Prefektúra, alprefektúra, polgármesteri hivatal vagy konzulátus."
+
+#: identite/models.py
+msgid "ex: Préfecture des Alpes-de-Haute-Provence"
+msgstr "e.g. Prefecture of Alpes-de-Haute-Provence"
+
+#: identite/models.py
+msgid "Nom d'usage"
+msgstr "Használt név"
+
+#: identite/models.py
+msgid "nom d'usage"
+msgstr "használt név"
+
+#: identite/models.py
+msgid "S'il diffère du nom de famille : c'est souvent lui qui figure sur les contrats."
+msgstr "Ha eltér a családi névtől: gyakran ez szerepel a szerződéseken."
+
+#: identite/models.py
+msgid "seulement s'il diffère du nom de famille"
+msgstr "only if it differs from the family name"
+
+#: identite/models.py
+msgid "Validité prolongée de 5 ans"
+msgstr "Érvényesség 5 évvel meghosszabbítva"
+
+#: identite/models.py
+msgid "validité prolongée de 5 ans"
+msgstr "validity extended by 5 years"
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : la date imprimée n'est plus la bonne."
+msgstr "Card issued to an adult between 2004 and 2013: the printed date is no longer correct."
+
+#: identite/models.py
+msgid "Carte délivrée à un majeur entre 2004 et 2013 : valable cinq ans de plus en France, mais refusée par certains pays à l'étranger."
+msgstr "Issued to an adult between 2004 and 2013: valid five years longer in France, but refused by some countries abroad."
+
+#: identite/models.py
+msgid "La date imprimée sur la pièce."
+msgstr "A dokumentumra nyomtatott dátum."
+
+#: identite/templates/identite/pieces.html
+msgid "Lire la pièce"
+msgstr "Dokumentum beolvasása"
+
+#: identite/templates/identite/pieces.html
+msgid "Photographiez la pièce ou déposez le PDF : l'Agent IA en lit le titulaire, le numéro, l'autorité et les dates. Il ignore la date de naissance, l'adresse et la taille. Relisez avant d'enregistrer."
+msgstr "Fényképezze le a dokumentumot vagy töltse fel a PDF-et: az AI-ügynök kiolvassa a tulajdonost, a számot, a hatóságot és a dátumokat. A születési dátumot, a címet és a magasságot figyelmen kívül hagyja. Mentés előtt ellenőrizze."
+
+#: identite/templates/identite/pieces.html
+msgid "Votre signature"
+msgstr "Az Ön aláírása"
+
+#: identite/templates/identite/pieces.html
+msgid "Elle s'apposera sur les documents que vous émettez — contrats de travail, attestations."
+msgstr "Az Ön által kiállított dokumentumokra kerül — munkaszerződések, igazolások."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active"
+msgstr "Aktív aláírás"
+
+#: identite/templates/identite/pieces.html
+msgid "signature active"
+msgstr "aktív aláírás"
+
+#: identite/templates/identite/pieces.html
+msgid "Rendre active"
+msgstr "Aktiválás"
+
+#: identite/templates/identite/pieces.html
+msgid "Enregistrer la signature"
+msgstr "Aláírás mentése"
+
+#: identite/templates/identite/pieces.html
+msgid "Signature enregistrée."
+msgstr "Aláírás mentve."
+
+#: identite/templates/identite/pieces.html
+msgid "Signature active mise à jour."
+msgstr "Aktív aláírás frissítve."
+
+#: identite/templates/identite/pieces.html
+msgid "Tracé illisible : recommencez la signature."
+msgstr "Olvashatatlan vonal: írja alá újra."
+
+#: identite/templates/identite/pieces.html
+msgid "L'employeur"
+msgstr "A munkáltató"
+
+#: identite/templates/identite/pieces.html
+msgid "Le salarié"
+msgstr "A munkavállaló"
+
+#: identite/views.py
+msgid "Cette pièce n'existe plus."
+msgstr "Ez a dokumentum már nem létezik."
