@@ -22,18 +22,32 @@ from . import facturation_electronique as fe
 from . import services, superpdp, ubl
 from client.models import Client
 
-from .models import Charge, Devis, Facture, Revenu
+from .models import Charge, Devis, Facture, IdentiteFacturation, Logo, Revenu
 from .services import compute_bilan
+
+
+def _to_int(valeur):
+    try:
+        return int(str(valeur).strip())
+    except (TypeError, ValueError):
+        return None
 
 
 def _exploitation(request):
     return Exploitation.objects.filter(owner=request.user).first()
 
 
+#: Séparateurs de milliers rencontrés à la saisie ou au copier-coller : une
+#: espace ordinaire, l'insécable, et l'insécable étroite que produit le
+#: formatage français. Sans elles, « 7 500 » était lu comme invalide et le
+#: montant se perdait sans que rien ne le dise.
+_BRUIT_NOMBRE = str.maketrans({" ": "", "\u00a0": "", "\u202f": "", "€": "", "%": ""})
+
+
 def _to_float(value):
-    """Montant saisi (« 12,50 » ou « 12.50 ») → float, ou None si vide/invalide."""
+    """Montant saisi (« 12,50 », « 7 500 », « 12.50 € ») → float, ou None."""
     try:
-        return float(str(value).replace(",", ".").strip())
+        return float(str(value).translate(_BRUIT_NOMBRE).replace(",", ".").strip())
     except (TypeError, ValueError):
         return None
 
@@ -276,6 +290,8 @@ def _contexte_editeur(request, exploitation) -> dict:
     """Ce que facture et devis partagent : émetteur, clients, mise en page."""
     return {
         "emetteur": _emetteur(exploitation),
+        "logos": (Logo.objects.filter(exploitation=exploitation)
+                  if exploitation else Logo.objects.none()),
         "clients": Client.objects.filter(exploitation=exploitation) if exploitation else [],
     }
 
@@ -320,9 +336,12 @@ def devis_create(request):
     if not exploitation:
         return redirect("finances:devis")
 
-    if request.FILES.get("logo"):
-        exploitation.logo = request.FILES["logo"]
-        exploitation.save(update_fields=["logo", "updated_at"])
+    # Le logo se choisit dans la bibliothèque : le document en retient un,
+    # et rien n'est téléversé depuis ici. Vide → celui par défaut s'applique
+    # à l'impression, de sorte qu'un document suive la marque courante.
+    choisi = _to_int(request.POST.get("logo"))
+    logo = (Logo.objects.filter(pk=choisi, exploitation=exploitation).first()
+            if choisi else None)
 
     client = _client_depuis_post(request, exploitation)
     if not client:
@@ -342,6 +361,7 @@ def devis_create(request):
         date_emission=_jour(request.POST.get("date_emission")) or timezone.now(),
         date_validite=_jour(request.POST.get("date_validite")),
         lignes=lignes,
+        logo=logo,
         notes=(request.POST.get("notes") or "").strip(),
         taux_tva=lignes[0]["taux_tva"],
         statut=Devis.Statut.ENVOYE if request.POST.get("action") == "envoyer" else Devis.Statut.BROUILLON,
@@ -432,7 +452,7 @@ def devis_signature(request, pk):
 
     return render(request, "finances/devis_signature.html", {
         "devis": document,
-        "emetteur": _emetteur(document.exploitation),
+        "emetteur": _emetteur(document.exploitation, document),
         "retour": retour,
         "mention_attendue": _("Bon pour accord"),
         "page_title": _("Signature du devis %(numero)s") % {"numero": document.numero},
@@ -461,6 +481,9 @@ def devis_convertir(request, pk):
         date_emission=timezone.now(),
         date_echeance=timezone.now() + timedelta(days=30),
         lignes=document.lignes,
+        # La facture reprend le logo du devis : le client a signé sous cette
+        # marque, elle ne doit pas changer en cours de route.
+        logo=document.logo,
         notes=document.notes,
         taux_tva=document.taux_tva,
         montant_ht=document.montant_ht,
@@ -477,18 +500,187 @@ def devis_convertir(request, pk):
     return redirect("finances:facturation")
 
 
-def _emetteur(exploitation) -> dict:
-    """Bloc émetteur de la facture, tel qu'il s'imprime en tête."""
+# ── Logos ───────────────────────────────────────────────────────────
+#
+# Une bibliothèque, pas un champ : les documents viennent y choisir. Elle vit
+# dans Finance parce que c'est là qu'on l'utilise, même si le logo appartient
+# à l'exploitation.
+
+
+@login_required
+def logos(request):
+    exploitation = _exploitation(request)
+    liste = (Logo.objects.filter(exploitation=exploitation)
+             if exploitation else Logo.objects.none())
+    return render(request, "finances/logos.html", {
+        "logos": liste,
+        "extensions": ",".join(sorted(Logo.EXTENSIONS)),
+        "page_title": _("Logos"),
+    })
+
+
+def _logo_refuse(request, fichier) -> bool:
+    """Dit non, et pourquoi, quand le fichier ne peut pas servir de logo."""
+    import os
+
+    if os.path.splitext(fichier.name)[1].lower() not in Logo.EXTENSIONS:
+        messages.error(request, _("Image non acceptée : PNG, JPEG, WebP ou SVG."))
+        return True
+    if fichier.size > Logo.TAILLE_MAX:
+        messages.error(request, _("Le logo ne doit pas dépasser 2 Mo."))
+        return True
+    return False
+
+
+@login_required
+@require_POST
+def logo_ajouter(request):
+    exploitation = _exploitation(request)
+    fichier = request.FILES.get("fichier")
+    if exploitation is None or not fichier:
+        return redirect("finances:logos")
+    if _logo_refuse(request, fichier):
+        return redirect("finances:logos")
+
+    # Le premier déposé devient le défaut : sans cela la bibliothèque serait
+    # pleine et aucun document ne saurait quoi prendre.
+    premier = not Logo.objects.filter(exploitation=exploitation).exists()
+    Logo.objects.create(
+        exploitation=exploitation, fichier=fichier,
+        nom=(request.POST.get("nom") or "").strip()[:120],
+        par_defaut=premier or request.POST.get("par_defaut") == "on")
+    messages.success(request, _("Logo ajouté."))
+    return redirect("finances:logos")
+
+
+@login_required
+@require_POST
+def logo_modifier(request, pk):
+    """Renomme, remplace l'image, ou désigne le logo par défaut."""
+    exploitation = _exploitation(request)
+    logo = get_object_or_404(Logo, pk=pk, exploitation=exploitation)
+
+    if "nom" in request.POST:
+        logo.nom = (request.POST.get("nom") or "").strip()[:120]
+    fichier = request.FILES.get("fichier")
+    if fichier:
+        if _logo_refuse(request, fichier):
+            return redirect("finances:logos")
+        logo.fichier = fichier
+    if request.POST.get("par_defaut") == "on":
+        logo.par_defaut = True
+
+    logo.save()
+    messages.success(request, _("Logo modifié."))
+    return redirect("finances:logos")
+
+
+@login_required
+@require_POST
+def logo_supprimer(request, pk):
+    exploitation = _exploitation(request)
+    logo = get_object_or_404(Logo, pk=pk, exploitation=exploitation)
+    etait_defaut = logo.par_defaut
+    logo.fichier.delete(save=False)
+    logo.delete()
+
+    # Supprimer le défaut ne doit pas laisser la bibliothèque sans référence.
+    if etait_defaut:
+        suivant = Logo.objects.filter(exploitation=exploitation).first()
+        if suivant:
+            suivant.par_defaut = True
+            suivant.save(update_fields=["par_defaut"])
+    messages.success(request, _("Logo supprimé."))
+    return redirect("finances:logos")
+
+
+# ── Identité de facturation ─────────────────────────────────────────
+
+
+def _identite(exploitation):
+    """L'identité de facturation, créée à la volée si elle manque."""
+    if exploitation is None:
+        return None
+    identite, _cree = IdentiteFacturation.objects.get_or_create(exploitation=exploitation)
+    return identite
+
+
+def _societe_principale(exploitation):
+    """La société qui émet : source de la raison sociale, du SIRET, de la TVA."""
+    if exploitation is None:
+        return None
+    return (exploitation.entreprises_liees.filter(principale=True).first()
+            or exploitation.entreprises_liees.first())
+
+
+def _adresse_principale(exploitation):
+    """L'adresse qui s'imprime. Les champs de l'exploitation n'en sont qu'un
+    miroir, et un miroir peut avoir divergé — sur une facture, cela vaut une
+    adresse fausse."""
+    if exploitation is None:
+        return None
+    return (exploitation.adresses.filter(principale=True).first()
+            or exploitation.adresses.first())
+
+
+@login_required
+def coordonnees(request):
+    exploitation = _exploitation(request)
+    identite_obj = _identite(exploitation)
+
+    if request.method == "POST" and identite_obj:
+        for champ in ("banque", "iban", "bic", "conditions_reglement", "rcs", "mentions"):
+            setattr(identite_obj, champ, (request.POST.get(champ) or "").strip())
+        identite_obj.iban = identite_obj.iban.replace(" ", "").upper()
+        identite_obj.capital_social = _to_float(request.POST.get("capital_social"))
+        identite_obj.save()
+        messages.success(request, _("Identité de facturation enregistrée."))
+        return redirect("finances:coordonnees")
+
+    return render(request, "finances/coordonnees.html", {
+        "identite": identite_obj,
+        "societe": _societe_principale(exploitation),
+        "adresse": _adresse_principale(exploitation),
+        "page_title": _("Identité de facturation"),
+    })
+
+
+def logo_du_document(document, exploitation):
+    """Le logo à imprimer : celui du document, sinon celui par défaut."""
+    if getattr(document, "logo", None):
+        return document.logo
+    return Logo.objects.filter(exploitation=exploitation, par_defaut=True).first()
+
+
+def _emetteur(exploitation, document=None) -> dict:
+    """Bloc émetteur du document, tel qu'il s'imprime en tête.
+
+    Le logo du document l'emporte sur celui par défaut : un devis signé sous
+    une marque ne peut pas s'afficher plus tard sous une autre.
+    """
     if not exploitation:
         return {}
-    commune = " ".join(m for m in (exploitation.postal_code, exploitation.city) if m)
+    # Chaque information vient de sa source, jamais du miroir posé sur
+    # l'exploitation : sur un document à valeur légale, un miroir qui a
+    # divergé imprime une adresse fausse.
+    societe = _societe_principale(exploitation)
+    adresse = _adresse_principale(exploitation)
+    identite_obj = getattr(exploitation, "identite_facturation", None)
+    commune = " ".join(m for m in (
+        (adresse.postal_code if adresse else exploitation.postal_code),
+        (adresse.city if adresse else exploitation.city)) if m)
     return {
-        "nom": exploitation.raison_sociale or exploitation.name,
-        "adresse": exploitation.address,
+        "nom": (societe.raison_sociale if societe and societe.raison_sociale
+                else exploitation.raison_sociale or exploitation.name),
+        "adresse": (adresse.ligne if adresse else exploitation.address),
         "commune": commune,
-        "siret": exploitation.siret,
-        "tva": exploitation.tva_intra,
-        "logo_url": exploitation.logo.url if exploitation.logo else "",
+        "siret": (societe.siret if societe and societe.siret else exploitation.siret),
+        "tva": (societe.tva_intra if societe and societe.tva_intra else exploitation.tva_intra),
+        "identite": identite_obj,
+        # Le logo vient de la bibliothèque : `Exploitation.logo` reste pour
+        # les usages historiques, il n'est plus la source des documents.
+        "logo_url": (lambda d: d.fichier.url if d else "")(
+            logo_du_document(document, exploitation)),
     }
 
 
@@ -500,11 +692,10 @@ def facture_create(request):
     if not exploitation:
         return redirect("finances:facturation")
 
-    # Le logo appartient à l'exploitation : déposé ici, il sert aux documents
-    # suivants sans avoir à le redonner.
-    if request.FILES.get("logo"):
-        exploitation.logo = request.FILES["logo"]
-        exploitation.save(update_fields=["logo", "updated_at"])
+    # Le logo se choisit dans la bibliothèque, il ne se téléverse plus ici.
+    choisi = _to_int(request.POST.get("logo"))
+    logo = (Logo.objects.filter(pk=choisi, exploitation=exploitation).first()
+            if choisi else None)
 
     client = _client_depuis_post(request, exploitation)
     if not client:
@@ -524,6 +715,7 @@ def facture_create(request):
         date_emission=_jour(request.POST.get("date_emission")) or timezone.now(),
         date_echeance=_jour(request.POST.get("date_echeance")),
         lignes=lignes,
+        logo=logo,
         notes=(request.POST.get("notes") or "").strip(),
         taux_tva=lignes[0]["taux_tva"],
     )

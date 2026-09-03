@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "pac",
     "environnement",
     "finances",
+    "identite",
     "contrat",
     "client",
     "reseaux",

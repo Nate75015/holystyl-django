@@ -34,6 +34,7 @@ urlpatterns = [
     path("", include("environnement.urls")),
     path("", include("finances.urls")),
     path("", include("contrat.urls")),
+    path("", include("identite.urls")),
     path("", include("client.urls")),
     path("", include("reseaux.urls")),
     path("", include("stock.urls")),

@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% comment %}
+  Les pièces personnelles : carte, passeport, signature. On les cherche
+  toujours dans l'urgence — un contrôle, un dossier, un départ —, d'où la
+  date d'expiration en champ plutôt qu'en note, et l'alerte en tête.
+
+  `items-center` est absent du voile à dessein : sur un conteneur qui défile,
+  il rend le haut inatteignable. Le centrage passe par `my-auto`.
+{% endcomment %}
+<section class="space-y-5" x-data="{ modal: false, type: '{{ type_actif|default:"carte" }}' }">
+
+  <p class="hs-crumb">{% trans "Identité" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Identité" %}</h1>
+    <button type="button" @click="modal = true" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une pièce" %}
+    </button>
+  </div>
+
+  <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+    <a href="{% url 'identite:pieces' %}"
+       class="hs-tab {% if not type_actif %}hs-tab-active{% endif %}">{% trans "Toutes" %}</a>
+    {% for value, label in types %}
+      <a href="{% url 'identite:pieces_type' value %}"
+         class="hs-tab whitespace-nowrap {% if type_actif == value %}hs-tab-active{% endif %}">{{ label }}</a>
+    {% endfor %}
+  </div>
+
+  {# ── Ce qui périme, avant qu'on en ait besoin ── #}
+  {% if alertes %}
+    <div class="rounded-[10px] px-4 py-3 text-[13px]"
+         style="border: 0.5px solid var(--warning); background: color-mix(in srgb, var(--warning) 8%, transparent)">
+      <p class="font-medium" style="color: var(--warning)">
+        {% blocktrans count n=alertes|length %}Une pièce demande votre attention{% plural %}{{ n }} pièces demandent votre attention{% endblocktrans %}
+      </p>
+      {% for p in alertes %}
+        <p class="mt-1" style="color: var(--text-secondary)">
+          {{ p.get_type_piece_display }}{% if p.titulaire %} · {{ p.titulaire }}{% endif %} —
+          {% if p.perimee %}
+            <span style="color: var(--danger)">{% trans "périmée depuis le" %} {{ p.expire_le|date:"d/m/Y" }}</span>
+          {% else %}
+            {% trans "expire le" %} {{ p.expire_le|date:"d/m/Y" }} ({{ p.jours_avant_expiration }} {% trans "jours" %})
+          {% endif %}
+        </p>
+      {% endfor %}
+      <p class="mt-1" style="color: var(--text-muted)">{% trans "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance." %}</p>
+    </div>
+  {% endif %}
+
+  {% if pieces %}
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for p in pieces %}
+        <div class="hs-card p-5">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div class="min-w-0">
+              <p class="text-[15px] font-medium">{{ p.get_type_piece_display }}</p>
+              {% if p.titulaire %}<p class="text-[12px]" style="color: var(--text-muted)">{{ p.titulaire }}</p>{% endif %}
+            </div>
+            {% if p.perimee %}
+              <span class="hs-badge hs-badge-danger shrink-0">{% trans "Périmée" %}</span>
+            {% elif p.expire_bientot %}
+              <span class="hs-badge hs-badge-neutral shrink-0">{{ p.jours_avant_expiration }} {% trans "jours" %}</span>
+            {% elif p.est_signature %}
+              <span class="hs-badge hs-badge-neutral shrink-0">{% trans "Signature" %}</span>
+            {% endif %}
+          </div>
+
+          {% if p.est_signature and p.fichier %}
+            <div class="mt-3 grid h-24 place-items-center overflow-hidden rounded-[10px]"
+                 style="background: var(--surface-alt)">
+              <img src="{{ p.fichier.url }}" alt="{% trans 'Signature' %}" class="max-h-20 max-w-full object-contain">
+            </div>
+          {% endif %}
+
+          <p class="mt-3 text-[12px]" style="color: var(--text-secondary)">
+            {% if p.numero %}{% trans "n°" %} {{ p.numero }}{% endif %}
+            {% if p.delivre_le %}{% if p.numero %} · {% endif %}{% trans "délivrée le" %} {{ p.delivre_le|date:"d/m/Y" }}{% endif %}
+            {% if p.expire_le %} · {% trans "expire le" %} {{ p.expire_le|date:"d/m/Y" }}{% endif %}
+          </p>
+          {% if p.notes %}<p class="mt-2 whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ p.notes }}</p>{% endif %}
+
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <a href="{{ p.fichier.url }}" target="_blank" rel="noopener"
+               class="hs-btn-outline">{% trans "Ouvrir" %}</a>
+            <form method="post" action="{% url 'identite:piece_supprimer' p.pk %}"
+                  onsubmit="return confirm('{% trans "Supprimer cette pièce ?" %}')" class="ml-auto leading-none">
+              {% csrf_token %}
+              <button type="submit" title="{% trans 'Supprimer' %}" style="color: var(--text-muted)">
+                <span class="material-icons-round text-[17px]">delete</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="hs-card px-14 py-10 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucune pièce enregistrée" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut." %}
+      </p>
+      <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Ajouter une pièce" %}</button>
+    </div>
+  {% endif %}
+
+  {# ── Ajout ── #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="modal = false" class="my-auto flex w-full max-w-xl justify-center">
+      <div class="hs-popover w-full p-5">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-[16px] font-medium">{% trans "Ajouter une pièce" %}</h2>
+          <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+        </div>
+        <form method="post" action="{% url 'identite:piece_ajouter' %}"
+              enctype="multipart/form-data" class="space-y-3">
+          {% csrf_token %}
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="p-type" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type" %}</label>
+              <select id="p-type" name="type_piece" x-model="type">
+                {% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label for="p-titulaire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Titulaire" %}</label>
+              <input id="p-titulaire" name="titulaire">
+            </div>
+          </div>
+
+          <div>
+            <label for="p-fichier" class="mb-1 block text-sm" style="color: var(--text-secondary)">
+              {% trans "Fichier" %} <span style="color: var(--danger)">*</span>
+            </label>
+            <input id="p-fichier" type="file" name="fichier" accept="{{ extensions }}"
+                   capture="environment" required class="w-full text-[13px]">
+            <p class="mt-1 text-[12px]" style="color: var(--text-muted)">{% trans "PDF ou photo, 10 Mo maximum." %}</p>
+          </div>
+
+          {% comment %} Une signature ne se périme pas : ces champs disparaissent. {% endcomment %}
+          <div x-show="type !== 'signature'" x-cloak class="grid grid-cols-3 gap-3">
+            <div>
+              <label for="p-numero" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Numéro" %}</label>
+              <input id="p-numero" name="numero">
+            </div>
+            <div>
+              <label for="p-delivre" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Délivrée le" %}</label>
+              <input id="p-delivre" name="delivre_le" type="date">
+            </div>
+            <div>
+              <label for="p-expire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Expire le" %}</label>
+              <input id="p-expire" name="expire_le" type="date">
+            </div>
+          </div>
+
+          <div>
+            <label for="p-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+            <textarea id="p-notes" name="notes" rows="2"></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+            <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

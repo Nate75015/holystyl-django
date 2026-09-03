@@ -105,6 +105,7 @@ def layout(request):
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
                 {"label": _("Facture"), "url_name": "finances:facturation", "icon": "receipt_long"},
                 {"label": _("Devis"), "url_name": "finances:devis", "icon": "request_quote"},
+                {"label": _("Logos"), "url_name": "finances:logos", "icon": "branding_watermark"},
                 {"label": _("PAC"), "url_name": "pac:pac", "icon": "account_balance"},
             ],
         },
@@ -128,6 +129,20 @@ def layout(request):
                 {"label": _("Contrats de travail"), "url_name": "equipe:contrats", "icon": "assignment_ind"},
                 {"label": _("Offres d'emploi"), "url_name": "equipe:offres", "icon": "work"},
                 {"label": _("Paie"), "url_name": "equipe:paie", "icon": "payments"},
+            ],
+        },
+        {
+            # Les pièces personnelles : elles ne relèvent ni de l'exploitation
+            # ni d'un contrat, et on les cherche toujours dans l'urgence.
+            "label": _("Identité"), "key": "identite",
+            "url_name": "identite:pieces",
+            "items": [
+                {"label": _("Carte d'identité"), "url_name": "identite:pieces_type",
+                 "args": ["carte"], "icon": "badge"},
+                {"label": _("Passeport"), "url_name": "identite:pieces_type",
+                 "args": ["passeport"], "icon": "book"},
+                {"label": _("Signature"), "url_name": "identite:pieces_type",
+                 "args": ["signature"], "icon": "draw"},
             ],
         },
         {

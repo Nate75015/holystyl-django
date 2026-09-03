@@ -29,23 +29,42 @@
       {# En-tête : logo + émetteur / destinataire #}
       <div class="grid gap-6 sm:grid-cols-2">
         <div class="space-y-4">
-          {# Logo — enregistré sur l'exploitation, donc repris sur les factures suivantes #}
-          <label class="hs-champ-papier flex h-24 cursor-pointer items-center gap-4 px-4">
-            <span class="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full" style="background: var(--surface-alt)">
-              <template x-if="apercuLogo">
-                <img :src="apercuLogo" alt="" class="h-full w-full object-cover">
-              </template>
-              <template x-if="!apercuLogo">
-                <span class="material-icons-round text-[26px]" style="color: var(--text-muted)">image</span>
-              </template>
-            </span>
-            <span class="min-w-0 flex-1 truncate text-sm" style="color: var(--text-secondary)"
-                  x-text="nomLogo || '{% trans "Importer votre logo" %}'">{% trans "Importer votre logo" %}</span>
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full" style="border: 0.5px solid var(--border); color: var(--text-secondary)">
-              <span class="material-icons-round text-[18px]">file_upload</span>
-            </span>
-            <input type="file" name="logo" accept="image/*" class="hidden" @change="choisirLogo($event)">
-          </label>
+          {% comment %}
+            Le logo se choisit dans la bibliothèque de Finance, il ne se
+            téléverse plus depuis un document : la même marque doit pouvoir
+            servir la facture suivante sans être redonnée.
+          {% endcomment %}
+          {% if logos %}
+            <div class="hs-champ-papier flex items-center gap-4 px-4 py-3"
+                 x-data="{ choix: '{{ logos.0.pk }}' }">
+              <span class="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-[10px]"
+                    style="background: var(--surface-alt)">
+                {% for l in logos %}
+                  <img x-show="choix === '{{ l.pk }}'" x-cloak src="{{ l.fichier.url }}"
+                       alt="{{ l.nom }}" class="max-h-14 max-w-full object-contain">
+                {% endfor %}
+              </span>
+              <div class="min-w-0 flex-1">
+                <label for="doc-logo" class="mb-1 block text-[11px] uppercase tracking-wide"
+                       style="color: var(--text-muted)">{% trans "Logo" %}</label>
+                <select id="doc-logo" name="logo" x-model="choix" class="text-sm">
+                  {% for l in logos %}
+                    <option value="{{ l.pk }}" {% if l.par_defaut %}selected{% endif %}>
+                      {{ l.nom }}{% if l.par_defaut %} · {% trans "par défaut" %}{% endif %}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          {% else %}
+            <a href="{% url 'finances:logos' %}"
+               class="hs-champ-papier flex items-center gap-3 px-4 py-3 text-sm"
+               style="color: var(--text-secondary)">
+              <span class="material-icons-round text-[20px]" style="color: var(--text-muted)">branding_watermark</span>
+              {% trans "Ajouter un logo dans Finance › Logos" %}
+              <span class="material-icons-round ml-auto text-[16px]">arrow_forward</span>
+            </a>
+          {% endif %}
 
           {# Émetteur : lecture seule, il vient de la fiche exploitation #}
           <div class="hs-champ-papier px-4 py-3 text-sm leading-relaxed">
@@ -255,16 +274,8 @@
       emission: jour(new Date()),
       reglement: '{% if mode == "devis" %}30{% else %}30{% endif %}',
       echeance: jour(new Date(Date.now() + 30 * 864e5)),
-      apercuLogo: '{{ emetteur.logo_url|default:"" }}',
-      nomLogo: '',
       lignes: [{ designation: '', quantite: 1, unite: 'C62', prix: '', tva: 20 }],
 
-      choisirLogo(e) {
-        const fichier = e.target.files[0];
-        if (!fichier) return;
-        this.nomLogo = fichier.name;
-        this.apercuLogo = URL.createObjectURL(fichier);
-      },
       remplirClient() {
         const opt = this.$refs ? null : null;
         const select = document.querySelector('select[name="client"]');

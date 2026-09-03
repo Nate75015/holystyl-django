@@ -23,6 +23,14 @@
     <div class="grid gap-6 sm:grid-cols-2">
       <div class="text-sm leading-relaxed">
         <p class="text-xs font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Émetteur" %}</p>
+        {% comment %}
+          C'est le seul document que le client regarde : le logo y a sa place,
+          il était jusqu'ici capté sans jamais être montré.
+        {% endcomment %}
+        {% if emetteur.logo_url %}
+          <img src="{{ emetteur.logo_url }}" alt="{{ emetteur.nom }}"
+               style="max-height: 52px; max-width: 180px; object-fit: contain; margin: 8px 0 10px">
+        {% endif %}
         <p class="mt-1 font-medium">{{ emetteur.nom }}</p>
         {% if emetteur.adresse %}<p style="color: var(--text-secondary)">{{ emetteur.adresse }}</p>{% endif %}
         {% if emetteur.commune %}<p style="color: var(--text-secondary)">{{ emetteur.commune }}</p>{% endif %}
@@ -37,6 +45,33 @@
         {% endif %}
       </div>
     </div>
+      {% comment %}
+        Coordonnées de paiement et mentions obligatoires : sans elles, le
+        client doit redemander l'IBAN, et la facture est incomplète au regard
+        de la loi entre professionnels.
+      {% endcomment %}
+      {% if emetteur.identite.peut_encaisser or emetteur.identite.mentions %}
+        <div class="mt-6 space-y-2 border-t pt-4 text-[12px]"
+             style="border-color: var(--border); color: var(--text-secondary)">
+          {% if emetteur.identite.peut_encaisser %}
+            <p>
+              <span class="font-medium">{% trans "Règlement" %}</span>
+              {% if emetteur.identite.conditions_reglement %} · {{ emetteur.identite.conditions_reglement }}{% endif %}
+              {% if emetteur.identite.banque %} · {{ emetteur.identite.banque }}{% endif %}
+            </p>
+            <p class="tabular-nums">IBAN {{ emetteur.identite.iban_lisible }}{% if emetteur.identite.bic %} · BIC {{ emetteur.identite.bic }}{% endif %}</p>
+          {% endif %}
+          {% if emetteur.identite.mentions %}
+            <p class="whitespace-pre-line">{{ emetteur.identite.mentions }}</p>
+          {% endif %}
+          {% if emetteur.identite.rcs or emetteur.identite.capital_social %}
+            <p style="color: var(--text-muted)">
+              {{ emetteur.identite.rcs }}{% if emetteur.identite.rcs and emetteur.identite.capital_social %} · {% endif %}{% if emetteur.identite.capital_social %}{% blocktrans with c=emetteur.identite.capital_social|floatformat:"-2" %}Capital social {{ c }} €{% endblocktrans %}{% endif %}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
 
     <div class="grid gap-4 text-sm sm:grid-cols-3">
       <div>
