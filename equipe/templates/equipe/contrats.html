@@ -22,55 +22,25 @@
     {% trans "Ces modèles sont des points de départ : les clauses obligatoires, la période d'essai et la rémunération dépendent de la convention collective applicable. Faites relire un contrat avant de le remettre." %}
   </p>
 
-  {# ── Établir un contrat ── #}
-  <form x-show="ouvert === 'contrat'" x-cloak method="post" action="{% url 'equipe:contrat_create' %}"
-        class="hs-card p-6 sm:p-8">
-    {% csrf_token %}
-    <h2 class="mb-4 text-[15px] font-medium">{% trans "Établir un contrat" %}</h2>
+  {# ── Établir un contrat : le modèle choisi s'ouvre en document à remplir ── #}
+  <div x-show="ouvert === 'contrat'" x-cloak class="hs-card p-6 sm:p-8">
+    <h2 class="text-[15px] font-medium">{% trans "Établir un contrat" %}</h2>
+    <p class="mb-4 mt-1 text-[13px]" style="color: var(--text-secondary)">
+      {% trans "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà." %}
+    </p>
     {% if membres and modeles %}
-      <div class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-membre">{% trans "Salarié" %} <span style="color: var(--danger)">*</span></label>
-          <select id="c-membre" name="membre" required class="w-full">
-            <option value="">—</option>
-            {% for m in membres %}<option value="{{ m.pk }}">{{ m.name }}</option>{% endfor %}
-          </select>
-        </div>
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-modele">{% trans "Modèle" %} <span style="color: var(--danger)">*</span></label>
-          <select id="c-modele" name="modele" required class="w-full">
-            <option value="">—</option>
-            {% for m in modeles %}<option value="{{ m.pk }}">{{ m.nom }}</option>{% endfor %}
-          </select>
-        </div>
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-poste">{% trans "Poste" %}</label>
-          <input id="c-poste" name="poste" class="w-full" placeholder="{% trans 'ex : ouvrier arboricole' %}">
-        </div>
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-lieu">{% trans "Lieu de travail" %}</label>
-          <input id="c-lieu" name="lieu" class="w-full">
-        </div>
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-debut">{% trans "Début" %}</label>
-          <input id="c-debut" type="date" name="date_debut" class="w-full">
-        </div>
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-fin">{% trans "Fin" %} <span class="font-normal" style="color: var(--text-muted)">({% trans "si CDD" %})</span></label>
-          <input id="c-fin" type="date" name="date_fin" class="w-full">
-        </div>
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-heures">{% trans "Heures par semaine" %}</label>
-          <input id="c-heures" name="duree_hebdo" inputmode="decimal" class="w-full" placeholder="35">
-        </div>
-        <div>
-          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="c-remu">{% trans "Brut mensuel (€)" %}</label>
-          <input id="c-remu" name="remuneration" inputmode="decimal" class="w-full">
-        </div>
-      </div>
-      <div class="mt-6 flex justify-end gap-2">
-        <button type="button" @click="ouvert = null" class="hs-btn-outline">{% trans "Annuler" %}</button>
-        <button type="submit" class="hs-btn-primary">{% trans "Établir" %}</button>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {% for m in modeles %}
+          <a href="{% url 'equipe:contrat_etablir' m.pk %}"
+             class="flex items-center justify-between gap-3 rounded-[10px] p-3 transition hover:bg-black/5 dark:hover:bg-white/10"
+             style="border: 0.5px solid var(--border)">
+            <span class="min-w-0">
+              <span class="block truncate text-sm font-medium">{{ m.nom }}</span>
+              <span class="block text-[12px]" style="color: var(--text-muted)">{{ m.get_type_contrat_display }}</span>
+            </span>
+            <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">arrow_forward</span>
+          </a>
+        {% endfor %}
       </div>
     {% else %}
       <p class="text-[13px]" style="color: var(--text-secondary)">
@@ -78,7 +48,7 @@
         {% else %}{% trans "Créez ou importez d'abord un modèle de contrat." %}{% endif %}
       </p>
     {% endif %}
-  </form>
+  </div>
 
   {# ── Éditeur de modèle ── #}
   <form x-show="ouvert === 'modele'" x-cloak method="post"
@@ -150,10 +120,21 @@
             </div>
             <p class="text-[12px]" style="color: var(--text-muted)">{{ m.get_type_contrat_display }}</p>
             {# escapejs neutralise les retours à la ligne du corps, sinon la chaîne JS casse. #}
-            <button type="button" class="mt-3 text-[12px] underline" style="color: var(--text-muted)"
-                    @click="ouvert = 'modele'; modele = { id: {{ m.pk }}, nom: '{{ m.nom|escapejs }}', type_contrat: '{{ m.type_contrat|escapejs }}', corps: '{{ m.corps|escapejs }}' }">
-              {% trans "Modifier" %}
-            </button>
+            <div class="mt-3 flex flex-wrap items-center gap-3 text-[12px]">
+              <button type="button" class="underline" style="color: var(--text-muted)"
+                      @click="ouvert = 'modele'; modele = { id: {{ m.pk }}, nom: '{{ m.nom|escapejs }}', type_contrat: '{{ m.type_contrat|escapejs }}', corps: '{{ m.corps|escapejs }}' }">
+                {% trans "Modifier" %}
+              </button>
+              <a href="{% url 'equipe:contrat_etablir' m.pk %}"
+                 class="inline-flex items-center gap-1 underline" style="color: var(--action)">
+                <span class="material-icons-round text-[14px]">edit_note</span>{% trans "Établir" %}
+              </a>
+              {% comment %} Vierge, à imprimer et remplir à la main. {% endcomment %}
+              <a href="{% url 'equipe:modele_pdf' m.pk %}" target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-1 underline" style="color: var(--text-muted)">
+                <span class="material-icons-round text-[14px]">picture_as_pdf</span>{% trans "PDF vierge" %}
+              </a>
+            </div>
           </div>
         {% endfor %}
       </div>

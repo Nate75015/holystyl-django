@@ -20766,3 +20766,51 @@ msgstr "El trabajador"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Este documento ya no existe."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "PDF en blanco"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Plantilla en blanco"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Desde el 1 de abril de 2021, la producción agrícola y las CUMA se rigen por un único convenio colectivo nacional; el paisajismo, los trabajos agrícolas y forestales y las cooperativas conservan el suyo."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Esta plantilla ya no existe."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Elija un empleado"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Otro…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "espacio(s) por completar"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Todos los espacios están completos"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Redactar el contrato"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Cada espacio de la plantilla es un campo: las listas proponen lo que la explotación ya sabe, y todo sigue siendo modificable. Un espacio vacío se imprimirá con puntos suspensivos."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Elija la plantilla: el contrato se abre como un documento y cada espacio propone lo que la explotación ya sabe."

@@ -20735,3 +20735,51 @@ msgstr "Medarbejderen"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Dette dokument findes ikke længere."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "Tom PDF"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Tom skabelon"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Siden 1. april 2021 er landbrugsproduktion og CUMA omfattet af én national overenskomst; anlægsgartneri, maskinstationer og andelsselskaber beholder deres egen."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Denne skabelon findes ikke længere."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Vælg en medarbejder"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Andet…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "felt(er) mangler"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Alle felter er udfyldt"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Opret kontrakten"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Hvert felt i skabelonen kan udfyldes: listerne foreslår, hvad bedriften allerede ved, og alt kan stadig ændres. Et tomt felt udskrives som en punkteret linje."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Vælg skabelonen: kontrakten åbner som et dokument, og hvert felt foreslår, hvad bedriften allerede ved."

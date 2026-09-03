@@ -828,3 +828,129 @@ def test_le_bandeau_ne_change_pas_entre_l_accueil_et_les_emplois(client, offre_p
     # Seule différence attendue : l'entrée courante.
     assert 'aria-current="page"' in emplois and 'aria-current="page"' not in accueil
     assert emplois.replace(' aria-current="page"', "") == accueil
+
+
+@pytest.mark.django_db
+def test_un_modele_s_imprime_vierge(client, setup):
+    """Une feuille à remplir à la main : les jetons deviennent des pointillés."""
+    from equipe.models import ModeleContrat
+
+    user, exploitation, _membre = setup
+    modele = ModeleContrat.objects.create(
+        exploitation=exploitation, nom="CDI saisonnier", type_contrat="cdi",
+        corps="Entre {{ exploitation }} et {{ salarie }}, poste de {{ poste }}.")
+    client.force_login(user)
+
+    reponse = client.get(f"/contrats-travail/modeles/{modele.pk}/pdf/")
+    assert reponse.status_code == 200
+
+    if reponse["Content-Type"] == "application/pdf":
+        assert reponse["Content-Disposition"].startswith("inline;")
+    else:  # WeasyPrint absent : on rend la page imprimable
+        corps = reponse.content.decode()
+        assert "……………………" in corps, "les jetons devraient devenir des pointillés"
+        assert "{{ salarie }}" not in corps
+        assert "Modèle vierge" in corps
+        # La signature de l'employeur ne s'appose pas sur un modèle vierge.
+        assert "signature" not in corps.lower() or "img" not in corps
+
+
+@pytest.mark.django_db
+def test_le_modele_du_voisin_ne_s_imprime_pas(client, setup, django_user_model):
+    from equipe.models import ModeleContrat
+    from exploitations.models import Exploitation
+
+    user, _exploitation, _membre = setup
+    voisin = django_user_model.objects.create_user(email="voisin-modele@ex.com",
+                                                   password="pwd12345")
+    chez_lui = Exploitation.objects.create(owner=voisin, name="Ferme Voisine")
+    modele = ModeleContrat.objects.create(exploitation=chez_lui, nom="Secret",
+                                          type_contrat="cdi", corps="…")
+
+    client.force_login(user)
+    reponse = client.get(f"/contrats-travail/modeles/{modele.pk}/pdf/", follow=True)
+    assert "Secret" not in reponse.content.decode()
+
+
+@pytest.mark.django_db
+def test_le_modele_s_ouvre_en_document_a_remplir(client, ferme_rh):
+    """Chaque blanc devient un champ, déjà porteur de ce que la ferme sait."""
+    from equipe.models import ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    modele = ModeleContrat.objects.create(
+        exploitation=exploitation, nom="CDI maison", type_contrat="cdi",
+        corps="{{ salarie }} est engagé par {{ exploitation }} au poste de "
+              "{{ poste }} à {{ lieu }} le {{ date_debut }}.")
+
+    client.force_login(patron)
+    page = client.get(f"/contrats-travail/modeles/{modele.pk}/etablir/").content.decode()
+
+    # Le texte du modèle demeure, les jetons ont laissé place à des champs.
+    assert "est engagé par" in page and "{{" not in page
+    for cle in ("salarie", "exploitation", "poste", "lieu", "date_debut"):
+        assert f'name="{cle}"' in page
+    # Le nom de la ferme est déjà là ; le poste propose les rôles de l'équipe.
+    assert "Ferme des Coteaux" in page
+    assert "<option value=\"Ouvrier\">" in page
+    # Le salarié se choisit en tête, ce qui remplira son identité.
+    assert "Paul Martin" in page
+
+
+@pytest.mark.django_db
+def test_les_valeurs_choisies_priment_sur_les_deduites(client, ferme_rh):
+    """Ce que l'exploitant corrige dans un blanc ne doit pas être réécrit."""
+    from equipe.models import ContratTravail, ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    modele = ModeleContrat.objects.create(
+        exploitation=exploitation, nom="CDI maison", type_contrat="cdi",
+        corps="Employeur {{ employeur }}, siège {{ exploitation_adresse }}, "
+              "salarié {{ salarie }}.")
+
+    client.force_login(patron)
+    client.post("/contrats-travail/etablir/", {
+        "membre": str(membre.pk), "modele": str(modele.pk),
+        "employeur": "Marie Dupont", "exploitation_adresse": "3 route des Vignes",
+    })
+
+    corps = ContratTravail.objects.get(membre=membre).corps
+    assert "Employeur Marie Dupont" in corps
+    assert "siège 3 route des Vignes" in corps
+    # Un blanc non soumis reste déduit de l'exploitation.
+    assert "salarié Paul Martin" in corps
+
+
+@pytest.mark.django_db
+def test_le_modele_du_voisin_ne_s_etablit_pas(client, ferme_rh):
+    from equipe.models import ModeleContrat
+    from exploitations.models import Exploitation
+
+    patron, _exploitation, _membre = ferme_rh
+    voisin = User.objects.create_user(email="voisin@ex.com", password="pwd12345")
+    ailleurs = Exploitation.objects.create(owner=voisin, name="Ferme d'à côté")
+    modele = ModeleContrat.objects.create(exploitation=ailleurs, nom="Son CDI",
+                                          type_contrat="cdi", corps="{{ salarie }}")
+
+    client.force_login(patron)
+    reponse = client.get(f"/contrats-travail/modeles/{modele.pk}/etablir/")
+    assert reponse.status_code == 302 and reponse.url == "/contrats-travail/"
+
+
+@pytest.mark.django_db
+def test_une_date_saisie_s_ecrit_en_toutes_lettres(client, ferme_rh):
+    """Le calendrier rend « 2026-09-15 » ; un contrat ne s'écrit pas ainsi."""
+    from equipe.models import ContratTravail, ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    modele = ModeleContrat.objects.create(
+        exploitation=exploitation, nom="CDD maison", type_contrat="cdd",
+        corps="Le contrat prend effet le {{ date_debut }}.")
+
+    client.force_login(patron)
+    client.post("/contrats-travail/etablir/", {
+        "membre": str(membre.pk), "modele": str(modele.pk), "date_debut": "2026-09-15"})
+
+    corps = ContratTravail.objects.get(membre=membre).corps
+    assert "2026-09-15" not in corps
+    assert "15 septembre 2026" in corps

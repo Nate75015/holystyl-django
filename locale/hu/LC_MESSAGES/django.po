@@ -20744,3 +20744,51 @@ msgstr "A munkavállaló"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Ez a dokumentum már nem létezik."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "Üres PDF"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Üres sablon"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "2021. április 1. óta a mezőgazdasági termelés és a CUMA egyetlen országos kollektív szerződés hatálya alá tartozik; a kertészet, a mezőgazdasági és erdészeti szolgáltatás és a szövetkezetek megtartják a sajátjukat."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Ez a sablon már nem létezik."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Válasszon munkavállalót"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Egyéb…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "kitöltendő üres hely"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Minden üres hely ki van töltve"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Szerződés elkészítése"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "A sablon minden üres helye egy mező: a listák azt kínálják, amit a gazdaság már tud, és minden módosítható marad. Az üresen hagyott hely pontozott vonalként nyomtatódik."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Válassza ki a sablont: a szerződés dokumentumként nyílik meg, és minden üres hely felkínálja, amit a gazdaság már tud."

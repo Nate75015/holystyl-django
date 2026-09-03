@@ -20776,3 +20776,51 @@ msgstr "Ο εργαζόμενος"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Αυτό το έγγραφο δεν υπάρχει πλέον."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "Κενό PDF"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Κενό υπόδειγμα"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Από την 1η Απριλίου 2021, η γεωργική παραγωγή και οι CUMA υπάγονται σε ενιαία εθνική συλλογική σύμβαση· ο κλάδος του πρασίνου, οι γεωργικές και δασικές εργασίες και οι συνεταιρισμοί διατηρούν τη δική τους."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Αυτό το υπόδειγμα δεν υπάρχει πλέον."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Επιλέξτε εργαζόμενο"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Άλλο…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "κενό/ά προς συμπλήρωση"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Όλα τα κενά συμπληρώθηκαν"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Σύνταξη της σύμβασης"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Κάθε κενό του υποδείγματος είναι πεδίο: οι λίστες προτείνουν όσα γνωρίζει ήδη η εκμετάλλευση και όλα παραμένουν τροποποιήσιμα. Κενό που μένει άδειο τυπώνεται με τελείες."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Επιλέξτε το υπόδειγμα: η σύμβαση ανοίγει ως έγγραφο και κάθε κενό προτείνει όσα γνωρίζει ήδη η εκμετάλλευση."

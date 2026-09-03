@@ -20759,3 +20759,51 @@ msgstr "Salariatul"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Acest document nu mai există."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "PDF gol"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Model gol"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "De la 1 aprilie 2021, producția agricolă și CUMA intră sub o singură convenție colectivă națională; peisagistica, lucrările agricole și forestiere și cooperativele o păstrează pe a lor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Acest model nu mai există."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Alegeți un angajat"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Altul…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "spațiu/ii de completat"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Toate spațiile sunt completate"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Întocmește contractul"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Fiecare spațiu din model este un câmp: listele propun ceea ce ferma știe deja, iar totul rămâne modificabil. Un spațiu lăsat gol se va tipări punctat."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Alegeți modelul: contractul se deschide ca un document, iar fiecare spațiu propune ceea ce ferma știe deja."

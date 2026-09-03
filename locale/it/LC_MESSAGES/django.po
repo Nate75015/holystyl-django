@@ -20755,3 +20755,51 @@ msgstr "Il dipendente"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Questo documento non esiste più."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "PDF vuoto"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Modello vuoto"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Dal 1° aprile 2021 la produzione agricola e le CUMA rientrano in un unico contratto collettivo nazionale; il paesaggio, i lavori agricoli e forestali e le cooperative mantengono il proprio."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Questo modello non esiste più."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Scegliete un dipendente"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Altro…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "spazio/i da completare"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Tutti gli spazi sono compilati"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Redigere il contratto"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Ogni spazio del modello è un campo: gli elenchi propongono ciò che l'azienda già sa, e tutto resta modificabile. Uno spazio lasciato vuoto verrà stampato con dei puntini."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Scegliete il modello: il contratto si apre come un documento e ogni spazio propone ciò che l'azienda già sa."

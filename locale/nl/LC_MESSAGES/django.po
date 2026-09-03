@@ -20749,3 +20749,51 @@ msgstr "De werknemer"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Dit document bestaat niet meer."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "Blanco pdf"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Blanco sjabloon"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Sinds 1 april 2021 vallen de landbouwproductie en de CUMA's onder één nationale cao; groenvoorziening, loonwerk en coöperaties houden de hunne."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Dit sjabloon bestaat niet meer."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Kies een medewerker"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Andere…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "in te vullen veld(en)"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Alle velden zijn ingevuld"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Contract opstellen"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Elk veld in het sjabloon is invulbaar: de lijsten bieden wat het bedrijf al weet, en alles blijft aanpasbaar. Een leeg gelaten veld wordt als stippellijn afgedrukt."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Kies het sjabloon: het contract opent als document en elk veld biedt wat het bedrijf al weet."

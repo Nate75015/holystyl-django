@@ -1,5 +1,7 @@
 """Vues web équipe : équipe, tâches, mes-tâches (technicien), partage géoloc public."""
 
+import json
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
@@ -8,6 +10,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
@@ -352,6 +355,93 @@ def _champs_contrat(request):
     }
 
 
+#: Les blancs qui appellent un calendrier, et ceux qui appellent un nombre.
+_BLANCS_DATE = {"date_debut", "date_fin", "date_du_jour"}
+_BLANCS_NOMBRE = {"duree_hebdo", "remuneration"}
+
+
+def _propositions(exploitation):
+    """Ce que l'exploitation sait déjà, par blanc.
+
+    Rien n'est inventé : les postes viennent des rôles de l'équipe, les lieux
+    du siège et des communes des parcelles. Un blanc sans proposition reste
+    une saisie libre.
+    """
+    lieux = [valeur for valeur in (
+        getattr(exploitation, "city", ""),
+        " ".join(p for p in (getattr(exploitation, "address", ""),
+                             getattr(exploitation, "postal_code", ""),
+                             getattr(exploitation, "city", "")) if p),
+        exploitation.name,
+    ) if valeur]
+    lieux += list(Parcelle.objects.filter(exploitation=exploitation)
+                  .exclude(commune="").values_list("commune", flat=True).distinct())
+    vus, uniques = set(), []
+    for lieu in lieux:
+        if lieu not in vus:
+            vus.add(lieu)
+            uniques.append(lieu)
+    return {
+        "poste": [libelle for _code, libelle in TeamMember.Role.choices],
+        "lieu": uniques,
+        "duree_hebdo": ["35", "39"],
+    }
+
+
+@login_required
+@espace_requis(EXPLOITANT)
+def contrat_etablir(request, pk):
+    """Le contrat comme un document, chaque blanc prêt à être choisi.
+
+    Partir du modèle et remplir les blancs sur place vaut mieux qu'un
+    formulaire à côté : on lit la phrase où la valeur va s'inscrire, et on
+    voit ce qu'il reste à compléter avant de remettre le contrat.
+    """
+    exploitation = _exploitation(request)
+    modele = ModeleContrat.objects.filter(pk=pk, exploitation=exploitation).first()
+    if not modele:
+        messages.error(request, _("Ce modèle n'existe plus."))
+        return redirect("equipe:contrats")
+
+    membres = list(TeamMember.objects.filter(exploitation=exploitation, is_active=True))
+    connues = contrats_service.valeurs_pour(ContratTravail(
+        exploitation=exploitation, membre=membres[0] if membres else TeamMember()))
+    propositions = _propositions(exploitation)
+
+    blancs, valeurs, libre = {}, {}, {}
+    for cle in contrats_service.jetons_utilises(modele.corps):
+        # L'identité du salarié attend qu'on en choisisse un ; le reste part
+        # de ce que l'exploitation sait déjà.
+        valeur = "" if cle.startswith("salarie") else (connues.get(cle) or "")
+        if cle in _BLANCS_DATE and hasattr(valeur, "isoformat"):
+            valeur = valeur.isoformat()  # ce qu'attend <input type="date">
+        options = propositions.get(cle, [])
+        blancs[cle] = {
+            "cle": cle, "libelle": dict(contrats_service.JETONS)[cle],
+            "genre": ("date" if cle in _BLANCS_DATE
+                      else "nombre" if cle in _BLANCS_NOMBRE else "texte"),
+            "options": options,
+        }
+        valeurs[cle] = str(valeur)
+        # Une valeur connue absente de la liste ouvre d'emblée la saisie libre.
+        libre[cle] = bool(valeur) and str(valeur) not in options
+
+    segments = [{"texte": valeur} if genre == "texte" else {"blanc": blancs[valeur]}
+                for genre, valeur in contrats_service.decouper(modele.corps)]
+
+    return render(request, "equipe/etablir.html", {
+        "modele": modele,
+        "membres": membres,
+        "segments": segments,
+        "etat": json.dumps({"valeurs": valeurs, "libre": libre}),
+        "fiches_membres": json.dumps({
+            str(m.pk): {"salarie": m.name, "salarie_email": m.email,
+                        "salarie_telephone": m.phone,
+                        "poste": m.get_role_display()} for m in membres}),
+        "page_title": _("Établir un contrat"),
+    })
+
+
 @login_required
 @espace_requis(EXPLOITANT)
 @require_POST
@@ -372,8 +462,9 @@ def contrat_create(request):
 
     contrat = ContratTravail(exploitation=exploitation, membre=membre, modele=modele,
                              type_contrat=modele.type_contrat, **_champs_contrat(request))
-    contrat.corps = contrats_service.remplir(
-        modele.corps, contrats_service.valeurs_pour(contrat))
+    valeurs = contrats_service.valeurs_pour(contrat)
+    valeurs.update(contrats_service.valeurs_saisies(request.POST))
+    contrat.corps = contrats_service.remplir(modele.corps, valeurs)
     contrat.save()
     messages.success(request, _("Contrat établi. Relisez-le avant de le remettre."))
     return redirect("equipe:contrats")
@@ -405,6 +496,37 @@ def contrat_delete(request, pk):
     exploitation = _exploitation(request)
     get_object_or_404(ContratTravail, pk=pk, exploitation=exploitation).delete()
     return redirect("equipe:contrats")
+
+
+@login_required
+def modele_pdf(request, pk):
+    """Le modèle en PDF, vierge : une feuille à remplir à la main.
+
+    Les jetons deviennent des pointillés — c'est déjà ce que fait `remplir`
+    quand une valeur manque, on lui passe simplement un dictionnaire vide.
+    """
+    exploitation = _exploitation(request)
+    modele = ModeleContrat.objects.filter(pk=pk, exploitation=exploitation).first()
+    if modele is None:
+        messages.info(request, _("Ce modèle n'existe plus."))
+        return redirect("equipe:contrats")
+
+    contexte = {"modele": modele, "exploitation": exploitation,
+                "corps": contrats_service.remplir(modele.corps, {})}
+    html = render(request, "equipe/modele_pdf.html", contexte).content.decode()
+
+    try:
+        from weasyprint import HTML
+    except Exception:  # noqa: BLE001 — libs système absentes : on rend la page
+        return render(request, "equipe/modele_pdf.html", contexte)
+
+    from django.http import HttpResponse
+
+    pdf = HTML(string=html, base_url=request.build_absolute_uri("/")).write_pdf()
+    reponse = HttpResponse(pdf, content_type="application/pdf")
+    reponse["Content-Disposition"] = (
+        'inline; filename="%s.pdf"' % slugify(modele.nom or "modele"))
+    return reponse
 
 
 @login_required

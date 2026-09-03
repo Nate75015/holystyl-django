@@ -20786,3 +20786,51 @@ msgstr "An fostaí"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Níl an cháipéis seo ann a thuilleadh."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "PDF folamh"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Teimpléad folamh"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Ó 1 Aibreán 2021, tagann táirgeadh talmhaíochta agus na CUMAnna faoi chomhaontú comhchoiteann náisiúnta amháin; coinníonn tírdhreachú, conraitheoireacht talmhaíochta agus foraoiseachta, agus comharchumainn a gceann féin."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Níl an teimpléad seo ann a thuilleadh."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Roghnaigh fostaí"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Eile…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "bearna(í) le líonadh"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Tá gach bearna líonta"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Dréachtaigh an conradh"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Is réimse é gach bearna sa teimpléad: tairgeann na liostaí a bhfuil ar eolas ag an bhfeirm cheana, agus fanann gach rud inathraithe. Priontálfar bearna fholamh mar líne poncaithe."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Roghnaigh an teimpléad: osclaíonn an conradh mar dhoiciméad, agus tairgeann gach bearna a bhfuil ar eolas ag an bhfeirm cheana."

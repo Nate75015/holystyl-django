@@ -20739,3 +20739,51 @@ msgstr "Der Arbeitnehmer"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Dieses Dokument gibt es nicht mehr."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "Leeres PDF"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Leere Vorlage"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Seit dem 1. April 2021 unterliegen die Agrarproduktion und die CUMA einem einzigen nationalen Tarifvertrag; Garten- und Landschaftsbau, Lohnunternehmen sowie Genossenschaften behalten ihren eigenen."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Diese Vorlage gibt es nicht mehr."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Mitarbeiter wählen"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Andere…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "auszufüllende Lücke(n)"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Alle Lücken sind ausgefüllt"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Vertrag erstellen"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Jede Lücke der Vorlage ist ein Feld: Die Listen bieten an, was der Betrieb bereits weiß, und alles bleibt änderbar. Eine leer gelassene Lücke wird als punktierte Linie gedruckt."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Wählen Sie die Vorlage: Der Vertrag öffnet sich als Dokument, und jede Lücke bietet an, was der Betrieb bereits weiß."

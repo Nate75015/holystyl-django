@@ -20773,3 +20773,51 @@ msgstr "Pracownik"
 #: identite/views.py
 msgid "Cette pièce n'existe plus."
 msgstr "Ten dokument już nie istnieje."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "PDF vierge"
+msgstr "Pusty PDF"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Modèle vierge"
+msgstr "Pusty wzór"
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "%(ferme)s — modèle établi depuis Isidor."
+msgstr "%(ferme)s — template produced with Isidor."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur."
+msgstr "Od 1 kwietnia 2021 r. produkcja rolna i CUMA podlegają jednemu krajowemu układowi zbiorowemu; zieleń, usługi rolnicze i leśne oraz spółdzielnie zachowują własny."
+
+#: equipe/templates/equipe/modele_pdf.html
+msgid "Ce modèle n'existe plus."
+msgstr "Ten wzór już nie istnieje."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez un salarié"
+msgstr "Wybierz pracownika"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Autre…"
+msgstr "Inne…"
+
+#: equipe/templates/equipe/etablir.html
+msgid "blanc(s) à compléter"
+msgstr "pole do uzupełnienia"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Tous les blancs sont remplis"
+msgstr "Wszystkie pola są uzupełnione"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Établir le contrat"
+msgstr "Sporządź umowę"
+
+#: equipe/templates/equipe/etablir.html
+msgid "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés."
+msgstr "Każde puste miejsce we wzorze to pole: listy podpowiadają to, co gospodarstwo już wie, a wszystko pozostaje edytowalne. Puste miejsce wydrukuje się jako kropkowana linia."
+
+#: equipe/templates/equipe/etablir.html
+msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
+msgstr "Wybierz wzór: umowa otwiera się jak dokument, a każde puste miejsce podpowiada to, co gospodarstwo już wie."

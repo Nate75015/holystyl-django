@@ -12,6 +12,9 @@ convention collective applicable, la durée d'essai et les clauses obligatoires
 varient, et l'exploitant doit les faire relire avant usage.
 """
 
+import datetime
+import re
+
 from django.utils import formats
 from django.utils.translation import gettext_lazy as _
 
@@ -35,11 +38,21 @@ JETONS = (
 )
 
 
+#: Ce que rend un <input type="date"> : à écrire en toutes lettres, pas brut.
+_ISO = re.compile(r"^(\d{4})-(\d{2})-(\d{2})$")
+
+
 def _texte(valeur):
     """Une valeur prête à s'insérer : dates à la française, nombres lisibles."""
     if valeur is None or valeur == "":
         return ""
-    if hasattr(valeur, "isoformat") and not isinstance(valeur, str):
+    if isinstance(valeur, str):
+        iso = _ISO.match(valeur.strip())
+        if iso:
+            valeur = datetime.date(*(int(n) for n in iso.groups()))
+            return formats.date_format(valeur, "DATE_FORMAT")
+        return valeur
+    if hasattr(valeur, "isoformat"):
         return formats.date_format(valeur, "DATE_FORMAT")
     if isinstance(valeur, float):
         return formats.number_format(valeur, decimal_pos=2, use_l10n=True)
@@ -60,6 +73,56 @@ def remplir(corps, valeurs):
     return rendu
 
 
+#: `{{ jeton }}` ou `{{jeton}}` — la même tolérance que `remplir`.
+_MOTIF = re.compile(r"\{\{ ?(\w+) ?\}\}")
+
+
+def decouper(corps):
+    """Le corps en morceaux : ``("texte", …)`` et ``("jeton", clé)``.
+
+    C'est ce qui permet d'afficher le contrat comme un document dont chaque
+    blanc est un champ, plutôt qu'un formulaire à côté d'un aperçu. Un jeton
+    inconnu reste dans le texte : mieux vaut le voir que le perdre.
+    """
+    connus = dict(JETONS)
+    corps = corps or ""
+    morceaux, position = [], 0
+    for trouve in _MOTIF.finditer(corps):
+        if trouve.group(1) not in connus:
+            continue
+        if trouve.start() > position:
+            morceaux.append(("texte", corps[position:trouve.start()]))
+        morceaux.append(("jeton", trouve.group(1)))
+        position = trouve.end()
+    if corps[position:]:
+        morceaux.append(("texte", corps[position:]))
+    return morceaux
+
+
+def jetons_utilises(corps):
+    """Les jetons présents dans ce corps, dans l'ordre, sans doublon."""
+    vus = []
+    for genre, valeur in decouper(corps):
+        if genre == "jeton" and valeur not in vus:
+            vus.append(valeur)
+    return vus
+
+
+def valeurs_saisies(donnees):
+    """Ce que l'exploitant a effectivement rempli, jeton par jeton.
+
+    Ce qu'il n'a pas touché est absent du résultat plutôt que vide : la vue
+    peut ainsi le compléter par ce que l'exploitation sait déjà, au lieu de
+    l'écraser par du blanc.
+    """
+    saisies = {}
+    for cle, _libelle in JETONS:
+        valeur = (donnees.get(cle) or "").strip()
+        if valeur:
+            saisies[cle] = valeur
+    return saisies
+
+
 def valeurs_pour(contrat):
     """Les valeurs d'un contrat, prêtes pour `remplir`."""
     from django.utils import timezone
@@ -74,7 +137,8 @@ def valeurs_pour(contrat):
         "exploitation": exploitation.name,
         "exploitation_adresse": " ".join(
             p for p in (getattr(exploitation, "address", ""),
-                        getattr(exploitation, "postal_code", "")) if p),
+                        getattr(exploitation, "postal_code", ""),
+                        getattr(exploitation, "city", "")) if p),
         "exploitation_siret": getattr(exploitation, "siret", "") or "",
         "employeur": proprietaire.display_name if proprietaire else "",
         "poste": contrat.poste,
