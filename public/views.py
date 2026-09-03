@@ -21,8 +21,12 @@ def home(request):
     return render(request, "public/home.html", {"page_title": "Isidor — Irrigation de précision"})
 
 
-def exploitants(request):
-    """L'annuaire des fermes qui ont choisi d'y figurer.
+def terroirs(request):
+    """« Nos terroirs » : la vitrine des producteurs de la place de marché.
+
+    La vente elle-même reste dans `vente` — boutiques, panier, commandes.
+    Cette page est la porte d'entrée : elle montre qui vend, et renvoie vers
+    les boutiques et le catalogue.
 
     Le filtre porte sur `annuaire_public`, pas sur l'ensemble des comptes :
     le nom et la commune d'un exploitant ne se publient pas sans son accord.
@@ -51,13 +55,13 @@ def exploitants(request):
         f.cp = (getattr(principale, "postal_code", "") or f.postal_code or "").strip()
         f.dep_code, f.dep_nom, f.region = geo.situer(f.cp)
 
-    return render(request, "public/exploitants.html", {
+    return render(request, "public/terroirs.html", {
         "fermes": fermes,
         "nb": len(fermes),
         "referentiel": geo.referentiel(),
         "layout_nu": True,
-        "page_vitrine": "exploitants",
-        "page_title": _("Exploitants agricoles"),
+        "page_vitrine": "terroirs",
+        "page_title": _("Nos terroirs"),
     })
 
 

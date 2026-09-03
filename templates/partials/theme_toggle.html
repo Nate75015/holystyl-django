@@ -11,7 +11,12 @@
 {% trans "Mode sombre" as libelle_sombre %}
 <button type="button" @click="toggle()"
         class="grid shrink-0 place-items-center rounded-full border transition hover:opacity-80"
-        style="height: 32px; width: 32px; color: color-mix(in srgb, var(--on-action) 90%, transparent); border-color: color-mix(in srgb, var(--on-action) 40%, transparent)"
+        {% comment %}
+          `currentColor` plutôt qu'un jeton fixe : le bouton sert désormais
+          deux bandeaux, l'un turquoise à texte clair, l'autre jaune à texte
+          noir. Il prend la couleur de celui qui l'accueille.
+        {% endcomment %}
+        style="height: 32px; width: 32px; color: color-mix(in srgb, currentColor 90%, transparent); border-color: color-mix(in srgb, currentColor 40%, transparent)"
         :title="dark ? '{{ libelle_clair|escapejs }}' : '{{ libelle_sombre|escapejs }}'"
         :aria-label="dark ? '{{ libelle_clair|escapejs }}' : '{{ libelle_sombre|escapejs }}'">
   <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"

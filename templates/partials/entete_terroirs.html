@@ -1,0 +1,183 @@
+{% load i18n %}
+{% comment %}
+  Bandeau et convention visuelle de « Nos terroirs » : la place de marché a
+  sa marque — noir, blanc, jaune — distincte de celle du produit.
+
+  Ce partiel porte la palette, le bandeau, et les atomes partagés par toutes
+  les pages du marché : fiches, champs, grille, pastilles. Les pages n'ont
+  plus qu'à décrire ce qui leur est propre.
+
+  Une règle gouverne la palette : le jaune ne sert jamais de couleur de texte
+  sur fond clair (1,6 de contraste). Il est soit un fond portant du texte
+  noir, soit du texte sur du noir.
+
+  Paramètre : `avec_panier` pour les pages où l'on achète.
+{% endcomment %}
+<style>
+  :root {
+    --nt-jaune: #FFC800;
+    --nt-noir: #0C0C0C;
+    --nt-gutter: clamp(20px, 5vw, 56px);
+    --nt-fond: #FFFFFF;
+    --nt-texte: #0C0C0C;
+    --nt-second: #55554F;
+    --nt-carte: #FFFFFF;
+    --nt-doux: #F6F6F3;
+    --nt-filet: rgba(0, 0, 0, .13);
+    --nt-ease: cubic-bezier(.16, 1, .3, 1);
+  }
+  .dark {
+    --nt-fond: #0C0C0C;
+    --nt-texte: #FFFFFF;
+    --nt-second: #A8A8A2;
+    --nt-carte: #161616;
+    --nt-doux: #1B1B1B;
+    --nt-filet: rgba(255, 255, 255, .15);
+  }
+
+  /* ── Bandeau ────────────────────────────────────────────────────── */
+  .nt-bandeau {
+    position: sticky; top: 0; z-index: 30;
+    background: var(--nt-jaune); color: var(--nt-noir);
+    transition: box-shadow .25s var(--nt-ease);
+  }
+  .nt-bandeau.is-colle { box-shadow: 0 10px 30px -18px rgba(0,0,0,.6); }
+  .nt-bandeau-inner {
+    padding: 13px var(--nt-gutter);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .nt-wordmark {
+    display: inline-flex; align-items: baseline; gap: 7px;
+    font-size: 1.125rem; font-weight: 600; letter-spacing: -.02em; color: var(--nt-noir);
+  }
+  .nt-wordmark small { font-size: .625rem; letter-spacing: .16em; text-transform: uppercase; opacity: .62; }
+  .nt-actions { display: flex; align-items: center; gap: 8px; }
+  .nt-pill {
+    display: inline-flex; align-items: center; gap: 6px; height: 34px; padding-inline: 18px;
+    border-radius: 999px; font-size: .875rem; font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, .32); color: var(--nt-noir);
+    transition: background .18s, transform .18s var(--nt-ease);
+  }
+  .nt-pill:hover { background: rgba(0, 0, 0, .09); transform: translateY(-1px); }
+  .nt-pill-plein { background: var(--nt-noir); color: var(--nt-jaune); border-color: transparent; }
+  .nt-pill-plein:hover { background: var(--nt-noir); opacity: .88; transform: translateY(-1px); }
+  .nt-hide-sm { display: none; }
+  @media (min-width: 640px) { .nt-hide-sm { display: inline-flex; } }
+
+  /* ── Atomes partagés ────────────────────────────────────────────── */
+  .nt-page { background: var(--nt-fond); color: var(--nt-texte); }
+  .nt-large { padding-inline: var(--nt-gutter); }
+  .nt-titre { font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem); font-weight: 500;
+              letter-spacing: -.025em; color: var(--nt-texte); }
+  .nt-second { color: var(--nt-second); }
+
+  .nt-champ {
+    height: 44px; padding-inline: 15px; border-radius: 11px; width: 100%;
+    border: 1px solid var(--nt-filet); background: var(--nt-carte);
+    color: var(--nt-texte); font-size: .9375rem;
+  }
+  .nt-champ:focus { outline: 2px solid var(--nt-jaune); outline-offset: 1px; border-color: transparent; }
+  .nt-rech { position: relative; }
+  .nt-rech .nt-champ { padding-left: 40px; }
+  .nt-rech > .material-icons-round {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 19px; color: var(--nt-second); pointer-events: none;
+  }
+
+  /* `auto-fill` ajoute des colonnes au lieu d'étirer les fiches ; le
+     `min(…, 100%)` empêche la piste de déborder sur un écran étroit. */
+  .nt-grille {
+    display: grid; gap: 16px;
+    /* Respiration par défaut : la grille suit toujours quelque chose — des
+       filtres, une recherche — et se retrouvait collée dessous. Une page qui
+       veut un écart plus serré (sous un titre de rayon) le pose en ligne. */
+    margin-top: clamp(28px, 3.5vw, 44px);
+    grid-template-columns: repeat(auto-fill, minmax(min(288px, 100%), 1fr));
+  }
+  .nt-grille-serree { grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr)); }
+
+  .nt-carte {
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: 16px; background: var(--nt-carte); border: 1px solid var(--nt-filet);
+    transition: transform .22s var(--nt-ease), box-shadow .22s var(--nt-ease), border-color .22s;
+  }
+  .nt-carte:hover {
+    transform: translateY(-3px); border-color: var(--nt-jaune);
+    box-shadow: 0 16px 34px -22px rgba(0,0,0,.55);
+  }
+  .nt-photo { position: relative; aspect-ratio: 16 / 10; background: var(--nt-doux); }
+  .nt-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .nt-photo-vide {
+    display: grid; place-items: center; height: 100%;
+    background: var(--nt-noir); color: var(--nt-jaune);
+    font-size: 2.2rem; font-weight: 600; letter-spacing: -.03em;
+  }
+  /* Posé sur la photo : la fiche produit sert aussi la page d'une ferme,
+     la règle doit donc vivre ici et non dans le corps du marché. */
+  .nt-epuise {
+    position: absolute; inset: auto 8px 8px auto;
+    background: var(--nt-noir); color: #FFFFFF;
+    font-size: .6875rem; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+  }
+  .nt-corps-carte { display: flex; flex-direction: column; gap: 8px; padding: 16px; flex: 1; }
+  .nt-nom { font-size: 1rem; font-weight: 600; letter-spacing: -.012em; }
+  .nt-lieu { font-size: .8125rem; color: var(--nt-second); }
+  .nt-prod { font-size: .875rem; color: var(--nt-second); line-height: 1.5; }
+  .nt-prix { font-size: 1.0625rem; font-weight: 600; letter-spacing: -.02em; }
+  .nt-prix span { font-size: .8125rem; font-weight: 400; color: var(--nt-second); }
+
+  .nt-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+  .nt-tag {
+    font-size: .6875rem; padding: 4px 10px; border-radius: 999px;
+    background: var(--nt-doux); color: var(--nt-second); border: 1px solid var(--nt-filet);
+  }
+  .nt-tag-bio { background: var(--nt-jaune); color: var(--nt-noir); border-color: transparent; font-weight: 600; }
+
+  .nt-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 44px; padding-inline: 22px; border-radius: 11px;
+    background: var(--nt-noir); color: #FFFFFF; font-size: .9375rem; font-weight: 600;
+    transition: opacity .18s, transform .18s var(--nt-ease);
+  }
+  .dark .nt-btn { background: var(--nt-jaune); color: var(--nt-noir); }
+  .nt-btn:hover { opacity: .88; transform: translateY(-1px); }
+  .nt-btn-creux {
+    background: transparent; color: var(--nt-texte); border: 1px solid var(--nt-filet);
+  }
+  .dark .nt-btn-creux { background: transparent; color: var(--nt-texte); }
+  .nt-btn-creux:hover { background: var(--nt-doux); }
+
+  .nt-chip {
+    display: inline-flex; align-items: center; height: 34px; padding-inline: 15px;
+    border-radius: 999px; font-size: .8125rem; font-weight: 500;
+    border: 1px solid var(--nt-filet); color: var(--nt-texte);
+    transition: background .18s, border-color .18s;
+  }
+  .nt-chip:hover { background: var(--nt-doux); }
+  .nt-chip-actif { background: var(--nt-jaune); color: var(--nt-noir); border-color: transparent; font-weight: 600; }
+  .nt-chip-actif:hover { background: var(--nt-jaune); }
+
+  .nt-vide {
+    padding: 48px 24px; text-align: center; border-radius: 16px;
+    background: var(--nt-carte); border: 1px solid var(--nt-filet);
+  }
+</style>
+
+<header class="nt-bandeau" x-data="{ colle: false }"
+        @scroll.window="colle = window.scrollY > 8" :class="colle && 'is-colle'">
+  <div class="nt-bandeau-inner">
+    <a href="{% url 'public:terroirs' %}" class="nt-wordmark">Nos terroirs <small>by Isidor</small></a>
+    <div class="nt-actions">
+      {% include "partials/lang_switcher.html" %}
+      {% include "partials/theme_toggle.html" %}
+      {% if avec_panier %}
+        <a href="{% url 'vente:panier' %}" class="nt-pill" aria-label="{% trans 'Panier' %}">
+          <span class="material-icons-round text-[17px]">shopping_basket</span>
+          {% if panier_nb %}{{ panier_nb }}{% endif %}
+        </a>
+      {% endif %}
+      <a href="{% url 'accounts:login' %}" class="nt-pill nt-hide-sm">{% trans "Connexion" %}</a>
+      <a href="{% url 'accounts:register' %}" class="nt-pill nt-pill-plein">{% trans "S'inscrire" %}</a>
+    </div>
+  </div>
+</header>

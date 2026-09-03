@@ -91,7 +91,7 @@
       <a href="{% url 'public:home' %}#tarif">{% trans "Tarif" %}</a>
       <a href="{% url 'public:home' %}#faq">FAQ</a>
       <a href="{% url 'equipe:emplois' %}"{% if page_vitrine == "emplois" %} aria-current="page"{% endif %}>{% trans "Offres d'emploi" %}</a>
-      <a href="{% url 'public:exploitants' %}"{% if page_vitrine == "exploitants" %} aria-current="page"{% endif %}>{% trans "Exploitants agricoles" %}</a>
+      <a href="{% url 'public:terroirs' %}"{% if page_vitrine == "terroirs" %} aria-current="page"{% endif %}>{% trans "Nos terroirs" %}</a>
     </nav>
     <div class="flex items-center gap-2">
       {% include "partials/lang_switcher.html" %}
@@ -111,7 +111,7 @@
     <a href="{% url 'public:home' %}#tarif" @click="menu = false">{% trans "Tarif" %}</a>
     <a href="{% url 'public:home' %}#faq" @click="menu = false">FAQ</a>
     <a href="{% url 'equipe:emplois' %}"{% if page_vitrine == "emplois" %} aria-current="page"{% endif %}>{% trans "Offres d'emploi" %}</a>
-    <a href="{% url 'public:exploitants' %}"{% if page_vitrine == "exploitants" %} aria-current="page"{% endif %}>{% trans "Exploitants agricoles" %}</a>
+    <a href="{% url 'public:terroirs' %}"{% if page_vitrine == "terroirs" %} aria-current="page"{% endif %}>{% trans "Nos terroirs" %}</a>
     <a href="{% url 'accounts:login' %}">{% trans "Connexion" %}</a>
   </div>
 </header>

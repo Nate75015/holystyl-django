@@ -128,7 +128,7 @@ def test_l_annuaire_ne_publie_que_les_fermes_consentantes(client, django_user_mo
                                 city="Manosque", annuaire_public=True)
     discrete = Exploitation.objects.create(owner=u2, name="Ferme Discrète", city="Forcalquier")
 
-    page = client.get("/exploitants/").content.decode()
+    page = client.get("/nos-terroirs/").content.decode()
     assert "Ferme Consentante" in page
     assert "Ferme Discrète" not in page and "Forcalquier" not in page
     # L'interrupteur est éteint par défaut : c'est le point.
@@ -140,9 +140,9 @@ def test_l_annuaire_ne_publie_que_les_fermes_consentantes(client, django_user_mo
 def test_l_annuaire_est_atteignable_depuis_le_bandeau(client):
     page = client.get("/").content.decode()
     # Barre de navigation, menu compact, et pied de page reste sur l'accueil.
-    assert page.count('href="/exploitants/"') >= 2
-    assert "Exploitants agricoles" in page
-    assert client.get("/exploitants/").status_code == 200
+    assert page.count('href="/nos-terroirs/"') >= 2
+    assert "Nos terroirs" in page
+    assert client.get("/nos-terroirs/").status_code == 200
 
 
 @pytest.mark.django_db
@@ -159,7 +159,7 @@ def test_l_annuaire_se_filtre_sur_la_geographie(client, django_user_model):
         Exploitation.objects.create(owner=u, name=nom, city=ville,
                                     postal_code=cp, annuaire_public=True)
 
-    reponse = client.get("/exploitants/")
+    reponse = client.get("/nos-terroirs/")
     situees = {f.name: (f.region, f.dep_code, f.dep_nom) for f in reponse.context["fermes"]}
     assert situees["Ferme Sud"] == ("Provence-Alpes-Côte d'Azur", "04", "Alpes-de-Haute-Provence")
     assert situees["Ferme Ouest"] == ("Bretagne", "29", "Finistère")
@@ -179,7 +179,7 @@ def test_les_listes_offrent_toute_la_france(client):
     Un visiteur doit pouvoir chercher dans une région même vide : la liste
     vient du référentiel, pas des données.
     """
-    reponse = client.get("/exploitants/")
+    reponse = client.get("/nos-terroirs/")
     referentiel = reponse.context["referentiel"]
     assert len(referentiel) == 18
     assert sum(len(r["departements"]) for r in referentiel) == 101
@@ -202,8 +202,8 @@ def test_la_photo_de_ferme_a_une_place_de_repli(client, django_user_model):
 
     u = django_user_model.objects.create_user(email="photo@ex.com", password="pwd12345")
     Exploitation.objects.create(owner=u, name="Zephyr", annuaire_public=True)
-    page = client.get("/exploitants/").content.decode()
-    assert "lp-photo-vide" in page and ">Z<" in page
+    page = client.get("/nos-terroirs/").content.decode()
+    assert "nt-photo-vide" in page and ">Z<" in page
 
 
 @pytest.mark.django_db
@@ -223,7 +223,7 @@ def test_l_annuaire_lit_l_adresse_principale_et_non_le_miroir(client, django_use
     AdresseExploitation.objects.create(
         exploitation=ferme, city="Montpellier", postal_code="34090", principale=True)
 
-    lue = client.get("/exploitants/").context["fermes"][0]
+    lue = client.get("/nos-terroirs/").context["fermes"][0]
     assert lue.ville == "Montpellier" and lue.cp == "34090"
     assert (lue.dep_code, lue.dep_nom, lue.region) == ("34", "Hérault", "Occitanie")
 
@@ -237,5 +237,82 @@ def test_sans_adresse_l_annuaire_retombe_sur_l_exploitation(client, django_user_
     Exploitation.objects.create(owner=u, name="Ferme Repli", city="Quimper",
                                 postal_code="29000", annuaire_public=True)
 
-    lue = client.get("/exploitants/").context["fermes"][0]
+    lue = client.get("/nos-terroirs/").context["fermes"][0]
     assert lue.ville == "Quimper" and lue.dep_nom == "Finistère"
+
+
+@pytest.mark.django_db
+def test_le_bandeau_de_marque_reste_lisible(client):
+    """Le jaune ne sert jamais de texte sur fond clair, et le titre est explicite.
+
+    Le titre héritait du bandeau noir, mais une règle globale sur `h1` impose
+    la couleur de texte de l'application : il ressortait noir sur noir.
+    """
+    page = client.get("/nos-terroirs/").content.decode()
+    assert "Nos <em>terroirs</em>" in page and "by Isidor" in page
+    assert ".nt-marque {" in page and "color: #FFFFFF;" in page
+    # La pastille jaune porte du texte noir, jamais l'inverse.
+    assert "background: var(--nt-jaune); color: var(--nt-noir);" in page
+    assert "0 %" in page and "de commission" in page
+    assert "{#" not in page and "{{" not in page
+
+
+@pytest.mark.django_db
+def test_nos_terroirs_a_son_propre_bandeau_jaune(client):
+    """La place de marché porte sa marque, pas celle du produit.
+
+    Elle garde les commandes qui servent partout — langue, thème, connexion,
+    inscription — mais abandonne le bandeau turquoise du reste de la vitrine.
+    """
+    page = client.get("/nos-terroirs/").content.decode()
+    assert 'class="nt-bandeau"' in page
+    assert 'class="lp-header"' not in page, "l'ancien bandeau est encore là"
+    assert "background: var(--nt-jaune); color: var(--nt-noir);" in page
+
+    # Les commandes conservées : langue, thème, connexion, inscription.
+    for attendu in ("Connexion", "S'inscrire", "django_language", 'id="nt-geo"'):
+        assert attendu in page, attendu
+
+    # La goutte ramène à l'accueil du produit.
+    assert 'class="nt-goutte"' in page and 'href="/"' in page
+    assert "{#" not in page and "{{" not in page
+
+
+@pytest.mark.django_db
+def test_la_bascule_de_theme_prend_la_couleur_de_son_bandeau(client):
+    """Un seul composant pour deux bandeaux : turquoise à texte clair, jaune à
+    texte noir. Un jeton fixe l'aurait rendu illisible sur l'un des deux."""
+    for url in ("/", "/nos-terroirs/"):
+        page = client.get(url).content.decode()
+        assert "color-mix(in srgb, currentColor 90%, transparent)" in page, url
+        assert "var(--on-action) 90%" not in page, url
+
+
+@pytest.mark.django_db
+def test_la_grille_des_producteurs_prend_toute_la_largeur(client):
+    """Pleine largeur, mais sans jamais déborder sur un écran étroit.
+
+    `auto-fill` ajoute des colonnes au lieu d'étirer les fiches ; le
+    `min(288px, 100%)` empêche la piste de rester à 288 px sur un écran de
+    320, ce qui pousserait la page hors de l'écran.
+    """
+    page = client.get("/nos-terroirs/").content.decode()
+    assert "repeat(auto-fill, minmax(min(288px, 100%), 1fr))" in page
+    # Plus de conteneur borné sur le corps ni sur le bandeau.
+    assert ".nt-corps { padding:" in page
+    assert "max-width: var(--nt-max); margin-inline: auto" not in page
+    # Les filtres, eux, restent saisissables.
+    assert "max-width: 1180px;" in page
+
+
+@pytest.mark.django_db
+def test_la_grille_respire_sous_les_filtres(client):
+    """Elle suit toujours quelque chose : une recherche, des filtres, un titre.
+
+    Sans marge par défaut elle s'y colle — c'est arrivé en mutualisant la
+    règle, qui avait perdu son `margin-top` au passage.
+    """
+    page = client.get("/nos-terroirs/").content.decode()
+    assert "margin-top: clamp(28px, 3.5vw, 44px);" in page
+    # La page ne remet pas la grille à zéro par un style en ligne.
+    assert 'class="nt-grille" style="margin-top: 0' not in page

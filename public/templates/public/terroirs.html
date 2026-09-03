@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% comment %}
+  « Nos terroirs » : la vitrine des producteurs de la place de marché.
+
+  Identité propre — noir, blanc, jaune — portée par des jetons locaux plutôt
+  que par ceux de l'application : cette page a sa marque, le reste du produit
+  garde la sienne. Une règle tient toute la palette : le jaune ne sert jamais
+  de couleur de texte sur du blanc (1,6 de contraste). Il est soit un fond
+  avec du texte noir, soit du texte sur du noir.
+
+  Les fiches sont rendues côté serveur — une vitrine publique doit rester
+  lisible par les moteurs — et filtrées dans la page, pour que la recherche
+  réponde à la frappe.
+{% endcomment %}
+{% block auth_header %}{% include "partials/entete_terroirs.html" %}{% endblock %}
+{% block auth_main_class %}{% endblock %}
+
+{% block auth_content %}
+<style>
+  /* Rythme propre à cette page ; les atomes viennent du partiel partagé. */
+  .nt-corps { padding: clamp(34px, 4vw, 54px) var(--nt-gutter) 72px; }
+
+  /* ── Bandeau de marque ──────────────────────────────────────────── */
+  .nt-hero { background: var(--nt-noir); color: #FFFFFF; }
+  .nt-hero-inner { padding: clamp(46px, 6vw, 78px) var(--nt-gutter); }
+  /* Couleur explicite : une règle globale sur `h1` impose `--text` et bat
+     l'héritage du bandeau — le titre ressortait noir sur noir. */
+  .nt-marque {
+    font-size: clamp(2.4rem, 1.2rem + 5vw, 4.6rem);
+    line-height: .95; letter-spacing: -.04em; font-weight: 500;
+    color: #FFFFFF;
+  }
+  .nt-marque em { font-style: normal; color: var(--nt-jaune); }
+  .nt-by { display: flex; align-items: center; gap: 12px; margin-top: 12px;
+           font-size: clamp(.9rem, .8rem + .4vw, 1.05rem);
+           letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.62); }
+  .nt-goutte { display: inline-grid; place-items: center; border-radius: 999px;
+               transition: transform .2s var(--nt-ease); }
+  .nt-goutte:hover { transform: scale(1.08); }
+  .nt-goutte:focus-visible { outline: 2px solid var(--nt-jaune); outline-offset: 3px; }
+  .nt-baseline { margin-top: 26px; max-width: 38ch;
+                 font-size: clamp(1.05rem, .97rem + .5vw, 1.35rem); line-height: 1.45; }
+  .nt-hero-bas { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+
+  /* Le jaune porte du texte noir : jamais l'inverse sur fond clair. */
+  .nt-zero {
+    display: inline-flex; align-items: baseline; gap: 9px;
+    background: var(--nt-jaune); color: var(--nt-noir);
+    padding: 11px 20px; border-radius: 999px; font-weight: 600;
+  }
+  .nt-zero b { font-size: 1.25rem; letter-spacing: -.02em; }
+  .nt-cta {
+    display: inline-flex; align-items: center; gap: 7px;
+    height: 44px; padding-inline: 22px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.42); color: #FFFFFF; font-weight: 500;
+    transition: background .18s, transform .18s var(--nt-ease);
+  }
+  .nt-cta:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
+  .nt-promesse { margin-top: 18px; max-width: 56ch; font-size: .9375rem;
+                 line-height: 1.55; color: rgba(255,255,255,.72); }
+
+  /* ── Corps ──────────────────────────────────────────────────────── */
+  /* Pleine largeur : la grille des producteurs occupe tout l'écran, seule
+     la gouttière la retient. Tout s'aligne sur elle — bandeau compris. */
+  .nt-compte { font-size: .8125rem; color: var(--nt-second); }
+
+  .nt-filtres { display: grid; gap: 10px; margin-top: 22px; grid-template-columns: 1fr;
+                max-width: 1180px; }
+  @media (min-width: 720px) { .nt-filtres { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+  .nt-raz { margin-left: 10px; font-weight: 600; color: var(--nt-texte);
+            border-bottom: 2px solid var(--nt-jaune); }
+
+  /* `auto-fill` plutôt qu'un nombre de colonnes fixe : sur un écran large la
+     grille en ajoute au lieu d'étirer les fiches. */
+  .nt-boutique {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    margin-top: 4px; height: 40px; border-radius: 10px;
+    background: var(--nt-noir); color: #FFFFFF; font-size: .875rem; font-weight: 600;
+    transition: opacity .18s;
+  }
+  .dark .nt-boutique { background: var(--nt-jaune); color: var(--nt-noir); }
+  .nt-boutique:hover { opacity: .88; }
+</style>
+
+{{ referentiel|json_script:"nt-geo" }}
+
+<div class="nt-page">
+  <section class="nt-hero">
+    <div class="nt-hero-inner">
+      <h1 class="nt-marque">Nos <em>terroirs</em>
+        <span class="nt-by">
+          by Isidor
+          <a href="{% url 'public:home' %}" class="nt-goutte" title="{% trans 'Accueil Isidor' %}"
+             aria-label="{% trans 'Accueil Isidor' %}">
+            {% include "partials/brand_mark.html" with size=26 %}
+          </a>
+        </span>
+      </h1>
+      <p class="nt-baseline">{% trans "La place de marché des paysans. Ils vendent leur production en direct." %}</p>
+
+      <div class="nt-hero-bas">
+        <span class="nt-zero"><b>0 %</b> {% trans "de commission" %}</span>
+        <a href="{% url 'vente:marche' %}" class="nt-cta">
+          {% trans "Voir les produits" %}<span class="material-icons-round text-[17px]">arrow_forward</span>
+        </a>
+      </div>
+      <p class="nt-promesse">
+        {% trans "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur." %}
+      </p>
+    </div>
+  </section>
+
+  <section class="nt-corps" x-data="terroirs()" x-init="init()">
+    <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap">
+      <h2 class="nt-titre">{% trans "Nos producteurs" %}</h2>
+      {% if nb %}<span class="nt-tag">{{ nb }}</span>{% endif %}
+    </div>
+
+    {% if fermes %}
+      {% trans "Chercher une ferme, une commune, une production…" as ph_q %}
+      {% trans "Chercher une ville…" as ph_ville %}
+      <div class="nt-filtres">
+        <div class="nt-rech">
+          <span class="material-icons-round">search</span>
+          <input type="search" class="nt-champ" x-model="q"
+                 placeholder="{{ ph_q|escapejs }}" aria-label="{{ ph_q|escapejs }}">
+        </div>
+        <select class="nt-champ" x-model="region" aria-label="{% trans 'Région' %}">
+          <option value="">{% trans "Toutes les régions" %}</option>
+          <template x-for="r in referentiel" :key="r.region">
+            <option :value="r.region" x-text="r.region"></option>
+          </template>
+        </select>
+        <select class="nt-champ" x-model="dep" aria-label="{% trans 'Département' %}">
+          <option value="">{% trans "Tous les départements" %}</option>
+          <template x-for="r in groupes" :key="r.region">
+            <optgroup :label="r.region">
+              <template x-for="d in r.departements" :key="d.code">
+                <option :value="d.code" x-text="d.code + ' — ' + d.nom"></option>
+              </template>
+            </optgroup>
+          </template>
+        </select>
+        <div class="nt-rech">
+          <span class="material-icons-round">location_city</span>
+          <input type="search" class="nt-champ" x-model="ville"
+                 placeholder="{{ ph_ville|escapejs }}" aria-label="{{ ph_ville|escapejs }}">
+        </div>
+      </div>
+
+      <p class="nt-compte" style="margin-top: 14px" x-show="filtre" x-cloak>
+        <span x-text="visibles"></span> / {{ nb }}
+        <button type="button" @click="reinitialiser()" class="nt-raz">{% trans "Tout afficher" %}</button>
+      </p>
+
+      <div class="nt-grille">
+        {% for f in fermes %}
+          <article class="nt-carte"
+                   data-region="{{ f.region|default:'' }}" data-dep="{{ f.dep_code|default:'' }}"
+                   data-ville="{{ f.ville }}"
+                   data-texte="{{ f.raison_sociale|default:f.name }} {{ f.ville }} {{ f.cp }} {{ f.productions }} {{ f.get_type_agriculture_display }} {{ f.region|default:'' }} {{ f.dep_nom|default:'' }} {{ f.dep_code|default:'' }}"
+                   x-show="montrer($el)" x-cloak>
+            <div class="nt-photo">
+              {% if f.photo %}
+                <img src="{{ f.photo.url }}" alt="{{ f.raison_sociale|default:f.name }}" loading="lazy" decoding="async">
+              {% else %}
+                <div class="nt-photo-vide" aria-hidden="true">{{ f.raison_sociale|default:f.name|slice:":1"|upper }}</div>
+              {% endif %}
+            </div>
+
+            <div class="nt-corps-carte">
+              <div>
+                <p class="nt-nom">{{ f.raison_sociale|default:f.name }}</p>
+                {% if f.ville or f.dep_nom %}
+                  <p class="nt-lieu">
+                    {{ f.ville }}{% if f.ville and f.dep_nom %} · {% endif %}{% if f.dep_nom %}{{ f.dep_nom }} ({{ f.dep_code }}){% endif %}
+                  </p>
+                {% endif %}
+              </div>
+
+              {% if f.productions %}<p class="nt-prod">{{ f.productions|truncatechars:110 }}</p>{% endif %}
+
+              <div class="nt-tags">
+                {% if f.type_agriculture %}
+                  <span class="nt-tag{% if 'bio' in f.type_agriculture %} nt-tag-bio{% endif %}">{{ f.get_type_agriculture_display }}</span>
+                {% endif %}
+                {% if f.sau_ha %}<span class="nt-tag">{{ f.sau_ha|floatformat:"-1" }} ha</span>{% endif %}
+                {% if f.annee_installation %}<span class="nt-tag">{% blocktrans with a=f.annee_installation %}depuis {{ a }}{% endblocktrans %}</span>{% endif %}
+              </div>
+
+              {% if f.boutique.est_ouverte %}
+                <a href="{% url 'vente:boutique_publique' f.boutique.slug %}" class="nt-boutique">
+                  {% trans "Voir la boutique" %}<span class="material-icons-round text-[16px]">arrow_forward</span>
+                </a>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <div class="nt-vide" x-show="filtre && visibles === 0" x-cloak>
+        <p style="font-size: 1.0625rem; font-weight: 600">{% trans "Aucune ferme ne correspond." %}</p>
+        <p style="margin-top: 8px; color: var(--nt-second)">{% trans "Élargissez la recherche ou retirez un filtre." %}</p>
+      </div>
+    {% else %}
+      <div class="nt-vide">
+        <p style="font-size: 1.0625rem; font-weight: 600">{% trans "Aucune ferme ne figure encore dans l'annuaire." %}</p>
+        <p style="margin-top: 8px; color: var(--nt-second)">
+          {% trans "Chaque exploitation décide d'y paraître : nous ne publions ni nom ni commune sans son accord." %}
+        </p>
+      </div>
+    {% endif %}
+  </section>
+</div>
+
+<script>
+  function terroirs() {
+    const plat = (s) => (s || '').toString().normalize('NFD')
+      .replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+    return {
+      q: '', region: '', dep: '', ville: '', referentiel: [], visibles: 0,
+
+      init() {
+        const n = document.getElementById('nt-geo');
+        this.referentiel = n ? JSON.parse(n.textContent) : [];
+        this.$nextTick(() => this.compter());
+        this.$watch('q', () => this.compter());
+        this.$watch('ville', () => this.compter());
+        this.$watch('region', () => { this.elaguer(); this.compter(); });
+        this.$watch('dep', () => this.compter());
+      },
+
+      get filtre() { return !!(this.q || this.region || this.dep || this.ville); },
+
+      get groupes() {
+        return this.region
+          ? this.referentiel.filter(r => r.region === this.region)
+          : this.referentiel;
+      },
+      get departements() { return this.groupes.flatMap(r => r.departements); },
+
+      elaguer() {
+        if (this.dep && !this.departements.some(d => d.code === this.dep)) this.dep = '';
+      },
+
+      montrer(el) {
+        const d = el.dataset;
+        if (this.region && d.region !== this.region) return false;
+        if (this.dep && d.dep !== this.dep) return false;
+        if (this.ville && !plat(d.ville).includes(plat(this.ville))) return false;
+        if (this.q && !plat(d.texte).includes(plat(this.q))) return false;
+        return true;
+      },
+
+      compter() {
+        this.$nextTick(() => {
+          this.visibles = [...this.$el.querySelectorAll('.nt-carte')]
+            .filter(c => c.offsetParent !== null).length;
+        });
+      },
+
+      reinitialiser() { this.q = this.region = this.dep = this.ville = ''; },
+    };
+  }
+</script>
+{% endblock %}
