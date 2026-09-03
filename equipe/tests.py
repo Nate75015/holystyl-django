@@ -1,5 +1,7 @@
 """Tests équipe : API tâches/membres, SMS d'affectation, rappels Celery, lien géoloc."""
 
+import html
+import sys
 from datetime import timedelta
 
 import pytest
@@ -954,3 +956,94 @@ def test_une_date_saisie_s_ecrit_en_toutes_lettres(client, ferme_rh):
     corps = ContratTravail.objects.get(membre=membre).corps
     assert "2026-09-15" not in corps
     assert "15 septembre 2026" in corps
+
+
+def _signature(exploitation, par_defaut=False, nom="signature.png"):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from identite.models import Piece
+
+    return Piece.objects.create(
+        exploitation=exploitation, type_piece=Piece.Type.SIGNATURE, par_defaut=par_defaut,
+        fichier=SimpleUploadedFile(nom, b"\x89PNG signature", content_type="image/png"))
+
+
+@pytest.mark.django_db
+def test_la_signature_se_choisit_a_l_endroit_ou_l_employeur_signe(client, ferme_rh):
+    """Deux signatures portent le même nom : on choisit sur l'image."""
+    from equipe.models import ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    courante = _signature(exploitation, par_defaut=True)
+    autre = _signature(exploitation, nom="autre.png")
+    modele = ModeleContrat.objects.create(
+        exploitation=exploitation, nom="CDI maison", type_contrat="cdi",
+        corps="Représentée par {{ employeur }}.\n\nL'employeur\n{{ employeur }}")
+
+    client.force_login(patron)
+    brut = client.get(f"/contrats-travail/modeles/{modele.pk}/etablir/").content.decode()
+    page = html.unescape(brut)  # l'état de départ voyage dans un attribut
+
+    # Les deux signatures sont offertes, la courante déjà retenue.
+    assert brut.count('name="signature"') == 3  # les deux pièces, plus « à la main »
+    assert courante.fichier.url in page and autre.fichier.url in page
+    assert f'"signature": "{courante.pk}"' in page
+    # Le choix se pose à la dernière mention de l'employeur, pas à la première.
+    assert page.index('class="ct-signature"') > page.index("Représentée par")
+
+
+@pytest.mark.django_db
+def test_la_signature_choisie_se_fige_sur_le_contrat(client, ferme_rh, monkeypatch):
+    from equipe.models import ContratTravail, ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    _signature(exploitation, par_defaut=True)
+    choisie = _signature(exploitation, nom="celle-ci.png")
+    modele = ModeleContrat.objects.create(exploitation=exploitation, nom="CDI",
+                                          type_contrat="cdi", corps="{{ employeur }}")
+
+    client.force_login(patron)
+    client.post("/contrats-travail/etablir/", {
+        "membre": str(membre.pk), "modele": str(modele.pk), "signature": str(choisie.pk)})
+
+    contrat = ContratTravail.objects.get(membre=membre)
+    assert contrat.signature == choisie
+    # Et c'est bien elle qui s'appose sur le document remis. Sans WeasyPrint,
+    # la vue rend la page imprimable : c'est là qu'on peut la lire.
+    monkeypatch.setitem(sys.modules, "weasyprint", None)
+    page = client.get(f"/contrats-travail/{contrat.pk}/pdf/").content.decode()
+    assert choisie.fichier.url in page
+
+
+@pytest.mark.django_db
+def test_signer_a_la_main_laisse_le_contrat_vierge(client, ferme_rh):
+    """Un choix vide est un choix : il ne doit pas rappeler la signature par défaut."""
+    from equipe.models import ContratTravail, ModeleContrat
+
+    patron, exploitation, membre = ferme_rh
+    _signature(exploitation, par_defaut=True)
+    modele = ModeleContrat.objects.create(exploitation=exploitation, nom="CDI",
+                                          type_contrat="cdi", corps="{{ employeur }}")
+
+    client.force_login(patron)
+    client.post("/contrats-travail/etablir/", {
+        "membre": str(membre.pk), "modele": str(modele.pk), "signature": ""})
+
+    assert ContratTravail.objects.get(membre=membre).signature is None
+
+
+@pytest.mark.django_db
+def test_la_signature_du_voisin_ne_s_appose_pas(client, ferme_rh):
+    from equipe.models import ContratTravail, ModeleContrat
+    from exploitations.models import Exploitation
+
+    patron, exploitation, membre = ferme_rh
+    voisin = User.objects.create_user(email="voisin2@ex.com", password="pwd12345")
+    la_sienne = _signature(Exploitation.objects.create(owner=voisin, name="Ferme d'à côté"))
+    modele = ModeleContrat.objects.create(exploitation=exploitation, nom="CDI",
+                                          type_contrat="cdi", corps="{{ employeur }}")
+
+    client.force_login(patron)
+    client.post("/contrats-travail/etablir/", {
+        "membre": str(membre.pk), "modele": str(modele.pk), "signature": str(la_sienne.pk)})
+
+    assert ContratTravail.objects.get(membre=membre).signature is None

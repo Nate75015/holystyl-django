@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 
 from exploitations.models import Exploitation
 
+from . import signatures
 from .models import Piece
 
 
@@ -110,7 +111,9 @@ def signature_definir(request):
     piece = Piece(exploitation=exploitation, type_piece=Piece.Type.SIGNATURE,
                   titulaire=(request.POST.get("titulaire") or "").strip()[:160],
                   par_defaut=True)
-    piece.fichier.save("signature.png", ContentFile(binaire), save=False)
+    # Le pavé est une bande large : sans recadrage, le tracé s'imprimerait
+    # en filet au bas des contrats.
+    piece.fichier.save("signature.png", ContentFile(signatures.recadrer(binaire)), save=False)
     piece.save()
     messages.success(request, _("Signature enregistrée."))
     return redirect("identite:pieces_type", type_piece="signature")
@@ -176,6 +179,16 @@ def _piece_ou_rien(request, pk, type_piece=None):
     return piece
 
 
+def _signature_recadree(fichier, type_piece):
+    """Une signature rognée sur son trait ; toute autre pièce, intacte."""
+    if type_piece != Piece.Type.SIGNATURE:
+        return fichier
+    from django.core.files.base import ContentFile
+
+    fichier.seek(0)
+    return ContentFile(signatures.recadrer(fichier.read()), name=fichier.name)
+
+
 @login_required
 @require_POST
 def piece_ajouter(request):
@@ -184,7 +197,10 @@ def piece_ajouter(request):
     if exploitation is None or not fichier or _refuse(request, fichier):
         return redirect("identite:pieces")
 
-    Piece.objects.create(exploitation=exploitation, fichier=fichier, **_champs(request))
+    champs = _champs(request)
+    Piece.objects.create(exploitation=exploitation,
+                         fichier=_signature_recadree(fichier, champs.get("type_piece")),
+                         **champs)
     messages.success(request, _("Pièce enregistrée."))
     return redirect("identite:pieces")
 
@@ -200,7 +216,7 @@ def piece_modifier(request, pk):
     if fichier:
         if _refuse(request, fichier):
             return redirect("identite:pieces")
-        piece.fichier = fichier
+        piece.fichier = _signature_recadree(fichier, piece.type_piece)
     for champ, valeur in _champs(request).items():
         setattr(piece, champ, valeur)
     piece.save()

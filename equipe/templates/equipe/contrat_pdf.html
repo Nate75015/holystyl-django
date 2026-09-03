@@ -12,7 +12,10 @@
     .signatures td { width: 50%; vertical-align: top; padding-right: 8mm; font-size: 10pt; }
     .signatures .role { color: #555; font-size: 9pt; }
     .signatures .trait { margin-top: 16mm; border-top: 0.5pt solid #999; }
-    .signatures img { max-height: 20mm; max-width: 55mm; display: block; margin-bottom: 1mm; }
+    /* Une signature manuscrite est large et basse — la nôtre fait neuf fois
+       plus large que haut. C'est la largeur qui la contraint, pas la hauteur :
+       on lui donne toute la colonne, sans quoi elle s'imprime en filet. */
+    .signatures img { width: 100%; max-width: 78mm; max-height: 32mm; display: block; margin-bottom: 1mm; }
   </style>
 </head>
 <body>

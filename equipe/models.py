@@ -216,6 +216,12 @@ class ContratTravail(TimeStampedModel):
     duree_hebdo = models.FloatField(_("durée hebdomadaire (h)"), null=True, blank=True)
     remuneration = models.FloatField(_("rémunération brute mensuelle"), null=True, blank=True)
     date_signature = models.DateField(_("date de signature"), null=True, blank=True)
+    #: La signature apposée sur le PDF. Choisie à l'établissement — une
+    #: exploitation peut en avoir plusieurs — et figée avec le contrat :
+    #: changer de signature ensuite ne doit pas resigner un contrat remis.
+    signature = models.ForeignKey(
+        "identite.Piece", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="contrats_signes", verbose_name=_("signature de l'employeur"))
 
     #: Texte figé au moment de l'établissement, jetons déjà remplacés.
     corps = models.TextField(_("corps du contrat"), blank=True)

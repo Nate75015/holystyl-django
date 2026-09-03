@@ -46,6 +46,51 @@
   }
   .ct-feuille select.ct-blanc { padding-right: 20px; }
   .ct-barre { position: sticky; top: 0; z-index: 10; }
+
+  /* Le choix de la signature, à l'endroit où elle s'apposera. */
+  .ct-signature { position: relative; display: inline-block; vertical-align: middle; }
+  .ct-parapher {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 2px 6px;
+    border: 1px dashed color-mix(in srgb, var(--action) 45%, transparent);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--action) 6%, transparent);
+  }
+  .ct-parapher:hover { background: color-mix(in srgb, var(--action) 12%, transparent); }
+  /* Aussi large que sur le PDF : c'est un aperçu, il doit se lire. */
+  .ct-sign-apercu { max-height: 76px; max-width: 300px; }
+  .ct-sign-vide { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .ct-sign-panneau {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 260px;
+    padding: 10px;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 8px 28px rgb(0 0 0 / 0.14);
+    white-space: normal;
+  }
+  /* Le pavé de signature clôt le contrat : sous lui, la place manque. */
+  .ct-sign-panneau.ct-sign-haut { top: auto; bottom: calc(100% + 6px); }
+  .ct-sign-titre { font-size: 12px; color: var(--text-secondary); }
+  .ct-sign-choix {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .ct-sign-choix:hover { background: var(--surface-alt); }
+  .ct-sign-choix img { max-height: 56px; max-width: 230px; }
 </style>
 
 <section class="space-y-4" x-data="etablir({{ fiches_membres }}, {{ etat }})">
@@ -71,6 +116,13 @@
           {% for m in membres %}<option value="{{ m.pk }}">{{ m.name }}</option>{% endfor %}
         </select>
       </div>
+      {% if signature_en_tete %}
+        {% comment %} Le modèle ne nomme jamais l'employeur : le choix se pose ici. {% endcomment %}
+        <div>
+          <span class="mb-1 block text-[13px]" style="color: var(--text-secondary)">{% trans "Signature de l'employeur" %}</span>
+          {% include "equipe/_signature.html" %}
+        </div>
+      {% endif %}
       <div class="flex flex-wrap items-center gap-3">
         <span class="text-[13px]" x-show="restants > 0" x-cloak style="color: var(--danger)"
               x-text="restants + ' ' + libelleRestants"></span>
@@ -88,7 +140,7 @@
     </p>
 
     {# ── Le contrat, blancs compris ── #}
-    <article class="ct-feuille">{% for s in segments %}{% if s.blanc %}{% include "equipe/_blanc.html" with b=s.blanc %}{% else %}{{ s.texte }}{% endif %}{% endfor %}</article>
+    <article class="ct-feuille">{% for s in segments %}{% if s.blanc %}{% include "equipe/_blanc.html" with b=s.blanc %}{% if s.signature %} {% include "equipe/_signature.html" %}{% endif %}{% else %}{{ s.texte }}{% endif %}{% endfor %}</article>
   </form>
 </section>
 
@@ -99,6 +151,10 @@
       fiches: fiches,
       membre: '',
       v: etat.valeurs,
+      signature: etat.signature,
+      panneau: false,
+      panneauEnHaut: false,
+      urls: etat.urls_signatures,
       libre: etat.libre,
       libelleRestants: '{{ restants_libelle|escapejs }}',
       /* Le salarié choisi remplit son identité. Le poste ne s'écrase que
@@ -114,6 +170,18 @@
       /* Passer une liste en saisie libre, sans garder le mot-clé comme valeur. */
       basculer(cle) {
         if (this.v[cle] === '__libre__') { this.libre[cle] = true; this.v[cle] = ''; }
+      },
+      /* Ouvrir vers le haut quand le bas de la fenêtre est trop proche :
+         un panneau qu'il faut deviner ne se voit pas. */
+      ouvrirPanneau(bouton) {
+        this.panneau = !this.panneau;
+        if (this.panneau) {
+          this.panneauEnHaut = bouton.getBoundingClientRect().bottom + 250 > window.innerHeight;
+        }
+      },
+      /* Ce que montre le parapheur : l'image retenue, ou rien du tout. */
+      get urlSignature() {
+        return this.urls[this.signature] || '';
       },
       get restants() {
         return Object.values(this.v).filter(valeur => !String(valeur).trim()).length;

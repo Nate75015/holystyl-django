@@ -429,17 +429,54 @@ def contrat_etablir(request, pk):
     segments = [{"texte": valeur} if genre == "texte" else {"blanc": blancs[valeur]}
                 for genre, valeur in contrats_service.decouper(modele.corps)]
 
+    # La signature se choisit là où l'employeur signe, c'est-à-dire à sa
+    # dernière mention. Si le modèle ne le nomme jamais, elle rejoint la barre
+    # du haut plutôt que de disparaître.
+    from identite.models import Piece
+
+    rang_signature = max((i for i, seg in enumerate(segments)
+                          if seg.get("blanc") and seg["blanc"]["cle"] == "employeur"),
+                         default=None)
+    if rang_signature is not None:
+        segments[rang_signature]["signature"] = True
+    signatures = Piece.objects.filter(exploitation=exploitation,
+                                      type_piece=Piece.Type.SIGNATURE).exclude(fichier="")
+    active = Piece.signature_active(exploitation)
+
     return render(request, "equipe/etablir.html", {
+        "signatures": signatures,
+        "signature_active": active.pk if active else "",
+        "signature_en_tete": rang_signature is None,
         "modele": modele,
         "membres": membres,
         "segments": segments,
-        "etat": json.dumps({"valeurs": valeurs, "libre": libre}),
+        "etat": json.dumps({
+            "valeurs": valeurs, "libre": libre,
+            "signature": str(active.pk) if active else "",
+            "urls_signatures": {str(p.pk): p.fichier.url for p in signatures},
+        }),
         "fiches_membres": json.dumps({
             str(m.pk): {"salarie": m.name, "salarie_email": m.email,
                         "salarie_telephone": m.phone,
                         "poste": m.get_role_display()} for m in membres}),
         "page_title": _("Établir un contrat"),
     })
+
+
+def _signature_choisie(request, exploitation):
+    """La signature retenue pour ce contrat, et rien d'autre.
+
+    Un champ vide veut dire « signer à la main » et doit être respecté. Le
+    champ absent, lui, vient d'un envoi qui ignore la question : on reprend
+    alors la signature par défaut de la ferme, comme avant.
+    """
+    from identite.models import Piece
+
+    if "signature" not in request.POST:
+        return Piece.signature_active(exploitation)
+    return Piece.objects.filter(pk=request.POST.get("signature") or 0,
+                                exploitation=exploitation,
+                                type_piece=Piece.Type.SIGNATURE).first()
 
 
 @login_required
@@ -462,6 +499,7 @@ def contrat_create(request):
 
     contrat = ContratTravail(exploitation=exploitation, membre=membre, modele=modele,
                              type_contrat=modele.type_contrat, **_champs_contrat(request))
+    contrat.signature = _signature_choisie(request, exploitation)
     valeurs = contrats_service.valeurs_pour(contrat)
     valeurs.update(contrats_service.valeurs_saisies(request.POST))
     contrat.corps = contrats_service.remplir(modele.corps, valeurs)
@@ -535,13 +573,11 @@ def contrat_pdf(request, pk):
     """Le contrat en PDF, ou en page imprimable si WeasyPrint n'est pas là."""
     exploitation = _exploitation(request)
     contrat = get_object_or_404(
-        ContratTravail.objects.select_related("membre"), pk=pk, exploitation=exploitation)
-    # La signature de l'employeur vient de la section Identité : définie une
-    # fois, elle s'appose sur les documents qu'il émet.
-    from identite.models import Piece
-
+        ContratTravail.objects.select_related("membre", "signature"), pk=pk, exploitation=exploitation)
+    # La signature choisie à l'établissement, figée avec le contrat : en
+    # changer dans la section Identité ne resigne pas un contrat déjà remis.
     contexte = {"contrat": contrat, "exploitation": exploitation,
-                "signature": Piece.signature_active(exploitation)}
+                "signature": contrat.signature}
     html = render(request, "equipe/contrat_pdf.html", contexte).content.decode()
 
     try:

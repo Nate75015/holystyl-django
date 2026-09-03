@@ -368,3 +368,68 @@ def test_une_page_perimee_ne_montre_pas_un_ecran_d_erreur(client, setup):
         reponse = client.post(url, follow=True)
         assert reponse.status_code == 200, url
         assert "n&#x27;existe plus" in reponse.content.decode(), url
+
+
+def _toile(taille=(400, 100), trace=None):
+    """Une toile transparente, avec au besoin un trait noir posé dessus."""
+    import io
+
+    from PIL import Image, ImageDraw
+
+    image = Image.new("RGBA", taille, (0, 0, 0, 0))
+    if trace:
+        ImageDraw.Draw(image).rectangle(trace, fill=(0, 0, 0, 255))
+    sortie = io.BytesIO()
+    image.save(sortie, format="PNG")
+    return sortie.getvalue()
+
+
+def _taille(binaire):
+    import io
+
+    from PIL import Image
+
+    return Image.open(io.BytesIO(binaire)).size
+
+
+def test_la_signature_est_rognee_sur_son_trace():
+    """Le pavé est une bande large : sans rognage, le trait s'imprime en filet."""
+    from identite.signatures import recadrer
+
+    # Un trait de 100 × 40 au milieu d'une toile de 400 × 100.
+    largeur, hauteur = _taille(recadrer(_toile(trace=(150, 30, 250, 70))))
+    assert 100 < largeur < 130 and 40 < hauteur < 70  # le trait, plus une marge
+    # Le rapport passe de 4:1 à environ 2:1 — c'est ce qui la rend lisible.
+    assert largeur / hauteur < 2.5
+
+
+def test_une_toile_vide_reste_intacte():
+    """Rien à rogner : mieux vaut le fichier d'origine qu'une image nulle."""
+    from identite.signatures import recadrer
+
+    vide = _toile()
+    assert recadrer(vide) == vide
+
+
+def test_un_fichier_illisible_traverse_sans_dommage():
+    """Une signature abîmée vaudrait moins qu'une signature petite."""
+    from identite.signatures import recadrer
+
+    assert recadrer(b"%PDF-1.4 pas une image") == b"%PDF-1.4 pas une image"
+
+
+def test_une_signature_photographiee_perd_ses_marges_blanches():
+    """Sans transparence, c'est le blanc qui fait la marge."""
+    import io
+
+    from PIL import Image, ImageDraw
+
+    from identite.signatures import recadrer
+
+    image = Image.new("RGB", (400, 100), "white")
+    ImageDraw.Draw(image).rectangle((150, 30, 250, 70), fill="black")
+    sortie = io.BytesIO()
+    image.save(sortie, format="PNG")
+
+    largeur, _hauteur = _taille(recadrer(sortie.getvalue()))
+    assert largeur < 140
