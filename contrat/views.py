@@ -690,3 +690,234 @@ def rendez_vous_create(request):
     )
     messages.success(request, _("Rendez-vous ajouté au planning."))
     return redirect("contrat:assurances")
+
+
+# ── Drive : les documents de l'exploitation, rangés ───────────────────
+#
+# Un drive doit accepter ce qui arrive vraiment d'un tiers : le PDF avant
+# tout, mais aussi le tableur du comptable ou la photo d'un courrier. Plus
+# large que les pièces attachées à un bail, dont on sait ce qu'on attend.
+EXTENSIONS_DRIVE = EXTENSIONS_DOC | {
+    ".doc", ".docx", ".odt", ".rtf", ".txt",
+    ".xls", ".xlsx", ".ods", ".csv",
+    ".ppt", ".pptx", ".odp", ".zip", ".gif",
+}
+TAILLE_MAX_DRIVE = 50 * 1024 * 1024
+
+
+def _drive_dossier(request, pk):
+    """Le dossier demandé s'il appartient à la ferme, sinon la racine.
+
+    Rendre la racine plutôt qu'un 404 : un dossier supprimé depuis un autre
+    onglet ne doit pas jeter l'exploitant sur une page d'erreur.
+    """
+    from .models import Dossier
+
+    if not pk:
+        return None
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    return Dossier.objects.filter(pk=pk, exploitation=exploitation).first()
+
+
+def _drive_refuse(request, fichier):
+    """Vrai — et le dit — si ce fichier n'a pas sa place dans le drive."""
+    import os
+
+    if os.path.splitext(fichier.name)[1].lower() not in EXTENSIONS_DRIVE:
+        messages.error(request, _("« %(nom)s » : format non accepté.") % {"nom": fichier.name})
+        return True
+    if fichier.size > TAILLE_MAX_DRIVE:
+        messages.error(request, _("« %(nom)s » dépasse 50 Mo.") % {"nom": fichier.name})
+        return True
+    return False
+
+
+def _drive_retour(dossier):
+    if dossier is None:
+        return redirect("contrat:drive")
+    return redirect("contrat:drive_dossier", pk=dossier.pk)
+
+
+@login_required
+def drive(request, pk=None):
+    """Le contenu d'un dossier : ses sous-dossiers, puis ses fichiers."""
+    from .models import Dossier, Fichier
+
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    dossier = _drive_dossier(request, pk)
+    if pk and dossier is None:
+        messages.info(request, _("Ce dossier n'existe plus."))
+        return redirect("contrat:drive")
+
+    dossiers = Dossier.objects.filter(exploitation=exploitation, parent=dossier)
+    fichiers = Fichier.objects.filter(exploitation=exploitation, dossier=dossier)
+
+    # La liste des destinations possibles pour un déplacement, à plat : sur
+    # quelques dizaines de dossiers, un arbre déroulant coûterait plus qu'il
+    # ne rapporte.
+    destinations = [{"pk": d.pk, "chemin": " / ".join(p.nom for p in d.chemin)}
+                    for d in Dossier.objects.filter(exploitation=exploitation)
+                    .select_related("parent")]
+    destinations.sort(key=lambda d: d["chemin"])
+
+    return render(request, "contrat/drive.html", {
+        "dossier": dossier,
+        "chemin": dossier.chemin if dossier else [],
+        "dossiers": dossiers,
+        "fichiers": fichiers,
+        "destinations": destinations,
+        "vide": not dossiers.exists() and not fichiers.exists(),
+        "page_title": dossier.nom if dossier else _("Drive"),
+    })
+
+
+@login_required
+@require_POST
+def drive_dossier_creer(request, pk=None):
+    from django.db import IntegrityError, transaction
+
+    from .models import Dossier
+
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    parent = _drive_dossier(request, pk)
+    nom = (request.POST.get("nom") or "").strip()[:255]
+    if not exploitation or not nom:
+        return _drive_retour(parent)
+    if parent and parent.profondeur >= Dossier.PROFONDEUR_MAX:
+        messages.error(request, _("Trop de dossiers imbriqués : rangez plus à plat."))
+        return _drive_retour(parent)
+    try:
+        with transaction.atomic():
+            Dossier.objects.create(exploitation=exploitation, parent=parent, nom=nom)
+    except IntegrityError:
+        messages.error(request, _("Un dossier porte déjà ce nom ici."))
+    return _drive_retour(parent)
+
+
+@login_required
+@require_POST
+def drive_dossier_renommer(request, pk):
+    from django.db import IntegrityError, transaction
+
+    dossier = _drive_dossier(request, pk)
+    if dossier is None:
+        return redirect("contrat:drive")
+    nom = (request.POST.get("nom") or "").strip()[:255]
+    if nom:
+        dossier.nom = nom
+        try:
+            with transaction.atomic():
+                dossier.save(update_fields=["nom", "updated_at"])
+        except IntegrityError:
+            messages.error(request, _("Un dossier porte déjà ce nom ici."))
+    return _drive_retour(dossier.parent)
+
+
+@login_required
+@require_POST
+def drive_dossier_supprimer(request, pk):
+    dossier = _drive_dossier(request, pk)
+    if dossier is None:
+        return redirect("contrat:drive")
+    parent = dossier.parent
+    dossier.delete()  # emporte ses sous-dossiers et leurs fichiers
+    messages.success(request, _("Dossier supprimé."))
+    return _drive_retour(parent)
+
+
+@login_required
+@require_POST
+def drive_deposer(request, pk=None):
+    """Dépose les fichiers choisis dans le dossier courant."""
+    import os
+
+    from .models import Fichier
+
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    dossier = _drive_dossier(request, pk)
+    if exploitation is None:
+        return _drive_retour(dossier)
+
+    deposes = 0
+    for envoye in request.FILES.getlist("fichiers"):
+        if _drive_refuse(request, envoye):
+            continue
+        Fichier.objects.create(
+            exploitation=exploitation, dossier=dossier,
+            nom=os.path.basename(envoye.name)[:255], fichier=envoye,
+            taille=envoye.size, depose_par=request.user)
+        deposes += 1
+    if deposes:
+        messages.success(request, _("%(n)s document(s) importé(s).") % {"n": deposes})
+    return _drive_retour(dossier)
+
+
+def _drive_fichier(request, pk):
+    from .models import Fichier
+
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    return Fichier.objects.filter(pk=pk, exploitation=exploitation).first()
+
+
+@login_required
+@require_POST
+def drive_fichier_renommer(request, pk):
+    fichier = _drive_fichier(request, pk)
+    if fichier is None:
+        return redirect("contrat:drive")
+    nom = (request.POST.get("nom") or "").strip()[:255]
+    if nom:
+        fichier.nom = nom
+        fichier.save(update_fields=["nom"])
+    return _drive_retour(fichier.dossier)
+
+
+@login_required
+@require_POST
+def drive_fichier_supprimer(request, pk):
+    fichier = _drive_fichier(request, pk)
+    if fichier is None:
+        return redirect("contrat:drive")
+    dossier = fichier.dossier
+    fichier.delete()
+    messages.success(request, _("Document supprimé."))
+    return _drive_retour(dossier)
+
+
+@login_required
+@require_POST
+def drive_deplacer(request, pk):
+    """Déplace un dossier ou un fichier vers un autre dossier.
+
+    Un dossier ne peut pas descendre dans sa propre branche : la boucle
+    rendrait tout ce qu'elle contient inatteignable.
+    """
+    from django.db import IntegrityError, transaction
+
+    quoi = request.POST.get("quoi")
+    vers = _drive_dossier(request, request.POST.get("vers") or None)
+
+    if quoi == "dossier":
+        dossier = _drive_dossier(request, pk)
+        if dossier is None:
+            return redirect("contrat:drive")
+        depart = dossier.parent
+        if vers is not None and dossier.contient(vers):
+            messages.error(request, _("Un dossier ne peut pas être déplacé dans lui-même."))
+            return _drive_retour(depart)
+        dossier.parent = vers
+        try:
+            with transaction.atomic():
+                dossier.save(update_fields=["parent", "updated_at"])
+        except IntegrityError:
+            messages.error(request, _("Un dossier porte déjà ce nom là-bas."))
+            return _drive_retour(depart)
+        return _drive_retour(depart)
+
+    fichier = _drive_fichier(request, pk)
+    if fichier is None:
+        return redirect("contrat:drive")
+    depart = fichier.dossier
+    fichier.dossier = vers
+    fichier.save(update_fields=["dossier"])
+    return _drive_retour(depart)

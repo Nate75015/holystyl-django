@@ -557,3 +557,157 @@ def test_l_acte_du_voisin_est_hors_de_portee(client, setup):
     client.force_login(user)
     assert client.post(f"/actes-notaries/{acte.pk}/supprimer/").status_code == 404
     assert ActeNotarie.objects.filter(pk=acte.pk).exists()
+
+
+# ── Drive : ranger soi-même ses documents ────────────────────────────
+
+
+def _pdf(nom="bail.pdf"):
+    return SimpleUploadedFile(nom, b"%PDF-1.4 ...", content_type="application/pdf")
+
+
+@pytest.mark.django_db
+def test_on_construit_des_dossiers_et_on_y_importe(client, setup):
+    """Créer un dossier, y descendre, y déposer des PDF."""
+    from contrat.models import Dossier, Fichier
+
+    user, exploitation = setup
+    client.force_login(user)
+
+    client.post("/drive/nouveau-dossier/", {"nom": "Baux"})
+    baux = Dossier.objects.get(exploitation=exploitation, nom="Baux")
+    assert baux.parent is None
+
+    client.post(f"/drive/dossier/{baux.pk}/nouveau-dossier/", {"nom": "2026"})
+    annee = Dossier.objects.get(nom="2026")
+    assert annee.parent == baux
+    # Le fil d'Ariane remonte jusqu'à la racine, dans l'ordre.
+    assert [d.nom for d in annee.chemin] == ["Baux", "2026"]
+
+    client.post(f"/drive/dossier/{annee.pk}/importer/",
+                {"fichiers": [_pdf("coteaux.pdf"), _pdf("etat-des-lieux.pdf")]})
+    assert Fichier.objects.filter(dossier=annee).count() == 2
+    depose = Fichier.objects.get(nom="coteaux.pdf")
+    assert depose.taille > 0 and depose.est_pdf and depose.depose_par == user
+
+    # Et le dossier montre bien ce qu'il contient.
+    page = client.get(f"/drive/dossier/{annee.pk}/").content.decode()
+    assert "coteaux.pdf" in page and "etat-des-lieux.pdf" in page
+
+
+@pytest.mark.django_db
+def test_un_format_refuse_n_entre_pas(client, setup):
+    from contrat.models import Fichier
+
+    user, _exploitation = setup
+    client.force_login(user)
+    client.post("/drive/importer/", {"fichiers": [
+        SimpleUploadedFile("virus.exe", b"MZ", content_type="application/octet-stream")]})
+    assert Fichier.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_un_dossier_ne_descend_pas_dans_lui_meme(client, setup):
+    """La boucle rendrait toute la branche inatteignable."""
+    from contrat.models import Dossier
+
+    user, exploitation = setup
+    parent = Dossier.objects.create(exploitation=exploitation, nom="Baux")
+    enfant = Dossier.objects.create(exploitation=exploitation, parent=parent, nom="2026")
+
+    client.force_login(user)
+    client.post(f"/drive/{parent.pk}/deplacer/", {"quoi": "dossier", "vers": str(enfant.pk)})
+
+    parent.refresh_from_db()
+    assert parent.parent is None
+
+
+@pytest.mark.django_db
+def test_deplacer_un_fichier_vers_un_autre_dossier(client, setup):
+    from contrat.models import Dossier, Fichier
+
+    user, exploitation = setup
+    depart = Dossier.objects.create(exploitation=exploitation, nom="À trier")
+    arrivee = Dossier.objects.create(exploitation=exploitation, nom="Baux")
+    fichier = Fichier.objects.create(exploitation=exploitation, dossier=depart,
+                                     nom="coteaux.pdf", fichier=_pdf(), taille=12)
+
+    client.force_login(user)
+    client.post(f"/drive/{fichier.pk}/deplacer/", {"quoi": "fichier", "vers": str(arrivee.pk)})
+
+    fichier.refresh_from_db()
+    assert fichier.dossier == arrivee
+
+
+@pytest.mark.django_db
+def test_supprimer_un_dossier_emporte_ce_qu_il_contient(client, setup):
+    from contrat.models import Dossier, Fichier
+
+    user, exploitation = setup
+    parent = Dossier.objects.create(exploitation=exploitation, nom="Baux")
+    enfant = Dossier.objects.create(exploitation=exploitation, parent=parent, nom="2026")
+    Fichier.objects.create(exploitation=exploitation, dossier=enfant, nom="c.pdf",
+                           fichier=_pdf(), taille=12)
+
+    client.force_login(user)
+    client.post(f"/drive/dossier/{parent.pk}/supprimer/")
+
+    assert Dossier.objects.count() == 0 and Fichier.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_deux_dossiers_de_meme_nom_au_meme_endroit_sont_refuses(client, setup):
+    from contrat.models import Dossier
+
+    user, exploitation = setup
+    client.force_login(user)
+    client.post("/drive/nouveau-dossier/", {"nom": "Baux"})
+    client.post("/drive/nouveau-dossier/", {"nom": "Baux"})
+    assert Dossier.objects.filter(nom="Baux").count() == 1
+
+    # Le même nom ailleurs reste possible : c'est un autre rangement.
+    ailleurs = Dossier.objects.get(nom="Baux")
+    client.post(f"/drive/dossier/{ailleurs.pk}/nouveau-dossier/", {"nom": "Baux"})
+    assert Dossier.objects.filter(nom="Baux").count() == 2
+
+
+@pytest.mark.django_db
+def test_le_drive_du_voisin_reste_ferme(client, setup):
+    from contrat.models import Dossier, Fichier
+
+    user, _exploitation = setup
+    voisin = User.objects.create_user(email="voisin-drive@ex.com", password="pwd12345")
+    ailleurs = Exploitation.objects.create(owner=voisin, name="Ferme d'à côté")
+    son_dossier = Dossier.objects.create(exploitation=ailleurs, nom="Ses baux")
+    son_fichier = Fichier.objects.create(exploitation=ailleurs, dossier=son_dossier,
+                                         nom="prive.pdf", fichier=_pdf(), taille=12)
+
+    client.force_login(user)
+    # On n'entre pas, on ne renomme pas, on ne supprime pas.
+    assert client.get(f"/drive/dossier/{son_dossier.pk}/").url == "/drive/"
+    client.post(f"/drive/dossier/{son_dossier.pk}/renommer/", {"nom": "Volé"})
+    client.post(f"/drive/fichier/{son_fichier.pk}/supprimer/")
+
+    son_dossier.refresh_from_db()
+    assert son_dossier.nom == "Ses baux"
+    assert Fichier.objects.filter(pk=son_fichier.pk).exists()
+
+
+@pytest.mark.django_db
+def test_supprimer_efface_le_fichier_du_stockage(client, setup):
+    """Un document supprimé ne doit pas rester lisible à son adresse."""
+    import os
+
+    from contrat.models import Dossier, Fichier
+
+    user, exploitation = setup
+    dossier = Dossier.objects.create(exploitation=exploitation, nom="Baux")
+    fichier = Fichier.objects.create(exploitation=exploitation, dossier=dossier,
+                                     nom="c.pdf", fichier=_pdf(), taille=12)
+    chemin = fichier.fichier.path
+    assert os.path.exists(chemin)
+
+    # Même en cascade : c'est le dossier qu'on supprime, pas le fichier.
+    client.force_login(user)
+    client.post(f"/drive/dossier/{dossier.pk}/supprimer/")
+    assert not os.path.exists(chemin)

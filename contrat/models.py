@@ -1,4 +1,8 @@
+import os
+
+from django.conf import settings
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 
@@ -682,3 +686,122 @@ class IndiceFermage(models.Model):
 
     def __str__(self):
         return f"{self.annee} : {self.variation_pct} %"
+
+
+class Dossier(models.Model):
+    """Un dossier du drive, qui peut en contenir d'autres.
+
+    L'arborescence tient dans un simple parent : c'est peu de code, et c'est
+    ce qu'attend quelqu'un qui a déjà rangé des fichiers ailleurs. Supprimer
+    un dossier emporte ce qu'il contient — comme une corbeille de bureau, à
+    ceci près qu'ici c'est définitif, et la page le dit avant de le faire.
+    """
+
+    #: Au-delà, on refuse de créer : une arborescence trop profonde ne se
+    #: parcourt plus, et le fil d'Ariane déborde.
+    PROFONDEUR_MAX = 12
+
+    exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE,
+                                     related_name="dossiers")
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
+                               related_name="enfants", verbose_name=_("dossier parent"))
+    nom = models.CharField(_("nom"), max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("dossier")
+        verbose_name_plural = _("dossiers")
+        ordering = ("nom",)
+        constraints = [
+            models.UniqueConstraint(fields=["exploitation", "parent", "nom"],
+                                    name="dossier_unique_dans_son_parent"),
+            # `parent` nul échappe à la contrainte ci-dessus : SQL ne compare
+            # pas deux NULL. La racine a donc besoin de la sienne.
+            models.UniqueConstraint(fields=["exploitation", "nom"],
+                                    condition=models.Q(parent__isnull=True),
+                                    name="dossier_unique_a_la_racine"),
+        ]
+
+    def __str__(self):
+        return self.nom
+
+    @property
+    def chemin(self):
+        """Les dossiers de la racine jusqu'à celui-ci, pour le fil d'Ariane."""
+        remonte, dossier = [], self
+        while dossier is not None and len(remonte) <= self.PROFONDEUR_MAX:
+            remonte.append(dossier)
+            dossier = dossier.parent
+        return list(reversed(remonte))
+
+    @property
+    def profondeur(self):
+        return len(self.chemin)
+
+    def contient(self, autre):
+        """Vrai si `autre` est ce dossier ou l'un de ses descendants.
+
+        Sert à refuser qu'un dossier soit déplacé dans lui-même : la boucle
+        qui en naîtrait rendrait la branche entière inatteignable.
+        """
+        return self in autre.chemin
+
+
+class Fichier(models.Model):
+    """Un document déposé dans le drive."""
+
+    exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE,
+                                     related_name="fichiers")
+    dossier = models.ForeignKey(Dossier, on_delete=models.CASCADE, null=True, blank=True,
+                                related_name="fichiers", verbose_name=_("dossier"))
+    nom = models.CharField(_("nom"), max_length=255)
+    fichier = models.FileField(_("fichier"), upload_to="drive/%Y/%m/")
+    taille = models.PositiveBigIntegerField(_("taille"), default=0)
+    depose_par = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                   null=True, blank=True, verbose_name=_("déposé par"))
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("fichier")
+        verbose_name_plural = _("fichiers")
+        ordering = ("nom",)
+        indexes = [models.Index(fields=["exploitation", "dossier"])]
+
+    def __str__(self):
+        return self.nom
+
+    @property
+    def extension(self):
+        return os.path.splitext(self.nom)[1].lower().lstrip(".")
+
+    @property
+    def est_pdf(self):
+        return self.extension == "pdf"
+
+    @property
+    def est_image(self):
+        return self.extension in {"png", "jpg", "jpeg", "webp", "heic", "gif"}
+
+    @property
+    def taille_lisible(self):
+        """La taille en unités qu'on lit d'un coup d'œil."""
+        octets = float(self.taille or 0)
+        for unite in ("o", "Ko", "Mo", "Go"):
+            if octets < 1024 or unite == "Go":
+                return f"{octets:.0f} {unite}" if unite == "o" else f"{octets:.1f} {unite}"
+            octets /= 1024
+        return f"{octets:.1f} Go"
+
+
+@receiver(models.signals.post_delete, sender=Fichier)
+def _effacer_le_fichier_du_stockage(sender, instance, **kwargs):
+    """Supprimer un document doit l'effacer, pas seulement l'oublier.
+
+    Django ne touche pas au stockage : sans cela, le fichier resterait
+    lisible à son adresse et continuerait d'être facturé. Le signal plutôt
+    qu'un `delete()` surchargé, parce qu'une suppression en cascade — un
+    dossier entier — ne passe pas par la méthode du modèle.
+    """
+    if instance.fichier:
+        instance.fichier.delete(save=False)

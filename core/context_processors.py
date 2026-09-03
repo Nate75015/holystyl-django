@@ -149,6 +149,7 @@ def layout(request):
             "label": _("Contrat"), "key": "contrat",
             "items": [
                 {"label": _("Contrats"), "url_name": "contrat:contrats", "icon": "description"},
+                {"label": _("Drive"), "url_name": "contrat:drive", "icon": "folder"},
                 {"label": _("Baux"), "url_name": "contrat:baux", "icon": "agriculture"},
                 {"label": _("Patrimoine"), "url_name": "contrat:actes", "icon": "history_edu"},
                 {"label": _("Assurance"), "url_name": "contrat:assurances", "icon": "shield"},
