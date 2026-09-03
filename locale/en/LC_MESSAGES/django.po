@@ -20781,3 +20781,127 @@ msgstr "Every blank in the template is a field: the lists offer what the farm al
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Choose the template: the contract opens as a document, and every blank offers what the farm already knows."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Sign by hand"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Choose the signature"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Chosen signature"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Employer's signature"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (root)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "New folder"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Folder name"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "e.g. Leases 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "This folder is empty"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Drop your PDFs here, or use Import. Create folders and organise them as you like."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Folder"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Rename"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Move"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Destination folder"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "This folder and everything in it will be deleted. Continue?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Delete this document?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "This folder no longer exists."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "A folder here already has that name."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "A folder there already has that name."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Too many nested folders: keep things flatter."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Folder deleted."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Document deleted."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s document(s) imported."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "\"%(nom)s\": format not accepted."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "\"%(nom)s\" is over 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "A folder cannot be moved into itself."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Choose at least one plot."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Season added on %(n)s plot(s)."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Season already present on: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "This season already exists on every plot chosen."

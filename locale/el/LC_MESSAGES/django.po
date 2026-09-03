@@ -20824,3 +20824,127 @@ msgstr "Κάθε κενό του υποδείγματος είναι πεδίο:
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Επιλέξτε το υπόδειγμα: η σύμβαση ανοίγει ως έγγραφο και κάθε κενό προτείνει όσα γνωρίζει ήδη η εκμετάλλευση."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Υπογραφή με το χέρι"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Επιλογή υπογραφής"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Επιλεγμένη υπογραφή"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Υπογραφή του εργοδότη"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (ρίζα)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Νέος φάκελος"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Όνομα φακέλου"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "π.χ. Μισθώσεις 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Αυτός ο φάκελος είναι κενός"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Σύρετε εδώ τα PDF σας ή χρησιμοποιήστε την Εισαγωγή. Δημιουργήστε φακέλους και οργανώστε όπως θέλετε."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Φάκελος"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Μετονομασία"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Μετακίνηση"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Φάκελος προορισμού"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Αυτός ο φάκελος και όλα όσα περιέχει θα διαγραφούν. Συνέχεια;"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Διαγραφή αυτού του εγγράφου;"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Αυτός ο φάκελος δεν υπάρχει πλέον."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Υπάρχει ήδη φάκελος με αυτό το όνομα εδώ."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Υπάρχει ήδη φάκελος με αυτό το όνομα εκεί."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Πολλοί ένθετοι φάκελοι: οργανώστε πιο επίπεδα."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Ο φάκελος διαγράφηκε."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Το έγγραφο διαγράφηκε."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "Εισήχθησαν %(n)s έγγραφο/α."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "«%(nom)s»: μη αποδεκτή μορφή."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "«%(nom)s»: υπερβαίνει τα 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Ένας φάκελος δεν μπορεί να μετακινηθεί μέσα στον εαυτό του."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Επιλέξτε τουλάχιστον ένα αγροτεμάχιο."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Η καλλιεργητική περίοδος προστέθηκε σε %(n)s αγροτεμάχιο/α."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Η καλλιεργητική περίοδος υπάρχει ήδη σε: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Αυτή η καλλιεργητική περίοδος υπάρχει ήδη σε όλα τα επιλεγμένα αγροτεμάχια."

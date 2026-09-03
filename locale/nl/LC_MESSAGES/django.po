@@ -20797,3 +20797,127 @@ msgstr "Elk veld in het sjabloon is invulbaar: de lijsten bieden wat het bedrijf
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Kies het sjabloon: het contract opent als document en elk veld biedt wat het bedrijf al weet."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Met de hand ondertekenen"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Handtekening kiezen"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Gekozen handtekening"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Handtekening van de werkgever"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (hoofdmap)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Nieuwe map"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Mapnaam"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "bijv. Pachten 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Deze map is leeg"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Sleep uw pdf's hierheen of gebruik Importeren. Maak mappen en orden zoals u wilt."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Map"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Naam wijzigen"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Verplaatsen"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Doelmap"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Deze map en alles erin worden verwijderd. Doorgaan?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Dit document verwijderen?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Deze map bestaat niet meer."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Hier bestaat al een map met die naam."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Daar bestaat al een map met die naam."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Te veel geneste mappen: houd het vlakker."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Map verwijderd."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Document verwijderd."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s document(en) geïmporteerd."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "'%(nom)s': formaat niet toegestaan."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "'%(nom)s' is groter dan 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Een map kan niet naar zichzelf worden verplaatst."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Kies ten minste één perceel."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Teeltseizoen toegevoegd op %(n)s perceel/percelen."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Teeltseizoen bestaat al op: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Dit teeltseizoen bestaat al op alle gekozen percelen."

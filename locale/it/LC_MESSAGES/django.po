@@ -20803,3 +20803,127 @@ msgstr "Ogni spazio del modello è un campo: gli elenchi propongono ciò che l'a
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Scegliete il modello: il contratto si apre come un documento e ogni spazio propone ciò che l'azienda già sa."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Firmare a mano"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Scegliere la firma"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Firma scelta"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Firma del datore di lavoro"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (radice)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Nuova cartella"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Nome della cartella"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "es. Affitti 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Questa cartella è vuota"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Trascinate qui i vostri PDF, o usate Importa. Create cartelle e organizzate come preferite."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Cartella"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Rinomina"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Sposta"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Cartella di destinazione"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Questa cartella e tutto il suo contenuto saranno eliminati. Continuare?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Eliminare questo documento?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Questa cartella non esiste più."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Qui esiste già una cartella con questo nome."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Là esiste già una cartella con questo nome."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Troppe cartelle annidate: organizzate in modo più piatto."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Cartella eliminata."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Documento eliminato."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s documento/i importato/i."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "«%(nom)s»: formato non accettato."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "«%(nom)s» supera i 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Una cartella non può essere spostata dentro sé stessa."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Scegliete almeno una particella."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Campagna aggiunta su %(n)s particella/e."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Campagna già presente su: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Questa campagna esiste già su tutte le particelle scelte."

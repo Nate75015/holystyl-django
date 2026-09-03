@@ -20783,3 +20783,127 @@ msgstr "Hvert felt i skabelonen kan udfyldes: listerne foreslår, hvad bedriften
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Vælg skabelonen: kontrakten åbner som et dokument, og hvert felt foreslår, hvad bedriften allerede ved."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Underskriv i hånden"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Vælg underskrift"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Valgt underskrift"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Arbejdsgiverens underskrift"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (rod)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Ny mappe"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Mappenavn"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "f.eks. Forpagtninger 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Denne mappe er tom"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Træk dine PDF'er hertil, eller brug Importér. Opret mapper, og ordn som du vil."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Mappe"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Omdøb"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Flyt"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Målmappe"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Denne mappe og alt i den bliver slettet. Fortsæt?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Slet dette dokument?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Denne mappe findes ikke længere."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Der findes allerede en mappe med det navn her."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Der findes allerede en mappe med det navn dér."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "For mange mapper i mapper: hold det fladere."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Mappe slettet."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Dokument slettet."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s dokument(er) importeret."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "»%(nom)s«: format ikke tilladt."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "»%(nom)s« overstiger 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "En mappe kan ikke flyttes ind i sig selv."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Vælg mindst én mark."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Sæson tilføjet på %(n)s mark(er)."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Sæsonen findes allerede på: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Denne sæson findes allerede på alle valgte marker."

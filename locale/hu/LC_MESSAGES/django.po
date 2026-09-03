@@ -20792,3 +20792,127 @@ msgstr "A sablon minden üres helye egy mező: a listák azt kínálják, amit a
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Válassza ki a sablont: a szerződés dokumentumként nyílik meg, és minden üres hely felkínálja, amit a gazdaság már tud."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Aláírás kézzel"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Aláírás választása"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Kiválasztott aláírás"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "A munkáltató aláírása"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (gyökér)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Új mappa"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Mappa neve"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "pl. Bérletek 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Ez a mappa üres"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Húzza ide a PDF-eket, vagy használja az Importálást. Hozzon létre mappákat, és rendezze tetszés szerint."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Mappa"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Átnevezés"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Áthelyezés"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Célmappa"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Ez a mappa és minden tartalma törlődik. Folytatja?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Törli ezt a dokumentumot?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Ez a mappa már nem létezik."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Már van itt ilyen nevű mappa."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Már van ott ilyen nevű mappa."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Túl sok egymásba ágyazott mappa: rendezzen laposabban."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Mappa törölve."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Dokumentum törölve."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s dokumentum importálva."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "„%(nom)s”: nem elfogadott formátum."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "„%(nom)s” meghaladja az 50 MB-ot."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Egy mappa nem helyezhető át önmagába."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Válasszon legalább egy parcellát."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Idény hozzáadva %(n)s parcellához."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Az idény már létezik itt: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Ez az idény már létezik minden kiválasztott parcellán."

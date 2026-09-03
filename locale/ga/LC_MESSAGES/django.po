@@ -20834,3 +20834,127 @@ msgstr "Is réimse é gach bearna sa teimpléad: tairgeann na liostaí a bhfuil 
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Roghnaigh an teimpléad: osclaíonn an conradh mar dhoiciméad, agus tairgeann gach bearna a bhfuil ar eolas ag an bhfeirm cheana."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Sínigh de láimh"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Roghnaigh an síniú"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "An síniú roghnaithe"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Síniú an fhostóra"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (fréamh)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Fillteán nua"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Ainm an fhillteáin"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "m.sh. Léasanna 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Tá an fillteán seo folamh"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Tarraing do chuid PDFanna anseo, nó bain úsáid as Iompórtáil. Cruthaigh fillteáin agus eagraigh mar is mian leat."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Fillteán"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Athainmnigh"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Bog"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Fillteán ceann scríbe"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Scriosfar an fillteán seo agus a bhfuil ann. Ar aghaidh?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "An doiciméad seo a scriosadh?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Níl an fillteán seo ann a thuilleadh."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Tá fillteán leis an ainm sin ann cheana anseo."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Tá fillteán leis an ainm sin ann cheana ansin."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "An iomarca fillteán neadaithe: coinnigh níos réidhe é."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Fillteán scriosta."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Doiciméad scriosta."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "Iompórtáladh %(n)s doiciméad."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "\"%(nom)s\": formáid nach nglactar léi."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "\"%(nom)s\" os cionn 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Ní féidir fillteán a bhogadh isteach ann féin."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Roghnaigh ceapach amháin ar a laghad."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Cuireadh an séasúr le %(n)s cheapach."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Tá an séasúr ann cheana ar: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Tá an séasúr seo ann cheana ar gach ceapach a roghnaíodh."

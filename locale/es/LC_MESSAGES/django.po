@@ -20814,3 +20814,127 @@ msgstr "Cada espacio de la plantilla es un campo: las listas proponen lo que la 
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Elija la plantilla: el contrato se abre como un documento y cada espacio propone lo que la explotación ya sabe."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Firmar a mano"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Elegir la firma"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Firma elegida"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Firma del empleador"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (raíz)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Nueva carpeta"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Nombre de la carpeta"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "p. ej. Arrendamientos 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Esta carpeta está vacía"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Arrastre aquí sus PDF o use Importar. Cree carpetas y ordene como quiera."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Carpeta"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Cambiar el nombre"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Mover"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Carpeta de destino"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Se eliminarán esta carpeta y todo su contenido. ¿Continuar?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "¿Eliminar este documento?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Esta carpeta ya no existe."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Ya hay una carpeta con ese nombre aquí."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Ya hay una carpeta con ese nombre allí."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Demasiadas carpetas anidadas: organice de forma más plana."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Carpeta eliminada."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Documento eliminado."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s documento(s) importado(s)."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "«%(nom)s»: formato no admitido."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "«%(nom)s» supera los 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Una carpeta no puede moverse dentro de sí misma."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Elija al menos una parcela."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Campaña añadida en %(n)s parcela(s)."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "La campaña ya existe en: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Esta campaña ya existe en todas las parcelas elegidas."

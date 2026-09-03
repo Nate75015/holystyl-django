@@ -20821,3 +20821,127 @@ msgstr "Każde puste miejsce we wzorze to pole: listy podpowiadają to, co gospo
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Wybierz wzór: umowa otwiera się jak dokument, a każde puste miejsce podpowiada to, co gospodarstwo już wie."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Podpis odręczny"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Wybierz podpis"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Wybrany podpis"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Podpis pracodawcy"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (katalog główny)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Nowy folder"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Nazwa folderu"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "np. Dzierżawy 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Ten folder jest pusty"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Przeciągnij tu pliki PDF albo użyj Importuj. Twórz foldery i porządkuj po swojemu."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Folder"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Zmień nazwę"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Przenieś"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Folder docelowy"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Ten folder i cała jego zawartość zostaną usunięte. Kontynuować?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Usunąć ten dokument?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Ten folder już nie istnieje."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Folder o tej nazwie już tu istnieje."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Folder o tej nazwie już tam istnieje."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Zbyt wiele zagnieżdżonych folderów: uporządkuj płaściej."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Folder usunięty."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Dokument usunięty."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "Zaimportowano dokumenty: %(n)s."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "„%(nom)s”: format niedozwolony."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "„%(nom)s” przekracza 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Folderu nie można przenieść do niego samego."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Wybierz co najmniej jedną działkę."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Sezon dodany na działkach: %(n)s."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Sezon już istnieje na: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Ten sezon już istnieje na wszystkich wybranych działkach."

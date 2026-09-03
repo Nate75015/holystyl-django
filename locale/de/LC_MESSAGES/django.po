@@ -20787,3 +20787,127 @@ msgstr "Jede Lücke der Vorlage ist ein Feld: Die Listen bieten an, was der Betr
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Wählen Sie die Vorlage: Der Vertrag öffnet sich als Dokument, und jede Lücke bietet an, was der Betrieb bereits weiß."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Handschriftlich unterschreiben"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Unterschrift wählen"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Gewählte Unterschrift"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Unterschrift des Arbeitgebers"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (Stammordner)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Neuer Ordner"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Ordnername"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "z. B. Pachtverträge 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Dieser Ordner ist leer"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Ziehen Sie Ihre PDFs hierher oder nutzen Sie Importieren. Legen Sie Ordner an und ordnen Sie nach Belieben."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Ordner"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Umbenennen"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Verschieben"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Zielordner"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Dieser Ordner und sein gesamter Inhalt werden gelöscht. Fortfahren?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Dieses Dokument löschen?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Diesen Ordner gibt es nicht mehr."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Hier gibt es bereits einen Ordner mit diesem Namen."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Dort gibt es bereits einen Ordner mit diesem Namen."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Zu viele verschachtelte Ordner: ordnen Sie flacher."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Ordner gelöscht."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Dokument gelöscht."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s Dokument(e) importiert."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "„%(nom)s“: Format nicht zulässig."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "„%(nom)s“ überschreitet 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Ein Ordner kann nicht in sich selbst verschoben werden."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Wählen Sie mindestens eine Parzelle."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Kampagne auf %(n)s Parzelle(n) angelegt."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Kampagne bereits vorhanden auf: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Diese Kampagne besteht bereits auf allen gewählten Parzellen."

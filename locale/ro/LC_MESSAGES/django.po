@@ -20807,3 +20807,127 @@ msgstr "Fiecare spațiu din model este un câmp: listele propun ceea ce ferma ș
 #: equipe/templates/equipe/etablir.html
 msgid "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà."
 msgstr "Alegeți modelul: contractul se deschide ca un document, iar fiecare spațiu propune ceea ce ferma știe deja."
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signer à la main"
+msgstr "Semnare de mână"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Choisir la signature"
+msgstr "Alegeți semnătura"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature choisie"
+msgstr "Semnătura aleasă"
+
+#: equipe/templates/equipe/_signature.html
+msgid "Signature de l'employeur"
+msgstr "Semnătura angajatorului"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive"
+msgstr "Drive"
+
+#: contrat/templates/contrat/drive.html
+msgid "Drive (racine)"
+msgstr "Drive (rădăcină)"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nouveau dossier"
+msgstr "Folder nou"
+
+#: contrat/templates/contrat/drive.html
+msgid "Nom du dossier"
+msgstr "Numele folderului"
+
+#: contrat/templates/contrat/drive.html
+msgid "ex : Baux 2026"
+msgstr "ex.: Arende 2026"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier est vide"
+msgstr "Acest folder este gol"
+
+#: contrat/templates/contrat/drive.html
+msgid "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez."
+msgstr "Trageți aici PDF-urile sau folosiți Importă. Creați foldere și organizați cum doriți."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier"
+msgstr "Folder"
+
+#: contrat/templates/contrat/drive.html
+msgid "Renommer"
+msgstr "Redenumește"
+
+#: contrat/templates/contrat/drive.html
+msgid "Déplacer"
+msgstr "Mută"
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier de destination"
+msgstr "Folderul de destinație"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?"
+msgstr "Acest folder și tot ce conține vor fi șterse. Continuați?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Supprimer ce document ?"
+msgstr "Ștergeți acest document?"
+
+#: contrat/templates/contrat/drive.html
+msgid "Ce dossier n'existe plus."
+msgstr "Acest folder nu mai există."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom ici."
+msgstr "Există deja aici un folder cu acest nume."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier porte déjà ce nom là-bas."
+msgstr "Există deja acolo un folder cu acest nume."
+
+#: contrat/templates/contrat/drive.html
+msgid "Trop de dossiers imbriqués : rangez plus à plat."
+msgstr "Prea multe foldere imbricate: organizați mai plat."
+
+#: contrat/templates/contrat/drive.html
+msgid "Dossier supprimé."
+msgstr "Folder șters."
+
+#: contrat/templates/contrat/drive.html
+msgid "Document supprimé."
+msgstr "Document șters."
+
+#: contrat/templates/contrat/drive.html
+msgid "%(n)s document(s) importé(s)."
+msgstr "%(n)s document(e) importate."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » : format non accepté."
+msgstr "„%(nom)s”: format neacceptat."
+
+#: contrat/templates/contrat/drive.html
+msgid "« %(nom)s » dépasse 50 Mo."
+msgstr "„%(nom)s” depășește 50 MB."
+
+#: contrat/templates/contrat/drive.html
+msgid "Un dossier ne peut pas être déplacé dans lui-même."
+msgstr "Un folder nu poate fi mutat în el însuși."
+
+#: parcelles/views.py
+msgid "Choisissez au moins une parcelle."
+msgstr "Alegeți cel puțin o parcelă."
+
+#: parcelles/views.py
+msgid "Campagne ajoutée sur %(n)s parcelle(s)."
+msgstr "Campanie adăugată pe %(n)s parcelă/parcele."
+
+#: parcelles/views.py
+msgid "Campagne déjà présente sur : %(noms)s."
+msgstr "Campania există deja pe: %(noms)s."
+
+#: parcelles/views.py
+msgid "Cette campagne existe déjà sur toutes les parcelles choisies."
+msgstr "Această campanie există deja pe toate parcelele alese."
