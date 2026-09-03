@@ -107,6 +107,9 @@
     padding-block: clamp(56px, 8vw, 104px) clamp(64px, 9vw, 112px);
   }
   @media (min-width: 1000px) { .lp-hero-grid { grid-template-columns: 1.02fr .98fr; } }
+  /* Le titre et l'accroche ne suivent pas la largeur de l'écran : passé une
+     cinquantaine de caractères, une ligne devient pénible à parcourir. */
+  .lp-hero-texte { max-width: 40rem; }
   .lp-trust { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: .875rem; color: var(--text-muted); }
   .lp-trust span { display: inline-flex; align-items: center; gap: 7px; }
 
@@ -184,7 +187,7 @@
 {% comment %} ── Héros : la promesse, puis l'interface qui la tient ── {% endcomment %}
 <section class="lp-hero">
   <div class="lp-wrap lp-hero-grid">
-    <div>
+    <div class="lp-hero-texte">
       <span class="lp-eyebrow">{% trans "Assistant agricole français" %}</span>
       <h1 class="lp-display" style="margin-top: 22px">
         {% trans "Votre exploitation, sans la garder en tête." %}
@@ -314,6 +317,28 @@
   .lp-quote-p {
     font-size: clamp(1.0625rem, .98rem + .45vw, 1.3125rem);
     line-height: 1.55; color: var(--text-secondary); text-wrap: pretty;
+  }
+
+  /* ── Souveraineté ───────────────────────────────────────────────
+     Bande sombre au milieu de sections claires : la rupture de valeur fait
+     le poids de la phrase, sans avoir à grossir le corps. */
+  .lp-souv { background: var(--text); color: var(--page); }
+  .lp-souv-grid { display: grid; gap: clamp(28px, 4vw, 56px); align-items: start; }
+  @media (min-width: 900px) { .lp-souv-grid { grid-template-columns: 1.15fr .85fr; } }
+  /* Couleur explicite : une règle globale sur les titres impose `--text` et
+     bat l'héritage de la bande — la question ressortait sombre sur sombre. */
+  .lp-souv-q {
+    color: var(--page);
+    font-size: clamp(1.6rem, 1.05rem + 2.4vw, 2.9rem);
+    line-height: 1.12; letter-spacing: -.03em; font-weight: 500;
+    text-wrap: balance; max-width: 22ch;
+  }
+  .lp-souv-p { font-size: 1.0625rem; line-height: 1.62; opacity: .78; max-width: 54ch; }
+  .lp-souv-marques { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .lp-souv-marque {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: .8125rem; font-weight: 500; padding: 7px 14px; border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--page) 32%, transparent);
   }
 
   /* ── Deux colonnes : problèmes / réponses ───────────────────────── */
@@ -559,6 +584,32 @@
         <p style="margin-top: 24px; font-size: 1.0625rem; font-weight: 500; color: var(--action); border-left: 2px solid var(--action); padding-left: 16px">
           {% trans "48 % des agriculteurs citent « maîtriser le temps de travail » comme priorité n°1." %}
         </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} ── Souveraineté : alimentaire et numérique vont ensemble ── {% endcomment %}
+<section class="lp-souv lp-band">
+  <div class="lp-wrap lp-section">
+    <div class="lp-souv-grid lp-reveal">
+      <div>
+        <p class="lp-kicker" style="color: color-mix(in srgb, var(--page) 55%, transparent)">
+          {% trans "Souveraineté" %}
+        </p>
+        <h2 class="lp-souv-q" style="margin-top: 14px">
+          {% trans "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?" %}
+        </h2>
+      </div>
+      <div>
+        <p class="lp-souv-p">
+          {% trans "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs." %}
+        </p>
+        <div class="lp-souv-marques">
+          <span class="lp-souv-marque"><span class="material-icons-round text-[16px]">dns</span>{% trans "Hébergement en France" %}</span>
+          <span class="lp-souv-marque"><span class="material-icons-round text-[16px]">lock</span>{% trans "Jamais revendues" %}</span>
+          <span class="lp-souv-marque"><span class="material-icons-round text-[16px]">download</span>{% trans "Exportables à tout moment" %}</span>
+        </div>
       </div>
     </div>
   </div>

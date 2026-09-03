@@ -12,12 +12,14 @@
 {% endcomment %}
 <style>
   :root {
-    --lp-max: 1180px;
     --lp-gutter: clamp(20px, 5vw, 56px);
     --lp-ease: cubic-bezier(.16, 1, .3, 1);
   }
   /* Même mesure que le bandeau : sans elle, le contenu se décale sous la marque. */
-  .lp-wrap { max-width: var(--lp-max); margin-inline: auto; padding-inline: var(--lp-gutter); }
+  /* Pleine largeur : seule la gouttière retient le contenu. Les blocs de
+     texte gardent leur propre borne en `ch` — une ligne de 1900 px ne se lit
+     pas, on ne gagne de l'espace que là où il sert : les grilles. */
+  .lp-wrap { padding-inline: var(--lp-gutter); }
   .lp-header {
     position: sticky; top: 0; z-index: 30;
     background: color-mix(in srgb, var(--action) 92%, transparent);
@@ -27,8 +29,9 @@
     transition: box-shadow .25s var(--lp-ease), background .25s var(--lp-ease);
   }
   .lp-header.is-stuck { box-shadow: 0 1px 0 color-mix(in srgb, var(--on-action) 14%, transparent), 0 10px 30px -18px rgba(0,0,0,.55); }
+  /* Pleine largeur comme le contenu : borné, le bandeau laissait la marque en
+     retrait pendant que les sections partaient au bord. */
   .lp-header-inner {
-    max-width: var(--lp-max); margin-inline: auto;
     padding: 13px var(--lp-gutter);
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
