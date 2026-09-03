@@ -20365,3 +20365,31 @@ msgstr "Leguminoase"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Pește și fructe de mare"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Coș"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Suveranitate"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "La ce bun să aperi suveranitatea alimentară dacă renunți la cea digitală?"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Parcelele, randamentele și contractele dumneavoastră spun totul despre exploatație. Aceste date sunt găzduite în Franța și nu sunt niciodată revândute: un instrument care vă face autonom nu vă poate face dependent de altundeva."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Găzduire în Franța"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Niciodată revândute"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Exportabile oricând"

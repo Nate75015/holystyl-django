@@ -20382,3 +20382,31 @@ msgstr "Όσπρια"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Ψάρια και θαλασσινά"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Καλάθι"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Κυριαρχία"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "Τι νόημα έχει να υπερασπιζόμαστε τη διατροφική κυριαρχία αν εγκαταλείπουμε την ψηφιακή;"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Τα αγροτεμάχια, οι αποδόσεις και τα συμβόλαιά σας λένε τα πάντα για την εκμετάλλευσή σας. Τα δεδομένα φιλοξενούνται στη Γαλλία και δεν μεταπωλούνται ποτέ: ένα εργαλείο που σας κάνει αυτόνομους δεν μπορεί να σας κάνει εξαρτημένους από αλλού."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Φιλοξενία στη Γαλλία"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Ποτέ δεν μεταπωλούνται"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Εξαγώγιμα ανά πάσα στιγμή"

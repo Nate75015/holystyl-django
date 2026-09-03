@@ -20350,3 +20350,31 @@ msgstr "Hüvelyesek"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Hal és tenger gyümölcsei"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Kosár"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Szuverenitás"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "Mit ér az élelmiszer-szuverenitás védelme, ha feladjuk a digitálisat?"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Tábláik, terméseik és szerződéseik mindent elárulnak az üzemükről. Ezek az adatok Franciaországban vannak tárolva, és soha nem kerülnek továbbértékesítésre: az az eszköz, amely függetlenné tesz, nem tehet mástól függővé."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Franciaországi tárhely"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Soha nem adjuk tovább"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Bármikor exportálható"

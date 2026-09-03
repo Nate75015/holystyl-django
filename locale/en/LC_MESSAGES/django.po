@@ -20339,3 +20339,31 @@ msgstr "Pulses"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Fish and seafood"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Basket"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Sovereignty"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "What good is defending food sovereignty if we give up digital sovereignty?"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Your plots, your yields, your contracts say everything about your farm. This data is hosted in France and never resold: a tool that makes you independent cannot make you dependent on somewhere else."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Hosted in France"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Never resold"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Exportable at any time"

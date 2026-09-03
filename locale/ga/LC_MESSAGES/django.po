@@ -20392,3 +20392,31 @@ msgstr "Piseánaigh"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Iasc agus bia mara"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Ciseán"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Ceannasacht"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "Cén mhaith ceannasacht bia a chosaint má thugtar suas an cheannasacht dhigiteach?"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Insíonn do ghabháltais, do thorthaí agus do chonarthaí gach rud faoi d'fheirm. Coinnítear na sonraí sin sa Fhrainc agus ní dhíoltar riamh iad: ní féidir le huirlis a fhágann neamhspleách thú spleáchas ar áit eile a chruthú."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Óstáil sa Fhrainc"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Ní dhíoltar riamh"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Inonondíolta am ar bith"

@@ -20341,3 +20341,31 @@ msgstr "Bælgfrugter"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Fisk og skaldyr"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Kurv"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Suverænitet"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "Hvad nytter det at forsvare fødevaresuverænitet, hvis vi opgiver den digitale?"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Dine marker, dine udbytter, dine kontrakter siger alt om din bedrift. Disse data ligger i Frankrig og videresælges aldrig: et værktøj, der gør dig uafhængig, må ikke gøre dig afhængig af andre."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Hostet i Frankrig"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Aldrig videresolgt"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Kan altid eksporteres"

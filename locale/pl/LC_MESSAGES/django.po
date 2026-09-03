@@ -20379,3 +20379,31 @@ msgstr "Rośliny strączkowe"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Ryby i owoce morza"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Koszyk"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Suwerenność"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "Po co bronić suwerenności żywnościowej, jeśli rezygnujemy z cyfrowej?"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Twoje działki, plony i umowy mówią wszystko o gospodarstwie. Te dane są przechowywane we Francji i nigdy nie są odsprzedawane: narzędzie, które daje niezależność, nie może uzależniać od kogoś innego."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Hosting we Francji"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Nigdy nieodsprzedawane"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Zawsze do wyeksportowania"

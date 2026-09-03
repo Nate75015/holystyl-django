@@ -20345,3 +20345,31 @@ msgstr "Hülsenfrüchte"
 #: vente/models.py
 msgid "Poissons et fruits de mer"
 msgstr "Fisch und Meeresfrüchte"
+
+#: templates/partials/pied_terroirs.html
+msgid "Panier"
+msgstr "Warenkorb"
+
+#: public/templates/public/home.html
+msgid "Souveraineté"
+msgstr "Souveränität"
+
+#: public/templates/public/home.html
+msgid "À quoi bon défendre la souveraineté alimentaire si l'on abandonne la souveraineté numérique ?"
+msgstr "Was nützt die Verteidigung der Ernährungssouveränität, wenn wir die digitale Souveränität aufgeben?"
+
+#: public/templates/public/home.html
+msgid "Vos parcelles, vos rendements, vos contrats disent tout de votre ferme. Ces données sont hébergées en France et ne sont jamais revendues : un outil qui vous rend autonome ne peut pas vous rendre dépendant d'ailleurs."
+msgstr "Ihre Parzellen, Erträge und Verträge sagen alles über Ihren Betrieb. Diese Daten liegen in Frankreich und werden nie weiterverkauft: Ein Werkzeug, das Sie unabhängig macht, darf Sie nicht von anderswo abhängig machen."
+
+#: public/templates/public/home.html
+msgid "Hébergement en France"
+msgstr "Hosting in Frankreich"
+
+#: public/templates/public/home.html
+msgid "Jamais revendues"
+msgstr "Nie weiterverkauft"
+
+#: public/templates/public/home.html
+msgid "Exportables à tout moment"
+msgstr "Jederzeit exportierbar"
