@@ -2535,7 +2535,7 @@ msgstr "Meting"
 #: reseaux/templates/reseaux/reseaux.html:7
 #: reseaux/templates/reseaux/reseaux.html:9 reseaux/views.py:81
 msgid "Réseau"
-msgstr ""
+msgstr "Netwerk"
 
 #: aquaculture/models.py:27
 msgid "Pluvial"
@@ -2981,19 +2981,15 @@ msgstr ""
 #: aquaculture/templates/aquaculture/detail.html:10
 #: aquaculture/templates/aquaculture/especes.html:33
 #: core/context_processors.py:162
-#, fuzzy
-#| msgid "culture"
 msgid "Aquaculture"
-msgstr "gewas"
+msgstr "Aquacultuur"
 
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/bassins.html:10
 #: aquaculture/templates/aquaculture/detail.html:10 aquaculture/views.py:87
 #: core/context_processors.py:164
-#, fuzzy
-#| msgid "Basse"
 msgid "Bassins"
-msgstr "Laag"
+msgstr "Bassins"
 
 #: aquaculture/templates/aquaculture/bassins.html:12
 #: client/templates/client/clients.html:13
@@ -3388,10 +3384,8 @@ msgid "Origine (ex : Bretagne)"
 msgstr ""
 
 #: aquaculture/views.py:208 core/context_processors.py:165
-#, fuzzy
-#| msgid "pièces jointes"
 msgid "Espèces aquacoles"
-msgstr "bijlagen"
+msgstr "Aquacultuursoorten"
 
 #: client/models.py:12
 #, fuzzy
@@ -3540,18 +3534,16 @@ msgstr "klanten"
 
 #: client/models.py:128 contrat/templates/contrat/_bail_modal.html:60
 #: core/context_processors.py:172 core/espaces.py:57
-#, fuzzy
-#| msgid "Taille"
 msgid "Bailleur"
-msgstr "Snoei"
+msgstr "Verpachter"
 
 #: client/models.py:129 core/context_processors.py:173 core/espaces.py:60
 msgid "Comptable"
-msgstr ""
+msgstr "Boekhouder"
 
 #: client/models.py:130 core/context_processors.py:174
 msgid "Avocat"
-msgstr ""
+msgstr "Advocaat"
 
 #: client/models.py:131 client/views.py:208 core/context_processors.py:175
 #: planning/templates/planning/planning.html:211
@@ -3732,10 +3724,8 @@ msgstr "Nieuwe e-mail"
 #: client/templates/client/clients.html:30
 #: client/templates/client/detail.html:10 client/views.py:94
 #: core/context_processors.py:171
-#, fuzzy
-#| msgid "Client"
 msgid "Clients"
-msgstr "Klant"
+msgstr "Klanten"
 
 #: client/templates/client/clients.html:19
 #: contrat/templates/contrat/actes.html:19
@@ -3843,10 +3833,8 @@ msgstr "Mijn account"
 
 #: client/templates/client/espace.html:14 client/views.py:116
 #: core/context_processors.py:50 vente/templates/vente/mes_commandes.html:44
-#, fuzzy
-#| msgid "document"
 msgid "Mes documents"
-msgstr "document"
+msgstr "Mijn documenten"
 
 #: client/templates/client/espace.html:16
 #, python-format
@@ -3861,7 +3849,7 @@ msgstr ""
 #: finances/templates/finances/document_editeur.html:17
 #: finances/templates/finances/document_editeur.html:112 finances/views.py:298
 msgid "Devis"
-msgstr ""
+msgstr "Offertes"
 
 #: client/templates/client/espace.html:30
 #: finances/templates/finances/devis_signature.html:47
@@ -3936,10 +3924,8 @@ msgid "Aucune facture pour le moment."
 msgstr "Nog geen gesprek."
 
 #: client/templates/client/partenaires.html:7 core/context_processors.py:169
-#, fuzzy
-#| msgid "exploitations"
 msgid "Relations"
-msgstr "bedrijven"
+msgstr "Relaties"
 
 #: client/templates/client/partenaires.html:44
 msgid "N° de voie"
@@ -5317,7 +5303,7 @@ msgstr "Contract"
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
 #: core/context_processors.py:138
 msgid "Patrimoine"
-msgstr ""
+msgstr "Vermogen"
 
 #: contrat/templates/contrat/actes.html:13
 #: contrat/templates/contrat/actes.html:69
@@ -5559,7 +5545,7 @@ msgstr ""
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
-msgstr ""
+msgstr "Pachtovereenkomsten"
 
 #: contrat/templates/contrat/baux.html:29
 #, fuzzy
@@ -5679,10 +5665,8 @@ msgstr ""
 #: contrat/templates/contrat/contrats.html:10
 #: contrat/templates/contrat/contrats.html:29 contrat/views.py:49
 #: core/context_processors.py:136
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats"
-msgstr "Contact"
+msgstr "Contracten"
 
 #: contrat/templates/contrat/contrats.html:25
 #, fuzzy
@@ -6073,10 +6057,8 @@ msgstr "Dashboard"
 
 #: core/context_processors.py:52 vente/templates/vente/mes_commandes.html:7
 #: vente/templates/vente/mes_commandes.html:8 vente/views.py:338
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes commandes"
-msgstr "IoT-commando's"
+msgstr "Mijn bestellingen"
 
 #: core/context_processors.py:57 messagerie/templates/messagerie/new.html:7
 #: notifications/templates/notifications/center.html:8
@@ -6105,10 +6087,8 @@ msgid "Mail"
 msgstr "E-mail"
 
 #: core/context_processors.py:63 petition/templates/petition/detail.html:8
-#, fuzzy
-#| msgid "Rétention"
 msgid "Pétition"
-msgstr "Retentie"
+msgstr "Petitie"
 
 #: core/context_processors.py:70 parcelles/templates/parcelles/list.html:14
 #: parcelles/views.py:59
@@ -6122,10 +6102,8 @@ msgstr "Percelen"
 #: parcelles/templates/parcelles/campagnes.html:7
 #: parcelles/templates/parcelles/campagnes.html:10
 #: parcelles/templates/parcelles/campagnes.html:35 parcelles/views.py:305
-#, fuzzy
-#| msgid "Campagne"
 msgid "Campagnes"
-msgstr "Campagne"
+msgstr "Teeltseizoenen"
 
 #: core/context_processors.py:76
 #: interventions/templates/interventions/interventions.html:24
@@ -6150,20 +6128,18 @@ msgstr "Veehouderij"
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
 #: irrigation/templates/irrigation/bassinage.html:19 irrigation/views.py:337
-#, fuzzy
-#| msgid "Basse"
 msgid "Bassinage"
-msgstr "Laag"
+msgstr "Koelberegening"
 
 #: core/context_processors.py:94 irrigation/templates/irrigation/antigel.html:8
 #: irrigation/templates/irrigation/antigel.html:9 irrigation/views.py:541
 msgid "Anti-gel"
-msgstr ""
+msgstr "Vorstbescherming"
 
 #: core/context_processors.py:95 irrigation/templates/irrigation/dti.html:7
 #: irrigation/views.py:176
 msgid "DTI"
-msgstr ""
+msgstr "ITD"
 
 #: core/context_processors.py:96 iot/templates/iot/regie.html:10
 #: iot/views.py:66
@@ -6176,10 +6152,8 @@ msgid "Capteurs"
 msgstr "Sensoren"
 
 #: core/context_processors.py:101 finances/templates/finances/fermage.html:7
-#, fuzzy
-#| msgid "Maintenance"
 msgid "Finance"
-msgstr "Onderhoud"
+msgstr "Financiën"
 
 #: core/context_processors.py:103
 #: dashboard/templates/dashboard/comptable.html:56
@@ -6196,7 +6170,7 @@ msgstr "Kosten"
 #: finances/templates/finances/fermage.html:7
 #: finances/templates/finances/fermage.html:9 finances/views.py:628
 msgid "Fermage"
-msgstr ""
+msgstr "Pachtprijs"
 
 #: core/context_processors.py:105
 #: dashboard/templates/dashboard/comptable.html:20
@@ -6213,10 +6187,8 @@ msgstr "Economisch overzicht"
 #: finances/templates/finances/facturation.html:9
 #: vente/templates/vente/commande_detail.html:54
 #: vente/templates/vente/mes_commandes.html:30
-#, fuzzy
-#| msgid "facture"
 msgid "Facture"
-msgstr "factuur"
+msgstr "Facturatie"
 
 #: core/context_processors.py:108 pac/templates/pac/pac.html:7
 #: pac/templates/pac/pac.html:9 pac/views.py:71
@@ -6297,43 +6269,37 @@ msgstr "Loonadministratie"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
-msgstr ""
+msgstr "MSA — Franse landbouwsociale zekerheid"
 
 #: core/context_processors.py:144 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/produits.html:16
-#, fuzzy
-#| msgid "Vente fruits"
 msgid "Vente directe"
-msgstr "Verkoop fruit"
+msgstr "Directe verkoop"
 
 #: core/context_processors.py:146 vente/templates/vente/commande_detail.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/commandes.html:10 vente/views.py:257
-#, fuzzy
-#| msgid "Commune"
 msgid "Commandes"
-msgstr "Gemeente"
+msgstr "Bestellingen"
 
 #: core/context_processors.py:147 vente/templates/vente/boutique.html:12
 #: vente/templates/vente/commandes.html:13
 #: vente/templates/vente/produits.html:16
 #: vente/templates/vente/produits.html:19 vente/views.py:147
-#, fuzzy
-#| msgid "Produit"
 msgid "Mes produits"
-msgstr "Product"
+msgstr "Mijn producten"
 
 #: core/context_processors.py:148 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/boutique.html:10
 #: vente/templates/vente/produits.html:22 vente/views.py:117
 msgid "Ma boutique"
-msgstr ""
+msgstr "Mijn winkel"
 
 #: core/context_processors.py:149 vente/templates/vente/_boutique_corps.html:5
 #: vente/templates/vente/_produit_corps.html:6
 msgid "Le marché"
-msgstr ""
+msgstr "De markt"
 
 #: core/context_processors.py:153 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:23 stock/templates/stock/depots.html:16
@@ -6342,14 +6308,14 @@ msgstr ""
 #: stock/templates/stock/recoltes.html:17 stock/views.py:117
 #: vente/templates/vente/produits.html:60
 msgid "Stock"
-msgstr ""
+msgstr "Voorraad"
 
 #: core/context_processors.py:155 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:47 stock/templates/stock/depots.html:22
 #: stock/templates/stock/depots.html:46
 #: stock/templates/stock/mouvements.html:14
 msgid "Articles"
-msgstr ""
+msgstr "Artikelen"
 
 #: core/context_processors.py:156 public/templates/public/home.html:276
 #: stock/templates/stock/recoltes.html:11
@@ -6360,16 +6326,14 @@ msgstr "Oogsten"
 
 #: core/context_processors.py:157 stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/mouvements.html:31
-#, fuzzy
-#| msgid "document"
 msgid "Mouvements"
-msgstr "document"
+msgstr "Mutaties"
 
 #: core/context_processors.py:158 stock/templates/stock/depots.html:16
 #: stock/templates/stock/depots.html:19 stock/templates/stock/depots.html:32
 #: stock/views.py:371
 msgid "Dépôts"
-msgstr ""
+msgstr "Opslagplaatsen"
 
 #: core/context_processors.py:179
 #: exploitations/templates/exploitations/adresses.html:7
@@ -6386,8 +6350,6 @@ msgid "Mon exploitation"
 msgstr "Mijn bedrijf"
 
 #: core/context_processors.py:183 exploitations/views.py:33
-#, fuzzy
-#| msgid "Identité"
 msgid "Identités"
 msgstr "Identiteit"
 
@@ -6408,10 +6370,8 @@ msgid "Caractéristiques agricoles"
 msgstr "Landbouwkenmerken"
 
 #: core/context_processors.py:189 exploitations/views.py:45
-#, fuzzy
-#| msgid "Notifications"
 msgid "Certificats et labels"
-msgstr "Meldingen"
+msgstr "Certificaten en keurmerken"
 
 #: core/context_processors.py:190
 #: exploitations/templates/exploitations/societes.html:32
@@ -6422,7 +6382,7 @@ msgstr "Verbonden vennootschappen"
 
 #: core/context_processors.py:191 exploitations/views.py:47
 msgid "RH et CA"
-msgstr ""
+msgstr "HR en omzet"
 
 #: core/context_processors.py:192
 #: operations/templates/operations/parc_materiel.html:36
@@ -14860,7 +14820,7 @@ msgstr "Typ een naam en druk op Enter om te zoeken."
 
 #: meteo/templates/meteo/meteo.html:10
 msgid "Toutes les villes"
-msgstr "Alle steden"
+msgstr "Alle gemeenten"
 
 #: meteo/templates/meteo/meteo.html:27
 #, fuzzy
@@ -18958,7 +18918,7 @@ msgstr "Ik heb het begrepen"
 
 #: templates/partials/header.html:8
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: templates/partials/header.html:21
 msgid "Heure locale"
@@ -20241,3 +20201,131 @@ msgstr ""
 #| msgid "Semis"
 msgid "Remise"
 msgstr "Zaaien"
+
+#: public/templates/public/home.html
+msgid "Personnel"
+msgstr "Personeel"
+
+#: public/templates/public/home.html
+msgid "Quota d'eau"
+msgstr "Waterquotum"
+
+#: public/templates/public/home.html
+msgid "Risque de gel cette nuit — parcelle des Coteaux"
+msgstr "Vorstrisico vannacht — perceel Coteaux"
+
+#: public/templates/public/home.html
+msgid "19,90 € HT/mois + 0,70 € par hectare, utilisateurs illimités."
+msgstr "€ 19,90 excl. btw/maand + € 0,70 per hectare, onbeperkt gebruikers."
+
+#: public/templates/public/home.html
+msgid "+ 0,70 € par hectare et par mois"
+msgstr "+ € 0,70 per hectare per maand"
+
+#: public/templates/public/home.html
+msgid "Estimez votre tarif"
+msgstr "Bereken uw tarief"
+
+#: public/templates/public/home.html
+msgid "€ HT/mois"
+msgstr "€ excl. btw/maand"
+
+#: public/templates/public/home.html
+msgid "Douze domaines. Un seul outil."
+msgstr "Twaalf domeinen. Eén enkel hulpmiddel."
+
+#: public/templates/public/home.html
+msgid "Facture électronique"
+msgstr "Elektronische facturatie"
+
+#: public/templates/public/home.html
+msgid "Format UBL, plateforme agréée"
+msgstr "UBL-formaat, erkend platform"
+
+#: public/templates/public/home.html
+msgid "Signature électronique"
+msgstr "Elektronische handtekening"
+
+#: public/templates/public/home.html
+msgid "Devis signés au doigt ou au stylet"
+msgstr "Offertes ondertekend met vinger of stylus"
+
+#: public/templates/public/exploitants.html
+msgid "Exploitants agricoles"
+msgstr "Landbouwbedrijven"
+
+#: public/templates/public/exploitants.html
+msgid "Les fermes qui utilisent Isidor et ont choisi de figurer ici."
+msgstr "De bedrijven die Isidor gebruiken en ervoor kozen hier te staan."
+
+#: public/templates/public/exploitants.html
+msgid "Aucune ferme ne figure encore dans l'annuaire."
+msgstr "Nog geen enkel bedrijf in de gids."
+
+#: public/templates/public/exploitants.html
+msgid "Chaque exploitation décide d'y paraître : nous ne publions ni nom ni commune sans son accord."
+msgstr "Elk bedrijf beslist zelf: wij publiceren naam noch gemeente zonder toestemming."
+
+#: public/templates/public/exploitants.html
+msgid "Voir la boutique"
+msgstr "Bekijk de winkel"
+
+#: public/templates/public/exploitants.html
+msgid "depuis %(a)s"
+msgstr "sinds %(a)s"
+
+#: public/templates/public/exploitants.html
+msgid "figurer dans l'annuaire public"
+msgstr "in de openbare gids verschijnen"
+
+#: public/templates/public/exploitants.html
+msgid "Votre ferme apparaît alors sur la page publique des exploitants."
+msgstr "Uw bedrijf verschijnt dan op de openbare bedrijvenpagina."
+
+#: public/templates/public/exploitants.html
+msgid "Chercher une ferme, une commune, une production…"
+msgstr "Zoek een bedrijf, een gemeente, een teelt…"
+
+#: public/templates/public/exploitants.html
+msgid "Région"
+msgstr "Regio"
+
+#: public/templates/public/exploitants.html
+msgid "Département"
+msgstr "Departement"
+
+#: public/templates/public/exploitants.html
+msgid "Toutes les régions"
+msgstr "Alle regio's"
+
+#: public/templates/public/exploitants.html
+msgid "Tous les départements"
+msgstr "Alle departementen"
+
+#: public/templates/public/exploitants.html
+msgid "Tout afficher"
+msgstr "Alles tonen"
+
+#: public/templates/public/exploitants.html
+msgid "Aucune ferme ne correspond."
+msgstr "Geen enkel bedrijf komt overeen."
+
+#: public/templates/public/exploitants.html
+msgid "Élargissez la recherche ou retirez un filtre."
+msgstr "Verruim de zoekopdracht of verwijder een filter."
+
+#: public/templates/public/exploitants.html
+msgid "Visibilité publique"
+msgstr "Openbare zichtbaarheid"
+
+#: public/templates/public/exploitants.html
+msgid "photo de la ferme"
+msgstr "foto van het bedrijf"
+
+#: public/templates/public/exploitants.html
+msgid "Visible sur l'annuaire public, si vous avez choisi d'y figurer."
+msgstr "Zichtbaar in de openbare gids, als u ervoor koos daarin te staan."
+
+#: public/templates/public/exploitants.html
+msgid "Chercher une ville…"
+msgstr "Zoek een gemeente…"

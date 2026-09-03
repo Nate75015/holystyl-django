@@ -2541,7 +2541,7 @@ msgstr "Μέτρηση"
 #: reseaux/templates/reseaux/reseaux.html:7
 #: reseaux/templates/reseaux/reseaux.html:9 reseaux/views.py:81
 msgid "Réseau"
-msgstr ""
+msgstr "Δίκτυο"
 
 #: aquaculture/models.py:27
 msgid "Pluvial"
@@ -2987,19 +2987,15 @@ msgstr ""
 #: aquaculture/templates/aquaculture/detail.html:10
 #: aquaculture/templates/aquaculture/especes.html:33
 #: core/context_processors.py:162
-#, fuzzy
-#| msgid "culture"
 msgid "Aquaculture"
-msgstr "καλλιέργεια"
+msgstr "Υδατοκαλλιέργεια"
 
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/bassins.html:10
 #: aquaculture/templates/aquaculture/detail.html:10 aquaculture/views.py:87
 #: core/context_processors.py:164
-#, fuzzy
-#| msgid "Basse"
 msgid "Bassins"
-msgstr "Χαμηλή"
+msgstr "Δεξαμενές"
 
 #: aquaculture/templates/aquaculture/bassins.html:12
 #: client/templates/client/clients.html:13
@@ -3394,10 +3390,8 @@ msgid "Origine (ex : Bretagne)"
 msgstr ""
 
 #: aquaculture/views.py:208 core/context_processors.py:165
-#, fuzzy
-#| msgid "pièces jointes"
 msgid "Espèces aquacoles"
-msgstr "συνημμένα"
+msgstr "Είδη υδατοκαλλιέργειας"
 
 #: client/models.py:12
 #, fuzzy
@@ -3546,18 +3540,16 @@ msgstr "πελάτες"
 
 #: client/models.py:128 contrat/templates/contrat/_bail_modal.html:60
 #: core/context_processors.py:172 core/espaces.py:57
-#, fuzzy
-#| msgid "Taille"
 msgid "Bailleur"
-msgstr "Κλάδεμα"
+msgstr "Εκμισθωτής"
 
 #: client/models.py:129 core/context_processors.py:173 core/espaces.py:60
 msgid "Comptable"
-msgstr ""
+msgstr "Λογιστής"
 
 #: client/models.py:130 core/context_processors.py:174
 msgid "Avocat"
-msgstr ""
+msgstr "Δικηγόρος"
 
 #: client/models.py:131 client/views.py:208 core/context_processors.py:175
 #: planning/templates/planning/planning.html:211
@@ -3738,10 +3730,8 @@ msgstr "Νέο email"
 #: client/templates/client/clients.html:30
 #: client/templates/client/detail.html:10 client/views.py:94
 #: core/context_processors.py:171
-#, fuzzy
-#| msgid "Client"
 msgid "Clients"
-msgstr "Πελάτης"
+msgstr "Πελάτες"
 
 #: client/templates/client/clients.html:19
 #: contrat/templates/contrat/actes.html:19
@@ -3849,10 +3839,8 @@ msgstr "Ο λογαριασμός μου"
 
 #: client/templates/client/espace.html:14 client/views.py:116
 #: core/context_processors.py:50 vente/templates/vente/mes_commandes.html:44
-#, fuzzy
-#| msgid "document"
 msgid "Mes documents"
-msgstr "έγγραφο"
+msgstr "Τα έγγραφά μου"
 
 #: client/templates/client/espace.html:16
 #, python-format
@@ -3867,7 +3855,7 @@ msgstr ""
 #: finances/templates/finances/document_editeur.html:17
 #: finances/templates/finances/document_editeur.html:112 finances/views.py:298
 msgid "Devis"
-msgstr ""
+msgstr "Προσφορές"
 
 #: client/templates/client/espace.html:30
 #: finances/templates/finances/devis_signature.html:47
@@ -3942,10 +3930,8 @@ msgid "Aucune facture pour le moment."
 msgstr "Καμία συνομιλία προς το παρόν."
 
 #: client/templates/client/partenaires.html:7 core/context_processors.py:169
-#, fuzzy
-#| msgid "exploitations"
 msgid "Relations"
-msgstr "εκμεταλλεύσεις"
+msgstr "Σχέσεις"
 
 #: client/templates/client/partenaires.html:44
 msgid "N° de voie"
@@ -5325,7 +5311,7 @@ msgstr "Σύμβαση"
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
 #: core/context_processors.py:138
 msgid "Patrimoine"
-msgstr ""
+msgstr "Περιουσία"
 
 #: contrat/templates/contrat/actes.html:13
 #: contrat/templates/contrat/actes.html:69
@@ -5567,7 +5553,7 @@ msgstr ""
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
-msgstr ""
+msgstr "Μισθώσεις"
 
 #: contrat/templates/contrat/baux.html:29
 #, fuzzy
@@ -5687,10 +5673,8 @@ msgstr ""
 #: contrat/templates/contrat/contrats.html:10
 #: contrat/templates/contrat/contrats.html:29 contrat/views.py:49
 #: core/context_processors.py:136
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats"
-msgstr "Επικοινωνία"
+msgstr "Συμβάσεις"
 
 #: contrat/templates/contrat/contrats.html:25
 #, fuzzy
@@ -6081,10 +6065,8 @@ msgstr "Πίνακας ελέγχου"
 
 #: core/context_processors.py:52 vente/templates/vente/mes_commandes.html:7
 #: vente/templates/vente/mes_commandes.html:8 vente/views.py:338
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes commandes"
-msgstr "εντολές IoT"
+msgstr "Οι παραγγελίες μου"
 
 #: core/context_processors.py:57 messagerie/templates/messagerie/new.html:7
 #: notifications/templates/notifications/center.html:8
@@ -6113,10 +6095,8 @@ msgid "Mail"
 msgstr "Email"
 
 #: core/context_processors.py:63 petition/templates/petition/detail.html:8
-#, fuzzy
-#| msgid "Rétention"
 msgid "Pétition"
-msgstr "Συγκράτηση"
+msgstr "Αίτημα"
 
 #: core/context_processors.py:70 parcelles/templates/parcelles/list.html:14
 #: parcelles/views.py:59
@@ -6130,10 +6110,8 @@ msgstr "Αγροτεμάχια"
 #: parcelles/templates/parcelles/campagnes.html:7
 #: parcelles/templates/parcelles/campagnes.html:10
 #: parcelles/templates/parcelles/campagnes.html:35 parcelles/views.py:305
-#, fuzzy
-#| msgid "Campagne"
 msgid "Campagnes"
-msgstr "Περίοδος"
+msgstr "Καλλιεργητικές περίοδοι"
 
 #: core/context_processors.py:76
 #: interventions/templates/interventions/interventions.html:24
@@ -6158,20 +6136,18 @@ msgstr "Κτηνοτροφία"
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
 #: irrigation/templates/irrigation/bassinage.html:19 irrigation/views.py:337
-#, fuzzy
-#| msgid "Basse"
 msgid "Bassinage"
-msgstr "Χαμηλή"
+msgstr "Δροσισμός με καταιονισμό"
 
 #: core/context_processors.py:94 irrigation/templates/irrigation/antigel.html:8
 #: irrigation/templates/irrigation/antigel.html:9 irrigation/views.py:541
 msgid "Anti-gel"
-msgstr ""
+msgstr "Αντιπαγετική προστασία"
 
 #: core/context_processors.py:95 irrigation/templates/irrigation/dti.html:7
 #: irrigation/views.py:176
 msgid "DTI"
-msgstr ""
+msgstr "DTI"
 
 #: core/context_processors.py:96 iot/templates/iot/regie.html:10
 #: iot/views.py:66
@@ -6184,10 +6160,8 @@ msgid "Capteurs"
 msgstr "Αισθητήρες"
 
 #: core/context_processors.py:101 finances/templates/finances/fermage.html:7
-#, fuzzy
-#| msgid "Maintenance"
 msgid "Finance"
-msgstr "Συντήρηση"
+msgstr "Οικονομικά"
 
 #: core/context_processors.py:103
 #: dashboard/templates/dashboard/comptable.html:56
@@ -6204,7 +6178,7 @@ msgstr "Έξοδα"
 #: finances/templates/finances/fermage.html:7
 #: finances/templates/finances/fermage.html:9 finances/views.py:628
 msgid "Fermage"
-msgstr ""
+msgstr "Μίσθωμα"
 
 #: core/context_processors.py:105
 #: dashboard/templates/dashboard/comptable.html:20
@@ -6221,10 +6195,8 @@ msgstr "Οικονομικός απολογισμός"
 #: finances/templates/finances/facturation.html:9
 #: vente/templates/vente/commande_detail.html:54
 #: vente/templates/vente/mes_commandes.html:30
-#, fuzzy
-#| msgid "facture"
 msgid "Facture"
-msgstr "τιμολόγιο"
+msgstr "Τιμολόγηση"
 
 #: core/context_processors.py:108 pac/templates/pac/pac.html:7
 #: pac/templates/pac/pac.html:9 pac/views.py:71
@@ -6305,43 +6277,37 @@ msgstr "Μισθοδοσία"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
-msgstr ""
+msgstr "MSA — γαλλική αγροτική κοινωνική ασφάλιση"
 
 #: core/context_processors.py:144 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/produits.html:16
-#, fuzzy
-#| msgid "Vente fruits"
 msgid "Vente directe"
-msgstr "Πώληση φρούτων"
+msgstr "Απευθείας πώληση"
 
 #: core/context_processors.py:146 vente/templates/vente/commande_detail.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/commandes.html:10 vente/views.py:257
-#, fuzzy
-#| msgid "Commune"
 msgid "Commandes"
-msgstr "Δήμος"
+msgstr "Παραγγελίες"
 
 #: core/context_processors.py:147 vente/templates/vente/boutique.html:12
 #: vente/templates/vente/commandes.html:13
 #: vente/templates/vente/produits.html:16
 #: vente/templates/vente/produits.html:19 vente/views.py:147
-#, fuzzy
-#| msgid "Produit"
 msgid "Mes produits"
-msgstr "Προϊόν"
+msgstr "Τα προϊόντα μου"
 
 #: core/context_processors.py:148 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/boutique.html:10
 #: vente/templates/vente/produits.html:22 vente/views.py:117
 msgid "Ma boutique"
-msgstr ""
+msgstr "Το κατάστημά μου"
 
 #: core/context_processors.py:149 vente/templates/vente/_boutique_corps.html:5
 #: vente/templates/vente/_produit_corps.html:6
 msgid "Le marché"
-msgstr ""
+msgstr "Η αγορά"
 
 #: core/context_processors.py:153 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:23 stock/templates/stock/depots.html:16
@@ -6350,14 +6316,14 @@ msgstr ""
 #: stock/templates/stock/recoltes.html:17 stock/views.py:117
 #: vente/templates/vente/produits.html:60
 msgid "Stock"
-msgstr ""
+msgstr "Απόθεμα"
 
 #: core/context_processors.py:155 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:47 stock/templates/stock/depots.html:22
 #: stock/templates/stock/depots.html:46
 #: stock/templates/stock/mouvements.html:14
 msgid "Articles"
-msgstr ""
+msgstr "Είδη"
 
 #: core/context_processors.py:156 public/templates/public/home.html:276
 #: stock/templates/stock/recoltes.html:11
@@ -6368,16 +6334,14 @@ msgstr "Συγκομιδές"
 
 #: core/context_processors.py:157 stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/mouvements.html:31
-#, fuzzy
-#| msgid "document"
 msgid "Mouvements"
-msgstr "έγγραφο"
+msgstr "Κινήσεις"
 
 #: core/context_processors.py:158 stock/templates/stock/depots.html:16
 #: stock/templates/stock/depots.html:19 stock/templates/stock/depots.html:32
 #: stock/views.py:371
 msgid "Dépôts"
-msgstr ""
+msgstr "Αποθήκες"
 
 #: core/context_processors.py:179
 #: exploitations/templates/exploitations/adresses.html:7
@@ -6394,10 +6358,8 @@ msgid "Mon exploitation"
 msgstr "Η εκμετάλλευσή μου"
 
 #: core/context_processors.py:183 exploitations/views.py:33
-#, fuzzy
-#| msgid "Identité"
 msgid "Identités"
-msgstr "Ταυτότητα"
+msgstr "Στοιχεία ταυτότητας"
 
 #: core/context_processors.py:184 exploitations/views.py:36
 #: exploitations/views.py:308 exploitations/views.py:309
@@ -6416,10 +6378,8 @@ msgid "Caractéristiques agricoles"
 msgstr "Γεωργικά χαρακτηριστικά"
 
 #: core/context_processors.py:189 exploitations/views.py:45
-#, fuzzy
-#| msgid "Notifications"
 msgid "Certificats et labels"
-msgstr "Ειδοποιήσεις"
+msgstr "Πιστοποιητικά και σήματα"
 
 #: core/context_processors.py:190
 #: exploitations/templates/exploitations/societes.html:32
@@ -6430,7 +6390,7 @@ msgstr "Συνδεδεμένες εταιρείες"
 
 #: core/context_processors.py:191 exploitations/views.py:47
 msgid "RH et CA"
-msgstr ""
+msgstr "Προσωπικό και τζίρος"
 
 #: core/context_processors.py:192
 #: operations/templates/operations/parc_materiel.html:36
@@ -14875,7 +14835,7 @@ msgstr "Πληκτρολογήστε ένα όνομα και Enter για αν�
 
 #: meteo/templates/meteo/meteo.html:10
 msgid "Toutes les villes"
-msgstr "Όλες οι πόλεις"
+msgstr "Όλοι οι δήμοι"
 
 #: meteo/templates/meteo/meteo.html:27
 #, fuzzy
@@ -18985,7 +18945,7 @@ msgstr "Κατάλαβα"
 
 #: templates/partials/header.html:8
 msgid "Menu"
-msgstr ""
+msgstr "Μενού"
 
 #: templates/partials/header.html:21
 msgid "Heure locale"
@@ -20268,3 +20228,131 @@ msgstr ""
 #| msgid "Semis"
 msgid "Remise"
 msgstr "Σπορά"
+
+#: public/templates/public/home.html
+msgid "Personnel"
+msgstr "Προσωπικό"
+
+#: public/templates/public/home.html
+msgid "Quota d'eau"
+msgstr "Ποσόστωση νερού"
+
+#: public/templates/public/home.html
+msgid "Risque de gel cette nuit — parcelle des Coteaux"
+msgstr "Κίνδυνος παγετού απόψε — αγροτεμάχιο Coteaux"
+
+#: public/templates/public/home.html
+msgid "19,90 € HT/mois + 0,70 € par hectare, utilisateurs illimités."
+msgstr "19,90 € χωρίς ΦΠΑ/μήνα + 0,70 € ανά εκτάριο, απεριόριστοι χρήστες."
+
+#: public/templates/public/home.html
+msgid "+ 0,70 € par hectare et par mois"
+msgstr "+ 0,70 € ανά εκτάριο τον μήνα"
+
+#: public/templates/public/home.html
+msgid "Estimez votre tarif"
+msgstr "Υπολογίστε την τιμή σας"
+
+#: public/templates/public/home.html
+msgid "€ HT/mois"
+msgstr "€ χωρίς ΦΠΑ/μήνα"
+
+#: public/templates/public/home.html
+msgid "Douze domaines. Un seul outil."
+msgstr "Δώδεκα τομείς. Ένα μόνο εργαλείο."
+
+#: public/templates/public/home.html
+msgid "Facture électronique"
+msgstr "Ηλεκτρονικό τιμολόγιο"
+
+#: public/templates/public/home.html
+msgid "Format UBL, plateforme agréée"
+msgstr "Μορφή UBL, εγκεκριμένη πλατφόρμα"
+
+#: public/templates/public/home.html
+msgid "Signature électronique"
+msgstr "Ηλεκτρονική υπογραφή"
+
+#: public/templates/public/home.html
+msgid "Devis signés au doigt ou au stylet"
+msgstr "Προσφορές που υπογράφονται με δάχτυλο ή γραφίδα"
+
+#: public/templates/public/exploitants.html
+msgid "Exploitants agricoles"
+msgstr "Γεωργικές εκμεταλλεύσεις"
+
+#: public/templates/public/exploitants.html
+msgid "Les fermes qui utilisent Isidor et ont choisi de figurer ici."
+msgstr "Οι εκμεταλλεύσεις που χρησιμοποιούν το Isidor και επέλεξαν να εμφανίζονται εδώ."
+
+#: public/templates/public/exploitants.html
+msgid "Aucune ferme ne figure encore dans l'annuaire."
+msgstr "Καμία εκμετάλλευση δεν εμφανίζεται ακόμη στον κατάλογο."
+
+#: public/templates/public/exploitants.html
+msgid "Chaque exploitation décide d'y paraître : nous ne publions ni nom ni commune sans son accord."
+msgstr "Κάθε εκμετάλλευση αποφασίζει: δεν δημοσιεύουμε όνομα ούτε δήμο χωρίς τη συγκατάθεσή της."
+
+#: public/templates/public/exploitants.html
+msgid "Voir la boutique"
+msgstr "Δείτε το κατάστημα"
+
+#: public/templates/public/exploitants.html
+msgid "depuis %(a)s"
+msgstr "από το %(a)s"
+
+#: public/templates/public/exploitants.html
+msgid "figurer dans l'annuaire public"
+msgstr "εμφάνιση στον δημόσιο κατάλογο"
+
+#: public/templates/public/exploitants.html
+msgid "Votre ferme apparaît alors sur la page publique des exploitants."
+msgstr "Η εκμετάλλευσή σας θα εμφανίζεται τότε στη δημόσια σελίδα εκμεταλλεύσεων."
+
+#: public/templates/public/exploitants.html
+msgid "Chercher une ferme, une commune, une production…"
+msgstr "Αναζήτηση εκμετάλλευσης, δήμου, παραγωγής…"
+
+#: public/templates/public/exploitants.html
+msgid "Région"
+msgstr "Περιφέρεια"
+
+#: public/templates/public/exploitants.html
+msgid "Département"
+msgstr "Νομός"
+
+#: public/templates/public/exploitants.html
+msgid "Toutes les régions"
+msgstr "Όλες οι περιφέρειες"
+
+#: public/templates/public/exploitants.html
+msgid "Tous les départements"
+msgstr "Όλοι οι νομοί"
+
+#: public/templates/public/exploitants.html
+msgid "Tout afficher"
+msgstr "Εμφάνιση όλων"
+
+#: public/templates/public/exploitants.html
+msgid "Aucune ferme ne correspond."
+msgstr "Καμία εκμετάλλευση δεν ταιριάζει."
+
+#: public/templates/public/exploitants.html
+msgid "Élargissez la recherche ou retirez un filtre."
+msgstr "Διευρύνετε την αναζήτηση ή αφαιρέστε ένα φίλτρο."
+
+#: public/templates/public/exploitants.html
+msgid "Visibilité publique"
+msgstr "Δημόσια προβολή"
+
+#: public/templates/public/exploitants.html
+msgid "photo de la ferme"
+msgstr "φωτογραφία της εκμετάλλευσης"
+
+#: public/templates/public/exploitants.html
+msgid "Visible sur l'annuaire public, si vous avez choisi d'y figurer."
+msgstr "Εμφανίζεται στον δημόσιο κατάλογο, αν επιλέξατε να περιλαμβάνεστε."
+
+#: public/templates/public/exploitants.html
+msgid "Chercher une ville…"
+msgstr "Αναζήτηση δήμου…"

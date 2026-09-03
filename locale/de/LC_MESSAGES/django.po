@@ -2526,7 +2526,7 @@ msgstr "Messung"
 #: reseaux/templates/reseaux/reseaux.html:7
 #: reseaux/templates/reseaux/reseaux.html:9 reseaux/views.py:81
 msgid "Réseau"
-msgstr ""
+msgstr "Netzwerk"
 
 #: aquaculture/models.py:27
 msgid "Pluvial"
@@ -2974,19 +2974,15 @@ msgstr ""
 #: aquaculture/templates/aquaculture/detail.html:10
 #: aquaculture/templates/aquaculture/especes.html:33
 #: core/context_processors.py:162
-#, fuzzy
-#| msgid "culture"
 msgid "Aquaculture"
-msgstr "Kultur"
+msgstr "Aquakultur"
 
 #: aquaculture/templates/aquaculture/bassins.html:7
 #: aquaculture/templates/aquaculture/bassins.html:10
 #: aquaculture/templates/aquaculture/detail.html:10 aquaculture/views.py:87
 #: core/context_processors.py:164
-#, fuzzy
-#| msgid "Basse"
 msgid "Bassins"
-msgstr "Niedrig"
+msgstr "Becken"
 
 #: aquaculture/templates/aquaculture/bassins.html:12
 #: client/templates/client/clients.html:13
@@ -3382,10 +3378,8 @@ msgid "Origine (ex : Bretagne)"
 msgstr ""
 
 #: aquaculture/views.py:208 core/context_processors.py:165
-#, fuzzy
-#| msgid "pièces jointes"
 msgid "Espèces aquacoles"
-msgstr "Anhänge"
+msgstr "Aquakulturarten"
 
 #: client/models.py:12
 #, fuzzy
@@ -3534,18 +3528,16 @@ msgstr "Kunden"
 
 #: client/models.py:128 contrat/templates/contrat/_bail_modal.html:60
 #: core/context_processors.py:172 core/espaces.py:57
-#, fuzzy
-#| msgid "Taille"
 msgid "Bailleur"
-msgstr "Schnitt"
+msgstr "Verpächter"
 
 #: client/models.py:129 core/context_processors.py:173 core/espaces.py:60
 msgid "Comptable"
-msgstr ""
+msgstr "Buchhalter"
 
 #: client/models.py:130 core/context_processors.py:174
 msgid "Avocat"
-msgstr ""
+msgstr "Anwalt"
 
 #: client/models.py:131 client/views.py:208 core/context_processors.py:175
 #: planning/templates/planning/planning.html:211
@@ -3726,10 +3718,8 @@ msgstr "Neue E-Mail"
 #: client/templates/client/clients.html:30
 #: client/templates/client/detail.html:10 client/views.py:94
 #: core/context_processors.py:171
-#, fuzzy
-#| msgid "Client"
 msgid "Clients"
-msgstr "Kunde"
+msgstr "Kunden"
 
 #: client/templates/client/clients.html:19
 #: contrat/templates/contrat/actes.html:19
@@ -3837,10 +3827,8 @@ msgstr "Mein Konto"
 
 #: client/templates/client/espace.html:14 client/views.py:116
 #: core/context_processors.py:50 vente/templates/vente/mes_commandes.html:44
-#, fuzzy
-#| msgid "document"
 msgid "Mes documents"
-msgstr "Dokument"
+msgstr "Meine Dokumente"
 
 #: client/templates/client/espace.html:16
 #, python-format
@@ -3855,7 +3843,7 @@ msgstr ""
 #: finances/templates/finances/document_editeur.html:17
 #: finances/templates/finances/document_editeur.html:112 finances/views.py:298
 msgid "Devis"
-msgstr ""
+msgstr "Angebote"
 
 #: client/templates/client/espace.html:30
 #: finances/templates/finances/devis_signature.html:47
@@ -3928,10 +3916,8 @@ msgid "Aucune facture pour le moment."
 msgstr "Bisher keine Konversation."
 
 #: client/templates/client/partenaires.html:7 core/context_processors.py:169
-#, fuzzy
-#| msgid "exploitations"
 msgid "Relations"
-msgstr "Betriebe"
+msgstr "Kontakte"
 
 #: client/templates/client/partenaires.html:44
 msgid "N° de voie"
@@ -5312,7 +5298,7 @@ msgstr "Vertrag"
 #: contrat/templates/contrat/actes.html:10 contrat/views.py:265
 #: core/context_processors.py:138
 msgid "Patrimoine"
-msgstr ""
+msgstr "Vermögen"
 
 #: contrat/templates/contrat/actes.html:13
 #: contrat/templates/contrat/actes.html:69
@@ -5554,7 +5540,7 @@ msgstr ""
 #: dashboard/templates/dashboard/bailleur.html:34
 #: finances/templates/finances/fermage.html:84
 msgid "Baux"
-msgstr ""
+msgstr "Pachtverträge"
 
 #: contrat/templates/contrat/baux.html:29
 #, fuzzy
@@ -5676,10 +5662,8 @@ msgstr ""
 #: contrat/templates/contrat/contrats.html:10
 #: contrat/templates/contrat/contrats.html:29 contrat/views.py:49
 #: core/context_processors.py:136
-#, fuzzy
-#| msgid "Contact"
 msgid "Contrats"
-msgstr "Kontakt"
+msgstr "Verträge"
 
 #: contrat/templates/contrat/contrats.html:25
 #, fuzzy
@@ -6072,10 +6056,8 @@ msgstr "Dashboard"
 
 #: core/context_processors.py:52 vente/templates/vente/mes_commandes.html:7
 #: vente/templates/vente/mes_commandes.html:8 vente/views.py:338
-#, fuzzy
-#| msgid "commandes IoT"
 msgid "Mes commandes"
-msgstr "IoT-Befehle"
+msgstr "Meine Bestellungen"
 
 #: core/context_processors.py:57 messagerie/templates/messagerie/new.html:7
 #: notifications/templates/notifications/center.html:8
@@ -6104,10 +6086,8 @@ msgid "Mail"
 msgstr "E-Mail"
 
 #: core/context_processors.py:63 petition/templates/petition/detail.html:8
-#, fuzzy
-#| msgid "Rétention"
 msgid "Pétition"
-msgstr "Speicherung"
+msgstr "Petition"
 
 #: core/context_processors.py:70 parcelles/templates/parcelles/list.html:14
 #: parcelles/views.py:59
@@ -6119,10 +6099,8 @@ msgstr "Meine Parzellen"
 #: parcelles/templates/parcelles/campagnes.html:7
 #: parcelles/templates/parcelles/campagnes.html:10
 #: parcelles/templates/parcelles/campagnes.html:35 parcelles/views.py:305
-#, fuzzy
-#| msgid "Campagne"
 msgid "Campagnes"
-msgstr "Kampagne"
+msgstr "Anbaujahre"
 
 #: core/context_processors.py:76
 #: interventions/templates/interventions/interventions.html:24
@@ -6147,20 +6125,18 @@ msgstr "Tierhaltung"
 #: core/context_processors.py:93
 #: irrigation/templates/irrigation/bassinage.html:17
 #: irrigation/templates/irrigation/bassinage.html:19 irrigation/views.py:337
-#, fuzzy
-#| msgid "Basse"
 msgid "Bassinage"
-msgstr "Niedrig"
+msgstr "Kühlberegnung"
 
 #: core/context_processors.py:94 irrigation/templates/irrigation/antigel.html:8
 #: irrigation/templates/irrigation/antigel.html:9 irrigation/views.py:541
 msgid "Anti-gel"
-msgstr ""
+msgstr "Frostschutz"
 
 #: core/context_processors.py:95 irrigation/templates/irrigation/dti.html:7
 #: irrigation/views.py:176
 msgid "DTI"
-msgstr ""
+msgstr "BTD"
 
 #: core/context_processors.py:96 iot/templates/iot/regie.html:10
 #: iot/views.py:66
@@ -6173,10 +6149,8 @@ msgid "Capteurs"
 msgstr "Sensoren"
 
 #: core/context_processors.py:101 finances/templates/finances/fermage.html:7
-#, fuzzy
-#| msgid "Maintenance"
 msgid "Finance"
-msgstr "Wartung"
+msgstr "Finanzen"
 
 #: core/context_processors.py:103
 #: dashboard/templates/dashboard/comptable.html:56
@@ -6192,10 +6166,8 @@ msgstr "Kosten"
 #: dashboard/templates/dashboard/bailleur.html:58
 #: finances/templates/finances/fermage.html:7
 #: finances/templates/finances/fermage.html:9 finances/views.py:628
-#, fuzzy
-#| msgid "Fermer"
 msgid "Fermage"
-msgstr "Schließen"
+msgstr "Pachtzins"
 
 #: core/context_processors.py:105
 #: dashboard/templates/dashboard/comptable.html:20
@@ -6212,10 +6184,8 @@ msgstr "Wirtschaftsbilanz"
 #: finances/templates/finances/facturation.html:9
 #: vente/templates/vente/commande_detail.html:54
 #: vente/templates/vente/mes_commandes.html:30
-#, fuzzy
-#| msgid "facture"
 msgid "Facture"
-msgstr "Rechnung"
+msgstr "Rechnungen"
 
 #: core/context_processors.py:108 pac/templates/pac/pac.html:7
 #: pac/templates/pac/pac.html:9 pac/views.py:71
@@ -6294,43 +6264,37 @@ msgstr "Lohnabrechnung"
 
 #: core/context_processors.py:140
 msgid "Mutualité Sociale Agricole"
-msgstr ""
+msgstr "MSA — französische Sozialversicherung der Landwirtschaft"
 
 #: core/context_processors.py:144 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/produits.html:16
-#, fuzzy
-#| msgid "Vente fruits"
 msgid "Vente directe"
-msgstr "Obstverkauf"
+msgstr "Direktvermarktung"
 
 #: core/context_processors.py:146 vente/templates/vente/commande_detail.html:7
 #: vente/templates/vente/commandes.html:7
 #: vente/templates/vente/commandes.html:10 vente/views.py:257
-#, fuzzy
-#| msgid "Commune"
 msgid "Commandes"
-msgstr "Gemeinde"
+msgstr "Bestellungen"
 
 #: core/context_processors.py:147 vente/templates/vente/boutique.html:12
 #: vente/templates/vente/commandes.html:13
 #: vente/templates/vente/produits.html:16
 #: vente/templates/vente/produits.html:19 vente/views.py:147
-#, fuzzy
-#| msgid "Produit"
 msgid "Mes produits"
-msgstr "Produkt"
+msgstr "Meine Produkte"
 
 #: core/context_processors.py:148 vente/templates/vente/boutique.html:7
 #: vente/templates/vente/boutique.html:10
 #: vente/templates/vente/produits.html:22 vente/views.py:117
 msgid "Ma boutique"
-msgstr ""
+msgstr "Mein Hofladen"
 
 #: core/context_processors.py:149 vente/templates/vente/_boutique_corps.html:5
 #: vente/templates/vente/_produit_corps.html:6
 msgid "Le marché"
-msgstr ""
+msgstr "Der Marktplatz"
 
 #: core/context_processors.py:153 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:23 stock/templates/stock/depots.html:16
@@ -6339,14 +6303,14 @@ msgstr ""
 #: stock/templates/stock/recoltes.html:17 stock/views.py:117
 #: vente/templates/vente/produits.html:60
 msgid "Stock"
-msgstr ""
+msgstr "Lagerbestand"
 
 #: core/context_processors.py:155 stock/templates/stock/articles.html:20
 #: stock/templates/stock/articles.html:47 stock/templates/stock/depots.html:22
 #: stock/templates/stock/depots.html:46
 #: stock/templates/stock/mouvements.html:14
 msgid "Articles"
-msgstr ""
+msgstr "Artikel"
 
 #: core/context_processors.py:156 public/templates/public/home.html:276
 #: stock/templates/stock/recoltes.html:11
@@ -6357,16 +6321,14 @@ msgstr "Ernten"
 
 #: core/context_processors.py:157 stock/templates/stock/mouvements.html:8
 #: stock/templates/stock/mouvements.html:31
-#, fuzzy
-#| msgid "abonnements"
 msgid "Mouvements"
-msgstr "Abonnements"
+msgstr "Bewegungen"
 
 #: core/context_processors.py:158 stock/templates/stock/depots.html:16
 #: stock/templates/stock/depots.html:19 stock/templates/stock/depots.html:32
 #: stock/views.py:371
 msgid "Dépôts"
-msgstr ""
+msgstr "Lager"
 
 #: core/context_processors.py:179
 #: exploitations/templates/exploitations/adresses.html:7
@@ -6383,10 +6345,8 @@ msgid "Mon exploitation"
 msgstr "Mein Betrieb"
 
 #: core/context_processors.py:183 exploitations/views.py:33
-#, fuzzy
-#| msgid "Identité"
 msgid "Identités"
-msgstr "Identität"
+msgstr "Stammdaten"
 
 #: core/context_processors.py:184 exploitations/views.py:36
 #: exploitations/views.py:308 exploitations/views.py:309
@@ -6405,10 +6365,8 @@ msgid "Caractéristiques agricoles"
 msgstr "Landwirtschaftliche Merkmale"
 
 #: core/context_processors.py:189 exploitations/views.py:45
-#, fuzzy
-#| msgid "Certifications & labels"
 msgid "Certificats et labels"
-msgstr "Zertifizierungen & Label"
+msgstr "Zertifikate und Siegel"
 
 #: core/context_processors.py:190
 #: exploitations/templates/exploitations/societes.html:32
@@ -6419,7 +6377,7 @@ msgstr "Verbundene Unternehmen"
 
 #: core/context_processors.py:191 exploitations/views.py:47
 msgid "RH et CA"
-msgstr ""
+msgstr "Personal und Umsatz"
 
 #: core/context_processors.py:192
 #: operations/templates/operations/parc_materiel.html:36
@@ -14835,7 +14793,7 @@ msgstr "Geben Sie einen Namen ein und drücken Sie Enter, um zu suchen."
 
 #: meteo/templates/meteo/meteo.html:10
 msgid "Toutes les villes"
-msgstr "Alle Städte"
+msgstr "Alle Orte"
 
 #: meteo/templates/meteo/meteo.html:27
 msgid "Capturer"
@@ -18942,7 +18900,7 @@ msgstr "Verstanden"
 
 #: templates/partials/header.html:8
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
 #: templates/partials/header.html:21
 msgid "Heure locale"
@@ -20233,3 +20191,131 @@ msgstr ""
 #| msgid "Semis"
 msgid "Remise"
 msgstr "Aussaat"
+
+#: public/templates/public/home.html
+msgid "Personnel"
+msgstr "Personal"
+
+#: public/templates/public/home.html
+msgid "Quota d'eau"
+msgstr "Wasserquote"
+
+#: public/templates/public/home.html
+msgid "Risque de gel cette nuit — parcelle des Coteaux"
+msgstr "Frostgefahr heute Nacht — Parzelle Coteaux"
+
+#: public/templates/public/home.html
+msgid "19,90 € HT/mois + 0,70 € par hectare, utilisateurs illimités."
+msgstr "19,90 € netto/Monat + 0,70 € pro Hektar, unbegrenzte Nutzer."
+
+#: public/templates/public/home.html
+msgid "+ 0,70 € par hectare et par mois"
+msgstr "+ 0,70 € pro Hektar und Monat"
+
+#: public/templates/public/home.html
+msgid "Estimez votre tarif"
+msgstr "Preis berechnen"
+
+#: public/templates/public/home.html
+msgid "€ HT/mois"
+msgstr "€ netto/Monat"
+
+#: public/templates/public/home.html
+msgid "Douze domaines. Un seul outil."
+msgstr "Zwölf Bereiche. Ein Werkzeug."
+
+#: public/templates/public/home.html
+msgid "Facture électronique"
+msgstr "Elektronische Rechnung"
+
+#: public/templates/public/home.html
+msgid "Format UBL, plateforme agréée"
+msgstr "UBL-Format, zugelassene Plattform"
+
+#: public/templates/public/home.html
+msgid "Signature électronique"
+msgstr "Elektronische Signatur"
+
+#: public/templates/public/home.html
+msgid "Devis signés au doigt ou au stylet"
+msgstr "Angebote per Finger oder Stift unterschrieben"
+
+#: public/templates/public/exploitants.html
+msgid "Exploitants agricoles"
+msgstr "Landwirtschaftliche Betriebe"
+
+#: public/templates/public/exploitants.html
+msgid "Les fermes qui utilisent Isidor et ont choisi de figurer ici."
+msgstr "Die Betriebe, die Isidor nutzen und sich hier zeigen möchten."
+
+#: public/templates/public/exploitants.html
+msgid "Aucune ferme ne figure encore dans l'annuaire."
+msgstr "Noch kein Betrieb im Verzeichnis."
+
+#: public/templates/public/exploitants.html
+msgid "Chaque exploitation décide d'y paraître : nous ne publions ni nom ni commune sans son accord."
+msgstr "Jeder Betrieb entscheidet selbst: Wir veröffentlichen weder Name noch Ort ohne seine Zustimmung."
+
+#: public/templates/public/exploitants.html
+msgid "Voir la boutique"
+msgstr "Zum Hofladen"
+
+#: public/templates/public/exploitants.html
+msgid "depuis %(a)s"
+msgstr "seit %(a)s"
+
+#: public/templates/public/exploitants.html
+msgid "figurer dans l'annuaire public"
+msgstr "im öffentlichen Verzeichnis erscheinen"
+
+#: public/templates/public/exploitants.html
+msgid "Votre ferme apparaît alors sur la page publique des exploitants."
+msgstr "Ihr Betrieb erscheint dann auf der öffentlichen Verzeichnisseite."
+
+#: public/templates/public/exploitants.html
+msgid "Chercher une ferme, une commune, une production…"
+msgstr "Betrieb, Ort oder Erzeugnis suchen…"
+
+#: public/templates/public/exploitants.html
+msgid "Région"
+msgstr "Region"
+
+#: public/templates/public/exploitants.html
+msgid "Département"
+msgstr "Departement"
+
+#: public/templates/public/exploitants.html
+msgid "Toutes les régions"
+msgstr "Alle Regionen"
+
+#: public/templates/public/exploitants.html
+msgid "Tous les départements"
+msgstr "Alle Departements"
+
+#: public/templates/public/exploitants.html
+msgid "Tout afficher"
+msgstr "Alle anzeigen"
+
+#: public/templates/public/exploitants.html
+msgid "Aucune ferme ne correspond."
+msgstr "Kein Betrieb passt."
+
+#: public/templates/public/exploitants.html
+msgid "Élargissez la recherche ou retirez un filtre."
+msgstr "Erweitern Sie die Suche oder entfernen Sie einen Filter."
+
+#: public/templates/public/exploitants.html
+msgid "Visibilité publique"
+msgstr "Öffentliche Sichtbarkeit"
+
+#: public/templates/public/exploitants.html
+msgid "photo de la ferme"
+msgstr "Foto des Betriebs"
+
+#: public/templates/public/exploitants.html
+msgid "Visible sur l'annuaire public, si vous avez choisi d'y figurer."
+msgstr "Im öffentlichen Verzeichnis sichtbar, sofern Sie dort erscheinen möchten."
+
+#: public/templates/public/exploitants.html
+msgid "Chercher une ville…"
+msgstr "Ort suchen…"
