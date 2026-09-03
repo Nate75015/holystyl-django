@@ -1,4 +1,8 @@
-"""Tests contrat : assurances — statut, échéances, documents, lecture IA."""
+"""Tests contrat : assurances, baux et actes notariés.
+
+Même trame pour les trois : statut, échéance qui ne se rattrape pas,
+documents joints, lecture IA sans écriture, et cloisonnement par ferme.
+"""
 
 from datetime import timedelta
 
@@ -324,3 +328,232 @@ def test_le_bail_du_voisin_est_hors_de_portee(client, setup):
     assert client.post(f"/baux/{son_bail.pk}/document/", {}).status_code == 404
     assert client.post(f"/baux/document/{son_doc.pk}/supprimer/").status_code == 404
     assert client.post(f"/baux/{son_bail.pk}/supprimer/").status_code == 404
+
+
+# ── Actes notariés ──────────────────────────────────────────────────
+#
+# Un acte notarié se manque sur deux dates : la réitération d'un compromis et
+# la péremption d'une inscription hypothécaire. Le reste est de l'archivage.
+
+
+def _acte(**surcharges):
+    champs = {
+        "objet": "Achat parcelle ZA 42",
+        "type_acte": "achat",
+        "statut": "signe",
+        "notaire": "Étude Berger & Associés",
+        "telephone_notaire": "0490445566",
+        "email_notaire": "etude@berger.example",
+        "parties": "Consorts Roux / EARL du Ventoux",
+        "reference": "2025/1187",
+        "date_signature": "2025-06-18",
+        "surface_ha": "8,60",
+        "references_cadastrales": "ZA 42, ZA 43",
+        "montant": "94 000",
+        "frais_notaire": "7 300",
+        "droits_enregistrement": "5 100",
+        "conditions_suspensives": "Obtention du prêt, purge SAFER",
+        "charges_et_servitudes": "Servitude de passage au nord",
+        "droit_preemption": "SAFER — deux mois",
+    }
+    champs.update(surcharges)
+    return champs
+
+
+@pytest.mark.django_db
+def test_enregistrer_un_acte_avec_ses_conditions(client, setup):
+    from contrat.models import ActeNotarie
+
+    user, exploitation = setup
+    client.force_login(user)
+    assert client.post("/actes-notaries/nouveau/", _acte()).status_code == 302
+
+    a = ActeNotarie.objects.get(exploitation=exploitation)
+    assert a.type_acte == "achat" and a.statut == "signe"
+    assert a.surface_ha == 8.6 and a.montant == 94000
+    assert a.frais_et_droits == 12400 and a.cout_total == 106400
+    assert a.droit_preemption.startswith("SAFER")
+    assert a.est_en_vigueur is True
+
+
+@pytest.mark.django_db
+def test_un_acte_sans_objet_n_est_pas_cree(client, setup):
+    from contrat.models import ActeNotarie
+
+    user, _exploitation = setup
+    client.force_login(user)
+    client.post("/actes-notaries/nouveau/", _acte(objet="   "))
+    assert ActeNotarie.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_la_promesse_expire_et_l_hypotheque_se_perime(setup):
+    """Les deux échéances qui ne se rattrapent pas, et rien d'autre."""
+    from datetime import date
+
+    from contrat.models import ActeNotarie
+
+    _user, exploitation = setup
+
+    promesse = ActeNotarie.objects.create(
+        exploitation=exploitation, objet="Compromis Plaine", type_acte="achat",
+        statut="promesse", date_limite_realisation=date(2030, 4, 15))
+    assert promesse.date_limite_action == date(2030, 4, 15)
+    assert "Réitérer" in str(promesse.action_a_mener)
+
+    hypo = ActeNotarie.objects.create(
+        exploitation=exploitation, objet="Prêt bâtiment", type_acte="hypotheque",
+        statut="signe", date_peremption=date(2031, 9, 1))
+    assert hypo.date_limite_action == date(2031, 9, 1)
+    assert "mainlevée" in str(hypo.action_a_mener)
+
+    # Mainlevée obtenue : l'inscription ne pèse plus, il n'y a plus rien à faire.
+    hypo.mainlevee_obtenue = True
+    assert hypo.date_limite_action is None and hypo.action_a_mener is None
+
+    # Une vente signée n'a aucune échéance de ce genre.
+    vente = ActeNotarie.objects.create(
+        exploitation=exploitation, objet="Vente pré", type_acte="vente",
+        statut="publie", date_signature=date(2024, 3, 2))
+    assert vente.date_limite_action is None and vente.jours_avant_action is None
+
+
+@pytest.mark.django_db
+def test_l_action_imminente_remonte_sur_la_page(client, setup):
+    from contrat.models import ActeNotarie
+
+    user, exploitation = setup
+    ActeNotarie.objects.create(
+        exploitation=exploitation, objet="Compromis Plaine", type_acte="achat",
+        statut="promesse",
+        date_limite_realisation=timezone.localdate() + timedelta(days=30))
+    ActeNotarie.objects.create(
+        exploitation=exploitation, objet="Compromis lointain", type_acte="achat",
+        statut="promesse",
+        date_limite_realisation=timezone.localdate() + timedelta(days=400))
+
+    client.force_login(user)
+    resp = client.get("/actes-notaries/")
+    assert [a.objet for a in resp.context["actions_imminentes"]] == ["Compromis Plaine"]
+    html = resp.content.decode()
+    assert "demande une action" in html
+    assert "{#" not in html and "{{" not in html
+
+
+@pytest.mark.django_db
+def test_le_delai_depasse_reste_visible(client, setup):
+    """Une échéance manquée ne disparaît pas : c'est là qu'elle compte."""
+    from contrat.models import ActeNotarie
+
+    user, exploitation = setup
+    acte = ActeNotarie.objects.create(
+        exploitation=exploitation, objet="Compromis échu", type_acte="achat",
+        statut="promesse",
+        date_limite_realisation=timezone.localdate() - timedelta(days=10))
+    assert acte.action_depassee is True and acte.action_imminente is False
+
+    client.force_login(user)
+    resp = client.get("/actes-notaries/")
+    assert [a.objet for a in resp.context["actions_imminentes"]] == ["Compromis échu"]
+    assert "délai dépassé" in resp.content.decode()
+
+
+@pytest.mark.django_db
+def test_signe_mais_non_publie_est_signale(client, setup):
+    """Entre les parties, oui ; contre les tiers, pas encore."""
+    from contrat.models import ActeNotarie
+
+    user, exploitation = setup
+    ActeNotarie.objects.create(exploitation=exploitation, objet="Achat ZA 42",
+                               type_acte="achat", statut="signe")
+    # Une procuration ne se publie pas : elle ne doit rien déclencher.
+    ActeNotarie.objects.create(exploitation=exploitation, objet="Procuration",
+                               type_acte="procuration", statut="signe")
+
+    client.force_login(user)
+    resp = client.get("/actes-notaries/")
+    assert [a.objet for a in resp.context["publications_attendues"]] == ["Achat ZA 42"]
+    assert "inopposable aux tiers" in resp.content.decode()
+
+
+@pytest.mark.django_db
+def test_joindre_un_acte_scanne(client, setup):
+    from contrat.models import ActeNotarie, DocumentActe
+
+    user, exploitation = setup
+    client.force_login(user)
+    client.post("/actes-notaries/nouveau/", _acte())
+    acte = ActeNotarie.objects.get(exploitation=exploitation)
+
+    fichier = SimpleUploadedFile("acte.pdf", b"%PDF-1.4 ...", content_type="application/pdf")
+    resp = client.post(f"/actes-notaries/{acte.pk}/document/",
+                       {"document": fichier, "type_document": "titre"})
+    assert resp.status_code == 302
+    doc = DocumentActe.objects.get(acte=acte)
+    assert doc.type_document == "titre" and doc.nom == "acte.pdf"
+
+    assert client.post(f"/actes-notaries/document/{doc.pk}/supprimer/").status_code == 302
+    assert DocumentActe.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_le_document_d_acte_est_filtre_sur_le_format(client, setup):
+    from contrat.models import ActeNotarie, DocumentActe
+
+    user, exploitation = setup
+    acte = ActeNotarie.objects.create(exploitation=exploitation, objet="Achat")
+    client.force_login(user)
+
+    tableur = SimpleUploadedFile("acte.xlsx", b"PK...", content_type="application/vnd.ms-excel")
+    client.post(f"/actes-notaries/{acte.pk}/document/", {"document": tableur})
+    assert DocumentActe.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_la_lecture_ia_de_l_acte_prefixe_sans_enregistrer(client, setup, monkeypatch):
+    """Le scan pré-remplit : il ne crée rien tant que l'exploitant n'a pas relu."""
+    from contrat import acte_ocr
+    from contrat.models import ActeNotarie
+
+    user, _exploitation = setup
+    monkeypatch.setattr(acte_ocr.llm, "is_configured", lambda: True)
+    monkeypatch.setattr(acte_ocr.llm, "extract_json_from_document",
+                        lambda *a, **k: {"objet": "Achat ZA 42", "type_acte": "achat",
+                                         "montant": 94000, "surface_ha": 8.6})
+
+    client.force_login(user)
+    fichier = SimpleUploadedFile("acte.pdf", b"%PDF-1.4 ...", content_type="application/pdf")
+    resp = client.post("/actes-notaries/scanner/", {"document": fichier})
+    assert resp.status_code == 200
+    champs = resp.json()["champs"]
+    assert champs["objet"] == "Achat ZA 42" and champs["montant"] == 94000
+    # Les clés absentes de la réponse du modèle sont présentes, à None.
+    assert champs["date_limite_realisation"] is None
+    assert ActeNotarie.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_la_lecture_ia_de_l_acte_ne_rend_rien_sans_ia(client, setup, monkeypatch):
+    from contrat import acte_ocr
+
+    user, _exploitation = setup
+    monkeypatch.setattr(acte_ocr.llm, "is_configured", lambda: False)
+
+    client.force_login(user)
+    fichier = SimpleUploadedFile("acte.pdf", b"%PDF-1.4 ...", content_type="application/pdf")
+    resp = client.post("/actes-notaries/scanner/", {"document": fichier})
+    assert resp.status_code == 503
+
+
+@pytest.mark.django_db
+def test_l_acte_du_voisin_est_hors_de_portee(client, setup):
+    from contrat.models import ActeNotarie
+
+    user, _exploitation = setup
+    voisin = User.objects.create_user(email="voisin-acte@ex.com", password="pwd12345")
+    chez_lui = Exploitation.objects.create(owner=voisin, name="Ferme Voisine")
+    acte = ActeNotarie.objects.create(exploitation=chez_lui, objet="Achat du voisin")
+
+    client.force_login(user)
+    assert client.post(f"/actes-notaries/{acte.pk}/supprimer/").status_code == 404
+    assert ActeNotarie.objects.filter(pk=acte.pk).exists()

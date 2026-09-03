@@ -19,8 +19,8 @@ class BailAdmin(admin.ModelAdmin):
 
 @admin.register(ActeNotarie)
 class ActeNotarieAdmin(admin.ModelAdmin):
-    list_display = ("objet", "type_acte", "notaire", "date_signature", "montant", "exploitation")
-    list_filter = ("type_acte",)
+    list_display = ("objet", "type_acte", "statut", "notaire", "date_signature", "montant", "exploitation")
+    list_filter = ("type_acte", "statut")
     search_fields = ("objet", "notaire", "parties", "reference")
 
 

@@ -230,16 +230,58 @@ class DocumentBail(models.Model):
 
 
 class ActeNotarie(models.Model):
-    """Un acte notarié (vente, achat, servitude, succession…)."""
+    """Un acte notarié : ce qui fonde et grève la propriété de la ferme.
+
+    Le patrimoine d'une exploitation ne tient pas dans une liste de ventes.
+    Il se joue sur des délais qui ne se rattrapent pas — un compromis qui
+    expire, une inscription hypothécaire qu'il faut lever avant de vendre,
+    une publication au fichier immobilier sans laquelle l'acte reste
+    inopposable aux tiers. Ces échéances sont ici des champs, pas des notes.
+    """
 
     class TypeActe(models.TextChoices):
+        """Ce qu'un exploitant signe réellement devant notaire.
+
+        La vente et l'achat sont le cas courant ; le reste relève de la
+        transmission (donation, succession, partage), du financement
+        (hypothèque et sa mainlevée) ou de la structure (GFA, GAEC, apport).
+        """
+
         VENTE = "vente", _("Vente")
         ACHAT = "achat", _("Achat")
+        ECHANGE = "echange", _("Échange de parcelles")
         DONATION = "donation", _("Donation")
+        DONATION_PARTAGE = "donation_partage", _("Donation-partage")
         SUCCESSION = "succession", _("Succession")
+        PARTAGE = "partage", _("Partage")
+        TESTAMENT = "testament", _("Testament")
+        DEMEMBREMENT = "demembrement", _("Démembrement (usufruit / nue-propriété)")
         SERVITUDE = "servitude", _("Servitude")
-        HYPOTHEQUE = "hypotheque", _("Hypothèque")
+        HYPOTHEQUE = "hypotheque", _("Hypothèque ou privilège de prêteur")
+        MAINLEVEE = "mainlevee", _("Mainlevée d'hypothèque")
+        PRET = "pret", _("Acte de prêt")
+        BAIL_EMPHYTEOTIQUE = "bail_emphyteotique", _("Bail emphytéotique")
+        SOCIETE = "societe", _("Constitution de société (GFA, GAEC, EARL)")
+        APPORT = "apport", _("Apport en société")
+        ATTESTATION = "attestation", _("Attestation de propriété")
+        PROCURATION = "procuration", _("Procuration")
         AUTRE = "autre", _("Autre")
+
+    class Statut(models.TextChoices):
+        """Où en est l'acte, du projet à son opposabilité aux tiers.
+
+        « Signé » et « publié » ne sont pas la même chose : entre les deux,
+        l'acte vaut entre les parties mais reste inopposable aux tiers.
+        """
+
+        PROJET = "projet", _("Projet")
+        PROMESSE = "promesse", _("Promesse ou compromis signé")
+        SIGNE = "signe", _("Signé")
+        PUBLIE = "publie", _("Publié au fichier immobilier")
+        CADUC = "caduc", _("Caduc")
+
+    #: Au-delà, l'échéance cesse d'être une information et devient une alerte.
+    JOURS_ALERTE = 90
 
     exploitation = models.ForeignKey(
         "exploitations.Exploitation", on_delete=models.CASCADE, related_name="actes_notaries"
@@ -248,11 +290,46 @@ class ActeNotarie(models.Model):
     type_acte = models.CharField(
         _("type d'acte"), max_length=20, choices=TypeActe.choices, default=TypeActe.AUTRE
     )
+    statut = models.CharField(
+        _("statut"), max_length=12, choices=Statut.choices, default=Statut.PROJET
+    )
     notaire = models.CharField(_("notaire / étude"), max_length=255, blank=True)
+    telephone_notaire = models.CharField(_("téléphone du notaire"), max_length=30, blank=True)
+    email_notaire = models.EmailField(_("email du notaire"), blank=True)
     parties = models.CharField(_("parties"), max_length=255, blank=True)
     reference = models.CharField(_("référence de l'acte"), max_length=100, blank=True)
+
+    # ── Les dates, dans l'ordre où elles arrivent ────────────────────
+    date_promesse = models.DateField(_("date de la promesse"), null=True, blank=True)
+    date_limite_realisation = models.DateField(
+        _("date limite de réitération"), null=True, blank=True,
+        help_text=_("Terme de la promesse : passé, l'avant-contrat est caduc."))
     date_signature = models.DateField(_("date de signature"), null=True, blank=True)
+    date_publication = models.DateField(
+        _("publication au fichier immobilier"), null=True, blank=True,
+        help_text=_("Tant qu'il n'est pas publié, l'acte reste inopposable aux tiers."))
+    date_peremption = models.DateField(
+        _("péremption de l'inscription"), null=True, blank=True,
+        help_text=_("Pour une hypothèque : date à laquelle l'inscription cesse d'avoir effet."))
+    mainlevee_obtenue = models.BooleanField(_("mainlevée obtenue"), default=False)
+
+    # ── Ce que l'acte porte ──────────────────────────────────────────
+    surface_ha = models.FloatField(_("surface (ha)"), null=True, blank=True)
+    references_cadastrales = models.TextField(_("références cadastrales"), blank=True)
     montant = models.FloatField(_("montant (€)"), null=True, blank=True)
+    frais_notaire = models.FloatField(_("frais de notaire (€)"), null=True, blank=True)
+    droits_enregistrement = models.FloatField(
+        _("droits d'enregistrement (€)"), null=True, blank=True)
+
+    # ── Ce qui conditionne l'usage du bien ───────────────────────────
+    #
+    # Une servitude de passage, un droit de préemption SAFER ou une condition
+    # suspensive non levée valent autant que le prix : ils décident de ce que
+    # l'exploitant peut faire de la parcelle, et quand.
+    conditions_suspensives = models.TextField(_("conditions suspensives"), blank=True)
+    charges_et_servitudes = models.TextField(_("charges et servitudes"), blank=True)
+    droit_preemption = models.TextField(_("droit de préemption"), blank=True)
+
     notes = models.TextField(_("notes"), blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -260,10 +337,125 @@ class ActeNotarie(models.Model):
         verbose_name = _("acte notarié")
         verbose_name_plural = _("actes notariés")
         ordering = ("-date_signature", "-created_at")
-        indexes = [models.Index(fields=["exploitation", "type_acte"])]
+        indexes = [
+            models.Index(fields=["exploitation", "type_acte"]),
+            models.Index(fields=["exploitation", "statut"]),
+        ]
 
     def __str__(self):
         return self.objet
+
+    # ── Ce qu'il reste à faire, et avant quand ───────────────────────
+
+    @property
+    def est_en_vigueur(self):
+        """L'acte produit ses effets : signé, publié ou non."""
+        return self.statut in (self.Statut.SIGNE, self.Statut.PUBLIE)
+
+    @property
+    def date_limite_action(self):
+        """La date qui ne se rattrape pas, selon la nature de l'acte.
+
+        Une promesse expire ; une inscription hypothécaire se périme. Les deux
+        se manquent de la même façon : en ne les regardant pas.
+        """
+        if self.statut == self.Statut.PROMESSE:
+            return self.date_limite_realisation
+        if self.type_acte == self.TypeActe.HYPOTHEQUE and not self.mainlevee_obtenue:
+            return self.date_peremption
+        return None
+
+    @property
+    def action_a_mener(self):
+        """Ce qu'il faut faire avant la date limite, en clair."""
+        if self.statut == self.Statut.PROMESSE:
+            return _("Réitérer l'acte devant notaire")
+        if self.type_acte == self.TypeActe.HYPOTHEQUE and not self.mainlevee_obtenue:
+            return _("Obtenir la mainlevée avant toute vente")
+        return None
+
+    @property
+    def jours_avant_action(self):
+        """Jours restants avant la date limite ; négatif si elle est passée."""
+        from django.utils import timezone
+
+        limite = self.date_limite_action
+        return (limite - timezone.localdate()).days if limite else None
+
+    @property
+    def action_imminente(self):
+        restant = self.jours_avant_action
+        return restant is not None and 0 <= restant <= self.JOURS_ALERTE
+
+    @property
+    def action_depassee(self):
+        restant = self.jours_avant_action
+        return restant is not None and restant < 0
+
+    @property
+    def publication_en_attente(self):
+        """Signé mais pas encore publié : opposable aux parties, pas aux tiers.
+
+        On ne le signale que pour les actes qui se publient — une procuration
+        ou un testament n'ont rien à faire au fichier immobilier.
+        """
+        A_PUBLIER = {
+            self.TypeActe.VENTE, self.TypeActe.ACHAT, self.TypeActe.ECHANGE,
+            self.TypeActe.DONATION, self.TypeActe.DONATION_PARTAGE,
+            self.TypeActe.PARTAGE, self.TypeActe.SUCCESSION,
+            self.TypeActe.DEMEMBREMENT, self.TypeActe.SERVITUDE,
+            self.TypeActe.HYPOTHEQUE, self.TypeActe.BAIL_EMPHYTEOTIQUE,
+            self.TypeActe.APPORT,
+        }
+        return (self.statut == self.Statut.SIGNE
+                and not self.date_publication
+                and self.type_acte in A_PUBLIER)
+
+    @property
+    def frais_et_droits(self):
+        """Frais de notaire et droits d'enregistrement réunis."""
+        retenu = [p for p in (self.frais_notaire, self.droits_enregistrement) if p]
+        return round(sum(retenu), 2) if retenu else None
+
+    @property
+    def cout_total(self):
+        """Prix, frais et droits : ce que l'opération a réellement coûté."""
+        parts = [self.montant, self.frais_notaire, self.droits_enregistrement]
+        retenu = [p for p in parts if p]
+        return round(sum(retenu), 2) if retenu else None
+
+
+class DocumentActe(models.Model):
+    """Une pièce du dossier : l'acte, son plan, l'état hypothécaire."""
+
+    class Type(models.TextChoices):
+        ACTE = "acte", _("Acte authentique")
+        PROMESSE = "promesse", _("Promesse ou compromis")
+        ATTESTATION = "attestation", _("Attestation de propriété")
+        TITRE = "titre", _("Titre de propriété")
+        PLAN = "plan", _("Plan ou extrait cadastral")
+        ETAT_HYPOTHECAIRE = "etat_hypo", _("État hypothécaire")
+        MAINLEVEE = "mainlevee", _("Mainlevée")
+        QUITTANCE = "quittance", _("Quittance")
+        PROCURATION = "procuration", _("Procuration")
+        AUTRE = "autre", _("Autre")
+
+    acte = models.ForeignKey("contrat.ActeNotarie", on_delete=models.CASCADE,
+                             related_name="documents")
+    fichier = models.FileField(_("fichier"), upload_to="actes/%Y/%m/")
+    nom = models.CharField(_("nom"), max_length=255, blank=True)
+    type_document = models.CharField(_("type"), max_length=15,
+                                     choices=Type.choices, default=Type.ACTE)
+    extraction = models.JSONField(_("extraction"), default=dict, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("document d'acte")
+        verbose_name_plural = _("documents d'acte")
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return self.nom or self.fichier.name
 
 
 class Assurance(models.Model):

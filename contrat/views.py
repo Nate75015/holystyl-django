@@ -253,37 +253,158 @@ def bail_delete(request, pk):
 @login_required
 def actes_notaries(request):
     exploitation = Exploitation.objects.filter(owner=request.user).first()
-    base = ActeNotarie.objects.filter(exploitation=exploitation) if exploitation else ActeNotarie.objects.none()
+    base = (ActeNotarie.objects.filter(exploitation=exploitation)
+            if exploitation else ActeNotarie.objects.none())
 
+    from .models import DocumentActe
+
+    liste = list(base.prefetch_related("documents"))
     total = base.aggregate(s=Sum("montant"))["s"] or 0
+    surface = base.aggregate(s=Sum("surface_ha"))["s"] or 0
 
     return render(request, "contrat/actes.html", {
-        "actes": base,
-        "kpi_count": base.count(),
+        "actes": liste,
+        # Une promesse qui expire ou une hypothèque à lever : les deux
+        # échéances qu'on ne rattrape pas une fois passées.
+        "actions_imminentes": [a for a in liste if a.action_imminente or a.action_depassee],
+        "publications_attendues": [a for a in liste if a.publication_en_attente],
+        "kpi_count": len(liste),
+        "kpi_en_vigueur": sum(1 for a in liste if a.est_en_vigueur),
+        "kpi_surface": round(surface, 2),
         "kpi_total": round(total),
         "types": ActeNotarie.TypeActe.choices,
+        "statuts": ActeNotarie.Statut.choices,
+        "types_document": DocumentActe.Type.choices,
         "page_title": _("Patrimoine"),
     })
 
 
+def _champs_acte(request):
+    """Les champs d'un acte lus du POST, ou None sans objet."""
+    objet = (request.POST.get("objet") or "").strip()
+    if not objet:
+        return None
+
+    type_acte = request.POST.get("type_acte") or ActeNotarie.TypeActe.AUTRE
+    statut = request.POST.get("statut") or ActeNotarie.Statut.PROJET
+    return {
+        "objet": objet[:255],
+        "type_acte": (type_acte if type_acte in ActeNotarie.TypeActe.values
+                      else ActeNotarie.TypeActe.AUTRE),
+        "statut": (statut if statut in ActeNotarie.Statut.values
+                   else ActeNotarie.Statut.PROJET),
+        "notaire": (request.POST.get("notaire") or "").strip()[:255],
+        "telephone_notaire": (request.POST.get("telephone_notaire") or "").strip()[:30],
+        "email_notaire": (request.POST.get("email_notaire") or "").strip(),
+        "parties": (request.POST.get("parties") or "").strip()[:255],
+        "reference": (request.POST.get("reference") or "").strip()[:100],
+        "date_promesse": _to_date(request.POST.get("date_promesse")),
+        "date_limite_realisation": _to_date(request.POST.get("date_limite_realisation")),
+        "date_signature": _to_date(request.POST.get("date_signature")),
+        "date_publication": _to_date(request.POST.get("date_publication")),
+        "date_peremption": _to_date(request.POST.get("date_peremption")),
+        "mainlevee_obtenue": request.POST.get("mainlevee_obtenue") == "on",
+        "surface_ha": _to_float(request.POST.get("surface_ha")),
+        "references_cadastrales": (request.POST.get("references_cadastrales") or "").strip(),
+        "montant": _to_float(request.POST.get("montant")),
+        "frais_notaire": _to_float(request.POST.get("frais_notaire")),
+        "droits_enregistrement": _to_float(request.POST.get("droits_enregistrement")),
+        "conditions_suspensives": (request.POST.get("conditions_suspensives") or "").strip(),
+        "charges_et_servitudes": (request.POST.get("charges_et_servitudes") or "").strip(),
+        "droit_preemption": (request.POST.get("droit_preemption") or "").strip(),
+        "notes": (request.POST.get("notes") or "").strip(),
+    }
+
+
 @login_required
 @require_POST
-def acte_create(request):
+def acte_create(request, pk=None):
     exploitation = Exploitation.objects.filter(owner=request.user).first()
-    objet = (request.POST.get("objet") or "").strip()
-    if exploitation and objet:
-        ActeNotarie.objects.create(
-            exploitation=exploitation,
-            objet=objet,
-            type_acte=request.POST.get("type_acte") or ActeNotarie.TypeActe.AUTRE,
-            notaire=(request.POST.get("notaire") or "").strip(),
-            parties=(request.POST.get("parties") or "").strip(),
-            reference=(request.POST.get("reference") or "").strip(),
-            date_signature=_to_date(request.POST.get("date_signature")),
-            montant=_to_float(request.POST.get("montant")),
-            notes=(request.POST.get("notes") or "").strip(),
-        )
+    if exploitation is None:
+        return redirect("contrat:actes")
+
+    champs = _champs_acte(request)
+    if champs is None:
+        messages.error(request, _("Un acte a besoin d'un objet."))
+        return redirect("contrat:actes")
+
+    acte = (get_object_or_404(ActeNotarie, pk=pk, exploitation=exploitation)
+            if pk else ActeNotarie(exploitation=exploitation))
+    for champ, valeur in champs.items():
+        setattr(acte, champ, valeur)
+    acte.save()
+
+    fichier = request.FILES.get("document")
+    if fichier:
+        _archiver_document_acte(acte, request, fichier)
     return redirect("contrat:actes")
+
+
+def _archiver_document_acte(acte, request, fichier):
+    """Range une pièce au dossier de l'acte, avec les mêmes garde-fous."""
+    import os
+
+    from .models import DocumentActe
+
+    if os.path.splitext(fichier.name)[1].lower() not in EXTENSIONS_DOC:
+        messages.error(request, _("Document non accepté : PDF ou photo seulement."))
+        return None
+    if fichier.size > TAILLE_MAX_DOC:
+        messages.error(request, _("Le document ne doit pas dépasser 10 Mo."))
+        return None
+
+    type_document = request.POST.get("type_document") or DocumentActe.Type.ACTE
+    return DocumentActe.objects.create(
+        acte=acte, fichier=fichier, nom=fichier.name[:255],
+        type_document=(type_document if type_document in DocumentActe.Type.values
+                       else DocumentActe.Type.AUTRE))
+
+
+@login_required
+@require_POST
+def acte_document(request, pk):
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    acte = get_object_or_404(ActeNotarie, pk=pk, exploitation=exploitation)
+    fichier = request.FILES.get("document")
+    if fichier:
+        _archiver_document_acte(acte, request, fichier)
+    return redirect("contrat:actes")
+
+
+@login_required
+@require_POST
+def acte_document_delete(request, pk):
+    from .models import DocumentActe
+
+    exploitation = Exploitation.objects.filter(owner=request.user).first()
+    get_object_or_404(DocumentActe, pk=pk, acte__exploitation=exploitation).delete()
+    return redirect("contrat:actes")
+
+
+@login_required
+@require_POST
+def acte_scanner(request):
+    """Lit un acte déposé et renvoie les champs, sans rien enregistrer."""
+    import os
+
+    from django.http import JsonResponse
+
+    from . import acte_ocr
+
+    fichier = request.FILES.get("document")
+    if not fichier:
+        return JsonResponse({"error": _("Aucun document reçu.")}, status=400)
+    if os.path.splitext(fichier.name)[1].lower() not in EXTENSIONS_DOC:
+        return JsonResponse({"error": _("Format non lisible : PDF ou photo.")}, status=400)
+    if fichier.size > TAILLE_MAX_DOC:
+        return JsonResponse({"error": _("Le document ne doit pas dépasser 10 Mo.")}, status=400)
+
+    champs = acte_ocr.lire(fichier.read(), fichier.name)
+    if champs is None:
+        return JsonResponse(
+            {"error": _("Lecture impossible : Agent IA non configuré, ou document illisible.")},
+            status=503)
+    return JsonResponse({"champs": champs})
 
 
 @login_required
