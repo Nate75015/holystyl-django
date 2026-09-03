@@ -1,0 +1,117 @@
+{% load i18n %}
+{% comment %}
+  Bandeau commun à toutes les pages de vitrine.
+
+  Il vivait dans la page d'accueil : partir vers les offres d'emploi changeait
+  donc de bandeau — autre marque, autre navigation, plus de bouton de
+  connexion. Le visiteur avait l'impression de quitter le site.
+
+  Les ancres sont absolues (`/#tarif` et non `#tarif`) pour fonctionner depuis
+  n'importe quelle page. Sur l'accueil, l'URL ne diffère que par le fragment :
+  le navigateur y voit une navigation interne, sans rechargement.
+{% endcomment %}
+<style>
+  :root {
+    --lp-max: 1180px;
+    --lp-gutter: clamp(20px, 5vw, 56px);
+    --lp-ease: cubic-bezier(.16, 1, .3, 1);
+  }
+  /* Même mesure que le bandeau : sans elle, le contenu se décale sous la marque. */
+  .lp-wrap { max-width: var(--lp-max); margin-inline: auto; padding-inline: var(--lp-gutter); }
+  .lp-header {
+    position: sticky; top: 0; z-index: 30;
+    background: color-mix(in srgb, var(--action) 92%, transparent);
+    color: var(--on-action);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    transition: box-shadow .25s var(--lp-ease), background .25s var(--lp-ease);
+  }
+  .lp-header.is-stuck { box-shadow: 0 1px 0 color-mix(in srgb, var(--on-action) 14%, transparent), 0 10px 30px -18px rgba(0,0,0,.55); }
+  .lp-header-inner {
+    max-width: var(--lp-max); margin-inline: auto;
+    padding: 13px var(--lp-gutter);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .lp-nav { display: none; align-items: center; gap: 26px; font-size: .875rem; font-weight: 500; }
+  .lp-nav a { color: color-mix(in srgb, var(--on-action) 78%, transparent); transition: color .18s; }
+  .lp-nav a:hover { color: var(--on-action); }
+  .lp-nav a[aria-current="page"] { color: var(--on-action); }
+  @media (min-width: 1100px) { .lp-nav { display: flex; } }
+  .lp-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 34px; padding-inline: 18px; border-radius: 999px;
+    font-size: .875rem; font-weight: 500;
+    border: 1px solid color-mix(in srgb, var(--on-action) 38%, transparent);
+    color: color-mix(in srgb, var(--on-action) 92%, transparent);
+    transition: background .18s, transform .18s var(--lp-ease);
+  }
+  .lp-pill:hover { background: color-mix(in srgb, var(--on-action) 12%, transparent); transform: translateY(-1px); }
+  .lp-pill-solid { background: var(--surface); color: var(--action); border-color: transparent; }
+  .lp-pill-solid:hover { background: var(--surface); opacity: .92; }
+  .lp-hide-sm { display: none; }
+  @media (min-width: 640px) { .lp-hide-sm { display: inline-flex; } }
+
+  /* Sous le seuil, la barre disparaissait sans rien pour la remplacer :
+     cinq destinations devenaient inatteignables. */
+  .lp-burger {
+    display: grid; place-items: center; height: 32px; width: 32px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--on-action) 38%, transparent);
+    color: color-mix(in srgb, var(--on-action) 92%, transparent);
+    transition: background .18s;
+  }
+  .lp-burger:hover { background: color-mix(in srgb, var(--on-action) 12%, transparent); }
+  @media (min-width: 1100px) { .lp-burger { display: none; } }
+  .lp-menu {
+    position: absolute; right: var(--lp-gutter); top: 60px; z-index: 40;
+    min-width: 232px; padding: 7px; border-radius: 15px;
+    background: var(--surface); border: 0.5px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,.06), 0 26px 52px -28px rgba(0,0,0,.5);
+  }
+  .lp-menu a {
+    display: block; padding: 9px 13px; border-radius: 10px;
+    font-size: .875rem; color: var(--text); transition: background .15s;
+  }
+  .lp-menu a:hover { background: var(--surface-alt); }
+  .lp-menu a[aria-current="page"] { color: var(--action); font-weight: 500; }
+</style>
+
+<header class="lp-header" style="position: sticky"
+        x-data="{ colle: false, menu: false }"
+        @scroll.window="colle = window.scrollY > 8"
+        @keydown.escape.window="menu = false"
+        :class="colle && 'is-stuck'">
+  <div class="lp-header-inner">
+    <a href="{% url 'public:home' %}" class="flex items-center gap-2">
+      {% include "partials/brand_mark.html" with size=30 icon=17 %}
+      <span class="text-lg font-medium tracking-tight">Isidor</span>
+    </a>
+    <nav class="lp-nav">
+      <a href="{% url 'public:home' %}#domaines">{% trans "Domaines" %}</a>
+      <a href="{% url 'public:home' %}#tarif">{% trans "Tarif" %}</a>
+      <a href="{% url 'public:home' %}#faq">FAQ</a>
+      <a href="{% url 'equipe:emplois' %}"{% if page_vitrine == "emplois" %} aria-current="page"{% endif %}>{% trans "Offres d'emploi" %}</a>
+      <a href="{% url 'public:exploitants' %}"{% if page_vitrine == "exploitants" %} aria-current="page"{% endif %}>{% trans "Exploitants agricoles" %}</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      {% include "partials/lang_switcher.html" %}
+      {% include "partials/theme_toggle.html" %}
+      {% trans "Menu" as libelle_menu %}
+      <button type="button" class="lp-burger" @click="menu = !menu"
+              :aria-expanded="menu ? 'true' : 'false'" aria-label="{{ libelle_menu|escapejs }}">
+        <span class="material-icons-round text-[18px]" x-text="menu ? 'close' : 'menu'">menu</span>
+      </button>
+      <a href="{% url 'accounts:login' %}" class="lp-pill lp-hide-sm">{% trans "Connexion" %}</a>
+      <a href="{% url 'accounts:register' %}" class="lp-pill lp-pill-solid">{% trans "S'inscrire" %}</a>
+    </div>
+  </div>
+
+  <div x-show="menu" x-cloak x-transition.opacity @click.outside="menu = false" class="lp-menu">
+    <a href="{% url 'public:home' %}#domaines" @click="menu = false">{% trans "Domaines" %}</a>
+    <a href="{% url 'public:home' %}#tarif" @click="menu = false">{% trans "Tarif" %}</a>
+    <a href="{% url 'public:home' %}#faq" @click="menu = false">FAQ</a>
+    <a href="{% url 'equipe:emplois' %}"{% if page_vitrine == "emplois" %} aria-current="page"{% endif %}>{% trans "Offres d'emploi" %}</a>
+    <a href="{% url 'public:exploitants' %}"{% if page_vitrine == "exploitants" %} aria-current="page"{% endif %}>{% trans "Exploitants agricoles" %}</a>
+    <a href="{% url 'accounts:login' %}">{% trans "Connexion" %}</a>
+  </div>
+</header>

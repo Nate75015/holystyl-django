@@ -396,8 +396,8 @@ def test_la_page_publique_est_ouverte_a_tous(client, offre_publiee):
     assert detail.status_code == 200
     corps = detail.content.decode()
     assert "Ferme des Coteaux" in corps and "Postuler" in corps
-    # L'entête public, pas l'ossature de l'application.
-    assert "Emplois à la ferme" in corps and "Tableau de bord" not in corps
+    # Le bandeau de vitrine, pas l'ossature de l'application.
+    assert 'class="lp-header"' in corps and "Tableau de bord" not in corps
     # Un {# … #} à cheval sur deux lignes s'afficherait en clair.
     assert "{#" not in corps and "{{" not in corps
 
@@ -523,7 +523,7 @@ def test_la_vitrine_reste_une_vitrine_meme_connecte(client, ferme_rh, offre_publ
 
     for url in ("/emplois/", f"/emplois/{offre_publiee.slug}/"):
         corps = client.get(url).content.decode()
-        assert "Emplois à la ferme" in corps           # l'entête vitrine…
+        assert 'class="lp-header"' in corps            # le bandeau de vitrine…
         assert "Tableau de bord" not in corps          # …et pas la barre latérale
         assert "Contrats de travail" not in corps
 
@@ -802,3 +802,29 @@ def test_la_page_dit_qu_elle_ne_calcule_pas(client, ferme_rh):
     assert "il ne calcule pas la paie" in html
     assert "Ajouter une fiche de paie" in html
     assert "{#" not in html and "{{" not in html
+
+
+@pytest.mark.django_db
+def test_le_bandeau_ne_change_pas_entre_l_accueil_et_les_emplois(client, offre_publiee):
+    """Passer aux offres ne doit pas donner l'impression de quitter le site.
+
+    Les deux pages partagent le même partiel : même marque, même navigation,
+    mêmes boutons d'accès. Seule l'entrée courante est signalée.
+    """
+    import re
+
+    def bandeau(url):
+        corps = client.get(url).content.decode()
+        m = re.search(r'<header class="lp-header".*?</header>', corps, re.S)
+        assert m, f"pas de bandeau de vitrine sur {url}"
+        return m.group(0)
+
+    accueil, emplois = bandeau("/"), bandeau("/emplois/")
+    for entree in ("Domaines", "Tarif", "FAQ", "Offres d'emploi", "Connexion", "S'inscrire"):
+        assert entree in accueil and entree in emplois, entree
+    # Les ancres sont absolues : elles fonctionnent depuis les deux pages.
+    for ancre in ("/#domaines", "/#tarif", "/#faq"):
+        assert ancre in accueil and ancre in emplois, ancre
+    # Seule différence attendue : l'entrée courante.
+    assert 'aria-current="page"' in emplois and 'aria-current="page"' not in accueil
+    assert emplois.replace(' aria-current="page"', "") == accueil

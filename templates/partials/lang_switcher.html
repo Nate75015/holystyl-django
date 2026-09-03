@@ -27,8 +27,8 @@
   <button type="button" @click="open = !open" title="{% trans 'Langue' %}"
           class="flex h-[28px] items-center gap-1 rounded-[6px] px-2 transition-colors hover:bg-[color:var(--surface-alt)]">
     <span class="fi" style="width:16px;height:11px;border-radius:2px;border:0.5px solid var(--border)" :class="'fi-' + (langs.find(l => l.c === cur) || langs[0]).flag"></span>
-    <span class="text-[13px] font-medium uppercase" style="color: var(--text-secondary)" x-text="cur"></span>
-    <span class="material-icons-round text-[13px]" style="color: var(--text-muted)">expand_more</span>
+    <span class="text-[13px] font-medium uppercase" style="color: inherit; opacity: .8" x-text="cur"></span>
+    <span class="material-icons-round text-[13px]" style="color: inherit; opacity: .6">expand_more</span>
   </button>
   <div x-show="open" x-cloak x-transition.opacity
        class="hs-popover absolute right-0 mt-2 w-44 p-1.5" style="color: var(--text)">

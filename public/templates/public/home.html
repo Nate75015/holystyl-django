@@ -2,494 +2,937 @@
 {% load i18n %}
 {% block title %}Isidor — {% trans "Irrigation de précision pour agriculteurs" %}{% endblock %}
 
+{% comment %}
+  Page vitrine. Elle a sa propre feuille de style, volontairement : le CSS de
+  l'application est compilé par Tailwind et ne contient que les classes déjà
+  rencontrées à la dernière génération. Une page de marketing a besoin d'une
+  typographie fluide, de grilles asymétriques et d'animations qu'aucune classe
+  utilitaire ne couvre — les écrire ici évite d'attendre un build, et n'ajoute
+  rien au poids de l'application.
+
+  Tout est bâti sur les jetons de couleur existants (--action, --surface,
+  --text…), donc le mode clair et le mode nuit suivent sans code en double.
+{% endcomment %}
+
 {% block auth_header %}
-<header class="sticky top-0 z-30 w-full" style="background: var(--action); color: var(--on-action)">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
-    <a href="{% url 'public:home' %}" class="flex items-center gap-2">
-      {% include "partials/brand_mark.html" with size=30 icon=17 %}
-      <span class="text-lg font-medium tracking-tight">Isidor</span>
-    </a>
-    <nav class="hidden items-center gap-8 text-sm font-medium text-white/80 md:flex">
-      <a href="#domaines" class="transition hover:text-white">{% trans "Domaines" %}</a>
-      <a href="#tarif" class="transition hover:text-white">{% trans "Tarif" %}</a>
-      <a href="#faq" class="transition hover:text-white">FAQ</a>
-    </nav>
-    <div class="flex items-center gap-2">
-      {% include "partials/lang_switcher.html" %}
-      <a href="{% url 'accounts:login' %}"
-         class="rounded-full border border-white/40 px-5 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10">
-        {% trans "Connexion" %}
-      </a>
-      <a href="{% url 'accounts:register' %}"
-         class="rounded-full px-5 py-1.5 text-sm font-medium transition hover:opacity-90" style="background: var(--surface); color: var(--action)">
-        {% trans "S'inscrire" %}
-      </a>
-    </div>
-  </div>
-</header>
+<style>
+  /* ── Réglages de la page ────────────────────────────────────────── */
+  /* Sur :root et non sur .lp — l'entête vit hors de ce conteneur, et une
+     variable déclarée sur .lp n'y serait pas résolue : le bandeau perdrait
+     sa largeur maximale et sa gouttière. */
+  :root {
+    --lp-section: clamp(72px, 9vw, 132px);
+    --lp-radius: 18px;
+  }
+  .lp-section { padding-block: var(--lp-section); }
+  .lp-band { border-top: 0.5px solid var(--border); }
+
+  /* ── Échelle typographique fluide ───────────────────────────────── */
+  .lp-display {
+    font-size: clamp(2.5rem, 1.15rem + 5.6vw, 5rem);
+    line-height: .98; letter-spacing: -.035em; font-weight: 500;
+    text-wrap: balance;
+  }
+  .lp-h2 {
+    font-size: clamp(1.75rem, 1.05rem + 2.6vw, 3rem);
+    line-height: 1.06; letter-spacing: -.028em; font-weight: 500;
+    text-wrap: balance;
+  }
+  .lp-h3 { font-size: 1.0625rem; line-height: 1.3; letter-spacing: -.012em; font-weight: 500; }
+  .lp-lead {
+    font-size: clamp(1.0625rem, .97rem + .5vw, 1.375rem);
+    line-height: 1.5; color: var(--text-secondary); text-wrap: pretty;
+  }
+  .lp-eyebrow {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: .75rem; font-weight: 500; letter-spacing: .02em;
+    padding: 6px 13px; border-radius: 999px;
+    background: var(--surface-alt); color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+  }
+  .lp-eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent);
+  }
+  .lp-kicker {
+    font-size: .6875rem; font-weight: 600; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+
+  /* ── Boutons ────────────────────────────────────────────────────── */
+  .lp-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 46px; padding-inline: 24px; border-radius: 999px;
+    font-size: .9375rem; font-weight: 500; white-space: nowrap;
+    transition: transform .18s var(--lp-ease), box-shadow .18s var(--lp-ease), opacity .18s;
+  }
+  .lp-btn:active { transform: translateY(1px); }
+  .lp-btn-primary {
+    background: var(--action); color: var(--on-action);
+    box-shadow: 0 1px 2px rgba(0,0,0,.16), 0 8px 24px -12px color-mix(in srgb, var(--action) 70%, transparent);
+  }
+  .lp-btn-primary:hover { background: var(--action-hover); transform: translateY(-1px); }
+  .lp-btn-ghost { border: 0.5px solid var(--border-strong); color: var(--text); background: var(--surface); }
+  .lp-btn-ghost:hover { background: var(--surface-alt); transform: translateY(-1px); }
+  .lp-btn-quiet { color: var(--text-secondary); padding-inline: 10px; }
+  .lp-btn-quiet:hover { color: var(--text); }
+
+  /* ── Apparition au défilement ───────────────────────────────────── */
+  /* Le masquage est conditionné à `.lp-js`, posée par un script en tête de
+     page. Sans JavaScript — ou si le script échoue — rien n'est masqué : une
+     page de vente ne peut pas dépendre d'une animation pour être lisible. */
+  .lp-js .lp-reveal { opacity: 0; transform: translateY(20px); }
+  .lp-js .lp-reveal.is-in {
+    opacity: 1; transform: none;
+    transition: opacity .75s var(--lp-ease), transform .75s var(--lp-ease);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lp-js .lp-reveal, .lp-js .lp-reveal.is-in { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto !important; }
+  }
+
+  /* ── Héros ──────────────────────────────────────────────────────── */
+  .lp-hero { position: relative; overflow: clip; background: var(--surface); }
+  .lp-hero::before {
+    content: ""; position: absolute; inset: -30% -10% auto -10%; height: 620px;
+    background:
+      radial-gradient(46% 60% at 22% 0%, color-mix(in srgb, var(--action) 20%, transparent), transparent 68%),
+      radial-gradient(40% 52% at 88% 12%, color-mix(in srgb, var(--success) 15%, transparent), transparent 66%);
+    pointer-events: none;
+  }
+  .lp-hero-grid {
+    position: relative; display: grid; gap: clamp(40px, 6vw, 72px);
+    align-items: center;
+    padding-block: clamp(56px, 8vw, 104px) clamp(64px, 9vw, 112px);
+  }
+  @media (min-width: 1000px) { .lp-hero-grid { grid-template-columns: 1.02fr .98fr; } }
+  .lp-trust { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: .875rem; color: var(--text-muted); }
+  .lp-trust span { display: inline-flex; align-items: center; gap: 7px; }
+
+  /* ── Maquette de l'interface ────────────────────────────────────── */
+  .lp-shot {
+    position: relative; border-radius: var(--lp-radius); overflow: hidden;
+    background: var(--page); border: 0.5px solid var(--border);
+    box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 34px 70px -34px rgba(0,0,0,.42);
+    transform: perspective(1600px) rotateY(-3.5deg) rotateX(1.2deg);
+    transition: transform .6s var(--lp-ease);
+  }
+  .lp-shot:hover { transform: perspective(1600px) rotateY(-1.2deg) rotateX(.4deg) translateY(-4px); }
+  @media (max-width: 999px) { .lp-shot { transform: none; } .lp-shot:hover { transform: translateY(-3px); } }
+  .lp-shot-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 11px 14px; border-bottom: 0.5px solid var(--border); background: var(--surface);
+  }
+  .lp-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border-strong); }
+  .lp-shot-title { margin-left: 6px; font-size: .75rem; color: var(--text-muted); }
+  .lp-shot-body { display: grid; grid-template-columns: 128px 1fr; min-height: 330px; }
+  @media (max-width: 520px) { .lp-shot-body { grid-template-columns: 1fr; } .lp-shot-rail { display: none; } }
+  .lp-shot-rail { padding: 14px 10px; border-right: 0.5px solid var(--border); background: var(--surface); }
+  .lp-rail-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 9px; border-radius: 8px; font-size: .75rem; color: var(--text-secondary);
+  }
+  .lp-rail-item.is-on { background: var(--action-subtle); color: var(--action-text); font-weight: 500; }
+  .lp-rail-icon { font-size: 15px; opacity: .75; }
+  .lp-shot-main { padding: 16px; display: grid; gap: 12px; align-content: start; }
+  .lp-shot-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .lp-tile {
+    border-radius: 11px; padding: 12px; background: var(--surface);
+    border: 0.5px solid var(--border);
+  }
+  .lp-tile-label { font-size: .625rem; color: var(--text-muted); }
+  .lp-tile-value { margin-top: 3px; font-size: 1.375rem; font-weight: 500; letter-spacing: -.02em; }
+  .lp-tile-value small { font-size: .75rem; font-weight: 400; color: var(--text-secondary); }
+  .lp-chart {
+    border-radius: 11px; padding: 13px; background: var(--surface);
+    border: 0.5px solid var(--border);
+  }
+  .lp-chart svg { display: block; width: 100%; height: 74px; }
+  .lp-alert {
+    display: flex; align-items: center; gap: 9px;
+    border-radius: 11px; padding: 10px 12px; font-size: .75rem;
+    background: color-mix(in srgb, var(--warning) 10%, transparent);
+    border: 0.5px solid color-mix(in srgb, var(--warning) 38%, transparent);
+    color: var(--warning);
+  }
+  .lp-float {
+    position: absolute; right: -14px; bottom: -18px;
+    display: flex; align-items: center; gap: 9px;
+    padding: 11px 15px; border-radius: 14px;
+    background: var(--surface); border: 0.5px solid var(--border);
+    box-shadow: 0 2px 6px rgba(0,0,0,.07), 0 22px 44px -24px rgba(0,0,0,.45);
+    font-size: .8125rem; font-weight: 500;
+  }
+  .lp-float-dot {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--action); color: var(--on-action); font-size: 15px;
+  }
+  @media (max-width: 640px) { .lp-float { display: none; } }
+</style>
+<script>document.documentElement.classList.add('lp-js');</script>
+
+{% include "partials/entete_vitrine.html" %}
 {% endblock %}
 
 {% block auth_main_class %}{% endblock %}
 
 {% block auth_hero %}
-<section class="border-b" style="border-color: var(--border); background: var(--surface)">
-  <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-24">
+<div class="lp">
 
-    {# Texte (gauche, aligné à gauche) #}
-    <div class="text-left">
-      <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium" style="background: var(--surface-alt); color: var(--text-secondary)">
-        <span class="h-1.5 w-1.5 rounded-full" style="background: var(--success)"></span>{% trans "Assistant agricole français" %}
-      </span>
-      <h1 class="mt-5 text-[32px] font-medium leading-[1.1] tracking-tight sm:text-[40px] lg:text-[48px]">
+{% comment %} ── Héros : la promesse, puis l'interface qui la tient ── {% endcomment %}
+<section class="lp-hero">
+  <div class="lp-wrap lp-hero-grid">
+    <div>
+      <span class="lp-eyebrow">{% trans "Assistant agricole français" %}</span>
+      <h1 class="lp-display" style="margin-top: 22px">
         {% trans "Votre exploitation, sans la garder en tête." %}
       </h1>
-      <p class="mt-5 max-w-xl text-lg leading-relaxed" style="color: var(--text-secondary)">
+      <p class="lp-lead" style="margin-top: 24px; max-width: 34ch">
         {% trans "L'assistant qui retient, calcule et prouve à votre place." %}
       </p>
-      <p class="mt-3 text-base font-medium" style="color: var(--action)">
-        {% trans "59,90 € HT/mois par exploitation, utilisateurs illimités." %}
+      <p style="margin-top: 14px; font-weight: 500; color: var(--action)">
+        {% trans "19,90 € HT/mois + 0,70 € par hectare, utilisateurs illimités." %}
       </p>
 
-      <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a href="{% url 'accounts:register' %}" class="hs-btn-primary">
-          {% trans "Commencer maintenant" %}
-        </a>
-        <a href="#domaines" class="hs-btn-outline">
-          {% trans "Voir ce qu'il fait" %}
-        </a>
-        <a href="#telecharger"
-           class="inline-flex items-center gap-1.5 px-2 py-2 text-sm font-medium transition hover:opacity-80" style="color: var(--text-secondary)">
+      <div class="flex flex-wrap items-center gap-3" style="margin-top: 34px">
+        <a href="{% url 'accounts:register' %}" class="lp-btn lp-btn-primary">{% trans "Commencer maintenant" %}</a>
+        <a href="#domaines" class="lp-btn lp-btn-ghost">{% trans "Voir ce qu'il fait" %}</a>
+        {% comment %}
+          Le bouton n'existe que si le navigateur propose vraiment
+          l'installation : il pointait jusqu'ici sur une ancre inexistante.
+        {% endcomment %}
+        <button type="button" x-data="installable()" x-show="possible" x-cloak @click="installer()"
+                class="lp-btn lp-btn-quiet">
           <span class="material-icons-round text-[18px]">download</span>{% trans "Télécharger l'app" %}
-        </a>
+        </button>
       </div>
 
-      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm" style="color: var(--text-muted)">
-        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Sans engagement" %}</span>
-        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Données hébergées en France" %}</span>
-        <span class="inline-flex items-center gap-1.5"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Prise en main guidée incluse" %}</span>
+      <div class="lp-trust" style="margin-top: 34px">
+        <span><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Sans engagement" %}</span>
+        <span><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Données hébergées en France" %}</span>
+        <span><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Prise en main guidée incluse" %}</span>
       </div>
     </div>
 
-    {# Image (droite) — exploitation agricole au coucher du soleil #}
-    <div class="relative">
-      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80"
-           alt="{% trans 'Exploitation agricole au coucher du soleil' %}"
-           loading="lazy"
-           class="h-64 w-full rounded-2xl object-cover sm:h-80 lg:h-[30rem]" style="border: 0.5px solid var(--border)">
+    {% comment %}
+      Une maquette dessinée en CSS plutôt qu'une photo d'illustration : elle
+      montre le produit, suit le thème clair ou sombre, et ne coûte aucune
+      requête réseau.
+    {% endcomment %}
+    <div style="position: relative">
+      <div class="lp-shot" aria-hidden="true">
+        <div class="lp-shot-bar">
+          <span class="lp-dot"></span><span class="lp-dot"></span><span class="lp-dot"></span>
+          <span class="lp-shot-title">{% trans "Tableau de bord" %}</span>
+        </div>
+        <div class="lp-shot-body">
+          <div class="lp-shot-rail">
+            <div class="lp-rail-item is-on"><span class="material-icons-round lp-rail-icon">dashboard</span>{% trans "Tableau de bord" %}</div>
+            <div class="lp-rail-item"><span class="material-icons-round lp-rail-icon">water_drop</span>{% trans "Irrigation" %}</div>
+            <div class="lp-rail-item"><span class="material-icons-round lp-rail-icon">grass</span>{% trans "Cultures" %}</div>
+            <div class="lp-rail-item"><span class="material-icons-round lp-rail-icon">payments</span>{% trans "Finance" %}</div>
+            <div class="lp-rail-item"><span class="material-icons-round lp-rail-icon">groups</span>{% trans "Personnel" %}</div>
+          </div>
+          <div class="lp-shot-main">
+            <div class="lp-shot-tiles">
+              <div class="lp-tile">
+                <p class="lp-tile-label">{% trans "Parcelles" %}</p>
+                <p class="lp-tile-value">22</p>
+              </div>
+              <div class="lp-tile">
+                <p class="lp-tile-label">{% trans "Surface" %}</p>
+                <p class="lp-tile-value">14,85 <small>ha</small></p>
+              </div>
+              <div class="lp-tile">
+                <p class="lp-tile-label">{% trans "Quota d'eau" %}</p>
+                <p class="lp-tile-value" style="color: var(--action)">62 <small>%</small></p>
+              </div>
+            </div>
+            <div class="lp-chart">
+              <p class="lp-tile-label" style="margin-bottom: 6px">{% trans "Consommation d'eau" %}</p>
+              <svg viewBox="0 0 300 74" preserveAspectRatio="none" role="presentation">
+                <defs>
+                  <linearGradient id="lpFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--action)" stop-opacity=".26"/>
+                    <stop offset="100%" stop-color="var(--action)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0 58 L30 52 L60 55 L90 40 L120 44 L150 28 L180 33 L210 20 L240 26 L270 13 L300 17 L300 74 L0 74 Z" fill="url(#lpFill)"/>
+                <path d="M0 58 L30 52 L60 55 L90 40 L120 44 L150 28 L180 33 L210 20 L240 26 L270 13 L300 17"
+                      fill="none" stroke="var(--action)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="lp-alert">
+              <span class="material-icons-round text-[15px]">ac_unit</span>{% trans "Risque de gel cette nuit — parcelle des Coteaux" %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lp-float">
+        <span class="lp-float-dot"><span class="material-icons-round text-[15px]">graphic_eq</span></span>
+        {% trans "Agent IA" %}
+      </div>
     </div>
   </div>
 </section>
 
-{# Section : la charge qui s'empile #}
-<section id="domaines" style="background: var(--page)">
-  <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
-        {% trans "Le métier n'a pas changé." %}
-      </h2>
-      <p class="mt-2 text-lg" style="color: var(--text-secondary)">
-        {% trans "Sa charge administrative et mentale, si." %}
-      </p>
+<style>
+  /* ── Chiffres ───────────────────────────────────────────────────── */
+  .lp-stats { background: var(--surface-alt); }
+  .lp-stats-grid {
+    display: grid; gap: clamp(28px, 4vw, 48px);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 900px) { .lp-stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .lp-stat-n {
+    font-size: clamp(2.75rem, 1.6rem + 4vw, 4.25rem);
+    line-height: .92; letter-spacing: -.045em; font-weight: 500;
+    color: var(--action); font-variant-numeric: tabular-nums;
+  }
+  .lp-stat-t { margin-top: 14px; font-size: .9375rem; line-height: 1.4; max-width: 22ch; }
+  .lp-stat-s { margin-top: 10px; font-size: .75rem; color: var(--text-muted); }
+
+  /* ── Colonnes éditoriales ───────────────────────────────────────── */
+  .lp-cols3 { display: grid; gap: clamp(32px, 4vw, 56px); }
+  @media (min-width: 820px) { .lp-cols3 { grid-template-columns: repeat(3, 1fr); } }
+  .lp-col { border-top: 1.5px solid var(--text); padding-top: 20px; }
+  .lp-col-list { margin-top: 18px; display: grid; gap: 11px; font-size: .9375rem; color: var(--text-secondary); }
+  .lp-col-list li { display: flex; gap: 11px; align-items: baseline; }
+  .lp-col-list li::before {
+    content: ""; flex: none; width: 14px; height: 1px; margin-top: 9px;
+    background: var(--border-strong);
+  }
+
+  /* ── Citation ───────────────────────────────────────────────────── */
+  .lp-quote { background: var(--surface); }
+  .lp-quote-inner { max-width: 30ch; }
+  .lp-quote-body { max-width: 60ch; }
+  .lp-quote-grid { display: grid; gap: clamp(28px, 4vw, 64px); align-items: start; }
+  @media (min-width: 900px) { .lp-quote-grid { grid-template-columns: .8fr 1.2fr; } }
+  .lp-quote-p {
+    font-size: clamp(1.0625rem, .98rem + .45vw, 1.3125rem);
+    line-height: 1.55; color: var(--text-secondary); text-wrap: pretty;
+  }
+
+  /* ── Deux colonnes : problèmes / réponses ───────────────────────── */
+  .lp-split { display: grid; gap: clamp(40px, 5vw, 72px); align-items: center; }
+  @media (min-width: 1000px) { .lp-split { grid-template-columns: .92fr 1.08fr; } }
+  .lp-photo {
+    border-radius: var(--lp-radius); overflow: hidden; position: relative;
+    border: 0.5px solid var(--border); aspect-ratio: 4 / 5;
+    box-shadow: 0 26px 56px -30px rgba(0,0,0,.45);
+  }
+  .lp-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lp-photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--action) 40%, transparent));
+  }
+  @media (max-width: 999px) { .lp-photo { aspect-ratio: 16 / 10; } }
+  .lp-answers { margin-top: 32px; display: grid; gap: 9px; }
+  /* Fond `--surface` et non `--surface-alt` : la section porte déjà
+     `--surface-alt`, les fiches y seraient invisibles. */
+  .lp-answer {
+    padding: 15px 18px; border-radius: 13px; line-height: 1.5;
+    background: var(--surface); border: 0.5px solid var(--border);
+    transition: border-color .2s, transform .2s var(--lp-ease), box-shadow .2s;
+  }
+  .lp-answer:hover { box-shadow: 0 10px 24px -18px rgba(0,0,0,.45); }
+  .lp-answer:hover { border-color: color-mix(in srgb, var(--action) 45%, transparent); transform: translateX(3px); }
+  .lp-answer-q { font-weight: 500; }
+  .lp-answer-a { color: var(--text-secondary); font-size: .9375rem; }
+  .lp-answer-arrow { position: relative; top: 3px; }
+  .lp-answer-arrow { color: var(--action); font-size: 16px; }
+
+  /* ── Grille bento des domaines ──────────────────────────────────── */
+  .lp-bento { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 720px) { .lp-bento { grid-template-columns: repeat(6, 1fr); } }
+  .lp-cell {
+    grid-column: span 1; border-radius: 15px; padding: 20px;
+    background: var(--surface); border: 0.5px solid var(--border);
+    transition: transform .22s var(--lp-ease), box-shadow .22s var(--lp-ease), border-color .22s;
+  }
+  .lp-cell:hover {
+    transform: translateY(-3px); border-color: var(--border-strong);
+    box-shadow: 0 14px 30px -20px rgba(0,0,0,.4);
+  }
+  @media (min-width: 720px) {
+    .lp-cell { grid-column: span 2; }
+    .lp-cell-lg { grid-column: span 3; padding: 26px; }
+  }
+  .lp-cell-icon {
+    display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
+    background: var(--action-subtle); color: var(--action-text); margin-bottom: 14px;
+  }
+  .lp-cell-lg .lp-cell-icon { width: 40px; height: 40px; }
+  .lp-cell p { margin-top: 5px; font-size: .875rem; color: var(--text-secondary); }
+  .lp-cell-lg .lp-h3 { font-size: 1.1875rem; }
+
+  /* ── Tarif ──────────────────────────────────────────────────────── */
+  .lp-price {
+    max-width: 760px; margin-inline: auto; border-radius: 22px; overflow: hidden;
+    border: 0.5px solid var(--border); background: var(--surface);
+    box-shadow: 0 2px 8px rgba(0,0,0,.05), 0 40px 80px -48px rgba(0,0,0,.5);
+  }
+  .lp-price-head {
+    padding: clamp(30px, 4vw, 46px) clamp(24px, 4vw, 46px);
+    text-align: center; border-bottom: 0.5px solid var(--border);
+    background:
+      radial-gradient(70% 120% at 50% 0%, color-mix(in srgb, var(--action) 12%, transparent), transparent 70%),
+      var(--surface);
+  }
+  .lp-price-n {
+    font-size: clamp(3rem, 2rem + 4vw, 4.5rem); line-height: 1;
+    letter-spacing: -.045em; font-weight: 500; color: var(--action);
+  }
+  /* Un tarif à l'hectare ne se lit pas : il se calcule. Le curseur donne le
+     total réel, seul chiffre qui intéresse l'exploitant. */
+  .lp-calc {
+    margin: 0 clamp(24px, 3.5vw, 38px); padding: 20px;
+    border-radius: 14px; text-align: left;
+    background: var(--surface-alt); border: 0.5px solid var(--border);
+  }
+  .lp-calc-row { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+  .lp-calc-label { font-size: .8125rem; color: var(--text-secondary); }
+  .lp-calc-ha { font-size: .9375rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .lp-calc input[type="range"] {
+    width: 100%; margin-top: 14px; accent-color: var(--action); cursor: pointer;
+  }
+  .lp-calc-out {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; margin-top: 16px; padding-top: 14px;
+    border-top: 0.5px solid var(--border);
+  }
+  .lp-calc-total {
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2rem); font-weight: 500;
+    letter-spacing: -.03em; color: var(--action); font-variant-numeric: tabular-nums;
+  }
+  .lp-calc-detail { font-size: .75rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+  .lp-price-list {
+    display: grid; gap: 12px 28px; padding: clamp(24px, 3.5vw, 38px);
+    font-size: .9375rem; color: var(--text-secondary);
+  }
+  @media (min-width: 640px) { .lp-price-list { grid-template-columns: repeat(2, 1fr); } }
+  .lp-price-list li { display: flex; align-items: center; gap: 9px; }
+  .lp-price-foot { padding: 0 clamp(24px, 3.5vw, 38px) clamp(28px, 3.5vw, 38px); text-align: center; }
+
+  /* ── Guide gratuit ──────────────────────────────────────────────── */
+  .lp-magnet {
+    border-radius: 22px; padding: clamp(30px, 4.5vw, 56px);
+    background:
+      radial-gradient(80% 140% at 15% 0%, color-mix(in srgb, var(--action) 13%, transparent), transparent 62%),
+      var(--surface);
+    border: 0.5px solid var(--border);
+  }
+  .lp-magnet-grid { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); margin-top: 30px; }
+  @media (min-width: 720px) { .lp-magnet-grid { grid-template-columns: repeat(4, 1fr); } }
+  .lp-magnet-cell {
+    padding: 16px; border-radius: 13px; background: var(--surface-alt);
+    border: 0.5px solid var(--border);
+  }
+  .lp-magnet-cell .material-icons-round { color: var(--action); font-size: 21px; }
+  .lp-magnet-cell p { margin-top: 8px; font-size: .8125rem; font-weight: 500; line-height: 1.35; }
+  .lp-form { display: flex; gap: 9px; max-width: 460px; margin: 30px auto 0; }
+  .lp-form input {
+    flex: 1; height: 46px; padding-inline: 16px; border-radius: 999px;
+    border: 0.5px solid var(--border-strong); background: var(--surface); color: var(--text);
+    font-size: .9375rem;
+  }
+  .lp-form input:focus { outline: 2px solid color-mix(in srgb, var(--action) 55%, transparent); outline-offset: 1px; }
+
+  /* ── FAQ ────────────────────────────────────────────────────────── */
+  .lp-faq { display: grid; gap: 9px; max-width: 780px; margin-inline: auto; }
+  .lp-faq-item {
+    border-radius: 14px; overflow: hidden;
+    border: 0.5px solid var(--border); background: var(--surface);
+    transition: border-color .2s, background .2s;
+  }
+  .lp-faq-item:hover { border-color: var(--border-strong); }
+  .lp-faq-q {
+    display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 22px; text-align: left; font-weight: 500; font-size: .9375rem;
+  }
+  .lp-faq-a { padding: 0 22px 18px; font-size: .9375rem; line-height: 1.6; color: var(--text-secondary); }
+  .lp-chevron { color: var(--text-muted); transition: transform .25s var(--lp-ease); }
+  .lp-chevron.is-open { transform: rotate(180deg); }
+
+  /* ── Pied de page ───────────────────────────────────────────────── */
+  .lp-footer { background: var(--surface-alt); border-top: 0.5px solid var(--border); }
+  .lp-footer-grid { display: grid; gap: 40px; }
+  @media (min-width: 760px) { .lp-footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+  .lp-footer-links { margin-top: 14px; display: grid; gap: 9px; font-size: .875rem; color: var(--text-secondary); }
+  .lp-footer-links a { transition: color .18s; }
+  .lp-footer-links a:hover { color: var(--text); }
+  .lp-footer-bottom {
+    margin-top: 44px; padding-top: 22px; border-top: 0.5px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 14px 30px; justify-content: space-between;
+    font-size: .8125rem; color: var(--text-muted);
+  }
+</style>
+
+{% comment %} ── Les chiffres, en grand : la preuve avant l'argument ── {% endcomment %}
+<section class="lp-stats lp-band">
+  <div class="lp-wrap lp-section">
+    <div class="lp-reveal" style="max-width: 44ch">
+      <p class="lp-kicker">{% trans "Ce que disent les agriculteurs français" %}</p>
+      <h2 class="lp-h2" style="margin-top: 14px">{% trans "Des chiffres qui parlent d'eux-mêmes." %}</h2>
+    </div>
+    <div class="lp-stats-grid lp-reveal" style="margin-top: clamp(40px, 5vw, 64px)">
+      <div>
+        <p class="lp-stat-n">48 %</p>
+        <p class="lp-stat-t">{% trans "des agriculteurs veulent travailler moins" %}</p>
+        <p class="lp-stat-s">{% trans "PRISM 2023 — priorité n°1 à 3 ans" %}</p>
+      </div>
+      <div>
+        <p class="lp-stat-n">70 %</p>
+        <p class="lp-stat-t">{% trans "choisissent de réduire leurs charges" %}</p>
+        <p class="lp-stat-s">{% trans "PRISM 2023 — vs maximiser la productivité" %}</p>
+      </div>
+      <div>
+        <p class="lp-stat-n">76 %</p>
+        <p class="lp-stat-t">{% trans "subissent le changement climatique" %}</p>
+        <p class="lp-stat-s">{% trans "VoxAgri 2025 — effet négatif sur l'exploitation" %}</p>
+      </div>
+      <div>
+        <p class="lp-stat-n">51 %</p>
+        <p class="lp-stat-t">{% trans "veulent plus d'accompagnement" %}</p>
+        <p class="lp-stat-s">{% trans "PRISM 2023 — ou de meilleure qualité" %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} ── Ce qui s'empile sur le métier ── {% endcomment %}
+<section id="domaines" class="lp-band" style="background: var(--page)">
+  <div class="lp-wrap lp-section">
+    <div class="lp-reveal" style="max-width: 40ch">
+      <h2 class="lp-h2">{% trans "Le métier n'a pas changé." %}</h2>
+      <p class="lp-lead" style="margin-top: 16px">{% trans "Sa charge administrative et mentale, si." %}</p>
     </div>
 
-    <div class="mt-10 grid gap-6 md:grid-cols-3">
-      {# Réglementation #}
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">gavel</span></span>
-        <h3 class="mt-4 font-medium">{% trans "La réglementation qui s'empile" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Plan Eau 2030" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Taxonomie EU" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "E-facturation obligatoire" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Traçabilité renforcée" %}</li>
+    <div class="lp-cols3 lp-reveal" style="margin-top: clamp(44px, 5vw, 72px)">
+      <div class="lp-col">
+        <h3 class="lp-h3">{% trans "La réglementation qui s'empile" %}</h3>
+        <ul class="lp-col-list">
+          <li>{% trans "Plan Eau 2030" %}</li>
+          <li>{% trans "Taxonomie EU" %}</li>
+          <li>{% trans "E-facturation obligatoire" %}</li>
+          <li>{% trans "Traçabilité renforcée" %}</li>
         </ul>
       </div>
-
-      {# Économie #}
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">payments</span></span>
-        <h3 class="mt-4 font-medium">{% trans "L'économie qui pèse autrement" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Marges sous pression" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Charges en hausse" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Financement complexe" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Dossiers de subvention" %}</li>
+      <div class="lp-col">
+        <h3 class="lp-h3">{% trans "L'économie qui pèse autrement" %}</h3>
+        <ul class="lp-col-list">
+          <li>{% trans "Marges sous pression" %}</li>
+          <li>{% trans "Charges en hausse" %}</li>
+          <li>{% trans "Financement complexe" %}</li>
+          <li>{% trans "Dossiers de subvention" %}</li>
         </ul>
       </div>
-
-      {# Main-d'œuvre #}
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">groups</span></span>
-        <h3 class="mt-4 font-medium">{% trans "La main-d'œuvre à gérer" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Saisonniers et apprentis" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Associés et salariés" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Transmission incertaine" %}</li>
-          <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--text-muted)"></span>{% trans "Formation continue" %}</li>
+      <div class="lp-col">
+        <h3 class="lp-h3">{% trans "La main-d'œuvre à gérer" %}</h3>
+        <ul class="lp-col-list">
+          <li>{% trans "Saisonniers et apprentis" %}</li>
+          <li>{% trans "Associés et salariés" %}</li>
+          <li>{% trans "Transmission incertaine" %}</li>
+          <li>{% trans "Formation continue" %}</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-{# Section : chiffres / preuve sociale #}
-<section class="border-t" style="border-color: var(--border); background: var(--surface)">
-  <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
-        {% trans "Ce que disent les agriculteurs français" %}
-      </h2>
-      <p class="mt-2 text-lg" style="color: var(--text-secondary)">
-        {% trans "Des chiffres qui parlent d'eux-mêmes." %}
-      </p>
-    </div>
-
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
-        <p class="text-[32px] font-medium" style="color: var(--action)">48 %</p>
-        <p class="mt-2 font-medium">{% trans "des agriculteurs veulent travailler moins" %}</p>
-        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "PRISM 2023 — priorité n°1 à 3 ans" %}</p>
-      </div>
-      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
-        <p class="text-[32px] font-medium" style="color: var(--action)">70 %</p>
-        <p class="mt-2 font-medium">{% trans "choisissent de réduire leurs charges" %}</p>
-        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "PRISM 2023 — vs maximiser la productivité" %}</p>
-      </div>
-      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
-        <p class="text-[32px] font-medium" style="color: var(--action)">76 %</p>
-        <p class="mt-2 font-medium">{% trans "subissent le changement climatique" %}</p>
-        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "VoxAgri 2025 — effet négatif sur l'exploitation" %}</p>
-      </div>
-      <div class="rounded-xl p-6" style="background: var(--surface-alt)">
-        <p class="text-[32px] font-medium" style="color: var(--action)">51 %</p>
-        <p class="mt-2 font-medium">{% trans "veulent plus d'accompagnement" %}</p>
-        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "PRISM 2023 — ou de meilleure qualité" %}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-{# Section : la charge invisible #}
-<section class="border-t" style="border-color: var(--border); background: var(--surface-alt)">
-  <div class="mx-auto max-w-3xl px-4 py-16 text-center lg:py-20">
-    <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
-      {% trans "La charge invisible" %}
-    </h2>
-    <p class="mt-6 text-lg leading-relaxed" style="color: var(--text-secondary)">
-      {% trans "Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le prouver à un contrôleur, le retrouver pour un dossier, le transmettre à l'apprenti — c'est un autre travail." %}
-    </p>
-    <p class="mt-4 text-lg leading-relaxed" style="color: var(--text-secondary)">
-      {% trans "Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est ce qui se colle par-dessus." %}
-      <span class="font-medium" style="color: var(--action)">{% trans "48 % des agriculteurs citent « maîtriser le temps de travail » comme priorité n°1." %}</span>
-    </p>
-  </div>
-</section>
-
-{# Section : 5 problèmes, 1 réponse — contenu décalé à droite #}
-<section class="border-t" style="border-color: var(--border); background: var(--surface)">
-  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-24">
-
-    {# Image (gauche) — agriculteur submergé par l'administratif #}
-    <div>
-      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
-           alt="{% trans 'Agriculteur submergé par la paperasse administrative' %}"
-           loading="lazy"
-           class="h-72 w-full rounded-2xl object-cover sm:h-96 lg:h-full lg:max-h-[34rem]" style="border: 0.5px solid var(--border)">
-    </div>
-
-    {# Contenu (droite) #}
-    <div>
-      <h2 class="text-3xl font-medium tracking-tight sm:text-4xl">{% trans "5 problèmes. 1 réponse." %}</h2>
-      <p class="mt-4 text-xl font-medium" style="color: var(--text)">
-        {% trans "Votre exploitation mérite un assistant qui ne dort jamais." %}
-      </p>
-      <p class="mt-4 leading-relaxed" style="color: var(--text-secondary)">
-        {% trans "Isidor répond aux 5 grandes préoccupations des agriculteurs français : temps de travail, charges, adaptation climatique, gestion d'équipe et accompagnement. Disponible à la voix, sur le tracteur, à 22h." %}
-      </p>
-
-      <ul class="mt-8 space-y-3">
-        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
-          <span class="font-medium">{% trans "« Je n'ai pas le temps »" %}</span>
-          <span style="color: var(--text-secondary)"> → {% trans "automatise les rapports et la traçabilité" %}</span>
-        </li>
-        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
-          <span class="font-medium">{% trans "« Je dois réduire mes charges »" %}</span>
-          <span style="color: var(--text-secondary)"> → {% trans "tableau de bord financier en temps réel" %}</span>
-        </li>
-        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
-          <span class="font-medium">{% trans "« Le climat change »" %}</span>
-          <span style="color: var(--text-secondary)"> → {% trans "alertes météo, suivi parcellaire, aide à la décision" %}</span>
-        </li>
-        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
-          <span class="font-medium">{% trans "« Je gère des saisonniers »" %}</span>
-          <span style="color: var(--text-secondary)"> → {% trans "module Équipe & Tâches avec rappels automatiques" %}</span>
-        </li>
-        <li class="rounded-xl border-l-2 px-4 py-3" style="border-color: var(--action); background: var(--surface-alt)">
-          <span class="font-medium">{% trans "« Je ne sais pas à qui demander »" %}</span>
-          <span style="color: var(--text-secondary)"> → {% trans "IA disponible 24h/24 sur vos questions" %}</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-{# Section : tout ce qu'il couvre — 10 domaines #}
-<section class="border-t" style="border-color: var(--border); background: var(--page)">
-  <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
-        {% trans "Tout ce qu'il couvre" %}
-      </h2>
-      <p class="mt-2 text-lg" style="color: var(--text-secondary)">
-        {% trans "Dix domaines. Un seul outil." %}
-      </p>
-    </div>
-
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">water_drop</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Irrigation et eau" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Programmes, quotas, capteurs IoT" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">payments</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Charges et marges" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Suivi économique en temps réel" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">agriculture</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Parc matériel" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Maintenance, alertes, historique" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">construction</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Interventions" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Traitements, travaux, traçabilité" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">science</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Analyses de sol" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Résultats, recommandations" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">grass</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Récoltes" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Volumes, qualité, rendements" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">groups</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Équipe et planning" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Saisonniers, apprentis, associés" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">gavel</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Conformité réglementaire" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Taxonomie EU, Plan Eau 2030" %}</p>
-      </div>
-      <div class="hs-card p-6">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">request_quote</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Dossiers de subvention" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "JEI, CIR, aides PAC" %}</p>
-      </div>
-      <div class="hs-card p-6 lg:col-start-2">
-        <span class="grid h-11 w-11 place-items-center rounded-xl" style="background: var(--surface-alt); color: var(--text-secondary)"><span class="material-icons-round text-[22px]">thunderstorm</span></span>
-        <h3 class="mt-4 font-medium">{% trans "Météo et alertes" %}</h3>
-        <p class="mt-1 text-sm" style="color: var(--text-secondary)">{% trans "Gel, ETP, prévisions 7 jours" %}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-{# Section : Tarif #}
-<section id="tarif" class="border-t" style="border-color: var(--border); background: var(--surface)">
-  <div class="mx-auto max-w-6xl px-4 py-16 lg:px-8 lg:py-20">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-2xl font-medium tracking-tight sm:text-3xl">
-        {% trans "Tarif" %}
-      </h2>
-      <p class="mt-2 text-lg" style="color: var(--text-secondary)">{% trans "Simple et transparent." %}</p>
-    </div>
-
-    <div class="hs-card mx-auto mt-10 max-w-2xl p-8 sm:p-10">
-      <div class="text-center">
-        <p class="text-5xl font-medium tracking-tight" style="color: var(--action)">59,90€</p>
-        <p class="mt-1" style="color: var(--text-secondary)">{% trans "par mois · par exploitation" %}</p>
-        <p class="mt-4 inline-block rounded-full px-4 py-1.5 text-sm font-medium" style="background: var(--surface-alt); color: var(--text-secondary)">
-          {% trans "Tous vos utilisateurs inclus — sans engagement" %}
+{% comment %} ── La charge invisible ── {% endcomment %}
+<section class="lp-quote lp-band">
+  <div class="lp-wrap lp-section">
+    <div class="lp-quote-grid lp-reveal">
+      <h2 class="lp-h2 lp-quote-inner">{% trans "La charge invisible" %}</h2>
+      <div class="lp-quote-body">
+        <p class="lp-quote-p">
+          {% trans "Vous savez ce que vous avez fait sur la parcelle 3 il y a six semaines. Le prouver à un contrôleur, le retrouver pour un dossier, le transmettre à l'apprenti — c'est un autre travail." %}
+        </p>
+        <p class="lp-quote-p" style="margin-top: 20px">
+          {% trans "Et ce travail, vous le faites le soir. La charge n'est pas le métier, c'est ce qui se colle par-dessus." %}
+        </p>
+        <p style="margin-top: 24px; font-size: 1.0625rem; font-weight: 500; color: var(--action); border-left: 2px solid var(--action); padding-left: 16px">
+          {% trans "48 % des agriculteurs citent « maîtriser le temps de travail » comme priorité n°1." %}
         </p>
       </div>
+    </div>
+  </div>
+</section>
 
-      <ul class="mx-auto mt-8 grid max-w-xl gap-x-8 gap-y-3 text-sm sm:grid-cols-2" style="color: var(--text-secondary)">
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Assistant vocal illimité" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Tous les modules inclus" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Prise en main guidée incluse" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Support réactif" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Mises à jour automatiques" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Données hébergées en France" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Utilisateurs illimités par exploitation" %}</li>
-        <li class="flex items-center gap-2"><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Accès mobile et tablette" %}</li>
-      </ul>
+{% comment %} ── Cinq problèmes, une réponse ── {% endcomment %}
+<section class="lp-band" style="background: var(--surface-alt)">
+  <div class="lp-wrap lp-section">
+    <div class="lp-split">
+      <div class="lp-photo lp-reveal">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+             alt="{% trans 'Agriculteur submergé par la paperasse administrative' %}" loading="lazy" decoding="async">
+      </div>
+      <div class="lp-reveal">
+        <h2 class="lp-h2">{% trans "5 problèmes. 1 réponse." %}</h2>
+        <p class="lp-lead" style="margin-top: 18px; color: var(--text)">
+          {% trans "Votre exploitation mérite un assistant qui ne dort jamais." %}
+        </p>
+        <p style="margin-top: 16px; line-height: 1.6; color: var(--text-secondary); max-width: 56ch">
+          {% trans "Isidor répond aux 5 grandes préoccupations des agriculteurs français : temps de travail, charges, adaptation climatique, gestion d'équipe et accompagnement. Disponible à la voix, sur le tracteur, à 22h." %}
+        </p>
 
-      <div class="mt-8 text-center">
-        <a href="{% url 'accounts:register' %}" class="hs-btn-primary">
-          {% trans "S'abonner maintenant" %}
-        </a>
-        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "Paiement sécurisé par Stripe · Résiliation en 1 clic" %}</p>
+        <div class="lp-answers">
+          <div class="lp-answer">
+            <span class="lp-answer-q">{% trans "« Je n'ai pas le temps »" %}</span>
+            <span class="lp-answer-a"><span class="material-icons-round lp-answer-arrow align-middle">arrow_forward</span> {% trans "automatise les rapports et la traçabilité" %}</span>
+          </div>
+          <div class="lp-answer">
+            <span class="lp-answer-q">{% trans "« Je dois réduire mes charges »" %}</span>
+            <span class="lp-answer-a"><span class="material-icons-round lp-answer-arrow align-middle">arrow_forward</span> {% trans "tableau de bord financier en temps réel" %}</span>
+          </div>
+          <div class="lp-answer">
+            <span class="lp-answer-q">{% trans "« Le climat change »" %}</span>
+            <span class="lp-answer-a"><span class="material-icons-round lp-answer-arrow align-middle">arrow_forward</span> {% trans "alertes météo, suivi parcellaire, aide à la décision" %}</span>
+          </div>
+          <div class="lp-answer">
+            <span class="lp-answer-q">{% trans "« Je gère des saisonniers »" %}</span>
+            <span class="lp-answer-a"><span class="material-icons-round lp-answer-arrow align-middle">arrow_forward</span> {% trans "module Équipe & Tâches avec rappels automatiques" %}</span>
+          </div>
+          <div class="lp-answer">
+            <span class="lp-answer-q">{% trans "« Je ne sais pas à qui demander »" %}</span>
+            <span class="lp-answer-a"><span class="material-icons-round lp-answer-arrow align-middle">arrow_forward</span> {% trans "IA disponible 24h/24 sur vos questions" %}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-{# Section : lead magnet — guide gratuit #}
-<section class="border-t" style="border-color: var(--border); background: var(--page)">
-  <div class="mx-auto max-w-3xl px-4 py-16 lg:py-20">
-    <div class="hs-card p-8 text-center sm:p-10">
-      <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium" style="background: var(--surface-alt); color: var(--text-secondary)">★ {% trans "Guide gratuit" %}</span>
-      <h2 class="mt-4 text-2xl font-medium tracking-tight sm:text-3xl">
-        {% trans "Lire ses analyses de sol" %}
-      </h2>
-      <p class="mx-auto mt-3 max-w-xl" style="color: var(--text-secondary)">
+{% comment %} ── Les dix domaines, en grille bento ── {% endcomment %}
+<section class="lp-band" style="background: var(--page)">
+  <div class="lp-wrap lp-section">
+    <div class="lp-reveal" style="max-width: 40ch">
+      <h2 class="lp-h2">{% trans "Tout ce qu'il couvre" %}</h2>
+      <p class="lp-lead" style="margin-top: 16px">{% trans "Douze domaines. Un seul outil." %}</p>
+    </div>
+
+    <div class="lp-bento lp-reveal" style="margin-top: clamp(40px, 5vw, 64px)">
+      <div class="lp-cell lp-cell-lg">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[20px]">water_drop</span></span>
+        <h3 class="lp-h3">{% trans "Irrigation et eau" %}</h3>
+        <p>{% trans "Programmes, quotas, capteurs IoT" %}</p>
+      </div>
+      <div class="lp-cell lp-cell-lg">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[20px]">payments</span></span>
+        <h3 class="lp-h3">{% trans "Charges et marges" %}</h3>
+        <p>{% trans "Suivi économique en temps réel" %}</p>
+      </div>
+
+      <div class="lp-cell">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[18px]">agriculture</span></span>
+        <h3 class="lp-h3">{% trans "Parc matériel" %}</h3>
+        <p>{% trans "Maintenance, alertes, historique" %}</p>
+      </div>
+      <div class="lp-cell">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[18px]">construction</span></span>
+        <h3 class="lp-h3">{% trans "Interventions" %}</h3>
+        <p>{% trans "Traitements, travaux, traçabilité" %}</p>
+      </div>
+      <div class="lp-cell">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[18px]">science</span></span>
+        <h3 class="lp-h3">{% trans "Analyses de sol" %}</h3>
+        <p>{% trans "Résultats, recommandations" %}</p>
+      </div>
+
+      <div class="lp-cell lp-cell-lg">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[20px]">receipt_long</span></span>
+        <h3 class="lp-h3">{% trans "Facture électronique" %}</h3>
+        <p>{% trans "Format UBL, plateforme agréée" %}</p>
+      </div>
+      <div class="lp-cell lp-cell-lg">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[20px]">history_edu</span></span>
+        <h3 class="lp-h3">{% trans "Signature électronique" %}</h3>
+        <p>{% trans "Devis signés au doigt ou au stylet" %}</p>
+      </div>
+
+      <div class="lp-cell">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[18px]">grass</span></span>
+        <h3 class="lp-h3">{% trans "Récoltes" %}</h3>
+        <p>{% trans "Volumes, qualité, rendements" %}</p>
+      </div>
+      <div class="lp-cell">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[18px]">groups</span></span>
+        <h3 class="lp-h3">{% trans "Équipe et planning" %}</h3>
+        <p>{% trans "Saisonniers, apprentis, associés" %}</p>
+      </div>
+      <div class="lp-cell">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[18px]">gavel</span></span>
+        <h3 class="lp-h3">{% trans "Conformité réglementaire" %}</h3>
+        <p>{% trans "Taxonomie EU, Plan Eau 2030" %}</p>
+      </div>
+
+      <div class="lp-cell lp-cell-lg">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[20px]">request_quote</span></span>
+        <h3 class="lp-h3">{% trans "Dossiers de subvention" %}</h3>
+        <p>{% trans "JEI, CIR, aides PAC" %}</p>
+      </div>
+      <div class="lp-cell lp-cell-lg">
+        <span class="lp-cell-icon"><span class="material-icons-round text-[20px]">thunderstorm</span></span>
+        <h3 class="lp-h3">{% trans "Météo et alertes" %}</h3>
+        <p>{% trans "Gel, ETP, prévisions 7 jours" %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} ── Tarif ── {% endcomment %}
+<section id="tarif" class="lp-band" style="background: var(--surface-alt)">
+  <div class="lp-wrap lp-section">
+    <div class="lp-reveal" style="text-align: center; max-width: 40ch; margin-inline: auto">
+      <h2 class="lp-h2">{% trans "Tarif" %}</h2>
+      <p class="lp-lead" style="margin-top: 14px">{% trans "Simple et transparent." %}</p>
+    </div>
+
+    <div class="lp-price lp-reveal" style="margin-top: clamp(36px, 4.5vw, 56px)">
+      <div class="lp-price-head">
+        <p class="lp-price-n">19,90€</p>
+        <p style="margin-top: 10px; color: var(--text-secondary)">{% trans "par mois · par exploitation" %}</p>
+        <p style="margin-top: 8px; font-weight: 500">{% trans "+ 0,70 € par hectare et par mois" %}</p>
+        <p class="lp-eyebrow" style="margin-top: 20px">{% trans "Tous vos utilisateurs inclus — sans engagement" %}</p>
+      </div>
+
+      {% comment %}
+        Le total se calcule dans la langue du visiteur : `toLocaleString` place
+        la virgule ou le point selon la locale, plutôt que de figer le format
+        français dans le gabarit.
+      {% endcomment %}
+      <div class="lp-calc" x-data="{
+             ha: 50,
+             get total() { return (19.9 + 0.7 * this.ha).toLocaleString(document.documentElement.lang || 'fr', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); },
+             get part() { return (0.7 * this.ha).toLocaleString(document.documentElement.lang || 'fr', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+           }">
+        <div class="lp-calc-row">
+          <label class="lp-calc-label" for="lp-ha">{% trans "Estimez votre tarif" %}</label>
+          <span class="lp-calc-ha"><span x-text="ha">50</span> ha</span>
+        </div>
+        <input id="lp-ha" type="range" min="0" max="400" step="5" x-model.number="ha"
+               aria-label="{% trans 'Surface (ha)' %}">
+        <div class="lp-calc-out">
+          <span class="lp-calc-detail">19,90 € + <span x-text="ha">50</span> × 0,70 € = <span x-text="part">35,00</span> €</span>
+          <span class="lp-calc-total"><span x-text="total">54,90</span> {% trans "€ HT/mois" %}</span>
+        </div>
+      </div>
+
+      <ul class="lp-price-list">
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Assistant vocal illimité" %}</li>
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Tous les modules inclus" %}</li>
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Prise en main guidée incluse" %}</li>
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Support réactif" %}</li>
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Mises à jour automatiques" %}</li>
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Données hébergées en France" %}</li>
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Utilisateurs illimités par exploitation" %}</li>
+        <li><span class="material-icons-round text-[18px]" style="color: var(--success)">check_circle</span>{% trans "Accès mobile et tablette" %}</li>
+      </ul>
+
+      <div class="lp-price-foot">
+        <a href="{% url 'accounts:register' %}" class="lp-btn lp-btn-primary">{% trans "S'abonner maintenant" %}</a>
+        <p style="margin-top: 14px; font-size: .75rem; color: var(--text-muted)">{% trans "Paiement sécurisé par Stripe · Résiliation en 1 clic" %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} ── Guide gratuit ── {% endcomment %}
+<section class="lp-band" style="background: var(--page)">
+  <div class="lp-wrap lp-section">
+    <div class="lp-magnet lp-reveal" style="max-width: 860px; margin-inline: auto; text-align: center">
+      <span class="lp-eyebrow">{% trans "Guide gratuit" %}</span>
+      <h2 class="lp-h2" style="margin-top: 18px">{% trans "Lire ses analyses de sol" %}</h2>
+      <p class="lp-lead" style="margin: 16px auto 0; max-width: 52ch">
         {% trans "Comprenez vos résultats d'analyses et prenez les bonnes décisions pour votre exploitation. Téléchargement immédiat." %}
       </p>
 
-      <div class="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div class="hs-tile">
-          <span class="text-2xl">🧪</span>
-          <p class="mt-1 text-sm font-medium">{% trans "pH & impact cultures" %}</p>
+      <div class="lp-magnet-grid">
+        <div class="lp-magnet-cell">
+          <span class="material-icons-round">science</span>
+          <p>{% trans "pH & impact cultures" %}</p>
         </div>
-        <div class="hs-tile">
-          <span class="text-2xl">🌿</span>
-          <p class="mt-1 text-sm font-medium">{% trans "Matière organique" %}</p>
+        <div class="lp-magnet-cell">
+          <span class="material-icons-round">eco</span>
+          <p>{% trans "Matière organique" %}</p>
         </div>
-        <div class="hs-tile">
-          <span class="text-2xl">⚗️</span>
-          <p class="mt-1 text-sm font-medium">{% trans "N, P, K décryptés" %}</p>
+        <div class="lp-magnet-cell">
+          <span class="material-icons-round">biotech</span>
+          <p>{% trans "N, P, K décryptés" %}</p>
         </div>
-        <div class="hs-tile">
-          <span class="text-2xl">💡</span>
-          <p class="mt-1 text-sm font-medium">{% trans "Recommandations concrètes" %}</p>
+        <div class="lp-magnet-cell">
+          <span class="material-icons-round">lightbulb</span>
+          <p>{% trans "Recommandations concrètes" %}</p>
         </div>
       </div>
 
-      <form method="post" action="{% url 'public:lead_capture' %}" class="mx-auto mt-8 flex max-w-md gap-2">
+      <form method="post" action="{% url 'public:lead_capture' %}" class="lp-form">
         {% csrf_token %}
-        <input type="email" name="email" required aria-label="{% trans 'Adresse email' %}" placeholder="votre@email.fr" class="flex-1">
-        <button class="hs-btn-primary shrink-0">
-          {% trans "Recevoir le guide" %}
-        </button>
+        <input type="email" name="email" required aria-label="{% trans 'Adresse email' %}" placeholder="votre@email.fr">
+        <button class="lp-btn lp-btn-primary" style="flex: none">{% trans "Recevoir le guide" %}</button>
       </form>
-      <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "Aucun spam. Votre email ne sera jamais revendu." %}</p>
+      <p style="margin-top: 14px; font-size: .75rem; color: var(--text-muted)">{% trans "Aucun spam. Votre email ne sera jamais revendu." %}</p>
     </div>
   </div>
 </section>
 
-{# Section : FAQ #}
-<section id="faq" class="border-t" style="border-color: var(--border); background: var(--surface)">
-  <div class="mx-auto max-w-3xl px-4 py-16 lg:py-20">
-    <h2 class="text-center text-2xl font-medium tracking-tight sm:text-3xl">
-      {% trans "Questions fréquentes" %}
-    </h2>
+{% comment %} ── Questions fréquentes ── {% endcomment %}
+<section id="faq" class="lp-band" style="background: var(--surface)">
+  <div class="lp-wrap lp-section">
+    <h2 class="lp-h2 lp-reveal" style="text-align: center">{% trans "Questions fréquentes" %}</h2>
 
-    <div class="mt-10 space-y-3" x-data="{ open: 3 }">
-      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
-        <button type="button" @click="open = open === 1 ? null : 1" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
+    <div class="lp-faq lp-reveal" style="margin-top: clamp(36px, 4.5vw, 56px)" x-data="{ open: 3 }">
+      <div class="lp-faq-item">
+        <button type="button" @click="open = open === 1 ? null : 1" class="lp-faq-q">
           <span>{% trans "Isidor peut-il vraiment m'aider à travailler moins ?" %}</span>
-          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 1 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round lp-chevron" :class="open === 1 && 'is-open'">expand_more</span>
         </button>
         <div x-show="open === 1" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi de vos parcelles, Isidor vous fait gagner les heures passées le soir sur l'administratif — la priorité n°1 de 48 % des agriculteurs." %}</p>
+          <p class="lp-faq-a">{% trans "Oui. En automatisant la traçabilité, les rapports réglementaires et le suivi de vos parcelles, Isidor vous fait gagner les heures passées le soir sur l'administratif — la priorité n°1 de 48 % des agriculteurs." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
-        <button type="button" @click="open = open === 2 ? null : 2" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
+      <div class="lp-faq-item">
+        <button type="button" @click="open = open === 2 ? null : 2" class="lp-faq-q">
           <span>{% trans "Est-ce que l'assistant comprend mes questions techniques ?" %}</span>
-          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 2 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round lp-chevron" :class="open === 2 && 'is-open'">expand_more</span>
         </button>
         <div x-show="open === 2" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, fertilisation (N, P, K), météo, réglementation ou analyses de sol — à l'écrit comme à la voix, 24h/24." %}</p>
+          <p class="lp-faq-a">{% trans "Oui. L'assistant IA est spécialisé pour l'agriculture : irrigation, fertilisation (N, P, K), météo, réglementation ou analyses de sol — à l'écrit comme à la voix, 24h/24." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
-        <button type="button" @click="open = open === 3 ? null : 3" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
+      <div class="lp-faq-item">
+        <button type="button" @click="open = open === 3 ? null : 3" class="lp-faq-q">
           <span>{% trans "Comment démarrer avec Isidor ?" %}</span>
-          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 3 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round lp-chevron" :class="open === 3 && 'is-open'">expand_more</span>
         </button>
         <div x-show="open === 3" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à pas vous accompagne pour ajouter vos parcelles, vos cultures et votre équipe. Isidor se connecte à votre système d'irrigation (Vyrsa, capteurs IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur." %}</p>
+          <p class="lp-faq-a">{% trans "Créez votre compte en ligne en 2 minutes. Un guide de configuration pas à pas vous accompagne pour ajouter vos parcelles, vos cultures et votre équipe. Isidor se connecte à votre système d'irrigation (Vyrsa, capteurs IoT) et est opérationnel le jour même, depuis votre smartphone ou ordinateur." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
-        <button type="button" @click="open = open === 4 ? null : 4" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
+      <div class="lp-faq-item">
+        <button type="button" @click="open = open === 4 ? null : 4" class="lp-faq-q">
           <span>{% trans "Isidor m'aide-t-il à réduire mes charges ?" %}</span>
-          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 4 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round lp-chevron" :class="open === 4 && 'is-open'">expand_more</span>
         </button>
         <div x-show="open === 4" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. Le tableau de bord financier suit vos charges et vos marges en temps réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles." %}</p>
+          <p class="lp-faq-a">{% trans "Oui. Le tableau de bord financier suit vos charges et vos marges en temps réel, identifie les postes qui pèsent et vous aide à arbitrer. Vous pilotez aussi vos quotas d'eau et votre matériel pour éviter les dépenses inutiles." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
-        <button type="button" @click="open = open === 5 ? null : 5" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
+      <div class="lp-faq-item">
+        <button type="button" @click="open = open === 5 ? null : 5" class="lp-faq-q">
           <span>{% trans "L'application fonctionne-t-elle sans internet sur la parcelle ?" %}</span>
-          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 5 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round lp-chevron" :class="open === 5 && 'is-open'">expand_more</span>
         </button>
         <div x-show="open === 5" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Oui. Vous consultez et saisissez vos interventions sur le terrain même sans réseau ; les données se synchronisent automatiquement dès que la connexion revient." %}</p>
+          <p class="lp-faq-a">{% trans "Oui. Vous consultez et saisissez vos interventions sur le terrain même sans réseau ; les données se synchronisent automatiquement dès que la connexion revient." %}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-xl transition-colors" style="border: 0.5px solid var(--border)">
-        <button type="button" @click="open = open === 6 ? null : 6" class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium">
+      <div class="lp-faq-item">
+        <button type="button" @click="open = open === 6 ? null : 6" class="lp-faq-q">
           <span>{% trans "Mes données m'appartiennent-elles ?" %}</span>
-          <span class="material-icons-round shrink-0 transition-transform" style="color: var(--text-muted)" :class="open === 6 ? 'rotate-180' : ''">expand_more</span>
+          <span class="material-icons-round lp-chevron" :class="open === 6 && 'is-open'">expand_more</span>
         </button>
         <div x-show="open === 6" x-collapse.duration.300ms>
-          <p class="px-5 pb-4 text-sm leading-relaxed" style="color: var(--text-secondary)">{% trans "Absolument. Vos données vous appartiennent et restent confidentielles : hébergées en France, jamais revendues, exportables ou supprimables à tout moment." %}</p>
+          <p class="lp-faq-a">{% trans "Absolument. Vos données vous appartiennent et restent confidentielles : hébergées en France, jamais revendues, exportables ou supprimables à tout moment." %}</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+</div>
+
+<script>
+  // Apparition au défilement — une seule fois par bloc, et rien du tout si la
+  // personne a demandé à réduire les animations.
+  (function () {
+    var doux = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var blocs = document.querySelectorAll('.lp-reveal');
+    if (doux || !('IntersectionObserver' in window)) {
+      blocs.forEach(function (b) { b.classList.add('is-in'); });
+      return;
+    }
+    var vu = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        vu.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    blocs.forEach(function (b) { vu.observe(b); });
+  })();
+
+  // « Télécharger l'app » : le bouton ne s'affiche que si le navigateur
+  // propose réellement l'installation. Il pointait sur une ancre inexistante.
+  function installable() {
+    return {
+      possible: false,
+      differe: null,
+      init() {
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          this.differe = e;
+          this.possible = true;
+        });
+      },
+      async installer() {
+        if (!this.differe) return;
+        this.differe.prompt();
+        await this.differe.userChoice;
+        this.differe = null;
+        this.possible = false;
+      },
+    };
+  }
+</script>
 {% endblock %}
 
 {% block auth_footer %}
-<footer class="border-t" style="border-color: var(--border); background: var(--surface-alt)">
-  <div class="mx-auto max-w-6xl px-4 py-12 lg:px-8">
-    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="max-w-sm lg:col-span-2">
+<footer class="lp-footer">
+  <div class="lp-wrap" style="padding-block: clamp(44px, 5vw, 64px)">
+    <div class="lp-footer-grid">
+      <div style="max-width: 38ch">
         <div class="flex items-center gap-2">
           {% include "partials/brand_mark.html" with size=30 icon=17 %}
           <span class="text-lg font-medium tracking-tight">Isidor</span>
         </div>
-        <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-secondary)">
+        <p style="margin-top: 14px; font-size: .875rem; line-height: 1.6; color: var(--text-secondary)">
           {% trans "Assistant intelligent pour exploitations agricoles. Conçu avec le réseau Isidor." %}
         </p>
-        <a href="mailto:contact@isidor.com" class="mt-4 inline-block text-sm transition hover:opacity-80" style="color: var(--action)">contact@isidor.com</a>
+        <a href="mailto:contact@isidor.com" style="display: inline-block; margin-top: 16px; font-size: .875rem; color: var(--action)">contact@isidor.com</a>
       </div>
 
       <div>
-        <h3 class="text-sm font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Produit" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
-          <li><a href="#domaines" class="transition hover:opacity-80">{% trans "Domaines" %}</a></li>
-          <li><a href="#tarif" class="transition hover:opacity-80">{% trans "Tarif" %}</a></li>
-          <li><a href="#faq" class="transition hover:opacity-80">FAQ</a></li>
+        <h3 class="lp-kicker">{% trans "Produit" %}</h3>
+        <ul class="lp-footer-links">
+          <li><a href="#domaines">{% trans "Domaines" %}</a></li>
+          <li><a href="#tarif">{% trans "Tarif" %}</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="{% url 'equipe:emplois' %}">{% trans "Offres d'emploi" %}</a></li>
         </ul>
       </div>
 
       <div>
-        <h3 class="text-sm font-medium uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Accès" %}</h3>
-        <ul class="mt-3 space-y-2 text-sm" style="color: var(--text-secondary)">
-          <li><a href="{% url 'accounts:login' %}" class="transition hover:opacity-80">{% trans "Connexion" %}</a></li>
-          <li><a href="{% url 'accounts:register' %}" class="transition hover:opacity-80">{% trans "S'abonner" %}</a></li>
-          <li><a href="mailto:contact@isidor.com" class="transition hover:opacity-80">{% trans "Contact" %}</a></li>
+        <h3 class="lp-kicker">{% trans "Accès" %}</h3>
+        <ul class="lp-footer-links">
+          <li><a href="{% url 'accounts:login' %}">{% trans "Connexion" %}</a></li>
+          <li><a href="{% url 'accounts:register' %}">{% trans "S'abonner" %}</a></li>
+          <li><a href="mailto:contact@isidor.com">{% trans "Contact" %}</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-10 flex flex-col gap-4 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between" style="border-color: var(--border); color: var(--text-muted)">
+    <div class="lp-footer-bottom">
       <p>{% trans "© 2026 Isidor · Tous droits réservés" %}</p>
       <div class="flex flex-wrap items-center gap-x-8 gap-y-2">
-        <a href="#" class="transition hover:opacity-80">{% trans "Mentions légales" %}</a>
-        <a href="#" class="transition hover:opacity-80">RGPD</a>
-        <a href="#" class="transition hover:opacity-80">{% trans "Confidentialité" %}</a>
+        <a href="#">{% trans "Mentions légales" %}</a>
+        <a href="#">RGPD</a>
+        <a href="#">{% trans "Confidentialité" %}</a>
         <span>{% trans "Registre transparence UE 238841" %}</span>
       </div>
     </div>

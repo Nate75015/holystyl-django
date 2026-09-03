@@ -51,6 +51,7 @@ def emplois(request):
         "offres": lot,
         "recherche": recherche,
         "layout_nu": True,
+        "page_vitrine": "emplois",
         "page_title": _("Offres d'emploi agricoles"),
     })
 
@@ -63,11 +64,13 @@ def emploi_detail(request, slug):
         # Une offre retirée ne disparaît pas en 404 : le lien a pu être
         # partagé, on explique plutôt qu'on ne recrute plus.
         return render(request, "equipe/emploi_close.html",
-                      {"offre": offre, "layout_nu": True, "page_title": offre.titre},
+                      {"offre": offre, "layout_nu": True, "page_vitrine": "emplois",
+                       "page_title": offre.titre},
                       status=410)
     return render(request, "equipe/emploi_detail.html", {
         "offre": offre,
         "layout_nu": True,
+        "page_vitrine": "emplois",
         "page_title": offre.titre,
     })
 

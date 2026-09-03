@@ -12,10 +12,11 @@
     </a>
     <div class="flex items-center gap-2">
       {% include "partials/lang_switcher.html" %}
-      <a href="{% url 'public:home' %}" class="hidden rounded-full border border-white/40 px-5 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10 sm:inline-block">
+      {% include "partials/theme_toggle.html" %}
+      <a href="{% url 'public:home' %}" class="hidden rounded-full border px-5 py-1.5 text-sm font-medium transition hover:opacity-80 sm:inline-block" style="color: color-mix(in srgb, var(--on-action) 90%, transparent); border-color: color-mix(in srgb, var(--on-action) 40%, transparent)">
         {% trans "Vous êtes agriculteur ?" %}
       </a>
-      <a href="{% url 'vente:panier' %}" class="relative flex items-center gap-1 rounded-full border border-white/40 px-4 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10">
+      <a href="{% url 'vente:panier' %}" class="relative flex items-center gap-1 rounded-full border px-4 py-1.5 text-sm font-medium transition hover:opacity-80" style="color: color-mix(in srgb, var(--on-action) 90%, transparent); border-color: color-mix(in srgb, var(--on-action) 40%, transparent)">
         <span class="material-icons-round text-[17px]">shopping_basket</span>
         {% if panier_nb %}<span>{{ panier_nb }}</span>{% endif %}
       </a>
