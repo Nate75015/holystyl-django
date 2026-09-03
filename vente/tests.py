@@ -605,3 +605,69 @@ def test_numerotation_partagee_avec_la_facturation_classique(client, ferme, toma
 
     commande.refresh_from_db()
     assert commande.facture.numero == f"F-{annee}-002"
+
+
+@pytest.mark.django_db
+def test_le_marche_suit_la_convention_nos_terroirs(client):
+    """Le marché et la vitrine des producteurs sont la même place de marché.
+
+    Elle ne change donc pas de visage entre les deux : même bandeau jaune,
+    mêmes atomes, et le panier en plus là où l'on achète.
+    """
+    page = client.get("/marche/").content.decode()
+    assert 'class="nt-bandeau"' in page
+    assert 'class="lp-header"' not in page, "l'ancien bandeau turquoise persiste"
+    assert "background: var(--nt-jaune); color: var(--nt-noir);" in page
+    # Le panier n'apparaît que sur les pages où l'on achète.
+    assert 'href="/panier/"' in page
+    assert "hs-btn-primary" not in page and "hs-chip-btn" not in page
+    assert "{#" not in page and "{{" not in page
+
+
+@pytest.mark.django_db
+def test_la_vitrine_des_producteurs_n_a_pas_de_panier(client):
+    """Elle présente les fermes ; on achète sur le marché."""
+    page = client.get("/nos-terroirs/").content.decode()
+    assert 'class="nt-bandeau"' in page
+    assert 'href="/panier/"' not in page
+
+
+@pytest.mark.django_db
+def test_le_marche_offre_toutes_les_categories(client, django_user_model):
+    """Toutes, y compris les vides.
+
+    Un filtre absent laisse croire que la catégorie n'existe pas, quand elle
+    est seulement sans offre aujourd'hui. Les vides sont montrées en retrait.
+    """
+    from django.utils.text import slugify
+
+    from exploitations.models import Exploitation
+    from vente.models import Boutique, Produit
+
+    u = django_user_model.objects.create_user(email="cat@ex.com", password="pwd12345")
+    e = Exploitation.objects.create(owner=u, name="Ferme Test")
+    Boutique.objects.create(exploitation=e, slug="ferme-test", est_ouverte=True, visible_marche=True)
+    for nom, cat in [("Pommes", "fruit"), ("Lentilles", "legumineuse"), ("Huîtres", "poisson")]:
+        Produit.objects.create(exploitation=e, nom=nom, slug=slugify(nom), categorie=cat,
+                               prix_ttc=3, statut=Produit.Statut.EN_LIGNE, visible_marche=True)
+
+    reponse = client.get("/marche/")
+    familles = {f["cle"]: f["n"] for f in reponse.context["familles"]}
+    assert len(familles) == len(Produit.Categorie.choices)
+    assert familles["fruit"] == 1 and familles["legumineuse"] == 1 and familles["poisson"] == 1
+    assert familles["fleur"] == 0  # présente et vide
+    assert "nt-chip-vide" in reponse.content.decode()
+
+    # Chaque catégorie filtre ce qu'elle annonce.
+    assert [p.nom for p in client.get("/marche/poisson/").context["produits"]] == ["Huîtres"]
+    # Une clé inconnue retombe sur le marché entier plutôt que sur du vide.
+    assert len(client.get("/marche/zzz/").context["produits"]) == 3
+
+
+@pytest.mark.django_db
+def test_les_categories_ajoutees_existent(client):
+    """Légumineuses et poissons manquaient au catalogue."""
+    from vente.models import Produit
+
+    valeurs = Produit.Categorie.values
+    assert "legumineuse" in valeurs and "poisson" in valeurs
