@@ -7366,11 +7366,11 @@ msgstr ""
 
 #: elevage/models.py:30 vente/models.py:144
 msgid "Viande"
-msgstr ""
+msgstr "Kød"
 
 #: elevage/models.py:31 vente/models.py:146
 msgid "Œufs"
-msgstr ""
+msgstr "Æg"
 
 #: elevage/models.py:32
 msgid "Mixte"
@@ -7390,7 +7390,7 @@ msgstr "Jordbearbejdning"
 
 #: elevage/models.py:35 vente/models.py:152
 msgid "Miel"
-msgstr ""
+msgstr "Honning"
 
 #: elevage/models.py:42
 msgid "durée de gestation (jours)"
@@ -19114,62 +19114,52 @@ msgid "boutiques"
 msgstr "Dæk"
 
 #: vente/models.py:145
-#, fuzzy
-#| msgid "Taille"
 msgid "Volaille"
-msgstr "Beskæring"
+msgstr "Fjerkræ"
 
 #: vente/models.py:147
-#, fuzzy
-#| msgid "Produits utilisés"
 msgid "Produits laitiers"
-msgstr "Anvendte produkter"
+msgstr "Mejeriprodukter"
 
 #: vente/models.py:148
-#, fuzzy
-#| msgid "Messagerie"
 msgid "Fromages"
-msgstr "Beskeder"
+msgstr "Oste"
 
 #: vente/models.py:149
 msgid "Céréales et légumes secs"
 msgstr ""
 
 #: vente/models.py:150
-#, fuzzy
-#| msgid "machines"
 msgid "Farines"
-msgstr "maskiner"
+msgstr "Mel"
 
 #: vente/models.py:151
 msgid "Huiles"
-msgstr ""
+msgstr "Olier"
 
 #: vente/models.py:153
 msgid "Vins et spiritueux"
-msgstr ""
+msgstr "Vin og spiritus"
 
 #: vente/models.py:154
 msgid "Jus et boissons"
-msgstr ""
+msgstr "Juice og drikkevarer"
 
 #: vente/models.py:155
 msgid "Épicerie et conserves"
-msgstr ""
+msgstr "Kolonial og konserves"
 
 #: vente/models.py:156
 msgid "Plants et semences"
-msgstr ""
+msgstr "Planter og frø"
 
 #: vente/models.py:157
 msgid "Fleurs"
-msgstr ""
+msgstr "Blomster"
 
 #: vente/models.py:158
-#, fuzzy
-#| msgid "Fourrage"
 msgid "Fourrage et paille"
-msgstr "Foder"
+msgstr "Foder og halm"
 
 #: vente/models.py:162
 msgid "au kilo"
@@ -20315,3 +20305,39 @@ msgstr "Vises i det offentlige register, hvis du har valgt at fremgå dér."
 #: public/templates/public/exploitants.html
 msgid "Chercher une ville…"
 msgstr "Søg en by…"
+
+#: public/templates/public/terroirs.html
+msgid "Nos terroirs"
+msgstr "Nos terroirs"
+
+#: public/templates/public/terroirs.html
+msgid "La place de marché des paysans. Ils vendent leur production en direct."
+msgstr "Bøndernes markedsplads. De sælger deres produkter direkte."
+
+#: public/templates/public/terroirs.html
+msgid "de commission"
+msgstr "i kommission"
+
+#: public/templates/public/terroirs.html
+msgid "Voir les produits"
+msgstr "Se produkterne"
+
+#: public/templates/public/terroirs.html
+msgid "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur."
+msgstr "Ingen mellemhandler, ingen skjult margin: Isidor tager intet af salget. Prisen går til producenten."
+
+#: public/templates/public/terroirs.html
+msgid "Nos producteurs"
+msgstr "Vores producenter"
+
+#: public/templates/public/terroirs.html
+msgid "Accueil Isidor"
+msgstr "Isidor forside"
+
+#: vente/models.py
+msgid "Légumineuses"
+msgstr "Bælgfrugter"
+
+#: vente/models.py
+msgid "Poissons et fruits de mer"
+msgstr "Fisk og skaldyr"

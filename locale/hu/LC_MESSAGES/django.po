@@ -7368,11 +7368,11 @@ msgstr ""
 
 #: elevage/models.py:30 vente/models.py:144
 msgid "Viande"
-msgstr ""
+msgstr "Hús"
 
 #: elevage/models.py:31 vente/models.py:146
 msgid "Œufs"
-msgstr ""
+msgstr "Tojás"
 
 #: elevage/models.py:32
 msgid "Mixte"
@@ -7392,7 +7392,7 @@ msgstr "Talajművelés"
 
 #: elevage/models.py:35 vente/models.py:152
 msgid "Miel"
-msgstr ""
+msgstr "Méz"
 
 #: elevage/models.py:42
 msgid "durée de gestation (jours)"
@@ -19123,62 +19123,52 @@ msgid "boutiques"
 msgstr "Gumiabroncsok"
 
 #: vente/models.py:145
-#, fuzzy
-#| msgid "Taille"
 msgid "Volaille"
-msgstr "Metszés"
+msgstr "Baromfi"
 
 #: vente/models.py:147
-#, fuzzy
-#| msgid "Produits utilisés"
 msgid "Produits laitiers"
-msgstr "Felhasznált termékek"
+msgstr "Tejtermékek"
 
 #: vente/models.py:148
-#, fuzzy
-#| msgid "Messagerie"
 msgid "Fromages"
-msgstr "Üzenetek"
+msgstr "Sajtok"
 
 #: vente/models.py:149
 msgid "Céréales et légumes secs"
 msgstr ""
 
 #: vente/models.py:150
-#, fuzzy
-#| msgid "machines"
 msgid "Farines"
-msgstr "gépek"
+msgstr "Lisztek"
 
 #: vente/models.py:151
 msgid "Huiles"
-msgstr ""
+msgstr "Olajok"
 
 #: vente/models.py:153
 msgid "Vins et spiritueux"
-msgstr ""
+msgstr "Borok és szeszes italok"
 
 #: vente/models.py:154
 msgid "Jus et boissons"
-msgstr ""
+msgstr "Levek és italok"
 
 #: vente/models.py:155
 msgid "Épicerie et conserves"
-msgstr ""
+msgstr "Élelmiszer és konzerv"
 
 #: vente/models.py:156
 msgid "Plants et semences"
-msgstr ""
+msgstr "Palánták és vetőmagok"
 
 #: vente/models.py:157
 msgid "Fleurs"
-msgstr ""
+msgstr "Virágok"
 
 #: vente/models.py:158
-#, fuzzy
-#| msgid "Fourrage"
 msgid "Fourrage et paille"
-msgstr "Takarmány"
+msgstr "Takarmány és szalma"
 
 #: vente/models.py:162
 msgid "au kilo"
@@ -20324,3 +20314,39 @@ msgstr "Megjelenik a nyilvános jegyzékben, ha a megjelenést választotta."
 #: public/templates/public/exploitants.html
 msgid "Chercher une ville…"
 msgstr "Település keresése…"
+
+#: public/templates/public/terroirs.html
+msgid "Nos terroirs"
+msgstr "Nos terroirs"
+
+#: public/templates/public/terroirs.html
+msgid "La place de marché des paysans. Ils vendent leur production en direct."
+msgstr "A gazdák piactere. Termésüket közvetlenül adják el."
+
+#: public/templates/public/terroirs.html
+msgid "de commission"
+msgstr "jutalék"
+
+#: public/templates/public/terroirs.html
+msgid "Voir les produits"
+msgstr "Termékek megtekintése"
+
+#: public/templates/public/terroirs.html
+msgid "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur."
+msgstr "Nincs közvetítő, nincs rejtett haszon: az Isidor semmit sem von le. Az ár a termelőé."
+
+#: public/templates/public/terroirs.html
+msgid "Nos producteurs"
+msgstr "Termelőink"
+
+#: public/templates/public/terroirs.html
+msgid "Accueil Isidor"
+msgstr "Isidor kezdőlap"
+
+#: vente/models.py
+msgid "Légumineuses"
+msgstr "Hüvelyesek"
+
+#: vente/models.py
+msgid "Poissons et fruits de mer"
+msgstr "Hal és tenger gyümölcsei"

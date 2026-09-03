@@ -7383,11 +7383,11 @@ msgstr ""
 
 #: elevage/models.py:30 vente/models.py:144
 msgid "Viande"
-msgstr ""
+msgstr "Feoil"
 
 #: elevage/models.py:31 vente/models.py:146
 msgid "Œufs"
-msgstr ""
+msgstr "Uibheacha"
 
 #: elevage/models.py:32
 msgid "Mixte"
@@ -7407,7 +7407,7 @@ msgstr "Saothrú ithreach"
 
 #: elevage/models.py:35 vente/models.py:152
 msgid "Miel"
-msgstr ""
+msgstr "Mil"
 
 #: elevage/models.py:42
 msgid "durée de gestation (jours)"
@@ -19150,62 +19150,52 @@ msgid "boutiques"
 msgstr "Boinn"
 
 #: vente/models.py:145
-#, fuzzy
-#| msgid "Taille"
 msgid "Volaille"
-msgstr "Bearradh"
+msgstr "Éanlaith chlóis"
 
 #: vente/models.py:147
-#, fuzzy
-#| msgid "Produits utilisés"
 msgid "Produits laitiers"
-msgstr "Táirgí úsáidte"
+msgstr "Déiríocht"
 
 #: vente/models.py:148
-#, fuzzy
-#| msgid "Messagerie"
 msgid "Fromages"
-msgstr "Teachtaireachtaí"
+msgstr "Cáiseanna"
 
 #: vente/models.py:149
 msgid "Céréales et légumes secs"
 msgstr ""
 
 #: vente/models.py:150
-#, fuzzy
-#| msgid "machines"
 msgid "Farines"
-msgstr "meaisíní"
+msgstr "Plúracha"
 
 #: vente/models.py:151
 msgid "Huiles"
-msgstr ""
+msgstr "Olaí"
 
 #: vente/models.py:153
 msgid "Vins et spiritueux"
-msgstr ""
+msgstr "Fíonta agus biotáille"
 
 #: vente/models.py:154
 msgid "Jus et boissons"
-msgstr ""
+msgstr "Súnna agus deochanna"
 
 #: vente/models.py:155
 msgid "Épicerie et conserves"
-msgstr ""
+msgstr "Grósaeireacht agus leasaithigh"
 
 #: vente/models.py:156
 msgid "Plants et semences"
-msgstr ""
+msgstr "Plandaí agus síolta"
 
 #: vente/models.py:157
 msgid "Fleurs"
-msgstr ""
+msgstr "Bláthanna"
 
 #: vente/models.py:158
-#, fuzzy
-#| msgid "Fourrage"
 msgid "Fourrage et paille"
-msgstr "Foráiste"
+msgstr "Foráiste agus tuí"
 
 #: vente/models.py:162
 msgid "au kilo"
@@ -20366,3 +20356,39 @@ msgstr "Le feiceáil san eolaire poiblí, má roghnaigh tú a bheith ann."
 #: public/templates/public/exploitants.html
 msgid "Chercher une ville…"
 msgstr "Cuardaigh baile…"
+
+#: public/templates/public/terroirs.html
+msgid "Nos terroirs"
+msgstr "Nos terroirs"
+
+#: public/templates/public/terroirs.html
+msgid "La place de marché des paysans. Ils vendent leur production en direct."
+msgstr "Margadh na bhfeirmeoirí. Díolann siad a dtáirgeadh go díreach."
+
+#: public/templates/public/terroirs.html
+msgid "de commission"
+msgstr "coimisiúin"
+
+#: public/templates/public/terroirs.html
+msgid "Voir les produits"
+msgstr "Féach ar na táirgí"
+
+#: public/templates/public/terroirs.html
+msgid "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur."
+msgstr "Gan idirghabhálaí, gan lamháil fholaithe: ní ghlacann Isidor faic ar dhíolacháin. Téann an praghas chuig an táirgeoir."
+
+#: public/templates/public/terroirs.html
+msgid "Nos producteurs"
+msgstr "Ár dtáirgeoirí"
+
+#: public/templates/public/terroirs.html
+msgid "Accueil Isidor"
+msgstr "Baile Isidor"
+
+#: vente/models.py
+msgid "Légumineuses"
+msgstr "Piseánaigh"
+
+#: vente/models.py
+msgid "Poissons et fruits de mer"
+msgstr "Iasc agus bia mara"

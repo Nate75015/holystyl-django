@@ -7378,11 +7378,11 @@ msgstr ""
 
 #: elevage/models.py:30 vente/models.py:144
 msgid "Viande"
-msgstr ""
+msgstr "Κρέας"
 
 #: elevage/models.py:31 vente/models.py:146
 msgid "Œufs"
-msgstr ""
+msgstr "Αυγά"
 
 #: elevage/models.py:32
 msgid "Mixte"
@@ -7402,7 +7402,7 @@ msgstr "Κατεργασία εδάφους"
 
 #: elevage/models.py:35 vente/models.py:152
 msgid "Miel"
-msgstr ""
+msgstr "Μέλι"
 
 #: elevage/models.py:42
 msgid "durée de gestation (jours)"
@@ -19155,62 +19155,52 @@ msgid "boutiques"
 msgstr "Ελαστικά"
 
 #: vente/models.py:145
-#, fuzzy
-#| msgid "Taille"
 msgid "Volaille"
-msgstr "Κλάδεμα"
+msgstr "Πουλερικά"
 
 #: vente/models.py:147
-#, fuzzy
-#| msgid "Produits utilisés"
 msgid "Produits laitiers"
-msgstr "Προϊόντα που χρησιμοποιήθηκαν"
+msgstr "Γαλακτοκομικά"
 
 #: vente/models.py:148
-#, fuzzy
-#| msgid "Messagerie"
 msgid "Fromages"
-msgstr "Μηνύματα"
+msgstr "Τυριά"
 
 #: vente/models.py:149
 msgid "Céréales et légumes secs"
 msgstr ""
 
 #: vente/models.py:150
-#, fuzzy
-#| msgid "machines"
 msgid "Farines"
-msgstr "μηχανήματα"
+msgstr "Αλεύρια"
 
 #: vente/models.py:151
 msgid "Huiles"
-msgstr ""
+msgstr "Έλαια"
 
 #: vente/models.py:153
 msgid "Vins et spiritueux"
-msgstr ""
+msgstr "Κρασιά και αποστάγματα"
 
 #: vente/models.py:154
 msgid "Jus et boissons"
-msgstr ""
+msgstr "Χυμοί και ποτά"
 
 #: vente/models.py:155
 msgid "Épicerie et conserves"
-msgstr ""
+msgstr "Παντοπωλείο και κονσέρβες"
 
 #: vente/models.py:156
 msgid "Plants et semences"
-msgstr ""
+msgstr "Φυτά και σπόροι"
 
 #: vente/models.py:157
 msgid "Fleurs"
-msgstr ""
+msgstr "Λουλούδια"
 
 #: vente/models.py:158
-#, fuzzy
-#| msgid "Fourrage"
 msgid "Fourrage et paille"
-msgstr "Χορτονομή"
+msgstr "Ζωοτροφές και άχυρο"
 
 #: vente/models.py:162
 msgid "au kilo"
@@ -20356,3 +20346,39 @@ msgstr "Εμφανίζεται στον δημόσιο κατάλογο, αν ε
 #: public/templates/public/exploitants.html
 msgid "Chercher une ville…"
 msgstr "Αναζήτηση δήμου…"
+
+#: public/templates/public/terroirs.html
+msgid "Nos terroirs"
+msgstr "Nos terroirs"
+
+#: public/templates/public/terroirs.html
+msgid "La place de marché des paysans. Ils vendent leur production en direct."
+msgstr "Η αγορά των αγροτών. Πωλούν την παραγωγή τους απευθείας."
+
+#: public/templates/public/terroirs.html
+msgid "de commission"
+msgstr "προμήθεια"
+
+#: public/templates/public/terroirs.html
+msgid "Voir les produits"
+msgstr "Δείτε τα προϊόντα"
+
+#: public/templates/public/terroirs.html
+msgid "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur."
+msgstr "Χωρίς μεσάζοντες, χωρίς κρυφό περιθώριο: η Isidor δεν κρατά τίποτα. Η τιμή πάει στον παραγωγό."
+
+#: public/templates/public/terroirs.html
+msgid "Nos producteurs"
+msgstr "Οι παραγωγοί μας"
+
+#: public/templates/public/terroirs.html
+msgid "Accueil Isidor"
+msgstr "Αρχική Isidor"
+
+#: vente/models.py
+msgid "Légumineuses"
+msgstr "Όσπρια"
+
+#: vente/models.py
+msgid "Poissons et fruits de mer"
+msgstr "Ψάρια και θαλασσινά"

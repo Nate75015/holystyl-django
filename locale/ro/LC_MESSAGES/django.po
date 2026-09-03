@@ -7378,11 +7378,11 @@ msgstr ""
 
 #: elevage/models.py:30 vente/models.py:144
 msgid "Viande"
-msgstr ""
+msgstr "Carne"
 
 #: elevage/models.py:31 vente/models.py:146
 msgid "Œufs"
-msgstr ""
+msgstr "Ouă"
 
 #: elevage/models.py:32
 msgid "Mixte"
@@ -7402,7 +7402,7 @@ msgstr "Lucrarea solului"
 
 #: elevage/models.py:35 vente/models.py:152
 msgid "Miel"
-msgstr ""
+msgstr "Miere"
 
 #: elevage/models.py:42
 msgid "durée de gestation (jours)"
@@ -19133,62 +19133,52 @@ msgid "boutiques"
 msgstr "Anvelope"
 
 #: vente/models.py:145
-#, fuzzy
-#| msgid "Taille"
 msgid "Volaille"
-msgstr "Tăiere"
+msgstr "Carne de pasăre"
 
 #: vente/models.py:147
-#, fuzzy
-#| msgid "Produits utilisés"
 msgid "Produits laitiers"
-msgstr "Produse utilizate"
+msgstr "Produse lactate"
 
 #: vente/models.py:148
-#, fuzzy
-#| msgid "Messagerie"
 msgid "Fromages"
-msgstr "Mesagerie"
+msgstr "Brânzeturi"
 
 #: vente/models.py:149
 msgid "Céréales et légumes secs"
 msgstr ""
 
 #: vente/models.py:150
-#, fuzzy
-#| msgid "machines"
 msgid "Farines"
-msgstr "utilaje"
+msgstr "Făinuri"
 
 #: vente/models.py:151
 msgid "Huiles"
-msgstr ""
+msgstr "Uleiuri"
 
 #: vente/models.py:153
 msgid "Vins et spiritueux"
-msgstr ""
+msgstr "Vinuri și băuturi spirtoase"
 
 #: vente/models.py:154
 msgid "Jus et boissons"
-msgstr ""
+msgstr "Sucuri și băuturi"
 
 #: vente/models.py:155
 msgid "Épicerie et conserves"
-msgstr ""
+msgstr "Alimente și conserve"
 
 #: vente/models.py:156
 msgid "Plants et semences"
-msgstr ""
+msgstr "Plante și semințe"
 
 #: vente/models.py:157
 msgid "Fleurs"
-msgstr ""
+msgstr "Flori"
 
 #: vente/models.py:158
-#, fuzzy
-#| msgid "Fourrage"
 msgid "Fourrage et paille"
-msgstr "Furaje"
+msgstr "Furaje și paie"
 
 #: vente/models.py:162
 msgid "au kilo"
@@ -20339,3 +20329,39 @@ msgstr "Vizibilă în directorul public, dacă ați ales să apăreți acolo."
 #: public/templates/public/exploitants.html
 msgid "Chercher une ville…"
 msgstr "Căutați o localitate…"
+
+#: public/templates/public/terroirs.html
+msgid "Nos terroirs"
+msgstr "Nos terroirs"
+
+#: public/templates/public/terroirs.html
+msgid "La place de marché des paysans. Ils vendent leur production en direct."
+msgstr "Piața țăranilor. Își vând producția direct."
+
+#: public/templates/public/terroirs.html
+msgid "de commission"
+msgstr "comision"
+
+#: public/templates/public/terroirs.html
+msgid "Voir les produits"
+msgstr "Vezi produsele"
+
+#: public/templates/public/terroirs.html
+msgid "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur."
+msgstr "Fără intermediari, fără marjă ascunsă: Isidor nu reține nimic din vânzări. Prețul merge la producător."
+
+#: public/templates/public/terroirs.html
+msgid "Nos producteurs"
+msgstr "Producătorii noștri"
+
+#: public/templates/public/terroirs.html
+msgid "Accueil Isidor"
+msgstr "Pagina principală Isidor"
+
+#: vente/models.py
+msgid "Légumineuses"
+msgstr "Leguminoase"
+
+#: vente/models.py
+msgid "Poissons et fruits de mer"
+msgstr "Pește și fructe de mare"

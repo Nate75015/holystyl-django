@@ -7381,11 +7381,11 @@ msgstr ""
 
 #: elevage/models.py:30 vente/models.py:144
 msgid "Viande"
-msgstr ""
+msgstr "Mięso"
 
 #: elevage/models.py:31 vente/models.py:146
 msgid "Œufs"
-msgstr ""
+msgstr "Jaja"
 
 #: elevage/models.py:32
 msgid "Mixte"
@@ -7405,7 +7405,7 @@ msgstr "Uprawa gleby"
 
 #: elevage/models.py:35 vente/models.py:152
 msgid "Miel"
-msgstr ""
+msgstr "Miód"
 
 #: elevage/models.py:42
 msgid "durée de gestation (jours)"
@@ -19142,62 +19142,52 @@ msgid "boutiques"
 msgstr "Opony"
 
 #: vente/models.py:145
-#, fuzzy
-#| msgid "Taille"
 msgid "Volaille"
-msgstr "Cięcie"
+msgstr "Drób"
 
 #: vente/models.py:147
-#, fuzzy
-#| msgid "Produits utilisés"
 msgid "Produits laitiers"
-msgstr "Użyte produkty"
+msgstr "Nabiał"
 
 #: vente/models.py:148
-#, fuzzy
-#| msgid "Messagerie"
 msgid "Fromages"
-msgstr "Wiadomości"
+msgstr "Sery"
 
 #: vente/models.py:149
 msgid "Céréales et légumes secs"
 msgstr ""
 
 #: vente/models.py:150
-#, fuzzy
-#| msgid "machines"
 msgid "Farines"
-msgstr "maszyny"
+msgstr "Mąki"
 
 #: vente/models.py:151
 msgid "Huiles"
-msgstr ""
+msgstr "Oleje"
 
 #: vente/models.py:153
 msgid "Vins et spiritueux"
-msgstr ""
+msgstr "Wina i alkohole"
 
 #: vente/models.py:154
 msgid "Jus et boissons"
-msgstr ""
+msgstr "Soki i napoje"
 
 #: vente/models.py:155
 msgid "Épicerie et conserves"
-msgstr ""
+msgstr "Artykuły spożywcze i przetwory"
 
 #: vente/models.py:156
 msgid "Plants et semences"
-msgstr ""
+msgstr "Rośliny i nasiona"
 
 #: vente/models.py:157
 msgid "Fleurs"
-msgstr ""
+msgstr "Kwiaty"
 
 #: vente/models.py:158
-#, fuzzy
-#| msgid "Fourrage"
 msgid "Fourrage et paille"
-msgstr "Pasza"
+msgstr "Pasza i słoma"
 
 #: vente/models.py:162
 msgid "au kilo"
@@ -20353,3 +20343,39 @@ msgstr "Widoczne w katalogu publicznym, jeśli wybrano w nim figurowanie."
 #: public/templates/public/exploitants.html
 msgid "Chercher une ville…"
 msgstr "Szukaj miejscowości…"
+
+#: public/templates/public/terroirs.html
+msgid "Nos terroirs"
+msgstr "Nos terroirs"
+
+#: public/templates/public/terroirs.html
+msgid "La place de marché des paysans. Ils vendent leur production en direct."
+msgstr "Targowisko rolników. Sprzedają swoje plony bezpośrednio."
+
+#: public/templates/public/terroirs.html
+msgid "de commission"
+msgstr "prowizji"
+
+#: public/templates/public/terroirs.html
+msgid "Voir les produits"
+msgstr "Zobacz produkty"
+
+#: public/templates/public/terroirs.html
+msgid "Pas d'intermédiaire, pas de marge cachée : Isidor ne prélève rien sur les ventes. Le prix payé va au producteur."
+msgstr "Bez pośredników i ukrytej marży: Isidor nic nie pobiera od sprzedaży. Cena trafia do producenta."
+
+#: public/templates/public/terroirs.html
+msgid "Nos producteurs"
+msgstr "Nasi producenci"
+
+#: public/templates/public/terroirs.html
+msgid "Accueil Isidor"
+msgstr "Strona główna Isidor"
+
+#: vente/models.py
+msgid "Légumineuses"
+msgstr "Rośliny strączkowe"
+
+#: vente/models.py
+msgid "Poissons et fruits de mer"
+msgstr "Ryby i owoce morza"
