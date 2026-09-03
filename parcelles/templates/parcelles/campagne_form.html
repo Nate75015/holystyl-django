@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block content %}
+<section x-data="campagneForm({{ parcelles_choisies }}, {{ noms_parcelles }})">
 <form method="post" class="space-y-5">
   {% csrf_token %}
 
@@ -31,17 +32,10 @@
   {# ── Campagne ── #}
   <div class="hs-card p-5 space-y-4">
     <h2 class="flex items-center gap-2 text-[15px] font-medium"><span class="material-icons-round text-[18px]" style="color: var(--text-muted)">event_repeat</span>{% trans "Campagne" %}</h2>
+    {% include "partials/_parcelles_selecteur.html" %}
+    {% if erreur_parcelle %}<p class="-mt-3 text-[11px]" style="color: var(--danger)">{{ erreur_parcelle }}</p>{% endif %}
+
     <div class="grid gap-4 sm:grid-cols-2 sm:max-w-2xl">
-      {% if parcelles %}
-        <div>
-          <label class="mb-1 block text-[12px] font-medium" style="color: var(--text-secondary)" for="campagne-parcelle">{% trans "Parcelle" %}</label>
-          <select id="campagne-parcelle" name="parcelle" required>
-            <option value="">{% trans "— Choisir une parcelle —" %}</option>
-            {% for p in parcelles %}<option value="{{ p.pk }}"{% if parcelle_choisie == p.pk %} selected{% endif %}>{{ p.name }}</option>{% endfor %}
-          </select>
-          {% if erreur_parcelle %}<p class="mt-1 text-[11px]" style="color: var(--danger)">{{ erreur_parcelle }}</p>{% endif %}
-        </div>
-      {% endif %}
       {% include "parcelles/_campagne_field.html" with field=form.libelle %}
     </div>
   </div>
@@ -94,4 +88,28 @@
     <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
   </div>
 </form>
+</section>
+
+<script>
+  function campagneForm(choisies, noms) {
+    return {
+      /* La même culture se sème souvent sur plusieurs parcelles : le choix est
+         multiple, exactement comme au formulaire de tâche. */
+      form: { parcelles: choisies },
+      noms: noms,
+      init() {
+        this.$watch('form.parcelles', ids => window.hsParcellesMap && window.hsParcellesMap.select(ids));
+        this.$nextTick(() => window.hsParcellesMap && window.hsParcellesMap.show(this.form.parcelles));
+      },
+      toggleParcelle(id) {
+        const i = this.form.parcelles.indexOf(id);
+        i === -1 ? this.form.parcelles.push(id) : this.form.parcelles.splice(i, 1);
+      },
+      surlignerParcelle(id) {
+        if (window.hsParcellesMap) window.hsParcellesMap.highlight(id, this.form.parcelles);
+      },
+    };
+  }
+</script>
+{% include "partials/_parcelles_carte_js.html" %}
 {% endblock %}

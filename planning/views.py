@@ -22,6 +22,7 @@ from equipe.models import Task, TeamMember
 from operations.models import AffectationEngin, Machine
 from exploitations.models import Exploitation
 from notifications.services import notify
+from parcelles import carte as carte_parcelles
 from parcelles.models import Parcelle
 
 from . import acces as acces_service
@@ -484,20 +485,7 @@ def planning(request):
     # de sélection (les agriculteurs reconnaissent leurs parcelles à la forme,
     # pas à la référence cadastrale).
     parcelles = list(Parcelle.objects.filter(exploitation=exploitation)) if exploitation else []
-    ctx["parcelles"] = parcelles
-    ctx["parcelles_geojson"] = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "geometry": p.boundaries,
-                "properties": {"id": p.pk, "name": p.name, "area": p.area},
-            }
-            for p in parcelles
-            if p.boundaries
-        ],
-    }
-    ctx["parcelles_mappables"] = sum(1 for p in parcelles if p.boundaries)
+    ctx.update(carte_parcelles.contexte(parcelles))
     ctx["peut_ecrire"] = acces_service.peut_ecrire(exploitation, request.user)
     ctx["peut_gerer"] = acces_service.peut_gerer(exploitation, request.user)
     ctx["demandes_en_attente"] = (

@@ -18,6 +18,7 @@ from core import espaces as espaces_service
 from core.decorators import espace_requis
 from core.espaces import EMPLOYE, EXPLOITANT
 from exploitations.models import Exploitation
+from parcelles import carte as carte_parcelles
 from parcelles.models import Parcelle
 
 from . import invitations
@@ -200,16 +201,7 @@ def taches(request):
         "priorities": Task.Priority.choices, "statuses": Task.Status.choices,
         "team_members": (TeamMember.objects.filter(exploitation=exploitation)
                          if exploitation else TeamMember.objects.none()),
-        "parcelles": parcelles,
-        "parcelles_mappables": sum(1 for p in parcelles if p.boundaries),
-        "parcelles_geojson": {
-            "type": "FeatureCollection",
-            "features": [
-                {"type": "Feature", "geometry": p.boundaries,
-                 "properties": {"id": p.pk, "name": p.name, "area": p.area}}
-                for p in parcelles if p.boundaries
-            ],
-        },
+        **carte_parcelles.contexte(parcelles),
         "page_title": _("Tâches"),
     })
 
