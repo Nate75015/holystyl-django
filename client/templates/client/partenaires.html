@@ -4,12 +4,12 @@
 {% block content %}
 <section class="space-y-5" x-data="{ ajout: false }">
 
-  <p class="hs-crumb">{% trans "Relations" %} · {{ titre }}</p>
+  <p class="hs-crumb">{% trans "Relations" %} · {{ libelles.titre }}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
-    <h1 class="text-[20px]">{{ titre }}</h1>
+    <h1 class="text-[20px]">{{ libelles.titre }}</h1>
     <button type="button" @click="ajout = !ajout" class="hs-btn-primary">
       <span class="material-icons-round text-[18px]" x-text="ajout ? 'close' : 'add'">add</span>
-      <span x-text="ajout ? '{% trans "Fermer" %}' : '{% blocktrans %}Ajouter un {{ singulier }}{% endblocktrans %}'">{% blocktrans %}Ajouter un {{ singulier }}{% endblocktrans %}</span>
+      <span x-text="ajout ? '{% trans "Fermer" %}' : '{{ libelles.ajouter|escapejs }}'">{{ libelles.ajouter }}</span>
     </button>
   </div>
 
@@ -18,7 +18,7 @@
         class="hs-card p-6 sm:p-8">
     {% csrf_token %}
     <input type="hidden" name="type_partenaire" value="{{ type_partenaire }}">
-    <h2 class="mb-4 text-[15px] font-medium">{% blocktrans %}Nouveau {{ singulier }}{% endblocktrans %}</h2>
+    <h2 class="mb-4 text-[15px] font-medium">{{ libelles.nouveau }}</h2>
     <div class="grid grid-cols-1 gap-x-24 gap-y-6 sm:grid-cols-2">
       <div class="sm:col-span-2">
         <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-nom">{% trans "Nom / raison sociale" %} <span style="color: var(--danger)">*</span></label>
@@ -123,7 +123,7 @@
     </div>
   {% empty %}
     <div class="hs-card p-6 text-center sm:p-8">
-      <p class="text-[15px] font-medium">{% blocktrans %}Aucun {{ singulier }} enregistré.{% endblocktrans %}</p>
+      <p class="text-[15px] font-medium">{{ libelles.aucun }}</p>
       <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Cliquez sur « Ajouter » pour créer une fiche." %}</p>
     </div>
   {% endfor %}

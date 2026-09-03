@@ -1,4 +1,4 @@
-# ── Holystyl Django — socle (Tranche 0) ─────────────────────────────
+# ── Isidor Django — socle (Tranche 0) ─────────────────────────────
 # Python 3.12 · Django 5.2 LTS
 Django>=5.2,<5.3
 djangorestframework>=3.16,<3.18

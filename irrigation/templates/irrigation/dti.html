@@ -4,7 +4,7 @@
 {% block content %}
 <section class="space-y-5">
 
-  <p class="hs-crumb">{% trans "Cultures & Élevage · DTI" %}</p>
+  <p class="hs-crumb">{% trans "Irrigation" %} · {% trans "DTI" %}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
     <h1 class="text-[20px]">{% trans "Diagnostic technique d'irrigation" %}</h1>
   </div>
@@ -137,5 +137,11 @@
     </div>
   </div>
 
+
+  {% include "irrigation/_bilan_eau.html" %}
 </section>
+{% endblock %}
+
+{% block extra_js %}{{ block.super }}
+{% include "irrigation/_bilan_eau_js.html" %}
 {% endblock %}

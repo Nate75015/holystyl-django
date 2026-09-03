@@ -1,55 +1,86 @@
 {% load i18n %}
-<section class="mx-auto max-w-6xl space-y-6 px-4 py-8 lg:px-8">
+{% comment %}
+  La page d'une ferme, à la convention « Nos terroirs ». C'est la suite
+  directe du marché : elle n'a pas à changer de visage au premier clic.
+{% endcomment %}
+<style>
+  .nt-ferme { padding: clamp(26px, 3.5vw, 44px) var(--nt-gutter) 72px; }
+  .nt-fil { font-size: .8125rem; color: var(--nt-second); }
+  .nt-fil a { border-bottom: 1px solid var(--nt-filet); }
+  .nt-fil a:hover { border-color: var(--nt-jaune); }
+  .nt-entete-ferme {
+    margin-top: 16px; padding: clamp(22px, 3vw, 32px); border-radius: 18px;
+    background: var(--nt-noir); color: #FFFFFF;
+  }
+  .nt-entete-haut { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
+  .nt-logo { height: 64px; width: 64px; border-radius: 999px; object-fit: cover; }
+  .nt-ferme-nom { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.125rem);
+                  font-weight: 600; letter-spacing: -.028em; color: #FFFFFF; }
+  .nt-ferme-accroche { margin-top: 8px; font-size: 1.0625rem; color: rgba(255,255,255,.82); }
+  .nt-ferme-ligne { display: flex; align-items: center; gap: 6px; margin-top: 10px;
+                    font-size: .8125rem; color: rgba(255,255,255,.62); }
+  .nt-ferme-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .nt-badge {
+    font-size: .6875rem; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+    background: var(--nt-jaune); color: var(--nt-noir);
+  }
+  .nt-badge-creux { background: transparent; color: rgba(255,255,255,.86);
+                    border: 1px solid rgba(255,255,255,.34); }
+  .nt-ferme-contact { display: grid; gap: 6px; font-size: .875rem; }
+  .nt-ferme-contact a { display: flex; align-items: center; gap: 6px; color: var(--nt-jaune); }
+  .nt-ferme-texte { margin-top: 20px; white-space: pre-line; line-height: 1.6;
+                    font-size: .9375rem; color: rgba(255,255,255,.78); }
+  .nt-rayon { margin-top: 34px; }
+  .nt-rayon h2 { font-size: 1.125rem; font-weight: 600; letter-spacing: -.015em; color: var(--nt-texte); }
+</style>
+
+<section class="nt-ferme">
   {% include "vente/_messages.html" %}
 
-  <p class="hs-crumb"><a href="{% url 'vente:marche' %}">{% trans "Le marché" %}</a> · {{ boutique.nom }}</p>
+  <p class="nt-fil"><a href="{% url 'vente:marche' %}">{% trans "Le marché" %}</a> · {{ boutique.nom }}</p>
 
-  <div class="hs-card p-6">
-    <div class="flex flex-wrap items-start gap-5">
+  <div class="nt-entete-ferme">
+    <div class="nt-entete-haut">
       {% if exploitation.logo %}
-        <img src="{{ exploitation.logo.url }}" alt="{{ boutique.nom }}" class="h-16 w-16 rounded-full object-cover">
+        <img src="{{ exploitation.logo.url }}" alt="{{ boutique.nom }}" class="nt-logo">
       {% endif %}
-      <div class="min-w-0 flex-1 space-y-2">
-        <h1 class="text-[26px] font-medium tracking-tight">{{ boutique.nom }}</h1>
-        {% if boutique.accroche %}<p class="text-[15px]" style="color: var(--text-secondary)">{{ boutique.accroche }}</p>{% endif %}
+      <div class="min-w-0 flex-1">
+        <h1 class="nt-ferme-nom">{{ boutique.nom }}</h1>
+        {% if boutique.accroche %}<p class="nt-ferme-accroche">{{ boutique.accroche }}</p>{% endif %}
         {% if boutique.localite %}
-          <p class="flex items-center gap-1 text-[13px]" style="color: var(--text-muted)">
-            <span class="material-icons-round text-[15px]">place</span>{{ boutique.localite }}
-          </p>
+          <p class="nt-ferme-ligne"><span class="material-icons-round text-[15px]">place</span>{{ boutique.localite }}</p>
         {% endif %}
-        <div class="flex flex-wrap gap-2 pt-1">
-          {% if boutique.retrait_ferme %}<span class="hs-badge hs-badge-success">{% trans "Retrait à la ferme" %}</span>{% endif %}
+        <div class="nt-ferme-badges">
+          {% if boutique.retrait_ferme %}<span class="nt-badge">{% trans "Retrait à la ferme" %}</span>{% endif %}
           {% if boutique.livraison %}
-            <span class="hs-badge hs-badge-neutral">
+            <span class="nt-badge nt-badge-creux">
               {% if boutique.rayon_livraison_km %}{% blocktrans with km=boutique.rayon_livraison_km %}Livraison à {{ km }} km{% endblocktrans %}{% else %}{% trans "Livraison" %}{% endif %}
             </span>
           {% endif %}
         </div>
       </div>
-      <div class="space-y-1 text-[13px]">
-        {% if boutique.telephone %}<p><a href="tel:{{ boutique.telephone }}" class="flex items-center gap-1" style="color: var(--action)"><span class="material-icons-round text-[15px]">call</span>{{ boutique.telephone }}</a></p>{% endif %}
-        {% if boutique.email %}<p><a href="mailto:{{ boutique.email }}" class="flex items-center gap-1" style="color: var(--action)"><span class="material-icons-round text-[15px]">mail</span>{{ boutique.email }}</a></p>{% endif %}
+      <div class="nt-ferme-contact">
+        {% if boutique.telephone %}<a href="tel:{{ boutique.telephone }}"><span class="material-icons-round text-[15px]">call</span>{{ boutique.telephone }}</a>{% endif %}
+        {% if boutique.email %}<a href="mailto:{{ boutique.email }}"><span class="material-icons-round text-[15px]">mail</span>{{ boutique.email }}</a>{% endif %}
       </div>
     </div>
-    {% if boutique.description %}<p class="mt-5 whitespace-pre-line text-[14px] leading-relaxed" style="color: var(--text-secondary)">{{ boutique.description }}</p>{% endif %}
+    {% if boutique.description %}<p class="nt-ferme-texte">{{ boutique.description }}</p>{% endif %}
     {% if boutique.horaires_retrait %}
-      <p class="mt-4 flex items-center gap-1 text-[13px]" style="color: var(--text-secondary)">
-        <span class="material-icons-round text-[15px]">schedule</span>{{ boutique.horaires_retrait }}
-      </p>
+      <p class="nt-ferme-ligne"><span class="material-icons-round text-[15px]">schedule</span>{{ boutique.horaires_retrait }}</p>
     {% endif %}
   </div>
 
   {% for rayon in rayons %}
-    <div class="space-y-3">
-      <h2 class="text-[17px] font-medium">{{ rayon.label }}</h2>
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+    <div class="nt-rayon">
+      <h2>{{ rayon.label }}</h2>
+      <div class="nt-grille nt-grille-serree" style="margin-top: 14px">
         {% for p in rayon.produits %}{% include "vente/_carte_produit.html" with p=p %}{% endfor %}
       </div>
     </div>
   {% empty %}
-    <div class="hs-card px-8 py-12 text-center">
-      <p class="text-[15px] font-medium">{% trans "Cette ferme n'a rien en vente pour l'instant" %}</p>
-      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Ses produits reviendront avec la saison." %}</p>
+    <div class="nt-vide" style="margin-top: 30px">
+      <p style="font-size: 1.0625rem; font-weight: 600">{% trans "Cette ferme n'a rien en vente pour l'instant" %}</p>
+      <p class="nt-second" style="margin-top: 8px">{% trans "Ses produits reviendront avec la saison." %}</p>
     </div>
   {% endfor %}
 </section>

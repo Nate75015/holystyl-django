@@ -28,12 +28,12 @@ def adresse_details(request):
 
 def healthz(request):
     """Sonde de disponibilité."""
-    return JsonResponse({"app": "holystyl-django", "status": "ok"})
+    return JsonResponse({"app": "isidor-django", "status": "ok"})
 
 
 # Service worker servi à la RACINE (scope "/") — requis pour l'installabilité PWA.
 _SW_JS = """
-const CACHE = 'holystyl-v2';
+const CACHE = 'isidor-v2';
 self.addEventListener('install', () => { self.skipWaiting(); });
 self.addEventListener('activate', (e) => {
   e.waitUntil(

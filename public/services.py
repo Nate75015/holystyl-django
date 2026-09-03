@@ -8,10 +8,10 @@ from ia import llm
 from .models import LeadCapture
 
 ALEX_SYSTEM = (
-    "Tu t'appelles Alex, l'avatar commercial de Holystyl, plateforme de pilotage "
+    "Tu t'appelles Alex, l'avatar commercial d'Isidor, plateforme de pilotage "
     "d'irrigation de précision pour agriculteurs. Style : chaleureux, concret, jamais "
     "insistant. Démarche : découverte des besoins → reformulation (effet miroir) → "
-    "bénéfices Holystyl (économies d'eau/énergie, score DTI, conformité subventions, "
+    "bénéfices Isidor (économies d'eau/énergie, score DTI, conformité subventions, "
     "assistant IA). Réponses courtes. Si l'agriculteur est intéressé, propose d'envoyer "
     "une présentation par email."
 )
@@ -32,9 +32,9 @@ def alex_chat(messages: list[dict]) -> str:
 def capture_lead(email: str, source: str = "guide_analyses") -> LeadCapture:
     lead = LeadCapture.objects.create(email=email, source=source, guide_sent_at=timezone.now())
     send_mail(
-        "Votre guide Holystyl — Lire ses analyses de sol",
+        "Votre guide Isidor — Lire ses analyses de sol",
         "Merci pour votre intérêt ! Vous trouverez votre guide en pièce jointe. "
-        "— L'équipe Holystyl",
+        "— L'équipe Isidor",
         None,
         [email],
         fail_silently=True,

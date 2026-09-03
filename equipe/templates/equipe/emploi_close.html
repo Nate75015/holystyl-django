@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{# Vitrine : `layout_nu` fait basculer base.html hors de l'ossature applicative. #}
+{% block auth_header %}{% include "partials/entete_vitrine.html" %}{% endblock %}
+{% block auth_main_class %}{% endblock %}
+{% block auth_content %}{% include "equipe/_emploi_close_corps.html" %}{% endblock %}

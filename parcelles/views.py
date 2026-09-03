@@ -18,7 +18,7 @@ from django.views.decorators.http import require_POST
 from exploitations.models import Exploitation
 from irrigation import satellite, teledetection
 
-from . import geometrie
+from . import carte, geometrie
 from .forms import ParcelleCampagneForm, ParcelleForm, ParcelleTypeAgricultureForm
 from .models import Parcelle, ParcelleCampagne
 
@@ -70,7 +70,7 @@ def parcelle_cadastre(request):
     geom = json.dumps({"type": "Point", "coordinates": [lon, lat]})
     url = "https://apicarto.ign.fr/api/cadastre/parcelle?geom=" + urllib.parse.quote(geom) + "&source_ign=PCI"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Holystyl/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": "Isidor/1.0"})
         with urllib.request.urlopen(req, timeout=15) as resp:
             return HttpResponse(resp.read(), content_type="application/json")
     except Exception as exc:  # noqa: BLE001 — toute erreur réseau/API renvoyée au front
@@ -306,6 +306,35 @@ def campagne_list(request):
     })
 
 
+def _semer_la_campagne(request, parcelles, donnees):
+    """Crée la même campagne sur chaque parcelle. Rend son libellé, ou "".
+
+    Une parcelle qui porte déjà cette campagne est passée plutôt que de faire
+    échouer les autres : on sème sur ce qui est libre, et l'on dit lesquelles
+    ont été laissées de côté.
+    """
+    libelle = donnees["libelle"]
+    creees, deja = [], []
+    with transaction.atomic():
+        for parcelle in parcelles:
+            if ParcelleCampagne.objects.filter(parcelle=parcelle, libelle=libelle).exists():
+                deja.append(parcelle.name)
+                continue
+            ParcelleCampagne.objects.create(parcelle=parcelle, **donnees)
+            # Le type d'agriculture appartient à la parcelle, pas à la campagne.
+            ParcelleTypeAgricultureForm(request.POST, instance=parcelle).save()
+            creees.append(parcelle.name)
+
+    if deja:
+        messages.info(request, _("Campagne déjà présente sur : %(noms)s.")
+                      % {"noms": ", ".join(deja)})
+    if not creees:
+        return ""
+    messages.success(request, _("Campagne ajoutée sur %(n)s parcelle(s).")
+                     % {"n": len(creees)})
+    return libelle
+
+
 @login_required
 def campagne_new(request):
     """Nouvelle campagne depuis la page Campagnes : la parcelle est à choisir."""
@@ -316,22 +345,21 @@ def campagne_new(request):
         messages.info(request, _("Créez d'abord une parcelle pour lui ajouter une campagne."))
         return redirect("parcelles:list")
 
-    parcelle_choisie, erreur_parcelle = None, ""
+    choisies, erreur_parcelle = [], ""
     if request.method == "POST":
-        parcelle = parcelles.filter(pk=request.POST.get("parcelle") or 0).first()
-        parcelle_choisie = parcelle.pk if parcelle else None
+        # Une même campagne se sème rarement sur une seule parcelle : on en
+        # accepte plusieurs, et l'on crée la même culture sur chacune.
+        choisies = list(parcelles.filter(pk__in=request.POST.getlist("parcelles")))
         form = ParcelleCampagneForm(request.POST)
-        parcelle_form = ParcelleTypeAgricultureForm(request.POST, instance=parcelle)
-        if parcelle is None:
-            erreur_parcelle = _("Choisissez la parcelle concernée.")
+        parcelle_form = ParcelleTypeAgricultureForm(request.POST)
+        if not choisies:
+            erreur_parcelle = _("Choisissez au moins une parcelle.")
             form.is_valid()  # peuple form.errors pour l'affichage
-        else:
-            form.instance.parcelle = parcelle
-            if form.is_valid() and parcelle_form.is_valid():
-                campagne = form.save()
-                parcelle_form.save()  # le type d'agriculture appartient à la parcelle
-                messages.success(request, _("Campagne ajoutée."))
-                return redirect(f"{reverse('parcelles:campagnes')}?campagne={campagne.libelle}")
+        elif form.is_valid() and parcelle_form.is_valid():
+            campagne = _semer_la_campagne(request, choisies, form.cleaned_data)
+            if campagne:
+                return redirect(f"{reverse('parcelles:campagnes')}?campagne={campagne}")
+            erreur_parcelle = _("Cette campagne existe déjà sur toutes les parcelles choisies.")
     else:
         form = ParcelleCampagneForm()
         parcelle_form = ParcelleTypeAgricultureForm()
@@ -339,8 +367,11 @@ def campagne_new(request):
     return render(request, "parcelles/campagne_form.html", {
         "form": form,
         "parcelle_form": parcelle_form,
-        "parcelles": parcelles,
-        "parcelle_choisie": parcelle_choisie,
+        # La carte et les pastilles, comme au formulaire de tâche : une
+        # parcelle se reconnaît à sa forme.
+        **carte.contexte(parcelles),
+        "noms_parcelles": json.dumps({str(p.pk): p.name for p in parcelles}),
+        "parcelles_choisies": json.dumps([str(p.pk) for p in choisies]),
         "erreur_parcelle": erreur_parcelle,
         "retour_url": reverse("parcelles:campagnes"),
         "page_title": _("Nouvelle campagne"),

@@ -1,17 +1,49 @@
 {% load i18n %}
+{% comment %}
+  Saisie d'un acte notarié. Le scan ouvre le formulaire : on part de l'acte
+  reçu de l'étude, pas d'une page blanche. Ce que l'IA lit pré-remplit sans
+  enregistrer — un compromis se joue sur sa date de réitération, et une date
+  mal recopiée ne se découvre qu'une fois l'avant-contrat caduc.
+
+  `items-center` est absent à dessein : sur un conteneur qui défile, il rend le
+  haut inatteignable. Le centrage passe par `my-auto` sur l'enfant.
+{% endcomment %}
 <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-  <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+  <div @click.self="modal = false" class="my-auto flex w-full max-w-5xl justify-center">
     <div class="hs-popover w-full p-5">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-[16px] font-medium">{% trans "Nouvel acte notarié" %}</h2>
         <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
       </div>
-      <form method="post" action="{% url 'contrat:acte_create' %}" class="space-y-3">
+
+      <form id="acte-modal-form" method="post" action="{% url 'contrat:acte_create' %}" enctype="multipart/form-data" class="space-y-3">
         {% csrf_token %}
+
+        {# ── Scanner l'acte ── #}
+        <div class="rounded-[10px] p-4" style="border: 0.5px solid var(--border); background: var(--surface-alt)">
+          <p class="text-sm font-medium">{% trans "Scanner l'acte" %}</p>
+          <p class="mt-0.5 text-[12px]" style="color: var(--text-secondary)">
+            {% trans "Photographiez l'acte ou déposez le PDF : l'Agent IA en lit les parties, l'étude, les dates, la surface, les servitudes et le droit de préemption. Relisez avant d'enregistrer." %}
+          </p>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <input type="file" name="document" id="acte-document" accept=".pdf,.png,.jpg,.jpeg,.webp,.heic"
+                   capture="environment" class="max-w-xs text-[13px]" @change="lu = ''">
+            <select name="type_document" class="w-auto text-[13px]">
+              {% for code, libelle in types_document %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+            </select>
+            <button type="button" class="hs-chip-btn" :disabled="lecture" @click="scanner()">
+              <span class="material-icons-round text-[16px]" x-text="lecture ? 'hourglass_empty' : 'document_scanner'">document_scanner</span>
+              <span x-text="lecture ? '{{ libelle_lecture|escapejs }}' : '{{ libelle_lire|escapejs }}'">{% trans "Lire le document" %}</span>
+            </button>
+            <span x-show="lu" x-cloak class="text-[12px]" :style="lu.startsWith('!') ? 'color: var(--danger)' : 'color: var(--success)'"
+                  x-text="lu.replace(/^!/, '')"></span>
+          </div>
+        </div>
+
         <div>
           <label for="acte-objet" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Objet" %} <span style="color: var(--danger)">*</span></label>
-          <input id="acte-objet" name="objet" required placeholder="{% trans 'ex: achat parcelle ab 42' %}">
+          <input id="acte-objet" name="objet" required placeholder="{% trans 'ex: achat parcelle ZA 42' %}">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -19,31 +51,116 @@
             <select id="acte-type" name="type_acte">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           </div>
           <div>
-            <label for="acte-date-signature" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de signature" %}</label>
-            <input id="acte-date-signature" name="date_signature" type="date">
+            <label for="acte-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+            <select id="acte-statut" name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           </div>
-        </div>
-        <div>
-          <label for="acte-notaire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notaire / étude" %}</label>
-          <input id="acte-notaire" name="notaire" placeholder="{% trans 'maître…' %}">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label for="acte-parties" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Parties" %}</label>
-            <input id="acte-parties" name="parties" placeholder="{% trans 'vendeur / acheteur' %}">
+            <input id="acte-parties" name="parties" placeholder="{% trans 'vendeur / acquéreur' %}">
           </div>
           <div>
             <label for="acte-reference" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Référence de l'acte" %}</label>
             <input id="acte-reference" name="reference" placeholder="{% trans 'n° / répertoire' %}">
           </div>
         </div>
-        <div>
-          <label for="acte-montant" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Montant (€)" %}</label>
-          <input id="acte-montant" name="montant" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+
+        {# ── L'étude, qu'on rappelle quand une date approche ── #}
+        <p class="pt-2 text-[13px] font-medium">{% trans "L'étude" %}</p>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="acte-notaire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notaire / étude" %}</label>
+            <input id="acte-notaire" name="notaire" placeholder="{% trans 'maître…' %}">
+          </div>
+          <div>
+            <label for="acte-tel-notaire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Téléphone" %}</label>
+            <input id="acte-tel-notaire" name="telephone_notaire" type="tel">
+          </div>
+          <div>
+            <label for="acte-email-notaire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Email" %}</label>
+            <input id="acte-email-notaire" name="email_notaire" type="email">
+          </div>
+        </div>
+
+        {# ── Les dates, dont deux ne se rattrapent pas ── #}
+        <p class="pt-2 text-[13px] font-medium">{% trans "Dates et échéances" %}</p>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="acte-date-promesse" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de la promesse" %}</label>
+            <input id="acte-date-promesse" name="date_promesse" type="date">
+          </div>
+          <div>
+            <label for="acte-date-limite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Limite de réitération" %}</label>
+            <input id="acte-date-limite" name="date_limite_realisation" type="date">
+          </div>
+          <div>
+            <label for="acte-date-signature" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de signature" %}</label>
+            <input id="acte-date-signature" name="date_signature" type="date">
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="acte-date-publication" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Publié le" %}</label>
+            <input id="acte-date-publication" name="date_publication" type="date">
+          </div>
+          <div>
+            <label for="acte-date-peremption" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Péremption de l'inscription" %}</label>
+            <input id="acte-date-peremption" name="date_peremption" type="date">
+          </div>
+          <label class="flex items-center gap-2.5 self-end pb-2 text-sm">
+            <input type="checkbox" name="mainlevee_obtenue" id="acte-mainlevee" class="h-4 w-4" style="accent-color: var(--action)">
+            {% trans "Mainlevée obtenue" %}
+          </label>
+        </div>
+
+        {# ── Ce que l'acte porte, et ce qu'il coûte ── #}
+        <p class="pt-2 text-[13px] font-medium">{% trans "Bien et montants" %}</p>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="acte-surface" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Surface (ha)" %}</label>
+            <input id="acte-surface" name="surface_ha" inputmode="decimal">
+          </div>
+          <div>
+            <label for="acte-cadastre" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Références cadastrales" %}</label>
+            <input id="acte-cadastre" name="references_cadastrales" placeholder="{% trans 'ex: ZA 12, ZA 14' %}">
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="acte-montant" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Montant (€)" %}</label>
+            <input id="acte-montant" name="montant" inputmode="decimal" placeholder="0.00">
+          </div>
+          <div>
+            <label for="acte-frais" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Frais de notaire (€)" %}</label>
+            <input id="acte-frais" name="frais_notaire" inputmode="decimal" placeholder="0.00">
+          </div>
+          <div>
+            <label for="acte-droits" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Droits d'enregistrement (€)" %}</label>
+            <input id="acte-droits" name="droits_enregistrement" inputmode="decimal" placeholder="0.00">
+          </div>
+        </div>
+
+        {# ── Ce qui conditionne l'usage du bien ── #}
+        <p class="pt-2 text-[13px] font-medium">{% trans "Conditions, charges et préemption" %}</p>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="acte-conditions" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Conditions suspensives" %}</label>
+            <textarea id="acte-conditions" name="conditions_suspensives" rows="2" placeholder="{% trans 'prêt, purge du droit de préemption, arpentage…' %}"></textarea>
+          </div>
+          <div>
+            <label for="acte-charges" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Charges et servitudes" %}</label>
+            <textarea id="acte-charges" name="charges_et_servitudes" rows="2" placeholder="{% trans 'passage, vue, écoulement des eaux…' %}"></textarea>
+          </div>
         </div>
         <div>
+          <label for="acte-preemption" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Droit de préemption" %}</label>
+          <textarea id="acte-preemption" name="droit_preemption" rows="2" placeholder="{% trans 'SAFER, preneur en place, commune…' %}"></textarea>
+        </div>
+
+        <div>
           <label for="acte-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
-          <textarea id="acte-notes" name="notes" rows="2" placeholder="{% trans 'conditions suspensives, servitudes…' %}"></textarea>
+          <textarea id="acte-notes" name="notes" rows="2"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-1">
           <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

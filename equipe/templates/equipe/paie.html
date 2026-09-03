@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{{ lignes_par_fiche|json_script:"lignes-par-fiche" }}
+<section class="space-y-5" x-data="paieUI()">
+
+  <p class="hs-crumb">{% trans "RH" %} · {% trans "Paie" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    {% trans "Rubriques :" as libelle_rubriques %}
+    <h1 class="text-[20px]">{% trans "Paie" %}</h1>
+    <button type="button" @click="ouvrir()" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une fiche de paie" %}
+    </button>
+  </div>
+
+  <p class="rounded-[10px] px-4 py-2.5 text-[13px]"
+     style="border: 0.5px solid var(--border); background: var(--surface-alt); color: var(--text-secondary)">
+    {% trans "Isidor enregistre et édite vos bulletins, il ne calcule pas la paie : les taux MSA, la convention collective et les exonérations relèvent de votre comptable ou du service TESA. Saisissez ici les montants qu'ils vous fournissent — l'addition des rubriques est vérifiée." %}
+  </p>
+
+  {# ── Saisie d'une fiche ── #}
+  <form x-show="ouvert" x-cloak method="post"
+        :action="fiche.id ? '{% url 'equipe:fiche_edit' 0 %}'.replace('/0/', '/' + fiche.id + '/') : '{% url 'equipe:fiche_create' %}'"
+        class="hs-card p-6 sm:p-8">
+    {% csrf_token %}
+    {% trans "Modifier la fiche de paie" as libelle_modifier %}
+    {% trans "Nouvelle fiche de paie" as libelle_nouvelle %}
+    <h2 class="mb-4 text-[15px] font-medium" x-text="fiche.id ? '{{ libelle_modifier|escapejs }}' : '{{ libelle_nouvelle|escapejs }}'"></h2>
+
+    {% if membres %}
+      <div class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-membre">{% trans "Salarié" %} <span style="color: var(--danger)">*</span></label>
+          <select id="f-membre" name="membre" x-model="fiche.membre" required class="w-full">
+            <option value="">—</option>
+            {% for m in membres %}<option value="{{ m.pk }}">{{ m.name }}</option>{% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-debut">{% trans "Période du" %} <span style="color: var(--danger)">*</span></label>
+          <input id="f-debut" type="date" name="periode_debut" x-model="fiche.periode_debut" required class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-fin">{% trans "au" %} <span style="color: var(--danger)">*</span></label>
+          <input id="f-fin" type="date" name="periode_fin" x-model="fiche.periode_fin" required class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-contrat">{% trans "Contrat" %} <span class="font-normal" style="color: var(--text-muted)">({% trans "optionnel" %})</span></label>
+          <select id="f-contrat" name="contrat" x-model="fiche.contrat" class="w-full">
+            <option value="">—</option>
+            {% for c in contrats %}<option value="{{ c.pk }}">{{ c.membre.name }} · {{ c.get_type_contrat_display }}</option>{% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-heures">{% trans "Heures travaillées" %}</label>
+          <input id="f-heures" name="heures_travaillees" inputmode="decimal" x-model="fiche.heures_travaillees" class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-hsupp">{% trans "Heures supplémentaires" %}</label>
+          <input id="f-hsupp" name="heures_supplementaires" inputmode="decimal" x-model="fiche.heures_supplementaires" class="w-full">
+        </div>
+      </div>
+
+      {# ── Rubriques : ce que l'employeur ou son comptable a établi ── #}
+      <h3 class="mt-6 text-[13px] font-medium">{% trans "Rubriques" %}</h3>
+      <div class="mt-2 space-y-1.5">
+        <template x-for="(l, i) in fiche.lignes" :key="i">
+          <div class="flex flex-wrap items-center gap-2">
+            <input type="text" x-model="l.libelle" placeholder="{% trans 'ex : Retraite complémentaire' %}"
+                   class="min-w-0 flex-1" style="min-width: 12rem">
+            <input type="text" x-model="l.base" inputmode="decimal" placeholder="{% trans 'base' %}" class="w-24">
+            <input type="text" x-model="l.taux" inputmode="decimal" placeholder="{% trans 'taux %' %}" class="w-20">
+            <input type="text" x-model="l.part_salariale" inputmode="decimal" placeholder="{% trans 'salarié' %}" class="w-24">
+            <input type="text" x-model="l.part_patronale" inputmode="decimal" placeholder="{% trans 'employeur' %}" class="w-24">
+            <button type="button" @click="fiche.lignes.splice(i, 1)" title="{% trans 'Retirer' %}"
+                    class="grid h-7 w-7 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                    style="color: var(--text-muted)">
+              <span class="material-icons-round text-[16px]">close</span>
+            </button>
+          </div>
+        </template>
+      </div>
+      <button type="button" @click="ajouterLigne()"
+              class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium transition hover:opacity-80" style="color: var(--action)">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une rubrique" %}
+      </button>
+      <input type="hidden" name="lignes" :value="JSON.stringify(fiche.lignes)">
+
+      {# ── Totaux ── #}
+      <h3 class="mt-6 text-[13px] font-medium">{% trans "Totaux" %}</h3>
+      <div class="mt-2 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-brut">{% trans "Salaire brut (€)" %}</label>
+          <input id="f-brut" name="salaire_brut" inputmode="decimal" x-model="fiche.salaire_brut" class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-cotsal">{% trans "Cotisations salariales (€)" %}</label>
+          <input id="f-cotsal" name="cotisations_salariales" inputmode="decimal" x-model="fiche.cotisations_salariales" class="w-full">
+          <p class="mt-1 text-[12px]" style="color: var(--text-muted)" x-show="fiche.lignes.length"
+             x-text="'{{ libelle_rubriques|escapejs }} ' + sommeSalariale().toFixed(2) + ' €'"></p>
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-cotpat">{% trans "Cotisations patronales (€)" %}</label>
+          <input id="f-cotpat" name="cotisations_patronales" inputmode="decimal" x-model="fiche.cotisations_patronales" class="w-full">
+          <p class="mt-1 text-[12px]" style="color: var(--text-muted)" x-show="fiche.lignes.length"
+             x-text="'{{ libelle_rubriques|escapejs }} ' + sommePatronale().toFixed(2) + ' €'"></p>
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-imposable">{% trans "Net imposable (€)" %}</label>
+          <input id="f-imposable" name="net_imposable" inputmode="decimal" x-model="fiche.net_imposable" class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-net">{% trans "Net à payer (€)" %}</label>
+          <input id="f-net" name="net_a_payer" inputmode="decimal" x-model="fiche.net_a_payer" class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-statut">{% trans "Statut" %}</label>
+          <select id="f-statut" name="statut" x-model="fiche.statut" class="w-full">
+            {% for code, libelle in statuts %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-paiement">{% trans "Payée le" %}</label>
+          <input id="f-paiement" type="date" name="date_paiement" x-model="fiche.date_paiement" class="w-full">
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-mode">{% trans "Mode de paiement" %}</label>
+          <input id="f-mode" name="mode_paiement" x-model="fiche.mode_paiement" class="w-full" placeholder="{% trans 'ex : virement' %}">
+        </div>
+        <div class="sm:col-span-3">
+          <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="f-notes">{% trans "Notes" %}</label>
+          <textarea id="f-notes" name="notes" rows="2" x-model="fiche.notes" class="w-full"></textarea>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-2">
+        <button type="button" @click="ouvert = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+        <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+      </div>
+    {% else %}
+      <p class="text-[13px]" style="color: var(--text-secondary)">
+        {% url 'equipe:equipe' as url_equipe %}
+        {% blocktrans %}Ajoutez d'abord un <a href="{{ url_equipe }}" class="underline">membre d'équipe</a>.{% endblocktrans %}
+      </p>
+    {% endif %}
+  </form>
+
+  {# ── Les fiches établies ── #}
+  <div class="hs-card p-5 sm:p-6">
+    <h2 class="text-[15px] font-medium">{% trans "Bulletins" %}</h2>
+    {% if fiches %}
+      <div class="mt-4 space-y-2">
+        {% for f in fiches %}
+          <div class="flex flex-wrap items-center gap-3 rounded-[10px] border px-4 py-3" style="border-color: var(--border)">
+            <span class="min-w-0 flex-1">
+              <span class="block truncate text-sm font-medium">{{ f.membre.name }}</span>
+              <span class="block truncate text-[12px]" style="color: var(--text-muted)">
+                {{ f.periode_debut|date:"SHORT_DATE_FORMAT" }} → {{ f.periode_fin|date:"SHORT_DATE_FORMAT" }}
+                {% if f.heures_travaillees %} · {{ f.heures_travaillees|floatformat:"-1" }} h{% endif %}
+                · {% trans "brut" %} {{ f.salaire_brut|floatformat:2 }} €
+                · {% trans "net" %} {{ f.net_a_payer|floatformat:2 }} €
+                · {% trans "coût employeur" %} {{ f.cout_employeur|floatformat:2 }} €
+              </span>
+              {% if not f.addition_coherente %}
+                <span class="mt-1 block text-[12px]" style="color: var(--warning)">
+                  {% trans "Les rubriques ne totalisent pas les montants annoncés." %}
+                </span>
+              {% endif %}
+            </span>
+            <form method="post" action="{% url 'equipe:fiche_statut' f.pk %}" class="shrink-0">
+              {% csrf_token %}
+              <select name="statut" class="w-auto" onchange="this.form.submit()">
+                {% for code, libelle in statuts %}<option value="{{ code }}" {% if code == f.statut %}selected{% endif %}>{{ libelle }}</option>{% endfor %}
+              </select>
+            </form>
+            {# escapejs : les notes contiennent des retours à la ligne. #}
+            <button type="button" title="{% trans 'Modifier' %}"
+                    class="grid h-8 w-8 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                    style="color: var(--text-muted)"
+                    @click="ouvrir({ id: {{ f.pk }}, membre: '{{ f.membre_id }}', contrat: '{{ f.contrat_id|default_if_none:"" }}', periode_debut: '{{ f.periode_debut|date:"Y-m-d" }}', periode_fin: '{{ f.periode_fin|date:"Y-m-d" }}', heures_travaillees: '{{ f.heures_travaillees|default_if_none:"" }}', heures_supplementaires: '{{ f.heures_supplementaires|default_if_none:"" }}', salaire_brut: '{{ f.salaire_brut|default_if_none:"" }}', cotisations_salariales: '{{ f.cotisations_salariales|default_if_none:"" }}', cotisations_patronales: '{{ f.cotisations_patronales|default_if_none:"" }}', net_imposable: '{{ f.net_imposable|default_if_none:"" }}', net_a_payer: '{{ f.net_a_payer|default_if_none:"" }}', date_paiement: '{{ f.date_paiement|date:"Y-m-d" }}', mode_paiement: '{{ f.mode_paiement|escapejs }}', statut: '{{ f.statut }}', notes: '{{ f.notes|escapejs }}', lignes: (JSON.parse(document.getElementById('lignes-par-fiche').textContent)['{{ f.pk }}'] || []) })">
+              <span class="material-icons-round text-[18px]">edit</span>
+            </button>
+            <a href="{% url 'equipe:fiche_pdf' f.pk %}" target="_blank" rel="noopener"
+               class="grid h-8 w-8 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+               style="color: var(--text-muted)" title="{% trans 'Ouvrir le bulletin' %}">
+              <span class="material-icons-round text-[18px]">picture_as_pdf</span>
+            </a>
+            <form method="post" action="{% url 'equipe:fiche_delete' f.pk %}"
+                  onsubmit="return confirm('{% trans "Supprimer cette fiche de paie ?" %}')" class="leading-none">
+              {% csrf_token %}
+              <button type="submit" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                      style="color: var(--text-muted)" title="{% trans 'Supprimer' %}">
+                <span class="material-icons-round text-[18px]">delete_outline</span>
+              </button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucun bulletin pour le moment." %}</p>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  function paieUI() {
+    const vide = () => ({
+      id: null, membre: '', contrat: '', periode_debut: '', periode_fin: '',
+      heures_travaillees: '', heures_supplementaires: '', salaire_brut: '',
+      cotisations_salariales: '', cotisations_patronales: '', net_imposable: '',
+      net_a_payer: '', date_paiement: '', mode_paiement: '', statut: 'brouillon',
+      notes: '', lignes: [],
+    });
+    const nombre = (v) => parseFloat(String(v ?? '').replace(',', '.')) || 0;
+    return {
+      ouvert: false,
+      fiche: vide(),
+      ouvrir(f) {
+        this.fiche = f ? { ...vide(), ...f } : vide();
+        this.ouvert = true;
+      },
+      ajouterLigne() {
+        this.fiche.lignes.push({ libelle: '', base: '', taux: '', part_salariale: '', part_patronale: '' });
+      },
+      // Somme des rubriques : de l'addition, pas du droit social. Elle s'affiche
+      // à côté du total saisi pour qu'un écart saute aux yeux.
+      sommeSalariale() { return this.fiche.lignes.reduce((s, l) => s + nombre(l.part_salariale), 0); },
+      sommePatronale() { return this.fiche.lignes.reduce((s, l) => s + nombre(l.part_patronale), 0); },
+    };
+  }
+</script>
+{% endblock %}

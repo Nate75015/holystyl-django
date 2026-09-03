@@ -21,10 +21,10 @@
     // Thème clair/sombre persistant (avant rendu pour éviter le flash)
     function theme() {
       return {
-        dark: (localStorage.getItem('holystyl-theme') || 'light') === 'dark',
+        dark: (localStorage.getItem('isidor-theme') || 'light') === 'dark',
         toggle() {
           this.dark = !this.dark;
-          localStorage.setItem('holystyl-theme', this.dark ? 'dark' : 'light');
+          localStorage.setItem('isidor-theme', this.dark ? 'dark' : 'light');
         },
       };
     }
@@ -84,7 +84,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="{% static 'js/app.js' %}" defer></script>
-  <script src="{% static 'js/holystyl-viz.js' %}" defer></script>
+  <script src="{% static 'js/isidor-viz.js' %}" defer></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

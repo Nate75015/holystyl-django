@@ -36,7 +36,7 @@ def test_login_then_dashboard(client):
     assert ok
     resp = client.get(reverse("core:dashboard"), follow=True)
     assert resp.status_code == 200
-    assert b"Holystyl" in resp.content
+    assert b"Isidor" in resp.content
 
 
 @pytest.mark.django_db

@@ -73,8 +73,8 @@ def smtp_send_test(request):
         return Response({"error": "Destinataire requis."}, status=status.HTTP_400_BAD_REQUEST)
     connection = _build_connection(cfg) if cfg else None
     sent = send_mail(
-        "Test email Holystyl",
-        "Ceci est un email de test depuis Holystyl. Votre configuration SMTP fonctionne !",
+        "Test email Isidor",
+        "Ceci est un email de test depuis Isidor. Votre configuration SMTP fonctionne !",
         cfg.from_email if cfg else None,
         [to],
         connection=connection,

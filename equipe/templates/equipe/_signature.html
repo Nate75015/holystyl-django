@@ -1,0 +1,7 @@
+{% load i18n %}{% comment %}
+  Le choix de la signature, posé là où l'employeur signe. Les signatures
+  d'une même ferme portent toutes le même nom : on choisit donc sur l'image,
+  pas dans une liste déroulante où elles seraient indiscernables. Les boutons
+  radio restent dans le DOM quand le panneau est replié — cachés, ils sont
+  tout de même envoyés, et c'est ce qui fige le choix avec le contrat.
+{% endcomment %}<span class="ct-signature" @click.outside="panneau = false"><button type="button" class="ct-parapher" @click="ouvrirPanneau($el)" title="{% trans 'Choisir la signature' %}"><img class="ct-sign-apercu" x-show="urlSignature" :src="urlSignature" alt="{% trans 'Signature choisie' %}"><span class="ct-sign-vide" x-show="!urlSignature">{% trans "Signer à la main" %}</span></button><span class="ct-sign-panneau" :class="{ 'ct-sign-haut': panneauEnHaut }" x-show="panneau" x-cloak><span class="ct-sign-titre">{% trans "Signature de l'employeur" %}</span>{% for s in signatures %}<label class="ct-sign-choix"><input type="radio" name="signature" value="{{ s.pk }}" x-model="signature"><img src="{{ s.fichier.url }}" alt=""></label>{% endfor %}<label class="ct-sign-choix"><input type="radio" name="signature" value="" x-model="signature"><span class="ct-sign-vide">{% trans "Signer à la main" %}</span></label></span></span>

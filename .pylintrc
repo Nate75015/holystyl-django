@@ -1,4 +1,4 @@
-# Configuration Pylint — projet Django Holystyl.
+# Configuration Pylint — projet Django Isidor.
 # Rend Pylint conscient de Django (managers, settings, modèles) et lui fait
 # résoudre les imports via le venv du projet.
 

@@ -2,7 +2,11 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5" x-data="{ modal: false, tab: 'tous', q: '', filtre: false, rdv: { open: false, professionnel: '', telephone: '' } }">
+{% trans "Lecture en cours…" as libelle_lecture %}
+{% trans "Lire le document" as libelle_lire %}
+{% trans "Champs pré-remplis. Relisez-les." as libelle_lu %}
+{% trans "Aucun document sélectionné." as libelle_sans_fichier %}
+<section class="space-y-5" x-data="assurancesUI('{% url 'contrat:assurance_scanner' %}')">
 
   {# Fil d'Ariane #}
   <p class="hs-crumb">{% trans "Contrat" %} · {% trans "Assurances" %}</p>
@@ -33,61 +37,188 @@
   </div>
 
   {# Indicateurs #}
+  {# grid-cols-5 n'est pas dans le CSS compilé : on s'en tient à quatre colonnes. #}
   <div class="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
     <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Polices" %}</p><p class="text-[22px]">{{ kpi_count }}</p></div>
     <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Actives" %}</p><p class="text-[22px]">{{ kpi_actives }}</p></div>
+    <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "À échéance" %}</p><p class="text-[22px]"{% if echeances_proches %} style="color: var(--warning)"{% endif %}>{{ echeances_proches|length }}</p></div>
     <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Prime annuelle" %}</p><p class="text-[22px]">{{ kpi_prime }} €</p></div>
     <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Capital assuré" %}</p><p class="text-[22px]">{{ kpi_capital }} €</p></div>
   </div>
 
-  {# Table #}
-  <div class="hs-card overflow-hidden">
-    <table class="hs-table">
-      <thead>
-        <tr>
-          <th>{% trans "Assureur" %}</th>
-          <th>{% trans "Garantie" %}</th>
-          <th class="num">{% trans "Échéance" %}</th>
-          <th class="num">{% trans "Prime" %}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for a in assurances %}
-          <tr x-show="(tab === 'tous' || tab === '{{ a.statut }}') && (!q || '{{ a.intitule|escapejs }} {{ a.assureur|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
-            <td>
-              <span>{{ a.assureur|default:"—" }}</span>
-              <span class="block text-[12px]" style="color: var(--text-muted)">{{ a.intitule }}{% if a.numero_police %} · {{ a.numero_police }}{% endif %}</span>
-            </td>
-            <td style="color: var(--text-secondary)">{{ a.get_type_assurance_display }}</td>
-            <td class="num" style="color: var(--text-secondary)">{% if a.date_fin %}{{ a.date_fin|date:"d/m/Y" }}{% else %}—{% endif %}</td>
-            <td class="num">{{ a.prime_annuelle|default_if_none:"—" }}{% if a.prime_annuelle %} €{% endif %}</td>
-            <td class="num">
-              <div class="flex items-center justify-end gap-1">
-                <button type="button" title="{% trans 'Prendre rendez-vous' %}" class="align-middle" style="color: var(--text-muted)"
-                        @click="rdv = { open: true, professionnel: '{{ a.assureur|escapejs }}', telephone: '' }">
-                  <span class="material-icons-round text-[17px]">event</span>
-                </button>
-                <form method="post" action="{% url 'contrat:assurance_delete' a.pk %}" onsubmit="return confirm('{% trans "Supprimer cette assurance ?" %}')">
-                  {% csrf_token %}
-                  <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
-                </form>
-              </div>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% if not assurances %}
-      <div class="px-14 py-10 text-center">
+  {# Échéances proches : c'est là que se joue la renégociation. #}
+  {% if echeances_proches %}
+    <div class="rounded-[10px] px-4 py-3 text-[13px]"
+         style="border: 0.5px solid var(--warning); background: color-mix(in srgb, var(--warning) 8%, transparent)">
+      <p class="font-medium" style="color: var(--warning)">
+        {% blocktrans count n=echeances_proches|length %}Une police arrive à échéance{% plural %}{{ n }} polices arrivent à échéance{% endblocktrans %}
+      </p>
+      <p class="mt-1" style="color: var(--text-secondary)">
+        {% for a in echeances_proches %}{{ a.intitule }} — {{ a.date_fin|date:"d/m/Y" }} ({{ a.jours_avant_echeance }} {% trans "jours" %}){% if not forloop.last %} · {% endif %}{% endfor %}
+      </p>
+      <p class="mt-1" style="color: var(--text-muted)">{% trans "Le préavis de résiliation est de deux mois dans la plupart des contrats : passé ce délai, la reconduction est tacite." %}</p>
+    </div>
+  {% endif %}
+
+  {# Les polices, en fiches : le jour du sinistre on cherche un téléphone et un délai, pas une colonne. #}
+  <div class="grid gap-4 lg:grid-cols-2">
+    {% for a in assurances %}
+      <div class="hs-card p-5"
+           x-show="(tab === 'tous' || tab === '{{ a.statut }}') && (!q || '{{ a.intitule|escapejs }} {{ a.assureur|escapejs }} {{ a.numero_police|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
+
+        <div class="flex flex-wrap items-start justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-[15px] font-medium">{{ a.intitule }}</p>
+            <p class="text-[12px]" style="color: var(--text-muted)">
+              {{ a.get_type_assurance_display }}
+              {% if a.assureur %} · {{ a.assureur }}{% endif %}
+              {% if a.numero_police %} · n° {{ a.numero_police }}{% endif %}
+            </p>
+          </div>
+          <span class="hs-badge shrink-0 {% if a.est_en_vigueur %}hs-badge-success{% elif a.statut == 'resiliee' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ a.get_statut_display }}</span>
+        </div>
+
+        {# Échéance et sortie #}
+        <p class="mt-2 text-[12px]" style="color: var(--text-secondary)">
+          {% if a.date_fin %}
+            {% trans "Échéance" %} {{ a.date_fin|date:"d/m/Y" }}
+            {% if a.jours_avant_echeance >= 0 %}<span{% if a.echeance_proche %} style="color: var(--warning)"{% endif %}> — {{ a.jours_avant_echeance }} {% trans "jours" %}</span>
+            {% else %}<span style="color: var(--danger)"> — {% trans "dépassée" %}</span>{% endif %}
+          {% else %}{% trans "Sans échéance renseignée" %}{% endif %}
+          {% if a.date_resiliation %} · {% trans "résiliée le" %} {{ a.date_resiliation|date:"d/m/Y" }}{% endif %}
+          {% if a.preavis_resiliation_jours %} · {% trans "préavis" %} {{ a.preavis_resiliation_jours }} {% trans "j" %}{% endif %}
+          {% if not a.tacite_reconduction %} · {% trans "sans tacite reconduction" %}{% endif %}
+        </p>
+
+        {# En cas de sinistre : ce qu'on cherche dans l'urgence. #}
+        {% if a.telephone_sinistre or a.delai_declaration_jours or a.franchise %}
+          <div class="mt-3 rounded-[10px] px-3 py-2.5" style="background: var(--surface-alt)">
+            <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "En cas de sinistre" %}</p>
+            <div class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px]">
+              {% if a.telephone_sinistre %}
+                <a href="tel:{{ a.telephone_sinistre }}" class="inline-flex items-center gap-1 font-medium" style="color: var(--action)">
+                  <span class="material-icons-round text-[16px]">call</span>{{ a.telephone_sinistre }}
+                </a>
+              {% endif %}
+              {% if a.delai_declaration_jours %}
+                <span>{% blocktrans with n=a.delai_declaration_jours %}à déclarer sous {{ n }} jours{% endblocktrans %}</span>
+              {% endif %}
+              {% if a.franchise %}<span style="color: var(--text-secondary)">{% trans "franchise" %} : {{ a.franchise }}</span>{% endif %}
+            </div>
+            {% if a.procedure_sinistre %}
+              <p class="mt-1 text-[12px]" style="color: var(--text-secondary)">{{ a.procedure_sinistre }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {# Montants #}
+        <div class="mt-3 grid grid-cols-3 gap-2 text-[13px]">
+          <div><p class="text-[11px]" style="color: var(--text-muted)">{% trans "Prime / an" %}</p><p>{% if a.prime_annuelle %}{{ a.prime_annuelle|floatformat:"-2" }} €{% else %}—{% endif %}</p></div>
+          <div><p class="text-[11px]" style="color: var(--text-muted)">{% trans "Capital" %}</p><p>{% if a.capital_assure %}{{ a.capital_assure|floatformat:"-2" }} €{% else %}—{% endif %}</p></div>
+          <div><p class="text-[11px]" style="color: var(--text-muted)">{% trans "Plafond" %}</p><p>{% if a.plafond %}{{ a.plafond|floatformat:"-2" }} €{% else %}—{% endif %}</p></div>
+        </div>
+
+        {% if a.garanties %}
+          <details class="mt-3">
+            <summary class="cursor-pointer text-[12px]" style="color: var(--text-muted)">{% trans "Garanties et exclusions" %}</summary>
+            <p class="mt-1 whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ a.garanties }}</p>
+            {% if a.exclusions %}
+              <p class="mt-2 text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Exclusions" %}</p>
+              <p class="whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ a.exclusions }}</p>
+            {% endif %}
+          </details>
+        {% endif %}
+
+        {# Le dossier : les pièces telles qu'elles ont été scannées. #}
+        <div class="mt-3">
+          <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Documents" %}</p>
+          {% for d in a.documents.all %}
+            <div class="mt-1 flex items-center gap-2 text-[13px]">
+              <span class="material-icons-round text-[15px]" style="color: var(--text-muted)">description</span>
+              <a href="{{ d.fichier.url }}" target="_blank" rel="noopener" class="min-w-0 flex-1 truncate underline">{{ d.nom }}</a>
+              <span class="shrink-0 text-[11px]" style="color: var(--text-muted)">{{ d.get_type_document_display }}</span>
+              <form method="post" action="{% url 'contrat:assurance_document_delete' d.pk %}"
+                    onsubmit="return confirm('{% trans "Retirer ce document ?" %}')" class="leading-none">
+                {% csrf_token %}
+                <button type="submit" title="{% trans 'Retirer' %}" style="color: var(--text-muted)"><span class="material-icons-round text-[15px]">close</span></button>
+              </form>
+            </div>
+          {% empty %}
+            <p class="mt-1 text-[12px]" style="color: var(--text-secondary)">{% trans "Aucune pièce au dossier." %}</p>
+          {% endfor %}
+          <form method="post" action="{% url 'contrat:assurance_document' a.pk %}" enctype="multipart/form-data" class="mt-2 flex flex-wrap items-center gap-2">
+            {% csrf_token %}
+            <input type="file" name="document" accept=".pdf,.png,.jpg,.jpeg,.webp,.heic" capture="environment" class="max-w-[16rem] text-[12px]">
+            <select name="type_document" class="w-auto text-[12px]">
+              {% for code, libelle in types_document %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+            </select>
+            <button type="submit" class="hs-btn-outline">{% trans "Joindre" %}</button>
+          </form>
+        </div>
+
+        <div class="mt-4 flex items-center justify-end gap-1">
+          <button type="button" title="{% trans 'Prendre rendez-vous' %}" style="color: var(--text-muted)"
+                  @click="rdv = { open: true, professionnel: '{{ a.assureur|escapejs }}', telephone: '{{ a.telephone_courtier|escapejs }}' }">
+            <span class="material-icons-round text-[17px]">event</span>
+          </button>
+          <form method="post" action="{% url 'contrat:assurance_delete' a.pk %}"
+                onsubmit="return confirm('{% trans "Supprimer cette assurance ?" %}')" class="leading-none">
+            {% csrf_token %}
+            <button type="submit" title="{% trans 'Supprimer' %}" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
+          </form>
+        </div>
+      </div>
+    {% empty %}
+      <div class="hs-card px-14 py-10 text-center lg:col-span-2">
         <p class="text-[15px] font-medium">{% trans "Enregistrez votre première assurance" %}</p>
-        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Suivez vos polices, primes et échéances au même endroit." %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Scannez la police : l'Agent IA en lit l'assureur, les dates, la franchise et le délai de déclaration." %}</p>
         <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Nouvelle assurance" %}</button>
       </div>
-    {% endif %}
+    {% endfor %}
   </div>
 
   {% include "contrat/_assurance_modal.html" %}
   {% include "contrat/_rendez_vous_modal.html" %}
 </section>
+
+<script>
+  function assurancesUI(urlScanner) {
+    // Les champs du formulaire portent le nom que renvoie l'extraction : on
+    // pose la valeur sur celui qui correspond, et on ignore le reste.
+    const poser = (nom, valeur) => {
+      if (valeur === null || valeur === undefined || valeur === '') return;
+      const champ = document.querySelector('#assurance-modal-form [name="' + nom + '"]')
+                 || document.querySelector('form [name="' + nom + '"]');
+      if (!champ) return;
+      if (champ.type === 'checkbox') champ.checked = !!valeur;
+      else champ.value = valeur;
+    };
+    return {
+      modal: false, tab: 'tous', q: '', filtre: false,
+      rdv: { open: false, professionnel: '', telephone: '' },
+      lecture: false, lu: '',
+      async scanner() {
+        const entree = document.getElementById('assurance-document');
+        if (!entree || !entree.files.length) { this.lu = '!{{ libelle_sans_fichier|escapejs }}'; return; }
+        this.lecture = true; this.lu = '';
+        try {
+          const corps = new FormData();
+          corps.append('document', entree.files[0]);
+          const jeton = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          const r = await fetch(urlScanner, {
+            method: 'POST', credentials: 'same-origin',
+            headers: { 'X-CSRFToken': jeton }, body: corps });
+          const d = await r.json();
+          if (d.error) { this.lu = '!' + d.error; return; }
+          Object.entries(d.champs || {}).forEach(([nom, valeur]) => poser(nom, valeur));
+          this.lu = '{{ libelle_lu|escapejs }}';
+        } catch (e) {
+          this.lu = '!' + e;
+        } finally {
+          this.lecture = false;
+        }
+      },
+    };
+  }
+</script>
 {% endblock %}

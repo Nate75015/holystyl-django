@@ -118,7 +118,7 @@ urlpatterns = [
     path("iot/ingest/", IotIngestView.as_view(), name="api-iot-ingest"),
     path("iot/command/poll/", IotCommandPollView.as_view(), name="api-iot-poll"),
     path("iot/command/callback/", IotCommandCallbackView.as_view(), name="api-iot-callback"),
-    # Assistant IA
+    # Agent IA
     path("ai/chat/", AiChatView.as_view(), name="api-ai-chat"),
     path("ai/execute-intent/", AiExecuteIntentView.as_view(), name="api-ai-intent"),
     path("ai/conversations/", AiConversationsView.as_view(), name="api-ai-conversations"),

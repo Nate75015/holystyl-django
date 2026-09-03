@@ -2,19 +2,19 @@
 {% load i18n %}
 
 {% block content %}
-<div class="mx-auto max-w-3xl" x-data="{ cc: {% if form.cc %}true{% else %}false{% endif %}, files: 0 }">
+<div class="hs-fill-viewport flex flex-col" x-data="{ cc: {% if form.cc %}true{% else %}false{% endif %}, files: 0 }">
 
   {% if errors %}
-    <div class="mb-3 rounded-[10px] px-4 py-2.5 text-sm" style="border: 0.5px solid var(--border); background: var(--surface-alt); color: var(--danger)">
+    <div class="mb-3 shrink-0 rounded-[10px] px-4 py-2.5 text-sm" style="border: 0.5px solid var(--border); background: var(--surface-alt); color: var(--danger)">
       {% for err in errors %}<p>{{ err }}</p>{% endfor %}
     </div>
   {% endif %}
 
-  <form method="post" enctype="multipart/form-data" class="hs-card overflow-hidden">
+  <form method="post" enctype="multipart/form-data" class="hs-card flex min-h-0 flex-1 flex-col overflow-hidden">
     {% csrf_token %}
 
     {# En-tête « Nouveau message » #}
-    <div class="flex items-center justify-between px-4 py-2.5" style="background: var(--surface-alt); color: var(--text); border-bottom: 0.5px solid var(--border)">
+    <div class="flex shrink-0 items-center justify-between px-6 py-3" style="background: var(--surface-alt); color: var(--text); border-bottom: 0.5px solid var(--border)">
       <span class="text-sm font-medium">{% trans "Nouveau message" %}</span>
       <a href="{% url 'mail:outbox' %}" class="grid h-7 w-7 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" title="{% trans 'Fermer' %}">
         <span class="material-icons-round text-[18px]">close</span>
@@ -22,12 +22,12 @@
     </div>
 
     {# Champ À + bascule Cc #}
-    <div class="flex items-center gap-2 border-b px-4" style="border-color: var(--border)">
+    <div class="flex shrink-0 items-center gap-2 border-b px-6 py-3" style="border-color: var(--border)">
       <label class="text-sm" style="color: var(--text-muted)">{% trans "À" %}</label>
       <input name="to" value="{{ form.to }}" list="carnet" autocomplete="off" required
              aria-label="{% trans 'Destinataires' %}"
              placeholder="{% trans 'destinataires (séparés par des virgules)' %}"
-             class="input-bare flex-1 bg-transparent py-2.5 text-sm">
+             class="input-bare flex-1 bg-transparent text-sm">
       <button type="button" x-show="!cc" @click="cc = true"
               class="px-1 text-xs font-medium transition hover:[color:var(--action)]" style="color: var(--text-muted)">{% trans "Cc" %}</button>
       {% if contacts %}
@@ -38,33 +38,35 @@
     </div>
 
     {# Champ Cc #}
-    <div x-show="cc" x-collapse class="flex items-center gap-2 border-b px-4" style="border-color: var(--border)">
+    <div x-show="cc" x-collapse class="flex shrink-0 items-center gap-2 border-b px-6 py-3" style="border-color: var(--border)">
       <label class="text-sm" style="color: var(--text-muted)">{% trans "Cc" %}</label>
       <input name="cc" value="{{ form.cc }}" autocomplete="off"
              aria-label="{% trans 'Copie (Cc)' %}" placeholder="{% trans 'copie' %}"
-             class="input-bare flex-1 bg-transparent py-2.5 text-sm">
+             class="input-bare flex-1 bg-transparent text-sm">
     </div>
 
     {# Objet #}
-    <div class="border-b px-4" style="border-color: var(--border)">
+    <div class="shrink-0 border-b px-6 py-3" style="border-color: var(--border)">
       <input name="subject" value="{{ form.subject }}" required placeholder="{% trans 'Objet' %}"
              aria-label="{% trans 'Objet' %}"
-             class="input-bare w-full bg-transparent py-2.5 text-sm font-medium">
+             class="input-bare w-full bg-transparent text-sm font-medium">
     </div>
 
     {# Corps #}
-    <textarea name="body" rows="12" placeholder="{% trans 'Rédigez votre message…' %}"
-              aria-label="{% trans 'Message' %}"
-              class="input-bare w-full resize-none bg-transparent px-4 py-3 text-sm leading-relaxed">{{ form.body }}</textarea>
+    <div class="flex min-h-0 flex-1 flex-col px-6 py-6">
+      <textarea id="mail-body" name="body" rows="12" placeholder="{% trans 'Rédigez votre message…' %}"
+                aria-label="{% trans 'Message' %}"
+                class="input-bare w-full min-h-0 flex-1 resize-none bg-transparent text-sm leading-relaxed">{{ form.body }}</textarea>
+    </div>
 
     {# Aperçu des pièces jointes #}
-    <div x-show="files > 0" x-cloak class="flex items-center gap-2 border-t px-4 py-2 text-xs" style="border-color: var(--border); color: var(--text-secondary)">
+    <div x-show="files > 0" x-cloak class="flex shrink-0 items-center gap-2 border-t px-6 py-2 text-xs" style="border-color: var(--border); color: var(--text-secondary)">
       <span class="material-icons-round text-[16px]" style="color: var(--action)">attach_file</span>
       <span x-text="files + ' {% trans "fichier(s) joint(s)" %}'"></span>
     </div>
 
     {# Barre d'envoi #}
-    <div class="flex items-center gap-2 border-t px-3 py-2.5" style="border-color: var(--border)">
+    <div class="flex shrink-0 items-center gap-2 border-t px-6 py-3" style="border-color: var(--border)">
       <button type="submit" class="hs-btn-primary">
         {% trans "Envoyer" %}<span class="material-icons-round text-[18px]">send</span>
       </button>
@@ -73,7 +75,10 @@
         <span class="material-icons-round text-[20px]">attach_file</span>
         <input type="file" name="fichiers" multiple class="hidden" @change="files = $event.target.files.length">
       </label>
-      <a href="{% url 'mail:outbox' %}" class="ml-auto rounded-full px-4 py-2 text-sm transition hover:bg-black/5 dark:hover:bg-white/5" style="color: var(--text-secondary)">{% trans "Annuler" %}</a>
+      <div class="ml-auto flex items-center gap-3">
+        {% include "partials/_ai_rewrite.html" with target="mail-body" contexte=_("Corps d'un e-mail professionnel agricole") %}
+        <a href="{% url 'mail:outbox' %}" class="rounded-full px-4 py-2 text-sm transition hover:bg-black/5 dark:hover:bg-white/5" style="color: var(--text-secondary)">{% trans "Annuler" %}</a>
+      </div>
     </div>
   </form>
 </div>

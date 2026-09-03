@@ -1,0 +1,84 @@
+{% load i18n %}
+<section class="mx-auto max-w-3xl space-y-5 px-4 py-8 lg:px-8">
+  {% include "equipe/_messages_public.html" %}
+
+  <a href="{% url 'equipe:emplois' %}" class="inline-flex items-center gap-1 text-[13px]" style="color: var(--text-muted)">
+    <span class="material-icons-round text-[16px]">arrow_back</span>{% trans "Toutes les offres" %}
+  </a>
+
+  <div class="hs-card p-6 sm:p-8">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div class="min-w-0">
+        <h1 class="text-[22px]">{{ offre.titre }}</h1>
+        <p class="mt-1 text-[14px]" style="color: var(--text-secondary)">
+          {{ offre.exploitation.name }}{% if offre.lieu %} · {{ offre.lieu }}{% elif offre.exploitation.city %} · {{ offre.exploitation.city }}{% endif %}
+        </p>
+      </div>
+      <span class="hs-badge hs-badge-neutral shrink-0">{{ offre.get_type_contrat_display }}</span>
+    </div>
+
+    <dl class="mt-5 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+      {% if offre.date_debut %}
+        <div><dt class="text-[12px]" style="color: var(--text-muted)">{% trans "Prise de poste" %}</dt>
+             <dd class="text-[14px]">{{ offre.date_debut|date:"DATE_FORMAT" }}</dd></div>
+      {% endif %}
+      {% if offre.duree_hebdo %}
+        <div><dt class="text-[12px]" style="color: var(--text-muted)">{% trans "Durée hebdomadaire" %}</dt>
+             <dd class="text-[14px]">{{ offre.duree_hebdo|floatformat:"-1" }} {% trans "heures" %}</dd></div>
+      {% endif %}
+      {% if offre.remuneration %}
+        <div><dt class="text-[12px]" style="color: var(--text-muted)">{% trans "Rémunération" %}</dt>
+             <dd class="text-[14px]">{{ offre.remuneration }}</dd></div>
+      {% endif %}
+      {% if offre.logement %}
+        <div><dt class="text-[12px]" style="color: var(--text-muted)">{% trans "Logement" %}</dt>
+             <dd class="text-[14px]">{% trans "Possible sur place" %}</dd></div>
+      {% endif %}
+    </dl>
+
+    <h2 class="mt-6 text-[15px] font-medium">{% trans "Le poste" %}</h2>
+    <p class="mt-2 whitespace-pre-line text-[14px]" style="color: var(--text-secondary)">{{ offre.description }}</p>
+
+    {% if offre.profil %}
+      <h2 class="mt-6 text-[15px] font-medium">{% trans "Profil recherché" %}</h2>
+      <p class="mt-2 whitespace-pre-line text-[14px]" style="color: var(--text-secondary)">{{ offre.profil }}</p>
+    {% endif %}
+  </div>
+
+  {# ── Candidature : ouverte, sans compte ── #}
+  <form method="post" action="{% url 'equipe:candidater' offre.slug %}" enctype="multipart/form-data"
+        class="hs-card p-6 sm:p-8">
+    {% csrf_token %}
+    <h2 class="text-[15px] font-medium">{% trans "Postuler" %}</h2>
+    <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Pas besoin de compte : la ferme reçoit votre message directement." %}</p>
+
+    <div class="mt-5 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-nom">{% trans "Votre nom" %} <span style="color: var(--danger)">*</span></label>
+        <input id="p-nom" name="nom" required class="w-full">
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-email">{% trans "Votre email" %} <span style="color: var(--danger)">*</span></label>
+        <input id="p-email" name="email" type="email" required class="w-full">
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-tel">{% trans "Téléphone" %}</label>
+        <input id="p-tel" name="telephone" type="tel" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-cv">{% trans "CV" %} <span class="font-normal" style="color: var(--text-muted)">({% trans "optionnel" %})</span></label>
+        <input id="p-cv" name="cv" type="file" class="w-full"
+               accept=".pdf,.doc,.docx,.odt,.rtf,.jpg,.jpeg,.png">
+        <p class="mt-1 text-[12px]" style="color: var(--text-muted)">{% trans "PDF, Word, OpenDocument ou photo — 5 Mo maximum." %}</p>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="p-message">{% trans "Votre message" %}</label>
+        <textarea id="p-message" name="message" rows="4" class="w-full"
+                  placeholder="{% trans 'Dites en quelques lignes ce qui vous intéresse dans ce poste et ce que vous savez faire.' %}"></textarea>
+      </div>
+    </div>
+    <div class="mt-6 flex justify-end">
+      <button type="submit" class="hs-btn-primary">{% trans "Envoyer ma candidature" %}</button>
+    </div>
+  </form>
+</section>

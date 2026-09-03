@@ -1,55 +1,166 @@
 {% load i18n %}
+{% comment %}
+  Saisie d'un bail rural. Le scan ouvre le formulaire : on part du bail reçu,
+  pas d'une page blanche. Ce que l'IA lit pré-remplit sans enregistrer — un
+  bail se joue sur dix-huit mois de préavis et neuf ans de reconduction, une
+  date mal recopiée ne se découvre qu'au renouvellement.
+
+  `items-center` est absent à dessein : sur un conteneur qui défile, il rend le
+  haut inatteignable. Le centrage passe par `my-auto` sur l'enfant.
+{% endcomment %}
 <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-  <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+     class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+  <div @click.self="modal = false" class="my-auto flex w-full max-w-5xl justify-center">
     <div class="hs-popover w-full p-5">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-[16px] font-medium">{% trans "Nouveau bail" %}</h2>
         <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
       </div>
-      <form method="post" action="{% url 'contrat:bail_create' %}" class="space-y-3">
+
+      <form id="bail-modal-form" method="post" action="{% url 'contrat:bail_create' %}" enctype="multipart/form-data" class="space-y-3">
         {% csrf_token %}
+
+        {# ── Scanner le bail ── #}
+        <div class="rounded-[10px] p-4" style="border: 0.5px solid var(--border); background: var(--surface-alt)">
+          <p class="text-sm font-medium">{% trans "Scanner le bail" %}</p>
+          <p class="mt-0.5 text-[12px]" style="color: var(--text-secondary)">
+            {% trans "Photographiez le bail ou déposez le PDF : l'Agent IA en lit les parties, les dates, la surface, le fermage et le préavis de congé. Relisez avant d'enregistrer." %}
+          </p>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <input type="file" name="document" id="bail-document" accept=".pdf,.png,.jpg,.jpeg,.webp,.heic"
+                   capture="environment" class="max-w-xs text-[13px]" @change="lu = ''">
+            <select name="type_document" class="w-auto text-[13px]">
+              {% for code, libelle in types_document %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+            </select>
+            <button type="button" class="hs-chip-btn" :disabled="lecture" @click="scanner()">
+              <span class="material-icons-round text-[16px]" x-text="lecture ? 'hourglass_empty' : 'document_scanner'">document_scanner</span>
+              <span x-text="lecture ? '{{ libelle_lecture|escapejs }}' : '{{ libelle_lire|escapejs }}'">{% trans "Lire le document" %}</span>
+            </button>
+            <span x-show="lu" x-cloak class="text-[12px]" :style="lu.startsWith('!') ? 'color: var(--danger)' : 'color: var(--success)'"
+                  x-text="lu.replace(/^!/, '')"></span>
+          </div>
+        </div>
+
         <div>
           <label for="bail-designation" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Désignation" %} <span style="color: var(--danger)">*</span></label>
-          <input id="bail-designation" name="designation" required placeholder="{% trans 'ex: bail parcelles nord' %}">
+          <input id="bail-designation" name="designation" required placeholder="{% trans 'ex: parcelles des Coteaux' %}">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="bail-type" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type de bail" %}</label>
+            <select id="bail-type" name="type_bail">{% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
+          <div>
+            <label for="bail-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
+            <select id="bail-statut" name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label for="bail-bailleur" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Bailleur" %}</label>
-            <input id="bail-bailleur" name="bailleur" placeholder="{% trans 'propriétaire' %}">
+            <input id="bail-bailleur" name="bailleur">
           </div>
           <div>
             <label for="bail-preneur" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Preneur" %}</label>
-            <input id="bail-preneur" name="preneur" placeholder="{% trans 'exploitant' %}">
+            <input id="bail-preneur" name="preneur">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
+            <label for="bail-tel" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Téléphone du bailleur" %}</label>
+            <input id="bail-tel" name="contact_telephone" type="tel">
+          </div>
+          <div>
+            <label for="bail-email" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Email du bailleur" %}</label>
+            <input id="bail-email" name="contact_email" type="email">
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
             <label for="bail-surface" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Surface (ha)" %}</label>
-            <input id="bail-surface" name="surface_ha" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0">
+            <input id="bail-surface" name="surface_ha" inputmode="decimal">
           </div>
           <div>
             <label for="bail-loyer" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Fermage annuel (€)" %}</label>
-            <input id="bail-loyer" name="loyer_annuel" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+            <input id="bail-loyer" name="loyer_annuel" inputmode="decimal">
+          </div>
+          <div>
+            <label for="bail-loyer-base" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Loyer de base (€/ha)" %}</label>
+            <input id="bail-loyer-base" name="loyer_base_ha" inputmode="decimal">
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="bail-debut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de début" %}</label>
+            <input id="bail-debut" name="date_debut" type="date">
+          </div>
+          <div>
+            <label for="bail-fin" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Terme" %}</label>
+            <input id="bail-fin" name="date_fin" type="date">
+          </div>
+          <div>
+            <label for="bail-resiliation" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Résilié le" %}</label>
+            <input id="bail-resiliation" name="date_resiliation" type="date">
+          </div>
+        </div>
+
+        {# ── Les délais, qui ne se rattrapent pas ── #}
+        <p class="pt-2 text-[13px] font-medium">{% trans "Congé et renouvellement" %}</p>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="bail-preavis" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Préavis de congé (mois)" %}</label>
+            <input id="bail-preavis" name="preavis_conge_mois" inputmode="numeric" value="18">
+          </div>
+          <div>
+            <label for="bail-revision" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Révision du fermage" %}</label>
+            <input id="bail-revision" name="date_revision_fermage" type="date">
+          </div>
+          <div>
+            <label for="bail-annee-ref" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Année de référence" %}</label>
+            <input id="bail-annee-ref" name="annee_reference" inputmode="numeric">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="flex items-center gap-2.5 text-sm">
+            <input type="checkbox" name="renouvellement_tacite" checked class="h-4 w-4" style="accent-color: var(--action)">
+            {% trans "Renouvellement tacite" %}
+          </label>
+          <label class="flex items-center gap-2.5 text-sm">
+            <input type="checkbox" name="etat_des_lieux" class="h-4 w-4" style="accent-color: var(--action)">
+            {% trans "État des lieux établi" %}
+          </label>
+        </div>
+
+        {# ── Parcelles, charges et clauses ── #}
+        <p class="pt-2 text-[13px] font-medium">{% trans "Parcelles, charges et clauses" %}</p>
+        <div>
+          <label for="bail-cadastre" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Références cadastrales" %}</label>
+          <textarea id="bail-cadastre" name="references_cadastrales" rows="2" placeholder="{% trans 'ex: ZA 12, ZA 14, ZB 3' %}"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="bail-charges" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Charges récupérables" %}</label>
+            <textarea id="bail-charges" name="charges_recuperables" rows="2"></textarea>
+          </div>
+          <div>
+            <label for="bail-taxe" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Part de taxe foncière au preneur (%)" %}</label>
+            <input id="bail-taxe" name="taxe_fonciere_part_preneur" inputmode="decimal" placeholder="20">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label for="bail-date-debut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de début" %}</label>
-            <input id="bail-date-debut" name="date_debut" type="date">
+            <label for="bail-env" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Clauses environnementales" %}</label>
+            <textarea id="bail-env" name="clauses_environnementales" rows="2"></textarea>
           </div>
           <div>
-            <label for="bail-date-fin" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Date de fin" %}</label>
-            <input id="bail-date-fin" name="date_fin" type="date">
+            <label for="bail-preemption" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Droit de préemption" %}</label>
+            <textarea id="bail-preemption" name="droit_preemption" rows="2"></textarea>
           </div>
         </div>
-        <div>
-          <label for="bail-statut" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Statut" %}</label>
-          <select id="bail-statut" name="statut">{% for value, label in statuts %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
-        </div>
+
         <div>
           <label for="bail-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
-          <textarea id="bail-notes" name="notes" rows="2" placeholder="{% trans 'clauses, révision du fermage…' %}"></textarea>
+          <textarea id="bail-notes" name="notes" rows="2"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-1">
           <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>

@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{ ouvert: null, modele: {} }">
+
+  <p class="hs-crumb">{% trans "RH" %} · {% trans "Contrats de travail" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Contrats de travail" %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" @click="ouvert = ouvert === 'modele' ? null : 'modele'; modele = {}" class="hs-btn-outline">
+        <span class="material-icons-round text-[18px]">post_add</span>{% trans "Nouveau modèle" %}
+      </button>
+      <button type="button" @click="ouvert = ouvert === 'contrat' ? null : 'contrat'" class="hs-btn-primary">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Établir un contrat" %}
+      </button>
+    </div>
+  </div>
+
+  <p class="rounded-[10px] px-4 py-2.5 text-[13px]"
+     style="border: 0.5px solid var(--border); background: var(--surface-alt); color: var(--text-secondary)">
+    {% trans "Ces modèles sont des points de départ : les clauses obligatoires, la période d'essai et la rémunération dépendent de la convention collective applicable. Faites relire un contrat avant de le remettre." %}
+  </p>
+
+  {# ── Établir un contrat : le modèle choisi s'ouvre en document à remplir ── #}
+  <div x-show="ouvert === 'contrat'" x-cloak class="hs-card p-6 sm:p-8">
+    <h2 class="text-[15px] font-medium">{% trans "Établir un contrat" %}</h2>
+    <p class="mb-4 mt-1 text-[13px]" style="color: var(--text-secondary)">
+      {% trans "Choisissez le modèle : le contrat s'ouvre comme un document et chaque blanc propose ce que l'exploitation sait déjà." %}
+    </p>
+    {% if membres and modeles %}
+      <div class="grid gap-2 sm:grid-cols-2">
+        {% for m in modeles %}
+          <a href="{% url 'equipe:contrat_etablir' m.pk %}"
+             class="flex items-center justify-between gap-3 rounded-[10px] p-3 transition hover:bg-black/5 dark:hover:bg-white/10"
+             style="border: 0.5px solid var(--border)">
+            <span class="min-w-0">
+              <span class="block truncate text-sm font-medium">{{ m.nom }}</span>
+              <span class="block text-[12px]" style="color: var(--text-muted)">{{ m.get_type_contrat_display }}</span>
+            </span>
+            <span class="material-icons-round text-[18px]" style="color: var(--text-muted)">arrow_forward</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-[13px]" style="color: var(--text-secondary)">
+        {% if not membres %}{% url 'equipe:equipe' as url_equipe %}{% blocktrans %}Ajoutez d'abord un <a href="{{ url_equipe }}" class="underline">membre d'équipe</a>.{% endblocktrans %}
+        {% else %}{% trans "Créez ou importez d'abord un modèle de contrat." %}{% endif %}
+      </p>
+    {% endif %}
+  </div>
+
+  {# ── Éditeur de modèle ── #}
+  <form x-show="ouvert === 'modele'" x-cloak method="post"
+        :action="modele.id ? '{% url 'equipe:modele_edit' 0 %}'.replace('/0/', '/' + modele.id + '/') : '{% url 'equipe:modele_create' %}'"
+        class="hs-card p-6 sm:p-8">
+    {% csrf_token %}
+    {% trans "Modifier le modèle" as libelle_modifier %}
+    {% trans "Nouveau modèle" as libelle_nouveau %}
+    <h2 class="mb-4 text-[15px] font-medium" x-text="modele.id ? '{{ libelle_modifier|escapejs }}' : '{{ libelle_nouveau|escapejs }}'"></h2>
+    <div class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-nom">{% trans "Nom du modèle" %} <span style="color: var(--danger)">*</span></label>
+        <input id="m-nom" name="nom" required x-model="modele.nom" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-type">{% trans "Type" %}</label>
+        <select id="m-type" name="type_contrat" x-model="modele.type_contrat" class="w-full">
+          {% for code, libelle in types %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-corps">{% trans "Corps du contrat" %} <span style="color: var(--danger)">*</span></label>
+        <textarea id="m-corps" name="corps" rows="16" required x-model="modele.corps"
+                  class="w-full font-mono text-[12px]"></textarea>
+        <details class="mt-2">
+          <summary class="cursor-pointer text-[12px]" style="color: var(--text-muted)">{% trans "Jetons disponibles" %}</summary>
+          <div class="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">
+            {% for cle, libelle in jetons %}
+              <p class="text-[12px]" style="color: var(--text-secondary)">
+                <code>{% templatetag openvariable %} {{ cle }} {% templatetag closevariable %}</code> — {{ libelle }}
+              </p>
+            {% endfor %}
+          </div>
+          <p class="mt-2 text-[12px]" style="color: var(--text-muted)">{% trans "Un jeton laissé vide devient une ligne de pointillés à compléter à la main." %}</p>
+        </details>
+      </div>
+    </div>
+    <div class="mt-6 flex justify-end gap-2">
+      <button type="button" @click="ouvert = null" class="hs-btn-outline">{% trans "Annuler" %}</button>
+      <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+    </div>
+  </form>
+
+  {# ── Les modèles ── #}
+  <div class="hs-card p-5 sm:p-6">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[15px] font-medium">{% trans "Mes modèles" %}</h2>
+      {% if not modeles %}
+        <form method="post" action="{% url 'equipe:modeles_importer' %}">
+          {% csrf_token %}
+          <button type="submit" class="hs-btn-outline">{% trans "Importer les modèles types" %}</button>
+        </form>
+      {% endif %}
+    </div>
+    {% if modeles %}
+      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {% for m in modeles %}
+          <div class="rounded-[10px] border p-4" style="border-color: var(--border)">
+            <div class="flex items-start justify-between gap-2">
+              <p class="min-w-0 truncate text-sm font-medium">{{ m.nom }}</p>
+              <form method="post" action="{% url 'equipe:modele_delete' m.pk %}"
+                    onsubmit="return confirm('{% trans "Supprimer ce modèle ?" %}')" class="leading-none">
+                {% csrf_token %}
+                <button type="submit" class="grid h-7 w-7 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                        style="color: var(--text-muted)" title="{% trans 'Supprimer' %}">
+                  <span class="material-icons-round text-[16px]">delete_outline</span>
+                </button>
+              </form>
+            </div>
+            <p class="text-[12px]" style="color: var(--text-muted)">{{ m.get_type_contrat_display }}</p>
+            {# escapejs neutralise les retours à la ligne du corps, sinon la chaîne JS casse. #}
+            <div class="mt-3 flex flex-wrap items-center gap-3 text-[12px]">
+              <button type="button" class="underline" style="color: var(--text-muted)"
+                      @click="ouvert = 'modele'; modele = { id: {{ m.pk }}, nom: '{{ m.nom|escapejs }}', type_contrat: '{{ m.type_contrat|escapejs }}', corps: '{{ m.corps|escapejs }}' }">
+                {% trans "Modifier" %}
+              </button>
+              <a href="{% url 'equipe:contrat_etablir' m.pk %}"
+                 class="inline-flex items-center gap-1 underline" style="color: var(--action)">
+                <span class="material-icons-round text-[14px]">edit_note</span>{% trans "Établir" %}
+              </a>
+              {% comment %} Vierge, à imprimer et remplir à la main. {% endcomment %}
+              <a href="{% url 'equipe:modele_pdf' m.pk %}" target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-1 underline" style="color: var(--text-muted)">
+                <span class="material-icons-round text-[14px]">picture_as_pdf</span>{% trans "PDF vierge" %}
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Aucun modèle. Importez les modèles types (CDI, CDD, saisonnier, apprentissage, stage) puis adaptez-les à votre exploitation." %}
+      </p>
+    {% endif %}
+  </div>
+
+  {# ── Les contrats établis ── #}
+  <div class="hs-card p-5 sm:p-6">
+    <h2 class="text-[15px] font-medium">{% trans "Contrats établis" %}</h2>
+    {% if contrats %}
+      <div class="mt-4 space-y-2">
+        {% for c in contrats %}
+          <div class="flex flex-wrap items-center gap-3 rounded-[10px] border px-4 py-3" style="border-color: var(--border)">
+            <span class="min-w-0 flex-1">
+              <span class="block truncate text-sm font-medium">{{ c.membre.name }}</span>
+              <span class="block truncate text-[12px]" style="color: var(--text-muted)">
+                {{ c.get_type_contrat_display }}{% if c.poste %} · {{ c.poste }}{% endif %}
+                {% if c.date_debut %} · {% trans "depuis le" %} {{ c.date_debut|date:"SHORT_DATE_FORMAT" }}{% endif %}
+                {% if c.date_fin %} → {{ c.date_fin|date:"SHORT_DATE_FORMAT" }}{% endif %}
+              </span>
+            </span>
+            <span class="hs-badge hs-badge-neutral shrink-0">{{ c.get_statut_display }}</span>
+            <form method="post" action="{% url 'equipe:contrat_edit' c.pk %}" class="flex shrink-0 items-center gap-2">
+              {% csrf_token %}
+              <input type="hidden" name="poste" value="{{ c.poste }}">
+              <input type="hidden" name="lieu" value="{{ c.lieu }}">
+              <input type="hidden" name="date_debut" value="{{ c.date_debut|date:'Y-m-d' }}">
+              <input type="hidden" name="date_fin" value="{{ c.date_fin|date:'Y-m-d' }}">
+              <input type="hidden" name="duree_hebdo" value="{{ c.duree_hebdo|default_if_none:'' }}">
+              <input type="hidden" name="remuneration" value="{{ c.remuneration|default_if_none:'' }}">
+              <select name="statut" class="w-auto" onchange="this.form.submit()">
+                {% for code, libelle in statuts %}<option value="{{ code }}" {% if code == c.statut %}selected{% endif %}>{{ libelle }}</option>{% endfor %}
+              </select>
+            </form>
+            <a href="{% url 'equipe:contrat_pdf' c.pk %}" target="_blank" rel="noopener"
+               class="grid h-8 w-8 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+               style="color: var(--text-muted)" title="{% trans 'Ouvrir le contrat' %}">
+              <span class="material-icons-round text-[18px]">picture_as_pdf</span>
+            </a>
+            <form method="post" action="{% url 'equipe:contrat_delete' c.pk %}"
+                  onsubmit="return confirm('{% trans "Supprimer ce contrat ?" %}')" class="leading-none">
+              {% csrf_token %}
+              <button type="submit" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                      style="color: var(--text-muted)" title="{% trans 'Supprimer' %}">
+                <span class="material-icons-round text-[18px]">delete_outline</span>
+              </button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="mt-2 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucun contrat établi pour le moment." %}</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

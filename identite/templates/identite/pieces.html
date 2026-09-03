@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% trans "Lecture en cours…" as libelle_lecture %}
+{% trans "Lire le document" as libelle_lire %}
+{% trans "Champs pré-remplis. Relisez-les." as libelle_lu %}
+{% trans "Aucun document sélectionné." as libelle_sans_fichier %}
+{% comment %}
+  Les pièces personnelles : carte, passeport, signature. On les cherche
+  toujours dans l'urgence — un contrôle, un dossier, un départ —, d'où la
+  date d'expiration en champ plutôt qu'en note, et l'alerte en tête.
+
+  `items-center` est absent du voile à dessein : sur un conteneur qui défile,
+  il rend le haut inatteignable. Le centrage passe par `my-auto`.
+{% endcomment %}
+<section class="space-y-5"
+         x-data="piecesUI('{% url 'identite:piece_scanner' %}', '{{ type_actif|default:"carte" }}')">
+
+  <p class="hs-crumb">{% trans "Identité" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Identité" %}</h1>
+    <button type="button" @click="modal = true" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une pièce" %}
+    </button>
+  </div>
+
+  <div class="flex gap-[18px] overflow-x-auto" style="border-bottom: 0.5px solid var(--border)">
+    <a href="{% url 'identite:pieces' %}"
+       class="hs-tab {% if not type_actif %}hs-tab-active{% endif %}">{% trans "Toutes" %}</a>
+    {% for value, label in types %}
+      <a href="{% url 'identite:pieces_type' value %}"
+         class="hs-tab whitespace-nowrap {% if type_actif == value %}hs-tab-active{% endif %}">{{ label }}</a>
+    {% endfor %}
+  </div>
+
+
+  {% comment %}
+    Le pavé n'apparaît que sur l'onglet Signature : c'est là qu'on la définit,
+    au doigt, au stylet ou à la souris. Le tracé part en image pour pouvoir
+    s'insérer dans un PDF comme n'importe quelle autre.
+  {% endcomment %}
+  {% if type_actif == "signature" %}
+    <div class="hs-card p-5" x-data="pave()">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 class="text-[15px] font-medium">{% trans "Votre signature" %}</h2>
+          <p class="mt-0.5 text-[12px]" style="color: var(--text-secondary)">
+            {% trans "Elle s'apposera sur les documents que vous émettez — contrats de travail, attestations." %}
+          </p>
+        </div>
+        {% if signature_active %}
+          <div class="text-right">
+            <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Signature active" %}</p>
+            <img src="{{ signature_active.fichier.url }}" alt="{% trans 'Signature active' %}"
+                 style="max-height: 56px; max-width: 200px; object-fit: contain">
+          </div>
+        {% endif %}
+      </div>
+
+      <form method="post" action="{% url 'identite:signature_definir' %}" class="mt-4" @submit="figer()">
+        {% csrf_token %}
+        <input type="hidden" name="trace" x-ref="trace">
+        <div class="rounded-[10px] p-2" style="background: var(--surface-alt)">
+          <canvas x-ref="toile" height="170"
+                  class="w-full touch-none rounded-[8px]"
+                  style="background: var(--surface); border: 0.5px dashed var(--border-strong); cursor: crosshair"
+                  @pointerdown.prevent="debut($event)" @pointermove.prevent="trait($event)"
+                  @pointerup="fin()" @pointerleave="fin()" @pointercancel="fin()"></canvas>
+        </div>
+        <p class="mt-2 text-[12px]" style="color: var(--text-muted)">
+          {% trans "Signez avec le doigt, un stylet ou la souris." %}
+        </p>
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <button type="button" @click="effacer()" class="hs-btn-outline">{% trans "Effacer" %}</button>
+          <button type="submit" class="hs-btn-primary" :disabled="!signe">{% trans "Enregistrer la signature" %}</button>
+        </div>
+      </form>
+    </div>
+  {% endif %}
+  {# ── Ce qui périme, avant qu'on en ait besoin ── #}
+  {% if alertes %}
+    <div class="rounded-[10px] px-4 py-3 text-[13px]"
+         style="border: 0.5px solid var(--warning); background: color-mix(in srgb, var(--warning) 8%, transparent)">
+      <p class="font-medium" style="color: var(--warning)">
+        {% blocktrans count n=alertes|length %}Une pièce demande votre attention{% plural %}{{ n }} pièces demandent votre attention{% endblocktrans %}
+      </p>
+      {% for p in alertes %}
+        <p class="mt-1" style="color: var(--text-secondary)">
+          {{ p.get_type_piece_display }}{% if p.titulaire %} · {{ p.titulaire }}{% endif %} —
+          {% if p.perimee %}
+            <span style="color: var(--danger)">{% trans "périmée depuis le" %} {{ p.expiration_reelle|date:"d/m/Y" }}</span>
+          {% else %}
+            {% trans "expire le" %} {{ p.expiration_reelle|date:"d/m/Y" }} ({{ p.jours_avant_expiration }} {% trans "jours" %})
+          {% endif %}
+        </p>
+      {% endfor %}
+      <p class="mt-1" style="color: var(--text-muted)">{% trans "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance." %}</p>
+    </div>
+  {% endif %}
+
+  {% if pieces %}
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for p in pieces %}
+        <div class="hs-card p-5">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div class="min-w-0">
+              <p class="text-[15px] font-medium">{{ p.get_type_piece_display }}</p>
+              {% if p.titulaire %}<p class="text-[12px]" style="color: var(--text-muted)">{{ p.titulaire }}</p>{% endif %}
+            </div>
+            {% if p.perimee %}
+              <span class="hs-badge hs-badge-danger shrink-0">{% trans "Périmée" %}</span>
+            {% elif p.expire_bientot %}
+              <span class="hs-badge hs-badge-neutral shrink-0">{{ p.jours_avant_expiration }} {% trans "jours" %}</span>
+            {% elif p.est_signature %}
+              <span class="hs-badge hs-badge-neutral shrink-0">{% trans "Signature" %}</span>
+            {% endif %}
+          </div>
+
+          {% if p.est_signature and p.fichier %}
+            <div class="mt-3 grid h-24 place-items-center overflow-hidden rounded-[10px]"
+                 style="background: var(--surface-alt)">
+              <img src="{{ p.fichier.url }}" alt="{% trans 'Signature' %}" class="max-h-20 max-w-full object-contain">
+            </div>
+          {% endif %}
+
+          <p class="mt-3 text-[12px]" style="color: var(--text-secondary)">
+            {% if p.numero %}{% trans "n°" %} {{ p.numero }}{% endif %}
+            {% if p.autorite %}{% if p.numero %} · {% endif %}{{ p.autorite }}{% endif %}
+            {% if p.delivre_le %} · {% trans "délivrée le" %} {{ p.delivre_le|date:"d/m/Y" }}{% endif %}
+            {% if p.expire_le %} · {% trans "expire le" %} {{ p.expire_le|date:"d/m/Y" }}{% endif %}
+          </p>
+          {% if p.nom_usage %}
+            <p class="text-[12px]" style="color: var(--text-secondary)">
+              {% trans "Nom d'usage" %} : {{ p.nom_usage }}
+            </p>
+          {% endif %}
+
+          {% comment %}
+            Deux dates qui ne servent pas au même endroit : la France retient
+            la prolongation, plusieurs pays s'en tiennent à la date imprimée.
+          {% endcomment %}
+          {% if p.prolongation_douteuse %}
+            <p class="mt-2 rounded-[8px] px-3 py-2 text-[12px]"
+               style="background: color-mix(in srgb, var(--warning) 10%, transparent); color: var(--warning)">
+              {% blocktrans with imprimee=p.expire_le|date:"d/m/Y" reelle=p.expiration_reelle|date:"d/m/Y" %}Prolongée jusqu'au {{ reelle }} en France, mais la pièce affiche {{ imprimee }} : plusieurs pays refusent cette prolongation.{% endblocktrans %}
+            </p>
+          {% endif %}
+          {% if p.notes %}<p class="mt-2 whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ p.notes }}</p>{% endif %}
+
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <a href="{{ p.fichier.url }}" target="_blank" rel="noopener"
+               class="hs-btn-outline">{% trans "Ouvrir" %}</a>
+            {% if p.est_signature %}
+              {% if p.par_defaut %}
+                <span class="hs-badge hs-badge-success">{% trans "Active" %}</span>
+              {% else %}
+                <form method="post" action="{% url 'identite:signature_activer' p.pk %}" class="leading-none">
+                  {% csrf_token %}
+                  <button type="submit" class="hs-btn-outline">{% trans "Rendre active" %}</button>
+                </form>
+              {% endif %}
+            {% endif %}
+            <form method="post" action="{% url 'identite:piece_supprimer' p.pk %}"
+                  onsubmit="return confirm('{% trans "Supprimer cette pièce ?" %}')" class="ml-auto leading-none">
+              {% csrf_token %}
+              <button type="submit" title="{% trans 'Supprimer' %}" style="color: var(--text-muted)">
+                <span class="material-icons-round text-[17px]">delete</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="hs-card px-14 py-10 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucune pièce enregistrée" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut." %}
+      </p>
+      <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Ajouter une pièce" %}</button>
+    </div>
+  {% endif %}
+
+  {# ── Ajout ── #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="modal = false" class="my-auto flex w-full max-w-xl justify-center">
+      <div class="hs-popover w-full p-5">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-[16px] font-medium">{% trans "Ajouter une pièce" %}</h2>
+          <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+        </div>
+        <form id="piece-form" method="post" action="{% url 'identite:piece_ajouter' %}"
+              enctype="multipart/form-data" class="space-y-3">
+          {% csrf_token %}
+
+          {% comment %}
+            Le scan ouvre le formulaire : on part de la pièce en main. Ce que
+            l'IA lit pré-remplit sans rien enregistrer — un numéro mal recopié
+            ne se découvre qu'au moment où l'on en a besoin.
+          {% endcomment %}
+          <div class="rounded-[10px] p-4" style="border: 0.5px solid var(--border); background: var(--surface-alt)">
+            <p class="text-sm font-medium">{% trans "Lire la pièce" %}</p>
+            <p class="mt-0.5 text-[12px]" style="color: var(--text-secondary)">
+              {% trans "Photographiez la pièce ou déposez le PDF : l'Agent IA en lit le titulaire, le numéro, l'autorité et les dates. Il ignore la date de naissance, l'adresse et la taille. Relisez avant d'enregistrer." %}
+            </p>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <button type="button" class="hs-chip-btn" :disabled="lecture" @click="scanner()">
+                <span class="material-icons-round text-[16px]" x-text="lecture ? 'hourglass_empty' : 'document_scanner'">document_scanner</span>
+                <span x-text="lecture ? '{{ libelle_lecture|escapejs }}' : '{{ libelle_lire|escapejs }}'">{% trans "Lire le document" %}</span>
+              </button>
+              <span x-show="lu" x-cloak class="text-[12px]"
+                    :style="lu.startsWith('!') ? 'color: var(--danger)' : 'color: var(--success)'"
+                    x-text="lu.replace(/^!/, '')"></span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="p-type" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Type" %}</label>
+              <select id="p-type" name="type_piece" x-model="type">
+                {% for value, label in types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label for="p-titulaire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Titulaire" %}</label>
+              <input id="p-titulaire" name="titulaire">
+            </div>
+          </div>
+
+          <div x-show="type !== 'signature'" x-cloak>
+            <label for="p-nom-usage" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Nom d'usage" %}</label>
+            <input id="p-nom-usage" name="nom_usage" placeholder="{% trans 'seulement s\'il diffère du nom de famille' %}">
+          </div>
+
+          <div>
+            <label for="p-fichier" class="mb-1 block text-sm" style="color: var(--text-secondary)">
+              {% trans "Fichier" %} <span style="color: var(--danger)">*</span>
+            </label>
+            <input id="p-fichier" type="file" name="fichier" accept="{{ extensions }}"
+                   capture="environment" required class="w-full text-[13px]" @change="lu = ''">
+            <p class="mt-1 text-[12px]" style="color: var(--text-muted)">{% trans "PDF ou photo, 10 Mo maximum." %}</p>
+          </div>
+
+          {% comment %} Une signature ne se périme pas : ces champs disparaissent. {% endcomment %}
+          <div x-show="type !== 'signature'" x-cloak>
+            <label for="p-autorite" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Autorité de délivrance" %}</label>
+            <input id="p-autorite" name="autorite" placeholder="{% trans 'ex: Préfecture des Alpes-de-Haute-Provence' %}">
+          </div>
+
+          <div x-show="type !== 'signature'" x-cloak class="grid grid-cols-3 gap-3">
+            <div>
+              <label for="p-numero" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Numéro" %}</label>
+              <input id="p-numero" name="numero">
+            </div>
+            <div>
+              <label for="p-delivre" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Délivrée le" %}</label>
+              <input id="p-delivre" name="delivre_le" type="date">
+            </div>
+            <div>
+              <label for="p-expire" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Expire le" %}</label>
+              <input id="p-expire" name="expire_le" type="date">
+            </div>
+          </div>
+
+          {% comment %}
+            Ne concerne que la carte d'identité : le passeport n'a jamais été
+            prolongé.
+          {% endcomment %}
+          <label x-show="type === 'carte'" x-cloak class="flex items-start gap-2.5 text-sm">
+            <input type="checkbox" name="prolongee" class="mt-0.5 h-4 w-4" style="accent-color: var(--action)">
+            <span>
+              {% trans "Validité prolongée de 5 ans" %}
+              <span class="block text-[12px]" style="color: var(--text-muted)">
+                {% trans "Carte délivrée à un majeur entre 2004 et 2013 : la date imprimée n'est plus la bonne." %}
+              </span>
+            </span>
+          </label>
+
+          <div>
+            <label for="p-notes" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Notes" %}</label>
+            <textarea id="p-notes" name="notes" rows="2"></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+            <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+  // Pavé de signature : le tracé se dessine au pointeur, puis part en PNG.
+  // Les coordonnées passent par le facteur d'échelle du canvas — sans lui, le
+  // trait se décale dès que la largeur affichée diffère de la largeur interne.
+  function pave() {
+    return {
+      ctx: null, dessine: false, signe: false,
+      init() {
+        const c = this.$refs.toile;
+        c.width = c.offsetWidth * (window.devicePixelRatio || 1);
+        c.height = 170 * (window.devicePixelRatio || 1);
+        this.ctx = c.getContext('2d');
+        this.ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+        this.ctx.lineWidth = 2.2;
+        this.ctx.lineCap = 'round';
+        this.ctx.lineJoin = 'round';
+        this.ctx.strokeStyle = '#111';
+      },
+      point(e) {
+        const r = this.$refs.toile.getBoundingClientRect();
+        return { x: e.clientX - r.left, y: e.clientY - r.top };
+      },
+      debut(e) {
+        this.dessine = true; this.signe = true;
+        const p = this.point(e);
+        this.ctx.beginPath(); this.ctx.moveTo(p.x, p.y);
+      },
+      trait(e) {
+        if (!this.dessine) return;
+        const p = this.point(e);
+        this.ctx.lineTo(p.x, p.y); this.ctx.stroke();
+      },
+      fin() { this.dessine = false; },
+      effacer() {
+        const c = this.$refs.toile;
+        this.ctx.clearRect(0, 0, c.width, c.height);
+        this.signe = false;
+      },
+      figer() { this.$refs.trace.value = this.$refs.toile.toDataURL('image/png'); },
+    };
+  }
+
+  function piecesUI(urlScanner, typeInitial) {
+    // Les champs du formulaire portent le nom que renvoie l'extraction.
+    const poser = (nom, valeur) => {
+      if (valeur === null || valeur === undefined || valeur === '') return;
+      const champ = document.querySelector('#piece-form [name="' + nom + '"]');
+      if (!champ) return;
+      if (champ.type === 'checkbox') champ.checked = !!valeur;
+      else champ.value = valeur;
+    };
+    return {
+      modal: false, type: typeInitial, lecture: false, lu: '',
+      async scanner() {
+        const entree = document.getElementById('p-fichier');
+        if (!entree || !entree.files.length) { this.lu = '!{{ libelle_sans_fichier|escapejs }}'; return; }
+        this.lecture = true; this.lu = '';
+        try {
+          const corps = new FormData();
+          corps.append('fichier', entree.files[0]);
+          const jeton = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          const r = await fetch(urlScanner, {
+            method: 'POST', credentials: 'same-origin',
+            headers: { 'X-CSRFToken': jeton }, body: corps });
+          const d = await r.json();
+          if (d.error) { this.lu = '!' + d.error; return; }
+          const champs = d.champs || {};
+          Object.entries(champs).forEach(([nom, valeur]) => poser(nom, valeur));
+          // Le type pilote l'affichage des dates : on suit ce qui a été lu.
+          if (champs.type_piece) this.type = champs.type_piece;
+          this.lu = '{{ libelle_lu|escapejs }}';
+        } catch (e) {
+          this.lu = '!' + e;
+        } finally {
+          this.lecture = false;
+        }
+      },
+    };
+  }
+</script>
+{% endblock %}

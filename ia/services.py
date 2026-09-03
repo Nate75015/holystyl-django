@@ -1,4 +1,4 @@
-"""Logique de l'assistant IA : contexte, chat, extraction d'intentions, rapport.
+"""Logique de l'agent IA : contexte, chat, extraction d'intentions, rapport.
 
 Reproduit le comportement du routeur `ai` tRPC (server/routers.ts) :
 - chat conversationnel contextualisé,
@@ -24,7 +24,7 @@ from . import llm
 from .models import AiConversation, DailyReport
 
 ASSISTANT_NOT_CONFIGURED = (
-    "L'assistant IA n'est pas encore configuré (clé API manquante). "
+    "L'agent IA n'est pas encore configuré (clé API manquante). "
     "Renseignez la clé du fournisseur actif (GEMINI_API_KEY ou MISTRAL_API_KEY) pour l'activer."
 )
 
@@ -52,7 +52,7 @@ def build_context(exploitation) -> dict:
 
 
 def _intent_system_prompt(ctx: dict) -> str:
-    return f"""Tu es l'assistant IA de Holystyl, copilote agricole intelligent pour l'exploitation.
+    return f"""Tu es l'assistant IA d'Isidor, copilote agricole intelligent pour l'exploitation.
 Ton rôle : comprendre les demandes de l'agriculteur et créer directement les enregistrements.
 
 CONTEXTE (données réelles, utilise les IDs exacts) :
@@ -93,7 +93,7 @@ def chat(exploitation, user, message: str, history: list[dict] | None = None) ->
         return ASSISTANT_NOT_CONFIGURED
 
     ctx = build_context(exploitation)
-    messages = [{"role": "system", "content": f"Tu es l'assistant Holystyl. Parcelles : {ctx['parcelles']}."}]
+    messages = [{"role": "system", "content": f"Tu es l'assistant Isidor. Parcelles : {ctx['parcelles']}."}]
     messages += history or []
     messages.append({"role": "user", "content": message})
     answer = llm.generate_text(messages)

@@ -127,7 +127,7 @@ def test_campagne_new_creates_from_campagnes_page(client, user_exploitation):
     assert page.status_code == 200 and "Nord" in page.content.decode()
 
     resp = client.post(reverse("parcelles:campagne_new"), {
-        "parcelle": parcelle.pk, "libelle": "2025/2026", "culture": "Vigne", "kc_value": 1.0,
+        "parcelles": [parcelle.pk], "libelle": "2025/2026", "culture": "Vigne", "kc_value": 1.0,
     })
     campagne = ParcelleCampagne.objects.get(libelle="2025/2026")
     assert resp.status_code == 302 and campagne.parcelle == parcelle
@@ -149,9 +149,9 @@ def test_campagne_new_rejects_missing_or_foreign_parcelle(client, user_exploitat
     donnees = {"libelle": "2025/2026", "culture": "Vigne", "kc_value": 1.0}
 
     sans = client.post(reverse("parcelles:campagne_new"), donnees)
-    assert sans.status_code == 200 and "Choisissez la parcelle" in sans.content.decode()
+    assert sans.status_code == 200 and "Choisissez au moins une parcelle" in sans.content.decode()
 
-    volee = client.post(reverse("parcelles:campagne_new"), {**donnees, "parcelle": intruse.pk})
+    volee = client.post(reverse("parcelles:campagne_new"), {**donnees, "parcelles": [intruse.pk]})
     assert volee.status_code == 200
     assert not ParcelleCampagne.objects.exists()
 
@@ -291,7 +291,7 @@ def test_type_agriculture_depuis_nouvelle_campagne(client, user_exploitation):
     client.force_login(user)
 
     client.post(reverse("parcelles:campagne_new"), {
-        "parcelle": parcelle.pk, "libelle": "2025/2026", "kc_value": 1.0,
+        "parcelles": [parcelle.pk], "libelle": "2025/2026", "kc_value": 1.0,
         "type_agriculture": "conversion",
     })
     parcelle.refresh_from_db()
@@ -417,3 +417,93 @@ def test_orientation_exposee_dans_le_geojson_de_la_carte(client, user_exploitati
     resp = client.get(reverse("parcelles:list"))
     feature = resp.context["parcelles_geojson"]["features"][0]
     assert feature["properties"]["orientation"] == 200
+
+
+@pytest.mark.django_db
+def test_la_campagne_se_choisit_sur_la_carte(client, user_exploitation):
+    """Des parcelles se reconnaissent à leur forme : la carte accompagne les pastilles."""
+    user, exploitation = user_exploitation
+    contour = {"type": "Polygon", "coordinates": [[[6.2, 44.1], [6.3, 44.1],
+                                                   [6.3, 44.2], [6.2, 44.2], [6.2, 44.1]]]}
+    tracee = Parcelle.objects.create(exploitation=exploitation, name="Les Coteaux",
+                                     boundaries=contour)
+    Parcelle.objects.create(exploitation=exploitation, name="Sans contour")
+
+    client.force_login(user)
+    page = client.get(reverse("parcelles:campagne_new")).content.decode()
+
+    # La carte est là, avec le contour de la parcelle tracée.
+    assert 'id="hs-parcelles-map"' in page
+    assert '"name": "Les Coteaux"' in page or "Les Coteaux" in page
+    # Les deux parcelles restent choisissables en pastille, tracées ou non.
+    assert "Sans contour" in page
+    assert f"toggleParcelle('{tracee.pk}')" in page
+    # Et l'on prévient que la seconde ne s'y verra pas.
+    assert "apparaissent pas sur la carte" in page
+    # Le choix est multiple : le formulaire envoie une liste de parcelles.
+    assert 'name="parcelles"' in page
+
+
+@pytest.mark.django_db
+def test_une_campagne_se_seme_sur_plusieurs_parcelles(client, user_exploitation):
+    """La même culture, sur toutes les parcelles choisies d'un coup."""
+    from parcelles.models import ParcelleCampagne
+
+    user, exploitation = user_exploitation
+    nord = Parcelle.objects.create(exploitation=exploitation, name="Nord", area=3)
+    sud = Parcelle.objects.create(exploitation=exploitation, name="Sud", area=2)
+    Parcelle.objects.create(exploitation=exploitation, name="Est", area=1)
+
+    client.force_login(user)
+    reponse = client.post(reverse("parcelles:campagne_new"), {
+        "parcelles": [nord.pk, sud.pk], "libelle": "2025/2026",
+        "culture": "Blé tendre", "kc_value": 1.0, "type_agriculture": "conversion",
+    })
+
+    assert reponse.status_code == 302
+    semees = ParcelleCampagne.objects.filter(libelle="2025/2026")
+    assert {c.parcelle.name for c in semees} == {"Nord", "Sud"}
+    assert {c.culture for c in semees} == {"Blé tendre"}
+    # Le type d'agriculture appartient à la parcelle : chacune le reçoit.
+    nord.refresh_from_db(); sud.refresh_from_db()
+    assert nord.type_agriculture == sud.type_agriculture == "conversion"
+
+
+@pytest.mark.django_db
+def test_une_parcelle_deja_semee_est_passee_sans_bloquer_les_autres(client, user_exploitation):
+    """Semer sur ce qui est libre vaut mieux que tout refuser."""
+    from parcelles.models import ParcelleCampagne
+
+    user, exploitation = user_exploitation
+    deja = Parcelle.objects.create(exploitation=exploitation, name="Nord", area=3)
+    libre = Parcelle.objects.create(exploitation=exploitation, name="Sud", area=2)
+    ParcelleCampagne.objects.create(parcelle=deja, libelle="2025/2026", culture="Vigne")
+
+    client.force_login(user)
+    reponse = client.post(reverse("parcelles:campagne_new"), {
+        "parcelles": [deja.pk, libre.pk], "libelle": "2025/2026",
+        "culture": "Blé tendre", "kc_value": 1.0,
+    }, follow=True)
+
+    # La libre est semée, l'autre gardée telle quelle, et on le dit.
+    assert ParcelleCampagne.objects.get(parcelle=libre).culture == "Blé tendre"
+    assert ParcelleCampagne.objects.get(parcelle=deja).culture == "Vigne"
+    assert "Nord" in reponse.content.decode()
+
+
+@pytest.mark.django_db
+def test_toutes_deja_semees_ne_cree_rien(client, user_exploitation):
+    from parcelles.models import ParcelleCampagne
+
+    user, exploitation = user_exploitation
+    parcelle = Parcelle.objects.create(exploitation=exploitation, name="Nord", area=3)
+    ParcelleCampagne.objects.create(parcelle=parcelle, libelle="2025/2026", culture="Vigne")
+
+    client.force_login(user)
+    reponse = client.post(reverse("parcelles:campagne_new"), {
+        "parcelles": [parcelle.pk], "libelle": "2025/2026", "culture": "Blé", "kc_value": 1.0,
+    })
+
+    assert reponse.status_code == 200  # on reste au formulaire
+    assert ParcelleCampagne.objects.count() == 1
+    assert ParcelleCampagne.objects.get().culture == "Vigne"

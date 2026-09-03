@@ -1,0 +1,52 @@
+{% load i18n %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'fr' }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ modele.nom }}</title>
+  <style>
+    @page { size: A4; margin: 22mm 20mm; }
+    body { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.55; color: #111; }
+    .vierge { font-size: 8.5pt; letter-spacing: .08em; text-transform: uppercase; color: #777; margin-bottom: 3mm; }
+    .titre { font-size: 13pt; font-weight: bold; margin: 0 0 6mm; }
+    .corps { white-space: pre-wrap; }
+    .signatures { margin-top: 12mm; width: 100%; }
+    .signatures td { width: 50%; vertical-align: top; padding-right: 8mm; font-size: 10pt; }
+    .signatures .role { color: #555; font-size: 9pt; }
+    .signatures .trait { margin-top: 16mm; border-top: 0.5pt solid #999; }
+    .pied { margin-top: 14mm; border-top: 0.5pt solid #999; padding-top: 4mm; font-size: 8pt; color: #666; }
+  </style>
+</head>
+<body>
+  {% comment %}
+    Un modèle s'imprime vierge : chaque jeton devient une ligne de pointillés,
+    de sorte que la feuille se remplisse à la main. C'est déjà ce que fait
+    `remplir` quand une valeur manque.
+  {% endcomment %}
+  <p class="vierge">{% trans "Modèle vierge" %}</p>
+  {% comment %}
+    Le nom seul : il est choisi par l'exploitant et porte déjà le type le plus
+    souvent — « CDD — contrat à durée déterminée — CDD » ne renseigne personne.
+  {% endcomment %}
+  <p class="titre">{{ modele.nom }}</p>
+
+  <div class="corps">{{ corps }}</div>
+
+  <table class="signatures">
+    <tr>
+      <td><div class="role">{% trans "L'employeur" %}</div><div class="trait"></div></td>
+      <td><div class="role">{% trans "Le salarié" %}</div><div class="trait"></div></td>
+    </tr>
+  </table>
+
+  <p class="pied">
+    {% blocktrans with ferme=exploitation.name %}{{ ferme }} — modèle établi depuis Isidor.{% endblocktrans %}
+    {% trans "À faire relire avant signature : les clauses obligatoires dépendent de la convention collective applicable." %}
+    {% comment %}
+      Repère factuel, pas un conseil : depuis 2021 la production agricole
+      relève d'un texte unique, mais les branches voisines — paysage, travaux
+      agricoles, coopératives — gardent la leur.
+    {% endcomment %}
+    {% trans "Depuis le 1er avril 2021, la production agricole et les CUMA relèvent d'une convention collective nationale unique ; le paysage, les travaux agricoles et forestiers et les coopératives gardent la leur." %}
+  </p>
+</body>
+</html>

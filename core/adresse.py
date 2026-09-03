@@ -122,7 +122,7 @@ def fournisseur():
 
 def _get_json(url, *, data=None, headers=None, timeout=6):
     req = urllib.request.Request(
-        url, data=data, headers={"User-Agent": "Holystyl/1.0", **(headers or {})}
+        url, data=data, headers={"User-Agent": "Isidor/1.0", **(headers or {})}
     )
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return json.loads(resp.read())

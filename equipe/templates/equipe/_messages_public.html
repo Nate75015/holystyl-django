@@ -1,0 +1,15 @@
+{% load i18n %}
+{# La branche anonyme de base.html n'affiche pas les messages : on les rend ici. #}
+{% if messages %}
+  <div class="space-y-2">
+    {% for message in messages %}
+      <div class="flex items-start gap-2 rounded-[10px] px-4 py-2.5 text-sm"
+           style="border: 0.5px solid var(--border);
+                  background: {% if message.level >= 40 %}color-mix(in srgb, var(--danger) 8%, transparent){% else %}var(--surface){% endif %};
+                  color: {% if message.level >= 40 %}var(--danger){% else %}var(--text){% endif %}">
+        <span class="material-icons-round mt-px text-[16px]">{% if message.level >= 40 %}error_outline{% else %}check_circle{% endif %}</span>
+        <span class="min-w-0">{{ message }}</span>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

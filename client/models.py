@@ -118,7 +118,7 @@ class Client(models.Model):
 
 
 class Partenaire(models.Model):
-    """Un tiers de l'exploitation hors client : bailleur, comptable, avocat…
+    """Un tiers de l'exploitation hors client : bailleur, comptable, avocat, CUMA…
 
     Un seul modèle pour les trois : mêmes champs (identité, contact, adresse),
     seul le type change. Chaque type a sa page dans la section « Relations ».
@@ -128,6 +128,7 @@ class Partenaire(models.Model):
         BAILLEUR = "bailleur", _("Bailleur")
         COMPTABLE = "comptable", _("Comptable")
         AVOCAT = "avocat", _("Avocat")
+        CUMA = "cuma", _("CUMA")
         AUTRE = "autre", _("Autre")
 
     exploitation = models.ForeignKey(

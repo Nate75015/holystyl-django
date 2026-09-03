@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% comment %}
+  L'identité telle qu'elle s'imprime sur les devis et les factures.
+
+  La raison sociale, le SIRET, la TVA et l'adresse ne se saisissent pas ici :
+  ils ont déjà leur page. Les recopier serait le meilleur moyen qu'ils se
+  contredisent, et sur un document à valeur légale cela vaut une adresse ou
+  un numéro faux. On les montre, avec le chemin pour les corriger.
+{% endcomment %}
+<section class="space-y-5">
+
+  <p class="hs-crumb">{% trans "Économie" %} · {% trans "Facture" %}</p>
+  <h1 class="text-[20px]">{% trans "Identité de facturation" %}</h1>
+  <p class="text-[13px]" style="color: var(--text-secondary)">
+    {% trans "Ce qui s'imprime en tête et en pied de vos devis et de vos factures." %}
+  </p>
+
+  {# ── Ce qui vient d'ailleurs : on montre, on ne ressaisit pas ── #}
+  <div class="hs-card p-5">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <h2 class="text-[15px] font-medium">{% trans "Émetteur" %}</h2>
+      <div class="flex flex-wrap gap-2">
+        <a href="{% url 'exploitations:section_juridique' %}" class="hs-btn-outline">{% trans "Juridique" %}</a>
+        <a href="{% url 'exploitations:section_localisation' %}" class="hs-btn-outline">{% trans "Localisation" %}</a>
+      </div>
+    </div>
+
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <div>
+        <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Raison sociale" %}</p>
+        <p class="text-sm">{{ societe.raison_sociale|default:"—" }}</p>
+        {% if societe.forme_juridique %}
+          <p class="text-[12px]" style="color: var(--text-secondary)">{{ societe.get_forme_juridique_display }}</p>
+        {% endif %}
+      </div>
+      <div>
+        <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Adresse" %}</p>
+        {% if adresse %}
+          <p class="text-sm">{{ adresse.resume }}</p>
+        {% else %}
+          <p class="text-sm" style="color: var(--warning)">{% trans "Aucune adresse enregistrée." %}</p>
+        {% endif %}
+      </div>
+      <div>
+        <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">SIRET</p>
+        <p class="text-sm tabular-nums">{{ societe.siret|default:"—" }}</p>
+      </div>
+      <div>
+        <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "TVA intracommunautaire" %}</p>
+        <p class="text-sm tabular-nums">{{ societe.tva_intra|default:"—" }}</p>
+      </div>
+    </div>
+  </div>
+
+  {# ── Ce qui n'existe que pour la facture ── #}
+  <form method="post" class="space-y-5">
+    {% csrf_token %}
+
+    <div class="hs-card p-5">
+      <h2 class="text-[15px] font-medium">{% trans "Se faire payer" %}</h2>
+      <p class="mt-1 text-[12px]" style="color: var(--text-secondary)">
+        {% trans "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander." %}
+      </p>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        <div>
+          <label for="i-banque" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Banque" %}</label>
+          <input id="i-banque" name="banque" value="{{ identite.banque }}">
+        </div>
+        <div>
+          <label for="i-conditions" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Conditions de règlement" %}</label>
+          <input id="i-conditions" name="conditions_reglement" value="{{ identite.conditions_reglement }}"
+                 placeholder="{% trans 'ex: 30 jours fin de mois' %}">
+        </div>
+        <div class="sm:col-span-2">
+          <label for="i-iban" class="mb-1 block text-sm" style="color: var(--text-secondary)">IBAN</label>
+          <input id="i-iban" name="iban" value="{{ identite.iban_lisible }}"
+                 class="tabular-nums" placeholder="FR76 1234 5678 9012 3456 7890 123">
+        </div>
+        <div>
+          <label for="i-bic" class="mb-1 block text-sm" style="color: var(--text-secondary)">BIC</label>
+          <input id="i-bic" name="bic" value="{{ identite.bic }}" class="tabular-nums">
+        </div>
+      </div>
+    </div>
+
+    <div class="hs-card p-5">
+      <h2 class="text-[15px] font-medium">{% trans "Mentions légales" %}</h2>
+      <p class="mt-1 text-[12px]" style="color: var(--text-secondary)">
+        {% trans "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture." %}
+      </p>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        <div>
+          <label for="i-capital" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Capital social (€)" %}</label>
+          <input id="i-capital" name="capital_social" inputmode="decimal"
+                 value="{{ identite.capital_social|default_if_none:'' }}">
+        </div>
+        <div>
+          <label for="i-rcs" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "RCS / RM" %}</label>
+          <input id="i-rcs" name="rcs" value="{{ identite.rcs }}"
+                 placeholder="{% trans 'ex: RCS Digne-les-Bains 123 456 789' %}">
+        </div>
+        <div class="sm:col-span-2">
+          <label for="i-mentions" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Pied de page" %}</label>
+          <textarea id="i-mentions" name="mentions" rows="4"
+                    placeholder="{% trans 'Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €.' %}">{{ identite.mentions }}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

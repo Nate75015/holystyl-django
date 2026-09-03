@@ -10,15 +10,33 @@ from django.utils.translation import gettext_lazy as _
 
 from core.models import TimeStampedModel
 
+from .materiel import CHOIX_GROUPES, LONGUEUR_MAX_TYPE, Famille, TypeMateriel, est_automoteur, famille_de
+
 
 class Machine(TimeStampedModel):
-    class Type(models.TextChoices):
-        PUMP = "pump", _("Pompe")
-        TRACTOR = "tractor", _("Tracteur")
-        ENROULEUR = "enrouleur", _("Enrouleur")
-        PIVOT = "pivot", _("Pivot")
-        SPRAYER = "sprayer", _("Pulvérisateur")
-        OTHER = "other", _("Autre")
+    """Un engin que possède l'exploitation, du tracteur à la pince à balles.
+
+    Le type vient de `operations.materiel`, partagé avec `CatalogueEngin` : les
+    deux désignent le même monde, ils ne peuvent pas le nommer différemment.
+    """
+
+    #: Conservé pour que `Machine.Type` reste une porte d'entrée lisible.
+    Type = TypeMateriel
+
+    class Detention(models.TextChoices):
+        """À qui appartient l'engin, et à quel titre.
+
+        Un booléen « en CUMA » aurait répondu à la question du jour sans dire
+        de quelle CUMA il s'agit, et il aurait fallu le remplacer dès la
+        première machine en copropriété ou en location — deux situations
+        courantes. La question « est-ce à la CUMA ? » se lit ici aussi bien.
+        """
+
+        PROPRE = "propre", _("En propre")
+        CUMA = "cuma", _("En CUMA")
+        COPROPRIETE = "copropriete", _("En copropriété")
+        LOCATION = "location", _("En location")
+        ETA = "eta", _("Confié à une ETA")
 
     class Status(models.TextChoices):
         OPERATIONAL = "operational", _("Opérationnelle")
@@ -28,7 +46,7 @@ class Machine(TimeStampedModel):
 
     exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="machines")
     name = models.CharField(_("nom"), max_length=255)
-    type = models.CharField(max_length=12, choices=Type.choices)
+    type = models.CharField(_("type"), max_length=LONGUEUR_MAX_TYPE, choices=CHOIX_GROUPES)
     brand = models.CharField(max_length=100, blank=True)
     model = models.CharField(max_length=100, blank=True)
     serial_number = models.CharField(max_length=100, blank=True)
@@ -38,15 +56,45 @@ class Machine(TimeStampedModel):
     next_maintenance_hours = models.FloatField(null=True, blank=True)
     next_maintenance_date = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=12, choices=Status.choices, default=Status.OPERATIONAL)
+    detention = models.CharField(
+        _("détention"), max_length=15, choices=Detention.choices, default=Detention.PROPRE)
+    proprietaire = models.ForeignKey(
+        "client.Partenaire", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="materiels", verbose_name=_("propriétaire"),
+        help_text=_("La CUMA, le loueur ou l'ETA à qui appartient l'engin. "
+                    "Vide quand il est à l'exploitation."))
     notes = models.TextField(blank=True)
 
     class Meta:
         verbose_name = _("machine")
         verbose_name_plural = _("machines")
         ordering = ("name",)
+        indexes = [
+            models.Index(fields=["exploitation", "type"]),
+            models.Index(fields=["exploitation", "detention"]),
+        ]
 
     def __str__(self):
         return self.name
+
+    @property
+    def famille(self):
+        """La famille du type, déduite plutôt que stockée : pas de dérive possible."""
+        return famille_de(self.type)
+
+    @property
+    def famille_libelle(self):
+        return Famille(self.famille).label
+
+    @property
+    def est_en_cuma(self):
+        """L'engin appartient-il à une CUMA ? La question posée, telle quelle."""
+        return self.detention == self.Detention.CUMA
+
+    @property
+    def est_automoteur(self):
+        """Vrai pour un engin qui roule seul — heures, carburant, carte grise."""
+        return est_automoteur(self.type)
 
 
 class MachineLog(models.Model):
@@ -120,7 +168,12 @@ class AffectationEngin(models.Model):
 
     exploitation = models.ForeignKey("exploitations.Exploitation", on_delete=models.CASCADE, related_name="affectations")
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, related_name="affectations")
-    parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.CASCADE)
+    # Facultative : on réserve un engin pour une journée sans toujours savoir
+    # sur quelle parcelle il ira, et une benne ou un télescopique n'en vise
+    # parfois aucune.
+    parcelle = models.ForeignKey("parcelles.Parcelle", on_delete=models.CASCADE,
+                                 null=True, blank=True,
+                                 verbose_name=_("parcelle"))
     operation = models.CharField(max_length=15, choices=Operation.choices)
     date_debut = models.DateTimeField()
     date_fin = models.DateTimeField(null=True, blank=True)
@@ -134,26 +187,30 @@ class AffectationEngin(models.Model):
         verbose_name = _("affectation d'engin")
         verbose_name_plural = _("affectations d'engins")
         ordering = ("-date_debut",)
+        indexes = [models.Index(fields=["exploitation", "date_debut"])]
+
+    def __str__(self):
+        return f"{self.machine} — {self.get_operation_display()}"
+
+    @property
+    def periode(self):
+        """(début, fin) comme une tâche, pour que l'agenda les pose côte à côte.
+
+        Une réservation sans date de fin tient sur la seule journée de début.
+        """
+        return self.date_debut, self.date_fin or self.date_debut
 
 
 class CatalogueEngin(models.Model):
     """Référentiel global de modèles d'engins (pas de FK exploitation)."""
 
-    class Type(models.TextChoices):
-        TRACTEUR = "tracteur", _("Tracteur")
-        PULVERISATEUR = "pulverisateur", _("Pulvérisateur")
-        SEMOIR = "semoir", _("Semoir")
-        EPANDEUR = "epandeur", _("Épandeur")
-        MOISSONNEUSE = "moissonneuse", _("Moissonneuse")
-        CHARRUE = "charrue", _("Charrue")
-        CULTIVATEUR = "cultivateur", _("Cultivateur")
-        BENNE = "benne", _("Benne")
-        POMPE = "pompe", _("Pompe")
-        AUTRE = "autre", _("Autre")
+    #: Le même vocabulaire que `Machine` : un semoir monograine s'appelle
+    #: pareil qu'on décrive le modèle du marché ou l'exemplaire de la ferme.
+    Type = TypeMateriel
 
     marque = models.CharField(max_length=100)
     modele = models.CharField(max_length=255)
-    type = models.CharField(max_length=15, choices=Type.choices)
+    type = models.CharField(_("type"), max_length=LONGUEUR_MAX_TYPE, choices=CHOIX_GROUPES)
     puissance_cv = models.IntegerField(null=True, blank=True)
     largeur_travail_m = models.FloatField(null=True, blank=True)
     capacite_l = models.FloatField(null=True, blank=True)

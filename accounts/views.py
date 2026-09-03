@@ -14,20 +14,20 @@ from core import espaces as espaces_service
 from .forms import EmailAuthenticationForm, RegisterForm
 
 
-class HolystylLoginView(LoginView):
+class IsidorLoginView(LoginView):
     template_name = "accounts/login.html"
     authentication_form = EmailAuthenticationForm
     redirect_authenticated_user = True
 
 
-class HolystylLogoutView(LogoutView):
+class IsidorLogoutView(LogoutView):
     pass
 
 
 #: Ce que chaque profil recouvre, en une phrase, pour éclairer le choix.
 DESCRIPTIONS_PROFIL = {
-    espaces_service.EXPLOITANT: _("Je dirige une exploitation et je la gère sur Holystyl."),
-    espaces_service.EMPLOYE: _("Je travaille pour une exploitation qui utilise Holystyl."),
+    espaces_service.EXPLOITANT: _("Je dirige une exploitation et je la gère sur Isidor."),
+    espaces_service.EMPLOYE: _("Je travaille pour une exploitation qui utilise Isidor."),
     espaces_service.BAILLEUR: _("Je loue des terres à une exploitation."),
     espaces_service.COMPTABLE: _("Je tiens la comptabilité d'une exploitation."),
 }

@@ -1,0 +1,53 @@
+{% load i18n %}
+{% comment %}
+  Sélection multiple de parcelles, par pastilles et par carte. Partagé entre
+  la modale du planning et le formulaire de tâche : les deux écrans créent la
+  même tâche, ils doivent proposer le même choix.
+
+  Attend dans le scope Alpine : `form.parcelles` (liste d'identifiants en
+  chaîne), `toggleParcelle(id)` et `surlignerParcelle(id)`. Et en contexte :
+  `parcelles` et `parcelles_mappables`.
+{% endcomment %}
+{# Parcelles — sélection multiple par pastilles #}
+<div>
+  <div class="mb-1.5 flex items-center gap-3">
+    <label class="text-sm font-medium">{% trans "Parcelles" %}</label>
+    <span x-show="form.parcelles.length" x-cloak class="text-xs tabular-nums" style="color: var(--text-secondary)"
+          x-text="`${form.parcelles.length} {% trans "sélectionnée(s)" %}`"></span>
+    <button type="button" x-show="form.parcelles.length" x-cloak @click="form.parcelles = []"
+            class="ml-auto text-xs font-medium transition hover:opacity-80" style="color: var(--action)">{% trans "Tout désélectionner" %}</button>
+  </div>
+  {% if parcelles %}
+    <div class="grid gap-3 {% if parcelles_mappables %}sm:grid-cols-2{% endif %}">
+    {% if parcelles_mappables %}
+      {# Carte de sélection : on reconnaît une parcelle à sa forme, pas à sa référence #}
+      <div class="overflow-hidden rounded-xl" style="border: 0.5px solid var(--border)">
+        <div id="hs-parcelles-map" class="h-56 w-full" style="background: var(--surface-alt)"></div>
+      </div>
+    {% endif %}
+    <div class="flex max-h-56 flex-wrap content-start gap-2 overflow-y-auto">
+      {% for p in parcelles %}
+        <button type="button" @click="toggleParcelle('{{ p.pk }}')"
+                @mouseenter="surlignerParcelle('{{ p.pk }}')" @mouseleave="surlignerParcelle(null)"
+                class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition"
+                :class="form.parcelles.includes('{{ p.pk }}') ? 'border-[color:var(--action)] text-[color:var(--action)]' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'"
+                style="border-color: var(--border)">
+          <span class="material-icons-round text-[15px]"
+                x-text="form.parcelles.includes('{{ p.pk }}') ? 'check_circle' : 'radio_button_unchecked'"></span>{{ p.name }}
+        </button>
+      {% endfor %}
+    </div>
+    </div>
+    {% if parcelles_mappables < parcelles|length %}
+      <p class="mt-1.5 text-xs" style="color: var(--text-muted)">{% trans "Les parcelles sans contour tracé n'apparaissent pas sur la carte." %}</p>
+    {% endif %}
+  {% else %}
+    <p class="text-sm" style="color: var(--text-secondary)">
+      {% trans "Aucune parcelle sur cette exploitation." %}
+      <a href="{% url 'parcelles:create' %}" class="font-medium" style="color: var(--action)">{% trans "En créer une" %}</a>
+    </p>
+  {% endif %}
+  <template x-for="id in form.parcelles" :key="id">
+    <input type="hidden" name="parcelles" :value="id">
+  </template>
+</div>

@@ -1,27 +1,7 @@
-{% load i18n %}
 {% comment %}
-  Entête des pages de vitrine pour un visiteur non connecté. Les comptes
-  connectés gardent l'ossature de l'application : ce bandeau ne s'affiche que
-  dans la branche publique de `base.html`.
+  L'entête du marché reprend la convention de « Nos terroirs » : c'est la même
+  place de marché, elle n'a pas à changer de visage entre la vitrine des
+  producteurs et le catalogue. `avec_panier` ajoute l'accès au panier, que les
+  pages d'achat sont seules à porter.
 {% endcomment %}
-<header class="sticky top-0 z-30 w-full" style="background: var(--action); color: var(--on-action)">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
-    <a href="{% url 'vente:marche' %}" class="flex items-center gap-2">
-      {% include "partials/brand_mark.html" with size=30 icon=17 %}
-      <span class="text-lg font-medium tracking-tight">{% trans "Le marché des fermes" %}</span>
-    </a>
-    <div class="flex items-center gap-2">
-      {% include "partials/lang_switcher.html" %}
-      <a href="{% url 'public:home' %}" class="hidden rounded-full border border-white/40 px-5 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10 sm:inline-block">
-        {% trans "Vous êtes agriculteur ?" %}
-      </a>
-      <a href="{% url 'vente:panier' %}" class="relative flex items-center gap-1 rounded-full border border-white/40 px-4 py-1.5 text-sm font-medium text-white/90 transition hover:bg-white/10">
-        <span class="material-icons-round text-[17px]">shopping_basket</span>
-        {% if panier_nb %}<span>{{ panier_nb }}</span>{% endif %}
-      </a>
-      <a href="{% url 'accounts:login' %}" class="rounded-full px-5 py-1.5 text-sm font-medium transition hover:opacity-90" style="background: var(--surface); color: var(--action)">
-        {% trans "Connexion" %}
-      </a>
-    </div>
-  </div>
-</header>
+{% include "partials/entete_terroirs.html" with avec_panier=True %}

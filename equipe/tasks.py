@@ -52,7 +52,7 @@ def _send_reminder(task, horizon: str) -> int:
     msg = f"Rappel ({horizon}) — tâche « {task.title} » à échéance {task.due_date:%d/%m %H:%M}."
     count = 0
     if member.email:
-        send_mail("Rappel de tâche Holystyl", msg, None, [member.email], fail_silently=True)
+        send_mail("Rappel de tâche Isidor", msg, None, [member.email], fail_silently=True)
         count = 1
     if member.phone:
         send_sms(member.phone, msg)

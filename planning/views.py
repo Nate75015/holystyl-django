@@ -6,20 +6,27 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import formats, timezone
 from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from client.models import Partenaire
+from equipe import services as equipe_services
 from equipe.models import Task, TeamMember
+from operations.models import AffectationEngin, Machine
 from exploitations.models import Exploitation
+from notifications.services import notify
+from parcelles import carte as carte_parcelles
 from parcelles.models import Parcelle
 
-from .models import InterventionReport, PlanningTask
+from . import acces as acces_service
+from .models import AccesPlanning, InterventionReport, PlanningTask
 
 
 PALETTE = ["#335E8A", "#3B6D11", "#BA7517", "#3C3489", "#A32D2D", "#0E7490", "#7C3AED", "#B45309"]
@@ -27,6 +34,10 @@ PALETTE = ["#335E8A", "#3B6D11", "#BA7517", "#3C3489", "#A32D2D", "#0E7490", "#7
 #: Nombre de lignes de barres affichables dans une cellule du mois ; au-delà,
 #: les tâches en trop sont résumées par un « +N ».
 MONTH_MAX_LANES = 4
+
+#: Les réservations de matériel ne sont pas assignées à un membre : une teinte
+#: neutre les distingue des barres d'équipe, qui portent la couleur de chacun.
+RESERVATION_COLOR = "#64748B"
 
 
 def _member_colors(team_list):
@@ -41,7 +52,32 @@ def _member_colors(team_list):
 
 
 def _exploitation(request):
-    return Exploitation.objects.filter(owner=request.user).first()
+    """L'exploitation de l'espace courant, salariés compris.
+
+    Le planning interrogeait `owner=request.user` : seul le patron avait un
+    agenda, et l'employé — à qui les tâches sont pourtant assignées — tombait
+    sur l'écran vide alors que son menu lui proposait l'entrée. On lit donc ce
+    que pose `CurrentExploitationMiddleware`, qui résout l'exploitation depuis
+    l'espace actif et sait qu'un salarié n'est pas propriétaire de la sienne.
+    """
+    return getattr(request, "exploitation", None)
+
+
+def _refuser_si_lecture_seule(request):
+    """Écrire dans le planning demande le niveau écriture, au moins.
+
+    Le chef d'exploitation l'a d'office ; les autres l'obtiennent en demandant
+    l'accès. Refuser ici, et pas seulement masquer les boutons : une URL tapée
+    à la main ne doit pas contourner le partage.
+    """
+    if not acces_service.peut_ecrire(_exploitation(request), request.user):
+        raise PermissionDenied(_("Vous n'avez pas le droit de modifier ce planning."))
+
+
+def _refuser_si_ne_gere_pas(request):
+    """Accorder ou retirer un accès demande le niveau gestion."""
+    if not acces_service.peut_gerer(_exploitation(request), request.user):
+        raise PermissionDenied(_("Vous ne gérez pas les accès à ce planning."))
 
 
 def _tasks_in_range(exploitation, members, start, end):
@@ -59,6 +95,83 @@ def _tasks_in_range(exploitation, members, start, end):
         .select_related("assigned_to", "parent")
         .prefetch_related("subtasks", "parcelles")
         .order_by("d_start", "priority", "id")
+    )
+
+
+def _siret_normalise(valeur):
+    """Un SIRET réduit à ses chiffres : la saisie l'espace diversement."""
+    return "".join(c for c in (valeur or "") if c.isdigit())
+
+
+def _sirets_cuma(exploitation):
+    """Les SIRET des CUMA où la ferme adhère.
+
+    C'est le seul lien dont on dispose entre exploitations : une CUMA n'existe
+    qu'en fiche partenaire, une par ferme. Deux fermes ayant enregistré le même
+    SIRET sont tenues pour co-adhérentes.
+    """
+    if not exploitation:
+        return set()
+    bruts = (Partenaire.objects
+             .filter(exploitation=exploitation, type_partenaire=Partenaire.Type.CUMA)
+             .exclude(siret="").values_list("siret", flat=True))
+    return {s for s in (_siret_normalise(x) for x in bruts) if s}
+
+
+def _reservations_partagees(exploitation, start, end):
+    """Les réservations des fermes co-adhérentes, sur du matériel de la CUMA.
+
+    Elles ne franchissent la frontière entre exploitations qu'à trois
+    conditions : l'engin est détenu en CUMA, cette CUMA est l'une des nôtres,
+    et la ferme n'est pas la nôtre. Rien d'autre ne traverse.
+    """
+    sirets = _sirets_cuma(exploitation)
+    if not sirets:
+        return []
+    lot = (AffectationEngin.objects
+           .exclude(exploitation=exploitation)
+           .filter(machine__detention=Machine.Detention.CUMA,
+                   machine__proprietaire__isnull=False)
+           .exclude(machine__proprietaire__siret="")
+           .annotate(d_end=Coalesce("date_fin", "date_debut"))
+           .filter(date_debut__date__lte=end, d_end__date__gte=start)
+           .select_related("machine", "machine__proprietaire", "exploitation")
+           .order_by("date_debut", "id"))
+    # L'appariement final se fait en Python : la base garde les SIRET tels que
+    # saisis, avec leurs espaces, et on les compare normalisés.
+    return [r for r in lot if _siret_normalise(r.machine.proprietaire.siret) in sirets]
+
+
+def _reservations_in_range(exploitation, start, end):
+    """Réservations de matériel chevauchant la fenêtre [start, end].
+
+    Sans date de fin, la réservation tient sur sa seule journée de début.
+    """
+    if not exploitation:
+        return []
+    return list(
+        AffectationEngin.objects.filter(exploitation=exploitation)
+        .annotate(d_end=Coalesce("date_fin", "date_debut"))
+        .filter(date_debut__date__lte=end, d_end__date__gte=start)
+        .select_related("machine", "parcelle")
+        .order_by("date_debut", "id")
+    ) + _reservations_partagees(exploitation, start, end)
+
+
+def _reservation_payload(reservation):
+    """Données de la réservation passées à la modale (attribut @click, donc JSON)."""
+    debut, fin = reservation.periode
+    return json.dumps(
+        {
+            "id": reservation.id,
+            "machine": reservation.machine_id or "",
+            "machine_nom": str(reservation.machine),
+            "operation": reservation.operation,
+            "start": timezone.localdate(debut).isoformat() if debut else "",
+            "end": timezone.localdate(fin).isoformat() if fin else "",
+            "parcelle": reservation.parcelle_id or "",
+            "notes": reservation.notes,
+        }
     )
 
 
@@ -91,17 +204,49 @@ def _payload(task):
     )
 
 
-def _bars(tasks, days, colors=None, max_lanes=None):
-    """Découpe les tâches en barres continues sur la fenêtre `days`.
+def _decor_tache(colors):
+    """Couleur, données de modale et nature d'une barre de tâche."""
+    def decor(t):
+        return {
+            "color": (colors or {}).get(t.assigned_to_id, PALETTE[0]),
+            "payload": _payload(t),
+            "kind": "tache",
+        }
+    return decor
+
+
+def _decor_reservation(exploitation_id):
+    """Idem pour une réservation, qui n'a pas de membre assigné.
+
+    Celle d'une ferme co-adhérente est marquée « partagée » : l'agenda la
+    montre pour qu'on sache l'engin pris, mais ne l'ouvre pas à la modification.
+    """
+    def decor(r):
+        return {
+            "color": RESERVATION_COLOR,
+            "payload": _reservation_payload(r),
+            "kind": "reservation",
+            "partagee": r.exploitation_id != exploitation_id,
+        }
+    return decor
+
+
+def _bars(items, days, colors=None, max_lanes=None, decor=None):
+    """Découpe tâches et réservations en barres continues sur la fenêtre `days`.
 
     Chaque barre occupe les colonnes de son début à sa fin (bornées à la
     fenêtre) et la première ligne libre, à la manière d'un agenda. Au-delà de
     `max_lanes` lignes, les barres du bas sont remplacées par un « +N » par jour.
+
+    `decor` dit comment habiller un élément — couleur, données de modale,
+    nature — pour que tâches et réservations partagent le même calcul de lignes
+    sans se chevaucher.
     """
     n = len(days)
     first, last = days[0], days[-1]
+    decor = decor or _decor_tache(colors)
     bars = []
-    for t in tasks:
+    for t in items:
         debut, fin = t.periode
         if not (debut and fin):
             continue
@@ -114,9 +259,8 @@ def _bars(tasks, days, colors=None, max_lanes=None):
         col_end = min(n - 1, (d1 - first).days)
         bars.append(
             {
-                "task": t,
-                "payload": _payload(t),
-                "color": (colors or {}).get(t.assigned_to_id, PALETTE[0]),
+                "item": t,
+                **decor(t),
                 "col": col,
                 "span": col_end - col + 1,
                 "opens": d0 >= first,  # début réel visible (bord arrondi à gauche)
@@ -158,6 +302,16 @@ def _bars(tasks, days, colors=None, max_lanes=None):
 @login_required
 def planning(request):
     exploitation = _exploitation(request)
+
+    # Sans droit de lecture, on ne montre pas un agenda vide : on dit qu'il
+    # faut demander l'accès, et où en est la demande le cas échéant.
+    if not acces_service.peut_lire(exploitation, request.user):
+        return render(request, "planning/sans_acces.html", {
+            "exploitation": exploitation,
+            "demande": acces_service.demande_en_cours(exploitation, request.user),
+            "page_title": _("Planning"),
+        })
+
     team_members = TeamMember.objects.filter(exploitation=exploitation) if exploitation else TeamMember.objects.none()
 
     today = timezone.localdate()
@@ -206,11 +360,18 @@ def planning(request):
         team_list = list(team_members)
         member_color = _member_colors(team_list)
         month_tasks = _tasks_in_range(exploitation, team_list, weeks[0][0], weeks[-1][-1])
+        month_reservations = _reservations_in_range(exploitation, weeks[0][0], weeks[-1][-1])
+        # Un même calcul de lignes pour les deux : elles ne se chevauchent pas.
+        decor_tache = _decor_tache(member_color)
+        decor_res = _decor_reservation(exploitation.pk if exploitation else None)
+        decor_mixte = lambda o: (decor_res(o) if isinstance(o, AffectationEngin)
+                                 else decor_tache(o))
         ctx.update(
             month_weeks=[
                 {
                     "days": [{"date": d, "in_month": d.month == first.month} for d in week],
-                    **_bars(month_tasks, week, member_color, MONTH_MAX_LANES),
+                    **_bars(month_tasks + month_reservations, week, member_color,
+                            MONTH_MAX_LANES, decor=decor_mixte),
                 }
                 for week in weeks
             ],
@@ -234,12 +395,15 @@ def planning(request):
         # jour-là, sur toute la durée de leurs tâches.
         day_colors = defaultdict(list)
         window_start, window_end = months[0]["weeks"][0][0], months[-1]["weeks"][-1][-1]
-        for t in _tasks_in_range(exploitation, team_list, window_start, window_end):
+        annee_items = (_tasks_in_range(exploitation, team_list, window_start, window_end)
+                       + _reservations_in_range(exploitation, window_start, window_end))
+        for t in annee_items:
             debut, fin = t.periode
             d0, d1 = timezone.localdate(debut), timezone.localdate(fin)
             if d1 < d0:
                 d0, d1 = d1, d0
-            color = member_color.get(t.assigned_to_id, PALETTE[0])
+            color = (RESERVATION_COLOR if isinstance(t, AffectationEngin)
+                     else member_color.get(t.assigned_to_id, PALETTE[0]))
             d = max(d0, window_start)
             while d <= min(d1, window_end):
                 if color not in day_colors[d]:
@@ -293,26 +457,44 @@ def planning(request):
             )
         ctx["rows"] = rows
 
+        # Les réservations ne visent pas un membre mais un engin : elles ont
+        # leur propre bande, une ligne par machine effectivement réservée.
+        par_machine = defaultdict(list)
+        for r in _reservations_in_range(exploitation, days[0], days[-1]):
+            par_machine[r.machine_id].append(r)
+        lignes_machines = []
+        for lot in par_machine.values():
+            layout = _bars(lot, days,
+                           decor=_decor_reservation(exploitation.pk if exploitation else None))
+            lignes_machines.append(
+                {
+                    "machine": lot[0].machine,
+                    # Une ligne entière peut appartenir à une ferme co-adhérente.
+                    "partagee": lot[0].machine.exploitation_id != (exploitation.pk if exploitation else None),
+                    "cells": [{"date": d} for d in days],
+                    "height": max(72, 18 + layout["lanes"] * 28),
+                    **layout,
+                }
+            )
+        lignes_machines.sort(key=lambda l: str(l["machine"]))
+        ctx["machine_rows"] = lignes_machines
+
     ctx["priorities"] = Task.Priority.choices
     ctx["statuses"] = Task.Status.choices
     # Parcelles : la liste pour les pastilles, et leurs contours pour la carte
     # de sélection (les agriculteurs reconnaissent leurs parcelles à la forme,
     # pas à la référence cadastrale).
     parcelles = list(Parcelle.objects.filter(exploitation=exploitation)) if exploitation else []
-    ctx["parcelles"] = parcelles
-    ctx["parcelles_geojson"] = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "geometry": p.boundaries,
-                "properties": {"id": p.pk, "name": p.name, "area": p.area},
-            }
-            for p in parcelles
-            if p.boundaries
-        ],
-    }
-    ctx["parcelles_mappables"] = sum(1 for p in parcelles if p.boundaries)
+    ctx.update(carte_parcelles.contexte(parcelles))
+    ctx["peut_ecrire"] = acces_service.peut_ecrire(exploitation, request.user)
+    ctx["peut_gerer"] = acces_service.peut_gerer(exploitation, request.user)
+    ctx["demandes_en_attente"] = (
+        AccesPlanning.objects.filter(exploitation=exploitation,
+                                     statut=AccesPlanning.Statut.EN_ATTENTE).count()
+        if ctx["peut_gerer"] else 0)
+    ctx["machines"] = (list(Machine.objects.filter(exploitation=exploitation))
+                       if exploitation else [])
+    ctx["operations"] = AffectationEngin.Operation.choices
     return render(request, "planning/planning.html", ctx)
 
 
@@ -326,47 +508,6 @@ def _planning_url(request):
 def _aware(d):
     """Date (jour) → datetime aware à minuit, ou None."""
     return timezone.make_aware(datetime.combine(d, datetime.min.time())) if d else None
-
-
-def _save_subtasks(task, request, exploitation):
-    """Synchronise les tâches filles depuis le JSON du champ caché `subtasks`.
-
-    Une sous-tâche est une tâche à part entière : elle a son assigné, sa date et
-    son statut. Les lignes retirées côté modale sont supprimées.
-    """
-    try:
-        rows = json.loads(request.POST.get("subtasks") or "[]")
-    except json.JSONDecodeError:
-        return
-    if not isinstance(rows, list):
-        return
-    kept = []
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        title = (row.get("title") or "").strip()
-        if not title:
-            continue
-        try:
-            sub_id = int(row.get("id") or 0)
-        except (TypeError, ValueError):
-            sub_id = 0
-        sub = Task.objects.filter(pk=sub_id, parent=task, exploitation=exploitation).first() if sub_id else None
-        if sub is None:
-            sub = Task(exploitation=exploitation, parent=task, created_by=request.user, priority=task.priority)
-        sub.title = title[:255]
-        if row.get("done"):
-            sub.status = Task.Status.DONE
-        elif sub.is_done:
-            sub.status = Task.Status.TODO
-        sub.assigned_to = (
-            TeamMember.objects.filter(pk=row.get("member") or None, exploitation=exploitation).first() or task.assigned_to
-        )
-        d = parse_date(str(row.get("date") or ""))
-        sub.start_date = sub.due_date = _aware(d)
-        sub.save()
-        kept.append(sub.pk)
-    task.subtasks.exclude(pk__in=kept).delete()
 
 
 def _save_task(task, request, exploitation):
@@ -394,20 +535,16 @@ def _save_task(task, request, exploitation):
     task.priority = priority
     task.status = status
     task.description = (request.POST.get("description") or "").strip()
-    # Parcelles : sélection multiple ; `parcelle` garde la première (API, espace employé).
-    choisies = list(
-        Parcelle.objects.filter(pk__in=request.POST.getlist("parcelles"), exploitation=exploitation).order_by("name")
-    )
-    task.parcelle = choisies[0] if choisies else None
     task.save()
-    task.parcelles.set(choisies)
-    _save_subtasks(task, request, exploitation)
+    equipe_services.enregistrer_parcelles(task, request, exploitation)
+    equipe_services.enregistrer_sous_taches(task, request, exploitation)
     return True
 
 
 @login_required
 @require_POST
 def task_create(request):
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     _save_task(Task(exploitation=exploitation, created_by=request.user), request, exploitation)
     return redirect(_planning_url(request))
@@ -416,6 +553,7 @@ def task_create(request):
 @login_required
 @require_POST
 def task_edit(request, pk):
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     task = get_object_or_404(Task, pk=pk, exploitation=exploitation)
     _save_task(task, request, exploitation)
@@ -425,8 +563,213 @@ def task_edit(request, pk):
 @login_required
 @require_POST
 def task_delete(request, pk):
+    _refuser_si_lecture_seule(request)
     exploitation = _exploitation(request)
     get_object_or_404(Task, pk=pk, exploitation=exploitation).delete()
+    return redirect(_planning_url(request))
+
+
+# ── Partage du planning ──────────────────────────────────────────────
+
+
+@login_required
+@require_POST
+def acces_demander(request):
+    """Le compte demande l'accès au planning de la ferme où il est rattaché."""
+    exploitation = _exploitation(request)
+    if exploitation is None:
+        raise PermissionDenied(_("Vous n'êtes rattaché à aucune exploitation."))
+    if acces_service.peut_lire(exploitation, request.user):
+        return redirect("planning:planning")
+
+    acces_service.demander(exploitation, request.user,
+                           (request.POST.get("message") or "").strip())
+    lien = reverse("planning:acces")
+    for destinataire in acces_service.gestionnaires(exploitation):
+        notify(destinataire, type="planning_acces",
+               title=_("Demande d'accès au planning"),
+               message=_("%(qui)s demande l'accès au planning.") % {
+                   "qui": request.user.display_name},
+               action_url=lien)
+    messages.success(request, _("Votre demande est envoyée."))
+    return redirect("planning:planning")
+
+
+@login_required
+def acces(request):
+    """L'écran de partage : qui a accès, à quel niveau, et qui attend."""
+    exploitation = _exploitation(request)
+    _refuser_si_ne_gere_pas(request)
+    lot = (AccesPlanning.objects.filter(exploitation=exploitation)
+           .select_related("user", "decide_par"))
+    return render(request, "planning/acces.html", {
+        "exploitation": exploitation,
+        "en_attente": [a for a in lot if a.statut == AccesPlanning.Statut.EN_ATTENTE],
+        "accordes": [a for a in lot if a.statut == AccesPlanning.Statut.ACCORDE],
+        "refuses": [a for a in lot if a.statut == AccesPlanning.Statut.REFUSE],
+        "niveaux": AccesPlanning.Niveau.choices,
+        "page_title": _("Partage du planning"),
+    })
+
+
+@login_required
+@require_POST
+def acces_decider(request, pk):
+    """Accorde à un niveau, ou refuse."""
+    exploitation = _exploitation(request)
+    _refuser_si_ne_gere_pas(request)
+    demande = get_object_or_404(AccesPlanning, pk=pk, exploitation=exploitation)
+
+    accorde = request.POST.get("decision") == "accorder"
+    niveau = request.POST.get("niveau") or AccesPlanning.Niveau.LECTURE
+    if niveau not in AccesPlanning.Niveau.values:
+        niveau = AccesPlanning.Niveau.LECTURE
+
+    acces_service.decider(
+        demande, par=request.user, niveau=niveau,
+        statut=AccesPlanning.Statut.ACCORDE if accorde else AccesPlanning.Statut.REFUSE)
+
+    notify(demande.user, type="planning_acces",
+           title=_("Accès au planning"),
+           message=(_("Vous avez désormais l'accès « %(niveau)s » au planning.")
+                    % {"niveau": demande.get_niveau_display()} if accorde
+                    else _("Votre demande d'accès au planning n'a pas été retenue.")),
+           action_url=reverse("planning:planning") if accorde else "")
+    return redirect("planning:acces")
+
+
+@login_required
+@require_POST
+def acces_revoquer(request, pk):
+    """Retire un accès accordé. Le compte pourra en redemander un."""
+    exploitation = _exploitation(request)
+    _refuser_si_ne_gere_pas(request)
+    demande = get_object_or_404(AccesPlanning, pk=pk, exploitation=exploitation)
+    if demande.user_id == request.user.id:
+        messages.error(request, _("Vous ne pouvez pas retirer votre propre accès."))
+        return redirect("planning:acces")
+    demande.delete()
+    return redirect("planning:acces")
+
+
+# ── Réservations de matériel ─────────────────────────────────────────
+
+
+def _reservation_fields(request, exploitation):
+    """Champs d'une réservation lus du POST, cloisonnés à l'exploitation.
+
+    Machine et parcelle sont cherchées chez l'exploitant : un POST forgé ne
+    peut pas réserver l'engin du voisin ni pointer sa parcelle.
+    """
+    machine = Machine.objects.filter(
+        pk=request.POST.get("machine") or 0, exploitation=exploitation).first()
+    if machine is None:
+        return None
+
+    operation = request.POST.get("operation") or AffectationEngin.Operation.AUTRE
+    if operation not in AffectationEngin.Operation.values:
+        operation = AffectationEngin.Operation.AUTRE
+
+    debut = _aware(parse_date(request.POST.get("start") or ""))
+    if debut is None:
+        return None
+    fin = _aware(parse_date(request.POST.get("end") or "")) or debut
+    if fin < debut:
+        debut, fin = fin, debut
+
+    return {
+        "machine": machine,
+        "operation": operation,
+        "date_debut": debut,
+        "date_fin": fin,
+        "parcelle": Parcelle.objects.filter(
+            pk=request.POST.get("parcelle") or 0, exploitation=exploitation).first(),
+        "notes": (request.POST.get("notes") or "").strip(),
+    }
+
+
+def _conflit(machine, debut, fin, exclure_pk=None):
+    """La réservation qui occupe déjà cet engin sur la période, s'il en est une.
+
+    Deux réservations se chevauchent dès que l'une commence avant que l'autre
+    ne s'achève. Seule la ferme propriétaire réserve un engin donné — les
+    autres membres de la CUMA le voient sans pouvoir le prendre — si bien que
+    le conflit se cherche sur la machine, sans croiser les exploitations.
+    """
+    lot = (AffectationEngin.objects
+           .filter(machine=machine)
+           .annotate(d_end=Coalesce("date_fin", "date_debut")))
+    if exclure_pk is not None:
+        lot = lot.exclude(pk=exclure_pk)
+    return (lot.filter(date_debut__date__lte=timezone.localdate(fin),
+                       d_end__date__gte=timezone.localdate(debut))
+               .order_by("date_debut").first())
+
+
+def _dire_le_conflit(conflit):
+    """Dire quand l'engin est déjà pris, et pour quoi faire."""
+    debut, fin = conflit.periode
+    d0, d1 = timezone.localdate(debut), timezone.localdate(fin)
+    quand = (formats.date_format(d0, "SHORT_DATE_FORMAT") if d0 == d1 else
+             _("du %(d0)s au %(d1)s") % {
+                 "d0": formats.date_format(d0, "SHORT_DATE_FORMAT"),
+                 "d1": formats.date_format(d1, "SHORT_DATE_FORMAT")})
+    return _("« %(engin)s » est déjà réservé %(quand)s (%(operation)s).") % {
+        "engin": conflit.machine, "quand": quand,
+        "operation": conflit.get_operation_display()}
+
+
+@login_required
+@require_POST
+def reservation_create(request):
+    _refuser_si_lecture_seule(request)
+    exploitation = _exploitation(request)
+    champs = _reservation_fields(request, exploitation) if exploitation else None
+    if not champs:
+        messages.error(request, _("Réservation impossible : choisissez un matériel et une date."))
+        return redirect(_planning_url(request))
+
+    conflit = _conflit(champs["machine"], champs["date_debut"], champs["date_fin"])
+    if conflit:
+        messages.error(request, _dire_le_conflit(conflit))
+        return redirect(_planning_url(request))
+
+    AffectationEngin.objects.create(
+        exploitation=exploitation, created_by=request.user, **champs)
+    return redirect(_planning_url(request))
+
+
+@login_required
+@require_POST
+def reservation_edit(request, pk):
+    _refuser_si_lecture_seule(request)
+    exploitation = _exploitation(request)
+    reservation = get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation)
+    champs = _reservation_fields(request, exploitation)
+    if not champs:
+        messages.error(request, _("Réservation impossible : choisissez un matériel et une date."))
+        return redirect(_planning_url(request))
+
+    # On s'exclut du calcul : déplacer une réservation ne doit pas la voir
+    # entrer en conflit avec elle-même.
+    conflit = _conflit(champs["machine"], champs["date_debut"], champs["date_fin"],
+                       exclure_pk=reservation.pk)
+    if conflit:
+        messages.error(request, _dire_le_conflit(conflit))
+        return redirect(_planning_url(request))
+
+    for champ, valeur in champs.items():
+        setattr(reservation, champ, valeur)
+    reservation.save()
+    return redirect(_planning_url(request))
+
+
+@login_required
+@require_POST
+def reservation_delete(request, pk):
+    _refuser_si_lecture_seule(request)
+    exploitation = _exploitation(request)
+    get_object_or_404(AffectationEngin, pk=pk, exploitation=exploitation).delete()
     return redirect(_planning_url(request))
 
 

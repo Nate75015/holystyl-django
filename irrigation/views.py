@@ -15,6 +15,7 @@ from meteo.services import fetch_weather
 from notifications.models import NotificationRule
 from parcelles.models import Parcelle
 
+from . import bilan_eau
 from .models import (
     BassinageEvent, DtiScore, IrrigationProgram, IrrigationSession, IrrigationZone, PumpingStation,
 )
@@ -140,7 +141,11 @@ _DTI_LABELS = {
 
 @login_required
 def dti(request):
-    """Diagnostic technique d'irrigation : dernier score, historique, calculateur."""
+    """Irrigation : le diagnostic technique et le bilan d'eau, sur une page.
+
+    Les deux répondaient séparément à la même question — ce que l'installation
+    fait de l'eau, et ce qu'elle coûte. Le bilan a rejoint le diagnostic.
+    """
     exploitation = _exploitation(request)
     scores = (
         DtiScore.objects.filter(exploitation=exploitation).select_related("parcelle")
@@ -161,6 +166,7 @@ def dti(request):
         for s in scores[:20]
     ]
     return render(request, "irrigation/dti.html", {
+        **bilan_eau.donnees(exploitation),
         "latest": latest,
         "latest_label": _DTI_LABELS.get(latest.score, "") if latest else "",
         "latest_color": _DTI_COLORS.get(latest.score, "#94a3b8") if latest else "#94a3b8",
@@ -169,6 +175,29 @@ def dti(request):
         "parcelles": parcelles,
         "page_title": _("DTI"),
     })
+
+
+@login_required
+def bilan_eau_export(request):
+    """Les sessions d'irrigation en CSV, telles qu'affichées sur la page DTI."""
+    import csv
+
+    from django.http import HttpResponse
+
+    donnees = bilan_eau.donnees(_exploitation(request))
+    reponse = HttpResponse(content_type="text/csv")
+    reponse["Content-Disposition"] = 'attachment; filename="bilan_eau.csv"'
+    ecrivain = csv.writer(reponse)
+    ecrivain.writerow(["Date", "Parcelle", "Volume (m³)", "Déclencheur", "kWh/m³"])
+    for s in donnees["sessions"]:
+        ecrivain.writerow([
+            s.start_time.strftime("%d/%m/%Y %H:%M") if s.start_time else "",
+            s.parcelle.name if s.parcelle else "",
+            s.volume_delivered_m3 or "",
+            s.get_triggered_by_display(),
+            s.kwh_per_m3 or "",
+        ])
+    return reponse
 
 
 @login_required

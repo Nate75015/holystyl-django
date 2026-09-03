@@ -152,6 +152,11 @@ class Devis(TimeStampedModel):
     taux_tva = models.FloatField(default=20)
     montant_tva = models.FloatField(default=0)
     montant_ttc = models.FloatField(default=0)
+    #: Le logo qui s'imprime en tête. Vide → celui marqué par défaut, de
+    #: sorte qu'un document ancien suit la marque courante.
+    logo = models.ForeignKey(
+        "finances.Logo", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="%(class)ss", verbose_name=_("logo"))
     notes = models.TextField(blank=True)
 
     # ── Acceptation par le client ──────────────────────────────────────
@@ -217,6 +222,11 @@ class Facture(TimeStampedModel):
     taux_tva = models.FloatField(default=20)
     montant_tva = models.FloatField(default=0)
     montant_ttc = models.FloatField(default=0)
+    #: Le logo qui s'imprime en tête. Vide → celui marqué par défaut, de
+    #: sorte qu'un document ancien suit la marque courante.
+    logo = models.ForeignKey(
+        "finances.Logo", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="%(class)ss", verbose_name=_("logo"))
     notes = models.TextField(blank=True)
     #: Devis dont cette facture est issue, le cas échéant.
     devis = models.OneToOneField(
@@ -247,6 +257,111 @@ class Facture(TimeStampedModel):
 
     def __str__(self):
         return self.numero
+
+
+class Logo(models.Model):
+    """Un logo de l'exploitation, réutilisable sur ses documents.
+
+    Une bibliothèque plutôt qu'un champ unique : une exploitation porte
+    souvent plusieurs marques — la ferme, la boutique, un label — et le logo
+    d'une facture n'est pas toujours celui d'un devis. Ils vivent donc ici,
+    et les documents viennent y choisir.
+
+    L'un d'eux est marqué par défaut : c'est celui qu'un nouveau document
+    prend sans qu'on ait à le demander.
+    """
+
+    #: On s'en tient à ce qui s'ouvre partout et n'alourdit pas un PDF.
+    EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".svg"}
+    TAILLE_MAX = 2 * 1024 * 1024
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="logos")
+    nom = models.CharField(_("nom"), max_length=120, blank=True)
+    fichier = models.ImageField(_("image"), upload_to="logos/%Y/%m/")
+    par_defaut = models.BooleanField(
+        _("logo par défaut"), default=False,
+        help_text=_("Celui que prend un nouveau document, sauf choix contraire."))
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("logo")
+        verbose_name_plural = _("logos")
+        ordering = ("-par_defaut", "nom", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "par_defaut"])]
+
+    def __str__(self):
+        return self.nom or self.fichier.name
+
+    def save(self, *args, **kwargs):
+        # Le nom n'est pas obligatoire : à défaut, celui du fichier fait
+        # l'affaire — mieux qu'une ligne vide dans la bibliothèque.
+        if not self.nom and self.fichier:
+            import os
+
+            self.nom = os.path.splitext(os.path.basename(self.fichier.name))[0][:120]
+        super().save(*args, **kwargs)
+        if self.par_defaut:
+            # Un seul par défaut : le nouveau chasse l'ancien.
+            Logo.objects.filter(exploitation=self.exploitation, par_defaut=True).exclude(
+                pk=self.pk).update(par_defaut=False)
+
+
+class IdentiteFacturation(models.Model):
+    """Ce qu'une facture doit porter et que l'exploitation ne dit pas ailleurs.
+
+    La raison sociale, le SIRET et la TVA vivent dans `EntrepriseLiee` ;
+    l'adresse dans `AdresseExploitation`. On ne les recopie pas ici : une
+    identité saisie deux fois finit par se contredire, et sur un document à
+    valeur légale c'est un vrai problème.
+
+    Ne restent donc que les mentions propres à la facturation — comment se
+    faire payer, et ce que la loi impose d'écrire en pied de document.
+    """
+
+    exploitation = models.OneToOneField(
+        "exploitations.Exploitation", on_delete=models.CASCADE,
+        related_name="identite_facturation")
+
+    # ── Se faire payer ───────────────────────────────────────────────
+    banque = models.CharField(_("banque"), max_length=120, blank=True)
+    iban = models.CharField(_("IBAN"), max_length=34, blank=True)
+    bic = models.CharField(_("BIC"), max_length=11, blank=True)
+    conditions_reglement = models.CharField(
+        _("conditions de règlement"), max_length=160, blank=True,
+        help_text=_("ex : 30 jours fin de mois."))
+
+    # ── Ce que la loi impose ─────────────────────────────────────────
+    capital_social = models.FloatField(_("capital social (€)"), null=True, blank=True)
+    rcs = models.CharField(
+        _("RCS / RM"), max_length=120, blank=True,
+        help_text=_("ex : RCS Digne-les-Bains 123 456 789."))
+    #: Pénalités de retard et indemnité forfaitaire sont obligatoires sur une
+    #: facture entre professionnels : le texte par défaut reprend le minimum
+    #: légal, à ajuster selon les conditions de vente.
+    mentions = models.TextField(
+        _("mentions de pied de page"), blank=True,
+        help_text=_("Pénalités de retard, indemnité forfaitaire de recouvrement…"))
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("identité de facturation")
+        verbose_name_plural = _("identités de facturation")
+
+    def __str__(self):
+        return str(self.exploitation)
+
+    @property
+    def iban_lisible(self) -> str:
+        """L'IBAN par groupes de quatre : c'est ainsi qu'on le recopie."""
+        brut = (self.iban or "").replace(" ", "").upper()
+        return " ".join(brut[i:i + 4] for i in range(0, len(brut), 4))
+
+    @property
+    def peut_encaisser(self) -> bool:
+        """Un IBAN sans BIC suffit en zone SEPA ; sans IBAN, rien à imprimer."""
+        return bool(self.iban)
 
 
 class SubventionExport(models.Model):

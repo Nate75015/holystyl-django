@@ -8,6 +8,7 @@ urlpatterns = [
     path("irrigation/", views.irrigation, name="irrigation"),
     path("dti/", views.dti, name="dti"),
     path("dti/calculer/", views.dti_calculate, name="dti_calculate"),
+    path("dti/bilan-eau/export/", views.bilan_eau_export, name="bilan_eau_export"),
     path("irrigation/zones/nouvelle/", views.zone_create, name="zone_create"),
     path("irrigation/programmes/nouveau/", views.program_create, name="program_create"),
     path("irrigation/stations/nouvelle/", views.station_create, name="station_create"),

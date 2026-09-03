@@ -2,7 +2,11 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5" x-data="{ modal: false, tab: 'tous', q: '', filtre: false }">
+{% trans "Lecture en cours…" as libelle_lecture %}
+{% trans "Lire le document" as libelle_lire %}
+{% trans "Champs pré-remplis. Relisez-les." as libelle_lu %}
+{% trans "Aucun document sélectionné." as libelle_sans_fichier %}
+<section class="space-y-5" x-data="bauxUI('{% url 'contrat:bail_scanner' %}')">
 
   <p class="hs-crumb">{% trans "Contrat" %} · {% trans "Baux" %}</p>
 
@@ -32,46 +36,167 @@
     <div class="hs-tile"><p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Fermage annuel" %}</p><p class="text-[22px]">{{ kpi_loyer }} €</p></div>
   </div>
 
-  <div class="hs-card overflow-hidden">
-    <table class="hs-table">
-      <thead>
-        <tr>
-          <th>{% trans "Désignation" %}</th>
-          <th>{% trans "Preneur" %}</th>
-          <th class="num">{% trans "Échéance" %}</th>
-          <th class="num">{% trans "Fermage" %}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for b in baux %}
-          <tr x-show="(tab === 'tous' || tab === '{{ b.statut }}') && (!q || '{{ b.designation|escapejs }} {{ b.bailleur|escapejs }} {{ b.preneur|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
-            <td>
-              <span>{{ b.designation }}</span>
-              {% if b.bailleur %}<span class="block text-[12px]" style="color: var(--text-muted)">{% trans "bailleur" %} · {{ b.bailleur }}</span>{% endif %}
-            </td>
-            <td style="color: var(--text-secondary)">{{ b.preneur|default:"—" }}</td>
-            <td class="num" style="color: var(--text-secondary)">{% if b.date_fin %}{{ b.date_fin|date:"d/m/Y" }}{% else %}—{% endif %}</td>
-            <td class="num">{{ b.loyer_annuel|default_if_none:"—" }}{% if b.loyer_annuel %} €{% endif %}</td>
-            <td class="num">
-              <form method="post" action="{% url 'contrat:bail_delete' b.pk %}" onsubmit="return confirm('{% trans "Supprimer ce bail ?" %}')">
+  {# La fenêtre de congé : dix-huit mois avant le terme, sinon renouvellement. #}
+  {% if conges_imminents %}
+    <div class="rounded-[10px] px-4 py-3 text-[13px]"
+         style="border: 0.5px solid var(--warning); background: color-mix(in srgb, var(--warning) 8%, transparent)">
+      <p class="font-medium" style="color: var(--warning)">
+        {% blocktrans count n=conges_imminents|length %}Un congé est à donner bientôt{% plural %}{{ n }} congés sont à donner bientôt{% endblocktrans %}
+      </p>
+      <p class="mt-1" style="color: var(--text-secondary)">
+        {% for b in conges_imminents %}{{ b.designation }} — {% trans "au plus tard le" %} {{ b.date_limite_conge|date:"d/m/Y" }} ({{ b.jours_avant_conge }} {% trans "jours" %}){% if not forloop.last %} · {% endif %}{% endfor %}
+      </p>
+      <p class="mt-1" style="color: var(--text-muted)">{% trans "Passée cette date, le bail se renouvelle de plein droit pour une nouvelle période." %}</p>
+    </div>
+  {% endif %}
+
+  <div class="grid gap-4 lg:grid-cols-2">
+    {% for b in baux %}
+      <div class="hs-card p-5"
+           x-show="(tab === 'tous' || tab === '{{ b.statut }}') && (!q || '{{ b.designation|escapejs }} {{ b.bailleur|escapejs }} {{ b.preneur|escapejs }}'.toLowerCase().includes(q.toLowerCase()))">
+
+        <div class="flex flex-wrap items-start justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-[15px] font-medium">{{ b.designation }}</p>
+            <p class="text-[12px]" style="color: var(--text-muted)">
+              {{ b.get_type_bail_display }}
+              {% if b.bailleur %} · {% trans "bailleur" %} {{ b.bailleur }}{% endif %}
+              {% if b.surface_ha %} · {{ b.surface_ha|floatformat:"-2" }} ha{% endif %}
+            </p>
+          </div>
+          <span class="hs-badge shrink-0 {% if b.est_en_vigueur %}hs-badge-success{% elif b.statut == 'resilie' %}hs-badge-danger{% else %}hs-badge-neutral{% endif %}">{{ b.get_statut_display }}</span>
+        </div>
+
+        <p class="mt-2 text-[12px]" style="color: var(--text-secondary)">
+          {% if b.date_debut %}{{ b.date_debut|date:"d/m/Y" }}{% endif %}
+          {% if b.date_fin %} → {{ b.date_fin|date:"d/m/Y" }}
+            {% if b.jours_avant_echeance >= 0 %} ({{ b.jours_avant_echeance }} {% trans "jours" %}){% else %}<span style="color: var(--danger)"> — {% trans "terme dépassé" %}</span>{% endif %}
+          {% endif %}
+          {% if b.date_resiliation %} · {% trans "résilié le" %} {{ b.date_resiliation|date:"d/m/Y" }}{% endif %}
+          {% if not b.renouvellement_tacite %} · {% trans "sans renouvellement tacite" %}{% endif %}
+        </p>
+
+        {# Donner congé : la seule date qui ne se rattrape pas. #}
+        {% if b.date_limite_conge %}
+          <div class="mt-3 rounded-[10px] px-3 py-2.5" style="background: var(--surface-alt)">
+            <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Pour donner congé" %}</p>
+            <p class="mt-1 text-[13px]">
+              {% trans "au plus tard le" %} <span class="font-medium"{% if b.conge_imminent %} style="color: var(--warning)"{% endif %}>{{ b.date_limite_conge|date:"d/m/Y" }}</span>
+              <span style="color: var(--text-secondary)">— {% blocktrans with n=b.preavis_conge_mois %}préavis de {{ n }} mois{% endblocktrans %}</span>
+              {% if b.jours_avant_conge < 0 %}<span style="color: var(--danger)"> · {% trans "fenêtre close" %}</span>{% endif %}
+            </p>
+            {% if b.contact_telephone or b.contact_email %}
+              <div class="mt-1 flex flex-wrap items-center gap-x-4 text-[13px]">
+                {% if b.contact_telephone %}
+                  <a href="tel:{{ b.contact_telephone }}" class="inline-flex items-center gap-1 font-medium" style="color: var(--action)">
+                    <span class="material-icons-round text-[16px]">call</span>{{ b.contact_telephone }}
+                  </a>
+                {% endif %}
+                {% if b.contact_email %}<a href="mailto:{{ b.contact_email }}" class="underline" style="color: var(--text-secondary)">{{ b.contact_email }}</a>{% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <div class="mt-3 grid grid-cols-3 gap-2 text-[13px]">
+          <div><p class="text-[11px]" style="color: var(--text-muted)">{% trans "Fermage / an" %}</p><p>{% if b.loyer_annuel %}{{ b.loyer_annuel|floatformat:"-2" }} €{% else %}—{% endif %}</p></div>
+          <div><p class="text-[11px]" style="color: var(--text-muted)">{% trans "Révision" %}</p><p>{% if b.date_revision_fermage %}{{ b.date_revision_fermage|date:"d/m" }}{% else %}—{% endif %}</p></div>
+          <div><p class="text-[11px]" style="color: var(--text-muted)">{% trans "Taxe foncière" %}</p><p>{% if b.taxe_fonciere_part_preneur %}{{ b.taxe_fonciere_part_preneur|floatformat:"-1" }} %{% else %}—{% endif %}</p></div>
+        </div>
+
+        {% if b.references_cadastrales or b.charges_recuperables or b.clauses_environnementales or b.droit_preemption %}
+          <details class="mt-3">
+            <summary class="cursor-pointer text-[12px]" style="color: var(--text-muted)">{% trans "Parcelles, charges et clauses" %}</summary>
+            {% if b.references_cadastrales %}<p class="mt-1 text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Parcelles" %}</p><p class="whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ b.references_cadastrales }}</p>{% endif %}
+            {% if b.charges_recuperables %}<p class="mt-2 text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Charges récupérables" %}</p><p class="whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ b.charges_recuperables }}</p>{% endif %}
+            {% if b.clauses_environnementales %}<p class="mt-2 text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Clauses environnementales" %}</p><p class="whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ b.clauses_environnementales }}</p>{% endif %}
+            {% if b.droit_preemption %}<p class="mt-2 text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">{% trans "Droit de préemption" %}</p><p class="whitespace-pre-line text-[13px]" style="color: var(--text-secondary)">{{ b.droit_preemption }}</p>{% endif %}
+          </details>
+        {% endif %}
+
+        <div class="mt-3">
+          <p class="text-[11px] uppercase tracking-wide" style="color: var(--text-muted)">
+            {% trans "Documents" %}{% if not b.etat_des_lieux %} · <span style="color: var(--warning)">{% trans "état des lieux non établi" %}</span>{% endif %}
+          </p>
+          {% for d in b.documents.all %}
+            <div class="mt-1 flex items-center gap-2 text-[13px]">
+              <span class="material-icons-round text-[15px]" style="color: var(--text-muted)">description</span>
+              <a href="{{ d.fichier.url }}" target="_blank" rel="noopener" class="min-w-0 flex-1 truncate underline">{{ d.nom }}</a>
+              <span class="shrink-0 text-[11px]" style="color: var(--text-muted)">{{ d.get_type_document_display }}</span>
+              <form method="post" action="{% url 'contrat:bail_document_delete' d.pk %}"
+                    onsubmit="return confirm('{% trans "Retirer ce document ?" %}')" class="leading-none">
                 {% csrf_token %}
-                <button type="submit" title="{% trans 'Supprimer' %}" class="align-middle" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
+                <button type="submit" title="{% trans 'Retirer' %}" style="color: var(--text-muted)"><span class="material-icons-round text-[15px]">close</span></button>
               </form>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% if not baux %}
-      <div class="px-14 py-10 text-center">
+            </div>
+          {% empty %}
+            <p class="mt-1 text-[12px]" style="color: var(--text-secondary)">{% trans "Aucune pièce au dossier." %}</p>
+          {% endfor %}
+          <form method="post" action="{% url 'contrat:bail_document' b.pk %}" enctype="multipart/form-data" class="mt-2 flex flex-wrap items-center gap-2">
+            {% csrf_token %}
+            <input type="file" name="document" accept=".pdf,.png,.jpg,.jpeg,.webp,.heic" capture="environment" class="max-w-[16rem] text-[12px]">
+            <select name="type_document" class="w-auto text-[12px]">
+              {% for code, libelle in types_document %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+            </select>
+            <button type="submit" class="hs-btn-outline">{% trans "Joindre" %}</button>
+          </form>
+        </div>
+
+        <div class="mt-4 flex items-center justify-end gap-1">
+          <form method="post" action="{% url 'contrat:bail_delete' b.pk %}"
+                onsubmit="return confirm('{% trans "Supprimer ce bail ?" %}')" class="leading-none">
+            {% csrf_token %}
+            <button type="submit" title="{% trans 'Supprimer' %}" style="color: var(--text-muted)"><span class="material-icons-round text-[17px]">delete</span></button>
+          </form>
+        </div>
+      </div>
+    {% empty %}
+      <div class="hs-card px-14 py-10 text-center lg:col-span-2">
         <p class="text-[15px] font-medium">{% trans "Enregistrez votre premier bail" %}</p>
-        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Suivez vos fermages, preneurs et échéances au même endroit." %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Scannez le bail : l'Agent IA en lit les parties, les dates, la surface et le fermage." %}</p>
         <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Nouveau bail" %}</button>
       </div>
-    {% endif %}
+    {% endfor %}
   </div>
 
   {% include "contrat/_bail_modal.html" %}
 </section>
+
+<script>
+  function bauxUI(urlScanner) {
+    // Les champs du formulaire portent le nom que renvoie l'extraction.
+    const poser = (nom, valeur) => {
+      if (valeur === null || valeur === undefined || valeur === '') return;
+      const champ = document.querySelector('#bail-modal-form [name="' + nom + '"]');
+      if (!champ) return;
+      if (champ.type === 'checkbox') champ.checked = !!valeur;
+      else champ.value = valeur;
+    };
+    return {
+      modal: false, tab: 'tous', q: '', filtre: false,
+      lecture: false, lu: '',
+      async scanner() {
+        const entree = document.getElementById('bail-document');
+        if (!entree || !entree.files.length) { this.lu = '!{{ libelle_sans_fichier|escapejs }}'; return; }
+        this.lecture = true; this.lu = '';
+        try {
+          const corps = new FormData();
+          corps.append('document', entree.files[0]);
+          const jeton = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          const r = await fetch(urlScanner, {
+            method: 'POST', credentials: 'same-origin',
+            headers: { 'X-CSRFToken': jeton }, body: corps });
+          const d = await r.json();
+          if (d.error) { this.lu = '!' + d.error; return; }
+          Object.entries(d.champs || {}).forEach(([nom, valeur]) => poser(nom, valeur));
+          this.lu = '{{ libelle_lu|escapejs }}';
+        } catch (e) {
+          this.lu = '!' + e;
+        } finally {
+          this.lecture = false;
+        }
+      },
+    };
+  }
+</script>
 {% endblock %}

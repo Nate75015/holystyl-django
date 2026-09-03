@@ -4,7 +4,6 @@ from .models import (
     EquipmentCatalog,
     InterventionReport,
     PlanningAbsence,
-    PlanningAccess,
     PlanningCategoryColor,
     PlanningTask,
     PlanningTaskDocument,
@@ -35,5 +34,5 @@ class EquipmentCatalogAdmin(admin.ModelAdmin):
 
 admin.site.register([
     PlanningTaskTechnician, PlanningTaskDocument, PlanningTimeLog,
-    PlanningAbsence, PlanningCategoryColor, PlanningAccess, TaskEquipment,
+    PlanningAbsence, PlanningCategoryColor, TaskEquipment,
 ])

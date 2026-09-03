@@ -147,3 +147,294 @@ class TaskReminder(models.Model):
     class Meta:
         verbose_name = _("rappel de tâche")
         verbose_name_plural = _("rappels de tâche")
+
+
+class ModeleContrat(TimeStampedModel):
+    """Un modèle de contrat de travail, adapté une fois puis réutilisé.
+
+    Le corps est du texte libre semé de jetons — `{{ salarie }}`, `{{ poste }}` —
+    que la génération remplace par les données du salarié. C'est ce qui évite
+    de retaper le même contrat à chaque embauche.
+    """
+
+    class Type(models.TextChoices):
+        CDI = "cdi", _("CDI")
+        CDD = "cdd", _("CDD")
+        SAISONNIER = "saisonnier", _("Contrat saisonnier")
+        APPRENTISSAGE = "apprentissage", _("Contrat d'apprentissage")
+        PROFESSIONNALISATION = "professionnalisation", _("Contrat de professionnalisation")
+        STAGE = "stage", _("Convention de stage")
+        TESA = "tesa", _("TESA — titre emploi simplifié agricole")
+        AUTRE = "autre", _("Autre")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="modeles_contrat")
+    nom = models.CharField(_("nom du modèle"), max_length=255)
+    type_contrat = models.CharField(_("type"), max_length=25,
+                                    choices=Type.choices, default=Type.CDI)
+    corps = models.TextField(_("corps du contrat"))
+    notes = models.TextField(_("notes"), blank=True)
+
+    class Meta:
+        verbose_name = _("modèle de contrat")
+        verbose_name_plural = _("modèles de contrat")
+        ordering = ("nom",)
+
+    def __str__(self):
+        return self.nom
+
+
+class ContratTravail(TimeStampedModel):
+    """Le contrat d'un salarié, établi à partir d'un modèle.
+
+    Son corps est figé à l'établissement : retoucher le modèle plus tard ne
+    doit pas réécrire un contrat déjà remis, encore moins signé.
+    """
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        ETABLI = "etabli", _("Établi")
+        SIGNE = "signe", _("Signé")
+        TERMINE = "termine", _("Terminé")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="contrats_travail")
+    membre = models.ForeignKey(TeamMember, on_delete=models.CASCADE,
+                               related_name="contrats", verbose_name=_("salarié"))
+    modele = models.ForeignKey(ModeleContrat, on_delete=models.SET_NULL, null=True, blank=True,
+                               verbose_name=_("modèle d'origine"))
+    type_contrat = models.CharField(_("type"), max_length=25,
+                                    choices=ModeleContrat.Type.choices,
+                                    default=ModeleContrat.Type.CDI)
+    statut = models.CharField(_("statut"), max_length=12,
+                              choices=Statut.choices, default=Statut.BROUILLON)
+
+    poste = models.CharField(_("poste"), max_length=255, blank=True)
+    lieu = models.CharField(_("lieu de travail"), max_length=255, blank=True)
+    date_debut = models.DateField(_("date de début"), null=True, blank=True)
+    date_fin = models.DateField(_("date de fin"), null=True, blank=True)
+    duree_hebdo = models.FloatField(_("durée hebdomadaire (h)"), null=True, blank=True)
+    remuneration = models.FloatField(_("rémunération brute mensuelle"), null=True, blank=True)
+    date_signature = models.DateField(_("date de signature"), null=True, blank=True)
+    #: La signature apposée sur le PDF. Choisie à l'établissement — une
+    #: exploitation peut en avoir plusieurs — et figée avec le contrat :
+    #: changer de signature ensuite ne doit pas resigner un contrat remis.
+    signature = models.ForeignKey(
+        "identite.Piece", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="contrats_signes", verbose_name=_("signature de l'employeur"))
+
+    #: Texte figé au moment de l'établissement, jetons déjà remplacés.
+    corps = models.TextField(_("corps du contrat"), blank=True)
+
+    class Meta:
+        verbose_name = _("contrat de travail")
+        verbose_name_plural = _("contrats de travail")
+        ordering = ("-date_debut", "-created_at")
+        indexes = [models.Index(fields=["exploitation", "statut"])]
+
+    def __str__(self):
+        return f"{self.membre.name} — {self.get_type_contrat_display()}"
+
+    @property
+    def est_en_cours(self):
+        """Un contrat court tant qu'il n'a pas de terme, ou que le terme est à venir."""
+        from django.utils import timezone
+
+        if self.statut in (self.Statut.BROUILLON, self.Statut.TERMINE):
+            return False
+        return self.date_fin is None or self.date_fin >= timezone.localdate()
+
+
+class OffreEmploi(TimeStampedModel):
+    """Une offre d'emploi de l'exploitation, publiable sur l'espace public.
+
+    Le slug sert d'adresse publique et ne change plus une fois l'offre en
+    ligne : un lien partagé ou indexé doit continuer de fonctionner même si le
+    titre est retouché.
+    """
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        PUBLIEE = "publiee", _("Publiée")
+        POURVUE = "pourvue", _("Pourvue")
+        CLOSE = "close", _("Close")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="offres_emploi")
+    titre = models.CharField(_("intitulé du poste"), max_length=255)
+    slug = models.SlugField(_("adresse publique"), max_length=280, unique=True, blank=True)
+    type_contrat = models.CharField(_("type de contrat"), max_length=25,
+                                    choices=ModeleContrat.Type.choices,
+                                    default=ModeleContrat.Type.SAISONNIER)
+    description = models.TextField(_("description du poste"))
+    profil = models.TextField(_("profil recherché"), blank=True)
+    lieu = models.CharField(_("lieu de travail"), max_length=255, blank=True)
+    date_debut = models.DateField(_("prise de poste"), null=True, blank=True)
+    duree_hebdo = models.FloatField(_("durée hebdomadaire (h)"), null=True, blank=True)
+    #: Texte libre : une offre annonce souvent « selon profil » ou une fourchette.
+    remuneration = models.CharField(_("rémunération"), max_length=255, blank=True)
+    logement = models.BooleanField(_("logement possible"), default=False)
+    contact_email = models.EmailField(_("email de contact"), blank=True)
+
+    statut = models.CharField(_("statut"), max_length=10,
+                              choices=Statut.choices, default=Statut.BROUILLON)
+    publiee_le = models.DateTimeField(_("publiée le"), null=True, blank=True)
+    expire_le = models.DateField(_("visible jusqu'au"), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("offre d'emploi")
+        verbose_name_plural = _("offres d'emploi")
+        ordering = ("-publiee_le", "-created_at")
+        indexes = [models.Index(fields=["statut", "publiee_le"])]
+
+    def __str__(self):
+        return self.titre
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._slug_libre()
+        super().save(*args, **kwargs)
+
+    def _slug_libre(self):
+        from django.utils.text import slugify
+
+        base = slugify(f"{self.titre}-{self.exploitation.name}")[:250] or "offre"
+        candidat, n = base, 2
+        while OffreEmploi.objects.filter(slug=candidat).exclude(pk=self.pk).exists():
+            candidat = f"{base}-{n}"
+            n += 1
+        return candidat
+
+    @property
+    def est_visible(self):
+        """Publiée, et pas encore expirée."""
+        from django.utils import timezone
+
+        if self.statut != self.Statut.PUBLIEE:
+            return False
+        return self.expire_le is None or self.expire_le >= timezone.localdate()
+
+
+class Candidature(TimeStampedModel):
+    """Une candidature déposée depuis l'espace public."""
+
+    class Statut(models.TextChoices):
+        RECUE = "recue", _("Reçue")
+        VUE = "vue", _("Vue")
+        RETENUE = "retenue", _("Retenue")
+        REFUSEE = "refusee", _("Refusée")
+
+    offre = models.ForeignKey(OffreEmploi, on_delete=models.CASCADE, related_name="candidatures")
+    nom = models.CharField(_("nom"), max_length=255)
+    email = models.EmailField(_("email"))
+    telephone = models.CharField(_("téléphone"), max_length=30, blank=True)
+    message = models.TextField(_("message"), blank=True)
+    cv = models.FileField(_("CV"), upload_to="candidatures/%Y/%m/", blank=True)
+    statut = models.CharField(_("statut"), max_length=10,
+                              choices=Statut.choices, default=Statut.RECUE)
+
+    class Meta:
+        verbose_name = _("candidature")
+        verbose_name_plural = _("candidatures")
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.nom} — {self.offre.titre}"
+
+
+class FichePaie(TimeStampedModel):
+    """Le bulletin de paie d'un salarié pour une période.
+
+    L'application ne calcule pas la paie : les taux MSA, la convention
+    collective et les exonérations relèvent du droit et changent. Elle
+    enregistre ce que l'employeur ou son comptable a établi, le présente, et
+    vérifie que les lignes s'additionnent bien aux totaux annoncés.
+    """
+
+    class Statut(models.TextChoices):
+        BROUILLON = "brouillon", _("Brouillon")
+        EMISE = "emise", _("Émise")
+        PAYEE = "payee", _("Payée")
+
+    exploitation = models.ForeignKey(
+        "exploitations.Exploitation", on_delete=models.CASCADE, related_name="fiches_paie")
+    membre = models.ForeignKey(TeamMember, on_delete=models.CASCADE,
+                               related_name="fiches_paie", verbose_name=_("salarié"))
+    contrat = models.ForeignKey(ContratTravail, on_delete=models.SET_NULL, null=True, blank=True,
+                                related_name="fiches_paie", verbose_name=_("contrat"))
+
+    periode_debut = models.DateField(_("période du"))
+    periode_fin = models.DateField(_("période au"))
+
+    heures_travaillees = models.FloatField(_("heures travaillées"), null=True, blank=True)
+    heures_supplementaires = models.FloatField(_("heures supplémentaires"), null=True, blank=True)
+
+    salaire_brut = models.FloatField(_("salaire brut"), default=0)
+    cotisations_salariales = models.FloatField(_("cotisations salariales"), default=0)
+    cotisations_patronales = models.FloatField(_("cotisations patronales"), default=0)
+    net_imposable = models.FloatField(_("net imposable"), null=True, blank=True)
+    net_a_payer = models.FloatField(_("net à payer"), default=0)
+
+    date_paiement = models.DateField(_("payée le"), null=True, blank=True)
+    mode_paiement = models.CharField(_("mode de paiement"), max_length=60, blank=True)
+    statut = models.CharField(_("statut"), max_length=10,
+                              choices=Statut.choices, default=Statut.BROUILLON)
+    notes = models.TextField(_("notes"), blank=True)
+
+    class Meta:
+        verbose_name = _("fiche de paie")
+        verbose_name_plural = _("fiches de paie")
+        ordering = ("-periode_debut", "membre__name")
+        indexes = [models.Index(fields=["exploitation", "periode_debut"])]
+        constraints = [
+            models.UniqueConstraint(fields=["membre", "periode_debut", "periode_fin"],
+                                    name="une_fiche_par_salarie_et_periode"),
+        ]
+
+    def __str__(self):
+        return f"{self.membre.name} — {self.periode_debut:%m/%Y}"
+
+    @property
+    def total_lignes_salariales(self):
+        return round(sum(l.part_salariale or 0 for l in self.lignes.all()), 2)
+
+    @property
+    def total_lignes_patronales(self):
+        return round(sum(l.part_patronale or 0 for l in self.lignes.all()), 2)
+
+    @property
+    def addition_coherente(self):
+        """Les lignes s'additionnent-elles aux totaux annoncés ?
+
+        Vrai quand il n'y a pas de ligne : on ne reproche rien à une fiche
+        saisie en totaux. Un centime d'écart est toléré, les arrondis existent.
+        """
+        if not self.lignes.exists():
+            return True
+        return (abs(self.total_lignes_salariales - (self.cotisations_salariales or 0)) <= 0.01
+                and abs(self.total_lignes_patronales - (self.cotisations_patronales or 0)) <= 0.01)
+
+    @property
+    def cout_employeur(self):
+        """Brut plus charges patronales : ce que la paie coûte à la ferme."""
+        return round((self.salaire_brut or 0) + (self.cotisations_patronales or 0), 2)
+
+
+class LignePaie(models.Model):
+    """Une rubrique du bulletin : cotisation, retenue ou complément."""
+
+    fiche = models.ForeignKey(FichePaie, on_delete=models.CASCADE, related_name="lignes")
+    libelle = models.CharField(_("libellé"), max_length=255)
+    base = models.FloatField(_("base"), null=True, blank=True)
+    taux = models.FloatField(_("taux (%)"), null=True, blank=True)
+    part_salariale = models.FloatField(_("part salariale"), null=True, blank=True)
+    part_patronale = models.FloatField(_("part patronale"), null=True, blank=True)
+    ordre = models.PositiveIntegerField(_("ordre"), default=0)
+
+    class Meta:
+        verbose_name = _("ligne de paie")
+        verbose_name_plural = _("lignes de paie")
+        ordering = ("ordre", "id")
+
+    def __str__(self):
+        return self.libelle

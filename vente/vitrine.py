@@ -40,22 +40,28 @@ def _catalogue_marche(request):
 
 
 def _familles(produits):
-    """Catégories réellement présentes, avec leur compte — pas de filtre vide."""
+    """Toutes les catégories du catalogue, avec ce que chacune contient.
+
+    Toutes, y compris les vides : un filtre absent laisse croire que la
+    catégorie n'existe pas, quand elle est seulement sans offre aujourd'hui.
+    Les vides sont affichées en retrait et le disent par leur zéro.
+    """
     comptes = dict(
         Produit.objects.sur_le_marche().values_list("categorie").annotate(n=Count("id"))
     )
-    libelles = dict(Produit.Categorie.choices)
     return [
-        {"cle": cle, "label": libelles.get(cle, cle), "n": n}
-        for cle, n in sorted(comptes.items(), key=lambda item: str(libelles.get(item[0], "")))
+        {"cle": cle, "label": libelle, "n": comptes.get(cle, 0)}
+        for cle, libelle in Produit.Categorie.choices
     ]
 
 
 def marche(request, categorie=""):
     """Place de marché : tout ce que les fermes ouvertes proposent."""
     produits, recherche = _catalogue_marche(request)
-    if categorie:
+    if categorie and categorie in Produit.Categorie.values:
         produits = produits.filter(categorie=categorie)
+    elif categorie:
+        categorie = ""  # clé inconnue : on retombe sur le marché entier
 
     liste = list(produits[:120])
     fermes = {p.exploitation_id for p in liste}

@@ -1,7 +1,7 @@
 // Service worker minimal (socle PWA).
 // La stratégie offline complète (cache des écrans + file d'écritures) sera
 // implémentée à la phase de finalisation (cf. MIGRATION_PLAN §10).
-const CACHE = 'holystyl-v1';
+const CACHE = 'isidor-v1';
 const PRECACHE = ['/static/css/app.css', '/static/js/app.js', '/static/icons/icon.svg'];
 
 self.addEventListener('install', (event) => {

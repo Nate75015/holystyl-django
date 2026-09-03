@@ -101,8 +101,8 @@
 
   {# ── Modal — Créer / modifier une fiche ── #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="modal = false" class="my-auto flex w-full max-w-5xl justify-center">
       <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center justify-between">
           <h3 class="text-[15px] font-medium" x-text="editing ? '{% trans "Modifier la fiche" %}' : '{% trans "Nouvelle fiche biodiversité" %}'">{% trans "Nouvelle fiche biodiversité" %}</h3>
@@ -192,8 +192,8 @@
 
   {# ── Modal — Détail d'une fiche (lecture seule) ── #}
   <div x-show="view.open" x-cloak x-transition.opacity @keydown.escape.window="view.open = false"
-       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="view.open = false" class="flex w-full max-w-md justify-center">
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="view.open = false" class="my-auto flex w-full max-w-md justify-center">
       <div class="hs-popover w-full max-w-md p-5">
         <div class="mb-4 flex items-start justify-between gap-3">
           <div>

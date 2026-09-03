@@ -2,32 +2,196 @@
 {% load i18n %}
 
 {% block content %}
-<section class="space-y-5">
+{# Tables passées au navigateur par json_script : l'échappement est fait pour nous. #}
+{{ marques_par_famille|json_script:"marques-par-famille" }}
+{{ famille_par_type|json_script:"famille-par-type" }}
+{{ partenaires|json_script:"partenaires" }}
+{% trans "marques proposées pour cette famille" as libelle_nb_marques %}
+
+<section class="space-y-5" x-data="{
+      ajout: false,
+      type: '',
+      marquesParFamille: JSON.parse(document.getElementById('marques-par-famille').textContent),
+      familleParType: JSON.parse(document.getElementById('famille-par-type').textContent),
+      marque: '',
+      heures: 0,
+      detention: 'propre',
+      partenaires: JSON.parse(document.getElementById('partenaires').textContent),
+      // « En propre » ne demande pas de tiers ; « En CUMA » ne propose que des CUMA.
+      get demandeProprietaire() { return this.detention !== 'propre' },
+      get proprietairesPossibles() {
+        return this.detention === 'cuma'
+          ? this.partenaires.filter(p => p.type === 'cuma')
+          : this.partenaires;
+      },
+      // Pleine échelle à 300 000 h ; elle s'étend encore si l'on tape au-delà,
+      // plutôt que de brider la saisie.
+      get heuresMax() { return Math.max(300000, Math.ceil((this.heures || 0) / 1000) * 1000) },
+      // Les marques du type choisi ; vide tant qu'aucun type ne l'est.
+      get marques() { return this.marquesParFamille[this.familleParType[this.type]] || [] },
+      // Saisie libre : quand on l'a demandée, ou quand la famille n'a rien à proposer.
+      get marqueLibre() { return this.marque === '__autre__' || (this.type !== '' && this.marques.length === 0) },
+    }">
 
   <p class="hs-crumb">{% trans "Mon exploitation" %} · {% trans "Parc matériel" %}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
     <h1 class="text-[20px]">{% trans "Parc matériel" %}</h1>
+    <button type="button" @click="ajout = !ajout" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]" x-text="ajout ? 'close' : 'add'">add</span>
+      {% trans "Ajouter un matériel" as libelle_ajout %}
+      <span x-text="ajout ? '{% trans "Fermer" %}' : '{{ libelle_ajout|escapejs }}'">{{ libelle_ajout }}</span>
+    </button>
   </div>
 
-  {# ── Section : Machines ── #}
-  {% if machines %}
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {% for m in machines %}
-        <div class="hs-card p-4">
-          <div class="flex items-center justify-between gap-2">
-            <p class="font-medium">{{ m.name }}</p>
-            <span class="hs-badge hs-badge-neutral">{{ m.get_status_display }}</span>
+  {# ── Formulaire d'ajout (replié par défaut) ── #}
+  <form x-show="ajout" x-cloak x-transition method="post" action="{% url 'operations:machine_create' %}"
+        class="hs-card p-6 sm:p-8">
+    {% csrf_token %}
+    <h2 class="mb-4 text-[15px] font-medium">{% trans "Nouveau matériel" %}</h2>
+    <div class="grid grid-cols-1 gap-x-24 gap-y-6 sm:grid-cols-2">
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-nom">{% trans "Désignation" %} <span style="color: var(--danger)">*</span></label>
+        <input id="m-nom" name="name" required class="w-full" placeholder="{% trans 'ex: John Deere 6120M' %}">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-type">{% trans "Type" %} <span style="color: var(--danger)">*</span></label>
+        {# Soixante-douze types : les optgroup par famille rendent la liste praticable. #}
+        <select id="m-type" name="type" x-model="type" @change="marque = ''" required class="w-full">
+          <option value="">—</option>
+          {% for famille, types in choix_types %}
+            <optgroup label="{{ famille }}">
+              {% for code, libelle in types %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+            </optgroup>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-marque">{% trans "Marque" %}</label>
+        {# Une liste visible, mais jamais fermée : « Autre marque… » ouvre la saisie libre. #}
+        <select id="m-marque" name="brand" x-model="marque" x-show="!marqueLibre" :disabled="!type" class="w-full">
+          <option value="">—</option>
+          <template x-for="m in marques" :key="m"><option :value="m" x-text="m"></option></template>
+          <option value="__autre__" x-show="type">{% trans "Autre marque…" %}</option>
+        </select>
+        <input name="brand_autre" x-show="marqueLibre" x-cloak autocomplete="off" class="w-full"
+               placeholder="{% trans 'Nom de la marque' %}">
+        <p class="mt-1 text-[12px]" style="color: var(--text-muted)" x-show="!type">
+          {% trans "Choisissez d'abord un type." %}
+        </p>
+        <p class="mt-1 text-[12px]" style="color: var(--text-muted)"
+           x-show="type && !marqueLibre" x-text="marques.length + ' {{ libelle_nb_marques|escapejs }}'"></p>
+        <button type="button" class="mt-1 text-[12px] underline" style="color: var(--text-muted)"
+                x-show="marque === '__autre__'" @click="marque = ''">{% trans "Revenir à la liste" %}</button>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-modele">{% trans "Modèle" %}</label>
+        <input id="m-modele" name="model" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-serie">{% trans "N° de série" %}</label>
+        <input id="m-serie" name="serial_number" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-achat">{% trans "Date d'achat" %}</label>
+        <input id="m-achat" name="purchase_date" type="date" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-heures">{% trans "Heures au compteur" %}</label>
+        {# Curseur pour approcher, champ pour la valeur exacte ; seul le champ porte le name. #}
+        <div class="flex items-center gap-3">
+          <input type="range" min="0" :max="heuresMax" step="100" x-model.number="heures"
+                 class="flex-1 accent-current" aria-label="{% trans 'Heures au compteur (curseur)' %}">
+          <div class="flex shrink-0 items-center gap-1">
+            <input type="number" id="m-heures" name="total_hours" min="0" step="0.5"
+                   x-model.number="heures" class="w-24 text-right">
+            <span class="text-[13px]" style="color: var(--text-muted)">h</span>
           </div>
-          <p class="text-[12px]" style="color: var(--text-secondary)">{{ m.get_type_display }} · {{ m.brand }} {{ m.model }}</p>
-          <p class="mt-2 text-sm">{{ m.total_hours }} h{% if m.next_maintenance_date %} · {% trans "prochain entretien" %} {{ m.next_maintenance_date }}{% endif %}</p>
         </div>
-      {% endfor %}
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-statut">{% trans "État" %}</label>
+        <select id="m-statut" name="status" class="w-full">
+          {% for code, libelle in statuts %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-detention">{% trans "Détention" %}</label>
+        <select id="m-detention" name="detention" x-model="detention" class="w-full">
+          {% for code, libelle in detentions %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+        </select>
+      </div>
+      <div x-show="demandeProprietaire" x-cloak>
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-proprietaire">{% trans "Propriétaire" %}</label>
+        <select id="m-proprietaire" name="proprietaire" class="w-full">
+          <option value="">—</option>
+          <template x-for="p in proprietairesPossibles" :key="p.id">
+            <option :value="p.id" x-text="p.nom"></option>
+          </template>
+        </select>
+        {# Une ferme peut avoir des relations sans avoir de CUMA : le dire précisément. #}
+        <p class="mt-1 text-[12px]" style="color: var(--text-muted)"
+           x-show="!proprietairesPossibles.length && detention === 'cuma'">
+          {% url 'client:partenaires' 'cuma' as url_cuma %}
+          {% blocktrans %}Aucune CUMA enregistrée. <a href="{{ url_cuma }}" class="underline">Ajoutez-la dans Relations</a>.{% endblocktrans %}
+        </p>
+        <p class="mt-1 text-[12px]" style="color: var(--text-muted)"
+           x-show="!proprietairesPossibles.length && detention !== 'cuma'">
+          {% url 'client:partenaires' 'autre' as url_partenaires %}
+          {% blocktrans %}Aucune relation enregistrée. <a href="{{ url_partenaires }}" class="underline">Ajoutez-en une</a>.{% endblocktrans %}
+        </p>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="mb-1.5 block text-[13px] font-medium" style="color: var(--text-secondary)" for="m-notes">{% trans "Notes" %}</label>
+        <textarea id="m-notes" name="notes" rows="3" class="w-full"></textarea>
+        {% include "partials/_ai_text_tools.html" with target="m-notes" contexte=_("Notes sur un matériel de l'exploitation") %}
+      </div>
     </div>
-  {% else %}
+    <div class="mt-6 flex justify-end">
+      <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+    </div>
+  </form>
+
+  {# ── Le parc, rangé par famille ── #}
+  {% for famille, lot in familles %}
+    <div class="space-y-3">
+      <h2 class="text-[13px] font-medium uppercase tracking-wide" style="color: var(--text-muted)">{{ famille }}</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {% for m in lot %}
+          <div class="hs-card p-4">
+            <div class="flex items-start justify-between gap-2">
+              <p class="font-medium">{{ m.name }}</p>
+              <div class="flex shrink-0 items-center gap-1">
+                <span class="hs-badge hs-badge-neutral">{{ m.get_status_display }}</span>
+                <form method="post" action="{% url 'operations:machine_delete' m.pk %}"
+                      onsubmit="return confirm('{% trans "Supprimer ce matériel ?" %}')" class="leading-none">
+                  {% csrf_token %}
+                  <button type="submit" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                          style="color: var(--text-muted)" title="{% trans 'Supprimer' %}">
+                    <span class="material-icons-round text-[18px]">delete_outline</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+            <p class="text-[12px]" style="color: var(--text-secondary)">{{ m.get_type_display }}{% if m.brand or m.model %} · {{ m.brand }} {{ m.model }}{% endif %}</p>
+            {% if m.detention != "propre" %}
+              <p class="mt-1 text-[12px]" style="color: var(--text-muted)">
+                {{ m.get_detention_display }}{% if m.proprietaire %} · {{ m.proprietaire.nom }}{% endif %}
+              </p>
+            {% endif %}
+            <p class="mt-2 text-sm">
+              {# Une pompe, un groupe électrogène ou un robot de traite ont aussi un compteur. #}
+              {% if m.total_hours %}{{ m.total_hours }} h{% else %}<span style="color: var(--text-muted)">—</span>{% endif %}
+              {% if m.next_maintenance_date %} · {% trans "prochain entretien" %} {{ m.next_maintenance_date }}{% endif %}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% empty %}
     <div class="hs-card p-8 text-center">
-      <p class="text-[15px] font-medium">{% trans "Ajoutez une machine" %}</p>
-      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune machine pour le moment. Ajoutez-en via l'admin ou l'API." %}</p>
+      <p class="text-[15px] font-medium">{% trans "Ajoutez un matériel" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Votre parc est vide. Cliquez sur « Ajouter » pour y faire entrer un engin." %}</p>
     </div>
-  {% endif %}
+  {% endfor %}
 </section>
 {% endblock %}

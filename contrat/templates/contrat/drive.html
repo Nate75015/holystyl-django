@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% comment %}
+  Le drive de l'exploitation. On range soi-même : des dossiers imbriqués, et
+  des documents qu'on y dépose. Le glisser-déposer est offert parce que c'est
+  le geste appris ailleurs, mais le bouton reste — un geste qui rate n'a rien
+  importé, et il faut alors une porte visible.
+{% endcomment %}
+
+{% block content %}
+<style>
+  .dr-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(232px, 100%), 1fr));
+    gap: 12px;
+  }
+  .dr-carte {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    min-width: 0;
+  }
+  .dr-carte:hover { background: var(--surface-alt); }
+  .dr-nom { min-width: 0; flex: 1; }
+  .dr-nom a { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dr-menu {
+    position: absolute;
+    right: 8px;
+    top: 34px;
+    z-index: 30;
+    min-width: 168px;
+    padding: 6px;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.16);
+  }
+  .dr-menu button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border-radius: 7px;
+    font-size: 13px;
+    text-align: left;
+  }
+  .dr-menu button:hover { background: var(--surface-alt); }
+  /* La zone de dépôt couvre la liste entière : viser une bande étroite avec
+     un fichier au bout du curseur est une épreuve inutile. */
+  .dr-zone { position: relative; border-radius: 12px; transition: background 120ms; }
+  .dr-zone.dr-survol { outline: 2px dashed var(--action); outline-offset: 6px; background: color-mix(in srgb, var(--action) 6%, transparent); }
+  .dr-vide { padding: 56px 20px; text-align: center; border: 1px dashed var(--border); border-radius: 12px; }
+</style>
+
+<section class="space-y-5"
+         x-data="drive()"
+         @dragover.prevent="survol = true"
+         @dragleave.self.prevent="survol = false"
+         @drop.prevent="deposer($event)">
+
+  {# ── Fil d'Ariane ── #}
+  <p class="hs-crumb">
+    {% trans "Contrat" %} ·
+    <a href="{% url 'contrat:drive' %}" style="color: inherit">{% trans "Drive" %}</a>{% for d in chemin %} ·
+      {% if forloop.last %}{{ d.nom }}{% else %}<a href="{% url 'contrat:drive_dossier' d.pk %}" style="color: inherit">{{ d.nom }}</a>{% endif %}
+    {% endfor %}
+  </p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% if dossier %}{{ dossier.nom }}{% else %}{% trans "Drive" %}{% endif %}</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" class="hs-btn-outline" @click="action = 'dossier'; $nextTick(() => $refs.nomDossier.focus())">
+        <span class="material-icons-round text-[18px]">create_new_folder</span>{% trans "Nouveau dossier" %}
+      </button>
+      <button type="button" class="hs-btn-primary" @click="$refs.champ.click()">
+        <span class="material-icons-round text-[18px]">upload_file</span>{% trans "Importer" %}
+      </button>
+    </div>
+  </div>
+
+  {# Le formulaire d'import, invisible : bouton et glisser-déposer y mènent. #}
+  <form x-ref="formulaire" method="post" enctype="multipart/form-data"
+        action="{% if dossier %}{% url 'contrat:drive_deposer_dans' dossier.pk %}{% else %}{% url 'contrat:drive_deposer' %}{% endif %}">
+    {% csrf_token %}
+    <input x-ref="champ" type="file" name="fichiers" multiple class="hidden"
+           accept=".pdf,.png,.jpg,.jpeg,.webp,.heic,.gif,.doc,.docx,.odt,.rtf,.txt,.xls,.xlsx,.ods,.csv,.ppt,.pptx,.odp,.zip"
+           @change="$refs.formulaire.submit()">
+  </form>
+
+  {# ── Nouveau dossier ── #}
+  <form x-show="action === 'dossier'" x-cloak method="post" class="flex flex-wrap items-end gap-2 rounded-[10px] p-4"
+        style="border: 0.5px solid var(--border); background: var(--surface-alt)"
+        action="{% if dossier %}{% url 'contrat:drive_sous_dossier_creer' dossier.pk %}{% else %}{% url 'contrat:drive_dossier_creer' %}{% endif %}">
+    {% csrf_token %}
+    <div class="min-w-[220px] flex-1">
+      <label for="dr-nom" class="mb-1 block text-[13px]" style="color: var(--text-secondary)">{% trans "Nom du dossier" %}</label>
+      <input id="dr-nom" x-ref="nomDossier" name="nom" required maxlength="255" placeholder="{% trans 'ex : Baux 2026' %}">
+    </div>
+    <button type="submit" class="hs-btn-primary">{% trans "Créer" %}</button>
+    <button type="button" class="hs-btn-outline" @click="action = null">{% trans "Annuler" %}</button>
+  </form>
+
+  {# ── Le contenu du dossier ── #}
+  <div class="dr-zone" :class="{ 'dr-survol': survol }">
+    {% if vide %}
+      <div class="dr-vide">
+        <span class="material-icons-round text-[34px]" style="color: var(--text-muted)">cloud_upload</span>
+        <p class="mt-2 text-sm font-medium">{% trans "Ce dossier est vide" %}</p>
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+          {% trans "Glissez vos PDF ici, ou utilisez Importer. Créez des dossiers pour ranger comme vous l'entendez." %}
+        </p>
+      </div>
+    {% else %}
+      <div class="dr-grille">
+        {% for d in dossiers %}
+          <div class="dr-carte relative">
+            <span class="material-icons-round text-[22px]" style="color: var(--action)">folder</span>
+            <span class="dr-nom">
+              <a href="{% url 'contrat:drive_dossier' d.pk %}" class="text-sm font-medium">{{ d.nom }}</a>
+              <span class="block text-[12px]" style="color: var(--text-muted)">{% trans "Dossier" %}</span>
+            </span>
+            {% trans "Ce dossier et tout ce qu'il contient seront supprimés. Continuer ?" as avertir %}
+            <button type="button" class="material-icons-round text-[18px]" style="color: var(--text-muted)"
+                    title="{% trans 'Actions' %}" @click.stop="basculer('d{{ d.pk }}')">more_vert</button>
+            <span class="dr-menu" x-show="menu === 'd{{ d.pk }}'" x-cloak @click.outside="menu = null">
+              <button type="button" @click="renommer('{% url 'contrat:drive_dossier_renommer' d.pk %}', '{{ d.nom|escapejs }}')">
+                <span class="material-icons-round text-[16px]">edit</span>{% trans "Renommer" %}
+              </button>
+              <button type="button" @click="deplacer('{% url 'contrat:drive_deplacer' d.pk %}', 'dossier', '{{ d.nom|escapejs }}')">
+                <span class="material-icons-round text-[16px]">drive_file_move</span>{% trans "Déplacer" %}
+              </button>
+              <button type="button" style="color: var(--danger)"
+                      @click="menu = null; if (confirm('{{ avertir|escapejs }}')) $refs['sup_d{{ d.pk }}'].submit()">
+                <span class="material-icons-round text-[16px]">delete_outline</span>{% trans "Supprimer" %}
+              </button>
+            </span>
+            <form x-ref="sup_d{{ d.pk }}" method="post" action="{% url 'contrat:drive_dossier_supprimer' d.pk %}" class="hidden">{% csrf_token %}</form>
+          </div>
+        {% endfor %}
+
+        {% for f in fichiers %}
+          <div class="dr-carte relative">
+            <span class="material-icons-round text-[22px]"
+                  style="color: {% if f.est_pdf %}var(--danger){% elif f.est_image %}var(--success){% else %}var(--text-muted){% endif %}">
+              {% if f.est_pdf %}picture_as_pdf{% elif f.est_image %}image{% else %}description{% endif %}
+            </span>
+            <span class="dr-nom">
+              <a href="{{ f.fichier.url }}" target="_blank" rel="noopener" class="text-sm font-medium">{{ f.nom }}</a>
+              <span class="block text-[12px]" style="color: var(--text-muted)">{{ f.taille_lisible }} · {{ f.created_at|date:"j M Y" }}</span>
+            </span>
+            {% trans "Supprimer ce document ?" as avertir_f %}
+            <button type="button" class="material-icons-round text-[18px]" style="color: var(--text-muted)"
+                    title="{% trans 'Actions' %}" @click.stop="basculer('f{{ f.pk }}')">more_vert</button>
+            <span class="dr-menu" x-show="menu === 'f{{ f.pk }}'" x-cloak @click.outside="menu = null">
+              <button type="button" @click="renommer('{% url 'contrat:drive_fichier_renommer' f.pk %}', '{{ f.nom|escapejs }}')">
+                <span class="material-icons-round text-[16px]">edit</span>{% trans "Renommer" %}
+              </button>
+              <button type="button" @click="deplacer('{% url 'contrat:drive_deplacer' f.pk %}', 'fichier', '{{ f.nom|escapejs }}')">
+                <span class="material-icons-round text-[16px]">drive_file_move</span>{% trans "Déplacer" %}
+              </button>
+              <button type="button" style="color: var(--danger)"
+                      @click="menu = null; if (confirm('{{ avertir_f|escapejs }}')) $refs['sup_f{{ f.pk }}'].submit()">
+                <span class="material-icons-round text-[16px]">delete_outline</span>{% trans "Supprimer" %}
+              </button>
+            </span>
+            <form x-ref="sup_f{{ f.pk }}" method="post" action="{% url 'contrat:drive_fichier_supprimer' f.pk %}" class="hidden">{% csrf_token %}</form>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  {# ── Renommer ── #}
+  <div x-show="action === 'renommer'" x-cloak class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]"
+       @keydown.escape.window="action = null">
+    <div @click.self="action = null" class="my-auto flex w-full max-w-md justify-center">
+      <form method="post" :action="cible.url" class="hs-popover w-full space-y-3 p-5">
+        {% csrf_token %}
+        <h2 class="text-[15px] font-medium">{% trans "Renommer" %}</h2>
+        <input name="nom" required maxlength="255" x-model="cible.nom" x-ref="nouveauNom">
+        <div class="flex justify-end gap-2">
+          <button type="button" class="hs-btn-outline" @click="action = null">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {# ── Déplacer ── #}
+  <div x-show="action === 'deplacer'" x-cloak class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]"
+       @keydown.escape.window="action = null">
+    <div @click.self="action = null" class="my-auto flex w-full max-w-md justify-center">
+      <form method="post" :action="cible.url" class="hs-popover w-full space-y-3 p-5">
+        {% csrf_token %}
+        <input type="hidden" name="quoi" :value="cible.quoi">
+        <h2 class="text-[15px] font-medium">{% trans "Déplacer" %} <span x-text="cible.nom" class="font-normal" style="color: var(--text-secondary)"></span></h2>
+        <label for="dr-vers" class="block text-[13px]" style="color: var(--text-secondary)">{% trans "Dossier de destination" %}</label>
+        <select id="dr-vers" name="vers">
+          <option value="">{% trans "Drive (racine)" %}</option>
+          {% for d in destinations %}<option value="{{ d.pk }}">{{ d.chemin }}</option>{% endfor %}
+        </select>
+        <div class="flex justify-end gap-2">
+          <button type="button" class="hs-btn-outline" @click="action = null">{% trans "Annuler" %}</button>
+          <button type="submit" class="hs-btn-primary">{% trans "Déplacer" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  function drive() {
+    return {
+      menu: null,
+      action: null,
+      survol: false,
+      cible: { url: '', nom: '', quoi: '' },
+      basculer(cle) { this.menu = this.menu === cle ? null : cle; },
+      renommer(url, nom) {
+        this.menu = null;
+        this.cible = { url: url, nom: nom, quoi: '' };
+        this.action = 'renommer';
+        this.$nextTick(() => this.$refs.nouveauNom.select());
+      },
+      deplacer(url, quoi, nom) {
+        this.menu = null;
+        this.cible = { url: url, nom: nom, quoi: quoi };
+        this.action = 'deplacer';
+      },
+      /* Les fichiers lâchés sur la page rejoignent le champ du formulaire :
+         un seul chemin d'import, donc une seule chose à vérifier. */
+      deposer(evenement) {
+        this.survol = false;
+        const tombes = evenement.dataTransfer.files;
+        if (!tombes || !tombes.length) return;
+        this.$refs.champ.files = tombes;
+        this.$refs.formulaire.submit();
+      },
+    };
+  }
+</script>
+{% endblock %}

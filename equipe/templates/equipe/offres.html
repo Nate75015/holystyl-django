@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="space-y-5" x-data="{
+      ouvert: false,
+      offre: {},
+      communes: JSON.parse(document.getElementById('communes').textContent),
+    }">
+
+  <p class="hs-crumb">{% trans "RH" %} · {% trans "Offres d'emploi" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Offres d'emploi" %}</h1>
+    <div class="flex items-center gap-2">
+      <a href="{% url 'equipe:emplois' %}" target="_blank" rel="noopener" class="hs-btn-outline">
+        <span class="material-icons-round text-[18px]">open_in_new</span>{% trans "Voir la page publique" %}
+      </a>
+      <button type="button" @click="ouvert = !ouvert; offre = {}" class="hs-btn-primary">
+        <span class="material-icons-round text-[18px]">add</span>{% trans "Nouvelle offre" %}
+      </button>
+    </div>
+  </div>
+
+  {# ── Rédiger une offre ── #}
+  {{ communes|json_script:"communes" }}
+  <form x-show="ouvert" x-cloak method="post"
+        :action="offre.id ? '{% url 'equipe:offre_edit' 0 %}'.replace('/0/', '/' + offre.id + '/') : '{% url 'equipe:offre_create' %}'"
+        class="hs-card p-6 sm:p-8">
+    {% csrf_token %}
+    {% trans "Modifier l'offre" as libelle_modifier %}
+    {% trans "Nouvelle offre" as libelle_nouvelle %}
+    <h2 class="mb-4 text-[15px] font-medium" x-text="offre.id ? '{{ libelle_modifier|escapejs }}' : '{{ libelle_nouvelle|escapejs }}'"></h2>
+
+    <div class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+      <div class="sm:col-span-2">
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-titre">{% trans "Intitulé du poste" %} <span style="color: var(--danger)">*</span></label>
+        <input id="o-titre" name="titre" required x-model="offre.titre" class="w-full"
+               placeholder="{% trans 'ex : ouvrier arboricole pour la récolte' %}">
+        <div class="mt-1.5">
+          {% include "partials/_ai_rewrite.html" with target="o-titre" contexte=_("Intitulé d'une offre d'emploi agricole") x_disabled="!(offre.titre || '').trim()" %}
+        </div>
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-type">{% trans "Type de contrat" %}</label>
+        <select id="o-type" name="type_contrat" x-model="offre.type_contrat" class="w-full">
+          {% for code, libelle in types %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-lieu">{% trans "Lieu de travail" %}</label>
+        <select id="o-lieu" name="lieu" x-model="offre.lieu" class="w-full">
+          <option value="">—</option>
+          {# Un lieu saisi jadis à la main reste dans la liste : sinon, modifier l'offre l'effacerait. #}
+          <template x-if="offre.lieu && !communes.includes(offre.lieu)">
+            <option :value="offre.lieu" x-text="offre.lieu"></option>
+          </template>
+          {% for c in communes %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+        </select>
+        {% if not communes %}
+          <p class="mt-1 text-[12px]" style="color: var(--text-muted)">
+            {% url 'parcelles:list' as url_parcelles %}
+            {% blocktrans %}Aucune commune renseignée sur vos <a href="{{ url_parcelles }}" class="underline">parcelles</a>. L'offre indiquera la commune de l'exploitation.{% endblocktrans %}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-debut">{% trans "Prise de poste" %}</label>
+        <input id="o-debut" type="date" name="date_debut" x-model="offre.date_debut" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-expire">{% trans "Visible jusqu'au" %}</label>
+        <input id="o-expire" type="date" name="expire_le" x-model="offre.expire_le" class="w-full">
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-heures">{% trans "Heures par semaine" %}</label>
+        <input id="o-heures" name="duree_hebdo" inputmode="decimal" x-model="offre.duree_hebdo" class="w-full" placeholder="35">
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-remu">{% trans "Rémunération" %}</label>
+        <input id="o-remu" name="remuneration" x-model="offre.remuneration" class="w-full"
+               placeholder="{% trans 'ex : SMIC agricole, selon profil' %}">
+      </div>
+      <div class="sm:col-span-2">
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-desc">{% trans "Description du poste" %} <span style="color: var(--danger)">*</span></label>
+        <textarea id="o-desc" name="description" rows="5" required x-model="offre.description" class="w-full"></textarea>
+        <div class="mt-1.5">
+          {% include "partials/_ai_rewrite.html" with target="o-desc" contexte=_("Description du poste dans une offre d'emploi agricole") x_disabled="!(offre.description || '').trim()" %}
+        </div>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-profil">{% trans "Profil recherché" %}</label>
+        <textarea id="o-profil" name="profil" rows="3" x-model="offre.profil" class="w-full"></textarea>
+        <div class="mt-1.5">
+          {% include "partials/_ai_rewrite.html" with target="o-profil" contexte=_("Profil recherché dans une offre d'emploi agricole") x_disabled="!(offre.profil || '').trim()" %}
+        </div>
+      </div>
+      <div>
+        <label class="mb-1 block text-[13px] font-medium" style="color: var(--text-secondary)" for="o-contact">{% trans "Email de contact" %}</label>
+        <input id="o-contact" name="contact_email" type="email" x-model="offre.contact_email" class="w-full">
+      </div>
+      <label class="flex items-center gap-2.5 self-end pb-2 text-[13px]">
+        <input type="checkbox" name="logement" class="h-4 w-4" style="accent-color: var(--action)"
+               :checked="offre.logement" x-model="offre.logement">
+        {% trans "Logement possible sur place" %}
+      </label>
+    </div>
+
+    <div class="mt-6 flex justify-end gap-2">
+      <button type="button" @click="ouvert = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+      <button type="submit" class="hs-btn-primary">{% trans "Enregistrer" %}</button>
+    </div>
+  </form>
+
+  {# ── Les offres et leurs candidatures ── #}
+  {% for offre in offres %}
+    <div class="hs-card p-5 sm:p-6">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div class="min-w-0">
+          <p class="text-[15px] font-medium">{{ offre.titre }}</p>
+          <p class="text-[12px]" style="color: var(--text-muted)">
+            {{ offre.get_type_contrat_display }}{% if offre.lieu %} · {{ offre.lieu }}{% endif %}
+            {% if offre.publiee_le %} · {% trans "en ligne depuis le" %} {{ offre.publiee_le|date:"SHORT_DATE_FORMAT" }}{% endif %}
+            {% if offre.expire_le %} · {% trans "jusqu'au" %} {{ offre.expire_le|date:"SHORT_DATE_FORMAT" }}{% endif %}
+          </p>
+        </div>
+        <div class="flex shrink-0 flex-wrap items-center gap-2">
+          {% if offre.est_visible %}
+            <a href="{% url 'equipe:emploi_detail' offre.slug %}" target="_blank" rel="noopener"
+               class="text-[12px] underline" style="color: var(--text-muted)">{% trans "Voir en ligne" %}</a>
+          {% endif %}
+          <form method="post" action="{% url 'equipe:offre_statut' offre.pk %}">
+            {% csrf_token %}
+            <select name="statut" class="w-auto" onchange="this.form.submit()">
+              {% for code, libelle in statuts %}<option value="{{ code }}" {% if code == offre.statut %}selected{% endif %}>{{ libelle }}</option>{% endfor %}
+            </select>
+          </form>
+          {# escapejs : la description contient des retours à la ligne. #}
+          <button type="button" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                  style="color: var(--text-muted)" title="{% trans 'Modifier' %}"
+                  @click="ouvert = true; offre = { id: {{ offre.pk }}, titre: '{{ offre.titre|escapejs }}', type_contrat: '{{ offre.type_contrat|escapejs }}', lieu: '{{ offre.lieu|escapejs }}', date_debut: '{{ offre.date_debut|date:"Y-m-d" }}', expire_le: '{{ offre.expire_le|date:"Y-m-d" }}', duree_hebdo: '{{ offre.duree_hebdo|default_if_none:"" }}', remuneration: '{{ offre.remuneration|escapejs }}', description: '{{ offre.description|escapejs }}', profil: '{{ offre.profil|escapejs }}', contact_email: '{{ offre.contact_email|escapejs }}', logement: {{ offre.logement|yesno:"true,false" }} }">
+            <span class="material-icons-round text-[18px]">edit</span>
+          </button>
+          <form method="post" action="{% url 'equipe:offre_delete' offre.pk %}"
+                onsubmit="return confirm('{% trans "Supprimer cette offre et ses candidatures ?" %}')" class="leading-none">
+            {% csrf_token %}
+            <button type="submit" class="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+                    style="color: var(--text-muted)" title="{% trans 'Supprimer' %}">
+              <span class="material-icons-round text-[18px]">delete_outline</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <h3 class="mt-4 text-[13px] font-medium">
+        {% blocktrans count n=offre.candidatures.count %}{{ n }} candidature{% plural %}{{ n }} candidatures{% endblocktrans %}
+      </h3>
+      {% if offre.candidatures.all %}
+        <div class="mt-2 space-y-2">
+          {% for c in offre.candidatures.all %}
+            <div class="flex flex-wrap items-center gap-3 rounded-[10px] border px-4 py-3" style="border-color: var(--border)">
+              <span class="min-w-0 flex-1">
+                <span class="block truncate text-sm font-medium">{{ c.nom }}</span>
+                <span class="block truncate text-[12px]" style="color: var(--text-muted)">
+                  {{ c.email }}{% if c.telephone %} · {{ c.telephone }}{% endif %} · {{ c.created_at|date:"SHORT_DATE_FORMAT" }}
+                </span>
+                {% if c.message %}<span class="mt-1 block text-[13px]" style="color: var(--text-secondary)">{{ c.message|truncatewords:30 }}</span>{% endif %}
+              </span>
+              {% if c.cv %}
+                <a href="{{ c.cv.url }}" target="_blank" rel="noopener"
+                   class="shrink-0 text-[12px] underline" style="color: var(--text-muted)">{% trans "CV" %}</a>
+              {% endif %}
+              <form method="post" action="{% url 'equipe:candidature_statut' c.pk %}" class="shrink-0">
+                {% csrf_token %}
+                <select name="statut" class="w-auto" onchange="this.form.submit()">
+                  {% for code, libelle in statuts_candidature %}<option value="{{ code }}" {% if code == c.statut %}selected{% endif %}>{{ libelle }}</option>{% endfor %}
+                </select>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune candidature reçue." %}</p>
+      {% endif %}
+    </div>
+  {% empty %}
+    <div class="hs-card p-8 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucune offre" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Rédigez une offre, puis publiez-la pour qu'elle apparaisse sur la page publique des emplois." %}</p>
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}

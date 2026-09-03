@@ -3,13 +3,29 @@
 
 {% block content %}
 <section class="flex flex-col space-y-5 {% if vue == 'mois' %}hs-fill-viewport{% endif %}"
-         x-data="planningTasks('{% url 'planning:task_create' %}', '{% url 'planning:task_edit' 0 %}', '{% url 'planning:task_delete' 0 %}')">
+         x-data="planningTasks({
+           creer: '{% url 'planning:task_create' %}',
+           modifier: '{% url 'planning:task_edit' 0 %}',
+           supprimer: '{% url 'planning:task_delete' 0 %}',
+           resCreer: '{% url 'planning:reservation_create' %}',
+           resModifier: '{% url 'planning:reservation_edit' 0 %}',
+           resSupprimer: '{% url 'planning:reservation_delete' 0 %}',
+         })">
 
   {# ── Fil d'Ariane + titre + sélecteur de vue ── #}
   <p class="hs-crumb">{% trans "RH · Planning" %}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
     <h1 class="text-[20px]">{% trans "Planning" %}</h1>
     <div class="flex items-center gap-2">
+      {% if peut_gerer %}
+        <a href="{% url 'planning:acces' %}" class="hs-btn-outline" title="{% trans 'Partage du planning' %}">
+          <span class="material-icons-round text-[18px]">person_add</span>{% trans "Partager" %}
+          {% if demandes_en_attente %}
+            <span class="ml-1 rounded-full px-1.5 py-[1px] text-[11px] tabular-nums"
+                  style="background: var(--danger); color: white">{{ demandes_en_attente }}</span>
+          {% endif %}
+        </a>
+      {% endif %}
       <a href="?vue=jour&date={{ anchor|date:'Y-m-d' }}"
          class="{% if vue == 'jour' %}hs-btn-primary{% else %}hs-btn-outline{% endif %}">{% trans "Jour" %}</a>
       <a href="?vue=semaine&date={{ anchor|date:'Y-m-d' }}"
@@ -69,7 +85,7 @@
                style="border-bottom: 0.5px solid var(--border); min-height: calc(2.6rem + ({{ week.lanes }} * 23px))">
             {# Fond : une cellule par jour (numéro + clic pour ajouter) #}
             {% for d in week.days %}
-              <div @click="openAdd('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"
+              <div {% if peut_ecrire %}@click="openChoix('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"{% endif %}
                    title="{% trans 'Ajouter une tâche' %}"
                    class="group cursor-pointer p-2 transition hover:bg-[color:var(--surface-alt)] {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if not d.in_month %}background: var(--surface-alt);{% endif %}">
                 <div class="flex items-center justify-between">
@@ -81,7 +97,7 @@
             {# Barres de tâches, superposées à la grille des jours #}
             {% if week.bars or week.more %}
               <div class="pointer-events-none absolute inset-x-0 bottom-1 top-[2.4rem] grid grid-cols-7 gap-y-[3px] px-1" style="grid-auto-rows: 20px">
-                {% for b in week.bars %}{% include "planning/_bar.html" %}{% endfor %}
+                {% for b in week.bars %}{% if b.kind == "reservation" %}{% include "planning/_bar_reservation.html" %}{% else %}{% include "planning/_bar.html" %}{% endif %}{% endfor %}
                 {% for m in week.more %}
                   <a href="?vue=jour&date={{ m.date }}"
                      class="pointer-events-auto flex items-center rounded-md px-1.5 text-[11px] font-medium leading-none transition hover:bg-[color:var(--surface-alt)]"
@@ -122,7 +138,7 @@
                 {% for week in m.weeks %}
                   {% for d in week %}
                     <button type="button"
-                            @click="openAdd('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"
+                            @click="openChoix('{{ team_members.0.id|default:'' }}', '{{ d.date|date:"Y-m-d" }}')"
                             title="{{ d.date|date:'l j F Y'|capfirst }}"
                             class="relative grid h-7 place-items-center rounded-md text-[11px] leading-none transition hover:bg-[color:var(--surface-alt)] {% if not d.in_month %}opacity-30{% endif %}">
                       <span class="grid h-6 w-6 place-items-center rounded-full font-medium"
@@ -166,7 +182,7 @@
               </div>
               {# Fond : une cellule par jour (clic pour ajouter) #}
               {% for cell in row.cells %}
-                <div @click="openAdd({{ row.member.id }}, '{{ cell.date|date:"Y-m-d" }}')"
+                <div {% if peut_ecrire %}@click="openChoix({{ row.member.id }}, '{{ cell.date|date:"Y-m-d" }}')"{% endif %}
                      title="{% trans 'Ajouter une tâche' %}"
                      class="group cursor-pointer transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}"></div>
               {% endfor %}
@@ -179,6 +195,35 @@
               {% endif %}
             </div>
           {% endfor %}
+          {# ── Bande matériel : une ligne par engin réservé sur la fenêtre ── #}
+          {% if machine_rows %}
+            <div class="grid" style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr)); border-bottom: 0.5px solid var(--border);">
+              <div class="flex items-center gap-1.5 border-r px-4 py-2 text-sm font-medium tracking-wide" style="border-color: var(--border); color: var(--text-secondary)">
+                {% trans "Matériel" %}
+              </div>
+              {% for d in days %}<div class="{% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border)"></div>{% endfor %}
+            </div>
+            {% for row in machine_rows %}
+              <div class="relative grid" style="grid-template-columns: 12rem repeat({{ ncols }}, minmax(0, 1fr)); min-height: {{ row.height }}px; border-bottom: 0.5px solid var(--border);">
+                <div class="flex items-center gap-2 border-r px-3 py-4" style="border-color: var(--border)">
+                  <span class="material-icons-round shrink-0 text-[18px]" style="color: var(--text-muted)">{% if row.partagee %}group{% else %}agriculture{% endif %}</span>
+                  <span class="min-w-0 truncate text-sm font-medium">{{ row.machine.name }}</span>
+                  {% if row.partagee %}<span class="shrink-0 text-[11px]" style="color: var(--text-muted)">{% trans "CUMA" %}</span>{% endif %}
+                </div>
+                {% for cell in row.cells %}
+                  <div {% if peut_ecrire and not row.partagee %}@click="openReservation('{{ cell.date|date:"Y-m-d" }}', {{ row.machine.pk }})"{% endif %}
+                       title="{% trans 'Réserver ce matériel' %}"
+                       class="cursor-pointer transition {% if not forloop.last %}border-r{% endif %}" style="border-color: var(--border); {% if cell.date == today %}background: color-mix(in srgb, var(--action) 6%, transparent);{% endif %}"></div>
+                {% endfor %}
+                {% if row.bars %}
+                  <div class="pointer-events-none absolute bottom-2 top-2 grid gap-y-[3px] px-1.5"
+                       style="left: 12rem; right: 0; grid-template-columns: repeat({{ ncols }}, minmax(0, 1fr)); grid-auto-rows: 24px">
+                    {% for b in row.bars %}{% include "planning/_bar_reservation.html" %}{% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% endif %}
         {% else %}
           <div class="flex flex-col items-center justify-center px-4 py-16 text-center">
             <p class="text-[15px] font-medium">{% trans "Ajoutez un membre d'équipe" %}</p>
@@ -190,10 +235,128 @@
     </div>
   </div>
 
+  {# ── Modal : le pas d'avant — tâche ou réservation ? ── #}
+  <div x-show="choix.open" x-cloak x-transition.opacity @keydown.escape.window="choix.open = false"
+       class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="choix.open = false" class="hs-popover w-full max-w-sm p-5">
+      <h3 class="text-[15px] font-medium" x-text="'{% trans "Que planifier ?"|escapejs %} ' + choix.date"></h3>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Choisissez ce que vous posez sur ce créneau." %}</p>
+      <div class="mt-5 grid gap-2">
+        <button type="button" @click="choix.open = false; openAdd(choix.member, choix.date)"
+                class="flex items-center gap-3 rounded-[10px] border px-4 py-3 text-left transition hover:bg-black/5 dark:hover:bg-white/5"
+                style="border-color: var(--border)">
+          <span class="material-icons-round text-[20px]" style="color: var(--action)">event_note</span>
+          <span class="min-w-0">
+            <span class="block text-sm font-medium">{% trans "Créer une tâche" %}</span>
+            <span class="block text-[12px]" style="color: var(--text-muted)">{% trans "Un travail confié à un membre de l'équipe." %}</span>
+          </span>
+        </button>
+        <button type="button" @click="choix.open = false; openReservation(choix.date)"
+                class="flex items-center gap-3 rounded-[10px] border px-4 py-3 text-left transition hover:bg-black/5 dark:hover:bg-white/5"
+                style="border-color: var(--border)">
+          <span class="material-icons-round text-[20px]" style="color: var(--action)">agriculture</span>
+          <span class="min-w-0">
+            <span class="block text-sm font-medium">{% trans "Réserver du matériel" %}</span>
+            <span class="block text-[12px]" style="color: var(--text-muted)">{% trans "Un engin du parc, bloqué sur ces dates." %}</span>
+          </span>
+        </button>
+      </div>
+      <div class="mt-4 flex justify-end">
+        <button type="button" @click="choix.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+      </div>
+    </div>
+  </div>
+
+  {# ── Modal : réserver du matériel ── #}
+  <div x-show="res.open" x-cloak x-transition.opacity @keydown.escape.window="res.open = false"
+       class="fixed inset-0 z-40 flex items-start justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
+    <div @click.self="res.open = false" class="flex w-full max-w-2xl justify-center">
+      <form method="post" :action="res.action" class="hs-popover w-full p-5">
+        {% csrf_token %}
+        <input type="hidden" name="vue" value="{{ vue }}">
+        <input type="hidden" name="date" value="{{ anchor|date:'Y-m-d' }}">
+
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-[15px] font-medium" x-text="res.editing ? '{% trans "Modifier la réservation"|escapejs %}' : '{% trans "Réserver du matériel"|escapejs %}'"></h3>
+          <button type="button" @click="res.open = false" class="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">✕</button>
+        </div>
+
+        {% if machines %}
+          <div class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+            <div class="sm:col-span-2">
+              <label class="mb-1 block text-sm font-medium" for="res-machine">{% trans "Matériel" %} <span style="color: var(--danger)">*</span></label>
+              <select id="res-machine" name="machine" x-model="res.form.machine" required class="w-full">
+                <option value="">{% trans "— Choisir un engin —" %}</option>
+                {% for m in machines %}<option value="{{ m.pk }}">{{ m.name }} · {{ m.get_type_display }}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium" for="res-debut">{% trans "Du" %}</label>
+              <input id="res-debut" type="date" name="start" x-model="res.form.start" required class="w-full">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium" for="res-fin">{% trans "Au" %}</label>
+              <input id="res-fin" type="date" name="end" x-model="res.form.end" class="w-full">
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium" for="res-operation">{% trans "Opération" %}</label>
+              <select id="res-operation" name="operation" x-model="res.form.operation" class="w-full">
+                {% for code, libelle in operations %}<option value="{{ code }}">{{ libelle }}</option>{% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium" for="res-parcelle">{% trans "Parcelle" %} <span class="font-normal" style="color: var(--text-muted)">({% trans "optionnel" %})</span></label>
+              <select id="res-parcelle" name="parcelle" x-model="res.form.parcelle" class="w-full">
+                <option value="">—</option>
+                {% for p in parcelles %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="mb-1 block text-sm font-medium" for="res-notes">{% trans "Notes" %}</label>
+              <textarea id="res-notes" name="notes" rows="2" x-model="res.form.notes" class="w-full"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-end gap-2">
+            <button type="button" x-show="res.editing" x-cloak
+                    @click="res.open = false; resDel = { open: true, action: res.delAction, nom: res.form.machine_nom }"
+                    class="mr-auto rounded-full px-4 py-2 text-sm transition hover:bg-black/5 dark:hover:bg-white/5" style="color: var(--danger)">{% trans "Supprimer" %}</button>
+            <button type="button" @click="res.open = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+            <button type="submit" class="hs-btn-primary" x-text="res.editing ? '{% trans "Enregistrer"|escapejs %}' : '{% trans "Réserver"|escapejs %}'"></button>
+          </div>
+        {% else %}
+          <p class="text-sm" style="color: var(--text-secondary)">
+            {% url 'operations:parc_materiel' as url_parc %}
+            {% blocktrans %}Votre parc est vide. <a href="{{ url_parc }}" class="underline">Ajoutez un matériel</a> avant de pouvoir le réserver.{% endblocktrans %}
+          </p>
+          <div class="mt-5 flex justify-end">
+            <button type="button" @click="res.open = false" class="hs-btn-outline">{% trans "Fermer" %}</button>
+          </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  {# ── Confirmation : annuler une réservation ── #}
+  <div x-show="resDel.open" x-cloak x-transition.opacity @keydown.escape.window="resDel.open = false"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="resDel.open = false" class="hs-popover w-full max-w-sm p-5">
+      <h3 class="text-[15px] font-medium">{% trans "Annuler cette réservation ?" %}</h3>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)" x-text="resDel.nom"></p>
+      <form method="post" :action="resDel.action" class="mt-5 flex justify-end gap-2">
+        {% csrf_token %}
+        <input type="hidden" name="vue" value="{{ vue }}">
+        <input type="hidden" name="date" value="{{ anchor|date:'Y-m-d' }}">
+        <button type="button" @click="resDel.open = false" class="hs-btn-outline">{% trans "Retour" %}</button>
+        <button type="submit" class="hs-btn-primary" style="background: var(--danger)">{% trans "Annuler la réservation" %}</button>
+      </form>
+    </div>
+  </div>
+
   {# ── Modal : créer / modifier une tâche ── #}
   <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
-       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)] sm:items-center">
-    <div @click.self="modal = false" class="flex w-full max-w-5xl justify-center">
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="modal = false" class="my-auto flex w-full max-w-5xl justify-center">
       <div class="hs-popover w-full max-w-5xl p-5">
         <div class="mb-4 flex items-center justify-between">
           <div class="min-w-0">
@@ -270,95 +433,8 @@
               </div>
               <input type="hidden" name="status" :value="form.status">
             </div>
-            {# Parcelles — sélection multiple par pastilles #}
-            <div>
-              <div class="mb-1.5 flex items-center gap-3">
-                <label class="text-sm font-medium">{% trans "Parcelles" %}</label>
-                <span x-show="form.parcelles.length" x-cloak class="text-xs tabular-nums" style="color: var(--text-secondary)"
-                      x-text="`${form.parcelles.length} {% trans "sélectionnée(s)" %}`"></span>
-                <button type="button" x-show="form.parcelles.length" x-cloak @click="form.parcelles = []"
-                        class="ml-auto text-xs font-medium transition hover:opacity-80" style="color: var(--action)">{% trans "Tout désélectionner" %}</button>
-              </div>
-              {% if parcelles %}
-                <div class="grid gap-3 {% if parcelles_mappables %}sm:grid-cols-2{% endif %}">
-                {% if parcelles_mappables %}
-                  {# Carte de sélection : on reconnaît une parcelle à sa forme, pas à sa référence #}
-                  <div class="overflow-hidden rounded-xl" style="border: 0.5px solid var(--border)">
-                    <div id="planning-parcelles-map" class="h-56 w-full" style="background: var(--surface-alt)"></div>
-                  </div>
-                {% endif %}
-                <div class="flex max-h-56 flex-wrap content-start gap-2 overflow-y-auto">
-                  {% for p in parcelles %}
-                    <button type="button" @click="toggleParcelle('{{ p.pk }}')"
-                            @mouseenter="surlignerParcelle('{{ p.pk }}')" @mouseleave="surlignerParcelle(null)"
-                            class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition"
-                            :class="form.parcelles.includes('{{ p.pk }}') ? 'border-[color:var(--action)] text-[color:var(--action)]' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/10'"
-                            style="border-color: var(--border)">
-                      <span class="material-icons-round text-[15px]"
-                            x-text="form.parcelles.includes('{{ p.pk }}') ? 'check_circle' : 'radio_button_unchecked'"></span>{{ p.name }}
-                    </button>
-                  {% endfor %}
-                </div>
-                </div>
-                {% if parcelles_mappables < parcelles|length %}
-                  <p class="mt-1.5 text-xs" style="color: var(--text-muted)">{% trans "Les parcelles sans contour tracé n'apparaissent pas sur la carte." %}</p>
-                {% endif %}
-              {% else %}
-                <p class="text-sm" style="color: var(--text-secondary)">
-                  {% trans "Aucune parcelle sur cette exploitation." %}
-                  <a href="{% url 'parcelles:create' %}" class="font-medium" style="color: var(--action)">{% trans "En créer une" %}</a>
-                </p>
-              {% endif %}
-              <template x-for="id in form.parcelles" :key="id">
-                <input type="hidden" name="parcelles" :value="id">
-              </template>
-            </div>
-            {# Sous-tâches — tâches filles : titre, assigné, date, statut fait/à faire #}
-            <div>
-              <div class="mb-1.5 flex items-center gap-3">
-                <label class="text-sm font-medium">{% trans "Sous-tâches" %}</label>
-                <template x-if="form.subtasks.length">
-                  <div class="flex items-center gap-2">
-                    <div class="h-1.5 w-24 overflow-hidden rounded-full" style="background: var(--surface-alt)">
-                      <div class="h-full rounded-full transition-all" style="background: var(--action)" :style="`width: ${(subDone() / form.subtasks.length) * 100}%`"></div>
-                    </div>
-                    <span class="text-xs tabular-nums" style="color: var(--text-secondary)" x-text="`${subDone()}/${form.subtasks.length}`"></span>
-                  </div>
-                </template>
-              </div>
-              <div class="space-y-1.5">
-                <template x-for="(st, i) in form.subtasks" :key="i">
-                  <div class="flex items-center gap-2">
-                    <button type="button" @click="st.done = !st.done"
-                            class="grid h-6 w-6 shrink-0 place-items-center rounded-md border transition"
-                            :style="st.done ? 'background: var(--action); border-color: var(--action); color: var(--on-action)' : 'border-color: var(--border); color: transparent'">
-                      <span class="material-icons-round text-[15px]">check</span>
-                    </button>
-                    <input type="text" x-model="st.title" placeholder="{% trans 'ex: Préparer le matériel' %}"
-                           class="min-w-0 flex-1 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none"
-                           :class="st.done ? 'line-through opacity-60' : ''" style="border: 0.5px solid var(--border); background: transparent">
-                    <select x-model="st.member"
-                            class="hidden w-36 shrink-0 rounded-lg px-2 py-1.5 text-sm focus:outline-none dark:[color-scheme:dark] sm:block" style="border: 0.5px solid var(--border); background: transparent">
-                      <option value="">{% trans "Même assigné" %}</option>
-                      {% for m in team_members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
-                    </select>
-                    {# width en inline : la règle de base input[type=date] impose w-full #}
-                    <input type="date" x-model="st.date"
-                           class="hidden shrink-0 rounded-lg px-2 py-1.5 text-sm focus:outline-none dark:[color-scheme:dark] sm:block" style="width: 9.5rem; border: 0.5px solid var(--border); background: transparent">
-                    <button type="button" @click="form.subtasks.splice(i, 1)" title="{% trans 'Retirer' %}"
-                            class="grid h-7 w-7 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
-                      <span class="material-icons-round text-[16px]">close</span>
-                    </button>
-                  </div>
-                </template>
-              </div>
-              <button type="button" @click="addSub()"
-                      class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium transition hover:opacity-80" style="color: var(--action)">
-                <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une sous-tâche" %}
-              </button>
-              <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Une sous-tâche datée apparaît aussi dans le planning de son assigné." %}</p>
-              <input type="hidden" name="subtasks" :value="JSON.stringify(form.subtasks)">
-            </div>
+            {% include "partials/_parcelles_selecteur.html" %}
+            {% include "partials/_sous_taches.html" %}
 
             <div>
               <div class="mb-1 flex items-center justify-between gap-3">
@@ -406,20 +482,49 @@
 </section>
 
 <script>
-  function planningTasks(createUrl, editUrl0, delUrl0) {
+  function planningTasks(urls) {
+    const createUrl = urls.creer, editUrl0 = urls.modifier, delUrl0 = urls.supprimer;
     const blank = () => ({
       title: '', assigned_to: '', start_date: '', due_date: '', priority: 'normale', status: 'todo',
       description: '', parcelles: [], parent: '', subtasks: [],
+    });
+    const blankRes = () => ({
+      machine: '', machine_nom: '', operation: 'autre', start: '', end: '', parcelle: '', notes: '',
     });
     return {
       modal: false, editing: false, action: createUrl, delAction: '',
       form: blank(),
       del: { open: false, action: '', name: '', subs: 0 },
+      // Le pas d'avant : sur un créneau vide, on demande quoi y poser.
+      choix: { open: false, member: '', date: '' },
+      res: { open: false, editing: false, action: urls.resCreer, delAction: '', form: blankRes() },
+      resDel: { open: false, action: '', nom: '' },
       init() {
         // La carte des parcelles vit hors d'Alpine (Leaflet) : on la tient
         // synchronisée avec la sélection et on la (ré)affiche à l'ouverture.
         this.$watch('form.parcelles', ids => window.hsParcellesMap && window.hsParcellesMap.select(ids));
         this.$watch('modal', open => open && window.hsParcellesMap && window.hsParcellesMap.show(this.form.parcelles));
+      },
+      openChoix(memberId, date) {
+        this.choix = { open: true, member: String(memberId || ''), date: date };
+      },
+      openReservation(date, machineId) {
+        this.res = {
+          open: true, editing: false, action: urls.resCreer, delAction: '',
+          form: { ...blankRes(), start: date, end: date, machine: String(machineId || '') },
+        };
+      },
+      openEditReservation(r) {
+        this.res = {
+          open: true, editing: true,
+          action: urls.resModifier.replace('/0/', '/' + r.id + '/'),
+          delAction: urls.resSupprimer.replace('/0/', '/' + r.id + '/'),
+          form: {
+            machine: String(r.machine || ''), machine_nom: r.machine_nom || '',
+            operation: r.operation, start: r.start, end: r.end,
+            parcelle: String(r.parcelle || ''), notes: r.notes || '',
+          },
+        };
       },
       openAdd(memberId, date) {
         this.editing = false;
@@ -457,93 +562,5 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if parcelles_mappables %}
-{{ parcelles_geojson|json_script:"planning-parcelles-geojson" }}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-  // ── Carte de sélection des parcelles (modale de tâche) ──
-  // Leaflet vit hors d'Alpine : la modale la réveille à l'ouverture
-  // (`show`) et lui pousse la sélection courante (`select`) ; un clic sur une
-  // parcelle rebascule la sélection côté Alpine.
-  window.hsParcellesMap = (function () {
-    var BASE = { color: '#ffffff', weight: 1.5, fillColor: '#ffffff', fillOpacity: 0.12 };
-    var SELECTED = { color: '#38bdf8', weight: 2.5, fillColor: '#38bdf8', fillOpacity: 0.45 };
-    var HOVER = { color: '#fbbf24', weight: 3, fillColor: '#fbbf24', fillOpacity: 0.35 };
-    var map = null, layers = {}, bounds = null;
-
-    function alpine() {
-      var section = document.querySelector('section[x-data]');
-      return section && window.Alpine ? window.Alpine.$data(section) : null;
-    }
-
-    function ign(layer, format) {
-      return L.tileLayer(
-        'https://data.geopf.fr/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM' +
-        '&FORMAT=' + format + '&LAYER=' + layer + '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-        { maxZoom: 19, attribution: '© IGN' });
-    }
-
-    function build() {
-      var el = document.getElementById('planning-parcelles-map');
-      var data = document.getElementById('planning-parcelles-geojson');
-      if (!el || !data || !window.L) return false;
-      var fc = JSON.parse(data.textContent);
-      map = L.map(el, { layers: [ign('ORTHOIMAGERY.ORTHOPHOTOS', 'image/jpeg')], attributionControl: false });
-      var geo = L.geoJSON(fc, {
-        style: BASE,
-        onEachFeature: function (feature, layer) {
-          var p = feature.properties || {};
-          layers[String(p.id)] = layer;
-          layer.bindTooltip(p.name + (p.area ? ' — ' + p.area + ' ha' : ''), { direction: 'top', sticky: true });
-          layer.on('click', function () {
-            var data = alpine();
-            if (data) data.toggleParcelle(String(p.id));
-          });
-        },
-      }).addTo(map);
-      bounds = geo.getBounds();
-      // La modale s'ouvre en fondu : le conteneur peut encore être à 0×0 au
-      // moment de l'init, on recadre dès qu'il a une taille réelle.
-      if (window.ResizeObserver) {
-        new ResizeObserver(function () { map.invalidateSize(); }).observe(el);
-      }
-      return true;
-    }
-
-    function cadrer() {
-      var el = document.getElementById('planning-parcelles-map');
-      if (!map || !el || el.clientHeight < 20) return;
-      map.invalidateSize();
-      if (bounds && bounds.isValid()) map.fitBounds(bounds, { padding: [14, 14] });
-    }
-
-    return {
-      show: function (ids) {
-        if (!map && !build()) return;
-        var self = this;
-        [60, 250, 600].forEach(function (ms) {
-          setTimeout(function () { cadrer(); self.select(ids); }, ms);
-        });
-      },
-      select: function (ids) {
-        if (!map) return;
-        var choisies = ids || [];
-        Object.keys(layers).forEach(function (id) {
-          layers[id].setStyle(choisies.indexOf(id) === -1 ? BASE : SELECTED);
-        });
-      },
-      // Survol d'une pastille : on montre de quelle parcelle il s'agit.
-      highlight: function (id, ids) {
-        if (!map) return;
-        this.select(ids);
-        var layer = id && layers[String(id)];
-        if (!layer) return;
-        layer.setStyle(HOVER);
-        layer.bringToFront();
-      },
-    };
-  })();
-</script>
-{% endif %}
+{% include "partials/_parcelles_carte_js.html" %}
 {% endblock %}

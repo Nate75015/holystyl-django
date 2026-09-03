@@ -1,4 +1,4 @@
-"""Envoi d'une facture Holystyl par la plateforme agréée SUPER PDP.
+"""Envoi d'une facture Isidor par la plateforme agréée SUPER PDP.
 
 Orchestre la chaîne : génération UBL → validation → dépôt → suivi du statut.
 La validation préalable est délibérée : elle coûte un appel, mais elle rend les
@@ -129,7 +129,7 @@ def envoyer(facture) -> dict:
         raise EnvoiImpossible(_("Facture non conforme : %(detail)s") % {"detail": detail})
 
     try:
-        depot = superpdp.send_invoice(xml, external_id=f"holystyl-facture-{facture.pk}")
+        depot = superpdp.send_invoice(xml, external_id=f"isidor-facture-{facture.pk}")
     except superpdp.SuperPDPError as exc:
         _echec(facture, str(exc))
         raise EnvoiImpossible(str(exc)) from exc

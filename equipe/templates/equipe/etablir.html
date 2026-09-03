@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% comment %}
+  Établir un contrat en partant du document, pas d'un formulaire posé à côté.
+  Chaque blanc du modèle devient un champ à sa place dans la phrase, et
+  propose ce que l'exploitation sait déjà — le salarié choisi remplit son
+  nom, son email et son téléphone d'un coup. On lit le contrat en le
+  remplissant, ce qui est la seule façon de voir ce qui manque encore.
+{% endcomment %}
+
+{% block content %}
+<style>
+  /* La feuille : une largeur de lecture, pas celle de l'écran. */
+  .ct-feuille {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: clamp(22px, 4vw, 48px);
+    font-size: 14.5px;
+    line-height: 2;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  /* Un blanc reste un blanc : souligné, posé dans le texte. La feuille en
+     préfixe donne la priorité sur le style général des champs, qui les veut
+     encadrés et pleine largeur — ici ils vivent au milieu d'une phrase. */
+  .ct-feuille .ct-blanc {
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 0 3px;
+    font: inherit;
+    color: var(--action);
+    background: color-mix(in srgb, var(--action) 8%, transparent);
+    border: 0;
+    border-bottom: 1.5px solid color-mix(in srgb, var(--action) 45%, transparent);
+    border-radius: 3px 3px 0 0;
+  }
+  .ct-feuille .ct-blanc:focus { outline: 2px solid var(--action); outline-offset: 1px; }
+  .ct-feuille .ct-blanc.ct-vide {
+    color: var(--text-muted);
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    border-bottom-color: color-mix(in srgb, var(--danger) 55%, transparent);
+  }
+  .ct-feuille select.ct-blanc { padding-right: 20px; }
+  .ct-barre { position: sticky; top: 0; z-index: 10; }
+
+  /* Le choix de la signature, à l'endroit où elle s'apposera. */
+  .ct-signature { position: relative; display: inline-block; vertical-align: middle; }
+  .ct-parapher {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 2px 6px;
+    border: 1px dashed color-mix(in srgb, var(--action) 45%, transparent);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--action) 6%, transparent);
+  }
+  .ct-parapher:hover { background: color-mix(in srgb, var(--action) 12%, transparent); }
+  /* Aussi large que sur le PDF : c'est un aperçu, il doit se lire. */
+  .ct-sign-apercu { max-height: 76px; max-width: 300px; }
+  .ct-sign-vide { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .ct-sign-panneau {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 260px;
+    padding: 10px;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 8px 28px rgb(0 0 0 / 0.14);
+    white-space: normal;
+  }
+  /* Le pavé de signature clôt le contrat : sous lui, la place manque. */
+  .ct-sign-panneau.ct-sign-haut { top: auto; bottom: calc(100% + 6px); }
+  .ct-sign-titre { font-size: 12px; color: var(--text-secondary); }
+  .ct-sign-choix {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .ct-sign-choix:hover { background: var(--surface-alt); }
+  .ct-sign-choix img { max-height: 56px; max-width: 230px; }
+</style>
+
+<section class="space-y-4" x-data="etablir({{ fiches_membres }}, {{ etat }})">
+
+  <p class="hs-crumb">
+    <a href="{% url 'equipe:contrats' %}" style="color: inherit">{% trans "Contrats de travail" %}</a>
+    · {{ modele.nom }}
+  </p>
+
+  <form method="post" action="{% url 'equipe:contrat_create' %}" class="space-y-4">
+    {% csrf_token %}
+    <input type="hidden" name="modele" value="{{ modele.pk }}">
+
+    {# ── Le salarié, qui remplit à lui seul trois blancs ── #}
+    <div class="ct-barre flex flex-wrap items-end justify-between gap-3 rounded-[10px] px-4 py-3"
+         style="border: 0.5px solid var(--border); background: var(--surface-alt)">
+      <div class="min-w-[240px] flex-1">
+        <label for="ct-membre" class="mb-1 block text-[13px]" style="color: var(--text-secondary)">
+          {% trans "Salarié" %} <span style="color: var(--danger)">*</span>
+        </label>
+        <select id="ct-membre" name="membre" required x-model="membre" @change="choisirMembre()">
+          <option value="">{% trans "Choisissez un salarié" %}</option>
+          {% for m in membres %}<option value="{{ m.pk }}">{{ m.name }}</option>{% endfor %}
+        </select>
+      </div>
+      {% if signature_en_tete %}
+        {% comment %} Le modèle ne nomme jamais l'employeur : le choix se pose ici. {% endcomment %}
+        <div>
+          <span class="mb-1 block text-[13px]" style="color: var(--text-secondary)">{% trans "Signature de l'employeur" %}</span>
+          {% include "equipe/_signature.html" %}
+        </div>
+      {% endif %}
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="text-[13px]" x-show="restants > 0" x-cloak style="color: var(--danger)"
+              x-text="restants + ' ' + libelleRestants"></span>
+        <span class="text-[13px]" x-show="restants === 0" x-cloak style="color: var(--success)">
+          {% trans "Tous les blancs sont remplis" %}
+        </span>
+        <button type="submit" class="hs-btn-primary">
+          <span class="material-icons-round text-[18px]">description</span>{% trans "Établir le contrat" %}
+        </button>
+      </div>
+    </div>
+
+    <p class="text-[13px]" style="color: var(--text-secondary)">
+      {% trans "Chaque blanc du modèle est un champ : les listes proposent ce que l'exploitation sait déjà, et tout reste modifiable. Un blanc laissé vide s'imprimera en pointillés." %}
+    </p>
+
+    {# ── Le contrat, blancs compris ── #}
+    <article class="ct-feuille">{% for s in segments %}{% if s.blanc %}{% include "equipe/_blanc.html" with b=s.blanc %}{% if s.signature %} {% include "equipe/_signature.html" %}{% endif %}{% else %}{{ s.texte }}{% endif %}{% endfor %}</article>
+  </form>
+</section>
+
+<script>
+  {% trans "blanc(s) à compléter" as restants_libelle %}
+  function etablir(fiches, etat) {
+    return {
+      fiches: fiches,
+      membre: '',
+      v: etat.valeurs,
+      signature: etat.signature,
+      panneau: false,
+      panneauEnHaut: false,
+      urls: etat.urls_signatures,
+      libre: etat.libre,
+      libelleRestants: '{{ restants_libelle|escapejs }}',
+      /* Le salarié choisi remplit son identité. Le poste ne s'écrase que
+         s'il est encore vide : on ne défait pas une saisie. */
+      choisirMembre() {
+        const fiche = this.fiches[this.membre];
+        if (!fiche) return;
+        for (const cle of ['salarie', 'salarie_email', 'salarie_telephone']) {
+          if (cle in this.v) this.v[cle] = fiche[cle] || '';
+        }
+        if ('poste' in this.v && !this.v.poste) this.v.poste = fiche.poste || '';
+      },
+      /* Passer une liste en saisie libre, sans garder le mot-clé comme valeur. */
+      basculer(cle) {
+        if (this.v[cle] === '__libre__') { this.libre[cle] = true; this.v[cle] = ''; }
+      },
+      /* Ouvrir vers le haut quand le bas de la fenêtre est trop proche :
+         un panneau qu'il faut deviner ne se voit pas. */
+      ouvrirPanneau(bouton) {
+        this.panneau = !this.panneau;
+        if (this.panneau) {
+          this.panneauEnHaut = bouton.getBoundingClientRect().bottom + 250 > window.innerHeight;
+        }
+      },
+      /* Ce que montre le parapheur : l'image retenue, ou rien du tout. */
+      get urlSignature() {
+        return this.urls[this.signature] || '';
+      },
+      get restants() {
+        return Object.values(this.v).filter(valeur => !String(valeur).trim()).length;
+      },
+      /* Un champ posé dans une phrase tient la place de sa valeur, pas une
+         largeur fixe qui trouerait le paragraphe. Un objet, et non une
+         chaîne : `:style` en chaîne réécrit tout l'attribut et effacerait le
+         `display: none` que `x-show` y pose. */
+      largeur(cle, minimum) {
+        const n = String(this.v[cle] || '').length;
+        return { width: Math.min(52, Math.max(minimum, n + 2)) + 'ch' };
+      },
+    };
+  }
+</script>
+{% endblock %}

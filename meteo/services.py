@@ -72,7 +72,7 @@ def geocode(query):
     base = "https://api-adresse.data.gouv.fr/search/?limit=1&q=" + urllib.parse.quote(query)
     for url in (base + "&type=municipality", base):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Holystyl/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": "Isidor/1.0"})
             with urllib.request.urlopen(req, timeout=10) as resp:
                 feats = (json.loads(resp.read()).get("features") or [])
         except Exception:  # noqa: BLE001 — on tente le repli
@@ -93,7 +93,7 @@ def fetch_current(lat, lon):
         "timezone": "auto",
     }
     url = OPEN_METEO_URL + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": "Holystyl/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Isidor/1.0"})
     with urllib.request.urlopen(req, timeout=10) as resp:
         data = json.loads(resp.read())
     cur = data.get("current", {})
@@ -114,7 +114,7 @@ def fetch_weather(lat, lon):
         "wind_speed_unit": "kmh",
     }
     url = OPEN_METEO_URL + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": "Holystyl/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Isidor/1.0"})
     with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read())
 

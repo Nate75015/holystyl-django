@@ -367,3 +367,238 @@ def test_un_devis_signe_n_expire_pas(setup, devis_a_signer):
     devis_a_signer.signature_mention = "Bon pour accord"
     devis_a_signer.signature_date = timezone.now()
     assert devis_a_signer.est_expire is False
+
+
+# ── Bibliothèque de logos ───────────────────────────────────────────
+
+
+@pytest.fixture
+def ferme_logo(db, django_user_model):
+    from exploitations.models import Exploitation
+
+    u = django_user_model.objects.create_user(email="biblio@ex.com", password="pwd12345")
+    return u, Exploitation.objects.create(owner=u, name="Ferme Biblio")
+
+
+def _png(nom="marque.png"):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    # En-tête PNG valide : suffisant pour ImageField, qui vérifie l'image.
+    import io
+
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new("RGB", (8, 8), (255, 255, 255)).save(buf, "PNG")
+    return SimpleUploadedFile(nom, buf.getvalue(), content_type="image/png")
+
+
+@pytest.mark.django_db
+def test_le_premier_logo_devient_le_defaut(client, ferme_logo):
+    """Une bibliothèque pleine dont aucun n'est désigné ne sert à rien."""
+    from finances.models import Logo
+
+    user, exploitation = ferme_logo
+    client.force_login(user)
+    assert client.post("/logos/ajouter/", {"fichier": _png()}).status_code == 302
+
+    logo = Logo.objects.get(exploitation=exploitation)
+    assert logo.par_defaut is True
+    # Sans nom donné, celui du fichier fait l'affaire.
+    assert logo.nom == "marque"
+
+
+@pytest.mark.django_db
+def test_un_seul_logo_par_defaut_a_la_fois(client, ferme_logo):
+    from finances.models import Logo
+
+    user, exploitation = ferme_logo
+    client.force_login(user)
+    client.post("/logos/ajouter/", {"fichier": _png("un.png")})
+    client.post("/logos/ajouter/", {"fichier": _png("deux.png"), "par_defaut": "on"})
+
+    defauts = list(Logo.objects.filter(exploitation=exploitation, par_defaut=True))
+    assert len(defauts) == 1 and defauts[0].nom == "deux"
+
+
+@pytest.mark.django_db
+def test_renommer_et_remplacer_un_logo(client, ferme_logo):
+    from finances.models import Logo
+
+    user, exploitation = ferme_logo
+    client.force_login(user)
+    client.post("/logos/ajouter/", {"fichier": _png("avant.png")})
+    logo = Logo.objects.get(exploitation=exploitation)
+
+    client.post(f"/logos/{logo.pk}/modifier/", {"nom": "Marque de la ferme"})
+    logo.refresh_from_db()
+    assert logo.nom == "Marque de la ferme"
+
+    client.post(f"/logos/{logo.pk}/modifier/", {"nom": logo.nom, "fichier": _png("apres.png")})
+    logo.refresh_from_db()
+    assert "apres" in logo.fichier.name
+
+
+@pytest.mark.django_db
+def test_supprimer_le_defaut_en_designe_un_autre(client, ferme_logo):
+    """La bibliothèque ne doit jamais rester sans référence."""
+    from finances.models import Logo
+
+    user, exploitation = ferme_logo
+    client.force_login(user)
+    client.post("/logos/ajouter/", {"fichier": _png("un.png")})
+    client.post("/logos/ajouter/", {"fichier": _png("deux.png")})
+    defaut = Logo.objects.get(exploitation=exploitation, par_defaut=True)
+
+    client.post(f"/logos/{defaut.pk}/supprimer/")
+    restants = Logo.objects.filter(exploitation=exploitation)
+    assert restants.count() == 1
+    assert restants.first().par_defaut is True
+
+
+@pytest.mark.django_db
+def test_le_logo_est_filtre_sur_le_format(client, ferme_logo):
+    """Un document à valeur légale n'embarque pas n'importe quel fichier."""
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    from finances.models import Logo
+
+    user, _exploitation = ferme_logo
+    client.force_login(user)
+    client.post("/logos/ajouter/", {
+        "fichier": SimpleUploadedFile("doc.pdf", b"%PDF-1.4", content_type="application/pdf")})
+    assert Logo.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_l_editeur_puise_dans_la_bibliotheque(client, ferme_logo):
+    """Il ne téléverse plus : la même marque doit servir la facture suivante."""
+    user, _exploitation = ferme_logo
+    client.force_login(user)
+    client.post("/logos/ajouter/", {"fichier": _png("marque.png")})
+
+    page = client.get("/facturation/nouvelle/").content.decode()
+    assert 'name="logo"' in page and "<select" in page
+    assert 'type="file" name="logo"' not in page, "le téléversement persiste dans l'éditeur"
+    assert "{#" not in page and "{{" not in page
+
+
+@pytest.mark.django_db
+def test_le_logo_du_document_l_emporte_sur_le_defaut(ferme_logo):
+    """Un devis signé sous une marque ne peut pas s'afficher sous une autre."""
+    from finances.models import Devis, Logo
+    from finances.views import _emetteur
+
+    _user, exploitation = ferme_logo
+    defaut = Logo.objects.create(exploitation=exploitation, fichier=_png("defaut.png"),
+                                 par_defaut=True)
+    autre = Logo.objects.create(exploitation=exploitation, fichier=_png("autre.png"))
+
+    from django.utils import timezone
+
+    devis = Devis.objects.create(exploitation=exploitation, numero="D-1",
+                                 client_nom="Client", date_emission=timezone.now(),
+                                 logo=autre)
+    assert _emetteur(exploitation, devis)["logo_url"] == autre.fichier.url
+    # Sans logo propre, le document suit la marque courante.
+    devis.logo = None
+    assert _emetteur(exploitation, devis)["logo_url"] == defaut.fichier.url
+
+
+# ── Identité de facturation ─────────────────────────────────────────
+
+
+@pytest.mark.django_db
+def test_l_identite_ne_recopie_pas_ce_qui_existe_ailleurs(client, ferme_logo):
+    """Raison sociale, SIRET, TVA et adresse ont déjà leur page.
+
+    Les ressaisir ici serait le meilleur moyen qu'ils divergent, et sur une
+    facture cela vaut un numéro ou une adresse faux.
+    """
+    from finances.models import IdentiteFacturation
+
+    user, exploitation = ferme_logo
+    client.force_login(user)
+    page = client.get("/facturation/coordonnees/").content.decode()
+
+    assert "Identité de facturation" in page
+    # Montrées, avec le chemin pour les corriger — jamais en champ de saisie.
+    for lu in ("SIRET", "TVA intracommunautaire", "Raison sociale"):
+        assert lu in page
+    for champ in ('name="siret"', 'name="raison_sociale"', 'name="tva_intra"', 'name="adresse"'):
+        assert champ not in page, f"{champ} ne doit pas se ressaisir ici"
+    assert "{#" not in page and "{{" not in page
+
+    # La fiche se crée à la première visite plutôt qu'à l'enregistrement.
+    assert IdentiteFacturation.objects.filter(exploitation=exploitation).exists()
+
+
+@pytest.mark.django_db
+def test_les_coordonnees_de_paiement_s_enregistrent(client, ferme_logo):
+    from finances.models import IdentiteFacturation
+
+    user, exploitation = ferme_logo
+    client.force_login(user)
+    reponse = client.post("/facturation/coordonnees/", {
+        "banque": "Crédit Agricole",
+        "iban": "FR76 1234 5678 9012 3456 7890 123",
+        "bic": "AGRIFRPP",
+        "conditions_reglement": "30 jours fin de mois",
+        "capital_social": "7 500",
+        "rcs": "RCS Digne-les-Bains 123 456 789",
+        "mentions": "Indemnité forfaitaire de recouvrement de 40 €.",
+    })
+    assert reponse.status_code == 302
+
+    identite = IdentiteFacturation.objects.get(exploitation=exploitation)
+    # L'IBAN se range sans espaces et en majuscules, se relit par quatre.
+    assert identite.iban == "FR761234567890123456789 0123".replace(" ", "")
+    assert identite.iban_lisible.startswith("FR76 1234 5678")
+    assert identite.capital_social == 7500
+    assert identite.peut_encaisser is True
+
+
+@pytest.mark.django_db
+def test_l_emetteur_lit_les_sources_et_non_le_miroir(ferme_logo):
+    """Le miroir posé sur l'exploitation peut avoir divergé.
+
+    Cas réel rencontré ailleurs : `Exploitation.city` disait une commune, et
+    l'adresse enregistrée une autre. Sur une facture, c'est une adresse fausse.
+    """
+    from exploitations.models import AdresseExploitation, EntrepriseLiee
+    from finances.views import _emetteur
+
+    _user, exploitation = ferme_logo
+    exploitation.raison_sociale = "Miroir SARL"
+    exploitation.city = "Digne-les-Bains"
+    exploitation.siret = "00000000000000"
+    exploitation.save()
+
+    EntrepriseLiee.objects.create(exploitation=exploitation, raison_sociale="Vraie SARL",
+                                  siret="90100075200021", principale=True)
+    AdresseExploitation.objects.create(exploitation=exploitation, voie_numero="3",
+                                       voie_type="rue", voie_nom="Dubreuil",
+                                       city="Montpellier", postal_code="34090",
+                                       principale=True)
+
+    bloc = _emetteur(exploitation)
+    assert bloc["nom"] == "Vraie SARL"
+    assert bloc["siret"] == "90100075200021"
+    assert "Montpellier" in bloc["commune"] and "34090" in bloc["commune"]
+    assert "Dubreuil" in bloc["adresse"]
+
+
+@pytest.mark.parametrize("saisi,attendu", [
+    ("12,50", 12.5),
+    ("12.50", 12.5),
+    ("7 500", 7500.0),          # espace ordinaire
+    ("7 500", 7500.0),     # insécable
+    ("7 500", 7500.0),     # insécable étroite, produite par le formatage FR
+    ("1 234,56 €", 1234.56),
+    ("", None), (None, None), ("abc", None),
+])
+def test_un_montant_saisi_avec_ses_separateurs_est_lu(saisi, attendu):
+    """« 7 500 » se perdait sans un mot : le champ repartait vide."""
+    from finances.views import _to_float
+
+    assert _to_float(saisi) == attendu

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% comment %}
+  La bibliothèque de logos. Une exploitation porte souvent plusieurs marques —
+  la ferme, la boutique, un label — et le logo d'une facture n'est pas
+  toujours celui d'un devis. Les documents viennent donc choisir ici.
+
+  `items-center` est absent du voile à dessein : sur un conteneur qui défile,
+  il rend le haut inatteignable. Le centrage passe par `my-auto`.
+{% endcomment %}
+<section class="space-y-5" x-data="{ modal: false }">
+
+  <p class="hs-crumb">{% trans "Économie" %} · {% trans "Logos" %}</p>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h1 class="text-[20px]">{% trans "Logos" %}</h1>
+    <button type="button" @click="modal = true" class="hs-btn-primary">
+      <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter un logo" %}
+    </button>
+  </div>
+
+  <p class="text-[13px]" style="color: var(--text-secondary)">
+    {% trans "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre." %}
+  </p>
+
+  {% if logos %}
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for l in logos %}
+        <div class="hs-card p-4">
+          <div class="grid h-32 place-items-center overflow-hidden rounded-[10px]"
+               style="background: var(--surface-alt)">
+            <img src="{{ l.fichier.url }}" alt="{{ l.nom }}" class="max-h-28 max-w-full object-contain">
+          </div>
+
+          <form method="post" action="{% url 'finances:logo_modifier' l.pk %}"
+                enctype="multipart/form-data" class="mt-3 space-y-2">
+            {% csrf_token %}
+            <label class="block text-[11px] uppercase tracking-wide" style="color: var(--text-muted)"
+                   for="logo-nom-{{ l.pk }}">{% trans "Nom" %}</label>
+            <input id="logo-nom-{{ l.pk }}" name="nom" value="{{ l.nom }}" class="text-sm">
+
+            <label class="block text-[11px] uppercase tracking-wide" style="color: var(--text-muted)"
+                   for="logo-img-{{ l.pk }}">{% trans "Remplacer l'image" %}</label>
+            <input id="logo-img-{{ l.pk }}" type="file" name="fichier" accept="{{ extensions }}"
+                   class="w-full text-[12px]">
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              {% if l.par_defaut %}
+                <span class="hs-badge hs-badge-success">{% trans "Par défaut" %}</span>
+              {% else %}
+                <label class="flex items-center gap-2 text-[13px]">
+                  <input type="checkbox" name="par_defaut" class="h-4 w-4" style="accent-color: var(--action)">
+                  {% trans "Par défaut" %}
+                </label>
+              {% endif %}
+              <button type="submit" class="hs-btn-outline">{% trans "Enregistrer" %}</button>
+            </div>
+          </form>
+
+          <div class="mt-2 flex items-center justify-end">
+            <form method="post" action="{% url 'finances:logo_supprimer' l.pk %}"
+                  onsubmit="return confirm('{% trans "Supprimer ce logo ?" %}')" class="leading-none">
+              {% csrf_token %}
+              <button type="submit" title="{% trans 'Supprimer' %}" style="color: var(--text-muted)">
+                <span class="material-icons-round text-[17px]">delete</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="hs-card px-14 py-10 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucun logo pour l'instant" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">
+        {% trans "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures." %}
+      </p>
+      <button type="button" @click="modal = true" class="hs-btn-primary mt-4">{% trans "Ajouter un logo" %}</button>
+    </div>
+  {% endif %}
+
+  {# ── Ajout ── #}
+  <div x-show="modal" x-cloak x-transition.opacity @keydown.escape.window="modal = false"
+       class="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 p-4 lg:pl-[var(--nav-offset)]">
+    <div @click.self="modal = false" class="my-auto flex w-full max-w-lg justify-center">
+      <div class="hs-popover w-full p-5">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-[16px] font-medium">{% trans "Ajouter un logo" %}</h2>
+          <button type="button" @click="modal = false" style="color: var(--text-muted)">✕</button>
+        </div>
+        <form method="post" action="{% url 'finances:logo_ajouter' %}"
+              enctype="multipart/form-data" class="space-y-3">
+          {% csrf_token %}
+          <div>
+            <label for="logo-fichier" class="mb-1 block text-sm" style="color: var(--text-secondary)">
+              {% trans "Image" %} <span style="color: var(--danger)">*</span>
+            </label>
+            <input id="logo-fichier" type="file" name="fichier" accept="{{ extensions }}" required
+                   class="w-full text-[13px]">
+            <p class="mt-1 text-[12px]" style="color: var(--text-muted)">
+              {% trans "PNG, JPEG, WebP ou SVG, 2 Mo maximum." %}
+            </p>
+          </div>
+          <div>
+            <label for="logo-nouveau-nom" class="mb-1 block text-sm" style="color: var(--text-secondary)">{% trans "Nom" %}</label>
+            <input id="logo-nouveau-nom" name="nom" placeholder="{% trans 'ex: logo de la ferme' %}">
+          </div>
+          <label class="flex items-center gap-2.5 text-sm">
+            <input type="checkbox" name="par_defaut" class="h-4 w-4" style="accent-color: var(--action)">
+            {% trans "En faire le logo par défaut" %}
+          </label>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" @click="modal = false" class="hs-btn-outline">{% trans "Annuler" %}</button>
+            <button type="submit" class="hs-btn-primary">{% trans "Ajouter" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

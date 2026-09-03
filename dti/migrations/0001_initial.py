@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('exported_at', models.DateTimeField(blank=True, null=True, verbose_name='exporté le')),
                 ('recu_le', models.DateTimeField(auto_now_add=True, verbose_name='reçu le')),
                 ('empreinte', models.CharField(db_index=True, max_length=64, verbose_name='empreinte du contenu')),
-                ('payload', models.JSONField(default=dict, help_text="Archive intégrale telle que reçue, y compris ce que Holystyl n'exploite pas encore.", verbose_name='payload')),
+                ('payload', models.JSONField(default=dict, help_text="Archive intégrale telle que reçue, y compris ce qu'Isidor n'exploite pas encore.", verbose_name='payload')),
                 ('siret_declare', models.CharField(blank=True, max_length=14, verbose_name='SIRET déclaré')),
                 ('nom_declare', models.CharField(blank=True, max_length=255, verbose_name='nom déclaré')),
                 ('statut', models.CharField(choices=[('recu', 'Reçu'), ('importe', 'Importé'), ('quarantaine', 'En attente de rattachement'), ('rejete', 'Rejeté'), ('erreur', 'Erreur')], default='recu', max_length=12, verbose_name='statut')),

@@ -7,9 +7,14 @@
   <p class="hs-crumb">{% trans "Économie" %} · {% trans "Facture" %}</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
     <h1 class="text-[20px]">{% trans "Facture" %}</h1>
+    <div class="flex flex-wrap items-center gap-2">
+    <a href="{% url 'finances:coordonnees' %}" class="hs-btn-outline">
+      <span class="material-icons-round text-[18px]">badge</span>{% trans "Coordonnées et mentions" %}
+    </a>
     <a href="{% url 'finances:facture_editeur' %}" class="hs-btn-primary">
       <span class="material-icons-round text-[18px]">add</span>{% trans "Nouvelle facture" %}
     </a>
+    </div>
   </div>
 
   {# ── Connexion à la plateforme agréée ── #}

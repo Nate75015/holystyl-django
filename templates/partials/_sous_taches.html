@@ -1,0 +1,54 @@
+{% load i18n %}
+{% comment %}
+  Sous-tâches d'une tâche, éditées en ligne et postées en JSON. Partagé entre
+  la modale du planning et le formulaire de tâche.
+
+  Attend dans le scope Alpine : `form.subtasks`, `addSub()` et `subDone()`.
+  Et en contexte : `team_members`.
+{% endcomment %}
+{# Sous-tâches — tâches filles : titre, assigné, date, statut fait/à faire #}
+<div>
+  <div class="mb-1.5 flex items-center gap-3">
+    <label class="text-sm font-medium">{% trans "Sous-tâches" %}</label>
+    <template x-if="form.subtasks.length">
+      <div class="flex items-center gap-2">
+        <div class="h-1.5 w-24 overflow-hidden rounded-full" style="background: var(--surface-alt)">
+          <div class="h-full rounded-full transition-all" style="background: var(--action)" :style="`width: ${(subDone() / form.subtasks.length) * 100}%`"></div>
+        </div>
+        <span class="text-xs tabular-nums" style="color: var(--text-secondary)" x-text="`${subDone()}/${form.subtasks.length}`"></span>
+      </div>
+    </template>
+  </div>
+  <div class="space-y-1.5">
+    <template x-for="(st, i) in form.subtasks" :key="i">
+      <div class="flex items-center gap-2">
+        <button type="button" @click="st.done = !st.done"
+                class="grid h-6 w-6 shrink-0 place-items-center rounded-md border transition"
+                :style="st.done ? 'background: var(--action); border-color: var(--action); color: var(--on-action)' : 'border-color: var(--border); color: transparent'">
+          <span class="material-icons-round text-[15px]">check</span>
+        </button>
+        <input type="text" x-model="st.title" placeholder="{% trans 'ex: Préparer le matériel' %}"
+               class="min-w-0 flex-1 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none"
+               :class="st.done ? 'line-through opacity-60' : ''" style="border: 0.5px solid var(--border); background: transparent">
+        <select x-model="st.member"
+                class="hidden w-36 shrink-0 rounded-lg px-2 py-1.5 text-sm focus:outline-none dark:[color-scheme:dark] sm:block" style="border: 0.5px solid var(--border); background: transparent">
+          <option value="">{% trans "Même assigné" %}</option>
+          {% for m in team_members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
+        </select>
+        {# width en inline : la règle de base input[type=date] impose w-full #}
+        <input type="date" x-model="st.date"
+               class="hidden shrink-0 rounded-lg px-2 py-1.5 text-sm focus:outline-none dark:[color-scheme:dark] sm:block" style="width: 9.5rem; border: 0.5px solid var(--border); background: transparent">
+        <button type="button" @click="form.subtasks.splice(i, 1)" title="{% trans 'Retirer' %}"
+                class="grid h-7 w-7 shrink-0 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style="color: var(--text-muted)">
+          <span class="material-icons-round text-[16px]">close</span>
+        </button>
+      </div>
+    </template>
+  </div>
+  <button type="button" @click="addSub()"
+          class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium transition hover:opacity-80" style="color: var(--action)">
+    <span class="material-icons-round text-[18px]">add</span>{% trans "Ajouter une sous-tâche" %}
+  </button>
+  <p class="mt-1 text-xs" style="color: var(--text-muted)">{% trans "Une sous-tâche datée apparaît aussi dans le planning de son assigné." %}</p>
+  <input type="hidden" name="subtasks" :value="JSON.stringify(form.subtasks)">
+</div>

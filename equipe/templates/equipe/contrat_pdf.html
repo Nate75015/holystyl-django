@@ -1,0 +1,51 @@
+{% load i18n %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>{% blocktrans with qui=contrat.membre.name %}Contrat — {{ qui }}{% endblocktrans %}</title>
+  <style>
+    @page { size: A4; margin: 22mm 20mm; }
+    body { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.55; color: #111; }
+    .corps { white-space: pre-wrap; }
+    .pied { margin-top: 14mm; border-top: 0.5pt solid #999; padding-top: 4mm; font-size: 8pt; color: #666; }
+    .signatures { margin-top: 12mm; width: 100%; }
+    .signatures td { width: 50%; vertical-align: top; padding-right: 8mm; font-size: 10pt; }
+    .signatures .role { color: #555; font-size: 9pt; }
+    .signatures .trait { margin-top: 16mm; border-top: 0.5pt solid #999; }
+    /* Une signature manuscrite est large et basse — la nôtre fait neuf fois
+       plus large que haut. C'est la largeur qui la contraint, pas la hauteur :
+       on lui donne toute la colonne, sans quoi elle s'imprime en filet. */
+    .signatures img { width: 100%; max-width: 78mm; max-height: 32mm; display: block; margin-bottom: 1mm; }
+  </style>
+</head>
+<body>
+  <div class="corps">{{ contrat.corps }}</div>
+  {% comment %}
+    Deux colonnes : l'employeur signe d'avance quand sa signature est
+    définie, le salarié signe à la main. Sans signature enregistrée, on
+    laisse simplement le trait.
+  {% endcomment %}
+  <table class="signatures">
+    <tr>
+      <td>
+        <div class="role">{% trans "L'employeur" %}</div>
+        {% if signature %}
+          <img src="{{ signature.fichier.url }}" alt="">
+          <div class="trait" style="margin-top: 0"></div>
+        {% else %}
+          <div class="trait"></div>
+        {% endif %}
+      </td>
+      <td>
+        <div class="role">{% trans "Le salarié" %}</div>
+        <div class="trait"></div>
+      </td>
+    </tr>
+  </table>
+
+  <p class="pied">
+    {% blocktrans with ferme=exploitation.name %}{{ ferme }} — document établi depuis Isidor.{% endblocktrans %}
+    {% trans "À faire relire avant signature : les clauses obligatoires dépendent de la convention collective applicable." %}
+  </p>
+</body>
+</html>

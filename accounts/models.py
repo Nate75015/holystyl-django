@@ -1,4 +1,4 @@
-"""Modèle utilisateur Holystyl — authentification par email/mot de passe."""
+"""Modèle utilisateur Isidor — authentification par email/mot de passe."""
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models

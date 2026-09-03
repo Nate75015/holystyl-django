@@ -1,4 +1,4 @@
-"""Vues web IA : page Assistant + endpoint SSE de streaming."""
+"""Vues web IA : page de l'agent + endpoint SSE de streaming."""
 
 import json
 import uuid
@@ -105,7 +105,7 @@ def stream(request):
 
         ctx = services.build_context(exploitation)
         messages = [
-            {"role": "system", "content": f"Tu es Eric, le conseiller agronome de Holystyl (irrigation de précision). Réponds en français, de façon concise et pratique. Contexte parcelles : {ctx['parcelles']}."},
+            {"role": "system", "content": f"Tu es Eric, le conseiller agronome d'Isidor (irrigation de précision). Réponds en français, de façon concise et pratique. Contexte parcelles : {ctx['parcelles']}."},
             {"role": "user", "content": message},
         ]
         full = []
@@ -139,7 +139,7 @@ def reformuler(request):
     if not text:
         return JsonResponse({"error": _("Rien à reformuler : le champ est vide.")}, status=400)
     if not llm.is_configured():
-        return JsonResponse({"error": _("Assistant IA non configuré.")}, status=503)
+        return JsonResponse({"error": _("Agent IA non configuré.")}, status=503)
 
     consigne = _(
         "Reformule ce texte en français : plus clair, mieux écrit et professionnel. "

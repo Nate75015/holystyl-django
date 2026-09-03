@@ -1,0 +1,81 @@
+{% load i18n %}
+{% comment %}
+  Le bilan d'eau, affiché sous le diagnostic : volumes, quota, coût, et la
+  répartition mensuelle puis par parcelle. Les données viennent de
+  `irrigation.bilan_eau.donnees`.
+{% endcomment %}
+<div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+  <h2 class="text-[17px]">{% trans "Bilan d'eau" %}</h2>
+  <a href="{% url 'irrigation:bilan_eau_export' %}" class="hs-btn-outline">{% trans "Export CSV" %}</a>
+</div>
+{# ── Indicateurs (KPI) ── #}
+<div id="sec-kpi" class="grid grid-cols-2 gap-[10px] lg:grid-cols-4">
+  <div class="hs-tile">
+    <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Irrigation totale" %}</p>
+    <p class="text-[22px]">{{ total_m3 }}<span class="ml-0.5 text-[13px]" style="color: var(--text-muted)">m³</span></p>
+  </div>
+  <div class="hs-tile">
+    <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Sessions enregistrées" %}</p>
+    <p class="text-[22px]">{{ nb_sessions }}</p>
+  </div>
+  <div class="hs-tile">
+    <p class="text-[12px]" style="color: var(--text-secondary)">{% trans "Quota" %} · {{ quota_display }} m³</p>
+    <p class="text-[22px]"{% if pct_quota > 90 %} style="color: var(--danger)"{% elif pct_quota > 75 %} style="color: var(--warning)"{% endif %}>{{ pct_quota }}%</p>
+    <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full" style="background: var(--surface-alt)">
+      <div class="h-full rounded-full transition-all duration-500" style="width: {{ pct_quota|floatformat:0 }}%; background: {% if pct_quota > 90 %}var(--danger){% elif pct_quota > 75 %}var(--warning){% else %}var(--success){% endif %}"></div>
+    </div>
+  </div>
+  <div class="hs-tile">
+    <p class="text-[12px]" style="color: var(--text-secondary)">{{ prix_m3 }} €/m³ {% trans "estimé" %}</p>
+    <p class="text-[22px]">{{ cout }}<span class="ml-0.5 text-[13px]" style="color: var(--text-muted)">€</span></p>
+  </div>
+</div>
+
+{# ── Consommation mensuelle ── #}
+<div id="sec-monthly" class="hs-card p-5">
+  <h2 class="text-[15px] font-medium mb-2">{% trans "Consommation mensuelle (m³)" %}</h2>
+  {% if monthly_chart.labels %}
+    {{ monthly_chart|json_script:"be-monthly" }}
+    <div class="h-56"><canvas id="chart-monthly"></canvas></div>
+  {% else %}
+    <div class="py-10 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucune session d'irrigation enregistrée" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Les données apparaîtront dès la première session." %}</p>
+    </div>
+  {% endif %}
+</div>
+
+{# ── Consommation quotidienne par parcelle ── #}
+<div id="sec-parcelles" class="hs-card p-5">
+  <h2 class="text-[15px] font-medium mb-2">{% trans "Consommation par parcelle (m³/jour)" %}</h2>
+  {% if parcelle_charts %}
+    {{ parcelle_charts|json_script:"be-parcelles" }}
+    <div class="grid gap-3 sm:grid-cols-2">
+      {% for pc in parcelle_charts %}
+        <div class="hs-card p-4">
+          <div class="mb-3 flex items-center justify-between gap-2">
+            <p class="font-medium">{{ pc.nom }}</p>
+            <span class="hs-badge hs-badge-neutral">{{ pc.total }} m³</span>
+          </div>
+          {% if pc.labels %}
+            <div class="h-44"><canvas id="chart-parc-{{ forloop.counter0 }}"></canvas></div>
+          {% else %}
+            <p class="py-10 text-center text-[13px]" style="color: var(--text-secondary)">{% trans "Aucune session d'irrigation" %}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% elif has_parcelles %}
+    <div class="py-6 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucune session d'irrigation enregistrée" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Enregistrez une session pour voir la consommation par parcelle." %}</p>
+    </div>
+  {% else %}
+    <div class="py-6 text-center">
+      <p class="text-[15px] font-medium">{% trans "Aucune parcelle enregistrée" %}</p>
+      <p class="mt-1 text-[13px]" style="color: var(--text-secondary)">{% trans "Créez vos parcelles pour voir la consommation par parcelle." %}</p>
+    </div>
+  {% endif %}
+</div>
+
+</section>

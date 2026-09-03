@@ -15,7 +15,7 @@
       </span>
       <h2 class="text-[20px]">{% trans "Connectez votre boîte mail" %}</h2>
       <p class="mx-auto mt-2 max-w-sm text-sm" style="color: var(--text-secondary)">
-        {% trans "Importez votre boîte Gmail dans Holystyl : réception, messages suivis, envoyés, brouillons, catégories, et l'envoi depuis votre propre adresse." %}
+        {% trans "Importez votre boîte Gmail dans Isidor : réception, messages suivis, envoyés, brouillons, catégories, et l'envoi depuis votre propre adresse." %}
       </p>
 
       {% if configured %}
@@ -24,7 +24,7 @@
            style="border: 0.5px solid var(--border-strong); background: var(--surface); color: var(--text)">
           <span class="material-icons-round text-[20px] text-red-500">mail</span>{% trans "Se connecter avec Google" %}
         </a>
-        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "Accès en lecture/écriture de libellés — Holystyl ne supprime jamais vos e-mails." %}</p>
+        <p class="mt-3 text-xs" style="color: var(--text-muted)">{% trans "Accès en lecture/écriture de libellés — Isidor ne supprime jamais vos e-mails." %}</p>
       {% else %}
         <div class="mt-6 rounded-[10px] px-4 py-3 text-left text-sm" style="border: 0.5px solid var(--border); background: var(--surface-alt); color: var(--warning)">
           <p class="font-medium">{% trans "Connexion Gmail non configurée" %}</p>

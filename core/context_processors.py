@@ -38,7 +38,7 @@ def layout(request):
         {"label": _("Parcelles"), "url_name": "parcelles:list"},
         {"label": _("Irrigation"), "url_name": "irrigation:irrigation"},
         {"label": _("Planning"), "url_name": "planning:planning"},
-        {"label": _("Assistant"), "url_name": "ia:assistant"},
+        {"label": _("Agent IA"), "url_name": "ia:assistant"},
     ]
 
     nav_sections = [
@@ -64,28 +64,37 @@ def layout(request):
             ],
         },
         {
-            "label": _("Cultures & Élevage"), "key": "cultures",
+            # Ce qui pousse : la terre, ce qu'on y met, ce qu'on y fait.
+            "label": _("Cultures"), "key": "cultures",
             "items": [
                 {"label": _("Mes Parcelles"), "url_name": "parcelles:list", "icon": "map"},
                 {"label": _("Campagnes"), "url_name": "parcelles:campagnes", "icon": "event_repeat"},
-                {"label": _("Météo"), "url_name": "meteo:index", "icon": "wb_sunny"},
                 {"label": _("Cultures"), "url_name": "agronomie:cultures", "icon": "grass"},
                 {"label": _("Types de sol"), "url_name": "agronomie:types_sol", "icon": "terrain"},
+                {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
                 {"label": _("Fertigation"), "url_name": "agronomie:fertigation", "icon": "opacity"},
                 {"label": _("Interventions"), "url_name": "interventions:interventions", "icon": "build"},
-                {"label": _("Analyses de sol"), "url_name": "analyse_sol:analyses_sol", "icon": "biotech"},
-                {"label": _("Élevage"), "url_name": "elevage:elevage", "icon": "pets"},
-                {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
-                {"label": _("DTI"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
-                {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
-                {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "sensors"},
+                {"label": _("Météo"), "url_name": "meteo:index", "icon": "wb_sunny"},
             ],
         },
         {
-            "label": _("Protection"), "key": "protection",
+            "label": _("Élevage"), "key": "elevage",
             "items": [
+                {"label": _("Élevage"), "url_name": "elevage:elevage", "icon": "pets"},
+            ],
+        },
+        {
+            # L'eau et son pilotage, d'un bout à l'autre : ce qu'on distribue,
+            # ce qui protège la culture, et ce qui mesure. Bassinage et anti-gel
+            # sont des usages de l'irrigation, ils n'avaient pas à vivre ailleurs.
+            "label": _("Irrigation"), "key": "irrigation",
+            "items": [
+                {"label": _("Irrigation"), "url_name": "irrigation:irrigation", "icon": "water_drop"},
                 {"label": _("Bassinage"), "url_name": "irrigation:bassinage", "icon": "shower"},
                 {"label": _("Anti-gel"), "url_name": "irrigation:antigel", "icon": "ac_unit"},
+                {"label": _("DTI"), "url_name": "irrigation:dti", "icon": "electric_bolt"},
+                {"label": _("Régie SCADA"), "url_name": "iot:regie", "icon": "tune"},
+                {"label": _("Capteurs"), "url_name": "iot:capteurs", "icon": "sensors"},
             ],
         },
         {
@@ -96,6 +105,7 @@ def layout(request):
                 {"label": _("Bilan économique"), "url_name": "finances:bilan_economique", "icon": "insights"},
                 {"label": _("Facture"), "url_name": "finances:facturation", "icon": "receipt_long"},
                 {"label": _("Devis"), "url_name": "finances:devis", "icon": "request_quote"},
+                {"label": _("Logos"), "url_name": "finances:logos", "icon": "branding_watermark"},
                 {"label": _("PAC"), "url_name": "pac:pac", "icon": "account_balance"},
             ],
         },
@@ -103,7 +113,6 @@ def layout(request):
             "label": _("Environnement"), "key": "environnement",
             "items": [
                 {"label": _("Biodiversité"), "url_name": "environnement:biodiversite", "icon": "eco"},
-                {"label": _("Bilan eau"), "url_name": "environnement:bilan_eau", "icon": "water_drop"},
                 {"label": _("Bilan azoté"), "url_name": "environnement:bilan_azote", "icon": "science"},
                 {"label": _("Empreinte carbone"), "url_name": "environnement:empreinte_carbone", "icon": "cloud"},
                 {"label": _("Rapport environnemental"), "url_name": "environnement:rapport", "icon": "assessment"},
@@ -118,13 +127,29 @@ def layout(request):
                 {"label": _("Équipe"), "url_name": "equipe:equipe", "icon": "groups"},
                 {"label": _("Tâches"), "url_name": "equipe:taches", "icon": "checklist"},
                 {"label": _("Contrats de travail"), "url_name": "equipe:contrats", "icon": "assignment_ind"},
+                {"label": _("Offres d'emploi"), "url_name": "equipe:offres", "icon": "work"},
                 {"label": _("Paie"), "url_name": "equipe:paie", "icon": "payments"},
+            ],
+        },
+        {
+            # Les pièces personnelles : elles ne relèvent ni de l'exploitation
+            # ni d'un contrat, et on les cherche toujours dans l'urgence.
+            "label": _("Identité"), "key": "identite",
+            "url_name": "identite:pieces",
+            "items": [
+                {"label": _("Carte d'identité"), "url_name": "identite:pieces_type",
+                 "args": ["carte"], "icon": "badge"},
+                {"label": _("Passeport"), "url_name": "identite:pieces_type",
+                 "args": ["passeport"], "icon": "book"},
+                {"label": _("Signature"), "url_name": "identite:pieces_type",
+                 "args": ["signature"], "icon": "draw"},
             ],
         },
         {
             "label": _("Contrat"), "key": "contrat",
             "items": [
                 {"label": _("Contrats"), "url_name": "contrat:contrats", "icon": "description"},
+                {"label": _("Drive"), "url_name": "contrat:drive", "icon": "folder"},
                 {"label": _("Baux"), "url_name": "contrat:baux", "icon": "agriculture"},
                 {"label": _("Patrimoine"), "url_name": "contrat:actes", "icon": "history_edu"},
                 {"label": _("Assurance"), "url_name": "contrat:assurances", "icon": "shield"},
@@ -163,6 +188,7 @@ def layout(request):
                 {"label": _("Bailleur"), "url_name": "client:partenaires", "args": ["bailleur"], "icon": "real_estate_agent"},
                 {"label": _("Comptable"), "url_name": "client:partenaires", "args": ["comptable"], "icon": "calculate"},
                 {"label": _("Avocat"), "url_name": "client:partenaires", "args": ["avocat"], "icon": "balance"},
+                {"label": _("CUMA"), "url_name": "client:partenaires", "args": ["cuma"], "icon": "agriculture"},
             ],
         },
         {
@@ -215,7 +241,8 @@ def layout(request):
     # Icône de section (présentation ; navigation de la sidebar)
     section_icons = {
         "accueil": "home", "communication": "forum", "cultures": "eco",
-        "protection": "lock", "economie": "payments", "environnement": "park",
+        "elevage": "pets", "irrigation": "water_drop",
+        "economie": "payments", "environnement": "park",
         "rh": "groups", "contrat": "gavel", "relations": "handshake",
         "stock": "inventory_2", "vente": "storefront",
         "aquaculture": "waves", "compte": "person",
@@ -304,7 +331,7 @@ def layout(request):
         espaces.append(entree)
 
     return {
-        "APP_NAME": getattr(settings, "APP_NAME", "Holystyl"),
+        "APP_NAME": getattr(settings, "APP_NAME", "Isidor"),
         "espaces": espaces,
         # Le sélecteur marque l'espace où l'on se trouve. Sans rattachement,
         # c'est le profil déclaré qui fait foi : on est bien sur son tableau de
