@@ -21,7 +21,7 @@ msgstr ""
 
 #: accounts/admin.py:17 accounts/templates/accounts/register.html:41
 msgid "Identité"
-msgstr "Aitheantas"
+msgstr "Céannacht"
 
 #: accounts/admin.py:18 accounts/templates/accounts/register.html:52
 #: client/templates/client/detail.html:80
@@ -10608,7 +10608,7 @@ msgstr "foirm dhlíthiúil"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "lógó"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11031,10 +11031,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "Níl aon chostas cláraithe."
+msgstr "Níl seoladh ar taifead."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11794,10 +11792,8 @@ msgid "Nom du signataire"
 msgstr "Ainm an tsínitheora"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "sonrasc"
+msgstr "Síniú"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11898,10 +11894,8 @@ msgid "90 jours"
 msgstr "Ar siúl"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Rialacha foláirimh"
+msgstr "Íocaíocht"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -20420,3 +20414,267 @@ msgstr "Ní dhíoltar riamh"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Inonondíolta am ar bith"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "lógónna"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "lógó réamhshocraithe"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "An ceann a thógann cáipéis nua, mura roghnaítear a mhalairt."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Cuir lógó leis"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "Priontáiltear iad ar bharr do mheastachán agus do shonrasc. Tógtar an ceann réamhshocraithe go huathoibríoch; is féidir le gach cáipéis ceann eile a roghnú."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Athraigh an íomhá"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Réamhshocrú"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "réamhshocrú"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Déan an lógó réamhshocraithe de"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "An lógó seo a scriosadh?"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "Gan lógó go fóill"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Cuir ceann suas: priontálfar é ar bharr do mheastachán agus do shonrasc."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP nó SVG, 2 MB ar a mhéad."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "m.sh. lógó na feirme"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "Íomhá nár glacadh leis: PNG, JPEG, WebP nó SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "Ní mór don lógó a bheith faoi bhun 2 MB."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Lógó curtha leis."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Lógó athraithe."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Lógó scriosta."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Cuir lógó leis in Airgeadas › Lógónna"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Céannacht sonrascála"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "An rud a phriontáiltear ag barr agus ag bun do mheastachán agus do shonrasc."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Íocaíocht a fháil"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "Priontáiltear na sonraí seo ar an sonrasc: dá n-uireasa, caithfidh an custaiméir iad a iarraidh arís."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Banc"
+
+#: finances/models.py
+msgid "banque"
+msgstr "banc"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Téarmaí íocaíochta"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "téarmaí íocaíochta"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "m.sh. 30 lá deireadh na míosa."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "m.sh. 30 lá deireadh na míosa"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Idir gnólachtaí, tá pionóis mhoille agus an cúiteamh seasta éigeantach ar an sonrasc."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Scairchaipiteal (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "scairchaipiteal (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Clár trádála"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Buntásc"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "fógraí buntáisc"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Pionóis mhoille, cúiteamh seasta…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Céannacht sonrascála sábháilte."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Cárta aitheantais"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Pas"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "cáipéis aitheantais"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "cáipéisí aitheantais"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Cuir cáipéis leis"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "Níl aon cháipéis ar taifead"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Cárta aitheantais, pas, síniú: curtha i dtaisce uair amháin, le fáil nuair is gá."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "Tógann athnuachan roinnt seachtainí: is fearr tosú roimh an spriocdháta."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "As dáta"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "as dáta ó"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Sealbhóir"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "sealbhóir"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "Cé leis an cháipéis, mura leatsa í."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Eisithe ar"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "eisithe ar"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "In éag ar"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "in éag ar"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "An cháipéis seo a scriosadh?"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Cáipéis sábháilte."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Cáipéis athraithe."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Cáipéis scriosta."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF nó grianghraf, 10 MB ar a mhéad."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Oscail"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Sonraí agus fógraí"

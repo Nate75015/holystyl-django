@@ -10598,7 +10598,7 @@ msgstr "forma jurídica"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "logotipo"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11021,10 +11021,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "Ningún gasto registrado."
+msgstr "Ninguna dirección registrada."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11784,10 +11782,8 @@ msgid "Nom du signataire"
 msgstr "Nombre del firmante"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "factura"
+msgstr "Firma"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11888,10 +11884,8 @@ msgid "90 jours"
 msgstr "En curso"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Reglas de alerta"
+msgstr "Pago"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -17867,7 +17861,7 @@ msgstr "© 2026 Isidor · Todos los derechos reservados"
 
 #: public/templates/public/home.html:490
 msgid "Mentions légales"
-msgstr "Aviso legal"
+msgstr "Menciones legales"
 
 #: public/templates/public/home.html:492
 msgid "Confidentialité"
@@ -20400,3 +20394,267 @@ msgstr "Nunca revendidos"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Exportables en todo momento"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "logotipos"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "logotipo predeterminado"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "El que toma un documento nuevo, salvo elección contraria."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Añadir un logotipo"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "Se imprimen en el encabezado de sus presupuestos y facturas. El predeterminado se toma automáticamente; cada documento puede elegir otro."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Reemplazar la imagen"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Predeterminado"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "predeterminado"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Convertirlo en el predeterminado"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "¿Eliminar este logotipo?"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "Ningún logotipo por ahora"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Suba uno: se imprimirá en el encabezado de sus presupuestos y facturas."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP o SVG, 2 MB máximo."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "p. ej. logotipo de la granja"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "Imagen no aceptada: PNG, JPEG, WebP o SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "El logotipo no debe superar 2 MB."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Logotipo añadido."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Logotipo modificado."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Logotipo eliminado."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Añadir un logotipo en Finanzas › Logos"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Identidad de facturación"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "Lo que se imprime en el encabezado y el pie de sus presupuestos y facturas."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Cobrar"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "Estos datos se imprimen en la factura: sin ellos, el cliente debe volver a pedírselos."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Banco"
+
+#: finances/models.py
+msgid "banque"
+msgstr "banco"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Condiciones de pago"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "condiciones de pago"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "p. ej. 30 días fin de mes."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "p. ej. 30 días fin de mes"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Entre profesionales, los intereses de demora y la indemnización a tanto alzado son obligatorios en la factura."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Capital social (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "capital social (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Registro mercantil"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Pie de página"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "menciones de pie de página"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Intereses de demora, indemnización a tanto alzado…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Identidad de facturación guardada."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Documento de identidad"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Pasaporte"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "documento de identidad"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "documentos de identidad"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Añadir un documento"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "Ningún documento registrado"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Documento de identidad, pasaporte, firma: guardados una vez, encontrados cuando hacen falta."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "Una renovación tarda varias semanas: conviene empezar antes del vencimiento."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "Caducado"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "caducado el"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Titular"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "titular"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "De quién es el documento, si no es suyo."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Expedido el"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "expedido el"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "Caduca el"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "caduca el"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "¿Eliminar este documento?"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Documento guardado."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Documento modificado."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Documento eliminado."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF o foto, 10 MB máximo."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Abrir"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Datos y menciones"

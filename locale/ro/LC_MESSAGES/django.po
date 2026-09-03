@@ -10599,7 +10599,7 @@ msgstr "formă juridică"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "logo"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11022,10 +11022,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "Nicio cheltuială înregistrată."
+msgstr "Nicio adresă înregistrată."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11785,10 +11783,8 @@ msgid "Nom du signataire"
 msgstr "Numele semnatarului"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "factură"
+msgstr "Semnătură"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11889,10 +11885,8 @@ msgid "90 jours"
 msgstr "În curs"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Reguli de alertă"
+msgstr "Plată"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -20393,3 +20387,267 @@ msgstr "Niciodată revândute"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Exportabile oricând"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "logouri"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "logo implicit"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "Cel pe care îl preia un document nou, în absența altei alegeri."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Adăugați un logo"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "Se tipăresc în capul devizelor și facturilor. Cel implicit este preluat automat; fiecare document poate alege altul."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Înlocuiți imaginea"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Implicit"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "implicit"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Faceți-l logo implicit"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "Ștergeți acest logo?"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "Niciun logo deocamdată"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Încărcați unul: se va tipări în capul devizelor și facturilor."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP sau SVG, maximum 2 MB."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "ex.: logo al fermei"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "Imagine neacceptată: PNG, JPEG, WebP sau SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "Logo-ul nu trebuie să depășească 2 MB."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Logo adăugat."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Logo modificat."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Logo șters."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Adăugați un logo în Finanțe › Logouri"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Identitate de facturare"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "Ceea ce se tipărește în antetul și subsolul devizelor și facturilor."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Încasarea plății"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "Aceste date se tipăresc pe factură: fără ele, clientul trebuie să le ceară din nou."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Bancă"
+
+#: finances/models.py
+msgid "banque"
+msgstr "bancă"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Condiții de plată"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "condiții de plată"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "ex.: 30 de zile sfârșit de lună."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "ex.: 30 de zile sfârșit de lună"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Între profesioniști, penalitățile de întârziere și indemnizația forfetară sunt obligatorii pe factură."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Capital social (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "capital social (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Registrul comerțului"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Subsol"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "mențiuni de subsol"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Penalități de întârziere, indemnizație forfetară…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Identitate de facturare salvată."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Carte de identitate"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Pașaport"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "act de identitate"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "acte de identitate"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Adăugați un document"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "Niciun document înregistrat"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Carte de identitate, pașaport, semnătură: puse la păstrare o dată, găsite la nevoie."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "O reînnoire durează câteva săptămâni: mai bine începeți înainte de termen."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "Expirat"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "expirat la"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Titular"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "titular"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "Cui îi aparține documentul, dacă nu vouă."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Eliberat la"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "eliberat la"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "Expiră la"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "expiră la"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "Ștergeți acest document?"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Document salvat."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Document modificat."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Document șters."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF sau fotografie, maximum 10 MB."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Deschide"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Date și mențiuni"

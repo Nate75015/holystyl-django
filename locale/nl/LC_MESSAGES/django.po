@@ -10591,7 +10591,7 @@ msgstr "rechtsvorm"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "logo"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11014,10 +11014,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "Geen kost geregistreerd."
+msgstr "Geen adres geregistreerd."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11777,10 +11775,8 @@ msgid "Nom du signataire"
 msgstr "Naam van de ondertekenaar"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "factuur"
+msgstr "Handtekening"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11881,10 +11877,8 @@ msgid "90 jours"
 msgstr "Bezig"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Waarschuwingsregels"
+msgstr "Betaling"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -20383,3 +20377,267 @@ msgstr "Nooit doorverkocht"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Altijd exporteerbaar"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "logo's"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "standaardlogo"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "Het logo dat een nieuw document overneemt, tenzij anders gekozen."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Een logo toevoegen"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "Ze staan boven uw offertes en facturen. Het standaardlogo wordt automatisch gebruikt; elk document kan een ander kiezen."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Afbeelding vervangen"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Standaard"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "standaard"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Als standaardlogo instellen"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "Dit logo verwijderen?"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "Nog geen logo"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Voeg er een toe: het komt boven uw offertes en facturen."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP of SVG, maximaal 2 MB."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "bijv. bedrijfslogo"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "Afbeelding niet geaccepteerd: PNG, JPEG, WebP of SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "Het logo mag niet groter zijn dan 2 MB."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Logo toegevoegd."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Logo gewijzigd."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Logo verwijderd."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Voeg een logo toe in Financiën › Logo's"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Facturatie-identiteit"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "Wat boven en onder uw offertes en facturen komt te staan."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Betaald worden"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "Deze gegevens staan op de factuur: zonder moet de klant er opnieuw om vragen."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Bank"
+
+#: finances/models.py
+msgid "banque"
+msgstr "bank"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Betalingsvoorwaarden"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "betalingsvoorwaarden"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "bijv. 30 dagen einde maand."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "bijv. 30 dagen einde maand"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Tussen ondernemingen zijn vertragingsrente en de forfaitaire invorderingsvergoeding verplicht op de factuur."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Maatschappelijk kapitaal (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "maatschappelijk kapitaal (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Handelsregister"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Voettekst"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "voetteksten"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Vertragingsrente, forfaitaire invorderingsvergoeding…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Facturatie-identiteit opgeslagen."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Identiteitskaart"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Paspoort"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "identiteitsbewijs"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "identiteitsbewijzen"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Een document toevoegen"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "Geen document geregistreerd"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Identiteitskaart, paspoort, handtekening: één keer opgeborgen, terug te vinden wanneer nodig."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "Een vernieuwing duurt weken: begin er beter voor de vervaldatum aan."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "Verlopen"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "verlopen op"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Houder"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "houder"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "Van wie het document is, als het niet het uwe is."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Afgegeven op"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "afgegeven op"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "Verloopt op"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "verloopt op"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "Dit document verwijderen?"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Document opgeslagen."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Document gewijzigd."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Document verwijderd."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF of foto, maximaal 10 MB."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Openen"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Gegevens en vermeldingen"

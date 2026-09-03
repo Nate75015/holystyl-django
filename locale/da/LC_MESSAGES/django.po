@@ -10585,7 +10585,7 @@ msgstr "juridisk form"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "logo"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11008,10 +11008,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "Ingen omkostning registreret."
+msgstr "Ingen adresse registreret."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11771,10 +11769,8 @@ msgid "Nom du signataire"
 msgstr "Underskriverens navn"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "faktura"
+msgstr "Underskrift"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11875,10 +11871,8 @@ msgid "90 jours"
 msgstr "I gang"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Advarselsregler"
+msgstr "Betaling"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -20369,3 +20363,267 @@ msgstr "Aldrig videresolgt"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Kan altid eksporteres"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "logoer"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "standardlogo"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "Det, som et nyt dokument tager, medmindre andet vælges."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Tilføj et logo"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "De trykkes øverst på dine tilbud og fakturaer. Standardlogoet bruges automatisk; hvert dokument kan vælge et andet."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Erstat billedet"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Standard"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "standard"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Gør det til standardlogo"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "Slet dette logo?"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "Endnu intet logo"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Læg et op: det trykkes øverst på dine tilbud og fakturaer."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP eller SVG, højst 2 MB."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "fx bedriftens logo"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "Billede ikke accepteret: PNG, JPEG, WebP eller SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "Logoet må ikke overstige 2 MB."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Logo tilføjet."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Logo ændret."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Logo slettet."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Tilføj et logo under Økonomi › Logoer"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Faktureringsidentitet"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "Det, der trykkes øverst og nederst på dine tilbud og fakturaer."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Blive betalt"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "Disse oplysninger står på fakturaen: uden dem må kunden spørge igen."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Bank"
+
+#: finances/models.py
+msgid "banque"
+msgstr "bank"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Betalingsbetingelser"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "betalingsbetingelser"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "fx 30 dage ultimo måned."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "fx 30 dage ultimo måned"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Mellem virksomheder er morarenter og det faste inddrivelsesgebyr obligatoriske på fakturaen."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Selskabskapital (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "selskabskapital (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Handelsregister"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Sidefod"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "sidefodsoplysninger"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Morarenter, fast inddrivelsesgebyr…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Faktureringsidentitet gemt."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Identitetskort"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Pas"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "legitimation"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "legitimationer"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Tilføj et dokument"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "Intet dokument registreret"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Identitetskort, pas, underskrift: lagt væk én gang, fundet når det gælder."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "En fornyelse tager flere uger: begynd hellere før udløbet."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "Udløbet"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "udløbet den"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Indehaver"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "indehaver"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "Hvem dokumentet tilhører, hvis det ikke er dit."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Udstedt den"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "udstedt den"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "Udløber den"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "udløber den"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "Slet dette dokument?"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Dokument gemt."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Dokument ændret."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Dokument slettet."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF eller foto, højst 10 MB."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Åbn"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Oplysninger og angivelser"

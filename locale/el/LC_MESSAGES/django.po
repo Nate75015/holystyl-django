@@ -10600,7 +10600,7 @@ msgstr "νομική μορφή"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "λογότυπο"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11023,10 +11023,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "Καμία καταχωρημένη δαπάνη."
+msgstr "Δεν έχει καταχωρηθεί διεύθυνση."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11786,10 +11784,8 @@ msgid "Nom du signataire"
 msgstr "Όνομα υπογράφοντος"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "τιμολόγιο"
+msgstr "Υπογραφή"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11890,10 +11886,8 @@ msgid "90 jours"
 msgstr "Σε εξέλιξη"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Κανόνες ειδοποίησης"
+msgstr "Πληρωμή"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -17881,7 +17875,7 @@ msgstr "© 2026 Isidor · Με την επιφύλαξη παντός δικαι
 
 #: public/templates/public/home.html:490
 msgid "Mentions légales"
-msgstr "Νομικές πληροφορίες"
+msgstr "Νομικές αναφορές"
 
 #: public/templates/public/home.html:492
 msgid "Confidentialité"
@@ -20410,3 +20404,267 @@ msgstr "Ποτέ δεν μεταπωλούνται"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Εξαγώγιμα ανά πάσα στιγμή"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "λογότυπα"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "προεπιλεγμένο λογότυπο"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "Αυτό που παίρνει ένα νέο έγγραφο, εκτός αν επιλεγεί άλλο."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Προσθήκη λογοτύπου"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "Εμφανίζονται στην κεφαλίδα των προσφορών και των τιμολογίων σας. Το προεπιλεγμένο λαμβάνεται αυτόματα· κάθε έγγραφο μπορεί να επιλέξει άλλο."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Αντικατάσταση εικόνας"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Προεπιλογή"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "προεπιλογή"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Ορισμός ως προεπιλογή"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "Διαγραφή αυτού του λογοτύπου;"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "Κανένα λογότυπο ακόμη"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Ανεβάστε ένα: θα εμφανίζεται στην κεφαλίδα των προσφορών και τιμολογίων σας."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP ή SVG, έως 2 MB."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "π.χ. λογότυπο της φάρμας"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "Μη αποδεκτή εικόνα: PNG, JPEG, WebP ή SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "Το λογότυπο δεν πρέπει να υπερβαίνει τα 2 MB."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Το λογότυπο προστέθηκε."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Το λογότυπο τροποποιήθηκε."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Το λογότυπο διαγράφηκε."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Προσθέστε λογότυπο στα Οικονομικά › Λογότυπα"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Στοιχεία τιμολόγησης"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "Ό,τι τυπώνεται στην κεφαλίδα και το υποσέλιδο των προσφορών και τιμολογίων σας."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Να πληρωθείτε"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "Αυτά τα στοιχεία τυπώνονται στο τιμολόγιο: χωρίς αυτά, ο πελάτης πρέπει να τα ζητήσει ξανά."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Τράπεζα"
+
+#: finances/models.py
+msgid "banque"
+msgstr "τράπεζα"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Όροι πληρωμής"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "όροι πληρωμής"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "π.χ. 30 ημέρες τέλος μήνα."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "π.χ. 30 ημέρες τέλος μήνα"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Μεταξύ επιχειρήσεων, οι τόκοι υπερημερίας και η κατ' αποκοπή αποζημίωση είναι υποχρεωτικοί στο τιμολόγιο."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Μετοχικό κεφάλαιο (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "μετοχικό κεφάλαιο (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Εμπορικό μητρώο"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Υποσέλιδο"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "αναφορές υποσέλιδου"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Τόκοι υπερημερίας, κατ' αποκοπή αποζημίωση…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Τα στοιχεία τιμολόγησης αποθηκεύτηκαν."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Ταυτότητα"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Διαβατήριο"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "έγγραφο ταυτότητας"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "έγγραφα ταυτότητας"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Προσθήκη εγγράφου"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "Κανένα έγγραφο καταχωρημένο"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Ταυτότητα, διαβατήριο, υπογραφή: τακτοποιημένα μία φορά, διαθέσιμα όταν χρειάζονται."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "Η ανανέωση απαιτεί αρκετές εβδομάδες: καλύτερα πριν από τη λήξη."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "Έληξε"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "έληξε στις"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Κάτοχος"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "κάτοχος"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "Σε ποιον ανήκει το έγγραφο, αν δεν είναι δικό σας."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Εκδόθηκε στις"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "εκδόθηκε στις"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "Λήγει στις"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "λήγει στις"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "Διαγραφή αυτού του εγγράφου;"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Το έγγραφο αποθηκεύτηκε."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Το έγγραφο τροποποιήθηκε."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Το έγγραφο διαγράφηκε."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF ή φωτογραφία, έως 10 MB."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Άνοιγμα"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Στοιχεία και αναφορές"

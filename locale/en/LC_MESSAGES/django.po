@@ -10587,7 +10587,7 @@ msgstr "legal form"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "logo"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11010,10 +11010,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "No expense recorded."
+msgstr "No address on file."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11773,10 +11771,8 @@ msgid "Nom du signataire"
 msgstr "Signatory name"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "invoice"
+msgstr "Signature"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11877,10 +11873,8 @@ msgid "90 jours"
 msgstr "In progress"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Alert rules"
+msgstr "Payment"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -17839,7 +17833,7 @@ msgstr "© 2026 Isidor · All rights reserved"
 
 #: public/templates/public/home.html:490
 msgid "Mentions légales"
-msgstr "Legal notice"
+msgstr "Legal notices"
 
 #: public/templates/public/home.html:492
 msgid "Confidentialité"
@@ -20367,3 +20361,267 @@ msgstr "Never resold"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Exportable at any time"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "logos"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "default logo"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "The one a new document takes, unless told otherwise."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Add a logo"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "They print at the top of your quotes and invoices. The default one is taken automatically; each document can choose another."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Replace the image"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Default"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "default"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Make it the default logo"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "Delete this logo?"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "No logo yet"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Drop one in: it will print at the top of your quotes and invoices."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP or SVG, 2 MB maximum."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "e.g. farm logo"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "Image not accepted: PNG, JPEG, WebP or SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "The logo must not exceed 2 MB."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Logo added."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Logo updated."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Logo deleted."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Add a logo in Finance › Logos"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Invoicing identity"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "What prints at the top and bottom of your quotes and invoices."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Getting paid"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "These details print on the invoice: without them, the customer has to ask you again."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Bank"
+
+#: finances/models.py
+msgid "banque"
+msgstr "bank"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Payment terms"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "payment terms"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "e.g. 30 days end of month."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "e.g. 30 days end of month"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Between businesses, late payment penalties and the fixed recovery indemnity are mandatory on the invoice."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Share capital (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "share capital (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Trade register"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Footer"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "footer notices"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Late payment penalties, fixed recovery indemnity…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Invoicing identity saved."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Identity card"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Passport"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "identity document"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "identity documents"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Add a document"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "No document on file"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Identity card, passport, signature: filed once, found when needed."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "A renewal takes several weeks: better to start before the deadline."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "Expired"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "expired on"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Holder"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "holder"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "Whose document this is, if not yours."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Issued on"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "issued on"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "Expires on"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "expires on"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "Delete this document?"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Document saved."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Document updated."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Document deleted."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF or photo, 10 MB maximum."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Open"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Details and notices"

@@ -20,7 +20,7 @@ msgstr ""
 
 #: accounts/admin.py:17 accounts/templates/accounts/register.html:41
 msgid "Identité"
-msgstr "Azonosítás"
+msgstr "Azonosság"
 
 #: accounts/admin.py:18 accounts/templates/accounts/register.html:52
 #: client/templates/client/detail.html:80
@@ -621,7 +621,7 @@ msgstr "műtrágya"
 #: stock/templates/stock/recoltes.html:23
 #: vente/templates/vente/commandes.html:18
 msgid "Toutes"
-msgstr "Mind"
+msgstr "Összes"
 
 #: agronomie/templates/agronomie/cultures.html:20
 msgid "Printemps"
@@ -10587,7 +10587,7 @@ msgstr "jogi forma"
 
 #: exploitations/models.py:116
 msgid "logo"
-msgstr ""
+msgstr "logó"
 
 #: exploitations/models.py:118 exploitations/models.py:274
 msgid "n° PACAGE"
@@ -11010,10 +11010,8 @@ msgid ""
 msgstr ""
 
 #: exploitations/templates/exploitations/settings.html:120
-#, fuzzy
-#| msgid "Aucune charge enregistrée."
 msgid "Aucune adresse enregistrée."
-msgstr "Nincs rögzített költség."
+msgstr "Nincs rögzített cím."
 
 #: exploitations/templates/exploitations/settings.html:127
 #: parcelles/templates/parcelles/list.html:39
@@ -11773,10 +11771,8 @@ msgid "Nom du signataire"
 msgstr "Az aláíró neve"
 
 #: finances/templates/finances/devis_signature.html:155
-#, fuzzy
-#| msgid "facture"
 msgid "Signature"
-msgstr "számla"
+msgstr "Aláírás"
 
 #: finances/templates/finances/devis_signature.html:157
 #: planning/templates/planning/bon_intervention.html:45
@@ -11877,10 +11873,8 @@ msgid "90 jours"
 msgstr "Folyamatban"
 
 #: finances/templates/finances/document_editeur.html:138
-#, fuzzy
-#| msgid "Règles d'alerte"
 msgid "Règlement"
-msgstr "Riasztási szabályok"
+msgstr "Fizetés"
 
 #: finances/templates/finances/document_editeur.html:141
 #, fuzzy
@@ -17850,7 +17844,7 @@ msgstr "© 2026 Isidor · Minden jog fenntartva"
 
 #: public/templates/public/home.html:490
 msgid "Mentions légales"
-msgstr "Jogi nyilatkozat"
+msgstr "Jogi közlemények"
 
 #: public/templates/public/home.html:492
 msgid "Confidentialité"
@@ -20378,3 +20372,267 @@ msgstr "Soha nem adjuk tovább"
 #: public/templates/public/home.html
 msgid "Exportables à tout moment"
 msgstr "Bármikor exportálható"
+
+#: finances/models.py
+msgid "Logos"
+msgstr "Logos"
+
+#: finances/models.py
+msgid "logos"
+msgstr "logók"
+
+#: finances/models.py
+msgid "logo par défaut"
+msgstr "alapértelmezett logó"
+
+#: finances/models.py
+msgid "Celui que prend un nouveau document, sauf choix contraire."
+msgstr "Amit egy új dokumentum átvesz, ha nincs más választás."
+
+#: finances/models.py
+msgid "Ajouter un logo"
+msgstr "Logó hozzáadása"
+
+#: finances/models.py
+msgid "Ils s'impriment en tête de vos devis et de vos factures. Celui marqué par défaut est pris automatiquement ; chaque document peut en choisir un autre."
+msgstr "Az árajánlatok és számlák fejlécében jelennek meg. Az alapértelmezett automatikusan érvényes; minden dokumentum választhat mást."
+
+#: finances/models.py
+msgid "Remplacer l'image"
+msgstr "Kép csereálása"
+
+#: finances/models.py
+msgid "Par défaut"
+msgstr "Alapértelmezett"
+
+#: finances/models.py
+msgid "par défaut"
+msgstr "alapértelmezett"
+
+#: finances/models.py
+msgid "En faire le logo par défaut"
+msgstr "Legyen ez az alapértelmezett"
+
+#: finances/models.py
+msgid "Supprimer ce logo ?"
+msgstr "Törli ezt a logót?"
+
+#: finances/models.py
+msgid "Aucun logo pour l'instant"
+msgstr "Még nincs logó"
+
+#: finances/models.py
+msgid "Déposez-en un : il s'imprimera en tête de vos devis et de vos factures."
+msgstr "Töltsön fel egyet: megjelenik az árajánlatok és számlák fejlécében."
+
+#: finances/models.py
+msgid "PNG, JPEG, WebP ou SVG, 2 Mo maximum."
+msgstr "PNG, JPEG, WebP vagy SVG, legfeljebb 2 MB."
+
+#: finances/models.py
+msgid "ex: logo de la ferme"
+msgstr "pl. a gazdaság logója"
+
+#: finances/models.py
+msgid "Image non acceptée : PNG, JPEG, WebP ou SVG."
+msgstr "A kép nem elfogadott: PNG, JPEG, WebP vagy SVG."
+
+#: finances/models.py
+msgid "Le logo ne doit pas dépasser 2 Mo."
+msgstr "A logó nem lehet nagyobb 2 MB-nál."
+
+#: finances/models.py
+msgid "Logo ajouté."
+msgstr "Logó hozzáadva."
+
+#: finances/models.py
+msgid "Logo modifié."
+msgstr "Logó módosítva."
+
+#: finances/models.py
+msgid "Logo supprimé."
+msgstr "Logó törölve."
+
+#: finances/models.py
+msgid "Ajouter un logo dans Finance › Logos"
+msgstr "Adjon hozzá logót: Pénzügy › Logók"
+
+#: finances/models.py
+msgid "Identité de facturation"
+msgstr "Számlázási azonosság"
+
+#: finances/models.py
+msgid "Ce qui s'imprime en tête et en pied de vos devis et de vos factures."
+msgstr "Ami az árajánlatok és számlák fejlécében és láblécében megjelenik."
+
+#: finances/models.py
+msgid "Se faire payer"
+msgstr "Fizetés fogadása"
+
+#: finances/models.py
+msgid "Ces coordonnées s'impriment sur la facture : sans elles, le client doit vous les redemander."
+msgstr "Ezek az adatok a számlán jelennek meg: nélkülük az ügyfélnek újra kérnie kell."
+
+#: finances/models.py
+msgid "Banque"
+msgstr "Bank"
+
+#: finances/models.py
+msgid "banque"
+msgstr "bank"
+
+#: finances/models.py
+msgid "Conditions de règlement"
+msgstr "Fizetési feltételek"
+
+#: finances/models.py
+msgid "conditions de règlement"
+msgstr "fizetési feltételek"
+
+#: finances/models.py
+msgid "ex : 30 jours fin de mois."
+msgstr "pl. 30 nap, hónap vége."
+
+#: finances/models.py
+msgid "ex: 30 jours fin de mois"
+msgstr "pl. 30 nap, hónap vége"
+
+#: finances/models.py
+msgid "Entre professionnels, les pénalités de retard et l'indemnité forfaitaire de recouvrement sont obligatoires sur la facture."
+msgstr "Vállalkozások között a késedelmi kamat és az átalány behajtási költség kötelező a számlán."
+
+#: finances/models.py
+msgid "Capital social (€)"
+msgstr "Jegyzett tőke (€)"
+
+#: finances/models.py
+msgid "capital social (€)"
+msgstr "jegyzett tőke (€)"
+
+#: finances/models.py
+msgid "RCS / RM"
+msgstr "Cégjegyzék"
+
+#: finances/models.py
+msgid "ex : RCS Digne-les-Bains 123 456 789."
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789."
+
+#: finances/models.py
+msgid "ex: RCS Digne-les-Bains 123 456 789"
+msgstr "e.g. Trade register Digne-les-Bains 123 456 789"
+
+#: finances/models.py
+msgid "Pied de page"
+msgstr "Lábléc"
+
+#: finances/models.py
+msgid "mentions de pied de page"
+msgstr "lábléc-közlemények"
+
+#: finances/models.py
+msgid "Pénalités de retard, indemnité forfaitaire de recouvrement…"
+msgstr "Késedelmi kamat, átalány behajtási költség…"
+
+#: finances/models.py
+msgid "Pénalités de retard au taux… Indemnité forfaitaire de recouvrement de 40 €."
+msgstr "Late payment penalties at a rate of… Fixed recovery indemnity of €40."
+
+#: finances/models.py
+msgid "Identité de facturation enregistrée."
+msgstr "Számlázási azonosság mentve."
+
+#: identite/models.py
+msgid "Carte d'identité"
+msgstr "Személyazonosító igazolvány"
+
+#: identite/models.py
+msgid "Passeport"
+msgstr "Útlevél"
+
+#: identite/models.py
+msgid "pièce d'identité"
+msgstr "személyazonosító okmány"
+
+#: identite/models.py
+msgid "pièces d'identité"
+msgstr "személyazonosító okmányok"
+
+#: identite/models.py
+msgid "Ajouter une pièce"
+msgstr "Dokumentum hozzáadása"
+
+#: identite/models.py
+msgid "Aucune pièce enregistrée"
+msgstr "Nincs rögzített dokumentum"
+
+#: identite/models.py
+msgid "Carte d'identité, passeport, signature : rangés une fois, retrouvés quand il le faut."
+msgstr "Igazolvány, útlevél, aláírás: egyszer elrakva, akkor is meglesz, ha kell."
+
+#: identite/models.py
+msgid "Un renouvellement demande plusieurs semaines : mieux vaut s'y prendre avant l'échéance."
+msgstr "A megújítás több hetet vesz igénybe: érdemes a lejárat előtt elkezdeni."
+
+#: identite/models.py
+msgid "Périmée"
+msgstr "Lejárt"
+
+#: identite/models.py
+msgid "périmée depuis le"
+msgstr "lejárt"
+
+#: identite/models.py
+msgid "Titulaire"
+msgstr "Tulajdonos"
+
+#: identite/models.py
+msgid "titulaire"
+msgstr "tulajdonos"
+
+#: identite/models.py
+msgid "À qui appartient la pièce, si ce n'est pas vous."
+msgstr "Kié a dokumentum, ha nem az öné."
+
+#: identite/models.py
+msgid "Délivrée le"
+msgstr "Kiállítva"
+
+#: identite/models.py
+msgid "délivrée le"
+msgstr "kiállítva"
+
+#: identite/models.py
+msgid "Expire le"
+msgstr "Lejár"
+
+#: identite/models.py
+msgid "expire le"
+msgstr "lejár"
+
+#: identite/models.py
+msgid "Supprimer cette pièce ?"
+msgstr "Törli ezt a dokumentumot?"
+
+#: identite/models.py
+msgid "Pièce enregistrée."
+msgstr "Dokumentum mentve."
+
+#: identite/models.py
+msgid "Pièce modifiée."
+msgstr "Dokumentum módosítva."
+
+#: identite/models.py
+msgid "Pièce supprimée."
+msgstr "Dokumentum törölve."
+
+#: identite/models.py
+msgid "PDF ou photo, 10 Mo maximum."
+msgstr "PDF vagy fénykép, legfeljebb 10 MB."
+
+#: identite/models.py
+msgid "Ouvrir"
+msgstr "Megnyitás"
+
+#: identite/models.py
+msgid "Coordonnées et mentions"
+msgstr "Adatok és közlemények"
